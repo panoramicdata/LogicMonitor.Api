@@ -1,0 +1,16 @@
+{
+	"Config": {
+		"Account": "mycompany",
+		"AccessId": "XXXXXXXXXXXXXXXXXXXX",
+		"AccessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+		"CollectorId": 12,
+		"WindowsDeviceId": 34,
+		"NetflowDeviceId": 56,
+		"SnmpDeviceId": 78,
+		"DeviceGroupFullPath": "Path to Test Device Group",
+		"WebsiteGroupFullPath": "Path to Test Website Group",
+		"AllWidgetsDashboardIdComment": "This should be a dashboard with all available types of LogicMonitor widget on.",
+		"AllWidgetsDashboardId": 74,
+		"AccountHasBillingInformation": true
+	}
+}	

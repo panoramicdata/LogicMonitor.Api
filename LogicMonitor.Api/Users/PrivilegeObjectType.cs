@@ -1,0 +1,80 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
+
+namespace LogicMonitor.Api.Users
+{
+	/// <summary>
+	/// A role privilege object type
+	/// </summary>
+	[DataContract]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public enum PrivilegeObjectType
+	{
+		/// <summary>
+		/// Dashboard
+		/// </summary>
+		[EnumMember(Value = "dashboard")]
+		Dashboard,
+
+		/// <summary>
+		/// DashboardGroup
+		/// </summary>
+		[EnumMember(Value = "dashboard_group")]
+		DashboardGroup,
+
+		/// <summary>
+		/// DeviceGroup
+		/// </summary>
+		[EnumMember(Value = "host_group")]
+		DeviceGroup,
+
+		/// <summary>
+		/// Help
+		/// </summary>
+		[EnumMember(Value = "help")]
+		Help,
+
+		/// <summary>
+		/// ReportGroup
+		/// </summary>
+		[EnumMember(Value = "report_group")]
+		ReportGroup,
+
+		/// <summary>
+		/// WebsiteGroup
+		/// </summary>
+		[EnumMember(Value = "website_group")]
+		WebsiteGroup,
+
+		/// <summary>
+		/// Setting
+		/// </summary>
+		[EnumMember(Value = "setting")]
+		Setting,
+
+		/// <summary>
+		/// Setting
+		/// </summary>
+		[EnumMember(Value = "remoteSession")]
+		RemoteSession,
+
+		/// <summary>
+		/// DeviceDashboard
+		/// </summary>
+		[EnumMember(Value = "deviceDashboard")]
+		DeviceDashboard,
+
+		/// <summary>
+		/// ConfigNeedDeviceManagePermission
+		/// </summary>
+		[EnumMember(Value = "configNeedDeviceManagePermission")]
+		ConfigNeedDeviceManagePermission,
+
+		/// <summary>
+		/// Map
+		/// </summary>
+		[EnumMember(Value = "map")]
+		Map,
+	}
+}

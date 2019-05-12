@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<Version>2.119.0</Version>
+		<Authors>Panoramic Data Limited</Authors>
+		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
+		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
+		<PackageLicenseUrl></PackageLicenseUrl>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageIconUrl>http://www.logicmonitor.com/wp-content/uploads/2015/07/LM_Logo_Circle_Indigo_300px.png</PackageIconUrl>
+		<PackageTags>LogicMonitor API REST</PackageTags>
+		<Title>LogicMonitor.Api</Title>
+		<Description>A .NET API for LogicMonitor</Description>
+		<Summary>A .NET API for LogicMonitor</Summary>
+		<Company>Panoramic Data Limited</Company>
+		<PackageReleaseNotes>Updated for v119</PackageReleaseNotes>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<LangVersion>7.3</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DocumentationFile>bin\Debug\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DocumentationFile>bin\Release\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
+</Project>

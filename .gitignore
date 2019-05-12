@@ -1,0 +1,12 @@
+Help
+obj
+bin
+lib
+packages
+*.nupkg
+/.vs
+/LogicMonitor.Api.Test/appsettings.json
+/LogicMonitor.Api.tss
+/LogicMonitor.Api/nuget-api-key.txt
+/LogicMonitor.Api.Help/html
+/LogicMonitor.Api.Test/apsettings.json
