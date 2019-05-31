@@ -143,10 +143,10 @@ namespace LogicMonitor.Api.Websites
 		public int PollingIntervalMinutes { get; set; }
 
 		/// <summary>
-		/// The schema
+		/// The HTTP schema
 		/// </summary>
 		[DataMember(Name = "schema")]
-		public string Schema { get; set; }
+		public HttpSchema Schema { get; set; }
 
 		/// <summary>
 		/// The script
@@ -218,7 +218,6 @@ namespace LogicMonitor.Api.Websites
 		/// The type
 		/// </summary>
 		[DataMember(Name = "type")]
-		[JsonConverter(typeof(StringEnumConverter))]
 		public WebsiteType Type { get; set; }
 
 		/// <summary>

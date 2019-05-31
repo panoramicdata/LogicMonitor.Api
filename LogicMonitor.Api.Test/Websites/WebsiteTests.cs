@@ -20,6 +20,7 @@ namespace LogicMonitor.Api.Test.Websites
 				Description = "Description",
 				PollingIntervalMinutes = 1.ToString(),
 				Type = WebsiteType.WebCheck,
+				HttpSchema = HttpSchema.Https,
 				WebsiteProperties = new List<Property>
 					{
 						new Property

@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Dashboards
 {
+
 	/// <summary>
 	///     A dashboard
 	/// </summary>

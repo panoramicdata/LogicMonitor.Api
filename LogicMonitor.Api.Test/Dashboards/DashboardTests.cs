@@ -12,6 +12,19 @@ namespace LogicMonitor.Api.Test.Dashboards
 		}
 
 		[Fact]
+		public async void GetWidgetData_Succeeds()
+		{
+			// Multi-number
+			var widgetData = await PortalClient.GetWidgetDataAsync(626).ConfigureAwait(false);
+			Assert.NotNull(widgetData);
+
+			// Single-number
+			var widgetData2 = await PortalClient.GetWidgetDataAsync(627).ConfigureAwait(false);
+			Assert.NotNull(widgetData2);
+		}
+
+
+		[Fact]
 		public async void Get()
 		{
 			// This one has all the different widget types on

@@ -70,6 +70,12 @@ namespace LogicMonitor.Api.Websites
 		public string HostName { get; set; }
 
 		/// <summary>
+		/// The HTTP schema
+		/// </summary>
+		[DataMember(Name = "schema")]
+		public HttpSchema HttpSchema { get; set; }
+
+		/// <summary>
 		/// The domain
 		/// </summary>
 		[DataMember(Name = "domain")]
@@ -135,6 +141,17 @@ namespace LogicMonitor.Api.Websites
 		[DataMember(Name = "testLocation")]
 		public TestLocation TestLocation { get; set; }
 
+		/// <summary>
+		/// Whether to trigger SSL Status Alerts
+		/// </summary>
+		[DataMember(Name = "triggerSSLStatusAlert")]
+		public bool TriggerSslStatusAlerts { get; set; }
+
+		/// <summary>
+		/// Whether to trigger SSL Expiration Alerts
+		/// </summary>
+		[DataMember(Name = "triggerSSLExpirationAlert")]
+		public bool TriggerSslExpirationAlerts { get; set; }
 		/// <summary>
 		/// The website properties
 		/// </summary>

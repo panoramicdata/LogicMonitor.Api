@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Websites
 {
@@ -6,6 +8,7 @@ namespace LogicMonitor.Api.Websites
 	/// The Post data edit type
 	/// </summary>
 	[DataContract]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public enum HttpSchema
 	{
 		/// <summary>

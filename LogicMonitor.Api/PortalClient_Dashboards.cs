@@ -70,9 +70,19 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 		/// <param name="filter">The filter</param>
+		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard> filter = null)
-			=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/dashboards");
+		public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard> filter = null, CancellationToken cancellationToken = default)
+			=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/dashboards", cancellationToken);
+
+		/// <summary>
+		///     Gets widget data
+		/// </summary>
+		/// <param name="widgetId">The Id of the widget</param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public Task<WidgetData> GetWidgetDataAsync(int widgetId, CancellationToken cancellationToken = default)
+			=> GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{widgetId}/data", cancellationToken);
 
 		/// <summary>
 		///     Gets widgets for a given dashboard
