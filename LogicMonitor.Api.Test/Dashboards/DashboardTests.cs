@@ -32,7 +32,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 			var widgets = await PortalClient.GetWidgetsByDashboardNameAsync("All Widgets").ConfigureAwait(false);
 			Assert.NotNull(dashboard);
 			Assert.NotNull(widgets);
-			Assert.Equal(16, widgets.Count); // There are 24 different types of widget
+			Assert.Equal(17, widgets.Count); // There are 24 different types of widget
 
 			// Test each type
 
@@ -51,7 +51,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 			Assert.False(string.IsNullOrWhiteSpace(jobMonitorWidget.BatchJobId));
 
 			// Big Number
-			var bigNumberWidget = widgets.OfType<BigNumberWidget>().SingleOrDefault();
+			var bigNumberWidget = widgets.OfType<BigNumberWidget>().FirstOrDefault();
 			Assert.NotNull(bigNumberWidget);
 			Assert.NotNull(bigNumberWidget.BigNumberInfo);
 			Assert.NotNull(bigNumberWidget.BigNumberInfo.DataPoints);
@@ -215,7 +215,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 			Assert.NotNull(deviceSlaStatusWidget.DaysInWeek);
 			Assert.NotNull(deviceSlaStatusWidget.PeriodInOneDay);
 			Assert.Equal(0, deviceSlaStatusWidget.UnmonitoredTimeType);
-			Assert.Equal(0, deviceSlaStatusWidget.DisplayType);
+			Assert.Equal(2, deviceSlaStatusWidget.DisplayType);
 			// Assert.NotNull(deviceSlaStatusWidget.UnitLabel);
 			Assert.NotNull(deviceSlaStatusWidget.BottomLabel);
 

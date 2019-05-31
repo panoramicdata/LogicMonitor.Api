@@ -29,6 +29,9 @@ namespace LogicMonitor.Api.Converters
 				case "autotask":
 					return new AutoTaskIntegration();
 
+				case "pagerduty":
+					return new PagerDutyIntegration();
+
 				default:
 					throw new NotSupportedException($"{integration} deserialization not supported.  IntegrationsConverter.cs needs updating.");
 			}

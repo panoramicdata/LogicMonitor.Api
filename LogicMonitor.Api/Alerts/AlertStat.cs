@@ -57,6 +57,18 @@ namespace LogicMonitor.Api.Alerts
 		public int SdtAlerts { get; set; }
 
 		/// <summary>
+		/// The total count of alerts
+		/// </summary>
+		[DataMember(Name = "totalAlerts")]
+		public int TotalAlerts { get; set; }
+
+		/// <summary>
+		/// The total count of alerts
+		/// </summary>
+		[DataMember(Name = "ackAlerts")]
+		public int AckAlerts { get; set; }
+
+		/// <summary>
 		///    The endpoint
 		/// </summary>
 		/// <returns></returns>

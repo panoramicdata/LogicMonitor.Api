@@ -71,7 +71,7 @@ namespace LogicMonitor.Api.Test
 					CollectorPlatformAndArchitecture.Win64,
 					CollectorDownloadType.Bootstrap,
 					CollectorSize.Medium,
-					28200).ConfigureAwait(false);
+					28400).ConfigureAwait(false);
 			}
 			finally
 			{
