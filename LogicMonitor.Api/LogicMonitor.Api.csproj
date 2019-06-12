@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>2.119.2</Version>
+		<Version>2.120.2</Version>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
 		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
@@ -19,6 +19,7 @@ Added PegerDuty Integration
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<LangVersion>7.3</LangVersion>
 		<AssemblyVersion>2.120.2.0</AssemblyVersion>
+		<FileVersion>2.120.2.0</FileVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DocumentationFile>bin\Debug\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
