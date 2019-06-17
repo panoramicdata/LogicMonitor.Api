@@ -12,7 +12,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 		}
 
 		[Fact]
-		public async void GetWidgetData_Succeeds()
+		public async void GetBigNumberWidgetData_Succeeds()
 		{
 			// Multi-number
 			var widgetData = await PortalClient.GetWidgetDataAsync(626).ConfigureAwait(false);
@@ -23,6 +23,17 @@ namespace LogicMonitor.Api.Test.Dashboards
 			Assert.NotNull(widgetData2);
 		}
 
+		[Fact]
+		public async void GetSlaWidgetData_Succeeds()
+		{
+			// Multi-number
+			//var widgetData = await PortalClient.GetWidgetDataAsync(540).ConfigureAwait(false);
+			//Assert.NotNull(widgetData);
+
+			// Single-number
+			var widgetData2 = await PortalClient.GetWidgetDataAsync(540).ConfigureAwait(false);
+			Assert.NotNull(widgetData2);
+		}
 
 		[Fact]
 		public async void Get()
