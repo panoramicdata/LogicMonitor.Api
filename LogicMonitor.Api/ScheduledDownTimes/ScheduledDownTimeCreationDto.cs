@@ -45,10 +45,46 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		public long EndDateTimeEpochMs { get; set; }
 
 		/// <summary>
+		///    The month day (used for monthly)
+		/// </summary>
+		[DataMember(Name = "monthDay")]
+		public int MonthDay { get; set; }
+
+		/// <summary>
 		///    The week day (used for monthlyByWeek)
 		/// </summary>
 		[DataMember(Name = "weekDay")]
 		public string WeekDay { get; set; }
+
+		/// <summary>
+		///    The start hour
+		/// </summary>
+		[DataMember(Name = "hour")]
+		public int StartHour { get; set; }
+
+		/// <summary>
+		///    The start minute
+		/// </summary>
+		[DataMember(Name = "minute")]
+		public int StartMinute { get; set; }
+
+		/// <summary>
+		///    The end hour
+		/// </summary>
+		[DataMember(Name = "endHour")]
+		public int EndHour { get; set; }
+
+		/// <summary>
+		///    The end minute
+		/// </summary>
+		[DataMember(Name = "endMinute")]
+		public int EndMinute { get; set; }
+
+		/// <summary>
+		///    The time zone
+		/// </summary>
+		[DataMember(Name = "timezone")]
+		public string TimeZone { get; set; }
 
 		/// <summary>
 		///    The week of month (used for monthlyByWeek)
