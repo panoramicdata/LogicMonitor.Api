@@ -37,7 +37,7 @@ namespace LogicMonitor.Api.Netscans
 		///    The weekday
 		/// </summary>
 		[DataMember(Name = "weekday")]
-		public List<string> Weekday { get; set; }
+		public List<string> WeekDays { get; set; }
 
 		/// <summary>
 		///    The nth week

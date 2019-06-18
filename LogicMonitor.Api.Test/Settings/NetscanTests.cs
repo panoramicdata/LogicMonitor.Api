@@ -70,7 +70,7 @@ namespace LogicMonitor.Api.Test.Settings
 				{
 					Type = netscanScheduleType,
 					Cron = netscanScheduleCron,
-					Weekday = netscanScheduleWeekday,
+					WeekDays = netscanScheduleWeekday,
 					NthWeek = netscanScheduleNthWeek,
 					Notify = netscanScheduleNotify,
 					Recipients = netscanScheduleScheduleRecipients

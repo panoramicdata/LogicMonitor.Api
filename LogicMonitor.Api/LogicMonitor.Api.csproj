@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>2.120.1</Version>
+		<Version>2.120.2</Version>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
 		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
@@ -13,8 +13,7 @@
 		<Description>A .NET API for LogicMonitor</Description>
 		<Summary>A .NET API for LogicMonitor</Summary>
 		<Company>Panoramic Data Limited</Company>
-		<PackageReleaseNotes>Updated ScheduleDownTimeCreationDto
-Referenced https://github.com/panoramicdata/LogicMonitor.Api/</PackageReleaseNotes>
+		<PackageReleaseNotes>Changed weekday strings to enums where appropriate.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<LangVersion>7.3</LangVersion>
 		<RepositoryType>git</RepositoryType>

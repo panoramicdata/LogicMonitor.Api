@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Time;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.ScheduledDownTimes
@@ -54,7 +55,7 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		///    The week day (used for monthlyByWeek)
 		/// </summary>
 		[DataMember(Name = "weekDay")]
-		public string WeekDay { get; set; }
+		public WeekDay WeekDay { get; set; }
 
 		/// <summary>
 		///    The start hour

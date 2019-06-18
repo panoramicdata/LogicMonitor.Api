@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Time;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
@@ -51,11 +53,9 @@ namespace LogicMonitor.Api.Alerts
 		public string TimeZone { get; set; }
 
 		/// <summary>
-		/// The number of minutes into a day.
-		/// e.g. midnight is 0
-		/// e.g. 1 a.m. is 60
+		/// The weekdays
 		/// </summary>
 		[DataMember(Name = "weekDays")]
-		public object WeekDays { get; set; }
+		public List<WeekDay> WeekDays { get; set; }
 	}
 }
