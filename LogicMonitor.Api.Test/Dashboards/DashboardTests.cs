@@ -27,8 +27,8 @@ namespace LogicMonitor.Api.Test.Dashboards
 		public async void GetSlaWidgetData_Succeeds()
 		{
 			// Multi-number
-			//var widgetData = await PortalClient.GetWidgetDataAsync(540).ConfigureAwait(false);
-			//Assert.NotNull(widgetData);
+			var widgetData = await PortalClient.GetWidgetDataAsync(631).ConfigureAwait(false);
+			Assert.NotNull(widgetData);
 
 			// Single-number
 			var widgetData2 = await PortalClient.GetWidgetDataAsync(540).ConfigureAwait(false);
@@ -43,7 +43,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 			var widgets = await PortalClient.GetWidgetsByDashboardNameAsync("All Widgets").ConfigureAwait(false);
 			Assert.NotNull(dashboard);
 			Assert.NotNull(widgets);
-			Assert.Equal(17, widgets.Count); // There are 24 different types of widget
+			Assert.Equal(19, widgets.Count); // There are 24 different types of widget
 
 			// Test each type
 
@@ -209,7 +209,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 			//Assert.False(websiteOverallStatusWidget.SelectedWebsites[0].AreAllChosen);
 
 			// Device SLA widget
-			var deviceSlaStatusWidget = widgets.OfType<DeviceSlaWidget>().SingleOrDefault();
+			var deviceSlaStatusWidget = widgets.OfType<DeviceSlaWidget>().FirstOrDefault();
 			Assert.NotNull(deviceSlaStatusWidget);
 			Assert.NotNull(deviceSlaStatusWidget.Metrics);
 			Assert.NotEmpty(deviceSlaStatusWidget.Metrics);

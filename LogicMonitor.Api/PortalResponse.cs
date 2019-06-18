@@ -143,7 +143,7 @@ namespace LogicMonitor.Api
 			}
 			catch (JsonSerializationException e)
 			{
-				if(dataString.Contains(LogicMonitorServiceUnavailableException.MatchText))
+				if (dataString.Contains(LogicMonitorServiceUnavailableException.MatchText))
 				{
 					throw new LogicMonitorServiceUnavailableException(dataString);
 				}

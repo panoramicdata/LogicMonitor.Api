@@ -4,6 +4,7 @@ using LogicMonitor.Api.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -82,5 +83,17 @@ namespace LogicMonitor.Api
 			// Download the collector
 			await DownloadFile(suburl, fileInfo, cancellationToken).ConfigureAwait(false);
 		}
+
+		/// <summary>
+		/// Gets the list of available Collector Versions
+		/// </summary>
+		/// <param name="filter">An optional filter</param>
+		/// <param name="cancellationToken">An optional CancellationToken</param>
+		public async Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(Filter<CollectorVersion> filter = null, CancellationToken cancellationToken = default)
+			=> (await GetBySubUrlAsync<Page<CollectorVersion>>($"setting/collector/collectors/versions?{filter}", cancellationToken).ConfigureAwait(false))
+			.Items
+			.OrderByDescending(cv => cv.MajorVersion)
+			.ThenByDescending(cv => cv.MinorVersion)
+			.ToList();
 	}
 }

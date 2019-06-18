@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Dashboards
@@ -14,13 +13,13 @@ namespace LogicMonitor.Api.Dashboards
 		///     position
 		/// </summary>
 		[DataMember(Name = "position")]
-		public int Position { get; set; }
+		public int? Position { get; set; }
 
 		/// <summary>
 		///     rounding
 		/// </summary>
 		[DataMember(Name = "rounding")]
-		public int Rounding { get; set; }
+		public int? Rounding { get; set; }
 
 		/// <summary>
 		///     bottomLabel
@@ -44,7 +43,7 @@ namespace LogicMonitor.Api.Dashboards
 		///     colorLevel
 		/// </summary>
 		[DataMember(Name = "colorLevel")]
-		public int ColorLevel { get; set; }
+		public int? ColorLevel { get; set; }
 
 		/// <summary>
 		///     errorMessage

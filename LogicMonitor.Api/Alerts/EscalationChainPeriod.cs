@@ -1,5 +1,3 @@
-using LogicMonitor.Api.Time;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
@@ -53,9 +51,9 @@ namespace LogicMonitor.Api.Alerts
 		public string TimeZone { get; set; }
 
 		/// <summary>
-		/// The weekdays
+		/// The weekdays.  Sometimes, an integer array, sometimes a string in the form "1|2|3|4|5|6|7"
 		/// </summary>
 		[DataMember(Name = "weekDays")]
-		public List<WeekDay> WeekDays { get; set; }
+		public object WeekDays { get; set; }
 	}
 }

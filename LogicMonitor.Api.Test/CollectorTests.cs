@@ -1,8 +1,11 @@
 using LogicMonitor.Api.Collectors;
+using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.Settings;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -59,6 +62,25 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void CreateCollectorDownloadAndDelete()
 		{
+			// Determine the latest supported version
+			var collectorVersionInts = (await PortalClient.GetAllCollectorVersionsAsync(
+				new Filter<CollectorVersion>
+				{
+					FilterItems = new List<FilterItem<CollectorVersion>>
+					{
+						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
+					}
+				}
+				).ConfigureAwait(false))
+				.Select(cv => (cv.MajorVersion * 1000) + cv.MinorVersion)
+				.OrderByDescending(v => v)
+				.ToList();
+
+			Assert.NotNull(collectorVersionInts);
+			Assert.NotEmpty(collectorVersionInts);
+
+			var collectorVersionInt = collectorVersionInts[0];
+
 			// Create the collector
 			var collector = await PortalClient.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }).ConfigureAwait(false);
 
@@ -71,7 +93,7 @@ namespace LogicMonitor.Api.Test
 					CollectorPlatformAndArchitecture.Win64,
 					CollectorDownloadType.Bootstrap,
 					CollectorSize.Medium,
-					28400).ConfigureAwait(false);
+					collectorVersionInt).ConfigureAwait(false);
 			}
 			finally
 			{

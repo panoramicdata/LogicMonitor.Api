@@ -1,4 +1,6 @@
 using LogicMonitor.Api.Collectors;
+using LogicMonitor.Api.Filters;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -47,6 +49,54 @@ namespace LogicMonitor.Api.Test
 		{
 			var collector = await PortalClient.GetAsync<Collector>(18).ConfigureAwait(false);
 			Assert.NotNull(collector);
+		}
+
+		[Fact]
+		public async void GetCollectorVersions_Unfiltered_Succeeds()
+		{
+			var collectorVersions = await PortalClient
+				.GetAllCollectorVersionsAsync()
+				.ConfigureAwait(false);
+			Assert.NotNull(collectorVersions);
+			Assert.NotEmpty(collectorVersions);
+			Assert.All(collectorVersions, collectorVersion =>
+			{
+				Assert.NotEqual(0, collectorVersion.MajorVersion);
+			});
+		}
+
+		[Fact]
+		public async void GetCollectorVersions_FilteredStable_Succeeds()
+		{
+			var collectorVersions = await PortalClient
+				.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
+				{
+					FilterItems = new List<FilterItem<CollectorVersion>>
+					{
+						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true)
+					}
+				})
+				.ConfigureAwait(false);
+			Assert.NotNull(collectorVersions);
+			Assert.NotEmpty(collectorVersions);
+			Assert.All(collectorVersions, collectorVersion => Assert.True(collectorVersion.IsStable));
+		}
+
+		[Fact]
+		public async void GetCollectorVersions_FilteredMandatory_Succeeds()
+		{
+			var collectorVersions = await PortalClient
+				.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
+				{
+					FilterItems = new List<FilterItem<CollectorVersion>>
+					{
+						new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
+					}
+				})
+				.ConfigureAwait(false);
+			Assert.NotNull(collectorVersions);
+			Assert.NotEmpty(collectorVersions);
+			Assert.All(collectorVersions, collectorVersion => Assert.True(collectorVersion.IsStable));
 		}
 	}
 }
