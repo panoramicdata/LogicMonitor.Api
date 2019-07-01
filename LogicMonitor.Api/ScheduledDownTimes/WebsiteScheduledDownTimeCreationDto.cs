@@ -5,13 +5,13 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 	/// <summary>
 	/// Website SDT creation DTO
 	/// </summary>
-	public class WebsiteIdScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+	public class WebsiteScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 	{
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="websiteId"></param>
-		public WebsiteIdScheduledDownTimeCreationDto(int websiteId) : base(ScheduledDownTimeType.Website) => WebsiteId = websiteId;
+		public WebsiteScheduledDownTimeCreationDto(int websiteId) : base(ScheduledDownTimeType.Website) => WebsiteId = websiteId;
 
 		/// <summary>
 		/// The website id

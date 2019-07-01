@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 namespace LogicMonitor.Api.ScheduledDownTimes
 {
 	/// <summary>
-	/// Website Group SDT creation DTO
+	/// WebsiteGroup SDT creation DTO
 	/// </summary>
 	public class WebsiteGroupIdScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 	{
