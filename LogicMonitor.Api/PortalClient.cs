@@ -1115,7 +1115,10 @@ namespace LogicMonitor.Api
 		{
 			ValidateFilter(filter);
 
-			return GetBySubUrlAsync<Page<T>>($"{subUrl}?{filter}", cancellationToken);
+			return GetBySubUrlAsync<Page<T>>(subUrl.Contains('?')
+				? $"{subUrl}&{filter}"
+				: $"{subUrl}?{filter}"
+				, cancellationToken);
 		}
 		#endregion Web Interaction
 
