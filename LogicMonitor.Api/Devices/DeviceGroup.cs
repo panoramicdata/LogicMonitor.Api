@@ -24,8 +24,8 @@ namespace LogicMonitor.Api.Devices
 		/// <summary>
 		///    Whether alerting is enabled
 		/// </summary>
-		[DataMember(Name = "alertEnable")]
-		public bool AlertEnable { get; set; }
+		[Obsolete("Use !IsAlertingDisabled instead", true)]
+		public bool AlertEnable => !IsAlertingDisabled;
 
 		/// <summary>
 		///    The alert status
