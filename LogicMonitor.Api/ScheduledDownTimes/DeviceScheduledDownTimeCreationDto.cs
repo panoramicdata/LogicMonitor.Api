@@ -2,7 +2,6 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.ScheduledDownTimes
 {
-
 	/// <summary>
 	///    Device SDT creation DTO
 	/// </summary>
@@ -20,6 +19,5 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// </summary>
 		[DataMember(Name = "deviceId")]
 		public int DeviceId { get; set; }
-
 	}
 }
