@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.ScheduledDownTimes
 {
@@ -20,5 +20,17 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// </summary>
 		[DataMember(Name = "deviceGroupId")]
 		public int DeviceGroupId { get; set; }
+
+		/// <summary>
+		///    The DataSource id
+		/// </summary>
+		[DataMember(Name = "dataSourceId")]
+		public int? DataSourceId { get; set; }
+
+		/// <summary>
+		///    The DataSource name
+		/// </summary>
+		[DataMember(Name = "dataSourceName")]
+		public string DataSourceName { get; set; }
 	}
 }
