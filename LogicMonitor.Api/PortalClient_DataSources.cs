@@ -232,7 +232,7 @@ namespace LogicMonitor.Api
 		/// <param name="deviceId">The Device Id</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
+		[Obsolete("Use GetAllDeviceDataSourcesAsync instead", false)]
 		public Task<Page<DeviceDataSource>> GetDeviceDataSourcesPageAsync(
 			int deviceId,
 			Filter<DeviceDataSource> filter,
@@ -240,6 +240,22 @@ namespace LogicMonitor.Api
 		{
 			ValidateFilter(filter);
 			return GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources?{filter}", cancellationToken);
+		}
+
+		/// <summary>
+		/// Gets all DeviceDataSources that match a filter
+		/// </summary>
+		/// <param name="deviceId">The Device Id</param>
+		/// <param name="filter">The filter</param>
+		/// <param name="cancellationToken">The cancellation token</param>
+		/// <returns></returns>
+		public Task<List<DeviceDataSource>> GetAllDeviceDataSourcesAsync(
+			int deviceId,
+			Filter<DeviceDataSource> filter,
+			CancellationToken cancellationToken = default)
+		{
+			ValidateFilter(filter);
+			return GetAllAsync<DeviceDataSource>(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken);
 		}
 
 		/// <summary>
