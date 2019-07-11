@@ -14,5 +14,4 @@ namespace LogicMonitor.Api.Settings
 		[DataMember(Name = "serviceKey")]
 		public string ServiceKey { get; set; }
 	}
-
 }

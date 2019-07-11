@@ -31,6 +31,7 @@ namespace LogicMonitor.Api.Settings
 		/// </summary>
 		[DataMember(Name = "queueId")]
 		public int QueueId { get; set; }
+
 		/// <summary>
 		/// The warnPriority
 		/// </summary>

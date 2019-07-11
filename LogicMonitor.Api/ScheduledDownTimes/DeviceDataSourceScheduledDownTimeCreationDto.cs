@@ -1,8 +1,7 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.ScheduledDownTimes
 {
-
 	/// <summary>
 	///    Device SDT creation DTO
 	/// </summary>

@@ -94,7 +94,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		{
 			var portalClient = PortalClient;
 			const string initialComment = "Woo";
-			var deviceGroupId = 1; // The root
+			const int deviceGroupId = 1; // The root
 			var sdtCreationDto = new DeviceGroupScheduledDownTimeCreationDto(deviceGroupId)
 			{
 				Comment = initialComment,

@@ -676,17 +676,14 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public async Task<DeviceDataSource> GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(int deviceId, int dataSourceId, CancellationToken cancellationToken = default)
 		{
-			// TODO - Make this use a search field
-			var page = await GetDeviceDataSourcesPageAsync(deviceId, new Filter<DeviceDataSource>
+			var deviceDataSources = await GetAllDeviceDataSourcesAsync(deviceId, new Filter<DeviceDataSource>
 			{
-				Skip = 0,
-				Take = 300,
 				FilterItems = new List<FilterItem<DeviceDataSource>>
 				{
 					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceId), dataSourceId.ToString())
 				}
 			}, cancellationToken).ConfigureAwait(false);
-			return page.Items.SingleOrDefault();
+			return deviceDataSources.SingleOrDefault();
 		}
 
 		/// <summary>

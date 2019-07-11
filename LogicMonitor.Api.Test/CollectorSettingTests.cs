@@ -59,10 +59,7 @@ namespace LogicMonitor.Api.Test
 				.ConfigureAwait(false);
 			Assert.NotNull(collectorVersions);
 			Assert.NotEmpty(collectorVersions);
-			Assert.All(collectorVersions, collectorVersion =>
-			{
-				Assert.NotEqual(0, collectorVersion.MajorVersion);
-			});
+			Assert.All(collectorVersions, collectorVersion => Assert.NotEqual(0, collectorVersion.MajorVersion));
 		}
 
 		[Fact]

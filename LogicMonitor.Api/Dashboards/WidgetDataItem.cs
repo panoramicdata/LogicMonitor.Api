@@ -2,7 +2,6 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Dashboards
 {
-
 	/// <summary>
 	///     Widget data item
 	/// </summary>

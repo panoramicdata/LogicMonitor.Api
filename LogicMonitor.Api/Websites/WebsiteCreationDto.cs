@@ -152,6 +152,7 @@ namespace LogicMonitor.Api.Websites
 		/// </summary>
 		[DataMember(Name = "triggerSSLExpirationAlert")]
 		public bool TriggerSslExpirationAlerts { get; set; }
+
 		/// <summary>
 		/// The website properties
 		/// </summary>

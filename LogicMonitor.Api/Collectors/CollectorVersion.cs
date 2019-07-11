@@ -2,6 +2,9 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Collectors
 {
+	/// <summary>
+	/// Collector version
+	/// </summary>
 	[DataContract]
 	public class CollectorVersion
 	{
@@ -47,5 +50,4 @@ namespace LogicMonitor.Api.Collectors
 		[DataMember(Name = "has32bitLinux")]
 		public bool Has32bitLinux { get; set; }
 	}
-
 }
