@@ -1,4 +1,5 @@
 using LogicMonitor.Api.Dashboards;
+using System;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -7,6 +8,8 @@ namespace LogicMonitor.Api.Test.Dashboards
 {
 	public class DashboardTests : TestWithOutput
 	{
+		private static DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+
 		public DashboardTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 		{
 		}
@@ -15,24 +18,30 @@ namespace LogicMonitor.Api.Test.Dashboards
 		public async void GetBigNumberWidgetData_Succeeds()
 		{
 			// Multi-number
-			var widgetData = await PortalClient.GetWidgetDataAsync(626).ConfigureAwait(false);
+			var widgetData = await PortalClient.GetWidgetDataAsync(626, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData);
 
 			// Single-number
-			var widgetData2 = await PortalClient.GetWidgetDataAsync(627).ConfigureAwait(false);
+			var widgetData2 = await PortalClient.GetWidgetDataAsync(627, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData2);
 		}
 
 		[Fact]
 		public async void GetSlaWidgetData_Succeeds()
 		{
+			var utcNow = DateTimeOffset.UtcNow;
+
 			// Multi-number
-			var widgetData = await PortalClient.GetWidgetDataAsync(631).ConfigureAwait(false);
+			var widgetData = await PortalClient.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData);
+			Assert.NotNull(widgetData.ResultList);
+			Assert.NotEmpty(widgetData.ResultList);
 
 			// Single-number
-			var widgetData2 = await PortalClient.GetWidgetDataAsync(540).ConfigureAwait(false);
+			var widgetData2 = await PortalClient.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData2);
+			Assert.NotEqual(0, widgetData2.Availability);
+			Assert.Null(widgetData2.ResultList);
 		}
 
 		[Fact]

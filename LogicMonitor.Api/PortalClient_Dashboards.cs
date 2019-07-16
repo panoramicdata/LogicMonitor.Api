@@ -79,10 +79,29 @@ namespace LogicMonitor.Api
 		///     Gets widget data
 		/// </summary>
 		/// <param name="widgetId">The Id of the widget</param>
+		/// <param name="start">The start date</param>
+		/// <param name="end">The end date</param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public Task<WidgetData> GetWidgetDataAsync(int widgetId, CancellationToken cancellationToken = default)
-			=> GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{widgetId}/data", cancellationToken);
+		public Task<WidgetData> GetWidgetDataAsync(
+			int widgetId,
+			DateTimeOffset start,
+			DateTimeOffset end,
+			CancellationToken cancellationToken = default)
+		{
+			if(start >= end)
+			{
+				throw new ArgumentException("The end should be after the start.", nameof(end));
+			}
+			// Start is before end
+			if(end > DateTimeOffset.UtcNow)
+			{
+				throw new ArgumentException("The end should not be in the future.", nameof(end));
+			}
+			// Start and end are in the past
+
+			return GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{widgetId}/data?time=zoom&start={start.ToUnixTimeSeconds()}&end={end.ToUnixTimeSeconds()}", cancellationToken);
+		}
 
 		/// <summary>
 		///     Gets widgets for a given dashboard
