@@ -508,6 +508,21 @@ namespace LogicMonitor.Api
 				cancellationToken).ConfigureAwait(false)).Items;
 
 		/// <summary>
+		/// Gets a Device's DataPointConfigurations
+		/// </summary>
+		/// <param name="deviceId"></param>
+		/// <param name="deviceDataSourceId"></param>
+		/// <param name="deviceDataSourceInstanceId"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<List<DataPointConfiguration>> GetDeviceDataPointConfigurations(
+			int deviceId,
+			CancellationToken cancellationToken = default)
+			=> await GetAllAsync<DataPointConfiguration>(
+				$"device/devices/{deviceId}/alertsettings",
+				cancellationToken).ConfigureAwait(false);
+
+		/// <summary>
 		///     Update a DataPointConfiguration
 		/// </summary>
 		/// <param name="deviceId">The Device Id</param>

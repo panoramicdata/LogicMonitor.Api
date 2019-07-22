@@ -264,6 +264,10 @@ namespace LogicMonitor.Api
 
 		private void ValidateFilter<T>(Filter<T> filter, int maxTake = 300)
 		{
+			if (filter == null)
+			{
+				throw new ArgumentNullException(nameof(filter));
+			}
 			if (filter.Skip < 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(filter.Skip), "must be greater than 0");
