@@ -274,7 +274,8 @@ namespace LogicMonitor.Api
 			}
 			if (filter.Take < 0 || filter.Take > maxTake)
 			{
-				throw new ArgumentOutOfRangeException(nameof(filter.Take), $"must be between 1 and {maxTake}");
+				// TODO - This is broken.  Ignore for now
+				// throw new ArgumentOutOfRangeException(nameof(filter.Take), $"must be between 1 and {maxTake}");
 			}
 		}
 
@@ -1303,9 +1304,10 @@ namespace LogicMonitor.Api
 		/// <summary>
 		/// Clone an ICloneableItem
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="cloneRequest"></param>
-		/// <param name="cancellationToken"></param>
+		/// <typeparam name="T">The type of the item being cloned</typeparam>
+		/// <param name="id">The id of the item being cloned</param>
+		/// <param name="cloneRequest">The clone request</param>
+		/// <param name="cancellationToken">An optional CancellationToken</param>
 		/// <returns></returns>
 		public Task<T> CloneAsync<T>(int id, CloneRequest<T> cloneRequest, CancellationToken cancellationToken = default) where T : IHasEndpoint, ICloneableItem, new()
 			=> PostAsync<CloneRequest<T>, T>(cloneRequest, false, $"{new T().Endpoint()}/{id}/clone", cancellationToken);
