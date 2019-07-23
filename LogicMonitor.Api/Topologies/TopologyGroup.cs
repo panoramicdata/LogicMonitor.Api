@@ -35,3 +35,4 @@ namespace LogicMonitor.Api.Topologies
 		/// <returns>FullPath</returns>
 		public override string ToString() => Name;
 	}
+}
