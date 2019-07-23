@@ -1299,5 +1299,15 @@ namespace LogicMonitor.Api
 
 			return Attribute.IsDefined(propertyInfo, typeof(SantabaReadOnly));
 		}
+
+		/// <summary>
+		/// Clone an ICloneableItem
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="cloneRequest"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public Task<T> CloneAsync<T>(int id, CloneRequest<T> cloneRequest, CancellationToken cancellationToken = default) where T : IHasEndpoint, ICloneableItem, new()
+			=> PostAsync<CloneRequest<T>, T>(cloneRequest, false, $"{new T().Endpoint()}/{id}/clone", cancellationToken);
 	}
 }

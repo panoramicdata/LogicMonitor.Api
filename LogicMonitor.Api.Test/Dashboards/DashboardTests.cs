@@ -45,6 +45,34 @@ namespace LogicMonitor.Api.Test.Dashboards
 		}
 
 		[Fact]
+		public async void Clone()
+		{
+			// This one has all the different widget types on
+			var originalDashboard = await PortalClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
+
+			var newDashboard = await PortalClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
+			{
+				Name = "All widgets clone",
+				Description = "I'm a clone and so if my wife.",
+				DashboardGroupId = originalDashboard.DashboardGroupId,
+				WidgetsConfig = originalDashboard.WidgetsConfig,
+				WidgetsOrder = originalDashboard.WidgetsOrder
+			}).ConfigureAwait(false);
+
+			var newDashboardRefetch = await PortalClient.
+				GetAsync<Dashboard>(newDashboard.Id)
+				.ConfigureAwait(false);
+
+			// Ensure that it is as expected
+			Assert.NotNull(newDashboardRefetch);
+
+			// Delete the clone
+			await PortalClient
+				.DeleteAsync(newDashboard)
+				.ConfigureAwait(false);
+		}
+
+		[Fact]
 		public async void Get()
 		{
 			// This one has all the different widget types on

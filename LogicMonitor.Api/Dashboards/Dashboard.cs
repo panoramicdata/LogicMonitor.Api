@@ -7,7 +7,11 @@ namespace LogicMonitor.Api.Dashboards
 	///     A dashboard
 	/// </summary>
 	[DataContract]
-	public class Dashboard : NamedItem, IPatchable, IHasCustomProperties
+	public class Dashboard
+		: NamedItem,
+		IPatchable,
+		IHasCustomProperties,
+		ICloneableItem
 	{
 		/// <summary>
 		///     Whether the dashboard is shareable
