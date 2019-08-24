@@ -438,6 +438,12 @@ namespace LogicMonitor.Api.Devices
 		Service = 70,
 
 		/// <summary>
+		///     AWS/DmsReplication
+		/// </summary>
+		[EnumMember(Value = "AWS/DmsReplication")]
+		AwsDmsReplication = 71,
+
+		/// <summary>
 		///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
 		///     This entry provides a workaround.
 		/// </summary>

@@ -115,7 +115,7 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">The optional CancellationToken</param>
 		/// <returns>An object with information on what to poll for to get results</returns>
 		public Task<PollNowRequest> GetPollNowRequestAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken = default)
-			=> PostAsync<EmptyRequest, PollNowRequest>(new EmptyRequest(), false, $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data/pollnow", cancellationToken);
+			=> PostAsync<EmptyRequest, PollNowRequest>(new EmptyRequest(), $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data/pollnow", cancellationToken);
 
 		/// <summary>
 		/// Polls now for data via the collector

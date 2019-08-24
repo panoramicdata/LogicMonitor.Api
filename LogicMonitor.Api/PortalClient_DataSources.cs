@@ -427,8 +427,7 @@ namespace LogicMonitor.Api
 			var deviceGroupIds = new List<int> { rootDeviceGroupId };
 			var deviceDataSourceInstances = new List<DeviceDataSourceInstance>();
 
-			var listIndex = 0;
-			while (listIndex < deviceGroupIds.Count)
+			for (var listIndex = 0; listIndex < deviceGroupIds.Count; listIndex++)
 			{
 				// Add the child deviceGroupIds to the list
 				var deviceGroup = await GetAsync(deviceGroupIds[listIndex], deviceGroupFilter, cancellationToken).ConfigureAwait(false);
@@ -470,8 +469,6 @@ namespace LogicMonitor.Api
 						}
 					}
 				}
-
-				listIndex++;
 			}
 
 			return deviceDataSourceInstances;
@@ -700,7 +697,6 @@ namespace LogicMonitor.Api
 			DeviceDataSourceInstanceCreationDto deviceDataSourceInstanceCreationDto,
 			CancellationToken cancellationToken = default) => PostAsync<DeviceDataSourceInstanceCreationDto, DeviceDataSourceInstance>(
 				deviceDataSourceInstanceCreationDto,
-				false,
 				$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances",
 				cancellationToken);
 	}

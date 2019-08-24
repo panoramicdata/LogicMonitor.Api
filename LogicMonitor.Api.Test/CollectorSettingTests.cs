@@ -1,6 +1,7 @@
 using LogicMonitor.Api.Collectors;
 using LogicMonitor.Api.Filters;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -39,16 +40,13 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetCollectorGroupSettings()
 		{
-			var collectorGroups = await PortalClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-			var pulsantCollectorGroupSettings = await PortalClient.GetAsync<CollectorGroup>(collectorGroups[0].Id).ConfigureAwait(false);
+			var collectorGroups = await PortalClient
+				.GetAllAsync<CollectorGroup>()
+				.ConfigureAwait(false);
+			var pulsantCollectorGroupSettings = await PortalClient
+				.GetAsync<CollectorGroup>(collectorGroups[0].Id)
+				.ConfigureAwait(false);
 			Assert.NotNull(pulsantCollectorGroupSettings);
-		}
-
-		[Fact]
-		public async void GetCollectorsSettings()
-		{
-			var collector = await PortalClient.GetAsync<Collector>(18).ConfigureAwait(false);
-			Assert.NotNull(collector);
 		}
 
 		[Fact]

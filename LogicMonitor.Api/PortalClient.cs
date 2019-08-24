@@ -150,11 +150,13 @@ namespace LogicMonitor.Api
 		private static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
 		{
 			// Construct signature
-			var hmac = new System.Security.Cryptography.HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) };
-			var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
-			var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
-			var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower();
-			return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
+			using (var hmac = new System.Security.Cryptography.HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) })
+			{
+				var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
+				var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
+				var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower();
+				return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
+			}
 		}
 
 		/// <summary>
@@ -481,7 +483,14 @@ namespace LogicMonitor.Api
 		// The ignoreReference permits forcing appliesTo functions and is ignored for other types
 		=> await PutAsync($"{@object.Endpoint()}/{@object.Id}?ignoreReference=true", @object, cancellationToken).ConfigureAwait(false);
 
-		private async Task PutAsync(string subUrl, object @object, CancellationToken cancellationToken)
+		/// <summary>
+		/// Update an item
+		/// </summary>
+		/// <param name="subUrl">The subURL</param>
+		/// <param name="object">The updated object</param>
+		/// <param name="cancellationToken">An optional CancellationToken</param>
+		/// <returns></returns>
+		public async Task PutAsync(string subUrl, object @object, CancellationToken cancellationToken = default)
 		{
 			var httpMethod = HttpMethod.Put;
 			var prefix = GetPrefix(httpMethod);
@@ -558,7 +567,7 @@ namespace LogicMonitor.Api
 			bool hardDelete = true,
 			CancellationToken cancellationToken = default)
 			where T : IdentifiedItem, IHasEndpoint, new()
-		=> await DeleteBySubUrlAsync($"{new T().Endpoint()}/{@object.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
+		=> await DeleteAsync($"{new T().Endpoint()}/{@object.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
 			.ConfigureAwait(false);
 
 		/// <summary>
@@ -574,7 +583,7 @@ namespace LogicMonitor.Api
 		bool hardDelete = true,
 		CancellationToken cancellationToken = default)
 		where T : StringIdentifiedItem, IHasEndpoint, new()
-		=> await DeleteBySubUrlAsync($"{new T().Endpoint()}/{@object.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
+		=> await DeleteAsync($"{new T().Endpoint()}/{@object.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
 		.ConfigureAwait(false);
 
 		/// <summary>
@@ -590,7 +599,7 @@ namespace LogicMonitor.Api
 		bool hardDelete = true,
 		CancellationToken cancellationToken = default
 		) where T : IdentifiedItem, IHasEndpoint, new()
-		=> await DeleteBySubUrlAsync($"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
+		=> await DeleteAsync($"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
 		.ConfigureAwait(false);
 
 		/// <summary>
@@ -605,7 +614,7 @@ namespace LogicMonitor.Api
 		 string id,
 		 bool hardDelete = true,
 		 CancellationToken cancellationToken = default) where T : StringIdentifiedItem, IHasEndpoint, new()
-		 => await DeleteBySubUrlAsync($"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
+		 => await DeleteAsync($"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
 
 		/// <summary>
 		///     Deletes an item by id
@@ -618,7 +627,7 @@ namespace LogicMonitor.Api
 			DeviceDataSourceInstance deviceDataSourceInstance,
 			bool hardDelete = true,
 			CancellationToken cancellationToken = default)
-			=> await DeleteBySubUrlAsync($"device/devices/{deviceDataSourceInstance.DeviceId}/devicedatasources/{deviceDataSourceInstance.DeviceDataSourceId}/instances/{deviceDataSourceInstance.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
+			=> await DeleteAsync($"device/devices/{deviceDataSourceInstance.DeviceId}/devicedatasources/{deviceDataSourceInstance.DeviceDataSourceId}/instances/{deviceDataSourceInstance.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
 
 		/// <summary>
 		///     Create an item
@@ -628,7 +637,7 @@ namespace LogicMonitor.Api
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
 		public virtual Task<T> CreateAsync<T>(CreationDto<T> creationDto, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
-			=> PostAsync<CreationDto<T>, T>(creationDto, false, new T().Endpoint(), cancellationToken);
+			=> PostAsync<CreationDto<T>, T>(creationDto, new T().Endpoint(), cancellationToken);
 
 		/// <summary>
 		/// Gets an integer header
@@ -708,7 +717,13 @@ namespace LogicMonitor.Api
 		private Task<T> GetBySubUrlAsync<T>(string subUrl, CancellationToken cancellationToken) where T : class, new()
 		=> GetAsync<T>(UseCache, subUrl, cancellationToken);
 
-		private async Task DeleteBySubUrlAsync(string subUrl, CancellationToken cancellationToken)
+		/// <summary>
+		/// Delete an item
+		/// </summary>
+		/// <param name="subUrl"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task DeleteAsync(string subUrl, CancellationToken cancellationToken = default)
 		{
 			var httpMethod = HttpMethod.Delete;
 			var prefix = GetPrefix(httpMethod);
@@ -956,7 +971,16 @@ namespace LogicMonitor.Api
 			return deserializedObject;
 		}
 
-		private async Task<TOut> PostAsync<TIn, TOut>(TIn @object, bool permitCacheIfEnabled, string subUrl, CancellationToken cancellationToken) where TOut : new()
+		/// <summary>
+		/// Post an item
+		/// </summary>
+		/// <typeparam name="TIn">The posted object type</typeparam>
+		/// <typeparam name="TOut">The returned object type</typeparam>
+		/// <param name="object">The posted object </param>
+		/// <param name="subUrl">The endpoint</param>
+		/// <param name="cancellationToken">An optional CancellationToken</param>
+		/// <returns></returns>
+		public async Task<TOut> PostAsync<TIn, TOut>(TIn @object, string subUrl, CancellationToken cancellationToken = default) where TOut : new()
 		{
 			var httpMethod = HttpMethod.Post;
 			var prefix = GetPrefix(httpMethod);
@@ -965,16 +989,6 @@ namespace LogicMonitor.Api
 			// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
 			var data = JsonConvert.SerializeObject(@object, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 			//var subUrl1 = "rest/" + (subUrl ?? "functions/");
-			var cacheKey = subUrl + data;
-
-			// Age the Cache
-			cache.Age();
-
-			var useCache = permitCacheIfEnabled && UseCache;
-			if (useCache && cache.TryGetValue(cacheKey, out var cacheObject))
-			{
-				return (TOut)cacheObject;
-			}
 
 			HttpResponseMessage httpResponseMessage;
 			// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
@@ -1037,12 +1051,6 @@ namespace LogicMonitor.Api
 
 			// Deserialize the JSON
 			var deserializedObject = portalResponse.GetObject();
-
-			// Update the cache
-			if (useCache)
-			{
-				cache.AddOrUpdate(cacheKey, deserializedObject);
-			}
 
 			// Return
 			return deserializedObject;
@@ -1137,7 +1145,7 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken"></param>
 		/// <returns>The ExecuteDebugCommandResponse containing the sessionId</returns>
 		public Task<ExecuteDebugCommandResponse> ExecuteDebugCommandAsync(int collectorId, string commandText, CancellationToken cancellationToken = default)
-		=> PostAsync<ExecuteDebugCommandRequest, ExecuteDebugCommandResponse>(new ExecuteDebugCommandRequest { Command = commandText }, false, $"debug?collectorId={collectorId}", cancellationToken);
+		=> PostAsync<ExecuteDebugCommandRequest, ExecuteDebugCommandResponse>(new ExecuteDebugCommandRequest { Command = commandText }, $"debug?collectorId={collectorId}", cancellationToken);
 
 		/// <summary>
 		///     Gets the debug command results, if available
@@ -1209,7 +1217,7 @@ namespace LogicMonitor.Api
 						if (value == null)
 						{
 							// Yes.
-							await DeleteBySubUrlAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
+							await DeleteAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 						}
 						else
 						{
@@ -1226,7 +1234,6 @@ namespace LogicMonitor.Api
 						{
 							var _ = await PostAsync<Property, Property>(
 								new Property { Name = name, Value = value },
-								false,
 								$"{propertiesSubUrl}",
 								cancellationToken).ConfigureAwait(false);
 						}
@@ -1239,7 +1246,7 @@ namespace LogicMonitor.Api
 						throw new InvalidOperationException("Value must not be set to null when creating the property.");
 					}
 
-					await PostAsync<Property, Property>(new Property { Name = name, Value = value }, false, $"{propertiesSubUrl}", cancellationToken).ConfigureAwait(false);
+					await PostAsync<Property, Property>(new Property { Name = name, Value = value }, $"{propertiesSubUrl}", cancellationToken).ConfigureAwait(false);
 					break;
 
 				case SetPropertyMode.Update:
@@ -1257,7 +1264,7 @@ namespace LogicMonitor.Api
 						throw new InvalidOperationException("Value must be set to null when deleting the value.");
 					}
 					// Delete the value
-					await DeleteBySubUrlAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
+					await DeleteAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 					break;
 
 				default:
@@ -1310,6 +1317,6 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">An optional CancellationToken</param>
 		/// <returns></returns>
 		public Task<T> CloneAsync<T>(int id, CloneRequest<T> cloneRequest, CancellationToken cancellationToken = default) where T : IHasEndpoint, ICloneableItem, new()
-			=> PostAsync<CloneRequest<T>, T>(cloneRequest, false, $"{new T().Endpoint()}/{id}/clone", cancellationToken);
+			=> PostAsync<CloneRequest<T>, T>(cloneRequest, $"{new T().Endpoint()}/{id}/clone", cancellationToken);
 	}
 }

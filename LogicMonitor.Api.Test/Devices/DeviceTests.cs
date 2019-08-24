@@ -189,13 +189,6 @@ deviceProperty
 		}
 
 		[Fact]
-		public async void GetDeviceByDisplayNameAsync_DeviceNameHasParentheses_Succeeds()
-		{
-			var device = await PortalClient.GetDeviceByDisplayNameAsync("api.blockchain.info (external)").ConfigureAwait(false);
-			Assert.NotNull(device);
-		}
-
-		[Fact]
 		public async void GetDeviceByHostName()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -334,10 +327,14 @@ deviceProperty
 			var portalClient = PortalClient;
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 
-			// Make sure that there are none called "test"
+			// Remove any called "test"
 			const string testPropertyName = "test";
 			const string testPropertyValue = "testValue";
-			Assert.DoesNotContain(device.CustomProperties, p => p.Name == testPropertyName);
+			var errantProperty = device.CustomProperties.SingleOrDefault(p => p.Name == testPropertyName);
+			if (errantProperty != null)
+			{
+				device.CustomProperties.Remove(errantProperty);
+			}
 
 			device.CustomProperties.Add(new Property
 			{
@@ -515,17 +512,6 @@ deviceProperty
 		{
 			await PortalClient.ScheduleActiveDiscovery(66).ConfigureAwait(false);
 			Assert.True(true);
-		}
-
-		[Theory]
-		[InlineData("id:0", 0)]
-		[InlineData("id:66", 1)]
-		[InlineData("id<66", 2)]
-		public async void Filter(string filter, int expectedResultCount)
-		{
-			var devices = await PortalClient.GetAllAsync(new Filter<Device> { QueryString = "filter=" + filter }).ConfigureAwait(false);
-			Assert.NotNull(devices);
-			Assert.Equal(expectedResultCount, devices.Count);
 		}
 
 		//[Fact]

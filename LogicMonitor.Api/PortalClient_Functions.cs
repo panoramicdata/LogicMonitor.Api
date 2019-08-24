@@ -20,7 +20,7 @@ namespace LogicMonitor.Api
 				OriginalAppliesTo = "",
 				CurrentAppliesTo = query
 			};
-			return (await PostAsync<AppliesToRequest, AppliesToResponse>(appliesToRequest, true, "functions", cancellationToken).ConfigureAwait(false)).CurrentMatches;
+			return (await PostAsync<AppliesToRequest, AppliesToResponse>(appliesToRequest, "functions", cancellationToken).ConfigureAwait(false)).CurrentMatches;
 		}
 	}
 }

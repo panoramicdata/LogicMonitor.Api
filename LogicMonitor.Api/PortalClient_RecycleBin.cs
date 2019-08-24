@@ -16,7 +16,7 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">An optional cancellation token</param>
 		/// <returns>The website</returns>
 		public Task<List<string>> RecycleBinRestoreAsync(List<string> recycleBinItemIds, CancellationToken cancellationToken = default)
-		  => PostAsync<List<string>, List<string>>(recycleBinItemIds, false, "recyclebin/recycles/batchrestore", cancellationToken);
+		  => PostAsync<List<string>, List<string>>(recycleBinItemIds, "recyclebin/recycles/batchrestore", cancellationToken);
 
 		/// <summary>
 		///    Deletes items from the recycle bin
@@ -25,6 +25,6 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">An optional cancellation token</param>
 		/// <returns>The website</returns>
 		public Task<List<string>> RecycleBinDeleteAsync(List<string> recycleBinItemIds, CancellationToken cancellationToken = default)
-		  => PostAsync<List<string>, List<string>>(recycleBinItemIds, false, "recyclebin/recycles/batchdelete", cancellationToken);
+		  => PostAsync<List<string>, List<string>>(recycleBinItemIds, "recyclebin/recycles/batchdelete", cancellationToken);
 	}
 }

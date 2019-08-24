@@ -130,7 +130,7 @@ namespace LogicMonitor.Api
 		public async Task SaveNewWidgetAsync(
 			HtmlWidget widget,
 			CancellationToken cancellationToken = default)
-			=> await PostAsync<HtmlWidget, HtmlWidget>(widget, false, "dashboard/widgets", cancellationToken).ConfigureAwait(false);
+			=> await PostAsync<HtmlWidget, HtmlWidget>(widget, "dashboard/widgets", cancellationToken).ConfigureAwait(false);
 
 		/// <summary>
 		///     Delete a dashboard group and all child dashboard groups and their dashboards

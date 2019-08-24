@@ -12,7 +12,7 @@ namespace LogicMonitor.Api.Test.Settings
 		{
 		}
 
-		[Fact]
+		[Fact(Skip = "Version 3 API call only")]
 		public async void GetAll()
 		{
 			var logicModuleUpdates = await PortalClient.GetAllAsync(new Filter<LogicModuleUpdate>

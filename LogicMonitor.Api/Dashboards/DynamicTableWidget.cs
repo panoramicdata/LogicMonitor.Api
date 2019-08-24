@@ -50,5 +50,17 @@ namespace LogicMonitor.Api.Dashboards
 		/// </summary>
 		[DataMember(Name = "sortOrder")]
 		public string SortOrder { get; set; }
+
+		/// <summary>
+		///     The Sort order
+		/// </summary>
+		[DataMember(Name = "sortOrder")]
+		public List<ColumnHeader> ColumnHeaders { get; set; }
+
+		/// <summary>
+		///     The Display Settings
+		/// </summary>
+		[DataMember(Name = "displaySettings")]
+		public object DisplaySettings { get; set; }
 	}
 }

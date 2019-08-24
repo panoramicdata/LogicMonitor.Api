@@ -66,7 +66,7 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <returns></returns>
 		public async Task ScheduleActiveDiscovery(int deviceId, CancellationToken cancellationToken = default)
-			=> await PostAsync<object, object>(new object(), false, $"device/devices/{deviceId}/scheduleAutoDiscovery", cancellationToken).ConfigureAwait(false);
+			=> await PostAsync<object, object>(new object(), $"device/devices/{deviceId}/scheduleAutoDiscovery", cancellationToken).ConfigureAwait(false);
 
 		/// <summary>
 		///     Get device alerts
@@ -312,7 +312,7 @@ namespace LogicMonitor.Api
 				ResultLimitation = maxResultCount
 			};
 
-			return (await PostAsync<TreeNodeFreeSearchRequest, Page<TreeNodeFreeSearchResult>>(treeNodeFreeSearchRequest, true, "functions", cancellationToken).ConfigureAwait(false)).Items;
+			return (await PostAsync<TreeNodeFreeSearchRequest, Page<TreeNodeFreeSearchResult>>(treeNodeFreeSearchRequest, "functions", cancellationToken).ConfigureAwait(false)).Items;
 		}
 
 		/// <summary>
@@ -433,7 +433,9 @@ namespace LogicMonitor.Api
 				new DeviceProcessServiceTask
 				{
 					Type = deviceProcessServiceTaskType
-				}, false, $"device/devices/{deviceId}/fetchProcessServiceTask", cancellationToken
+				},
+				$"device/devices/{deviceId}/fetchProcessServiceTask",
+				cancellationToken
 			);
 
 		/// <summary>
@@ -510,9 +512,7 @@ namespace LogicMonitor.Api
 		/// <summary>
 		/// Gets a Device's DataPointConfigurations
 		/// </summary>
-		/// <param name="deviceId"></param>
-		/// <param name="deviceDataSourceId"></param>
-		/// <param name="deviceDataSourceInstanceId"></param>
+		/// <param name="deviceId">The device id</param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
 		public async Task<List<DataPointConfiguration>> GetDeviceDataPointConfigurations(

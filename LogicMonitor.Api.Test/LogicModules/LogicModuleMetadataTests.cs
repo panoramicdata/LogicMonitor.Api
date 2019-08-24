@@ -40,15 +40,15 @@ namespace LogicMonitor.Api.Test.LogicModules
 		//	CheckMetadata(logicModuleMetadata);
 		//}
 
-		[Fact]
-		public async void GetPropertySourceMetadata()
-		{
-			var propertySource = await PortalClient.GetByNameAsync<PropertySource>("Cisco_Product_Info").ConfigureAwait(false);
-			Assert.NotNull(propertySource);
-			Assert.NotEqual(0, propertySource.Id);
-			var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id).ConfigureAwait(false);
-			CheckMetadata(logicModuleMetadata);
-		}
+		//[Fact]
+		//public async void GetPropertySourceMetadata()
+		//{
+		//	var propertySource = await PortalClient.GetByNameAsync<PropertySource>("Cisco_Product_Info").ConfigureAwait(false);
+		//	Assert.NotNull(propertySource);
+		//	Assert.NotEqual(0, propertySource.Id);
+		//	var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id).ConfigureAwait(false);
+		//	CheckMetadata(logicModuleMetadata);
+		//}
 
 		private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
 		{

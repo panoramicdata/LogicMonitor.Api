@@ -218,7 +218,6 @@ namespace LogicMonitor.Api
 		public async Task AcknowledgeAlert(string alertId, string acknowledgementComment, CancellationToken cancellationToken = default)
 			=> await PostAsync<AlertAcknowledgement, EmptyResponse>(
 				new AlertAcknowledgement { AcknowledgementComment = acknowledgementComment },
-				false,
 				$"alert/alerts/{alertId}/ack",
 				cancellationToken
 				).ConfigureAwait(false);

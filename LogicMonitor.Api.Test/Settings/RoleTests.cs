@@ -13,6 +13,8 @@ namespace LogicMonitor.Api.Test.Settings
 {
 	public class RoleTests : TestWithOutput
 	{
+		private const string Value = "Unit Test Role";
+
 		public RoleTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 		{
 		}
@@ -44,6 +46,16 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void CreateUpdateDelete()
 		{
+			// Ensure there is no existing role called "Test"
+			var existingRole = (await PortalClient
+					.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } })
+					.ConfigureAwait(false))
+				.SingleOrDefault();
+			if(existingRole != null)
+			{
+				await PortalClient.DeleteAsync(existingRole).ConfigureAwait(false);
+			}
+
 			var dashboardGroup = (await PortalClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
 			var deviceGroup = (await PortalClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
 			var websiteGroup = (await PortalClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
@@ -53,7 +65,7 @@ namespace LogicMonitor.Api.Test.Settings
 				CustomHelpLabel = "",
 				CustomHelpUrl = "",
 				Description = "Desc",
-				Name = "Test",
+				Name = Value,
 				RequireEULA = false,
 				TwoFactorAuthenticationRequired = false,
 				Privileges = new List<RolePrivilege>
