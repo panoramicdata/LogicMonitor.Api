@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Dashboards
 {
-
 	/// <summary>
 	/// A column header
 	/// </summary>
@@ -27,5 +25,4 @@ namespace LogicMonitor.Api.Dashboards
 		[DataMember(Name = "displayType")]
 		public string DisplayType { get; set; }
 	}
-
 }
