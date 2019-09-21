@@ -50,13 +50,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		//	CheckMetadata(logicModuleMetadata);
 		//}
 
-		private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
-		{
-			Assert.NotNull(logicModuleMetadata);
-			Assert.NotNull(logicModuleMetadata.LmLocator);
-			Assert.NotNull(logicModuleMetadata.Namespace);
-			Assert.NotNull(logicModuleMetadata.Quality);
-			Assert.NotNull(logicModuleMetadata.RegistryVersion);
-		}
+		//private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
+		//{
+		//	Assert.NotNull(logicModuleMetadata);
+		//	Assert.NotNull(logicModuleMetadata.LmLocator);
+		//	Assert.NotNull(logicModuleMetadata.Namespace);
+		//	Assert.NotNull(logicModuleMetadata.Quality);
+		//	Assert.NotNull(logicModuleMetadata.RegistryVersion);
+		//}
 	}
 }
