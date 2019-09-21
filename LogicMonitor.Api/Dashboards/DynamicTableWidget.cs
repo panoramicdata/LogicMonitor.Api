@@ -52,9 +52,9 @@ namespace LogicMonitor.Api.Dashboards
 		public string SortOrder { get; set; }
 
 		/// <summary>
-		///     The Sort order
+		///     The column headers
 		/// </summary>
-		[DataMember(Name = "sortOrder")]
+		[DataMember(Name = "columnHeaders")]
 		public List<ColumnHeader> ColumnHeaders { get; set; }
 
 		/// <summary>

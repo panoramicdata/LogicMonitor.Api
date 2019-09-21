@@ -49,5 +49,11 @@ namespace LogicMonitor.Api.Dashboards
 		/// </summary>
 		[EnumMember(Value = "column")]
 		Column,
+
+		/// <summary>
+		/// Color bar
+		/// </summary>
+		[EnumMember(Value = "colorBar")]
+		ColorBar,
 	}
 }
