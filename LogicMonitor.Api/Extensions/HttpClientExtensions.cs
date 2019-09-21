@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,16 +15,7 @@ namespace LogicMonitor.Api.Extensions
 				Content = iContent
 			})
 			{
-				var response = new HttpResponseMessage();
-				try
-				{
-					response = await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-				}
-				catch (TaskCanceledException e)
-				{
-					Debug.WriteLine($"ERROR: {e}");
-				}
-				return response;
+				return await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
 			}
 		}
 	}
