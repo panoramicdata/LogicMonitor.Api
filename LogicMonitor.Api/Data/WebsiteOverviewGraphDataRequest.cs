@@ -21,20 +21,12 @@ namespace LogicMonitor.Api.Data
 		{
 			get
 			{
-				string websiteGraphName;
-				switch (WebsiteGraphType)
+				var websiteGraphName = WebsiteGraphType switch
 				{
-					case WebsiteGraphType.OverallStatus:
-						websiteGraphName = "overallStatus";
-						break;
-
-					case WebsiteGraphType.ResponseTime:
-						websiteGraphName = "pingAvgRTT";
-						break;
-
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
+					WebsiteGraphType.OverallStatus => "overallStatus",
+					WebsiteGraphType.ResponseTime => "pingAvgRTT",
+					_ => throw new ArgumentOutOfRangeException(),
+				};
 				return $"website/websites/{WebsiteId}/graphs/{websiteGraphName}/data?{TimePart}";
 			}
 		}

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Version>2.125</Version>
@@ -7,7 +7,7 @@
 		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageIconUrl>http://www.logicmonitor.com/wp-content/uploads/2015/07/LM_Logo_Circle_Indigo_300px.png</PackageIconUrl>
+		<PackageIcon>Icon.png</PackageIcon>
 		<PackageTags>LogicMonitor API REST</PackageTags>
 		<Title>LogicMonitor.Api</Title>
 		<Description>A .NET API for LogicMonitor</Description>
@@ -15,7 +15,7 @@
 		<Company>Panoramic Data Limited</Company>
 		<PackageReleaseNotes>OK, you're all grown-ups.  With this release, the underlying PortalClient PostAsync, PutAsync and DeleteAsync methods have been move from private to public.  This means that you can use JObjects for full generic access to the LogicMonitor API.  Now there is nothing that you cannot do!</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<LangVersion>7.3</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/panoramicdata/LogicMonitor.Api/</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -27,10 +27,19 @@
 		<DocumentationFile>bin\Release\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+	  <None Remove="Icon.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="Icon.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Include="Icon.png" Pack="true" PackagePath=""/>
 		<Folder Include="Properties\" />
 	</ItemGroup>
 </Project>

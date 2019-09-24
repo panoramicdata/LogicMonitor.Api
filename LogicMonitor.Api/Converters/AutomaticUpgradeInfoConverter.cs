@@ -10,14 +10,11 @@ namespace LogicMonitor.Api.Converters
 		protected override AutomaticUpgradeInfo Create(Type objectType, JObject jObject)
 		{
 			var type = jObject["type"].Value<string>().ToLowerInvariant();
-			switch (type)
+			return type switch
 			{
-				case "automatic upgrade":
-					return new AutomaticUpgradeAutomaticUpgradeInfo();
-
-				default:
-					throw new NotSupportedException($"AutomaticUpgradeInfoConverter.cs needs updating to include {type}.");
-			}
+				"automatic upgrade" => new AutomaticUpgradeAutomaticUpgradeInfo(),
+				_ => throw new NotSupportedException($"AutomaticUpgradeInfoConverter.cs needs updating to include {type}.")
+			};
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

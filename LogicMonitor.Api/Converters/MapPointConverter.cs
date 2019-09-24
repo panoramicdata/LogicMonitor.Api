@@ -10,17 +10,12 @@ namespace LogicMonitor.Api.Converters
 		protected override MapPoint Create(Type objectType, JObject jObject)
 		{
 			var type = jObject["type"].Value<string>().ToLowerInvariant();
-			switch (type)
+			return type switch
 			{
-				case "device":
-					return new DeviceMapPoint();
-
-				case "group":
-					return new DeviceGroupMapPoint();
-
-				default:
-					throw new NotSupportedException($"MapPointConverter.cs needs updating to include {type}.");
-			}
+				"device" => new DeviceMapPoint(),
+				"group" => new DeviceGroupMapPoint(),
+				_ => throw new NotSupportedException($"MapPointConverter.cs needs updating to include {type}."),
+			};
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotSupportedException();

@@ -12,29 +12,16 @@ namespace LogicMonitor.Api.Converters
 		protected override Integration Create(Type objectType, JObject jObject)
 		{
 			var integration = jObject["type"].Value<string>().ToLowerInvariant();
-			switch (integration)
+			return integration switch
 			{
-				case "slack":
-					return new SlackIntegration();
-
-				case "http":
-					return new HttpIntegration();
-
-				case "servicenow":
-					return new ServiceNowIntegration();
-
-				case "email":
-					return new EmailIntegration();
-
-				case "autotask":
-					return new AutoTaskIntegration();
-
-				case "pagerduty":
-					return new PagerDutyIntegration();
-
-				default:
-					throw new NotSupportedException($"{integration} deserialization not supported.  IntegrationsConverter.cs needs updating.");
-			}
+				"slack" => new SlackIntegration(),
+				"http" => new HttpIntegration(),
+				"servicenow" => new ServiceNowIntegration(),
+				"email" => new EmailIntegration(),
+				"autotask" => new AutoTaskIntegration(),
+				"pagerduty" => new PagerDutyIntegration(),
+				_ => throw new NotSupportedException($"{integration} deserialization not supported.  IntegrationsConverter.cs needs updating."),
+			};
 		}
 	}
 }

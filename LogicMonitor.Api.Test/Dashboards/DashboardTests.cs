@@ -8,7 +8,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 {
 	public class DashboardTests : TestWithOutput
 	{
-		private static DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+		private static readonly DateTimeOffset UtcNow = DateTimeOffset.UtcNow;
 
 		public DashboardTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 		{
@@ -18,11 +18,11 @@ namespace LogicMonitor.Api.Test.Dashboards
 		public async void GetBigNumberWidgetData_Succeeds()
 		{
 			// Multi-number
-			var widgetData = await PortalClient.GetWidgetDataAsync(626, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
+			var widgetData = await PortalClient.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData);
 
 			// Single-number
-			var widgetData2 = await PortalClient.GetWidgetDataAsync(627, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
+			var widgetData2 = await PortalClient.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData2);
 		}
 

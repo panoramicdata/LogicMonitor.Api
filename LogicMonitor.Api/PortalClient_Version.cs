@@ -26,12 +26,10 @@ namespace LogicMonitor.Api
 		public static async Task<PortalVersion> GetVersionAsync(string accountName, CancellationToken cancellationToken = default)
 		{
 			// The actual Get method
-			using (var _httpClient = new HttpClient())
-			using (var result = await _httpClient.GetAsync($"https://{accountName}.logicmonitor.com/santaba/rest/version", cancellationToken).ConfigureAwait(false))
-			{
-				var portalResponse = new PortalResponse<PortalVersion>(result);
-				return portalResponse.GetObject();
-			}
+			using var _httpClient = new HttpClient();
+			using var result = await _httpClient.GetAsync($"https://{accountName}.logicmonitor.com/santaba/rest/version", cancellationToken).ConfigureAwait(false);
+			var portalResponse = new PortalResponse<PortalVersion>(result);
+			return portalResponse.GetObject();
 		}
 	}
 }

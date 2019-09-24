@@ -10,89 +10,36 @@ namespace LogicMonitor.Api.Converters
 		protected override Widget Create(Type objectType, JObject jObject)
 		{
 			var type = jObject["type"].Value<string>().ToLowerInvariant();
-			switch (type)
+			return type switch
 			{
-				case "alert":
-					return new AlertWidget();
-
-				case "bignumber":
-					return new BigNumberWidget();
-
-				case "cgraph":
-					return new CustomGraphWidget();
-
-				case "devicenoc":
-					return new DeviceNocWidget();
-
-				case "devicesla":
-					return new DeviceSlaWidget();
-
-				case "flash":
-					return new FlashWidget();
-
-				case "gauge":
-					return new GaugeWidget();
-
-				case "gmap":
-					return new GoogleMapWidget();
-
-				case "html":
-					return new HtmlWidget();
-
-				case "batchjob":
-					return new JobMonitorWidget();
-
-				case "netflow":
-					return new NetflowWidget();
-
-				case "ngraph":
-					return new NGraphWidget();
-
-				case "noc":
-					return new NocWidget();
-
-				case "ograph":
-					return new OverviewGraphWidget();
-
-				case "piechart":
-					return new PieChartWidget();
-
-				case "websiteindividualstatus":
-					return new WebsiteIndividualStatusWidget();
-
-				case "swebsitenoc":
-					return new WebsiteNocWidget();
-
-				case "websitesla":
-					return new WebsiteSlaWidget();
-
-				case "websiteoverview":
-					return new WebsiteOverviewWidget();
-
-				case "websiteoverallstatus":
-					return new WebsiteOverallStatusWidget();
-
-				case "sgraph":
-					return new WebsiteGraphWidget();
-
-				case "table":
-					return new TableWidget();
-
-				case "text":
-					return new TextWidget();
-
-				case "netflowgraph":
-					return new NetflowGraphWidget();
-
-				case "groupnetflow":
-					return new GroupNetflowWidget();
-
-				case "dynamictable":
-					return new DynamicTableWidget();
-
-				default:
-					throw new NotSupportedException($"WidgetConverter.cs needs updating to include {type} widgets.");
-			}
+				"alert" => new AlertWidget(),
+				"bignumber" => new BigNumberWidget(),
+				"cgraph" => new CustomGraphWidget(),
+				"devicenoc" => new DeviceNocWidget(),
+				"devicesla" => new DeviceSlaWidget(),
+				"flash" => new FlashWidget(),
+				"gauge" => new GaugeWidget(),
+				"gmap" => new GoogleMapWidget(),
+				"html" => new HtmlWidget(),
+				"batchjob" => new JobMonitorWidget(),
+				"netflow" => new NetflowWidget(),
+				"ngraph" => new NGraphWidget(),
+				"noc" => new NocWidget(),
+				"ograph" => new OverviewGraphWidget(),
+				"piechart" => new PieChartWidget(),
+				"websiteindividualstatus" => new WebsiteIndividualStatusWidget(),
+				"swebsitenoc" => new WebsiteNocWidget(),
+				"websitesla" => new WebsiteSlaWidget(),
+				"websiteoverview" => new WebsiteOverviewWidget(),
+				"websiteoverallstatus" => new WebsiteOverallStatusWidget(),
+				"sgraph" => new WebsiteGraphWidget(),
+				"table" => new TableWidget(),
+				"text" => new TextWidget(),
+				"netflowgraph" => new NetflowGraphWidget(),
+				"groupnetflow" => new GroupNetflowWidget(),
+				"dynamictable" => new DynamicTableWidget(),
+				_ => throw new NotSupportedException($"WidgetConverter.cs needs updating to include {type} widgets."),
+			};
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

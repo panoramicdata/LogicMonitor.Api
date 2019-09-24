@@ -52,16 +52,12 @@ namespace LogicMonitor.Api
 			{
 				throw new InvalidOperationException("StartDateTime must be before EndDateTime");
 			}
-			switch (TimePeriod)
+			return TimePeriod switch
 			{
-				case TimePeriod.Unknown:
-					throw new ArgumentException("TimePeriod not set.");
-				case TimePeriod.Zoom:
-					return $"&startEpochSec={StartDateTime.SecondsSinceTheEpoch()}&endEpochSec={EndDateTime.SecondsSinceTheEpoch()}";
-
-				default:
-					return $"&time={TimePeriod.ToString().LowerCaseFirst()}";
-			}
+				TimePeriod.Unknown => throw new ArgumentException("TimePeriod not set."),
+				TimePeriod.Zoom => $"&startEpochSec={StartDateTime.SecondsSinceTheEpoch()}&endEpochSec={EndDateTime.SecondsSinceTheEpoch()}",
+				_ => $"&time={TimePeriod.ToString().LowerCaseFirst()}",
+			};
 		}
 
 		/// <summary>

@@ -10,20 +10,13 @@ namespace LogicMonitor.Api.Converters
 		protected override OpsNoteScope Create(Type objectType, JObject jObject)
 		{
 			var type = jObject["type"].Value<string>().ToLowerInvariant();
-			switch (type)
+			return type switch
 			{
-				case "device":
-					return new DeviceOpsNoteScope();
-
-				case "website":
-					return new WebsiteOpsNoteScope();
-
-				case "devicegroup":
-					return new DeviceGroupOpsNoteScope();
-
-				default:
-					throw new NotSupportedException($"OpsNoteScopeConverter.cs needs updating to include {type}.");
-			}
+				"device" => new DeviceOpsNoteScope(),
+				"website" => new WebsiteOpsNoteScope(),
+				"devicegroup" => new DeviceGroupOpsNoteScope(),
+				_ => throw new NotSupportedException($"OpsNoteScopeConverter.cs needs updating to include {type}."),
+			};
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotSupportedException();

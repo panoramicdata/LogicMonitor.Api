@@ -64,21 +64,12 @@ namespace LogicMonitor.Api.Data
 		}
 
 		private DateTime StartTime(TrainingTimePeriod trainingTime)
-		{
-			switch (trainingTime)
+			=> trainingTime switch
 			{
-				case TrainingTimePeriod.ThreeMonths:
-					return DateTime.UtcNow.AddMonths(-3);
-
-				case TrainingTimePeriod.SixMonths:
-					return DateTime.UtcNow.AddMonths(-6);
-
-				case TrainingTimePeriod.OneYear:
-					return DateTime.UtcNow.AddYears(-1);
-
-				default:
-					return DateTime.UtcNow.AddDays(-30);
-			}
-		}
+				TrainingTimePeriod.ThreeMonths => DateTime.UtcNow.AddMonths(-3),
+				TrainingTimePeriod.SixMonths => DateTime.UtcNow.AddMonths(-6),
+				TrainingTimePeriod.OneYear => DateTime.UtcNow.AddYears(-1),
+				_ => DateTime.UtcNow.AddDays(-30),
+			};
 	}
 }

@@ -21,20 +21,15 @@ namespace LogicMonitor.Api.Data
 			get
 			{
 				var color = ColorString.StartsWith("#") ? ColorString.Substring(1) : ColorString;
-				switch (color.Length)
+				return color.Length switch
 				{
-					case 3:
-						return Color.FromArgb(HexToInt(color[0]) * 255 / 16, HexToInt(color[1]) * 255 / 16, HexToInt(color[2]) * 255 / 16);
-
-					case 6:
-						return Color.FromArgb(
+					3 => Color.FromArgb(HexToInt(color[0]) * 255 / 16, HexToInt(color[1]) * 255 / 16, HexToInt(color[2]) * 255 / 16),
+					6 => Color.FromArgb(
 							(HexToInt(color[0]) * 16) + HexToInt(color[1]),
 							(HexToInt(color[2]) * 16) + HexToInt(color[3]),
-							(HexToInt(color[4]) * 16) + HexToInt(color[5]));
-
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
+							(HexToInt(color[4]) * 16) + HexToInt(color[5])),
+					_ => throw new ArgumentOutOfRangeException(),
+				};
 			}
 			set => ColorString = value.ToHtml();
 		}

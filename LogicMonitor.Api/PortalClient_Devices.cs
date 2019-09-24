@@ -279,32 +279,15 @@ namespace LogicMonitor.Api
 			TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null,
 			CancellationToken cancellationToken = default)
 		{
-			string modifier;
-			switch (treeNodeFreeSearchResultType)
+			var modifier = treeNodeFreeSearchResultType switch
 			{
-				case TreeNodeFreeSearchResultType.DeviceDataSourceInstance:
-					modifier = "i:";
-					break;
-
-				case TreeNodeFreeSearchResultType.DeviceDataSource:
-					modifier = "ds:";
-					break;
-
-				case TreeNodeFreeSearchResultType.Device:
-					modifier = "d:";
-					break;
-
-				case TreeNodeFreeSearchResultType.DeviceGroup:
-					modifier = "g:";
-					break;
-
-				case null:
-					modifier = string.Empty;
-					break;
-
-				default:
-					throw new ArgumentException();
-			}
+				TreeNodeFreeSearchResultType.DeviceDataSourceInstance => "i:",
+				TreeNodeFreeSearchResultType.DeviceDataSource => "ds:",
+				TreeNodeFreeSearchResultType.Device => "d:",
+				TreeNodeFreeSearchResultType.DeviceGroup => "g:",
+				null => string.Empty,
+				_ => throw new ArgumentException(),
+			};
 			var treeNodeFreeSearchRequest = new TreeNodeFreeSearchRequest
 			{
 				Type = TreeNodeFreeSearchRequestType.TreeNodeFreeSearch,
@@ -384,22 +367,13 @@ namespace LogicMonitor.Api
 			DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 			CancellationToken cancellationToken = default)
 		{
-			string dataSourceName;
-			switch (deviceProcessServiceTaskType)
+			var dataSourceName = deviceProcessServiceTaskType switch
 			{
-				case DeviceProcessServiceTaskType.LinuxProcess:
-					dataSourceName = "LinuxNewProcesses-";
-					break;
-				case DeviceProcessServiceTaskType.WindowsProcess:
-					dataSourceName = "WinProcessStats-";
-					break;
-				case DeviceProcessServiceTaskType.WindowsService:
-					dataSourceName = "WinService-";
-					break;
-				default:
-					throw new ArgumentException($"Only {DeviceProcessServiceTaskType.LinuxProcess}, {DeviceProcessServiceTaskType.WindowsProcess} and {DeviceProcessServiceTaskType.WindowsService} are supported", nameof(deviceProcessServiceTaskType));
-			}
-
+				DeviceProcessServiceTaskType.LinuxProcess => "LinuxNewProcesses-",
+				DeviceProcessServiceTaskType.WindowsProcess => "WinProcessStats-",
+				DeviceProcessServiceTaskType.WindowsService => "WinService-",
+				_ => throw new ArgumentException($"Only {DeviceProcessServiceTaskType.LinuxProcess}, {DeviceProcessServiceTaskType.WindowsProcess} and {DeviceProcessServiceTaskType.WindowsService} are supported", nameof(deviceProcessServiceTaskType)),
+			};
 			var filter = new Filter<DeviceDataSource>
 			{
 				FilterItems = new List<FilterItem<DeviceDataSource>>

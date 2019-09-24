@@ -33,9 +33,9 @@ namespace LogicMonitor.Api
 
 		private static readonly HttpMethod PatchHttpMethod = new HttpMethod("PATCH");
 
-		private readonly HttpClientHandler handler;
+		private readonly HttpClientHandler _handler;
 
-		private readonly HttpClient client;
+		private readonly HttpClient _client;
 
 		private static readonly JsonConverter[] JsonConverters =
 		{
@@ -44,11 +44,11 @@ namespace LogicMonitor.Api
 			new FlagsEnumConverter()
 		};
 
-		private readonly Cache<string, object> cache;
+		private readonly Cache<string, object> _cache;
 
-		private readonly string accessId;
+		private readonly string _accessId;
 
-		private readonly string accessKey;
+		private readonly string _accessKey;
 
 		/// <summary>
 		///     The connected account name
@@ -64,15 +64,15 @@ namespace LogicMonitor.Api
 		/// </summary>
 		public TimeSpan CacheTimeSpan
 		{
-			get => cache.MaxAge;
-			set => cache.MaxAge = value;
+			get => _cache.MaxAge;
+			set => _cache.MaxAge = value;
 		}
 
 		/// <summary>
 		/// Clear the cache
 		/// </summary>
 		public void ClearCache()
-			=> cache.Clear();
+			=> _cache.Clear();
 
 		/// <summary>
 		///     Whether to use the cache
@@ -81,15 +81,15 @@ namespace LogicMonitor.Api
 
 		private int attemptCount = 1;
 
-		private readonly ILogger logger;
+		private readonly ILogger _logger;
 
 		/// <summary>
 		///     The query timeout
 		/// </summary>
 		public TimeSpan TimeOut
 		{
-			get => client.Timeout;
-			set => client.Timeout = value;
+			get => _client.Timeout;
+			set => _client.Timeout = value;
 		}
 
 		/// <summary>
@@ -126,37 +126,35 @@ namespace LogicMonitor.Api
 			ILogger iLogger = null)
 		{
 			// Set up the logger
-			logger = iLogger ?? new NullLogger<PortalClient>();
+			_logger = iLogger ?? new NullLogger<PortalClient>();
 
-			cache = new Cache<string, object>(TimeSpan.FromMinutes(5), logger);
+			_cache = new Cache<string, object>(TimeSpan.FromMinutes(5), _logger);
 
 			AccountName = subDomain ?? throw new ArgumentNullException(nameof(subDomain));
-			this.accessId = accessId ?? throw new ArgumentNullException(nameof(accessId));
-			this.accessKey = accessKey ?? throw new ArgumentNullException(nameof(accessKey));
+			_accessId = accessId ?? throw new ArgumentNullException(nameof(accessId));
+			_accessKey = accessKey ?? throw new ArgumentNullException(nameof(accessKey));
 
-			handler = new HttpClientHandler { CookieContainer = new CookieContainer() };
-			client = new HttpClient(handler)
+			_handler = new HttpClientHandler { CookieContainer = new CookieContainer() };
+			_client = new HttpClient(_handler)
 			{
 				BaseAddress = new Uri($"https://{AccountName}.logicmonitor.com/santaba/")
 			};
-			client.DefaultRequestHeaders.Accept.Clear();
-			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-			client.DefaultRequestHeaders.Add("X-version", "2");
-			client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
-			client.Timeout = TimeSpan.FromMinutes(1);
+			_client.DefaultRequestHeaders.Accept.Clear();
+			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			_client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+			_client.DefaultRequestHeaders.Add("X-version", "2");
+			_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
+			_client.Timeout = TimeSpan.FromMinutes(1);
 		}
 
 		private static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
 		{
 			// Construct signature
-			using (var hmac = new System.Security.Cryptography.HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) })
-			{
-				var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
-				var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
-				var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower();
-				return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
-			}
+			using var hmac = new System.Security.Cryptography.HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) };
+			var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
+			var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
+			var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower();
+			return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
 		}
 
 		/// <summary>
@@ -165,8 +163,8 @@ namespace LogicMonitor.Api
 		public void Dispose()
 		{
 			// Sign out
-			client.Dispose();
-			handler.Dispose();
+			_client.Dispose();
+			_handler.Dispose();
 		}
 
 		#endregion Constructor / Dispose
@@ -330,17 +328,12 @@ namespace LogicMonitor.Api
 			}, cancellationToken: cancellationToken).ConfigureAwait(false);
 
 			// If only one, return that.
-			switch (items.Count)
+			return items.Count switch
 			{
-				case 0:
-					return null;
-
-				case 1:
-					return items[0];
-
-				default:
-					throw new Exception($"An unexpected number of {typeof(T).Name} have name: {name}");
-			}
+				0 => null,
+				1 => items[0],
+				_ => throw new Exception($"An unexpected number of {typeof(T).Name} have name: {name}"),
+			};
 		}
 
 		/// <summary>
@@ -441,22 +434,20 @@ namespace LogicMonitor.Api
 		[Obsolete("Use GetVersionAsync() or GetVersionAsync(\"<accountName>\") instead.", true)]
 		public async Task<int> GetPortalVersionAsync()
 		{
-			using (var versionHttpClient = new HttpClient
+			using var versionHttpClient = new HttpClient
 			{
 				BaseAddress = new Uri($"https://{AccountName}.logicmonitor.com/"),
 				Timeout = TimeOut
-			})
+			};
+			var response = await versionHttpClient.GetAsync("").ConfigureAwait(false);
+			var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var versionRegex = new Regex("sbui(?<version>\\d+)-");
+			var match = versionRegex.Match(responseText);
+			if (match.Success)
 			{
-				var response = await versionHttpClient.GetAsync("").ConfigureAwait(false);
-				var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-				var versionRegex = new Regex("sbui(?<version>\\d+)-");
-				var match = versionRegex.Match(responseText);
-				if (match.Success)
-				{
-					return int.Parse(match.Groups["version"].Value);
-				}
-				throw new FormatException("Could not determine the portal version.");
+				return int.Parse(match.Groups["version"].Value);
 			}
+			throw new FormatException("Could not determine the portal version.");
 		}
 
 		/// <summary>
@@ -494,63 +485,61 @@ namespace LogicMonitor.Api
 		{
 			var httpMethod = HttpMethod.Put;
 			var prefix = GetPrefix(httpMethod);
-			logger.LogDebug($"{prefix} {subUrl}...");
+			_logger.LogDebug($"{prefix} {subUrl}...");
 
 			var jsonString = JsonConvert.SerializeObject(@object);
-			using (var content = new StringContent(jsonString, Encoding.UTF8, "application/json"))
+			using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+			HttpResponseMessage httpResponseMessage;
+			// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
+			while (true)
 			{
-				HttpResponseMessage httpResponseMessage;
-				// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
-				while (true)
+				// Determine the cancellationToken
+				// We will always use one
+				using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
 				{
-					// Determine the cancellationToken
-					// We will always use one
-					using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
-					{
-						httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
-					}
-					logger.LogDebug($"{prefix} complete");
-
-					// Check the outer HTTP status code
-					if (!httpResponseMessage.IsSuccessStatusCode)
-					{
-						if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
-						{
-							var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-							logger.LogDebug($"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-							throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody);
-						}
-						// We have been told to back off
-
-						// Check that all rate limit headers are present
-						var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-						var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-						var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-						var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-						// Wait for the full window
-						var delayMs = 1000 * xRateLimitWindowSeconds;
-
-						// Wait some time and try again
-						logger.LogInformation($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
-						await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-
-						// Try again
-						continue;
-					}
-
-					// Success - can be cached
-					break;
+					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 				}
-
-				var portalResponse = new PortalResponse<EmptyResponse>(httpResponseMessage);
+				_logger.LogDebug($"{prefix} complete");
 
 				// Check the outer HTTP status code
-				if (!portalResponse.IsSuccessStatusCode)
+				if (!httpResponseMessage.IsSuccessStatusCode)
 				{
-					// If a success code was not received, throw an exception
-					throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
+					if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
+					{
+						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+						_logger.LogDebug($"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+						throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody);
+					}
+					// We have been told to back off
+
+					// Check that all rate limit headers are present
+					var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
+					var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
+					var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
+
+					var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
+					// Wait for the full window
+					var delayMs = 1000 * xRateLimitWindowSeconds;
+
+					// Wait some time and try again
+					_logger.LogInformation($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+					await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+
+					// Try again
+					continue;
 				}
+
+				// Success - can be cached
+				break;
+			}
+
+			var portalResponse = new PortalResponse<EmptyResponse>(httpResponseMessage);
+
+			// Check the outer HTTP status code
+			if (!portalResponse.IsSuccessStatusCode)
+			{
+				// If a success code was not received, throw an exception
+				throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
 			}
 		}
 
@@ -656,7 +645,7 @@ namespace LogicMonitor.Api
 			if (!httpResponseMessage.Headers.TryGetValues(header, out var valueStringEnumerable))
 			{
 				var message = $"Response header '{header}' is not an integer.";
-				logger.LogDebug(message);
+				_logger.LogDebug(message);
 				throw new LogicMonitorApiException(httpMethod, subUrl, httpStatusCode, responseBody, message);
 			}
 
@@ -690,9 +679,9 @@ namespace LogicMonitor.Api
 			: subUrl;
 			var httpVerb = requestMessage.Method.ToString().ToUpperInvariant();
 			var resourcePath = $"/{subUrl2}";
-			var authHeaderValue = $"LMv1 {accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, accessKey)}:{epoch}";
+			var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
 			requestMessage.Headers.Add("Authorization", authHeaderValue);
-			return await client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+			return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 		}
 
 		private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
@@ -727,7 +716,7 @@ namespace LogicMonitor.Api
 		{
 			var httpMethod = HttpMethod.Delete;
 			var prefix = GetPrefix(httpMethod);
-			logger.LogDebug($"{prefix} {subUrl} ...");
+			_logger.LogDebug($"{prefix} {subUrl} ...");
 
 			var stopwatch = Stopwatch.StartNew();
 			HttpResponseMessage httpResponseMessage;
@@ -743,18 +732,18 @@ namespace LogicMonitor.Api
 					{
 						httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
 					}
-					logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
+					_logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
 				}
 				catch (Exception e)
 				{
-					logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
+					_logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
 					if (failureCount < AttemptCount)
 					{
 						// Try again
-						logger.LogDebug($"{prefix} Retrying..");
+						_logger.LogDebug($"{prefix} Retrying..");
 						continue;
 					}
-					logger.LogDebug($"{prefix} Giving up.");
+					_logger.LogDebug($"{prefix} Giving up.");
 					throw;
 				}
 
@@ -765,7 +754,7 @@ namespace LogicMonitor.Api
 					{
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						var message = $"{prefix} failed: {responseBody}";
-						logger.LogDebug(message);
+						_logger.LogDebug(message);
 						throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
 					}
 					// We have been told to back off
@@ -780,7 +769,7 @@ namespace LogicMonitor.Api
 					var delayMs = 1000 * xRateLimitWindowSeconds;
 
 					// Wait some time and try again
-					logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+					_logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
 					await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 					// Try again
@@ -791,7 +780,7 @@ namespace LogicMonitor.Api
 				break;
 			}
 
-			logger.LogDebug($"{prefix} complete");
+			_logger.LogDebug($"{prefix} complete");
 
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
@@ -799,7 +788,7 @@ namespace LogicMonitor.Api
 				// If a success code was not received, throw an exception
 				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 				var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-				logger.LogDebug(message);
+				_logger.LogDebug(message);
 				throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
 			}
 
@@ -809,7 +798,7 @@ namespace LogicMonitor.Api
 			{
 				// If a success code was not received, throw an exception
 				var message = $"{prefix} failed - group is not empty for suburl";
-				logger.LogDebug(message);
+				_logger.LogDebug(message);
 				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 				throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.PreconditionFailed, responseBody, message);
 			}
@@ -830,17 +819,17 @@ namespace LogicMonitor.Api
 		{
 			var httpMethod = HttpMethod.Get;
 			var prefix = GetPrefix(httpMethod);
-			logger.LogDebug($"{prefix} {subUrl} ...");
+			_logger.LogDebug($"{prefix} {subUrl} ...");
 
 			// Age the Cache
-			cache.Age();
+			_cache.Age();
 
 			var stopwatch = Stopwatch.StartNew();
 
 			var useCache = permitCacheIfEnabled && UseCache;
-			if (useCache && cache.TryGetValue(subUrl, out var cacheObject))
+			if (useCache && _cache.TryGetValue(subUrl, out var cacheObject))
 			{
-				logger.LogDebug($"{prefix} complete (from cache: {stopwatch.ElapsedMilliseconds:N0}ms)");
+				_logger.LogDebug($"{prefix} complete (from cache: {stopwatch.ElapsedMilliseconds:N0}ms)");
 				return (T)cacheObject;
 			}
 
@@ -857,18 +846,18 @@ namespace LogicMonitor.Api
 					{
 						httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
 					}
-					logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
+					_logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
 				}
 				catch (Exception e)
 				{
-					logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
+					_logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
 					if (failureCount < AttemptCount)
 					{
 						// Try again
-						logger.LogDebug($"{prefix} Retrying..");
+						_logger.LogDebug($"{prefix} Retrying..");
 						continue;
 					}
-					logger.LogDebug($"{prefix} Giving up.");
+					_logger.LogDebug($"{prefix} Giving up.");
 					throw;
 				}
 
@@ -879,11 +868,11 @@ namespace LogicMonitor.Api
 					{
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						var message = $"{prefix} failed on attempt {++failureCount}: {responseBody}";
-						logger.LogDebug(message);
+						_logger.LogDebug(message);
 						if (failureCount < AttemptCount)
 						{
 							// Try again
-							logger.LogDebug($"{prefix} Retrying..");
+							_logger.LogDebug($"{prefix} Retrying..");
 							continue;
 						}
 						throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, message);
@@ -900,7 +889,7 @@ namespace LogicMonitor.Api
 					var delayMs = 1000 * xRateLimitWindowSeconds;
 
 					// Wait some time and try again
-					logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+					_logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
 					await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 					// Try again
@@ -945,7 +934,7 @@ namespace LogicMonitor.Api
 				// If a success code was not received, throw an exception
 				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 				var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-				logger.LogDebug(message);
+				_logger.LogDebug(message);
 				throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, message);
 			}
 
@@ -957,14 +946,14 @@ namespace LogicMonitor.Api
 			}
 			catch (DeserializationException e)
 			{
-				logger.LogError($"{prefix} Unable to deserialize\n{e.ResponseBody}\n{e.Message}");
+				_logger.LogError($"{prefix} Unable to deserialize\n{e.ResponseBody}\n{e.Message}");
 				throw;
 			}
 
 			// Cache the result
 			if (useCache)
 			{
-				cache.AddOrUpdate(subUrl, deserializedObject);
+				_cache.AddOrUpdate(subUrl, deserializedObject);
 			}
 
 			// Return the result
@@ -984,7 +973,7 @@ namespace LogicMonitor.Api
 		{
 			var httpMethod = HttpMethod.Post;
 			var prefix = GetPrefix(httpMethod);
-			logger.LogDebug($"{prefix} {subUrl} ...");
+			_logger.LogDebug($"{prefix} {subUrl} ...");
 
 			// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
 			var data = JsonConvert.SerializeObject(@object, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
@@ -1000,7 +989,7 @@ namespace LogicMonitor.Api
 					{
 						httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken).ConfigureAwait(false);
 					}
-					logger.LogDebug($"{prefix} complete");
+					_logger.LogDebug($"{prefix} complete");
 				}
 
 				// Check the outer HTTP status code
@@ -1012,7 +1001,7 @@ namespace LogicMonitor.Api
 						// If a success code was not received, throw an exception
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-						logger.LogDebug(message);
+						_logger.LogDebug(message);
 						throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, message);
 					}
 
@@ -1027,7 +1016,7 @@ namespace LogicMonitor.Api
 					var delayMs = 1000 * xRateLimitWindowSeconds;
 
 					// Wait some time and try again
-					logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+					_logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
 					await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 					// Try again
@@ -1073,24 +1062,22 @@ namespace LogicMonitor.Api
 			var prefix = GetPrefix(PatchHttpMethod);
 			var jsonString = JsonConvert.SerializeObject(fieldsToUpdate);
 
-			logger.LogDebug($"{prefix} ...");
+			_logger.LogDebug($"{prefix} ...");
 			HttpResponseMessage httpResponseMessage;
 			using (var content = new StringContent(jsonString, Encoding.UTF8, "application/json"))
 			{
 				var patchSpec = $"?patchFields={string.Join(",", fieldsToUpdate.Keys)}";
-				using (var requestMessage = new HttpRequestMessage(PatchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content })
-				{
-					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
-				}
+				using var requestMessage = new HttpRequestMessage(PatchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content };
+				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 			}
-			logger.LogDebug($"{prefix} complete");
+			_logger.LogDebug($"{prefix} complete");
 
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
 				// If a success code was not received, throw an exception
 				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 				var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-				logger.LogDebug(message);
+				_logger.LogDebug(message);
 				throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
 			}
 		}

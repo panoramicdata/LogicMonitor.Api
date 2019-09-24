@@ -10,13 +10,11 @@ namespace LogicMonitor.Api.Extensions
 		public static async Task<HttpResponseMessage> PatchAsync(this HttpClient client, Uri requestUri, HttpContent iContent, CancellationToken cancellationToken = default)
 		{
 			var method = new HttpMethod("PATCH");
-			using (var request = new HttpRequestMessage(method, requestUri)
+			using var request = new HttpRequestMessage(method, requestUri)
 			{
 				Content = iContent
-			})
-			{
-				return await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
-			}
+			};
+			return await client.SendAsync(request, cancellationToken).ConfigureAwait(false);
 		}
 	}
 }

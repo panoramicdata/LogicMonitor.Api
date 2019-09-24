@@ -129,18 +129,12 @@ namespace LogicMonitor.Api
 
 			var dataSources = await GetAllAsync(filter, cancellationToken).ConfigureAwait(false);
 
-			switch (dataSources.Count)
+			return dataSources.Count switch
 			{
-				case 1:
-					// LMREP-3901 - One matches, return a full object based on that.
-					return await GetAsync<DataSource>(dataSources.Single().Id, cancellationToken).ConfigureAwait(false);
-
-				case 0:
-					return null;
-
-				default:
-					throw new Exception($"Unexpected result count {dataSources.Count}");
-			}
+				1 => await GetAsync<DataSource>(dataSources.Single().Id, cancellationToken).ConfigureAwait(false),
+				0 => null,
+				_ => throw new Exception($"Unexpected result count {dataSources.Count}"),
+			};
 		}
 
 		/// <summary>

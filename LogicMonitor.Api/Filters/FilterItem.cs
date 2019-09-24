@@ -31,38 +31,18 @@ namespace LogicMonitor.Api.Filters
 		[IgnoreDataMember]
 		public Comparator Comparator
 		{
-			set
+			set => Operation = value switch
 			{
-				switch (value)
-				{
-					case Comparator.Eq:
-						Operation = ":";
-						break;
-					case Comparator.Ge:
-						Operation = ">:";
-						break;
-					case Comparator.Gt:
-						Operation = ">";
-						break;
-					case Comparator.Includes:
-						Operation = "~";
-						break;
-					case Comparator.Le:
-						Operation = "<=";
-						break;
-					case Comparator.Lt:
-						Operation = "<";
-						break;
-					case Comparator.Ne:
-						Operation = "!:";
-						break;
-					case Comparator.NotIncludes:
-						Operation = "!~";
-						break;
-					default:
-						throw new NotSupportedException($"Unexpected Comparator: '{value}'");
-				}
-			}
+				Comparator.Eq => ":",
+				Comparator.Ge => ">:",
+				Comparator.Gt => ">",
+				Comparator.Includes => "~",
+				Comparator.Le => "<=",
+				Comparator.Lt => "<",
+				Comparator.Ne => "!:",
+				Comparator.NotIncludes => "!~",
+				_ => throw new NotSupportedException($"Unexpected Comparator: '{value}'"),
+			};
 		}
 
 		/// <summary>
