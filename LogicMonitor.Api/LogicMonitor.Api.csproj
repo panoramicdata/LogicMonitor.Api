@@ -30,11 +30,6 @@
 	  <None Remove="Icon.png" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Include="Icon.png">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
 	</ItemGroup>
