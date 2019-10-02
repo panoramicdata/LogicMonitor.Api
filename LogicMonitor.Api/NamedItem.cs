@@ -29,9 +29,9 @@ namespace LogicMonitor.Api
 			var logicMonitorNamedEntity = obj as NamedItem;
 
 			return base.Equals(logicMonitorNamedEntity)
-				   && logicMonitorNamedEntity != null
-				   && logicMonitorNamedEntity.Name == Name
-				   && logicMonitorNamedEntity.Description == Description;
+					&& logicMonitorNamedEntity != null
+					&& logicMonitorNamedEntity.Name == Name
+					&& logicMonitorNamedEntity.Description == Description;
 		}
 
 		/// <summary>
@@ -39,8 +39,8 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <returns></returns>
 		public override int GetHashCode() => base.GetHashCode()
-				   + ((Name ?? string.Empty).GetHashCode() * 23)
-				   + (Description ?? string.Empty).GetHashCode();
+					+ ((Name ?? string.Empty).GetHashCode() * 23)
+					+ (Description ?? string.Empty).GetHashCode();
 
 		/// <summary>
 		///    ToString override

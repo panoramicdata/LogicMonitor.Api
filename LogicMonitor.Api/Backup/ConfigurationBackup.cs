@@ -213,16 +213,28 @@ namespace LogicMonitor.Api.Backup
 		public List<SnmpSysOidMap> SnmpSysOidMaps { get; set; }
 
 		/// <summary>
-		///     Users
+		///     RoleGroups
 		/// </summary>
 		[DataMember]
-		public List<User> Users { get; set; }
+		public List<RoleGroup> RoleGroups { get; set; }
 
 		/// <summary>
 		///     Roles
 		/// </summary>
 		[DataMember]
 		public List<Role> Roles { get; set; }
+
+		/// <summary>
+		///     UserGroups
+		/// </summary>
+		[DataMember]
+		public List<UserGroup> UserGroups { get; set; }
+
+		/// <summary>
+		///     Users
+		/// </summary>
+		[DataMember]
+		public List<User> Users { get; set; }
 
 		/// <summary>
 		///     SingleSignOn

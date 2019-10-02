@@ -55,6 +55,8 @@ namespace LogicMonitor.Api
 		/// </summary>
 		public string AccountName { get; }
 
+		private static readonly Regex V3HackRegex = new Regex("/setting/admin/groups|setting/role/groups");
+
 		#endregion Fields
 
 		#region Properties
@@ -679,8 +681,19 @@ namespace LogicMonitor.Api
 			: subUrl;
 			var httpVerb = requestMessage.Method.ToString().ToUpperInvariant();
 			var resourcePath = $"/{subUrl2}";
+
+			// Auth header
 			var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
 			requestMessage.Headers.Add("Authorization", authHeaderValue);
+
+			// HACK: Modify X-version if appropriate
+			// Change when V3 is officially supportable
+			if (V3HackRegex.IsMatch(resourcePath))
+			{
+				requestMessage.Headers.Remove("X-version");
+				requestMessage.Headers.Add("X-version", "3");
+			}
+
 			return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 		}
 

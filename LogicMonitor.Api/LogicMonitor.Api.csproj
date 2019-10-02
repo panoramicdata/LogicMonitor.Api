@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>2.125</Version>
+		<Version>2.126</Version>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
 		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
@@ -13,7 +13,8 @@
 		<Description>A .NET API for LogicMonitor</Description>
 		<Summary>A .NET API for LogicMonitor</Summary>
 		<Company>Panoramic Data Limited</Company>
-		<PackageReleaseNotes>OK, you're all grown-ups.  With this release, the underlying PortalClient PostAsync, PutAsync and DeleteAsync methods have been move from private to public.  This means that you can use JObjects for full generic access to the LogicMonitor API.  Now there is nothing that you cannot do!</PackageReleaseNotes>
+		<PackageReleaseNotes>Release for LogicMonitor version 126
+Adds UserGroups and RoleGroups, however note that these are only available in the API v3, so are not supported.</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<LangVersion>latest</LangVersion>
 		<RepositoryType>git</RepositoryType>
@@ -27,14 +28,14 @@
 		<DocumentationFile>bin\Release\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="Icon.png" />
+		<None Remove="Icon.png" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Include="Icon.png" Pack="true" PackagePath=""/>
+		<None Include="Icon.png" Pack="true" PackagePath="" />
 		<Folder Include="Properties\" />
 	</ItemGroup>
 </Project>

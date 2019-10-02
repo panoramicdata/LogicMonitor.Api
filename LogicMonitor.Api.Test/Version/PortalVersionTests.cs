@@ -13,8 +13,8 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void GetPortalVersion()
 		{
 			var portalVersion = await PortalClient.GetVersionAsync().ConfigureAwait(false);
-			Assert.NotNull(portalVersion.Version);
-			Assert.NotNull(portalVersion.Version.Module);
+			Assert.NotNull((object)portalVersion.Version);
+			Assert.NotNull((object)portalVersion.Version.Module);
 			Assert.NotNull(portalVersion.Extra);
 			Assert.NotNull(portalVersion.Hash);
 			Assert.NotNull(portalVersion.BuildAt);
@@ -26,8 +26,8 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void GetPortalVersionStatic()
 		{
 			var portalVersion = await Api.PortalClient.GetVersionAsync("altius").ConfigureAwait(false);
-			Assert.NotNull(portalVersion.Version);
-			Assert.NotNull(portalVersion.Version.Module);
+			Assert.NotNull((object)portalVersion.Version);
+			Assert.NotNull((object)portalVersion.Version.Module);
 			Assert.NotNull(portalVersion.Extra);
 			Assert.NotNull(portalVersion.Hash);
 			Assert.NotNull(portalVersion.BuildAt);

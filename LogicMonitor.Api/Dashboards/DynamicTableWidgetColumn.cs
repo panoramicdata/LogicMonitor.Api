@@ -33,6 +33,18 @@ namespace LogicMonitor.Api.Dashboards
 		public bool EnableForecast { get; set; }
 
 		/// <summary>
+		///     The minimum value
+		/// </summary>
+		[DataMember(Name = "minValue")]
+		public double? MinValue { get; set; }
+
+		/// <summary>
+		///     The maximum value
+		/// </summary>
+		[DataMember(Name = "maxValue")]
+		public double? MaxValue { get; set; }
+
+		/// <summary>
 		///     The rounding decimal
 		/// </summary>
 		[DataMember(Name = "roundingDecimal")]

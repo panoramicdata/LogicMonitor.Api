@@ -14,12 +14,12 @@ namespace LogicMonitor.Api.Test
 		public FlowTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 		{
 			var endDateTime = DateTime.Today;
-			startDateTimeSeconds = endDateTime.AddDays(-1);
-			endDateTimeSeconds = endDateTime;
+			_startDateTimeSeconds = endDateTime.AddDays(-1);
+			_endDateTimeSeconds = endDateTime;
 		}
 
-		private readonly DateTime startDateTimeSeconds;
-		private readonly DateTime endDateTimeSeconds;
+		private readonly DateTime _startDateTimeSeconds;
+		private readonly DateTime _endDateTimeSeconds;
 
 		//private void CheckExpectedLineCount(GraphData graphData, int expectedLineCount)
 		//{
@@ -216,8 +216,8 @@ namespace LogicMonitor.Api.Test
 			{
 				DeviceId = device.Id,
 				TimePeriod = TimePeriod.Zoom,
-				StartDateTime = startDateTimeSeconds,
-				EndDateTime = endDateTimeSeconds
+				StartDateTime = _startDateTimeSeconds,
+				EndDateTime = _endDateTimeSeconds
 			}
 			).ConfigureAwait(false);
 

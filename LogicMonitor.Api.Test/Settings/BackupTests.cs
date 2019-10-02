@@ -1,5 +1,4 @@
 using LogicMonitor.Api.Backup;
-using LogicMonitor.Api.Settings;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -28,11 +27,21 @@ namespace LogicMonitor.Api.Test.Settings
 		{
 			var backup = await PortalClient.BackupAsync(new ConfigurationBackupSpecification(false) { Users = true }).ConfigureAwait(false);
 			Assert.NotNull(backup);
-			Assert.NotNull(backup.Users);
+			Assert.NotNull(backup.RoleGroups);
 			Assert.NotNull(backup.Roles);
+			Assert.NotNull(backup.UserGroups);
+			Assert.NotNull(backup.Users);
+
+			var roleGroup = backup.RoleGroups[0];
+			Assert.NotNull(roleGroup);
+
+			var role = backup.Roles[0];
+			Assert.NotNull(role);
+
+			var userGroup = backup.UserGroups[0];
+			Assert.NotNull(userGroup);
 
 			var user = backup.Users[0];
-
 			Assert.NotNull(user);
 
 			// CreatedBy is populated

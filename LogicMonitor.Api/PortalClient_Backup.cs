@@ -255,9 +255,13 @@ namespace LogicMonitor.Api
 			// Users
 			if (backupSpecification.Users)
 			{
-				progressReporter.Notify("Users\r\n");
-				progressReporter.StartSubTask("- Roles");
+				progressReporter.Notify("Users and Roles\r\n");
+				progressReporter.StartSubTask("- RoleGroups");
+				configurationBackup.RoleGroups = await GetAllAsync<RoleGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
+				progressReporter.CompleteSubTaskAndStartNew("- UserGroups");
 				configurationBackup.Roles = await GetAllAsync<Role>(cancellationToken: cancellationToken).ConfigureAwait(false);
+				progressReporter.CompleteSubTaskAndStartNew("- UserGroups");
+				configurationBackup.UserGroups = await GetAllAsync<UserGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- Users");
 				configurationBackup.Users = await GetAllAsync<User>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
