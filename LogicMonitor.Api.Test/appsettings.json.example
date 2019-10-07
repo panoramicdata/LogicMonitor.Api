@@ -5,6 +5,7 @@
 		"AccessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 		"CollectorId": 12,
 		"WindowsDeviceId": 34,
+		"ServiceDeviceId": 1053,
 		"NetflowDeviceId": 56,
 		"SnmpDeviceId": 78,
 		"DeviceGroupFullPath": "Path to Test Device Group",

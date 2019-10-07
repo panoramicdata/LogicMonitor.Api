@@ -435,6 +435,10 @@ deviceProperty
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			Assert.Equal(DeviceType.Regular, device.DeviceType);
+
+			device = await GetServiceDeviceAsync().ConfigureAwait(false);
+			Assert.Equal(DeviceType.Service, device.DeviceType);
+
 			// TODO - AWS and Azure
 		}
 

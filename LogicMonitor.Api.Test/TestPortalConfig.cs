@@ -20,6 +20,7 @@ namespace LogicMonitor.Api.Test
 			SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"]);
 			NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"]);
 			WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"]);
+			ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"]);
 			CollectorId = int.Parse(Configuration["Config:CollectorId"]);
 			WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"];
 			DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"];
@@ -36,6 +37,8 @@ namespace LogicMonitor.Api.Test
 		public int SnmpDeviceId { get; }
 
 		public int WindowsDeviceId { get; }
+
+		public int ServiceDeviceId { get; }
 
 		public bool AccountHasBillingInformation { get; }
 
