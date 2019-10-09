@@ -1,11 +1,13 @@
 {
-	"Config": {
+	"Config":
+	{
 		"Account": "mycompany",
 		"AccessId": "XXXXXXXXXXXXXXXXXXXX",
 		"AccessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 		"CollectorId": 12,
 		"WindowsDeviceId": 34,
 		"NetflowDeviceId": 56,
+		"ServiceDeviceId": 1053,
 		"SnmpDeviceId": 78,
 		"DeviceGroupFullPath": "Path to Test Device Group",
 		"WebsiteGroupFullPath": "Path to Test Website Group",
