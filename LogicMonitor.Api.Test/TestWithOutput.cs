@@ -18,6 +18,8 @@ namespace LogicMonitor.Api.Test
 
 		protected string DeviceGroupFullPath { get; }
 
+		protected int ServiceDeviceId { get; }
+
 		protected int WindowsDeviceId { get; }
 
 		protected int NetflowDeviceId { get; }
@@ -35,6 +37,7 @@ namespace LogicMonitor.Api.Test
 			var testPortalConfig = new TestPortalConfig(Logger);
 			PortalClient = testPortalConfig.PortalClient;
 			WindowsDeviceId = testPortalConfig.WindowsDeviceId;
+			ServiceDeviceId = testPortalConfig.ServiceDeviceId;
 			NetflowDeviceId = testPortalConfig.NetflowDeviceId;
 			DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 			WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
@@ -61,6 +64,9 @@ namespace LogicMonitor.Api.Test
 
 		internal Task<Device> GetNetflowDeviceAsync()
 			=> PortalClient.GetAsync<Device>(NetflowDeviceId);
+
+		protected Task<Device> GetServiceDeviceAsync()
+			=> PortalClient.GetAsync<Device>(ServiceDeviceId);
 
 		protected Task<Device> GetWindowsDeviceAsync()
 			=> PortalClient.GetAsync<Device>(WindowsDeviceId);

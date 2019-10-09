@@ -14,13 +14,18 @@ namespace LogicMonitor.Api.Devices
 		Regular = 0,
 
 		/// <summary>
-		/// Regular device
+		/// Aws
 		/// </summary>
 		Aws = 2,
 
 		/// <summary>
-		/// Regular device
+		/// Azure
 		/// </summary>
 		Azure = 4,
+
+		/// <summary>
+		/// Service
+		/// </summary>
+		Service = 6
 	}
 }
