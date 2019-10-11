@@ -28,8 +28,7 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public Task<Page<Role>> GetRolesForCurrentUserPageAsync(Filter<Role> filter, CancellationToken cancellationToken = default)
 		{
-			ValidateFilter(filter);
-			if (filter.Order == null)
+			if (filter != null && filter.Order == null)
 			{
 				filter.Order = new Order<Role>
 				{
@@ -48,8 +47,7 @@ namespace LogicMonitor.Api
 		/// <returns>The escalation chains</returns>
 		public Task<Page<EscalationChain>> GetEscalationChainsPageAsync(Filter<EscalationChain> filter, CancellationToken cancellationToken = default)
 		{
-			ValidateFilter(filter);
-			if (filter.Order == null)
+			if (filter != null && filter.Order == null)
 			{
 				filter.Order = new Order<EscalationChain>
 				{

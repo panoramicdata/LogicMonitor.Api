@@ -146,8 +146,7 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public Task<Page<Device>> GetDevicesPageAsync(Filter<Device> filter, CancellationToken cancellationToken = default)
 		{
-			ValidateFilter(filter);
-			if (filter.Order == null)
+			if (filter != null && filter.Order == null)
 			{
 				filter.Order = new Order<Device> { Property = nameof(Device.Id), Direction = OrderDirection.Asc };
 			}
@@ -203,10 +202,7 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <returns></returns>
 		public Task<Page<DeviceWithDataSourceInstanceInformation>> GetDevicesAndInstancesAssociatedWithDataSourceByIdPageAsync(int dataSourceId, Filter<DeviceWithDataSourceInstanceInformation> filter, CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceWithDataSourceInstanceInformation>>($"setting/datasources/{dataSourceId}/devices?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DeviceWithDataSourceInstanceInformation>>($"setting/datasources/{dataSourceId}/devices?{filter}", cancellationToken);
 
 		/// <summary>
 		///     Get devices by name

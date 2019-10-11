@@ -55,7 +55,7 @@ namespace LogicMonitor.Api
 		/// </summary>
 		public string AccountName { get; }
 
-		private static readonly Regex V3HackRegex = new Regex("/setting/admin/groups|setting/role/groups");
+		private static readonly Regex V3HackRegex = new Regex("/setting/admin/groups|setting/role/groups|/setting/registry/listcore");
 
 		#endregion Fields
 
@@ -261,23 +261,6 @@ namespace LogicMonitor.Api
 
 				// Increment the skip value
 				filter.Skip += filter.Take;
-			}
-		}
-
-		private void ValidateFilter<T>(Filter<T> filter, int maxTake = 300)
-		{
-			if (filter == null)
-			{
-				throw new ArgumentNullException(nameof(filter));
-			}
-			if (filter.Skip < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(filter.Skip), "must be greater than 0");
-			}
-			if (filter.Take < 0 || filter.Take > maxTake)
-			{
-				// TODO - This is broken.  Ignore for now
-				// throw new ArgumentOutOfRangeException(nameof(filter.Take), $"must be between 1 and {maxTake}");
 			}
 		}
 
@@ -698,10 +681,7 @@ namespace LogicMonitor.Api
 		}
 
 		private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
-		{
-			ValidateFilter(filter);
-			return GetAsync<Page<T>>(UseCache, $"{subUrl}?{filter}", cancellationToken);
-		}
+			=> GetAsync<Page<T>>(UseCache, $"{subUrl}?{filter}", cancellationToken);
 
 		/// <summary>
 		///     Gets a filtered page of items
@@ -711,10 +691,7 @@ namespace LogicMonitor.Api
 		/// <typeparam name="T">The item type</typeparam>
 		/// <returns>The filtered list</returns>
 		public virtual Task<Page<T>> GetAsync<T>(Filter<T> filter, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
-		{
-			ValidateFilter(filter);
-			return GetAsync<Page<T>>(UseCache, $"{new T().Endpoint()}?{filter}", cancellationToken);
-		}
+			=> GetAsync<Page<T>>(UseCache, $"{new T().Endpoint()}?{filter}", cancellationToken);
 
 		private Task<T> GetBySubUrlAsync<T>(string subUrl, CancellationToken cancellationToken) where T : class, new()
 		=> GetAsync<T>(UseCache, subUrl, cancellationToken);
@@ -1125,14 +1102,10 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken"></param>
 		/// <returns>A list of Collectors</returns>
 		private Task<Page<T>> GetPageInternalAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
-		{
-			ValidateFilter(filter);
-
-			return GetBySubUrlAsync<Page<T>>(subUrl.Contains('?')
+			=> GetBySubUrlAsync<Page<T>>(subUrl.Contains('?')
 				? $"{subUrl}&{filter}"
 				: $"{subUrl}?{filter}"
 				, cancellationToken);
-		}
 		#endregion Web Interaction
 
 		#region Debug Commands

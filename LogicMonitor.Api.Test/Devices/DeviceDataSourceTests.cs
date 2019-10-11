@@ -1,6 +1,7 @@
 using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.LogicModules;
 using System.Collections.Generic;
+using System.Threading;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -10,6 +11,12 @@ namespace LogicMonitor.Api.Test.Devices
 	{
 		public DeviceDataSourceTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 		{
+		}
+
+		[Fact]
+		public async void GetAllDeviceDatraSourcesAsync()
+		{
+			var _ = await PortalClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, CancellationToken.None).ConfigureAwait(false);
 		}
 
 		[Fact]

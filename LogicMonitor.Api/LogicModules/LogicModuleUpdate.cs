@@ -51,6 +51,12 @@ namespace LogicMonitor.Api.LogicModules
 		public string DisplayName { get; set; }
 
 		/// <summary>
+		/// The lineage id
+		/// </summary>
+		[DataMember(Name = "lineageid")]
+		public string LineageId { get; set; }
+
+		/// <summary>
 		/// The publish time
 		/// </summary>
 		[DataMember(Name = "publishedAt")]

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -52,9 +53,20 @@ namespace LogicMonitor.Api.Filters
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> QueryString != null
-			? $"offset={Skip}&size={Take}&{QueryString}"
-			: $"offset={Skip}&size={Take}{(Order == null ? string.Empty : $"&{Order}")}{(FilterItems == null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters == null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties == null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
+		{
+			Validate();
+			return QueryString != null
+					  ? $"offset={Skip}&size={Take}&{QueryString}"
+					  : $"offset={Skip}&size={Take}{(Order == null ? string.Empty : $"&{Order}")}{(FilterItems == null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters == null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties == null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
+		}
+
+		private void Validate()
+		{
+			if (Skip < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(Skip), "must be greater than 0");
+			}
+		}
 
 		private IEnumerable<string> GetFields()
 		{

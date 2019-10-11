@@ -147,10 +147,7 @@ namespace LogicMonitor.Api
 		public Task<Page<DataSourceGraph>> GetDataSourceGraphsPageAsync(int dataSourceId,
 			Filter<DataSourceGraph> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
 
 		/// <summary>
 		///     Gets a DataSource graph given dataSourceId and graphId
@@ -179,7 +176,6 @@ namespace LogicMonitor.Api
 			{
 				filter = new Filter<DataSourceGraph> { Skip = 0, Take = 300 };
 			}
-			ValidateFilter(filter);
 			var dataSourceOverviewGraphsPageAsync = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/ographs?{filter}", cancellationToken).ConfigureAwait(false);
 
 			// DataSourceId is no longer sent, but needed for backups.  Re-add.
@@ -215,10 +211,7 @@ namespace LogicMonitor.Api
 			int dataSourceId,
 			Filter<DataSourceDataPoint> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DataSourceDataPoint>>($"setting/datasources/{dataSourceId}/datapoints?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DataSourceDataPoint>>($"setting/datasources/{dataSourceId}/datapoints?{filter}", cancellationToken);
 
 		/// <summary>
 		/// Gets a page of Device DataSources
@@ -231,10 +224,7 @@ namespace LogicMonitor.Api
 			int deviceId,
 			Filter<DeviceDataSource> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources?{filter}", cancellationToken);
 
 		/// <summary>
 		/// Gets all DeviceDataSources that match a filter
@@ -247,10 +237,7 @@ namespace LogicMonitor.Api
 			int deviceId,
 			Filter<DeviceDataSource> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetAllAsync<DeviceDataSource>(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken);
-		}
+			=> GetAllAsync(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken);
 
 		/// <summary>
 		///     Gets the deviceDataSource
@@ -278,10 +265,7 @@ namespace LogicMonitor.Api
 			int deviceDataSourceId,
 			Filter<DeviceDataSourceGroup> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceDataSourceGroup>>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DeviceDataSourceGroup>>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups?{filter}", cancellationToken);
 
 		/// <summary>
 		///     Gets a list of DataSourceInstances
@@ -498,11 +482,8 @@ namespace LogicMonitor.Api
 			int deviceDataSourceInstanceId,
 			Filter<DeviceDataSourceInstanceProperty> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceDataSourceInstanceProperty>>(
+			=> GetBySubUrlAsync<Page<DeviceDataSourceInstanceProperty>>(
 				$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/properties?{filter}", cancellationToken);
-		}
 
 		/// <summary>
 		///     Gets a specific DataSourceInstanceProperty
@@ -605,12 +586,9 @@ namespace LogicMonitor.Api
 			int deviceDataSourceInstanceGroupId,
 			Filter<DeviceDataSourceInstance> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceDataSourceInstance>>(
+			=> GetBySubUrlAsync<Page<DeviceDataSourceInstance>>(
 				$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups/{deviceDataSourceInstanceGroupId}/instances?{filter}",
 				cancellationToken);
-		}
 
 		/// <summary>
 		///     Gets a list of devices that a datasource applies to
@@ -623,12 +601,9 @@ namespace LogicMonitor.Api
 			int deviceGroupId,
 			Filter<DataSourceAppliesToCollection> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DataSourceAppliesToCollection>>(
+			=> GetBySubUrlAsync<Page<DataSourceAppliesToCollection>>(
 				$"device/groups/{deviceGroupId}/datasources?{filter}",
 				cancellationToken);
-		}
 
 		/// <summary>
 		///     Gets a list of DataSources that apply to a device group

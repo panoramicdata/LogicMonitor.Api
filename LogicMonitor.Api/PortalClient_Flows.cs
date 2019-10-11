@@ -51,9 +51,6 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <returns></returns>
 		public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
 	}
 }

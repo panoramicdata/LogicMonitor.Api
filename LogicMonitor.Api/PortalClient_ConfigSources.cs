@@ -36,7 +36,6 @@ namespace LogicMonitor.Api
 			CancellationToken cancellationToken = default)
 		{
 			filter.FilterItems.Add(new Eq<DeviceConfigSource>(nameof(DeviceConfigSource.DataSourceType), "CS"));
-			ValidateFilter(filter);
 			return GetBySubUrlAsync<Page<DeviceConfigSource>>($"device/devices/{deviceId}/devicedatasources?{filter}", cancellationToken);
 		}
 
@@ -51,11 +50,8 @@ namespace LogicMonitor.Api
 			int configSourceId,
 			Filter<DeviceConfigSource> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
 			// setting/configsources/2228820/devices
-			return GetBySubUrlAsync<Page<Device>>($"setting/configsources/{configSourceId}/devices?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<Device>>($"setting/configsources/{configSourceId}/devices?{filter}", cancellationToken);
 
 		/// <summary>
 		///    Get DeviceConfigSource
@@ -68,7 +64,6 @@ namespace LogicMonitor.Api
 			int deviceId,
 			int deviceConfigSourceId,
 			CancellationToken cancellationToken = default) =>
-			// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/88/devicedatasources/36453
 			GetBySubUrlAsync<DeviceConfigSource>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}", cancellationToken);
 
 		/// <summary>
@@ -84,11 +79,7 @@ namespace LogicMonitor.Api
 			int deviceConfigSourceId,
 			Filter<DeviceConfigSourceInstance> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/88/devicedatasources/36453/instances
-			return GetBySubUrlAsync<Page<DeviceConfigSourceInstance>>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}/instances?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DeviceConfigSourceInstance>>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}/instances?{filter}", cancellationToken);
 
 		/// <summary>
 		///    Get DeviceConfigSourceInstance

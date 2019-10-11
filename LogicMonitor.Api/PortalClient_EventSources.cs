@@ -63,10 +63,7 @@ namespace LogicMonitor.Api
 			int deviceId,
 			Filter<DeviceEventSource> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceEventSource>>($"device/devices/{deviceId}/deviceeventsources?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DeviceEventSource>>($"device/devices/{deviceId}/deviceeventsources?{filter}", cancellationToken);
 
 		/// <summary>
 		///     Gets the deviceEventSource
@@ -94,10 +91,7 @@ namespace LogicMonitor.Api
 			int deviceEventSourceId,
 			Filter<DeviceEventSourceGroup> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<DeviceEventSourceGroup>>($"device/devices/{deviceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
-		}
+			=> GetBySubUrlAsync<Page<DeviceEventSourceGroup>>($"device/devices/{deviceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
 
 		/// <summary>
 		///     Gets a list of devices that a EventSource applies to
@@ -110,12 +104,9 @@ namespace LogicMonitor.Api
 			int deviceGroupId,
 			Filter<EventSourceAppliesToCollection> filter,
 			CancellationToken cancellationToken = default)
-		{
-			ValidateFilter(filter);
-			return GetBySubUrlAsync<Page<EventSourceAppliesToCollection>>(
+			=> GetBySubUrlAsync<Page<EventSourceAppliesToCollection>>(
 				$"device/groups/{deviceGroupId}/eventSources?{filter}",
 				cancellationToken);
-		}
 
 		/// <summary>
 		///     Gets a device data source
