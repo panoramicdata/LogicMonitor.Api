@@ -18,6 +18,12 @@ namespace LogicMonitor.Api
 		Unknown,
 
 		/// <summary>
+		///     None
+		/// </summary>
+		[EnumMember(Value = "none")]
+		None,
+
+		/// <summary>
 		///     Read
 		/// </summary>
 		[EnumMember(Value = "read")]
