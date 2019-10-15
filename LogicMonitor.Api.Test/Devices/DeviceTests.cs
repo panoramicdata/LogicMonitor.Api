@@ -505,6 +505,18 @@ deviceProperty
 		}
 
 		[Fact]
+		public async void PatchDeviceAsync()
+		{
+			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+			var oldDescription = device.Description;
+			var newDescription = Guid.NewGuid().ToString();
+			await PortalClient.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }).ConfigureAwait(false);
+			var updatedDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
+			Assert.Equal(newDescription, updatedDevice.Description);
+			await PortalClient.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }).ConfigureAwait(false);
+		}
+
+		[Fact]
 		public async void GetDeviceById66()
 		{
 			var device = await PortalClient.GetAsync<Device>(66).ConfigureAwait(false);
