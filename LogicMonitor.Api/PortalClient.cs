@@ -671,7 +671,8 @@ namespace LogicMonitor.Api
 
 			// HACK: Modify X-version if appropriate
 			// Change when V3 is officially supportable
-			if (V3HackRegex.IsMatch(resourcePath))
+			// There is a bug with Patch such that V2 gives errors related to "custom property name cannot be predef.externalResourceType\ncustom property name cannot be predef.externalResourceID"
+			if (V3HackRegex.IsMatch(resourcePath) || requestMessage.Method == PatchHttpMethod)
 			{
 				requestMessage.Headers.Remove("X-version");
 				requestMessage.Headers.Add("X-version", "3");
