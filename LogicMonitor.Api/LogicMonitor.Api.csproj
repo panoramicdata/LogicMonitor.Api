@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<Version>2.126.4</Version>
+		<Version>2.126.5</Version>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
 		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
