@@ -57,6 +57,18 @@ namespace LogicMonitor.Api.Users
 		[DataMember(Name = "privileges")]
 		public List<RolePrivilege> Privileges { get; set; }
 
+		/// <summary>
+		///    The role group id
+		/// </summary>
+		[DataMember(Name = "roleGroupId")]
+		public int RoleGroupId { get; set; }
+
+		/// <summary>
+		///    The user permission
+		/// </summary>
+		[DataMember(Name = "userPermission")]
+		public UserPermission? UserPermission { get; set; }
+
 		/// <inheritdoc />
 		public string Endpoint() => "setting/roles";
 	}

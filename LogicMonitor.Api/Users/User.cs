@@ -181,6 +181,18 @@ namespace LogicMonitor.Api.Users
 		public string Timezone { get; set; }
 
 		/// <summary>
+		///    The user group ids
+		/// </summary>
+		[DataMember(Name = "adminGroupIds")]
+		public List<int> UserGroupIds { get; set; }
+
+		/// <summary>
+		///    The user permission
+		/// </summary>
+		[DataMember(Name = "userPermission")]
+		public UserPermission? UserPermission { get; set; }
+
+		/// <summary>
 		///    The DateTime the user last logged in UTC
 		/// </summary>
 		[IgnoreDataMember]

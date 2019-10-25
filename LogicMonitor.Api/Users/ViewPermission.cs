@@ -23,7 +23,7 @@ namespace LogicMonitor.Api.Users
 		/// <summary>
 		/// Devices view permission
 		/// </summary>
-		[DataMember(Name = "Hosts")]
+		[DataMember(Name = "Resources")]
 		public bool Devices { get; set; }
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace LogicMonitor.Api.Users
 		/// <summary>
 		/// Websites view permission
 		/// </summary>
-		[DataMember(Name = "Services")]
+		[DataMember(Name = "Websites")]
 		public bool Websites { get; set; }
 
 		/// <summary>
