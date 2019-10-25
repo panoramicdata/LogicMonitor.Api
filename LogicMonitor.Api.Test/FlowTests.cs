@@ -21,6 +21,7 @@ namespace LogicMonitor.Api.Test
 		private readonly DateTime _startDateTimeSeconds;
 		private readonly DateTime _endDateTimeSeconds;
 
+
 		//private void CheckExpectedLineCount(GraphData graphData, int expectedLineCount)
 		//{
 		//	// Make sure that data is returned
@@ -50,6 +51,80 @@ namespace LogicMonitor.Api.Test
 
 			// TODO Make sure that flows are unique in some way
 			//Assert.False(flows.Select(flow => flow.Id).HasDuplicates());
+		}
+
+		[Fact]
+		public async void GetApplicationsForDeviceGroup()
+		{
+			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+
+			var flowApplications = await PortalClient.GetDeviceGroupFlowApplicationsPageAsync(new DeviceGroupFlowApplicationsRequest
+			{
+				TimePeriod = TimePeriod.Zoom,
+				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
+				SortDirection = SortDirection.Ascending,
+				SortFlowField = FlowField.Usage,
+				Take = 100,
+				Skip = 0,
+				FlowDirection = FlowDirection.All,
+				QosType = "all",
+				StartDateTime = DateTime.UtcNow.AddDays(-2),
+				EndDateTime = DateTime.UtcNow.AddDays(-1),
+
+			})
+			.ConfigureAwait(false);
+
+			// Make sure that some are returned
+			Assert.NotNull(flowApplications.Items);
+			Assert.True(flowApplications.Items.Count > 0);
+		}
+
+		[Fact]
+		public async void GetBandwidthsForDeviceGroup()
+		{
+			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+
+			var flowBandwidths = await PortalClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
+			{
+				TimePeriod = TimePeriod.Zoom,
+				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
+				SortDirection = SortDirection.Ascending,
+				SortFlowField = FlowField.Usage,
+				Take = 100,
+				Skip = 0,
+				FlowDirection = FlowDirection.All,
+				StartDateTime = DateTime.UtcNow.AddDays(-2),
+				EndDateTime = DateTime.UtcNow.AddDays(-1)
+			})
+			.ConfigureAwait(false);
+
+			// Make sure that some are returned
+			Assert.NotNull(flowBandwidths.Items);
+			Assert.True(flowBandwidths.Items.Count > 0);
+		}
+
+		[Fact]
+		public async void GetFlowsForDeviceGroup()
+		{
+			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+
+			var flows = await PortalClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
+			{
+				TimePeriod = TimePeriod.Zoom,
+				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
+				SortDirection = SortDirection.Ascending,
+				SortFlowField = FlowField.Usage,
+				Take = 100,
+				Skip = 0,
+				FlowDirection = FlowDirection.All,
+				StartDateTime = DateTime.UtcNow.AddDays(-2),
+				EndDateTime = DateTime.UtcNow.AddDays(-1)
+			})
+			.ConfigureAwait(false);
+
+			// Make sure that some are returned
+			Assert.NotNull(flows.Items);
+			Assert.True(flows.Items.Count > 0);
 		}
 
 		//[Fact]

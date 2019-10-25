@@ -1,4 +1,4 @@
-﻿namespace LogicMonitor.Api.Flows
+namespace LogicMonitor.Api.Flows
 {
 	/// <summary>
 	///    A request for flow applications.

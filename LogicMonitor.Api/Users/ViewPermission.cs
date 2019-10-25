@@ -62,6 +62,12 @@ namespace LogicMonitor.Api.Users
 		[DataMember(Name = "Settings")]
 		public bool Settings { get; set; }
 
+		/// <summary>
+		/// Resources view permission
+		/// </summary>
+		[DataMember(Name = "Resources")]
+		public bool Resources { get; set; }
+
 		/// <inheritdoc />
 		public override string ToString() => $"{nameof(Dashboards)}={Dashboards};{nameof(Reports)}={Reports};{nameof(Websites)}={Websites};{nameof(Settings)}={Settings};{nameof(Devices)}={Devices};{nameof(Alerts)}={Alerts};";
 	}
