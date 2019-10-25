@@ -17,6 +17,13 @@ namespace LogicMonitor.Api.Flows
 		public string DataType { get; set; }
 
 		/// <summary>
+		/// Device Display Name. This is only populated when the request is
+		/// for a Device Group's flow, not when for a Device's flow
+		/// </summary>
+		[DataMember(Name = "deviceDisplayName")]
+		public string DisplayName { get; set; }
+
+		/// <summary>
 		/// Source IP address
 		/// </summary>
 		[DataMember(Name = "srcIP")]

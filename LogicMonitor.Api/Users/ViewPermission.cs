@@ -53,7 +53,7 @@ namespace LogicMonitor.Api.Users
 		/// <summary>
 		/// Websites view permission
 		/// </summary>
-		[DataMember(Name = "Services")]
+		[DataMember(Name = "Websites")]
 		public bool Websites { get; set; }
 
 		/// <summary>
@@ -61,6 +61,12 @@ namespace LogicMonitor.Api.Users
 		/// </summary>
 		[DataMember(Name = "Settings")]
 		public bool Settings { get; set; }
+
+		/// <summary>
+		/// Resources view permission
+		/// </summary>
+		[DataMember(Name = "Resources")]
+		public bool Resources { get; set; }
 
 		/// <inheritdoc />
 		public override string ToString() => $"{nameof(Dashboards)}={Dashboards};{nameof(Reports)}={Reports};{nameof(Websites)}={Websites};{nameof(Settings)}={Settings};{nameof(Devices)}={Devices};{nameof(Alerts)}={Alerts};";

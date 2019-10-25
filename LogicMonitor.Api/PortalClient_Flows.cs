@@ -52,5 +52,36 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken = default)
 			=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
+
+		#region Device Group flows
+
+		/// <summary>
+		///  Get Flows for a Device Group using a FlowRequest
+		/// </summary>
+		/// <param name="flowRequest"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(DeviceGroupFlowRequest flowRequest, CancellationToken cancellationToken = default)
+			=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
+		
+		/// <summary>
+		/// Get a Device Group's application flows. This only ever appears to return 10 items
+		/// </summary>
+		/// <param name="flowRequest"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public Task<Page<FlowApplication>> GetDeviceGroupFlowApplicationsPageAsync(DeviceGroupFlowApplicationsRequest flowRequest, CancellationToken cancellationToken = default)
+			=> GetBySubUrlAsync<Page<FlowApplication>>(flowRequest.GetQueryString(), cancellationToken);
+
+		/// <summary>
+		/// Get a Device Group's bandwidth flows. This only ever appears to return 1 item
+		/// </summary>
+		/// <param name="flowRequest"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public Task<Page<FlowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken = default)
+			=> GetBySubUrlAsync<Page<FlowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
+
+		#endregion
 	}
 }
