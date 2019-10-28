@@ -110,7 +110,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void CustomerCodeWorks()
 		{
-			var matches = await PortalClient.GetAppliesToAsync("customer.code == \"PDL\"").ConfigureAwait(false);
+			var matches = await PortalClient
+				.GetAppliesToAsync("customer.code == \"PDL\"")
+				.ConfigureAwait(false);
 			Assert.NotNull(matches);
 			Assert.NotEmpty(matches);
 		}

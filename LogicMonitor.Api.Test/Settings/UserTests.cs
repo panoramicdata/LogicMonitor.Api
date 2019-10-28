@@ -25,6 +25,7 @@ namespace LogicMonitor.Api.Test.Settings
 				var refetchedUser = await PortalClient.GetAsync<User>(user.Id).ConfigureAwait(false);
 				var roles = refetchedUser.Roles;
 				Assert.True(roles.Count > 0);
+				Assert.NotEmpty(user.UserGroupIds);
 			}
 		}
 

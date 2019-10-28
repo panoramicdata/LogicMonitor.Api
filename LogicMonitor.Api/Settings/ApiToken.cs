@@ -72,10 +72,10 @@ namespace LogicMonitor.Api.Settings
 		public long LastUsedOnSeconds { get; set; }
 
 		/// <summary>
-		/// The user permission
+		///    The user permission
 		/// </summary>
 		[DataMember(Name = "userPermission")]
-		public string UserPermission { get; set; }
+		public UserPermission? UserPermission { get; set; }
 
 		/// <summary>
 		///    The DateTime the user accepted the EULA UTC
