@@ -95,7 +95,34 @@ namespace LogicMonitor.Api.Test.Data
 			}).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		/// Netflow Data
+		/// </summary>
 		[Fact]
+		public async void GetNetflowGraphDataForDeviceGroup()
+		{
+			var utcNow = DateTime.UtcNow;
+
+			// Get the configured Netflow Device
+			var netflowDevice = await GetNetflowDeviceAsync().ConfigureAwait(false);
+
+			// Create the request
+			var request = new NetflowDeviceGroupGraphDataRequest
+			{
+				DeviceGroupId = int.Parse(netflowDevice.DeviceGroupIdsString.Split(",").First()),
+				StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
+				EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
+				TimePeriod = TimePeriod.Zoom
+			};
+
+			// Send the request
+			var data = await PortalClient.GetGraphDataAsync(request).ConfigureAwait(false);
+
+			// Check there is at least one line of data
+			Assert.True(data.Lines.Count > 0);
+		}
+
+				[Fact]
 		public async void GetGraphData_X250()
 		{
 			PortalClient.UseCache = true;
