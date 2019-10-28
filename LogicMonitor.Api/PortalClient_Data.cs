@@ -154,5 +154,27 @@ namespace LogicMonitor.Api
 				await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 			}
 		}
+
+		/// <summary>
+		/// Fetch data across mutliple instances
+		/// </summary>
+		/// <param name="deviceDataSourceInstanceIds">The list of DeviceSataSourceInstance ids</param>
+		/// <param name="start">The start</param>
+		/// <param name="end">The start</param>
+		/// <param name="cancellationToken">The optional CancellationToken</param>
+		/// <returns>The FetchDataResponse</returns>
+		public async Task<FetchDataResponse> GetFetchDataResponseAsync(
+			List<int> deviceDataSourceInstanceIds,
+			DateTimeOffset start,
+			DateTimeOffset end,
+			CancellationToken cancellationToken = default)
+		{
+			var startDateTimeUtcTimestamp = start.ToUnixTimeSeconds();
+			var endDateTimeUtcTimestamp = end.ToUnixTimeSeconds();
+			return await PostAsync<FetchDataRequest, FetchDataResponse>(
+				new FetchDataRequest { InstanceIds = string.Join(",", deviceDataSourceInstanceIds) },
+				$"device/instances/datafetch?start={startDateTimeUtcTimestamp}&end={endDateTimeUtcTimestamp}",
+				cancellationToken).ConfigureAwait(false);
+		}
 	}
 }

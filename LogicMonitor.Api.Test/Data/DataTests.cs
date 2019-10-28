@@ -28,8 +28,8 @@ namespace LogicMonitor.Api.Test.Data
 			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 			var dataSourceGraphs = await PortalClient.GetDataSourceGraphsAsync(dataSource.Id).ConfigureAwait(false);
 			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }).ConfigureAwait(false);
-			var deviceDataSourceInstance = deviceDataSourceInstances.Items[0];
+			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstance = deviceDataSourceInstances[0];
 			var dataSourceGraph = dataSourceGraphs[0];
 			var virtualDataPoint = dataSourceGraph.DataPoints[0];
 			var forecastGraphData = await PortalClient.GetForecastGraphDataAsync(new ForecastDataRequest
@@ -220,7 +220,7 @@ namespace LogicMonitor.Api.Test.Data
 			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstances = (await PortalClient
-					.GetDeviceDataSourceInstancesPageAsync(
+					.GetAllDeviceDataSourceInstancesAsync(
 						device.Id,
 						deviceDataSource.Id,
 						new Filter<DeviceDataSourceInstance>
@@ -231,8 +231,7 @@ namespace LogicMonitor.Api.Test.Data
 								new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 							},
 							Order = new Order<DeviceDataSourceInstance> { Property = nameof(DeviceDataSourceInstance.Name), Direction = OrderDirection.Asc }
-						}).ConfigureAwait(false))
-				.Items;
+						}).ConfigureAwait(false));
 			Assert.NotNull(deviceDataSourceInstances);
 			Assert.NotEmpty(deviceDataSourceInstances);
 		}

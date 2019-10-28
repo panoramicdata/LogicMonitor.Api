@@ -1,5 +1,3 @@
-using LogicMonitor.Api.Data;
-using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.Flows;
 using LogicMonitor.Api.Time;
 using System;
@@ -20,7 +18,6 @@ namespace LogicMonitor.Api.Test
 
 		private readonly DateTime _startDateTimeSeconds;
 		private readonly DateTime _endDateTimeSeconds;
-
 
 		//private void CheckExpectedLineCount(GraphData graphData, int expectedLineCount)
 		//{
@@ -70,7 +67,6 @@ namespace LogicMonitor.Api.Test
 				QosType = "all",
 				StartDateTime = DateTime.UtcNow.AddDays(-2),
 				EndDateTime = DateTime.UtcNow.AddDays(-1),
-
 			})
 			.ConfigureAwait(false);
 
