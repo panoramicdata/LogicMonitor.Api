@@ -50,16 +50,15 @@ namespace LogicMonitor.Api.Test.Devices
 			var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
 			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("snmp64_If-").ConfigureAwait(false);
 			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
+			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 			{
-				Take = 300,
 				Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
 				ExtraFilters = new List<FilterItem<DeviceDataSourceInstance>>
 				{
 					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 				}
 			}).ConfigureAwait(false);
-			Assert.All(deviceDataSourceInstances.Items, dsi => Assert.False(dsi.StopMonitoring));
+			Assert.All(deviceDataSourceInstances, dsi => Assert.False(dsi.StopMonitoring));
 		}
 	}
 }

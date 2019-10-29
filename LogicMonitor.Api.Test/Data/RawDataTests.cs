@@ -1,6 +1,4 @@
 using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
 using System;
 using System.Linq;
 using Xunit;
@@ -21,9 +19,8 @@ namespace LogicMonitor.Api.Test.Data
 			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
 			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstance =
-			(await PortalClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id,
-				new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 300 }).ConfigureAwait(false)
-			).Items.Single();
+			(await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
+			).Single();
 			var rawData = await PortalClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 
 			Assert.NotNull(rawData);
@@ -38,9 +35,8 @@ namespace LogicMonitor.Api.Test.Data
 			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
 			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstance =
-			(await PortalClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id,
-				new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 300 }).ConfigureAwait(false)
-			).Items.Single();
+			(await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
+			).Single();
 			var rawData = await PortalClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow).ConfigureAwait(false);
 
 			Assert.NotNull(rawData);
@@ -60,14 +56,32 @@ namespace LogicMonitor.Api.Test.Data
 			var dataSource = await portalClient.GetDataSourceByUniqueNameAsync("WinService-").ConfigureAwait(false);
 			var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstance =
-			(await portalClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id,
-				new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 300 }).ConfigureAwait(false)
-			).Items.FirstOrDefault();
+			(await portalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
+			).FirstOrDefault();
 			Assert.NotNull(deviceDataSourceInstance);
 
 			var pollNowResponse = await portalClient.PollNowAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 
 			Assert.NotNull(pollNowResponse);
+		}
+
+		[Fact]
+		public async void FetchInstanceData()
+		{
+			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinIf-").ConfigureAwait(false);
+			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
+
+			var end = DateTime.UtcNow;
+			var start = end.AddHours(-2);
+
+			var rawData = await PortalClient.GetFetchDataResponseAsync(deviceDataSourceInstances.Select(ddsi => ddsi.Id).ToList(), start, end).ConfigureAwait(false);
+
+			Assert.NotNull(rawData);
+			Assert.Equal(deviceDataSourceInstances.Count, rawData.TotalCount);
+			Assert.Equal(deviceDataSourceInstances.Count, rawData.InstanceFetchDataResponses.Count);
+			Assert.All(rawData.InstanceFetchDataResponses, response => Assert.Equal(dataSource.DataSourceDataPoints.Count, response.DataPoints.Length));
 		}
 	}
 }

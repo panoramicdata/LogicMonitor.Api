@@ -268,13 +268,14 @@ namespace LogicMonitor.Api
 			=> GetBySubUrlAsync<Page<DeviceDataSourceGroup>>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups?{filter}", cancellationToken);
 
 		/// <summary>
-		///     Gets a list of DataSourceInstances
+		///     Gets a page of DataSourceInstances
 		/// </summary>
 		/// <param name="deviceId">The device Id</param>
 		/// <param name="deviceDataSourceId">The device data source id</param>
 		/// <param name="filter">The filter to apply</param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <returns></returns>
+		[Obsolete("Use GetAllDeviceDataSourceInstancesAsync() instead")]
 		public Task<Page<DeviceDataSourceInstance>> GetDeviceDataSourceInstancesPageAsync(
 			int deviceId,
 			int deviceDataSourceId,
@@ -323,7 +324,8 @@ namespace LogicMonitor.Api
 			var items = new List<DeviceDataSourceInstance>();
 			while (true)
 			{
-				var itemsThisTime = await GetDeviceDataSourceInstancesPageAsync(deviceId, deviceDataSourceId, filter, cancellationToken).ConfigureAwait(false);
+				var itemsThisTime = await FilteredGetAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances", filter, cancellationToken)
+					.ConfigureAwait(false);
 				if (itemsThisTime.Items.Count == 0)
 				{
 					return items;

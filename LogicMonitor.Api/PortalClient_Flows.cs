@@ -63,7 +63,7 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(DeviceGroupFlowRequest flowRequest, CancellationToken cancellationToken = default)
 			=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
-		
+
 		/// <summary>
 		/// Get a Device Group's application flows. This only ever appears to return 10 items
 		/// </summary>
