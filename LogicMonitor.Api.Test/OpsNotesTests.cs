@@ -24,10 +24,22 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetOpsNotes()
 		{
+			// Create an ops note
+			var newOpsNote = await PortalClient.CreateAsync(new OpsNoteCreationDto
+			{
+				DateTimeUtcSeconds = DateTime.UtcNow.SecondsSinceTheEpoch(),
+				Note = $"LogicMonitor.Api.Test run on {DateTime.UtcNow}",
+				Tags = new List<OpsNoteTagCreationDto> { new OpsNoteTagCreationDto { Name = "LogicMonitor.Api" } }
+			})
+			.ConfigureAwait(false);
+
+			await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+
 			var allOpsNotes = await PortalClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(allOpsNotes.Count > 0);
+			Assert.Contains(newOpsNote.Id, allOpsNotes.Select(o => o.Id));
 		}
 
 		//[Fact]
