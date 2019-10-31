@@ -102,10 +102,17 @@ namespace LogicMonitor.Api.Flows
 		public int OutboundInterfaceId { get; set; }
 
 		/// <summary>
-		/// Outbound interface id
+		/// Usage bytes
 		/// </summary>
 		[DataMember(Name = "usage")]
-		public long UsageBytes { get; set; }
+		public long UsageMb { get; set; }
+
+		/// <summary>
+		/// Usage bytes
+		/// Actually usage is in MBytes, so we'll calculate this one
+		/// </summary>
+		[IgnoreDataMember]
+		public long UsageBytes => UsageMb * 1000000;
 
 		/// <summary>
 		/// The percent usage
@@ -115,9 +122,10 @@ namespace LogicMonitor.Api.Flows
 
 		/// <summary>
 		/// Source bytes
+		/// Not provided any more by LogicMonitor
 		/// </summary>
-		[DataMember(Name = "sourceBytes")]
-		public long SourceBytes { get; set; }
+		[IgnoreDataMember]
+		public long SourceBytes => SourceMb * 1000000;
 
 		/// <summary>
 		/// Source megabytes
@@ -126,10 +134,11 @@ namespace LogicMonitor.Api.Flows
 		public long SourceMb { get; set; }
 
 		/// <summary>
-		/// Destination bytes
+		/// Destination bytes.
+		/// Not populated any more by LogicMonitor
 		/// </summary>
-		[DataMember(Name = "destinationBytes")]
-		public long DestinationBytes { get; set; }
+		[IgnoreDataMember]
+		public long DestinationBytes => DestinationMb * 1000000;
 
 		/// <summary>
 		/// Destination megabytes
