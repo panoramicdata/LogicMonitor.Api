@@ -19,5 +19,5 @@ public async Task GetAllDevices()
 {
 	var portalClient = new PortalClient("acme", "accessTokenId", "accessTokenKey");
 	var devices = await portalClient.GetAllAsync<Device>();
-	Concole.WriteLine($"Device Count: {devices.Count}");
+	Console.WriteLine($"Device Count: {devices.Count}");
 }
