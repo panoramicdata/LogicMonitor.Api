@@ -1,4 +1,5 @@
 using LogicMonitor.Api.Data;
+using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.Time;
 using LogicMonitor.Api.Websites;
 using System;
@@ -35,15 +36,16 @@ namespace LogicMonitor.Api.Test.Websites
 						new WebsiteStep
 						{
 							MatchType = MatchType.Plain,
+							HttpSchema = HttpSchema.Https,
 							HttpMethod = "get",
-							Url = "https://www.google.com/",
+							Url = "/",
 							HttpVersion = "1.1",
 							Description = "Step 1",
 							Enable = true,
 							FollowRedirection = true,
 							Name = "Step 1",
 							Timeout = 5,
-							HttpSchema = HttpSchema.Https,
+							UseDefaultRoot = true
 						}
 					}
 			};
@@ -146,12 +148,24 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void CrudWebsiteGroupsAndWebsites()
 		{
-			// Ensure it doesn't exist
+			// Ensure the website group doesn't exist
 			var oldWebsiteGroup = await PortalClient.GetWebsiteGroupByFullPathAsync("Test Name").ConfigureAwait(false);
-
 			if (oldWebsiteGroup != null)
 			{
 				await PortalClient.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id).ConfigureAwait(false);
+			}
+
+			// Ensure the website doesn't exist
+			var oldWebsites = await PortalClient.GetAllAsync(new Filter<Website>
+			{
+				FilterItems = new List<FilterItem<Website>>
+				{
+					new Eq<Website>(nameof(Website.Name), nameof(CrudWebsiteGroupsAndWebsites))
+				}
+			}).ConfigureAwait(false);
+			foreach(var oldWebsite in oldWebsites)
+			{
+				await PortalClient.DeleteAsync<Website>(oldWebsite.Id).ConfigureAwait(false);
 			}
 
 			// Create it
@@ -174,9 +188,12 @@ namespace LogicMonitor.Api.Test.Websites
 				var website = await PortalClient
 					.CreateAsync(GetWebsiteCreationDto(websiteGroup.Id, nameof(CrudWebsiteGroupsAndWebsites)))
 					.ConfigureAwait(false);
+				Assert.NotNull(website);
+				Assert.Equal(websiteGroup.Id, website.WebsiteGroupId);
 
 				// Wait to ensure that it was created
-				await Task.Delay(1000).ConfigureAwait(false);
+				await Task.Delay(1000)
+					.ConfigureAwait(false);
 
 				// Delete it
 				await PortalClient

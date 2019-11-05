@@ -10,9 +10,9 @@ namespace LogicMonitor.Api.Websites
 	public class WebsiteCreationDto : CreationDto<Website>
 	{
 		/// <summary>
-		///    The website folder id
+		///    The website group id
 		/// </summary>
-		[DataMember(Name = "websiteFolderId")]
+		[DataMember(Name = "groupId")]
 		public string WebsiteGroupId { get; set; }
 
 		/// <summary>
