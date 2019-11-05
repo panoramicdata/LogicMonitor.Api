@@ -15,6 +15,12 @@ namespace LogicMonitor.Api.Websites
 		public string Type { get; set; }
 
 		/// <summary>
+		/// The domain
+		/// </summary>
+		[DataMember(Name = "domain")]
+		public string Domain { get; set; }
+
+		/// <summary>
 		/// The user name
 		/// </summary>
 		[DataMember(Name = "userName")]
