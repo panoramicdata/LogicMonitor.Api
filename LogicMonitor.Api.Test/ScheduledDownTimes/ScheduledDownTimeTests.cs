@@ -1,5 +1,7 @@
+using LogicMonitor.Api.Devices;
 using LogicMonitor.Api.Extensions;
 using LogicMonitor.Api.Filters;
+using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.ScheduledDownTimes;
 using System;
 using System.Collections.Generic;
@@ -240,6 +242,74 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 				Assert.Equal(deviceId, refetchedSdt.DeviceId);
 				Assert.Equal(sdt.Comment, refetchedSdt.Comment);
 			}
+		}
+
+
+		[Fact]
+		public async void CreatePingDataSourceSdtOnEmptyDeviceGroup()
+		{
+			const string deviceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
+
+			// Ensure DeviceGroup is NOT present
+			var deviceGroup = await PortalClient
+				.GetDeviceGroupByFullPathAsync(deviceGroupName)
+				.ConfigureAwait(false);
+
+			if (deviceGroup != null)
+			{
+				await PortalClient
+					.DeleteAsync(deviceGroup)
+					.ConfigureAwait(false);
+			}
+
+			// Create DeviceGroup
+			deviceGroup = await PortalClient
+				.CreateAsync(new DeviceGroupCreationDto
+				{
+					ParentId = "1",
+					Name = deviceGroupName
+				})
+				.ConfigureAwait(false);
+
+			// Get ping DataSource
+			var dataSource = (await PortalClient
+				.GetAllAsync(new Filter<DataSource>
+				{
+					FilterItems = new List<FilterItem<DataSource>>
+					{
+						new Eq<DataSource>(nameof(DataSource.Name), "Ping")
+					}
+				})
+				.ConfigureAwait(false))
+				.SingleOrDefault();
+
+			// Create Scheduled Downtime
+			var sdtCreationDto = new DeviceGroupScheduledDownTimeCreationDto(deviceGroup.Id)
+			{
+				Comment = "Created by Unit Test",
+				StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
+				EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+				RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime,
+				DataSourceId = dataSource.Id,
+				DataSourceName = dataSource.Name
+			};
+
+			// Check the created SDT looks right
+			var createdSdt = await PortalClient
+				.CreateAsync(sdtCreationDto)
+				.ConfigureAwait(false);
+			Assert.NotNull(createdSdt);
+
+
+			// Clean up
+			await PortalClient
+				.DeleteAsync<ScheduledDownTime>(createdSdt.Id)
+				.ConfigureAwait(false);
+
+			// Remove the device group
+			await PortalClient
+				.DeleteAsync(deviceGroup)
+				.ConfigureAwait(false);
 		}
 	}
 }
