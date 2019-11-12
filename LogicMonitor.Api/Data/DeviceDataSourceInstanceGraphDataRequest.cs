@@ -23,7 +23,7 @@ namespace LogicMonitor.Api.Data
 		/// <inheritdoc />
 		public override void Validate()
 		{
-			if (DataSourceGraphId <= 0)
+			if (DataSourceGraphId <= 0 && DataSourceGraphId != -1)
 			{
 				throw new ArgumentException("DataSourceGraphId must be specified.");
 			}
