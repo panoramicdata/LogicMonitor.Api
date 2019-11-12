@@ -1,12 +1,14 @@
 using LogicMonitor.Api.Collectors;
 using LogicMonitor.Api.Devices;
 using LogicMonitor.Api.Filters;
+using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.RecycleBin;
 using LogicMonitor.Api.ScheduledDownTimes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -167,9 +169,28 @@ deviceProperty
 		[Fact]
 		public async void GetDevicePage()
 		{
-			var devicesPage = await PortalClient.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = 50 }).ConfigureAwait(false);
+			const int MaxCount = 50;
+			var devicesPage = await PortalClient.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = MaxCount }).ConfigureAwait(false);
 
 			Assert.NotNull(devicesPage);
+			Assert.False(devicesPage.TotalCount > MaxCount);
+		}
+
+		[Fact]
+		public async void GetAllDeviceInstancs()
+		{
+			var deviceInstances = await PortalClient
+				.GetAllDeviceInstances(WindowsDeviceId, new Filter<DeviceDataSourceInstance>
+				{
+					Properties = new List<string>
+					{
+						nameof(DeviceDataSourceInstance.Id),
+						nameof(DeviceDataSourceInstance.Name),
+						nameof(DeviceDataSourceInstance.DataSourceName),
+					}
+				}, CancellationToken.None)
+				.ConfigureAwait(false);
+			Assert.True(deviceInstances.Count > 300);
 		}
 
 		[Fact]

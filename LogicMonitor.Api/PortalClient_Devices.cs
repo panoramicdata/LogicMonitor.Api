@@ -604,5 +604,15 @@ namespace LogicMonitor.Api
 			int dataSourceId,
 			CancellationToken cancellationToken = default)
 			=> (await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{deviceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false)).Items;
+
+		/// <summary>
+		/// Gets all device instances matching the provided filter
+		/// </summary>
+		/// <param name="deviceId">The device id</param>
+		/// <param name="filter">The optional filter</param>
+		/// <param name="cancellationToken">The cancellation token</param>
+		/// <returns></returns>
+		public Task<List<DeviceDataSourceInstance>> GetAllDeviceInstances(int deviceId, Filter<DeviceDataSourceInstance> filter, CancellationToken cancellationToken)
+			=> GetAllInternalAsync<DeviceDataSourceInstance>(filter, $"device/devices/{deviceId}/instances", cancellationToken);
 	}
 }
