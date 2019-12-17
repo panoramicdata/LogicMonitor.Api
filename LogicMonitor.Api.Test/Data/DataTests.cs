@@ -158,16 +158,24 @@ namespace LogicMonitor.Api.Test.Data
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			Assert.NotNull(device);
 
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var dataSource = await PortalClient
+				.GetDataSourceByUniqueNameAsync("WinCPU")
+				.ConfigureAwait(false);
 			Assert.NotNull(dataSource);
 
-			var dataSourceGraph = await PortalClient.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage").ConfigureAwait(false);
+			var dataSourceGraph = await PortalClient
+				.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage")
+				.ConfigureAwait(false);
 			Assert.NotNull(dataSourceGraph);
 
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSource = await PortalClient
+				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id)
+				.ConfigureAwait(false);
 			Assert.NotNull(deviceDataSource);
 
-			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>()).ConfigureAwait(false);
+			var deviceDataSourceInstances = await PortalClient
+				.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>())
+				.ConfigureAwait(false);
 			Assert.NotNull(deviceDataSourceInstances);
 			Assert.NotEmpty(deviceDataSourceInstances);
 
@@ -179,10 +187,21 @@ namespace LogicMonitor.Api.Test.Data
 				StartDateTime = startDateTime,
 				EndDateTime = utcNow.LastDayOfLastMonth()
 			};
+
+			//  Ensure Caching is enabled
+			PortalClient.UseCache = true;
+
 			var graphData = await PortalClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
 			Assert.NotEmpty(graphData.Lines);
 			Assert.Equal(startDateTime, graphData.StartTimeUtc);
 			Assert.NotNull(graphData.Lines[0].ColorString);
+
+			// Ensure that subsequent fetches are fast
+			var stopwatch = Stopwatch.StartNew();
+			graphData = await PortalClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
+			Assert.NotNull(graphData);
+			stopwatch.Stop();
+			Assert.True(stopwatch.ElapsedMilliseconds < 50);
 		}
 
 		[Fact]

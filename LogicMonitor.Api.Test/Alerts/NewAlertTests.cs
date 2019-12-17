@@ -1,9 +1,11 @@
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Extensions;
 using LogicMonitor.Api.Filters;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -180,6 +182,15 @@ namespace LogicMonitor.Api.Test.Alerts
 			// Act
 			var alerts = await PortalClient.GetAllAsync(filter).ConfigureAwait(false);
 			Assert.All(alerts, alert => severities.Contains(alert.Severity));
+		}
+
+		[Fact]
+		public async void GetAlertThing()
+		{
+			var result = await PortalClient
+						.GetJObjectAsync("alert/alerts/DS18021744", CancellationToken.None)
+						.ConfigureAwait(false);
+			Assert.NotNull(result);
 		}
 	}
 }

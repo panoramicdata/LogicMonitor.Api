@@ -200,5 +200,11 @@ namespace LogicMonitor.Api.Netscans
 		/// </summary>
 		[DataMember(Name = "ports")]
 		public NetscanPorts Ports { get; set; }
+
+		/// <summary>
+		/// Whether to ignore duplicates of the system.ips property
+		/// /// </summary>
+		[DataMember(Name = "ignoreSystemIPsDuplicates")]
+		public bool IgnoreSystemIpsDuplicates { get; set; }
 	}
 }

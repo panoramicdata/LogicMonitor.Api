@@ -173,7 +173,7 @@ deviceProperty
 			var devicesPage = await PortalClient.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = MaxCount }).ConfigureAwait(false);
 
 			Assert.NotNull(devicesPage);
-			Assert.False(devicesPage.TotalCount > MaxCount);
+			Assert.True(devicesPage.Items.Count <= MaxCount);
 		}
 
 		[Fact]
@@ -449,6 +449,16 @@ deviceProperty
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			var deviceProperties = await PortalClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
 			Assert.NotEmpty(deviceProperties);
+		}
+
+		[Fact]
+		public async void GetDeviceUsingSubUrl()
+		{
+			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+			var deviceRefetch = await PortalClient
+						.GetAllAsync<JObject>($"device/devices?filter=id:{device.Id}&fields=inheritedProperties", CancellationToken.None)
+						.ConfigureAwait(false);
+			Assert.NotNull(deviceRefetch);
 		}
 
 		[Fact]

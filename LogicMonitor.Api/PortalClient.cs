@@ -7,6 +7,7 @@ using LogicMonitor.Api.OpsNotes;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -696,6 +697,9 @@ namespace LogicMonitor.Api
 
 		private Task<T> GetBySubUrlAsync<T>(string subUrl, CancellationToken cancellationToken) where T : class, new()
 		=> GetAsync<T>(UseCache, subUrl, cancellationToken);
+
+		public Task<JObject> GetJObjectAsync(string subUrl, CancellationToken cancellationToken)
+		=> GetAsync<JObject>(UseCache, subUrl, cancellationToken);
 
 		/// <summary>
 		/// Delete an item
