@@ -9,34 +9,10 @@ namespace LogicMonitor.Api.LogicModules
 	public class LogicModuleUpdate : IHasEndpoint
 	{
 		/// <summary>
-		/// The permission
+		/// The local ID
 		/// </summary>
-		[DataMember(Name = "category")]
-		public LogicModuleUpdateCategory Category { get; set; }
-
-		/// <summary>
-		/// The active instance count
-		/// </summary>
-		[DataMember(Name = "activeInstances")]
-		public int? ActiveInstanceCount { get; set; }
-
-		/// <summary>
-		/// The associated device count
-		/// </summary>
-		[DataMember(Name = "associatedDevices")]
-		public int? AssociatedDeviceCount { get; set; }
-
-		/// <summary>
-		/// The description
-		/// </summary>
-		[DataMember(Name = "description")]
-		public string Description { get; set; }
-
-		/// <summary>
-		/// The locator
-		/// </summary>
-		[DataMember(Name = "locator")]
-		public string Locator { get; set; }
+		[DataMember(Name = "localId")]
+		public int LocalId { get; set; }
 
 		/// <summary>
 		/// The name
@@ -45,16 +21,70 @@ namespace LogicMonitor.Api.LogicModules
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The displayName
+		/// The appliesTo
 		/// </summary>
-		[DataMember(Name = "displayName")]
-		public string DisplayName { get; set; }
+		[DataMember(Name = "appliesTo")]
+		public string AppliesTo { get; set; }
 
 		/// <summary>
-		/// The lineage id
+		/// The permission
 		/// </summary>
-		[DataMember(Name = "lineageid")]
-		public string LineageId { get; set; }
+		[DataMember(Name = "category")]
+		public LogicModuleUpdateCategory Category { get; set; }
+
+		/// <summary>
+		/// The type
+		/// </summary>
+		[DataMember(Name = "type")]
+		public LogicModuleType Type { get; set; }
+
+		/// <summary>
+		/// The collection method
+		/// </summary>
+		[DataMember(Name = "collectionMethod")]
+		public string CollectionMethod { get; set; }
+
+		/// <summary>
+		/// The description
+		/// </summary>
+		[DataMember(Name = "description")]
+		public string Description { get; set; }
+
+		/// <summary>
+		/// The group
+		/// </summary>
+		[DataMember(Name = "group")]
+		public string Group { get; set; }
+
+		/// <summary>
+		/// The version
+		/// </summary>
+		[DataMember(Name = "version")]
+		public long Version { get; set; }
+
+		/// <summary>
+		/// The local version
+		/// </summary>
+		[DataMember(Name = "localVersion")]
+		public long LocalVersion { get; set; }
+
+		/// <summary>
+		/// The audit version
+		/// </summary>
+		[DataMember(Name = "auditVersion")]
+		public long AuditVersion { get; set; }
+
+		/// <summary>
+		/// The rest LM (?)
+		/// </summary>
+		[DataMember(Name = "restLm")]
+		public string RestLm { get; set; }
+
+		/// <summary>
+		/// The registryVersion
+		/// </summary>
+		[DataMember(Name = "registryVersion")]
+		public string RegistryVersion { get; set; }
 
 		/// <summary>
 		/// The publish time
@@ -69,21 +99,39 @@ namespace LogicMonitor.Api.LogicModules
 		public string Quality { get; set; }
 
 		/// <summary>
-		/// The registryVersion
+		/// The locator
 		/// </summary>
-		[DataMember(Name = "registryVersion")]
-		public string RegistryVersion { get; set; }
+		[DataMember(Name = "locator")]
+		public string Locator { get; set; }
 
 		/// <summary>
-		/// The type
+		/// The currentUuid
 		/// </summary>
-		[DataMember(Name = "type")]
-		public LogicModuleType Type { get; set; }
+		[DataMember(Name = "currentUuid")]
+		public string CurrentUuid { get; set; }
+
+		/// <summary>
+		/// The namespace
+		/// </summary>
+		[DataMember(Name = "namespace")]
+		public string Namespace { get; set; }
+
+		/// <summary>
+		/// The local version
+		/// </summary>
+		[DataMember(Name = "local")]
+		public string Local { get; set; }
+
+		/// <summary>
+		/// The remote version
+		/// </summary>
+		[DataMember(Name = "remote")]
+		public string Remote { get; set; }
 
 		/// <summary>
 		/// The endpoint
 		/// </summary>
 		/// <returns></returns>
-		public string Endpoint() => "setting/registry/listcore";
+		public string Endpoint() => "setting/logicmodules/listcore";
 	}
 }

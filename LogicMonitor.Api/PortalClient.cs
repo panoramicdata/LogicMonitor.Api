@@ -56,7 +56,7 @@ namespace LogicMonitor.Api
 		/// </summary>
 		public string AccountName { get; }
 
-		private static readonly Regex V3HackRegex = new Regex("/setting/admin|setting/role|setting/role|/setting/registry/listcore");
+		private static readonly Regex V3HackRegex = new Regex("/setting/admin|setting/role|setting/role|/setting/logicmodules/listcore");
 
 		#endregion Fields
 
