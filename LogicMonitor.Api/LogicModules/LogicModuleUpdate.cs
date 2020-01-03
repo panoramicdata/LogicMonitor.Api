@@ -57,19 +57,19 @@ namespace LogicMonitor.Api.LogicModules
 		public string Group { get; set; }
 
 		/// <summary>
-		/// The version
+		/// The version (installed). This is an epoch timestamp
 		/// </summary>
 		[DataMember(Name = "version")]
 		public long Version { get; set; }
 
 		/// <summary>
-		/// The local version
+		/// The local version. This is an epoch timestamp
 		/// </summary>
 		[DataMember(Name = "localVersion")]
 		public long LocalVersion { get; set; }
 
 		/// <summary>
-		/// The audit version
+		/// The audit version. This is an epoch timestamp
 		/// </summary>
 		[DataMember(Name = "auditVersion")]
 		public long AuditVersion { get; set; }

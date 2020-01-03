@@ -30,6 +30,12 @@ namespace LogicMonitor.Api.LogicModules
 		/// Updated in use
 		/// </summary>
 		[EnumMember(Value = "updatedInUse")]
-		UpdatedInUse
+		UpdatedInUse,
+
+		/// <summary>
+		/// audited
+		/// </summary>
+		[EnumMember(Value = "audited")]
+		Audited
 	}
 }
