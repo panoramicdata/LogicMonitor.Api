@@ -51,30 +51,31 @@ namespace LogicMonitor.Api
 			LogicModuleType logicModuleType,
 			CancellationToken cancellationToken = default)
 		{
-			var typeParameterValue = string.Empty;
+			var typeParameter = string.Empty;
 			switch (logicModuleType)
 			{
-				case LogicModuleType.Unknown:
-					throw new LogicMonitorApiException($"Unable to ask for LogicModules of type '{logicModuleType.ToString()}'.");
+				case LogicModuleType.All:
+					// No parameter
+					break;
 				case LogicModuleType.DataSource:
 				case LogicModuleType.EventSource:
 				case LogicModuleType.ConfigSource:
-					typeParameterValue = logicModuleType.ToString().ToLower();
+					typeParameter = $"?type={logicModuleType.ToString().ToLower()}";
 					break;
 				case LogicModuleType.PropertySource:
-					typeParameterValue = "propertyrules";
+					typeParameter = "?type=propertyrules";
 					break;
 				case LogicModuleType.JobMonitor:
-					typeParameterValue = "batchjob";
+					typeParameter = "?type=batchjob";
 					break;
 				case LogicModuleType.AppliesToFunction:
-					typeParameterValue = "function";
+					typeParameter = "?type=function";
 					break;
 				case LogicModuleType.SnmpSysOIDMap:
-					typeParameterValue = "oid";
+					typeParameter = "?type=oid";
 					break;
 				case LogicModuleType.TopologySource:
-					typeParameterValue = $"{logicModuleType.ToString().ToLower()}s";
+					typeParameter = $"?type={logicModuleType.ToString().ToLower()}s";
 					break;
 			}
 
@@ -85,7 +86,7 @@ namespace LogicMonitor.Api
 					Username = "anonymouse",
 					Password = "logicmonitor"
 				},
-				$"setting/logicmodules/listcore?type={typeParameterValue}",
+				$"setting/logicmodules/listcore{typeParameter}",
 				cancellationToken)
 			.ConfigureAwait(false);
 		}

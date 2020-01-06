@@ -11,6 +11,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 		}
 
+		/// <summary>
+		/// Get DataSource updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleDataSourceUpdates()
 		{
@@ -22,6 +25,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.NotEmpty(dataSourceUpdates.Items);
 		}
 
+		/// <summary>
+		/// Get EventSource updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleEventSourceUpdates()
 		{
@@ -33,6 +39,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.NotEmpty(eventSourceUpdates.Items);
 		}
 
+		/// <summary>
+		/// Get ConfigSource updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleConfigSourceUpdates()
 		{
@@ -44,6 +53,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.NotEmpty(configSourceUpdates.Items);
 		}
 
+		/// <summary>
+		/// Get PropertySource updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModulePropertySourceUpdates()
 		{
@@ -55,6 +67,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.NotEmpty(propertySourceUpdates.Items);
 		}
 
+		/// <summary>
+		/// Get TopologySource updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleTopologySourceUpdates()
 		{
@@ -66,6 +81,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.NotEmpty(topologySourceUpdates.Items);
 		}
 
+		/// <summary>
+		/// Get Job Monitor updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleJobMonitorUpdates()
 		{
@@ -77,6 +95,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			//Assert.NotEmpty(jobMonitorUpdates.Items);	// Usually none
 		}
 
+		/// <summary>
+		/// Get AppliesTo Function updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleAppliesToUpdates()
 		{
@@ -88,6 +109,9 @@ namespace LogicMonitor.Api.Test.LogicModules
 			//Assert.NotEmpty(appliesToUpdates.Items);	// Usually none
 		}
 
+		/// <summary>
+		/// Get SnmpSysOID updates
+		/// </summary>
 		[Fact]
 		public async void GetLogicModuleSnmpSysOidUpdates()
 		{
@@ -99,24 +123,18 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.NotEmpty(snmpSysOidUpdates.Items);
 		}
 
+		/// <summary>
+		/// Get ALL LogicModule updates
+		/// </summary>
 		[Fact]
-		public async void GetLogicModuleUnknownUpdates()
+		public async void GetAllLogicModuleUpdates()
 		{
-			var unknownUpdates = new LogicModuleUpdateCollection();
+			var allUpdates =
+				await PortalClient
+					.GetLogicModuleUpdates(LogicModuleType.All, default)
+					.ConfigureAwait(false);
 
-			try
-			{
-				unknownUpdates =
-					await PortalClient
-						.GetLogicModuleUpdates(LogicModuleType.Unknown, default)
-						.ConfigureAwait(false);
-			}
-#pragma warning disable CA1031 // Do not catch general exception types
-			catch
-			{
-				Assert.True(unknownUpdates.Total == 0);
-			}
-#pragma warning restore CA1031 // Do not catch general exception types
+				Assert.True(allUpdates.Total > 0);
 		}
 
 		/// <summary>
