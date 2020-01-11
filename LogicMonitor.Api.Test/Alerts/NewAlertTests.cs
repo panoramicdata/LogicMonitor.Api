@@ -160,7 +160,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				// Refetch each alert
 				foreach (var alert in await PortalClient.GetAllAsync(alertFilter).ConfigureAwait(false))
 				{
-					var refetchedAlert = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+					var _ = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
 				}
 			}
 		}

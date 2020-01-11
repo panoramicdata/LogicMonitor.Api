@@ -16,7 +16,10 @@ namespace LogicMonitor.Api
 		/// Constructor
 		/// </summary>
 		internal LogicMonitorServiceUnavailableException(string responseBody)
-			: base(MatchText) => ResponseBody = responseBody;
+			: base(MatchText)
+		{
+			ResponseBody = responseBody;
+		}
 
 		/// <summary>
 		/// Constructor

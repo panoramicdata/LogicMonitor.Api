@@ -11,7 +11,10 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// Constructor
 		/// </summary>
 		/// <param name="websiteId"></param>
-		public WebsiteScheduledDownTimeCreationDto(int websiteId) : base(ScheduledDownTimeType.Website) => WebsiteId = websiteId;
+		public WebsiteScheduledDownTimeCreationDto(int websiteId) : base(ScheduledDownTimeType.Website)
+		{
+			WebsiteId = websiteId;
+		}
 
 		/// <summary>
 		/// The website id

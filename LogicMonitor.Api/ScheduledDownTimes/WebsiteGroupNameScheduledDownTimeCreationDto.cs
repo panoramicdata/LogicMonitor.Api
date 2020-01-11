@@ -11,7 +11,10 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// Constructor
 		/// </summary>
 		/// <param name="websiteGroupName"></param>
-		public WebsiteGroupNameScheduledDownTimeCreationDto(string websiteGroupName) : base(ScheduledDownTimeType.WebsiteGroup) => WebsiteGroupName = websiteGroupName;
+		public WebsiteGroupNameScheduledDownTimeCreationDto(string websiteGroupName) : base(ScheduledDownTimeType.WebsiteGroup)
+		{
+			WebsiteGroupName = websiteGroupName;
+		}
 
 		/// <summary>
 		/// The website group name

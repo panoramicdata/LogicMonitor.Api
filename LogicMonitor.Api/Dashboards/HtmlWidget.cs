@@ -12,7 +12,10 @@ namespace LogicMonitor.Api.Dashboards
 		/// <summary>
 		///     Constructor with default parameters
 		/// </summary>
-		public HtmlWidget() => Type = "html";
+		public HtmlWidget()
+		{
+			Type = "html";
+		}
 
 		/// <summary>
 		///     The HTML widget resources

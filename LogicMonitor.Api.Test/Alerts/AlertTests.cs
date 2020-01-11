@@ -395,15 +395,11 @@ namespace LogicMonitor.Api.Test.Alerts
 			// Refetch with GetAlertAsync
 			foreach (var alert in alerts)
 			{
-				// Make sure they are fetched whether or not the alert type is specified
-				foreach (var alertType in new[] { AlertType.Unknown, alert.AlertType })
-				{
-					var refetchedAlert = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
-					Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
-					Assert.Equal(alert.Id, refetchedAlert.Id);
-					Assert.Equal(alert.AlertType, refetchedAlert.AlertType);
-					Assert.Equal(alert.DetailMessage?.Body, refetchedAlert.DetailMessage?.Body);
-				}
+				var refetchedAlert = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+				Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
+				Assert.Equal(alert.Id, refetchedAlert.Id);
+				Assert.Equal(alert.AlertType, refetchedAlert.AlertType);
+				Assert.Equal(alert.DetailMessage?.Body, refetchedAlert.DetailMessage?.Body);
 			}
 		}
 

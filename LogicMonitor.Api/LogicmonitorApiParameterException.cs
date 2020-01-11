@@ -19,7 +19,10 @@ namespace LogicMonitor.Api
 		/// Constructor
 		/// </summary>
 		/// <param name="parameter"></param>
-		public LogicMonitorApiParameterException(string parameter) => Parameter = parameter;
+		public LogicMonitorApiParameterException(string parameter)
+		{
+			Parameter = parameter;
+		}
 
 		/// <summary>
 		///  Constructor

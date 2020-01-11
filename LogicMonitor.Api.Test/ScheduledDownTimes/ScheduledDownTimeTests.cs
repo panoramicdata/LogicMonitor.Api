@@ -244,7 +244,6 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 			}
 		}
 
-
 		[Fact]
 		public async void CreatePingDataSourceSdtOnEmptyDeviceGroup()
 		{
@@ -299,7 +298,6 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 				.CreateAsync(sdtCreationDto)
 				.ConfigureAwait(false);
 			Assert.NotNull(createdSdt);
-
 
 			// Clean up
 			await PortalClient

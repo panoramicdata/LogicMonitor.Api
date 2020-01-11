@@ -12,7 +12,9 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// </summary>
 		/// <param name="deviceId"></param>
 		public DeviceScheduledDownTimeCreationDto(int deviceId) : base(ScheduledDownTimeType.Device)
-			=> DeviceId = deviceId;
+		{
+			DeviceId = deviceId;
+		}
 
 		/// <summary>
 		///    The collector id
