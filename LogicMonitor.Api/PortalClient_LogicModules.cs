@@ -40,5 +40,175 @@ namespace LogicMonitor.Api
 				}
 			}
 		}
+
+		/// <summary>
+		/// Get a list of LogicModule updates
+		/// </summary>
+		/// <param name="logicModuleType"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns>A LogicModuleUpdate collection</returns>
+		public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdates(
+			LogicModuleType logicModuleType,
+			CancellationToken cancellationToken = default)
+		{
+			var typeParameter = string.Empty;
+			switch (logicModuleType)
+			{
+				case LogicModuleType.All:
+					// No parameter
+					break;
+				case LogicModuleType.DataSource:
+				case LogicModuleType.EventSource:
+				case LogicModuleType.ConfigSource:
+					typeParameter = $"?type={logicModuleType.ToString().ToLower()}";
+					break;
+				case LogicModuleType.PropertySource:
+					typeParameter = "?type=propertyrules";
+					break;
+				case LogicModuleType.JobMonitor:
+					typeParameter = "?type=batchjob";
+					break;
+				case LogicModuleType.AppliesToFunction:
+					typeParameter = "?type=function";
+					break;
+				case LogicModuleType.SnmpSysOIDMap:
+					typeParameter = "?type=oid";
+					break;
+				case LogicModuleType.TopologySource:
+					typeParameter = $"?type={logicModuleType.ToString().ToLower()}s";
+					break;
+			}
+
+			return await PostAsync<LogicModuleUpdateCredential, LogicModuleUpdateCollection>(
+				new LogicModuleUpdateCredential
+				{
+					CoreServer = "v129.core.logicmonitor.com",
+					Username = "anonymouse",
+					Password = "logicmonitor"
+				},
+				$"setting/logicmodules/listcore{typeParameter}",
+				cancellationToken)
+			.ConfigureAwait(false);
+		}
+
+		/// <summary>
+		/// Mark a DataSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		/// </summary>
+		/// <param name="dataSourceId"></param>
+		/// <param name="auditVersion"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<DataSource> AuditDataSource(int dataSourceId, long auditVersion, CancellationToken cancellationToken = default)
+			=> await PostAsync<LogicModuleUpdateVersion, DataSource>
+			(
+				new LogicModuleUpdateVersion { Version = auditVersion },
+				$"setting/datasources/{dataSourceId}/audit", cancellationToken
+			)
+			.ConfigureAwait(false);
+
+		/// <summary>
+		/// Mark an EventSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		/// </summary>
+		/// <param name="eventSourceId"></param>
+		/// <param name="auditVersion"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<EventSource> AuditEventSource(int eventSourceId, long auditVersion, CancellationToken cancellationToken = default)
+			=> await PostAsync<LogicModuleUpdateVersion, EventSource>
+			(
+				new LogicModuleUpdateVersion { Version = auditVersion },
+				$"setting/eventsources/{eventSourceId}/audit", cancellationToken
+			)
+			.ConfigureAwait(false);
+
+		/// <summary>
+		/// Mark a ConfigSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		/// </summary>
+		/// <param name="configSourceId"></param>
+		/// <param name="auditVersion"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<ConfigSource> AuditConfigSource(int configSourceId, long auditVersion, CancellationToken cancellationToken = default)
+			=> await PostAsync<LogicModuleUpdateVersion, ConfigSource>
+			(
+				new LogicModuleUpdateVersion { Version = auditVersion },
+				$"setting/configsources/{configSourceId}/audit", cancellationToken
+			)
+			.ConfigureAwait(false);
+
+		/// <summary>
+		/// Mark a PropertySource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		/// </summary>
+		/// <param name="propertySourceId"></param>
+		/// <param name="auditVersion"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<PropertySource> AuditPropertySource(int propertySourceId, long auditVersion, CancellationToken cancellationToken = default)
+			=> await PostAsync<LogicModuleUpdateVersion, PropertySource>
+			(
+				new LogicModuleUpdateVersion { Version = auditVersion },
+				$"setting/propertyrules/{propertySourceId}/audit", cancellationToken
+			)
+			.ConfigureAwait(false);
+
+		///// <summary>
+		///// CURRENTLY NOT SUPPORTED IN LM: Mark a TopologySource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		///// </summary>
+		///// <param name="topologySourceId"></param>
+		///// <param name="auditVersion"></param>
+		///// <param name="cancellationToken"></param>
+		///// <returns></returns>
+		//public async Task<TopologySource> AuditTopologySource(int topologySourceId, long auditVersion, CancellationToken cancellationToken = default)
+		//	=> await PostAsync<LogicModuleUpdateVersion, TopologySource>
+		//	(
+		//		new LogicModuleUpdateVersion { Version = auditVersion },
+		//		$"setting/topologysources/{topologySourceId}/audit", cancellationToken
+		//	)
+		//	.ConfigureAwait(false);
+
+		///// <summary>
+		///// CURRENTLY NOT SUPPORTED IN LM: Mark a Job Monitor (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		///// </summary>
+		///// <param name="jobMonitorId"></param>
+		///// <param name="auditVersion"></param>
+		///// <param name="cancellationToken"></param>
+		///// <returns></returns>
+		//public async Task<JobMonitor> AuditJobMonitor(int jobMonitorId, long auditVersion, CancellationToken cancellationToken = default)
+		//	=> await PostAsync<LogicModuleUpdateVersion, JobMonitor>
+		//	(
+		//		new LogicModuleUpdateVersion { Version = auditVersion },
+		//		$"setting/batchjob/{jobMonitorId}/audit", cancellationToken
+		//	)
+		//	.ConfigureAwait(false);
+
+		///// <summary>
+		///// CURRENTLY NOT SUPPORTED IN LM: Mark an AppliesTo Function (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		///// </summary>
+		///// <param name="appliesToFunctionId"></param>
+		///// <param name="auditVersion"></param>
+		///// <param name="cancellationToken"></param>
+		///// <returns></returns>
+		//public async Task<AppliesToFunction> AuditAppliesToFunction(int appliesToFunctionId, long auditVersion, CancellationToken cancellationToken = default)
+		//	=> await PostAsync<LogicModuleUpdateVersion, AppliesToFunction>
+		//	(
+		//		new LogicModuleUpdateVersion { Version = auditVersion },
+		//		$"setting/function/{appliesToFunctionId}/audit", cancellationToken
+		//	)
+		//	.ConfigureAwait(false);
+
+		/// <summary>
+		/// Mark an SNMP SysOID Map (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		/// </summary>
+		/// <param name="snmpSysOidMapId"></param>
+		/// <param name="auditVersion"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task<SnmpSysOidMap> AuditSnmpSysOidMap(int snmpSysOidMapId, long auditVersion, CancellationToken cancellationToken = default)
+			=> await PostAsync<LogicModuleUpdateVersion, SnmpSysOidMap>
+			(
+				new LogicModuleUpdateVersion { Version = auditVersion },
+				$"setting/oid/{snmpSysOidMapId}/audit", cancellationToken
+			)
+			.ConfigureAwait(false);
 	}
 }

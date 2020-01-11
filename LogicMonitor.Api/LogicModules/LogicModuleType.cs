@@ -11,8 +11,8 @@ namespace LogicMonitor.Api.LogicModules
 		/// <summary>
 		/// Unknown
 		/// </summary>
-		[EnumMember(Value = "unknown")]
-		Unknown = 0,
+		[EnumMember(Value = "All")]
+		All = 0,
 
 		/// <summary>
 		/// DataSource
