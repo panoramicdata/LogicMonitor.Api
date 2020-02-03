@@ -1,5 +1,6 @@
 using LogicMonitor.Api.LogicModules;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,13 +45,16 @@ namespace LogicMonitor.Api
 		/// <summary>
 		/// Get a list of LogicModule updates
 		/// </summary>
-		/// <param name="logicModuleType"></param>
+		/// <param name="logicModuleType">The LogicModule type</param>
+		/// <param name="versionOverride">The LogicMonitor version override</param>
 		/// <param name="cancellationToken"></param>
 		/// <returns>A LogicModuleUpdate collection</returns>
 		public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdates(
 			LogicModuleType logicModuleType,
+			int? versionOverride = null,
 			CancellationToken cancellationToken = default)
 		{
+			versionOverride ??= 130; // TODO: use the actual version we want
 			var typeParameter = string.Empty;
 			switch (logicModuleType)
 			{
@@ -82,9 +86,7 @@ namespace LogicMonitor.Api
 			return await PostAsync<LogicModuleUpdateCredential, LogicModuleUpdateCollection>(
 				new LogicModuleUpdateCredential
 				{
-					CoreServer = "v129.core.logicmonitor.com",
-					Username = "anonymouse",
-					Password = "logicmonitor"
+					CoreServer = $"v{versionOverride}.core.logicmonitor.com"
 				},
 				$"setting/logicmodules/listcore{typeParameter}",
 				cancellationToken)
@@ -151,64 +153,87 @@ namespace LogicMonitor.Api
 			)
 			.ConfigureAwait(false);
 
-		///// <summary>
-		///// CURRENTLY NOT SUPPORTED IN LM: Mark a TopologySource (from the repository) as audited. Find the version via GetLogicModuleUpdates
-		///// </summary>
-		///// <param name="topologySourceId"></param>
-		///// <param name="auditVersion"></param>
-		///// <param name="cancellationToken"></param>
-		///// <returns></returns>
-		//public async Task<TopologySource> AuditTopologySource(int topologySourceId, long auditVersion, CancellationToken cancellationToken = default)
-		//	=> await PostAsync<LogicModuleUpdateVersion, TopologySource>
-		//	(
-		//		new LogicModuleUpdateVersion { Version = auditVersion },
-		//		$"setting/topologysources/{topologySourceId}/audit", cancellationToken
-		//	)
-		//	.ConfigureAwait(false);
-
-		///// <summary>
-		///// CURRENTLY NOT SUPPORTED IN LM: Mark a Job Monitor (from the repository) as audited. Find the version via GetLogicModuleUpdates
-		///// </summary>
-		///// <param name="jobMonitorId"></param>
-		///// <param name="auditVersion"></param>
-		///// <param name="cancellationToken"></param>
-		///// <returns></returns>
-		//public async Task<JobMonitor> AuditJobMonitor(int jobMonitorId, long auditVersion, CancellationToken cancellationToken = default)
-		//	=> await PostAsync<LogicModuleUpdateVersion, JobMonitor>
-		//	(
-		//		new LogicModuleUpdateVersion { Version = auditVersion },
-		//		$"setting/batchjob/{jobMonitorId}/audit", cancellationToken
-		//	)
-		//	.ConfigureAwait(false);
-
-		///// <summary>
-		///// CURRENTLY NOT SUPPORTED IN LM: Mark an AppliesTo Function (from the repository) as audited. Find the version via GetLogicModuleUpdates
-		///// </summary>
-		///// <param name="appliesToFunctionId"></param>
-		///// <param name="auditVersion"></param>
-		///// <param name="cancellationToken"></param>
-		///// <returns></returns>
-		//public async Task<AppliesToFunction> AuditAppliesToFunction(int appliesToFunctionId, long auditVersion, CancellationToken cancellationToken = default)
-		//	=> await PostAsync<LogicModuleUpdateVersion, AppliesToFunction>
-		//	(
-		//		new LogicModuleUpdateVersion { Version = auditVersion },
-		//		$"setting/function/{appliesToFunctionId}/audit", cancellationToken
-		//	)
-		//	.ConfigureAwait(false);
-
 		/// <summary>
-		/// Mark an SNMP SysOID Map (from the repository) as audited. Find the version via GetLogicModuleUpdates
+		/// Import a LogicModule
 		/// </summary>
-		/// <param name="snmpSysOidMapId"></param>
-		/// <param name="auditVersion"></param>
+		/// <param name="logicModuleType">The LogicModule type (except SNMP SysOID Maps - for those use ImportSnmpSysOidMap)</param>
+		/// <param name="logicModuleNames">A list of LogicModule names</param>
+		/// <param name="versionOverride">The LogicMonitor version override</param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public async Task<SnmpSysOidMap> AuditSnmpSysOidMap(int snmpSysOidMapId, long auditVersion, CancellationToken cancellationToken = default)
-			=> await PostAsync<LogicModuleUpdateVersion, SnmpSysOidMap>
+		public async Task ImportLogicModules(
+			LogicModuleType logicModuleType,
+			List<string> logicModuleNames,
+			int? versionOverride = null,
+			CancellationToken cancellationToken = default)
+		{
+			versionOverride ??= 130; // TODO: use the actual version we want
+
+			string typeEndpoint;
+			switch (logicModuleType)
+			{
+				case LogicModuleType.DataSource:
+				case LogicModuleType.EventSource:
+				case LogicModuleType.ConfigSource:
+				case LogicModuleType.TopologySource:
+					typeEndpoint = $"{logicModuleType.ToString().ToLower()}s";
+					break;
+				case LogicModuleType.PropertySource:
+					typeEndpoint = "propertyrules";
+					break;
+				case LogicModuleType.JobMonitor:
+					typeEndpoint = "batchjobs";
+					break;
+				case LogicModuleType.AppliesToFunction:
+					typeEndpoint = "functions";
+					break;
+				case LogicModuleType.SnmpSysOIDMap:
+					throw new NotSupportedException($"Unsupported import type. Use {nameof(ImportSnmpSysOidMap)} instead.");
+				default:
+					throw new NotSupportedException("Unsupported import type.");
+			}
+
+			await PostAsync<LogicModuleImportObject, object>
 			(
-				new LogicModuleUpdateVersion { Version = auditVersion },
-				$"setting/oid/{snmpSysOidMapId}/audit", cancellationToken
+				// OK for Datasources, EventSources, ConfigSources, PropertySources, TopologySources, AppliesToFunctions
+				new LogicModuleImportObject
+				{
+					CoreServer = $"v{versionOverride}.core.logicmonitor.com",
+					ImportDataSources = logicModuleNames
+				},
+				$"setting/{typeEndpoint}/importcore",
+				cancellationToken
 			)
 			.ConfigureAwait(false);
+		}
+
+
+		/// <summary>
+		/// Import a LogicModule
+		/// </summary>
+		/// <param name="snmpSysOidMapImportItems">A list of LogicModule names</param>
+		/// <param name="versionOverride">The LogicMonitor version override</param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		public async Task ImportSnmpSysOidMap(
+			List<SnmpSysOidMapImportItem> snmpSysOidMapImportItems,
+			int? versionOverride = null,
+			CancellationToken cancellationToken = default)
+		{
+			versionOverride ??= 130; // TODO: use the actual version we want
+
+			await PostAsync<SnmpSysOidMapImportObject, object>
+			(
+				new SnmpSysOidMapImportObject
+				{
+					CoreServer = $"v{versionOverride}.core.logicmonitor.com",
+					ImportOids = snmpSysOidMapImportItems
+				},
+				"setting/oids/importcore",
+				cancellationToken
+			)
+			.ConfigureAwait(false);
+			return;
+		}
 	}
 }

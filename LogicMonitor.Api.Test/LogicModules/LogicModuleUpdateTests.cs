@@ -1,4 +1,5 @@
 using LogicMonitor.Api.LogicModules;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -245,85 +246,255 @@ namespace LogicMonitor.Api.Test.LogicModules
 			}
 		}
 
-		///// <summary>
-		///// Find one unaudited topology source update and mark as audited. LM NOT CURRENTLY SUPPORTS AUDITING A TOPOLOGY SOURCE
-		///// </summary>
-		//[Fact]
-		//public async void AuditTopologySource()
-		//{
-		//	var topologySourceUpdates =
-		//		(await PortalClient
-		//			.GetLogicModuleUpdates(LogicModuleType.TopologySource, default)
-		//			.ConfigureAwait(false))
-		//		.Items
-		//		.Where(ds =>
-		//			ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
-		//		.ToList();
+		/// <summary>
+		/// Find one updated Data Source and import
+		/// </summary>
+		[Fact]
+		public async void ImportDataSource()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.DataSource;
 
-		//	if (topologySourceUpdates.Count > 0)
-		//	{
-		//		var topologySourceToAudit = topologySourceUpdates[0];
-		//		var auditedTopologySource =
-		//			await PortalClient.AuditTopologySource(
-		//				topologySourceToAudit.LocalId,
-		//				topologySourceToAudit.Version,
-		//				default)
-		//			.ConfigureAwait(false);
-		//	}
-		//}
+			var dataSourceUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
 
-		///// <summary>
-		///// Find one unaudited job monitor update and mark as audited. LM NOT CURRENTLY SUPPORTS AUDITING A JOB MONITOR
-		///// </summary>
-		//[Fact]
-		//public async void AuditJobMonitor()
-		//{
-		//	var jobMonitorUpdates =
-		//		(await PortalClient
-		//			.GetLogicModuleUpdates(LogicModuleType.JobMonitor, default)
-		//			.ConfigureAwait(false))
-		//		.Items
-		//		.Where(ds =>
-		//			ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
-		//		.ToList();
+			if (dataSourceUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						dataSourceUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
 
-		//	if (jobMonitorUpdates.Count > 0)
-		//	{
-		//		var jobMonitorToAudit = jobMonitorUpdates[0];
-		//		var auditedJobMonitor =
-		//			await PortalClient.AuditTopologySource(
-		//				jobMonitorToAudit.LocalId,
-		//				jobMonitorToAudit.Version,
-		//				default)
-		//			.ConfigureAwait(false);
-		//	}
-		//}
+		/// <summary>
+		/// Find one updated Event Source and import
+		/// </summary>
+		[Fact]
+		public async void ImportEventSource()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.EventSource;
 
-		///// <summary>
-		///// Find one unaudited applies to function update and mark as audited. LM NOT CURRENTLY SUPPORTS AUDITING AN APPLIESTO
-		///// </summary>
-		//[Fact]
-		//public async void AuditAppliesToFunction()
-		//{
-		//	var appliesToUpdates =
-		//		(await PortalClient
-		//			.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, default)
-		//			.ConfigureAwait(false))
-		//		.Items
-		//		.Where(ds =>
-		//			ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
-		//		.ToList();
+			var eventSourceUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
 
-		//	if (appliesToUpdates.Count > 0)
-		//	{
-		//		var appliesToToAudit = appliesToUpdates[0];
-		//		var auditedAppliesTo =
-		//			await PortalClient.AuditAppliesToFunction(
-		//				appliesToToAudit.LocalId,
-		//				appliesToToAudit.Version,
-		//				default)
-		//			.ConfigureAwait(false);
-		//	}
-		//}
+			if (eventSourceUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						eventSourceUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Find one updated Config Source and import
+		/// </summary>
+		[Fact]
+		public async void ImportConfigSource()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
+
+			var configSourceUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
+
+			if (configSourceUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						configSourceUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Find one updated Property Source and import
+		/// </summary>
+		[Fact]
+		public async void ImportPropertySource()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
+
+			var propertySourceUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
+
+			if (propertySourceUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						propertySourceUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Find one updated Topology Source and import
+		/// </summary>
+		[Fact]
+		public async void ImportTopologySource()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
+
+			var topologySourceUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
+
+			if (topologySourceUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						topologySourceUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Find one updated Job Monitor and import
+		/// </summary>
+		[Fact]
+		public async void ImportJobMonitor()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
+
+			var jobMonitorUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
+
+			if (jobMonitorUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						jobMonitorUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Find one updated AppliesToFunction and import
+		/// </summary>
+		[Fact]
+		public async void ImportAppliesToFunction()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
+
+			var appliesToFunctionUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
+
+			if (appliesToFunctionUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportLogicModules(
+					logicModuleType,
+					new List<string>
+					{
+						appliesToFunctionUpdates[0].Name
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
+
+		/// <summary>
+		/// Find one updated SNMP SysOID Map and import
+		/// </summary>
+		[Fact]
+		public async void ImportSnmpSysOidMap()
+		{
+			const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;
+
+			var snmpSysOidMapUpdates =
+				(await PortalClient
+					.GetLogicModuleUpdates(logicModuleType, default)
+					.ConfigureAwait(false))
+				.Items
+				.Where(ds =>
+					ds.Category == LogicModuleUpdateCategory.New)
+				.ToList();
+
+			if (snmpSysOidMapUpdates.Count > 0)
+			{
+				await PortalClient
+					.ImportSnmpSysOidMap(
+					new List<SnmpSysOidMapImportItem>
+					{
+						new SnmpSysOidMapImportItem
+						{
+							Id = snmpSysOidMapUpdates[0].LocalId,
+							Oid = snmpSysOidMapUpdates[0].Name
+						}
+					},
+					default)
+					.ConfigureAwait(false);
+			}
+		}
 	}
 }
