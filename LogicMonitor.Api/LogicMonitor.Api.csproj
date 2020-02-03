@@ -2,10 +2,10 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.129.2</Version>
+		<Version>2.130.2</Version>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
-		<Copyright>Copyright © Panoramic Data Limited 2019</Copyright>
+		<Copyright>Copyright © Panoramic Data Limited 2020</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageIcon>Icon.png</PackageIcon>
@@ -14,7 +14,7 @@
 		<Description>A .NET API for LogicMonitor</Description>
 		<Summary>A .NET API for LogicMonitor</Summary>
 		<Company>Panoramic Data Limited</Company>
-		<PackageReleaseNotes>Changed LogicModuleType.Unknown to LogicModuleType.All so that all updates can be requested.</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated WidgetData</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<LangVersion>latest</LangVersion>
 		<RepositoryType>git</RepositoryType>

@@ -10,7 +10,10 @@ namespace LogicMonitor.Api.OpsNotes
 	public class OpsNoteCreationDto : CreationDto<OpsNote>
 	{
 		/// <inheritdoc />
-		public OpsNoteCreationDto() => Tags = new List<OpsNoteTagCreationDto>();
+		public OpsNoteCreationDto()
+		{
+			Tags = new List<OpsNoteTagCreationDto>();
+		}
 
 		/// <summary>
 		/// The note

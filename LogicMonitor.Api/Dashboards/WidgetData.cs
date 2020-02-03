@@ -44,5 +44,17 @@ namespace LogicMonitor.Api.Dashboards
 		/// </summary>
 		[DataMember(Name = "resultList")]
 		public List<WidgetDataItem> ResultList { get; set; }
+
+		/// <summary>
+		///     Column headers
+		/// </summary>
+		[DataMember(Name = "columnHeaders")]
+		public List<WidgetColumnHeader> ColumnHeaders { get; set; }
+
+		/// <summary>
+		///     Rows
+		/// </summary>
+		[DataMember(Name = "rows")]
+		public List<WidgetRow> Rows { get; set; }
 	}
 }

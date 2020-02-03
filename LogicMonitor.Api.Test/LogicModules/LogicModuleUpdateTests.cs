@@ -88,7 +88,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleJobMonitorUpdates()
 		{
-			var jobMonitorUpdates =
+			var _ =
 				await PortalClient
 					.GetLogicModuleUpdates(LogicModuleType.PropertySource, default)
 					.ConfigureAwait(false);
@@ -102,7 +102,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleAppliesToUpdates()
 		{
-			var appliesToUpdates =
+			var _ =
 				await PortalClient
 					.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, default)
 					.ConfigureAwait(false);
@@ -135,7 +135,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					.GetLogicModuleUpdates(LogicModuleType.All, default)
 					.ConfigureAwait(false);
 
-				Assert.True(allUpdates.Total > 0);
+			Assert.True(allUpdates.Total > 0);
 		}
 
 		/// <summary>

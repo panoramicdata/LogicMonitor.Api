@@ -699,6 +699,12 @@ namespace LogicMonitor.Api
 		private Task<T> GetBySubUrlAsync<T>(string subUrl, CancellationToken cancellationToken) where T : class, new()
 		=> GetAsync<T>(UseCache, subUrl, cancellationToken);
 
+		/// <summary>
+		/// Gets a JObject directly from the API
+		/// </summary>
+		/// <param name="subUrl">The subUrl</param>
+		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <returns></returns>
 		public Task<JObject> GetJObjectAsync(string subUrl, CancellationToken cancellationToken)
 		=> GetAsync<JObject>(UseCache, subUrl, cancellationToken);
 

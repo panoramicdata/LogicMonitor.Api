@@ -11,7 +11,10 @@ namespace LogicMonitor.Api.Dashboards
 		/// <summary>
 		///    Constructor
 		/// </summary>
-		public DeviceGroupMapPoint() => Type = "group";
+		public DeviceGroupMapPoint()
+		{
+			Type = "group";
+		}
 
 		/// <summary>
 		///    The deviceGroup Full Path

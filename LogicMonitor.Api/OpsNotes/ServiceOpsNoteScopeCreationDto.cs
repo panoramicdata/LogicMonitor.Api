@@ -11,7 +11,10 @@ namespace LogicMonitor.Api.OpsNotes
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public WebsiteOpsNoteScopeCreationDto() => Type = "website";
+		public WebsiteOpsNoteScopeCreationDto()
+		{
+			Type = "website";
+		}
 
 		/// <summary>
 		/// The website Id

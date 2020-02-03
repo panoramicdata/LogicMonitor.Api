@@ -11,7 +11,10 @@ namespace LogicMonitor.Api.OpsNotes
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DeviceOpsNoteScopeCreationDto() => Type = "device";
+		public DeviceOpsNoteScopeCreationDto()
+		{
+			Type = "device";
+		}
 
 		/// <summary>
 		/// The device Id

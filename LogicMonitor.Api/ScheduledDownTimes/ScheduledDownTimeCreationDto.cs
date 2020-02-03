@@ -13,7 +13,10 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// Protected constructor
 		/// </summary>
 		/// <param name="type"></param>
-		protected ScheduledDownTimeCreationDto(ScheduledDownTimeType type) => Type = type;
+		protected ScheduledDownTimeCreationDto(ScheduledDownTimeType type)
+		{
+			Type = type;
+		}
 
 		/// <summary>
 		///    Recurrence type

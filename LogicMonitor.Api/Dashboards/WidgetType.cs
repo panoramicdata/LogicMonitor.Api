@@ -91,5 +91,11 @@ namespace LogicMonitor.Api.Dashboards
 		/// </summary>
 		[EnumMember(Value = "bigNumber")]
 		BigNumber,
+
+		/// <summary>
+		/// Dynamic table
+		/// </summary>
+		[EnumMember(Value = "dynamicTable")]
+		DynamicTable,
 	}
 }

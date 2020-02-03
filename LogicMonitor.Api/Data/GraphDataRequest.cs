@@ -13,7 +13,10 @@ namespace LogicMonitor.Api.Data
 		///    Constructor.
 		///    Sets Width to 500 by default
 		/// </summary>
-		protected GraphDataRequest() => Width = 500;
+		protected GraphDataRequest()
+		{
+			Width = 500;
+		}
 
 		/// <summary>
 		///    The graph width
