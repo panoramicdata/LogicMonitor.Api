@@ -3,22 +3,21 @@ using System.Runtime.Serialization;
 namespace LogicMonitor.Api.LogicModules
 {
 	/// <summary>
-	/// The credentials used to get LogicModule update details
+	/// The LogicModule import credentials
 	/// </summary>
 	[DataContract]
-	public class LogicModuleUpdateCredential
+	public class LogicModuleImportCredentials
 	{
 		/// <summary>
 		/// The server address
 		/// </summary>
-		[DataMember(Name = "coreServer")]
+		[DataMember(Name = "coreserver")]
 		public string CoreServer { get; set; }
 
 		/// <summary>
 		/// The username
 		/// </summary>
 		[DataMember(Name = "username")]
-
 		public string Username { get; set; } = "anonymouse";
 
 		/// <summary>
@@ -26,6 +25,5 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[DataMember(Name = "password")]
 		public string Password { get; set; } = "logicmonitor";
-
 	}
 }

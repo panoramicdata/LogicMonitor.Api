@@ -1,12 +1,13 @@
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.LogicModules
 {
 	/// <summary>
-	/// The credentials used to get LogicModule update details
+	/// The list of Snmp SysOID Map names and credentials to import
 	/// </summary>
 	[DataContract]
-	public class LogicModuleUpdateCredential
+	public class SnmpSysOidMapImportObject
 	{
 		/// <summary>
 		/// The server address
@@ -18,7 +19,6 @@ namespace LogicMonitor.Api.LogicModules
 		/// The username
 		/// </summary>
 		[DataMember(Name = "username")]
-
 		public string Username { get; set; } = "anonymouse";
 
 		/// <summary>
@@ -27,5 +27,10 @@ namespace LogicMonitor.Api.LogicModules
 		[DataMember(Name = "password")]
 		public string Password { get; set; } = "logicmonitor";
 
+		/// <summary>
+		/// The LogicModule names. This is the same for all Module types except SNMP SysOID Maps
+		/// </summary>
+		[DataMember(Name = "importOids")]
+		public List<SnmpSysOidMapImportItem> ImportOids { get; set; }
 	}
 }
