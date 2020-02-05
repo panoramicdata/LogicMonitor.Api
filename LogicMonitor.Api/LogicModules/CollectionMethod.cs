@@ -264,10 +264,16 @@ namespace LogicMonitor.Api.LogicModules
 		Ping,
 
 		/// <summary>
-		/// Script
+		/// script
 		/// </summary>
 		[EnumMember(Value = "script")]
 		Script,
+
+		/// <summary>
+		/// Script
+		/// </summary>
+		[EnumMember(Value = "Script")]
+		Script2,
 
 		/// <summary>
 		/// SNMP

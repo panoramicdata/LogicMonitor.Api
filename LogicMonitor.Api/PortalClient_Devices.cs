@@ -40,7 +40,7 @@ namespace LogicMonitor.Api
 			{
 				FilterItems = new List<FilterItem<Device>>
 				{
-					new Eq<Device>(nameof(Device.DisplayName), displayName)
+					new Eq<Device>(nameof(Device.DisplayName), displayName.EscapeSlashes())
 				}
 			}, cancellationToken)
 			.ConfigureAwait(false))

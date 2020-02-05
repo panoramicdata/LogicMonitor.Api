@@ -19,5 +19,8 @@ namespace LogicMonitor.Api.Extensions
 
 		public static string EscapeProblematicCharacters(this string value)
 			=> value.Replace("\\", "\\\\").Replace("(", @"\(").Replace(")", @"\)").Replace('[', '*').Replace(']', '*');
+
+		public static string EscapeSlashes(this string value)
+			=> value.Replace("\\", "\\\\");
 	}
 }
