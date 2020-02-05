@@ -67,7 +67,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteByName()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>("reportmagic.net HTTPS").ConfigureAwait(false);
+			var website = await PortalClient.GetByNameAsync<Website>("PDL-WEB-RM-Prod-Www").ConfigureAwait(false);
 
 			// One service should be returned
 			Assert.NotNull(website);
@@ -76,7 +76,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteByNamePing()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>("reportmagic.net Ping").ConfigureAwait(false);
+			var website = await PortalClient.GetByNameAsync<Website>("PDL-WEB-RM-Prod-Ping").ConfigureAwait(false);
 			// One website should be returned
 			Assert.NotNull(website);
 		}
@@ -84,7 +84,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteGraphData()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>("reportmagic.net HTTPS").ConfigureAwait(false);
+			var website = await PortalClient.GetByNameAsync<Website>(" PDL-WEB-RM-Prod-Www").ConfigureAwait(false);
 
 			var endDateTime = DateTime.UtcNow;
 			var startDateTime = endDateTime.AddMonths(-1);

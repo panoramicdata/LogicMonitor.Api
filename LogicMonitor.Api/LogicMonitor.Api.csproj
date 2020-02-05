@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.130.2</Version>
+		<Version>2.130.3</Version>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
 		<Copyright>Copyright © Panoramic Data Limited 2020</Copyright>
@@ -14,7 +14,7 @@
 		<Description>A .NET API for LogicMonitor</Description>
 		<Summary>A .NET API for LogicMonitor</Summary>
 		<Company>Panoramic Data Limited</Company>
-		<PackageReleaseNotes>Updated WidgetData</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed an issue with backslash characters when getting Devices by Display Name</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<LangVersion>latest</LangVersion>
 		<RepositoryType>git</RepositoryType>
