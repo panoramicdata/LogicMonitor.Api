@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LogicMonitor.Api
 {   /// <summary>
-	///     Metadata
-	/// </summary>
+	 ///     Metadata
+	 /// </summary>
 	public partial class PortalClient
 	{
 		/// <summary>
@@ -23,8 +23,8 @@ namespace LogicMonitor.Api
 			CancellationToken cancellationToken = default)
 		{
 			return GetBySubUrlAsync<LogicModuleMetadata>(
-						   $"setting/registry/metadata/{GetText()}/{id}",
-						   cancellationToken);
+							$"setting/registry/metadata/{GetText()}/{id}",
+							cancellationToken);
 
 			string GetText()
 			{
@@ -206,7 +206,6 @@ namespace LogicMonitor.Api
 			)
 			.ConfigureAwait(false);
 		}
-
 
 		/// <summary>
 		/// Import a LogicModule

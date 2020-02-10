@@ -26,6 +26,5 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[DataMember(Name = "password")]
 		public string Password { get; set; } = "logicmonitor";
-
 	}
 }

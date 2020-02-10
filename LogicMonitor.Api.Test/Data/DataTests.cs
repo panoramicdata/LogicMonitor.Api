@@ -122,7 +122,7 @@ namespace LogicMonitor.Api.Test.Data
 			Assert.True(data.Lines.Count > 0);
 		}
 
-				[Fact]
+		[Fact]
 		public async void GetGraphData_X250()
 		{
 			PortalClient.UseCache = true;
@@ -238,7 +238,7 @@ namespace LogicMonitor.Api.Test.Data
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = (await PortalClient
+			var deviceDataSourceInstances = await PortalClient
 					.GetAllDeviceDataSourceInstancesAsync(
 						device.Id,
 						deviceDataSource.Id,
@@ -250,7 +250,7 @@ namespace LogicMonitor.Api.Test.Data
 								new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 							},
 							Order = new Order<DeviceDataSourceInstance> { Property = nameof(DeviceDataSourceInstance.Name), Direction = OrderDirection.Asc }
-						}).ConfigureAwait(false));
+						}).ConfigureAwait(false);
 			Assert.NotNull(deviceDataSourceInstances);
 			Assert.NotEmpty(deviceDataSourceInstances);
 		}
