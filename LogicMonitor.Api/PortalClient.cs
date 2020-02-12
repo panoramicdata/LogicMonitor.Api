@@ -112,6 +112,12 @@ namespace LogicMonitor.Api
 			}
 		}
 
+		/// <summary>
+		/// Whether to throw an exception when paging over results and the total does not match the count of items retrieved.
+		/// This can happen for example when an item in the first page is deleted during paging.
+		/// </summary>
+		public bool StrictPagingTotalChecking { get; set; }
+
 		#endregion Properties
 
 		#region Constructor / Dispose
@@ -225,38 +231,38 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		private async Task<List<T>> GetAllInternalAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
 		{
-			var originalTake = filter?.Take;
+			var requestedTake = filter?.Take ?? int.MaxValue;
 			// Ensure filter is set up
 			if (filter == null)
 			{
 				filter = new Filter<T>();
 			}
-			filter.Take = Math.Min(300, originalTake ?? int.MaxValue);
+			filter.Take = Math.Min(300, requestedTake);
 			filter.Skip = 0;
 			var list = new List<T>();
 			while (true)
 			{
 				// Get a page
 				var page = await GetPageAsync(filter, subUrl, cancellationToken).ConfigureAwait(false);
-
-				// Is it empty?
-				if (page.Items.Count == 0)
-				{
-					// Yes.  We're done.
-					return list;
-				}
 				list.AddRange(page.Items);
 
-				// Do we already have all items?
-				if (list.Count >= Math.Min(page.TotalCount, originalTake ?? int.MaxValue))
-				{
-					// Yes.  Return list.
-					return list;
-				}
+				// Some endpoints return a negative total count
+				var expectedTotal = Math.Min(page.TotalCount < 0 ? int.MaxValue : page.TotalCount, requestedTake);
 
-				// Special case - OpsNotesTags don't like being paged.
-				if (typeof(T) == typeof(OpsNoteTag))
+				// Did we zero this time
+				// OR do we already have all items?
+				// OR Special case - OpsNotesTags don't like being paged.
+				if (page.Items.Count == 0
+					|| list.Count >= expectedTotal
+					|| typeof(T) == typeof(OpsNoteTag))
 				{
+					// Yes.
+
+					// Do strict checking if required
+					if (StrictPagingTotalChecking && expectedTotal != list.Count)
+					{
+						throw new PagingException($"Mismatch between expected total: {expectedTotal} and received count: {list.Count}");
+					}
 					// Return list.
 					return list;
 				}

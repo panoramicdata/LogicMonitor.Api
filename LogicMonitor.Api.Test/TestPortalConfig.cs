@@ -16,10 +16,14 @@ namespace LogicMonitor.Api.Test
 				.AddJsonFile("appsettings.json");
 			Configuration = builder.Build();
 
-			PortalClient = new PortalClient(Configuration["Config:Account"], Configuration["Config:AccessId"], Configuration["Config:AccessKey"], logger);
+			PortalClient = new PortalClient(Configuration["Config:Account"], Configuration["Config:AccessId"], Configuration["Config:AccessKey"], logger)
+			{
+				StrictPagingTotalChecking = true
+			};
 			SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"]);
 			NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"]);
 			WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"]);
+			WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"]);
 			ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"]);
 			CollectorId = int.Parse(Configuration["Config:CollectorId"]);
 			WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"];
@@ -37,6 +41,8 @@ namespace LogicMonitor.Api.Test
 		public int SnmpDeviceId { get; }
 
 		public int WindowsDeviceId { get; }
+
+		public int WindowsDeviceLargeDeviceDataSourceId { get; }
 
 		public int ServiceDeviceId { get; }
 

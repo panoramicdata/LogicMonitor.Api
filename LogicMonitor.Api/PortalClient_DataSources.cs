@@ -301,7 +301,7 @@ namespace LogicMonitor.Api
 			=> FilteredGetAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/properties", filter, cancellationToken);
 
 		/// <summary>
-		///     Get all T
+		///     Get all DeviceDataSourceInstances given a Device id and DeviceDataSource id
 		/// </summary>
 		/// <param name="deviceId">The device Id</param>
 		/// <param name="deviceDataSourceId">The device data source id</param>
@@ -318,7 +318,7 @@ namespace LogicMonitor.Api
 			{
 				filter = new Filter<DeviceDataSourceInstance>();
 			}
-			filter.Take = 50; // LogicMonitor hardcoded value
+			filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 			filter.Skip = 0;
 
 			var items = new List<DeviceDataSourceInstance>();
@@ -326,11 +326,52 @@ namespace LogicMonitor.Api
 			{
 				var itemsThisTime = await FilteredGetAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances", filter, cancellationToken)
 					.ConfigureAwait(false);
-				if (itemsThisTime.Items.Count == 0)
+				items.AddRange(itemsThisTime.Items);
+				if (itemsThisTime.Items.Count < filter.Take)
 				{
+					if (StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count)
+					{
+						throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}");
+					}
 					return items;
 				}
+				filter.Skip += filter.Take;
+			}
+		}
+
+		/// <summary>
+		///     Get all DeviceDataSourceInstances given a Device id
+		/// </summary>
+		/// <param name="deviceId">The device Id</param>
+		/// <param name="filter">The filter to apply</param>
+		/// <param name="cancellationToken">The cancellation token</param>
+		/// <returns></returns>
+		public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
+			int deviceId,
+			Filter<DeviceDataSourceInstance> filter = null,
+			CancellationToken cancellationToken = default)
+		{
+			if (filter == null)
+			{
+				filter = new Filter<DeviceDataSourceInstance>();
+			}
+			filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
+			filter.Skip = 0;
+
+			var items = new List<DeviceDataSourceInstance>();
+			while (true)
+			{
+				var itemsThisTime = await FilteredGetAsync($"device/devices/{deviceId}/instances", filter, cancellationToken)
+					.ConfigureAwait(false);
 				items.AddRange(itemsThisTime.Items);
+				if (itemsThisTime.Items.Count < filter.Take)
+				{
+					if (StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count)
+					{
+						throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}");
+					}
+					return items;
+				}
 				filter.Skip += filter.Take;
 			}
 		}

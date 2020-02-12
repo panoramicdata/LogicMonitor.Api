@@ -22,6 +22,8 @@ namespace LogicMonitor.Api.Test
 
 		protected int WindowsDeviceId { get; }
 
+		protected int WindowsDeviceLargeDeviceDataSourceId { get; }
+
 		protected int NetflowDeviceId { get; }
 
 		protected int SnmpDeviceId { get; }
@@ -37,6 +39,7 @@ namespace LogicMonitor.Api.Test
 			var testPortalConfig = new TestPortalConfig(Logger);
 			PortalClient = testPortalConfig.PortalClient;
 			WindowsDeviceId = testPortalConfig.WindowsDeviceId;
+			WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
 			ServiceDeviceId = testPortalConfig.ServiceDeviceId;
 			NetflowDeviceId = testPortalConfig.NetflowDeviceId;
 			DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;

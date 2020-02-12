@@ -1,5 +1,7 @@
+using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.Logs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -15,15 +17,24 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void Get()
 		{
-			var accessLogItems = await PortalClient.GetAllAsync<LogItem>().ConfigureAwait(false);
+			var accessLogItems = await PortalClient.GetAllAsync<LogItem>(new Filter<LogItem>
+			{
+				FilterItems = new List<FilterItem<LogItem>>
+				{
+					new Gt<LogItem>(nameof(LogItem.HappenedOnTimeStampUtc), DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeSeconds())
+				},
+				Order = new Order<LogItem>
+				{
+					Property = nameof(LogItem.HappenedOnTimeStampUtc),
+					Direction = OrderDirection.Asc
+				}
+			}).ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(accessLogItems.Count > 0);
 
-			// TODO Make sure that all have Unique Ids
-			//Assert.False(accessLogItems.Select(a => a.Id).HasDuplicates());
-
-			Assert.True(accessLogItems.Count > 50);
+			// Make sure that all have Unique Ids
+			Assert.False(accessLogItems.Select(a => a.Id).HasDuplicates());
 		}
 
 		[Fact]
