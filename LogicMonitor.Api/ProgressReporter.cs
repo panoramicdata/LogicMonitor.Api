@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 
@@ -8,19 +9,19 @@ namespace LogicMonitor.Api
 	/// </summary>
 	public class ProgressReporter
 	{
-		private readonly Action<string> _action;
+		private readonly ILogger _logger;
 		private readonly Stopwatch _totalStopwatch;
 		private readonly Stopwatch _subTaskStopwatch;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="action"></param>
-		public ProgressReporter(Action<string> action)
+		/// <param name="logger"></param>
+		public ProgressReporter(ILogger logger)
 		{
 			_totalStopwatch = new Stopwatch();
 			_subTaskStopwatch = new Stopwatch();
-			_action = action;
+			_logger = logger;
 		}
 
 		/// <summary>
@@ -48,7 +49,7 @@ namespace LogicMonitor.Api
 				throw new InvalidOperationException("Subtask is running.  Call StopSubTask() first.");
 			}
 
-			_action?.Invoke($"{subTaskName}...");
+			Notify($"{subTaskName}...");
 			_subTaskStopwatch.Start();
 		}
 
@@ -65,7 +66,7 @@ namespace LogicMonitor.Api
 
 			_subTaskStopwatch.Stop();
 			var elapsed = _subTaskStopwatch.Elapsed;
-			_action?.Invoke($"done in {(int)elapsed.TotalMinutes}:{elapsed.Seconds:00}.{elapsed.Milliseconds:000}\r\n");
+			Notify($"done in {(int)elapsed.TotalMinutes}:{elapsed.Seconds:00}.{elapsed.Milliseconds:000}");
 		}
 
 		/// <summary>
@@ -81,8 +82,8 @@ namespace LogicMonitor.Api
 			}
 
 			var elapsed = _subTaskStopwatch.Elapsed;
-			_action?.Invoke($"done in {(int)elapsed.TotalMinutes}:{elapsed.Seconds:00}.{elapsed.Milliseconds:000}\r\n");
-			_action?.Invoke($"{text}...");
+			Notify($"done in {(int)elapsed.TotalMinutes}:{elapsed.Seconds:00}.{elapsed.Milliseconds:000}");
+			Notify($"{text}...");
 			_subTaskStopwatch.Restart();
 		}
 
@@ -90,7 +91,7 @@ namespace LogicMonitor.Api
 		/// Notify of progress
 		/// </summary>
 		/// <param name="text"></param>
-		public void Notify(string text) => _action?.Invoke(text);
+		public void Notify(string text) => _logger?.LogInformation(text);
 
 		/// <summary>
 		/// Stop
@@ -104,7 +105,7 @@ namespace LogicMonitor.Api
 			}
 
 			var elapsed = _totalStopwatch.Elapsed;
-			_action?.Invoke($"Total: {(int)elapsed.TotalMinutes}:{elapsed.Seconds:00}.{elapsed.Milliseconds:000}\r\n");
+			Notify($"Total: {(int)elapsed.TotalMinutes}:{elapsed.Seconds:00}.{elapsed.Milliseconds:000}");
 			_totalStopwatch.Stop();
 		}
 
@@ -119,11 +120,10 @@ namespace LogicMonitor.Api
 		/// <summary>
 		/// Start a new progress reporter
 		/// </summary>
-		/// <param name="progressFunc"></param>
-		/// <returns></returns>
-		public static ProgressReporter StartNew(Action<string> progressFunc)
+		/// <param name="logger"></param>
+		public static ProgressReporter StartNew(ILogger logger)
 		{
-			var progressReporter = new ProgressReporter(progressFunc);
+			var progressReporter = new ProgressReporter(logger);
 			progressReporter.Start();
 			return progressReporter;
 		}

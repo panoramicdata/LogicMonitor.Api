@@ -31,7 +31,8 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public async Task BackupAllToFileAsync(FileInfo fileInfo)
 		{
-			var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }).ConfigureAwait(false);
+			var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo })
+				.ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -39,17 +40,16 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="backupSpecification"></param>
 		/// <param name="cancellationToken"></param>
-		/// <param name="progressFunc"></param>
 		/// <returns>the configuration backup</returns>
-		public async Task<ConfigurationBackup> BackupAsync(ConfigurationBackupSpecification backupSpecification, CancellationToken cancellationToken = default, Action<string> progressFunc = null)
+		public async Task<ConfigurationBackup> BackupAsync(ConfigurationBackupSpecification backupSpecification, CancellationToken cancellationToken = default)
 		{
 			var configurationBackup = new ConfigurationBackup();
 
-			var progressReporter = ProgressReporter.StartNew(progressFunc);
+			var progressReporter = ProgressReporter.StartNew(_logger);
 			// AccountSettings
 			if (backupSpecification.AccountSettings)
 			{
-				progressReporter.Notify("Account Settings\r\n");
+				progressReporter.Notify("Account Settings");
 				progressReporter.StartSubTask("- Account Settings");
 				configurationBackup.AccountSettings = await GetAsync<AccountSettings>(cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- Company Logo");
@@ -66,7 +66,7 @@ namespace LogicMonitor.Api
 			// Alerting
 			if (backupSpecification.Alerting)
 			{
-				progressReporter.Notify("Alerting\r\n");
+				progressReporter.Notify("Alerting");
 				progressReporter.StartSubTask("- Alert Rules");
 				configurationBackup.AlertRules = await GetAllAsync<AlertRule>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- Escalation Chains");
@@ -83,7 +83,7 @@ namespace LogicMonitor.Api
 			// Collectors
 			if (backupSpecification.Collectors)
 			{
-				progressReporter.Notify("Collectors\r\n");
+				progressReporter.Notify("Collectors");
 				progressReporter.StartSubTask("- Collectors");
 				configurationBackup.Collectors = await GetAllAsync<Collector>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -92,7 +92,7 @@ namespace LogicMonitor.Api
 			// Dashboards
 			if (backupSpecification.Dashboards)
 			{
-				progressReporter.Notify("Dashboards\r\n");
+				progressReporter.Notify("Dashboards");
 				progressReporter.StartSubTask("- Dashboard Groups");
 				// Get with associated widgets populated
 				configurationBackup.DashboardGroups = await GetAllAsync<DashboardGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -106,7 +106,7 @@ namespace LogicMonitor.Api
 			// Devices
 			if (backupSpecification.Devices)
 			{
-				progressReporter.Notify("Devices\r\n");
+				progressReporter.Notify("Devices");
 				progressReporter.StartSubTask("- Device Groups");
 				configurationBackup.DeviceGroups = await GetAllAsync<DeviceGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- Devices");
@@ -117,7 +117,7 @@ namespace LogicMonitor.Api
 			// Integrations
 			if (backupSpecification.Integrations)
 			{
-				progressReporter.Notify("Integrations\r\n");
+				progressReporter.Notify("Integrations");
 				progressReporter.StartSubTask("- Integrations");
 				configurationBackup.Integrations = await GetAllAsync<Integration>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -128,7 +128,7 @@ namespace LogicMonitor.Api
 			// AppliesToFunctions
 			if (backupSpecification.AppliesToFunctions)
 			{
-				progressReporter.Notify("AppliesToFunctions\r\n");
+				progressReporter.Notify("AppliesToFunctions");
 				progressReporter.StartSubTask("- AppliesToFunctions");
 				configurationBackup.AppliesToFunctions = await GetAllAsync<AppliesToFunction>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -137,7 +137,7 @@ namespace LogicMonitor.Api
 			// ConfigSources
 			if (backupSpecification.ConfigSources)
 			{
-				progressReporter.Notify("ConfigSources\r\n");
+				progressReporter.Notify("ConfigSources");
 				progressReporter.StartSubTask("- ConfigSources");
 				configurationBackup.ConfigSources = await GetAllAsync<ConfigSource>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -146,7 +146,7 @@ namespace LogicMonitor.Api
 			// DataSources
 			if (backupSpecification.DataSources)
 			{
-				progressReporter.Notify("DataSources\r\n");
+				progressReporter.Notify("DataSources");
 				progressReporter.StartSubTask("- DataSources");
 				configurationBackup.DataSources = await GetAllAsync<DataSource>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- DataSource graphs");
@@ -167,7 +167,7 @@ namespace LogicMonitor.Api
 			// EventSources
 			if (backupSpecification.EventSources)
 			{
-				progressReporter.Notify("EventSources\r\n");
+				progressReporter.Notify("EventSources");
 				progressReporter.StartSubTask("- EventSources");
 
 				configurationBackup.EventSources = await GetAllAsync<EventSource>(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -177,7 +177,7 @@ namespace LogicMonitor.Api
 			// JobMonitors
 			if (backupSpecification.JobMonitors)
 			{
-				progressReporter.Notify("JobMonitors\r\n");
+				progressReporter.Notify("JobMonitors");
 				progressReporter.StartSubTask("- JobMonitors");
 
 				configurationBackup.JobMonitors = await GetAllAsync<JobMonitor>(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -187,7 +187,7 @@ namespace LogicMonitor.Api
 			// PropertySources
 			if (backupSpecification.PropertySources)
 			{
-				progressReporter.Notify("PropertySources\r\n");
+				progressReporter.Notify("PropertySources");
 				progressReporter.StartSubTask("- PropertySources");
 
 				configurationBackup.PropertySources = await GetAllAsync<PropertySource>(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -197,7 +197,7 @@ namespace LogicMonitor.Api
 			// SnmpSysOidMaps
 			if (backupSpecification.SnmpSysOidMaps)
 			{
-				progressReporter.Notify("SnmpSysOidMaps\r\n");
+				progressReporter.Notify("SnmpSysOidMaps");
 				progressReporter.StartSubTask("- SnmpSysOidMaps");
 
 				configurationBackup.SnmpSysOidMaps = await GetAllAsync<SnmpSysOidMap>(cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -208,7 +208,7 @@ namespace LogicMonitor.Api
 			// Logs
 			if (backupSpecification.Logs)
 			{
-				progressReporter.Notify("Logs\r\n");
+				progressReporter.Notify("Logs");
 				progressReporter.StartSubTask("- Logs");
 				configurationBackup.LogItems = await GetLogItemsAsync(null, cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -217,7 +217,7 @@ namespace LogicMonitor.Api
 			// Netscans
 			if (backupSpecification.Netscans)
 			{
-				progressReporter.Notify("Netscans\r\n");
+				progressReporter.Notify("Netscans");
 				progressReporter.StartSubTask("- Netscans");
 				configurationBackup.Netscans = await GetAllAsync<Netscan>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -226,7 +226,7 @@ namespace LogicMonitor.Api
 			// OpsNotes
 			if (backupSpecification.OpsNotes)
 			{
-				progressReporter.Notify("Ops Notes\r\n");
+				progressReporter.Notify("Ops Notes");
 				progressReporter.StartSubTask("- Ops Notes");
 				configurationBackup.OpsNotes = await GetAllAsync<OpsNote>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -235,7 +235,7 @@ namespace LogicMonitor.Api
 			// SDTs
 			if (backupSpecification.ScheduledDownTimes)
 			{
-				progressReporter.Notify("Scheduled Down Times\r\n");
+				progressReporter.Notify("Scheduled Down Times");
 				progressReporter.StartSubTask("- Scheduled Down Times");
 				configurationBackup.ScheduledDownTimes = await GetAllAsync<ScheduledDownTime>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.StopSubTask();
@@ -244,7 +244,7 @@ namespace LogicMonitor.Api
 			// Websites
 			if (backupSpecification.Websites)
 			{
-				progressReporter.Notify("Websites\r\n");
+				progressReporter.Notify("Websites");
 				progressReporter.StartSubTask("- Website Groups");
 				configurationBackup.WebsiteGroups = await GetAllAsync<WebsiteGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- Websites");
@@ -255,7 +255,7 @@ namespace LogicMonitor.Api
 			// Users
 			if (backupSpecification.Users)
 			{
-				progressReporter.Notify("Users and Roles\r\n");
+				progressReporter.Notify("Users and Roles");
 				progressReporter.StartSubTask("- RoleGroups");
 				configurationBackup.RoleGroups = await GetAllAsync<RoleGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 				progressReporter.CompleteSubTaskAndStartNew("- UserGroups");
@@ -270,7 +270,7 @@ namespace LogicMonitor.Api
 			// This one must be done last, to ensure that all retrieved data is sent to file
 			if (backupSpecification.GzipFileInfo != null)
 			{
-				progressReporter.Notify("Save\r\n");
+				progressReporter.Notify("Save");
 				progressReporter.StartSubTask("- Writing to disk");
 				SerializeAndCompress(configurationBackup, backupSpecification.GzipFileInfo.FullName);
 				progressReporter.StopSubTask();
