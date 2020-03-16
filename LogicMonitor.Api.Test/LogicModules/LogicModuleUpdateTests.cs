@@ -150,7 +150,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
-					ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
+					ds.Category == LogicModuleUpdateCategory.UpdatedNotInUse)
 				.ToList();
 
 			if (dataSourceUpdates.Count > 0)
