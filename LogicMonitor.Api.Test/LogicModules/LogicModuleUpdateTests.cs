@@ -37,7 +37,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					.GetLogicModuleUpdates(LogicModuleType.EventSource, default)
 					.ConfigureAwait(false);
 
-			Assert.NotEmpty(eventSourceUpdates.Items);
+			Assert.NotNull(eventSourceUpdates.Items);
 		}
 
 		/// <summary>

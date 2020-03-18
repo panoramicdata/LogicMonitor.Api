@@ -6,7 +6,6 @@ using Xunit.Abstractions;
 
 namespace LogicMonitor.Api.Test.Devices
 {
-
 	public class DeviceDataSourceTests : TestWithOutput
 	{
 		public DeviceDataSourceTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)

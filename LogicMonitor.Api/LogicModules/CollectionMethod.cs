@@ -114,6 +114,12 @@ namespace LogicMonitor.Api.LogicModules
 		AwsSesServiceLimits,
 
 		/// <summary>
+		/// Azure backup job
+		/// </summary>
+		[EnumMember(Value = "azurebackupjob")]
+		AzureBackupJob,
+
+		/// <summary>
 		/// Azure Billing
 		/// </summary>
 		[EnumMember(Value = "azurebilling")]

@@ -60,7 +60,7 @@ namespace LogicMonitor.Api.Filters
 			switch (Value)
 			{
 				case bool boolValue:
-					valueString = $"\"{boolValue.ToString().ToLowerInvariant()}\"";
+					valueString = boolValue.ToString().ToLowerInvariant();
 					break;
 
 				case string text:

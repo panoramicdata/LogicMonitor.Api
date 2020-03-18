@@ -130,7 +130,7 @@ namespace LogicMonitor.Api.Alerts
 		///    The specific SDT
 		/// </summary>
 		[DataMember(Name = "SDT")]
-		public object Sdt { get; set; }
+		public AlertSdt Sdt { get; set; }
 
 		/// <summary>
 		///    The value that triggered the Alert

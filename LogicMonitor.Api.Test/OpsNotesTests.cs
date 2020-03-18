@@ -14,7 +14,6 @@ namespace LogicMonitor.Api.Test
 	/// Tests here may fail if the user has never used OpsNotes before.
 	/// !!!!!!
 	/// </summary>
-
 	public class OpsNotesTests : TestWithOutput
 	{
 		public OpsNotesTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)

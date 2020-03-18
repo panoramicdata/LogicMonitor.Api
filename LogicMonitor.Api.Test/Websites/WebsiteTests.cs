@@ -65,7 +65,7 @@ namespace LogicMonitor.Api.Test.Websites
 		}
 
 		[Fact]
-		public async void GetWebsiteByName()
+		public async void GetWebsiteByName_Exists_Succeeds()
 		{
 			var website = await PortalClient.GetByNameAsync<Website>("PDL-WEB-RM-Prod-Www").ConfigureAwait(false);
 
@@ -74,11 +74,11 @@ namespace LogicMonitor.Api.Test.Websites
 		}
 
 		[Fact]
-		public async void GetWebsiteByNamePing()
+		public async void GetWebsiteByName_DoesNotExist_ReturnsNull()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>("PDL-WEB-RM-Prod-Ping").ConfigureAwait(false);
-			// One website should be returned
-			Assert.NotNull(website);
+			var website = await PortalClient.GetByNameAsync<Website>("DoesNotExist").ConfigureAwait(false);
+			// Null should be returned
+			Assert.Null(website);
 		}
 
 		[Fact]
@@ -163,7 +163,7 @@ namespace LogicMonitor.Api.Test.Websites
 					new Eq<Website>(nameof(Website.Name), nameof(CrudWebsiteGroupsAndWebsites))
 				}
 			}).ConfigureAwait(false);
-			foreach(var oldWebsite in oldWebsites)
+			foreach (var oldWebsite in oldWebsites)
 			{
 				await PortalClient.DeleteAsync<Website>(oldWebsite.Id).ConfigureAwait(false);
 			}

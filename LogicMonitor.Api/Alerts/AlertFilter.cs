@@ -94,7 +94,7 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		///    The end DateTime for the query in seconds since the Epoch
 		/// </summary>
-		public int? StartEpochIsBefore { get; set; }
+		public long? StartEpochIsBefore { get; set; }
 
 		/// <summary>
 		///    Start DateTime in UTC is after
@@ -179,7 +179,7 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		///    Whether to include alerts that occurred during SDT
 		/// </summary>
-		public SdtFilter SdtFilter { get; set; } = SdtFilter.All;
+		public SdtFilter SdtFilter { get; set; }
 
 		/// <summary>
 		///    The skip
@@ -189,17 +189,17 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		///    The start DateTime for the query in seconds since the Epoch
 		/// </summary>
-		public int? StartEpochIsAfter { get; set; }
+		public long? StartEpochIsAfter { get; set; }
 
 		/// <summary>
 		///    The start DateTime for the query in seconds since the Epoch
 		/// </summary>
-		public int? EndEpochIsAfter { get; set; }
+		public long? EndEpochIsAfter { get; set; }
 
 		/// <summary>
 		///    The start DateTime for the query in seconds since the Epoch
 		/// </summary>
-		public int? EndEpochIsBefore { get; set; }
+		public long? EndEpochIsBefore { get; set; }
 
 		/// <summary>
 		///    The take

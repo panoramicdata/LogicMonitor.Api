@@ -33,6 +33,11 @@ namespace LogicMonitor.Api.Converters
 			object existingValue,
 			JsonSerializer serializer)
 		{
+			if (reader.TokenType == JsonToken.Null)
+			{
+				return null;
+			}
+
 			// Load JObject from stream
 			var jObject = JObject.Load(reader);
 

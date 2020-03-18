@@ -464,5 +464,40 @@ namespace LogicMonitor.Api.Test.Alerts
 			Assert.Equal(AlertLevel.Error, alertFilter.Levels[0]);
 			Assert.Equal(AlertLevel.Critical, alertFilter.Levels[1]);
 		}
+
+		[Fact]
+		public async void SdtFilter_Works()
+		{
+			var nowUtc = DateTimeOffset.UtcNow;
+			var oneDayAgo = nowUtc.AddDays(-1);
+
+			// Get all alerts
+			var allAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			{
+				StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
+				StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
+			}).ConfigureAwait(false);
+
+			// Get all alerts NOT in SDT
+			var nonSdtAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			{
+				StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
+				StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
+				SdtFilter = SdtFilter.NonSdt
+			}).ConfigureAwait(false);
+			Assert.All(nonSdtAlerts, alert => Assert.Null(alert.Sdt));
+
+			// Get all alerts in SDT
+			var sdtAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			{
+				StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
+				StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
+				SdtFilter = SdtFilter.Sdt
+			}).ConfigureAwait(false);
+			Assert.All(sdtAlerts, alert => Assert.NotNull(alert.Sdt));
+
+			// Make sure the numbers add up
+			Assert.Equal(allAlerts.Count, nonSdtAlerts.Count + sdtAlerts.Count);
+		}
 	}
 }

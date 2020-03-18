@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.OpsNotes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,8 +14,9 @@ namespace LogicMonitor.Api.Converters
 			return type switch
 			{
 				"device" => new DeviceOpsNoteScope(),
-				"website" => new WebsiteOpsNoteScope(),
 				"devicegroup" => new DeviceGroupOpsNoteScope(),
+				"website" => new WebsiteOpsNoteScope(),
+				"websitegroup" => new WebsiteGroupOpsNoteScope(),
 				_ => throw new NotSupportedException($"OpsNoteScopeConverter.cs needs updating to include {type}."),
 			};
 		}
