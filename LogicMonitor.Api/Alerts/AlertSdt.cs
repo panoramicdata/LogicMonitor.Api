@@ -171,4 +171,23 @@ namespace LogicMonitor.Api.Alerts
 		[DataMember(Name = "websiteGroupId")]
 		public int WebsiteGroupId { get; set; }
 	}
+
+	/// <summary>
+	/// A device data source instance SDT
+	/// </summary>
+	[DataContract]
+	public class DeviceDataSourceInstanceSdt : AlertSdt
+	{
+		/// <summary>
+		/// The DataSourceInstance ID (note: these two are identical but both present)
+		/// </summary>
+		[DataMember(Name = "dsiId")]
+		public int DsiId { get; set; }
+
+		/// <summary>
+		/// The DataSourceInstance ID (note: these two are identical but both present)
+		/// </summary>
+		[DataMember(Name = "dataSourceInstanceId")]
+		public int DataSourceInstanceId { get; set; }
+	}
 }

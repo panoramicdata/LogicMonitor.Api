@@ -16,6 +16,7 @@ namespace LogicMonitor.Api.Converters
 				"devicegroupsdt" => new DeviceGroupAlertSdt(),
 				"websitesdt" => new WebsiteAlertSdt(),
 				"websitegroupsdt" => new WebsiteGroupAlertSdt(),
+				"devicedatasourceinstancesdt" => new DeviceDataSourceInstanceSdt(),
 				_ => throw new NotSupportedException($"AlertSdtConverter.cs needs updating to include {type}."),
 			};
 		}
