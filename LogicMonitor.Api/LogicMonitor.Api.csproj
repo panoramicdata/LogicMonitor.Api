@@ -14,7 +14,7 @@
 		<Description>A .NET API for LogicMonitor</Description>
 		<Summary>A .NET API for LogicMonitor</Summary>
 		<Company>Panoramic Data Limited</Company>
-		<PackageReleaseNotes>Support for LogicMonitor 132</PackageReleaseNotes>
+		<PackageReleaseNotes>Added support for Device Data Source Sdt</PackageReleaseNotes>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<LangVersion>latest</LangVersion>
 		<RepositoryType>git</RepositoryType>
