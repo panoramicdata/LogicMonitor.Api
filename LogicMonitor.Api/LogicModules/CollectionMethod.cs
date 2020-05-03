@@ -114,6 +114,18 @@ namespace LogicMonitor.Api.LogicModules
 		AwsSesServiceLimits,
 
 		/// <summary>
+		/// Azure express route circuit peering
+		/// </summary>
+		[EnumMember(Value = "azureexpressroutecircuitpeering")]
+		AzureExpressRouteCircuitPeering,
+
+		/// <summary>
+		/// Azure replication job
+		/// </summary>
+		[EnumMember(Value = "azurereplicationjob")]
+		AzureReplicationJob,
+
+		/// <summary>
 		/// Azure backup job
 		/// </summary>
 		[EnumMember(Value = "azurebackupjob")]

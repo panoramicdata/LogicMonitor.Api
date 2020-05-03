@@ -1,12 +1,14 @@
-﻿using System.Runtime.Serialization;
+﻿using LogicMonitor.Api.Converters;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
 {
 	/// <summary>
-	/// A Category
+	/// A device group alert SDT
 	/// </summary>
 	[DataContract]
-	public class Category : NamedItem
+	public class DeviceGroupAlertSdt : AlertSdt
 	{
 		/// <summary>
 		/// The device group id
