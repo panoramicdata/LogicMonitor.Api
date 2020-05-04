@@ -96,10 +96,22 @@ namespace LogicMonitor.Api.Flows
 		public int InboundInterfaceId { get; set; }
 
 		/// <summary>
+		/// Inbound interface display name
+		/// </summary>
+		[DataMember(Name = "ifInDisplayName")]
+		public string InboundInterfaceDisplayName { get; set; }
+
+		/// <summary>
 		/// Outbound interface id
 		/// </summary>
 		[DataMember(Name = "ifOut")]
 		public int OutboundInterfaceId { get; set; }
+
+		/// <summary>
+		/// Outbound interface display name
+		/// </summary>
+		[DataMember(Name = "ifOutDisplayName")]
+		public string OutboundInterfaceDisplayName { get; set; }
 
 		/// <summary>
 		/// Usage bytes

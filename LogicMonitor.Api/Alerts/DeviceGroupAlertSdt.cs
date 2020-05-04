@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
 {
-
 	/// <summary>
 	/// A device group alert SDT
 	/// </summary>
@@ -16,5 +15,11 @@ namespace LogicMonitor.Api.Alerts
 		/// </summary>
 		[DataMember(Name = "hostGroupId")]
 		public int DeviceGroupId { get; set; }
+
+		/// <summary>
+		/// The DataSource id
+		/// </summary>
+		[DataMember(Name = "dataSourceId")]
+		public int? DataSourceId { get; set; }
 	}
 }
