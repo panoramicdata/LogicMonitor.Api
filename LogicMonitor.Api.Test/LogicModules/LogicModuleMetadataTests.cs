@@ -10,15 +10,15 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 		}
 
-		//[Fact]
-		//public async void GetDataSourceMetadata()
-		//{
-		//	var dataSource = await DefaultPortalClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
-		//	Assert.NotNull(dataSource);
-		//	Assert.NotEqual(0, dataSource.Id);
-		//	var logicModuleMetadata = await DefaultPortalClient.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id).ConfigureAwait(false);
-		//	CheckMetadata(logicModuleMetadata);
-		//}
+		[Fact]
+		public async void GetDataSourceMetadata()
+		{
+			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
+			Assert.NotNull(dataSource);
+			Assert.NotEqual(0, dataSource.Id);
+			var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id).ConfigureAwait(false);
+			CheckMetadata(logicModuleMetadata);
+		}
 
 		//[Fact(Skip = "LogicMonitor is broken - ZenDesk ticket number 112910")]
 		//public async void GetEventSourceMetadata()
@@ -50,13 +50,14 @@ namespace LogicMonitor.Api.Test.LogicModules
 		//	CheckMetadata(logicModuleMetadata);
 		//}
 
-		//private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
-		//{
-		//	Assert.NotNull(logicModuleMetadata);
-		//	Assert.NotNull(logicModuleMetadata.LmLocator);
-		//	Assert.NotNull(logicModuleMetadata.Namespace);
-		//	Assert.NotNull(logicModuleMetadata.Quality);
-		//	Assert.NotNull(logicModuleMetadata.RegistryVersion);
-		//}
+		private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
+		{
+			Assert.NotNull(logicModuleMetadata);
+			Assert.NotNull(logicModuleMetadata.LmLocator);
+			Assert.NotNull(logicModuleMetadata.Namespace);
+			Assert.NotNull(logicModuleMetadata.Quality);
+			Assert.NotNull(logicModuleMetadata.RegistryVersion);
+			Assert.NotNull(logicModuleMetadata.Id);
+		}
 	}
 }
