@@ -32,6 +32,12 @@ namespace LogicMonitor.Api.LogicModules
 		[DataMember(Name = "lmLocator")]
 		public string LmLocator { get; set; }
 
+		/// <summary>
+		///     The ID
+		/// </summary>
+		[DataMember(Name = "id")]
+		public string Id { get; set; }
+
 		/// <inheritdoc />
 		/// <returns>'Id : Name - DisplayedAs'</returns>
 		public override string ToString() => $"{Namespace}.{LmLocator}/v{RegistryVersion} ({Quality})";
