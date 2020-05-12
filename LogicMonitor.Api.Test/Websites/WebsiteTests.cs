@@ -13,6 +13,8 @@ namespace LogicMonitor.Api.Test.Websites
 {
 	public class WebsiteTests : TestWithOutput
 	{
+		private const string ExpectedAlertExpression = "< 90 60 30";
+
 		private static WebsiteCreationDto GetWebsiteCreationDto(int websiteGroupId, string name)
 			=> new WebsiteCreationDto
 			{
@@ -47,7 +49,9 @@ namespace LogicMonitor.Api.Test.Websites
 							Timeout = 5,
 							UseDefaultRoot = true
 						}
-					}
+					},
+				TriggerSslExpirationAlerts = true,
+				AlertExpression = ExpectedAlertExpression
 			};
 
 		public WebsiteTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
@@ -190,6 +194,8 @@ namespace LogicMonitor.Api.Test.Websites
 					.ConfigureAwait(false);
 				Assert.NotNull(website);
 				Assert.Equal(websiteGroup.Id, website.WebsiteGroupId);
+				Assert.True(website.TriggerSslExpirationAlerts);
+				Assert.Equal(ExpectedAlertExpression, website.AlertExpression);
 
 				// Wait to ensure that it was created
 				await Task.Delay(1000)

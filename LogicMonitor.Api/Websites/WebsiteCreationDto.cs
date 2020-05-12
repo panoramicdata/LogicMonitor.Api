@@ -158,5 +158,11 @@ namespace LogicMonitor.Api.Websites
 		/// </summary>
 		[DataMember(Name = "websiteProperties")]
 		public List<Property> WebsiteProperties { get; set; }
+
+		/// <summary>
+		/// The alert expression for SSL expiration alerts
+		/// </summary>
+		[DataMember(Name = "alertExpr")]
+		public string AlertExpression { get; set; }
 	}
 }
