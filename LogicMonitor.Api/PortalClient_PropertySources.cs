@@ -9,7 +9,7 @@ namespace LogicMonitor.Api
 	public partial class PortalClient
 	{
 		/// <summary>
-		///     Gets the JSON for a PropertySource (it is NOT XML!)
+		///     Gets the JSON for a PropertySource (it is NOT XML!).
 		/// </summary>
 		/// <param name="propertySourceId">The PropertySource id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
@@ -17,5 +17,6 @@ namespace LogicMonitor.Api
 			int propertySourceId,
 			CancellationToken cancellationToken = default)
 			=> (await GetBySubUrlAsync<XmlResponse>($"setting/propertyrules/{propertySourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+		// Can probably take off format=xml as this never returns XML anyway!
 	}
 }

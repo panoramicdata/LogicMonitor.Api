@@ -25,6 +25,12 @@ namespace LogicMonitor.Api.Alerts
 		public AlertType AlertType { get; set; }
 
 		/// <summary>
+		/// Whether enableAnomalyAlertSuppression is enabled
+		/// </summary>
+		[DataMember(Name = "enableAnomalyAlertSuppression")]
+		public bool? EnableAnomalyAlertSuppression { get; set; }
+
+		/// <summary>
 		///    The internal Id
 		/// </summary>
 		[DataMember(Name = "internalId")]

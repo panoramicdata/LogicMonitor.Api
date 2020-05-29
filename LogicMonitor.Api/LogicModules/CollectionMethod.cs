@@ -228,6 +228,12 @@ namespace LogicMonitor.Api.LogicModules
 		GcpStackDriver,
 
 		/// <summary>
+		/// GCP Back-end Service Health
+		/// </summary>
+		[EnumMember(Value = "gcpbackendservicehealth")]
+		GcpBackendServiceHealth,
+
+		/// <summary>
 		/// Internal
 		/// </summary>
 		[EnumMember(Value = "internal")]
@@ -322,6 +328,12 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[EnumMember(Value = "webpage")]
 		Webpage,
+
+		/// <summary>
+		/// Webpage (different spelling of property in the JSON!)
+		/// </summary>
+		[EnumMember(Value = "Webpage")]	// version 136 introduced this issue!
+		Webpage1,
 
 		/// <summary>
 		/// Xen
