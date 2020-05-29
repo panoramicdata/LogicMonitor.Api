@@ -148,5 +148,15 @@ namespace LogicMonitor.Api
 			CancellationToken cancellationToken = default) =>
 			// TODO - permit more than 300
 			(await GetDeviceConfigSourcesPageAsync(deviceId, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }, cancellationToken).ConfigureAwait(false)).Items.SingleOrDefault(deviceConfigSource => deviceConfigSource.ConfigSourceId == configSourceId);
+
+		/// <summary>
+		///     Gets the XML for a ConfigSource.
+		/// </summary>
+		/// <param name="configSourceId">The ConfigSource id</param>
+		/// <param name="cancellationToken">The cancellation token</param>
+		public async Task<string> GetConfigSourceXmlAsync(
+			int configSourceId,
+			CancellationToken cancellationToken = default)
+			=> (await GetBySubUrlAsync<XmlResponse>($"setting/configsources/{configSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
 	}
 }

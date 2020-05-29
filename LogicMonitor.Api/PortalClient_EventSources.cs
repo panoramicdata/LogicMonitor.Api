@@ -22,7 +22,7 @@ namespace LogicMonitor.Api
 		public Task<List<EventSource>> GetEventSourcesAsync(Filter<EventSource> filter, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
 		/// <summary>
-		///     Gets a list of all overview graphs for a EventSource.
+		///     Gets the XML for an EventSource.
 		/// </summary>
 		/// <param name="eventSourceId">The EventSource id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
