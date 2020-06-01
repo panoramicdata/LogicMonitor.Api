@@ -6,7 +6,7 @@ namespace LogicMonitor.Api.Alerts
 	/// A device data source instance SDT
 	/// </summary>
 	[DataContract]
-	public class DeviceDataSourceInstanceSdt : AlertSdt
+	public class DeviceDataSourceInstanceAlertSdt : AlertSdt
 	{
 		/// <summary>
 		/// The DataSourceInstance ID (note: these two are identical but both present)

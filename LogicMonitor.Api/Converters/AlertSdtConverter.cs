@@ -12,11 +12,19 @@ namespace LogicMonitor.Api.Converters
 			var type = jObject["type"].Value<string>().ToLowerInvariant();
 			return type switch
 			{
-				"resourcesdt" => new DeviceAlertSdt(),
+				"collectorsdt" => new CollectorAlertSdt(),
+				"devicebatchjobsdt" => new DeviceBatchJobAlertSdt(),
+				"deviceclusteralertdefsdt" => new DeviceClusterAlertDefSdt(),
+				"devicedatasourceinstancesdt" => new DeviceDataSourceInstanceAlertSdt(),
+				"devicedatasourceinstancegroupsdt" => new DeviceDataSourceInstanceGroupAlertSdt(),
+				"devicedatasourcesdt" => new DeviceDataSourceAlertSdt(),
+				"deviceeventsourcesdt" => new DeviceEventSourceAlertSdt(),
 				"devicegroupsdt" => new DeviceGroupAlertSdt(),
+				"resourcesdt" => new DeviceAlertSdt(),
+				"servicesdt" => new ServiceAlertSdt(),
 				"websitesdt" => new WebsiteAlertSdt(),
+				"websitecheckpointsdt" => new WebsiteCheckpointAlertSdt(),
 				"websitegroupsdt" => new WebsiteGroupAlertSdt(),
-				"devicedatasourceinstancesdt" => new DeviceDataSourceInstanceSdt(),
 				_ => throw new NotSupportedException($"AlertSdtConverter.cs needs updating to include {type}."),
 			};
 		}
