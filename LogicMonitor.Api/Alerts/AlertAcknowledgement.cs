@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace LogicMonitor.Api.Alerts
 {
 	/// <summary>
