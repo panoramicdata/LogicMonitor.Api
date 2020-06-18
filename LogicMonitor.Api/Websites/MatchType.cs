@@ -16,19 +16,19 @@ namespace LogicMonitor.Api.Websites
 		/// <summary>
 		/// Plain
 		/// </summary>
-		[DataMember(Name = "plain")]
+		[EnumMember(Value = "plain")]
 		Plain = 1,
 
 		/// <summary>
 		/// JSON
 		/// </summary>
-		[DataMember(Name = "json")]
+		[EnumMember(Value = "json")]
 		Json = 2,
 
 		/// <summary>
 		/// Regular
 		/// </summary>
-		[DataMember(Name = "regular")]
+		[EnumMember(Value = "regular")]
 		Regular = 3
 	}
 }
