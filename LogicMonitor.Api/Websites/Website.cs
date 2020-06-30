@@ -21,7 +21,7 @@ namespace LogicMonitor.Api.Websites
 		public List<WebsiteCollectorInfo> Collectors { get; set; }
 
 		/// <summary>
-		/// The count
+		/// The count of packets to send
 		/// </summary>
 		[DataMember(Name = "count")]
 		public int Count { get; set; }
