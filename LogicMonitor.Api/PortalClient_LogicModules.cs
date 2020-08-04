@@ -54,7 +54,7 @@ namespace LogicMonitor.Api
 			int? versionOverride = null,
 			CancellationToken cancellationToken = default)
 		{
-			versionOverride ??= 136; // TODO: use the actual version we want
+			versionOverride ??= 139; // TODO: use the actual version we want
 			var typeParameter = string.Empty;
 			switch (logicModuleType)
 			{
@@ -167,7 +167,7 @@ namespace LogicMonitor.Api
 			int? versionOverride = null,
 			CancellationToken cancellationToken = default)
 		{
-			versionOverride ??= 136; // TODO: use the actual version we want
+			versionOverride ??= 139; // TODO: use the actual version we want
 
 			string typeEndpoint;
 			switch (logicModuleType)
@@ -219,7 +219,7 @@ namespace LogicMonitor.Api
 			int? versionOverride = null,
 			CancellationToken cancellationToken = default)
 		{
-			versionOverride ??= 136; // TODO: use the actual version we want
+			versionOverride ??= 139; // TODO: use the actual version we want
 
 			await PostAsync<SnmpSysOidMapImportObject, object>
 			(

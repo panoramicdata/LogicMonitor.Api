@@ -177,7 +177,7 @@ deviceProperty
 		}
 
 		[Fact]
-		public async void GetAllDeviceInstancs()
+		public async void GetAllDeviceInstances()
 		{
 			var deviceInstances = await PortalClient
 				.GetAllDeviceInstances(WindowsDeviceId, new Filter<DeviceDataSourceInstance>
