@@ -39,6 +39,12 @@ namespace LogicMonitor.Api.Users
 		/// SDT
 		/// </summary>
 		[EnumMember(Value = "sdt")]
-		Sdt
+		Sdt,
+
+		/// <summary>
+		/// Threshold
+		/// </summary>
+		[EnumMember(Value = "threshold")]
+		Threshold
 	}
 }
