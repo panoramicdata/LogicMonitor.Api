@@ -113,6 +113,11 @@ namespace LogicMonitor.Api
 		}
 
 		/// <summary>
+		/// Whether to wait (10 second delay) during upgrades
+		/// </summary>
+		public bool WaitDuringLogicMonitorUpgrades { get; set; } = true;
+
+		/// <summary>
 		/// Whether to throw an exception when paging over results and the total does not match the count of items retrieved.
 		/// This can happen for example when an item in the first page is deleted during paging.
 		/// </summary>
@@ -499,6 +504,13 @@ namespace LogicMonitor.Api
 				{
 					if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
 					{
+						if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+						{
+							// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+							_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+							await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+							continue;
+						}
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						_logger.LogDebug($"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 						throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody);
@@ -760,6 +772,14 @@ namespace LogicMonitor.Api
 				{
 					if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
 					{
+						if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+						{
+							// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+							_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+							await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+							continue;
+						}
+
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						var message = $"{prefix} failed: {responseBody}";
 						_logger.LogDebug(message);
@@ -874,6 +894,14 @@ namespace LogicMonitor.Api
 				{
 					if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
 					{
+						if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+						{
+							// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+							_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+							await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+							continue;
+						}
+
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						var message = $"{prefix} failed on attempt {++failureCount}: {responseBody}";
 						_logger.LogDebug(message);
@@ -1006,6 +1034,13 @@ namespace LogicMonitor.Api
 				{
 					if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
 					{
+						if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+						{
+							// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+							_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+							await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+							continue;
+						}
 						// If a success code was not received, throw an exception
 						var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 						var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
@@ -1072,21 +1107,34 @@ namespace LogicMonitor.Api
 
 			_logger.LogDebug($"{prefix} ...");
 			HttpResponseMessage httpResponseMessage;
-			using (var content = new StringContent(jsonString, Encoding.UTF8, "application/json"))
+			while (true)
 			{
-				var patchSpec = $"?patchFields={string.Join(",", fieldsToUpdate.Keys)}";
-				using var requestMessage = new HttpRequestMessage(PatchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content };
-				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
-			}
-			_logger.LogDebug($"{prefix} complete");
+				using (var content = new StringContent(jsonString, Encoding.UTF8, "application/json"))
+				{
+					var patchSpec = $"?patchFields={string.Join(",", fieldsToUpdate.Keys)}";
+					using var requestMessage = new HttpRequestMessage(PatchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content };
+					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
+				}
+				_logger.LogDebug($"{prefix} complete");
 
-			if (!httpResponseMessage.IsSuccessStatusCode)
-			{
-				// If a success code was not received, throw an exception
-				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-				var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-				_logger.LogDebug(message);
-				throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+				if (!httpResponseMessage.IsSuccessStatusCode)
+				{
+					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+					{
+						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+						_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+						continue;
+					}
+					// If a success code was not received, throw an exception
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
+					_logger.LogDebug(message);
+					throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+				}
+
+				// Success, so finish
+				break;
 			}
 		}
 
