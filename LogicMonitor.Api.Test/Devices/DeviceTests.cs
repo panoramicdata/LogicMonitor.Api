@@ -548,16 +548,16 @@ deviceProperty
 		}
 
 		[Fact]
-		public async void GetDeviceById66()
+		public async void GetDeviceById1487()
 		{
-			var device = await PortalClient.GetAsync<Device>(66).ConfigureAwait(false);
+			var device = await PortalClient.GetAsync<Device>(1487).ConfigureAwait(false);
 			Assert.NotNull(device);
 		}
 
 		[Fact]
-		public async void ScheduleActiveDiscovery66()
+		public async void ScheduleActiveDiscovery1487()
 		{
-			await PortalClient.ScheduleActiveDiscovery(66).ConfigureAwait(false);
+			await PortalClient.ScheduleActiveDiscovery(1487).ConfigureAwait(false);
 			Assert.True(true);
 		}
 
