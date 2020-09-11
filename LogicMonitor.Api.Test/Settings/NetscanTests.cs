@@ -34,7 +34,7 @@ namespace LogicMonitor.Api.Test.Settings
 
 			const string name = "LogicMonitor.Api UnitTest CreateNetscan";
 			const string description = "Description 1";
-			const int collectorId = 18;
+			const int collectorId = 248;
 			const int credentialsDeviceGroupId = 0;
 			const string netscanScheduleCron = "01 00 * * *";
 			const NetscanMethod netscanMethod = NetscanMethod.Icmp;

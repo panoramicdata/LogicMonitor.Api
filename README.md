@@ -18,6 +18,6 @@ using LogicMonitor.Api;
 public async Task GetAllDevices()
 {
 	var portalClient = new PortalClient("acme", "accessTokenId", "accessTokenKey");
-	var devices = await portalClient.GetAllAsync<Device>();
+	var devices = await portalClient.GetAllAsync<Device>().ConfigureAwait(false);
 	Console.WriteLine($"Device Count: {devices.Count}");
 }

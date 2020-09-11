@@ -309,5 +309,50 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 				.DeleteAsync(deviceGroup)
 				.ConfigureAwait(false);
 		}
+
+		[Fact]
+		public async void CreatePingDataSourceInstanceSdtOnEmptyDeviceGroup()
+		{
+			// Get ping DataSource
+			var dataSource = (await PortalClient
+				.GetAllAsync(new Filter<DataSource>
+				{
+					FilterItems = new List<FilterItem<DataSource>>
+					{
+						new Eq<DataSource>(nameof(DataSource.Name), "Ping")
+					}
+				})
+				.ConfigureAwait(false))
+				.Single();
+
+			var deviceDataSource = await PortalClient
+				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id)
+				.ConfigureAwait(false);
+
+			var deviceDataSourceInstance = (await PortalClient
+				.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id)
+				.ConfigureAwait(false))
+				.Single();
+
+			// Create Scheduled Downtime
+			var sdtCreationDto = new DeviceDataSourceInstanceScheduledDownTimeCreationDto(WindowsDeviceId, deviceDataSourceInstance.Id)
+			{
+				Comment = "Created by Unit Test",
+				StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
+				EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+				RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime
+			};
+
+			// Check the created SDT looks right
+			var createdSdt = await PortalClient
+				.CreateAsync(sdtCreationDto)
+				.ConfigureAwait(false);
+			Assert.NotNull(createdSdt);
+
+			// Clean up
+			await PortalClient
+				.DeleteAsync<ScheduledDownTime>(createdSdt.Id)
+				.ConfigureAwait(false);
+		}
 	}
 }

@@ -61,11 +61,13 @@ namespace LogicMonitor.Api
 				.SingleOrDefault(g => g.Name == graphName);
 
 		/// <summary>
-		///     Gets a list of all overview graphs for a DataSource.
+		///     Gets the XML for a DataSource.
 		/// </summary>
 		/// <param name="dataSourceId">The datasource id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		public async Task<string> GetDataSourceXmlAsync(int dataSourceId, CancellationToken cancellationToken = default)
+		public async Task<string> GetDataSourceXmlAsync(
+			int dataSourceId,
+			CancellationToken cancellationToken = default)
 			=> (await GetBySubUrlAsync<XmlResponse>($"setting/datasources/{dataSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
 
 		/// <summary>

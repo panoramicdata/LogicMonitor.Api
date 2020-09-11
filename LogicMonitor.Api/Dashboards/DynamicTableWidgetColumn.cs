@@ -67,5 +67,11 @@ namespace LogicMonitor.Api.Dashboards
 		/// </summary>
 		[DataMember(Name = "colorThresholds")]
 		public List<ColorThreshold> ColorThresholds { get; set; }
+
+		/// <summary>
+		///     The unit label
+		/// </summary>
+		[DataMember(Name = "unitLabel")]
+		public string UnitLabel { get; set; }
 	}
 }
