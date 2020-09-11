@@ -42,6 +42,30 @@ namespace LogicMonitor.Api.Alerts
 		///    Batch job alert
 		/// </summary>
 		[EnumMember(Value = "batchJobAlert")]
-		BatchJob = 5
+		BatchJob = 5,
+
+		/// <summary>
+		///    Collector down alert
+		/// </summary>
+		[EnumMember(Value = "agentDownAlert")]
+		CollectorDown = 6,
+
+		/// <summary>
+		///    Collector failover alert
+		/// </summary>
+		[EnumMember(Value = "agentFailoverAlert")]
+		CollectorFailover = 7,
+
+		/// <summary>
+		///    Collector fail back alert
+		/// </summary>
+		[EnumMember(Value = "agentFailBackAlert")]
+		CollectorFailBack = 8,
+
+		/// <summary>
+		///    Collector fail back alert
+		/// </summary>
+		[EnumMember(Value = "alertThrottledAlert")]
+		AlertThrottled = 9
 	}
 }
