@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.139.3</Version>
-		<PackageReleaseNotes>Added WaitDuringLogicMonitorUpgrades to PortalClient.</PackageReleaseNotes>
+		<Version>2.139.4</Version>
+		<PackageReleaseNotes>Added new Alert types, and new Scheduled Down Time type.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

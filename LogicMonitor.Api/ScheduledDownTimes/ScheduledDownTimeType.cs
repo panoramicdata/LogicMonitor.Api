@@ -81,6 +81,21 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// Device Data Source Instance Group
 		/// </summary>
 		[EnumMember(Value = "DeviceDataSourceInstanceGroupSDT")]
-		DeviceDataSourceInstanceGroup
+		DeviceDataSourceInstanceGroup,
+
+		/// <summary>
+		/// Service
+		/// </summary>
+		[EnumMember(Value = "ServiceSDT")]
+		Service,
+		// Have not created a CreationDto as adding an SDT to a service in the UI appears
+		// to use a resourceSDT, so this may not be required
+
+		/// <summary>
+		/// Device Cluster Alert Def
+		/// </summary>
+		[EnumMember(Value = "DeviceClusterAlertDefSDT")]
+		DeviceClusterAlertDefSdt,
+		// Have not created a CreationDto yet...
 	}
 }
