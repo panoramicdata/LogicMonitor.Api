@@ -881,8 +881,9 @@ namespace LogicMonitor.Api
 					_logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
 					if (failureCount < AttemptCount)
 					{
-						// Try again
 						_logger.LogDebug($"{prefix} Retrying..");
+						// Try again (after a short delay)
+						await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
 					_logger.LogDebug($"{prefix} Giving up.");
@@ -907,8 +908,9 @@ namespace LogicMonitor.Api
 						_logger.LogDebug(message);
 						if (failureCount < AttemptCount)
 						{
-							// Try again
 							_logger.LogDebug($"{prefix} Retrying..");
+							// Try again (after a short delay)
+							await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 							continue;
 						}
 						throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, message);

@@ -16,6 +16,7 @@ namespace LogicMonitor.Api
 	public partial class PortalClient
 	{
 		private const int AlertsMaxTake = 300;
+		private readonly Random randomGenerator = new Random();
 
 		/// <summary>
 		///     Gets a list of alerts.
@@ -29,11 +30,12 @@ namespace LogicMonitor.Api
 			// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
 			var alerts =
 				alertFilter?.StartUtcIsAfter != null
-				&& alertFilter.StartUtcIsBefore != null
-				&& alertFilter.EndUtcIsAfter == null
-				&& alertFilter.EndUtcIsBefore == null
-					? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(8)).ConfigureAwait(false)
-					: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
+					&& alertFilter.StartUtcIsBefore != null
+					&& alertFilter.EndUtcIsAfter == null
+					&& alertFilter.EndUtcIsBefore == null
+						? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false)
+						: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
+
 			if (alertFilter?.IsCleared == true)
 			{
 				return alerts.Where(a => a.IsCleared).ToList();
@@ -77,6 +79,7 @@ namespace LogicMonitor.Api
 				});
 			await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 			{
+				await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
 				foreach (var alert in await GetRestAlertsWithoutV84BugAsync(individualAlertFilter).ConfigureAwait(false))
 				{
 					allAlerts.Add(alert);
