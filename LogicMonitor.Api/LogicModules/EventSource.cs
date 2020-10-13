@@ -119,6 +119,12 @@ namespace LogicMonitor.Api.LogicModules
 		public EventSourceScriptType ScriptType { get; set; }
 
 		/// <summary>
+		/// Suppress duplicates
+		/// </summary>
+		[DataMember(Name = "suppressDuplicatesES")]
+		public bool SuppressDuplicates { get; set; }
+
+		/// <summary>
 		/// Tags
 		/// </summary>
 		[DataMember(Name = "tags")]
