@@ -28,13 +28,21 @@ namespace LogicMonitor.Api
 		public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter = null, CancellationToken cancellationToken = default)
 		{
 			// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
-			var alerts =
-				alertFilter?.StartUtcIsAfter != null
-					&& alertFilter.StartUtcIsBefore != null
-					&& alertFilter.EndUtcIsAfter == null
-					&& alertFilter.EndUtcIsBefore == null
-						? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false)
-						: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
+			//var alerts =
+			//	alertFilter?.StartUtcIsAfter != null
+			//		&& alertFilter.StartUtcIsBefore != null
+			//		&& alertFilter.EndUtcIsAfter == null
+			//		&& alertFilter.EndUtcIsBefore == null
+			//			? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false)
+			//			: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
+
+			var (alerts, limitReached) = await GetRestAlertsWithoutV84BugAsync(alertFilter, false, cancellationToken).ConfigureAwait(false);
+
+			if (limitReached)
+			{
+				// Fall back to the chunked method
+				alerts = await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false);
+			}
 
 			if (alertFilter?.IsCleared == true)
 			{
@@ -80,7 +88,7 @@ namespace LogicMonitor.Api
 			await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 			{
 				await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-				foreach (var alert in await GetRestAlertsWithoutV84BugAsync(individualAlertFilter).ConfigureAwait(false))
+				foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true).ConfigureAwait(false)).alerts)
 				{
 					allAlerts.Add(alert);
 				}
@@ -92,7 +100,7 @@ namespace LogicMonitor.Api
 			return allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue).ToList();
 		}
 
-		internal async Task<List<Alert>> GetRestAlertsWithoutV84BugAsync(AlertFilter alertFilter, CancellationToken cancellationToken = default)
+		internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(AlertFilter alertFilter, bool calledFromChunked = false, CancellationToken cancellationToken = default)
 		{
 			var correctedAlertFilter = alertFilter?.Clone() ?? new AlertFilter
 			{
@@ -142,7 +150,13 @@ namespace LogicMonitor.Api
 			do
 			{
 				var page = await FilteredGetAsync("alert/alerts", correctedAlertFilter.GetFilter(), cancellationToken).ConfigureAwait(false);
-				allAlerts.AddRange(page.Items.Where(a => !allAlerts.Select(aa => aa.Id).Contains(a.Id)).ToList());
+				allAlerts.AddRange(page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id)).ToList());
+
+				if (!calledFromChunked && allAlerts.Count >= 5000)
+				{
+					// LMREP-9012: when there are more than 5000 (anywhere near the 10,000 limit), return and use the chunked method instead
+					return (new List<Alert>(), true);
+				}
 
 				// The page TotalCount is negative if there are more to come, but this is not particularly useful to us.
 				// The only way to be sure (while bugs exist) is to keep fetching the next batch until no more results are returned.
@@ -162,7 +176,7 @@ namespace LogicMonitor.Api
 				correctedAlertFilter.Take = Math.Min(AlertsMaxTake, maxAlertCount - allAlerts.Count);
 			}
 			while (correctedAlertFilter.Take != 0);
-			return allAlerts;
+			return (allAlerts, false);
 		}
 
 		/// <summary>

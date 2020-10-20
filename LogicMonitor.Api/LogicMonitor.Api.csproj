@@ -21,7 +21,7 @@
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
 		<Version>2.142.1</Version>
-		<PackageReleaseNotes>Added fix for GetAlerts to resolve API issues with incorrect data. Adding missing property to EventSource.</PackageReleaseNotes>
+		<PackageReleaseNotes>GetAlertsAsync now uses the quick 'paged' method when there are less than 5,000 alerts.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
