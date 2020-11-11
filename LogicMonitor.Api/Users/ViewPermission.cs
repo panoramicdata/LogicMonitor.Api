@@ -27,6 +27,12 @@ namespace LogicMonitor.Api.Users
 		public bool Devices { get; set; }
 
 		/// <summary>
+		/// Logs view permission
+		/// </summary>
+		[DataMember(Name = "Logs")]
+		public bool Logs { get; set; }
+
+		/// <summary>
 		/// Maps view permission
 		/// </summary>
 		[DataMember(Name = "Maps")]
@@ -51,18 +57,26 @@ namespace LogicMonitor.Api.Users
 		public bool Reports { get; set; }
 
 		/// <summary>
-		/// Websites view permission
-		/// </summary>
-		[DataMember(Name = "Websites")]
-		public bool Websites { get; set; }
-
-		/// <summary>
 		/// Settings view permission
 		/// </summary>
 		[DataMember(Name = "Settings")]
 		public bool Settings { get; set; }
 
+		/// <summary>
+		/// Websites view permission
+		/// </summary>
+		[DataMember(Name = "Websites")]
+		public bool Websites { get; set; }
+
 		/// <inheritdoc />
-		public override string ToString() => $"{nameof(Dashboards)}={Dashboards};{nameof(Reports)}={Reports};{nameof(Websites)}={Websites};{nameof(Settings)}={Settings};{nameof(Devices)}={Devices};{nameof(Alerts)}={Alerts};";
+		public override string ToString() =>
+			$"{nameof(Dashboards)}={Dashboards};" +
+			$"{nameof(Reports)}={Reports};" +
+			$"{nameof(Websites)}={Websites};" +
+			$"{nameof(Settings)}={Settings};" +
+			$"{nameof(Devices)}={Devices};" +
+			$"{nameof(Alerts)}={Alerts};" +
+			$"{nameof(Maps)}={Maps};" +
+			$"{nameof(Logs)}={Logs};";
 	}
 }

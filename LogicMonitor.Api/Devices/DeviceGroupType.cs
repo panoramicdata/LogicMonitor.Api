@@ -444,6 +444,150 @@ namespace LogicMonitor.Api.Devices
 		AwsDmsReplication = 71,
 
 		/// <summary>
+		///     Azure/MariaDB
+		/// </summary>
+		[EnumMember(Value = "Azure/MariaDB")]
+		AzureMariaDb = 72,
+
+		/// <summary>
+		///     Azure/ApplicationInsights
+		/// </summary>
+		[EnumMember(Value = "Azure/ApplicationInsights")]
+		AzureApplicationInsights = 73,
+
+		/// <summary>
+		///     Azure/Firewall
+		/// </summary>
+		[EnumMember(Value = "Azure/Firewall")]
+		AzureFirewall = 74,
+
+		/// <summary>
+		///     Azure/SQLElasticPool
+		/// </summary>
+		[EnumMember(Value = "Azure/SQLElasticPool")]
+		AzureSQLElasticPool = 75,
+
+		/// <summary>
+		///     Azure/SQLManagedInstance
+		/// </summary>
+		[EnumMember(Value = "Azure/SQLManagedInstance")]
+		AzureSQLManagedInstance = 76,
+
+		/// <summary>
+		///     Azure/SQLManagedInstance
+		/// </summary>
+		[EnumMember(Value = "Azure/HDInsight")]
+		AzureHDInsight = 77,
+
+		/// <summary>
+		///     Azure/RecoveryServices
+		/// </summary>
+		[EnumMember(Value = "Azure/RecoveryServices")]
+		AzureRecoveryServices = 78,
+
+		/// <summary>
+		///     Azure/NetworkInterface
+		/// </summary>
+		[EnumMember(Value = "Azure/NetworkInterface")]
+		AzureNetworkInterface = 79,
+
+		/// <summary>
+		///     Azure/BatchAccount
+		/// </summary>
+		[EnumMember(Value = "Azure/BatchAccount")]
+		AzureBatchAccount = 80,
+
+		/// <summary>
+		///     Azure/LogicApps
+		/// </summary>
+		[EnumMember(Value = "Azure/LogicApps")]
+		AzureLogicApps = 81,
+
+		/// <summary>
+		///     Azure/DataFactory
+		/// </summary>
+		[EnumMember(Value = "Azure/DataFactory")]
+		AzureDataFactory = 82,
+
+		/// <summary>
+		///     Azure/PublicIP
+		/// </summary>
+		[EnumMember(Value = "Azure/PublicIP")]
+		AzurePublicIP = 83,
+
+		/// <summary>
+		///     Azure/StreamAnalytics
+		/// </summary>
+		[EnumMember(Value = "Azure/StreamAnalytics")]
+		AzureStreamAnalytics = 84,
+
+		/// <summary>
+		///     Azure/EventGrid
+		/// </summary>
+		[EnumMember(Value = "Azure/EventGrid")]
+		AzureEventGrid = 85,
+
+		/// <summary>
+		///     Azure/LoadBalancers
+		/// </summary>
+		[EnumMember(Value = "Azure/LoadBalancers")]
+		AzureLoadBalancers = 86,
+
+		/// <summary>
+		///     Azure/ServiceFabricMesh
+		/// </summary>
+		[EnumMember(Value = "Azure/ServiceFabricMesh")]
+		AzureServiceFabricMesh = 87,
+
+		/// <summary>
+		///     Azure/CognitiveSearch
+		/// </summary>
+		[EnumMember(Value = "Azure/CognitiveSearch")]
+		AzureCognitiveSearch = 88,
+
+		/// <summary>
+		///     Azure/CognitiveServices
+		/// </summary>
+		[EnumMember(Value = "Azure/CognitiveServices")]
+		AzureCognitiveServices = 89,
+
+		/// <summary>
+		///     Azure/MLWorkspaces
+		/// </summary>
+		[EnumMember(Value = "Azure/MLWorkspaces")]
+		AzureMLWorkspaces = 90,
+
+		/// <summary>
+		///     Azure/FrontDoors
+		/// </summary>
+		[EnumMember(Value = "Azure/FrontDoors")]
+		AzureFrontDoors = 91,
+
+		/// <summary>
+		///     Azure/KeyVault
+		/// </summary>
+		[EnumMember(Value = "Azure/KeyVault")]
+		AzureKeyVault = 92,
+
+		/// <summary>
+		///     Azure/RelayNamespaces
+		/// </summary>
+		[EnumMember(Value = "Azure/RelayNamespaces")]
+		AzureRelayNamespaces = 93,
+
+		/// <summary>
+		///     Azure/NotificationHubs
+		/// </summary>
+		[EnumMember(Value = "Azure/NotificationHubs")]
+		AzureNotificationHubs = 94,
+
+		/// <summary>
+		///     Azure/AppServiceEnvironment
+		/// </summary>
+		[EnumMember(Value = "Azure/AppServiceEnvironment")]
+		AzureAppServiceEnvironment = 95,
+
+		/// <summary>
 		///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
 		///     This entry provides a workaround.
 		/// </summary>

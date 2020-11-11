@@ -25,6 +25,12 @@ namespace LogicMonitor.Api.Alerts
 		public AlertType AlertType { get; set; }
 
 		/// <summary>
+		/// Whether enableAnomalyAlertGeneration is enabled (1,1,1) i.e. warn/error/critical
+		/// </summary>
+		[DataMember(Name = "enableAnomalyAlertGeneration")]
+		public string EnableAnomalyAlertGeneration { get; set; }
+
+		/// <summary>
 		/// Whether enableAnomalyAlertSuppression is enabled (1,1,1) i.e. warn/error/critical
 		/// </summary>
 		[DataMember(Name = "enableAnomalyAlertSuppression")]

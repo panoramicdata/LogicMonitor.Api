@@ -93,9 +93,9 @@ namespace LogicMonitor.Api.Test.Devices
 					Link = deviceLink,
 					DeviceGroupIds = $"{deviceGroup.Id}",
 					CustomProperties = new List<Property>
-{
-deviceProperty
-},
+					{
+						deviceProperty
+					},
 					Description = deviceDescription,
 					DisableAlerting = deviceDisableAlerting,
 					EnableNetflow = deviceEnableNetflow,
@@ -110,8 +110,7 @@ deviceProperty
 					Assert.Equal(deviceDescription, device.Description);
 					Assert.Equal(deviceLink, device.Link);
 					Assert.NotNull(device.CustomProperties);
-					Assert.Equal(1,
-						device.CustomProperties.Count(p => p.Name == devicePropertyName && p.Value == devicePropertyValue));
+					Assert.Equal(1, device.CustomProperties.Count(p => p.Name == devicePropertyName && p.Value == devicePropertyValue));
 					Assert.Equal(devicePropertyName, device.CustomProperties[0].Name);
 					Assert.Equal(devicePropertyValue, device.CustomProperties[0].Value);
 					Assert.Equal(deviceDisableAlerting, device.IsAlertingDisabled);
