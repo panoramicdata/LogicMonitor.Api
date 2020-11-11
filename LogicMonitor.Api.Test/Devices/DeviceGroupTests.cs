@@ -1,5 +1,7 @@
+using FluentAssertions;
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Devices;
+using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.LogicModules;
 using System;
 using System.Linq;
@@ -31,7 +33,7 @@ namespace LogicMonitor.Api.Test.Devices
 				.GetByNameAsync<DataSource>("Ping")
 				.ConfigureAwait(false);
 			var datapoints = (await PortalClient
-				.GetDataSourceDataPointsPageAsync(dataSource.Id, new Filters.Filter<DataSourceDataPoint> { Skip = 0, Take = 10 })
+				.GetDataSourceDataPointsPageAsync(dataSource.Id, new Filter<DataSourceDataPoint> { Skip = 0, Take = 10 })
 				.ConfigureAwait(false)).Items;
 			var datapoint = datapoints.Single(dp => dp.Name == "average");
 			await PortalClient
@@ -102,6 +104,17 @@ namespace LogicMonitor.Api.Test.Devices
 
 			// Make sure that all have Unique Ids
 			Assert.False(deviceGroups.Select(c => c.Id).HasDuplicates());
+		}
+
+		[Fact]
+		public async void GetOneDeviceGroup_Succeeds()
+		{
+			var deviceGroup = await PortalClient
+				.GetAllAsync(new Filter<DeviceGroup> { Take = 1 })
+				.ConfigureAwait(false);
+
+			// Make sure that some are returned
+			deviceGroup.Count.Should().Be(1);
 		}
 
 		[Fact]

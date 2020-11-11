@@ -158,7 +158,7 @@ namespace LogicMonitor.Api
 						break;
 				}
 			}
-			await PutAsync<T>(websiteOrGroup, cancellationToken).ConfigureAwait(false);
+			await PutAsync(websiteOrGroup, cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
