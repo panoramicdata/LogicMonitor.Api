@@ -38,6 +38,8 @@ namespace LogicMonitor.Api.Test.Devices
 					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 				}
 			}).ConfigureAwait(false);
+
+			// BROKEN - extraFilters appears not to work!
 			Assert.All(deviceDataSourceInstances, dsi => Assert.False(dsi.StopMonitoring));
 		}
 	}

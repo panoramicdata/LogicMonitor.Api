@@ -22,5 +22,14 @@ namespace LogicMonitor.Api.Extensions
 
 		public static string EscapeSlashes(this string value)
 			=> value.Replace("\\", "\\\\");
+
+		/// <summary>
+		/// Convert the + character into %2B. This is required to get device display names
+		/// that include "+". There may be other characters that require this also!
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string EscapePlusCharacter(this string value)
+			=> value.Replace("+", "%2B");
 	}
 }

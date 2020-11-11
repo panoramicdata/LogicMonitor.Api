@@ -499,5 +499,38 @@ namespace LogicMonitor.Api.Test.Alerts
 			// Make sure the numbers add up
 			Assert.Equal(allAlerts.Count, nonSdtAlerts.Count + sdtAlerts.Count);
 		}
+
+		[Fact(Skip = "This is only to test specific problems with the /alert/alerts endpoints for R2UT")]
+		public async void R2ut_Alerts_Test()
+		{
+			var startDate = new DateTime(2020, 9, 1, 0, 0, 0);
+			var endDate = new DateTime(2020, 10, 1, 0, 0, 0);
+			var s = new DateTimeOffset(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, 0, TimeSpan.Zero);
+			var e = new DateTimeOffset(endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, 0, TimeSpan.Zero);
+
+			PortalClient.TimeOut = TimeSpan.FromSeconds(120);
+			PortalClient.AttemptCount = 5;
+
+			while (true)
+			{
+				// Alerts that start inside the range (same as web UI)
+				var inRangeAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+				{
+					ResourceTemplateName = "Alert History",
+					IncludeCleared = true,
+					StartUtcIsAfter = s.UtcDateTime,
+					StartUtcIsBefore = e.UtcDateTime,
+					EndUtcIsAfter = null,
+					EndUtcIsBefore = null,
+					MonitorObjectGroupFullPaths = new List<string> { DeviceGroupFullPath },
+					Levels = new List<AlertLevel> { AlertLevel.Warning, AlertLevel.Error, AlertLevel.Critical }
+				})
+				.ConfigureAwait(false);
+
+				//Debug.WriteLine("\r\n ******* ALERTS START IN RANGE: " + inRangeAlerts.Count);
+
+				//await Task.Delay(2000).ConfigureAwait(false);
+			}
+		}
 	}
 }

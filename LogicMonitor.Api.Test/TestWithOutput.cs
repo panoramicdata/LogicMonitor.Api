@@ -14,6 +14,8 @@ namespace LogicMonitor.Api.Test
 	{
 		protected ILogger Logger { get; }
 
+		protected int CollectorId { get; }
+
 		protected string WebsiteGroupFullPath { get; }
 
 		protected string DeviceGroupFullPath { get; }
@@ -38,6 +40,7 @@ namespace LogicMonitor.Api.Test
 
 			var testPortalConfig = new TestPortalConfig(Logger);
 			PortalClient = testPortalConfig.PortalClient;
+			CollectorId = testPortalConfig.CollectorId;
 			WindowsDeviceId = testPortalConfig.WindowsDeviceId;
 			WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
 			ServiceDeviceId = testPortalConfig.ServiceDeviceId;

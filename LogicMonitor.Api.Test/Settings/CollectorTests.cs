@@ -15,7 +15,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void ExecuteDebugCommand()
 		{
-			var debugCommandResponse = await PortalClient.ExecuteDebugCommandAsync(18, "!ping 8.8.8.8").ConfigureAwait(false);
+			var debugCommandResponse = await PortalClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8").ConfigureAwait(false);
 
 			// Check for valid response
 			Assert.NotNull(debugCommandResponse);
@@ -25,7 +25,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void ExecuteDebugCommandAndWaitForResult()
 		{
-			var debugCommandResponse = await PortalClient.ExecuteDebugCommandAndWaitForResultAsync(18, "!ping 8.8.8.8", 20000, 100).ConfigureAwait(false);
+			var debugCommandResponse = await PortalClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100).ConfigureAwait(false);
 
 			// Check for valid response
 			Assert.NotNull(debugCommandResponse);
@@ -63,6 +63,16 @@ namespace LogicMonitor.Api.Test.Settings
 				.ConfigureAwait(false);
 
 			Assert.NotNull(refetchedCollector);
+		}
+
+		[Fact]
+		public async void Get1Collector()
+		{
+			var collector = await PortalClient
+				.GetAsync<Collector>(CollectorId, default)
+				.ConfigureAwait(false);
+
+			Assert.NotNull(collector);
 		}
 	}
 }
