@@ -240,7 +240,7 @@ namespace LogicMonitor.Api.Test.Devices
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			var deviceProperties = await PortalClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
-			Assert.Contains(deviceProperties, dp => dp.Name == "collector.jvmport");
+			Assert.Contains(deviceProperties, dp => dp.Name == "location");
 		}
 
 		[Fact]

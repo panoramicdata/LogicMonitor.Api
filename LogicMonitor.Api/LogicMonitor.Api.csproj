@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.143.1</Version>
-		<PackageReleaseNotes>LogicMonitor portal / API v143 support.</PackageReleaseNotes>
+		<Version>2.145.1</Version>
+		<PackageReleaseNotes>LogicMonitor portal / API v145 support.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

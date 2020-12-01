@@ -9,6 +9,13 @@ namespace LogicMonitor.Api.LogicModules
 	public class LogicModuleMetadata
 	{
 		/// <summary>
+		///     The status
+		/// </summary>
+		[DataMember(Name = "status")]
+		public string Status { get; set; }
+
+
+		/// <summary>
 		///     The namespace
 		/// </summary>
 		[DataMember(Name = "namespace")]

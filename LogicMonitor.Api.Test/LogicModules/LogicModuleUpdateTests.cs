@@ -18,9 +18,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleDataSourceUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var dataSourceUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.DataSource, default)
+					.GetLogicModuleUpdates(LogicModuleType.DataSource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.NotEmpty(dataSourceUpdates.Items);
@@ -32,9 +36,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleEventSourceUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var eventSourceUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.EventSource, default)
+					.GetLogicModuleUpdates(LogicModuleType.EventSource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.NotNull(eventSourceUpdates.Items);
@@ -46,9 +54,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleConfigSourceUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var configSourceUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.ConfigSource, default)
+					.GetLogicModuleUpdates(LogicModuleType.ConfigSource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.NotEmpty(configSourceUpdates.Items);
@@ -60,9 +72,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModulePropertySourceUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var propertySourceUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.PropertySource, default)
+					.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.NotEmpty(propertySourceUpdates.Items);
@@ -74,9 +90,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleTopologySourceUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var topologySourceUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.TopologySource, default)
+					.GetLogicModuleUpdates(LogicModuleType.TopologySource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.NotEmpty(topologySourceUpdates.Items);
@@ -88,9 +108,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleJobMonitorUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var _ =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.PropertySource, default)
+					.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			//Assert.NotEmpty(jobMonitorUpdates.Items);	// Usually none
@@ -102,9 +126,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleAppliesToUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var _ =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, default)
+					.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			//Assert.NotEmpty(appliesToUpdates.Items);	// Usually none
@@ -116,9 +144,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleSnmpSysOidUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var snmpSysOidUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.SnmpSysOIDMap, default)
+					.GetLogicModuleUpdates(LogicModuleType.SnmpSysOIDMap, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.NotEmpty(snmpSysOidUpdates.Items);
@@ -130,9 +162,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetAllLogicModuleUpdates()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var allUpdates =
 				await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.All, default)
+					.GetLogicModuleUpdates(LogicModuleType.All, version.Version.Major, default)
 					.ConfigureAwait(false);
 
 			Assert.True(allUpdates.Total > 0);
@@ -144,9 +180,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditDataSource()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var dataSourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.DataSource, default)
+					.GetLogicModuleUpdates(LogicModuleType.DataSource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -171,9 +211,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditEventSource()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var eventSourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.EventSource, default)
+					.GetLogicModuleUpdates(LogicModuleType.EventSource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -198,9 +242,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditConfigSource()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var configSourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.ConfigSource, default)
+					.GetLogicModuleUpdates(LogicModuleType.ConfigSource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -225,9 +273,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditPropertySource()
 		{
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var propertySourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(LogicModuleType.PropertySource, default)
+					.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -254,9 +306,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.DataSource;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var dataSourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -285,9 +341,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.EventSource;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var eventSourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -316,9 +376,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var configSourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -347,9 +411,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var propertySourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -378,9 +446,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var topologySourceUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -409,9 +481,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var jobMonitorUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -440,9 +516,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var appliesToFunctionUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>
@@ -471,9 +551,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;
 
+			var version = await PortalClient
+				.GetVersionAsync(default)
+				.ConfigureAwait(false);
+
 			var snmpSysOidMapUpdates =
 				(await PortalClient
-					.GetLogicModuleUpdates(logicModuleType, default)
+					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
 				.Where(ds =>

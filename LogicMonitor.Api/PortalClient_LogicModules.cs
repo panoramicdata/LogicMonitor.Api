@@ -51,10 +51,9 @@ namespace LogicMonitor.Api
 		/// <returns>A LogicModuleUpdate collection</returns>
 		public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdates(
 			LogicModuleType logicModuleType,
-			int? versionOverride = null,
+			int versionOverride,
 			CancellationToken cancellationToken = default)
 		{
-			versionOverride ??= 143; // TODO: use the actual version we want
 			var typeParameter = string.Empty;
 			switch (logicModuleType)
 			{
@@ -164,35 +163,18 @@ namespace LogicMonitor.Api
 		public async Task ImportLogicModules(
 			LogicModuleType logicModuleType,
 			List<string> logicModuleNames,
-			int? versionOverride = null,
+			int versionOverride,
 			CancellationToken cancellationToken = default)
 		{
-			versionOverride ??= 143; // TODO: use the actual version we want
-
-			string typeEndpoint;
-			switch (logicModuleType)
+			var typeEndpoint = logicModuleType switch
 			{
-				case LogicModuleType.DataSource:
-				case LogicModuleType.EventSource:
-				case LogicModuleType.ConfigSource:
-				case LogicModuleType.TopologySource:
-					typeEndpoint = $"{logicModuleType.ToString().ToLower()}s";
-					break;
-				case LogicModuleType.PropertySource:
-					typeEndpoint = "propertyrules";
-					break;
-				case LogicModuleType.JobMonitor:
-					typeEndpoint = "batchjobs";
-					break;
-				case LogicModuleType.AppliesToFunction:
-					typeEndpoint = "functions";
-					break;
-				case LogicModuleType.SnmpSysOIDMap:
-					throw new NotSupportedException($"Unsupported import type. Use {nameof(ImportSnmpSysOidMap)} instead.");
-				default:
-					throw new NotSupportedException("Unsupported import type.");
-			}
-
+				LogicModuleType.DataSource or LogicModuleType.EventSource or LogicModuleType.ConfigSource or LogicModuleType.TopologySource => $"{logicModuleType.ToString().ToLower()}s",
+				LogicModuleType.PropertySource => "propertyrules",
+				LogicModuleType.JobMonitor => "batchjobs",
+				LogicModuleType.AppliesToFunction => "functions",
+				LogicModuleType.SnmpSysOIDMap => throw new NotSupportedException($"Unsupported import type. Use {nameof(ImportSnmpSysOidMap)} instead."),
+				_ => throw new NotSupportedException("Unsupported import type."),
+			};
 			await PostAsync<LogicModuleImportObject, object>
 			(
 				// OK for Datasources, EventSources, ConfigSources, PropertySources, TopologySources, AppliesToFunctions
@@ -216,11 +198,9 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public async Task ImportSnmpSysOidMap(
 			List<SnmpSysOidMapImportItem> snmpSysOidMapImportItems,
-			int? versionOverride = null,
+			int versionOverride,
 			CancellationToken cancellationToken = default)
 		{
-			versionOverride ??= 143; // TODO: use the actual version we want
-
 			await PostAsync<SnmpSysOidMapImportObject, object>
 			(
 				new SnmpSysOidMapImportObject

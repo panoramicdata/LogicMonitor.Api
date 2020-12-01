@@ -53,6 +53,12 @@ namespace LogicMonitor.Api.LogicModules
 		public int? CheckIntervalSeconds { get; set; }
 
 		/// <summary>
+		/// The checksum
+		/// </summary>
+		[DataMember(Name = "checksum")]
+		public string CheckSum { get; set; }
+
+		/// <summary>
 		/// Whether to clear after acknowledgement
 		/// </summary>
 		[DataMember(Name = "clearAfterAck")]
@@ -99,6 +105,12 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[DataMember(Name = "linuxScript")]
 		public string LinuxScript { get; set; }
+
+		/// <summary>
+		/// Linux script
+		/// </summary>
+		[DataMember(Name = "lineageId")]
+		public string LineageId { get; set; }
 
 		/// <summary>
 		/// Published
