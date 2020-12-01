@@ -59,13 +59,15 @@ namespace LogicMonitor.Api.Test
 		private Stopwatch Stopwatch { get; }
 
 		protected int StartEpoch { get; }
+
 		protected int EndEpoch { get; }
+
 		protected PortalClient PortalClient { get; }
 
 		protected void AssertIsFast(int durationSeconds)
 			=> Assert.InRange(Stopwatch.ElapsedMilliseconds, 0, durationSeconds * 1000);
 
-		protected long DaysAgoAsUnixSeconds(int days)
+		protected static long DaysAgoAsUnixSeconds(int days)
 			=> DateTimeOffset.UtcNow.AddDays(-days).ToUnixTimeSeconds();
 
 		internal Task<Device> GetNetflowDeviceAsync()

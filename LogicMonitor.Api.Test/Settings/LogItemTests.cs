@@ -17,7 +17,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void Get()
 		{
-			var accessLogItems = await PortalClient.GetAllAsync<LogItem>(new Filter<LogItem>
+			var accessLogItems = await PortalClient.GetAllAsync(new Filter<LogItem>
 			{
 				FilterItems = new List<FilterItem<LogItem>>
 				{

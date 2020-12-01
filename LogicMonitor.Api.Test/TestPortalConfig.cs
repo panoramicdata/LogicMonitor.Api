@@ -16,7 +16,11 @@ namespace LogicMonitor.Api.Test
 				.AddJsonFile("appsettings.json");
 			Configuration = builder.Build();
 
-			PortalClient = new PortalClient(Configuration["Config:Account"], Configuration["Config:AccessId"], Configuration["Config:AccessKey"], logger)
+			PortalClient = new PortalClient(
+				Configuration["Config:Account"],
+				Configuration["Config:AccessId"],
+				Configuration["Config:AccessKey"],
+				logger)
 			{
 				StrictPagingTotalChecking = true
 			};

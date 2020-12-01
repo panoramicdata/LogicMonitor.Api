@@ -616,6 +616,6 @@ namespace LogicMonitor.Api
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <returns></returns>
 		public Task<List<DeviceDataSourceInstance>> GetAllDeviceInstances(int deviceId, Filter<DeviceDataSourceInstance> filter, CancellationToken cancellationToken)
-			=> GetAllInternalAsync<DeviceDataSourceInstance>(filter, $"device/devices/{deviceId}/instances", cancellationToken);
+			=> GetAllInternalAsync(filter, $"device/devices/{deviceId}/instances", cancellationToken);
 	}
 }
