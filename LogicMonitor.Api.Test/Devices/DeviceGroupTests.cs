@@ -116,6 +116,17 @@ namespace LogicMonitor.Api.Test.Devices
 			Assert.False(deviceGroup.SubGroups.Select(c => c.Id).HasDuplicates());
 		}
 
+		/// <summary>
+		/// Get a Device Group that has a + character in the name (must be escaped)
+		/// </summary>
+		[Fact]
+		public async void GetDeviceGroupByFullPathWithPlusInName()
+		{
+			var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
+
+			Assert.NotNull(deviceGroup);
+		}
+
 		[Fact]
 		public async void SetDeviceGroupCustomProperty()
 		{

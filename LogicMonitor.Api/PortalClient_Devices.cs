@@ -246,9 +246,12 @@ namespace LogicMonitor.Api
 			{
 				FilterItems = new List<FilterItem<DeviceGroup>>
 				{
-					new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), deviceGroupFullPath)
+					new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), deviceGroupFullPath.EscapePlusCharacter())
 				}
-			}, cancellationToken: cancellationToken).ConfigureAwait(false);
+			},
+			cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
 			return allDeviceGroups.SingleOrDefault(dg => dg.FullPath == deviceGroupFullPath);
 		}
 
