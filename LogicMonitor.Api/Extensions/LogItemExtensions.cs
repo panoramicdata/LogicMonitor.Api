@@ -8,9 +8,9 @@ namespace LogicMonitor.Api.Extensions
 	/// </summary>
 	public static class LogItemExtensions
 	{
-		private static readonly Regex UpdateResourceRegex = new Regex(@"Update host<(?<resourceId>\d+), (?<resourceHostname>.+?)> \(monitored by collector <(?<collectorId>\d+), (?<collectorName>.+?)>\), (?<additionalInfo>.+?), ( via API token (?<apiTokenId>.+))?$");
-		private static readonly Regex UpdateDeviceDataSourceInstanceRegex = new Regex(@"""Action=Update""; ""Type=Instance""; ""Device=(?<resourceHostname>.+?)""; ""InstanceId=(?<instanceId>\d+)""; ""Description=(?<description>\d+)$");
-		private static readonly Regex CreateSdtRegex = new Regex(@"Update host<(?<resourceId>\d+), (?<resourceHostname>.+?)> \(monitored by collector <(?<collectorId>\d+), (?<collectorName>.+?)>\), (?<additionalInfo>.+?), ( via API token (?<apiTokenId>.+))?$");
+		private static readonly Regex UpdateResourceRegex = new(@"Update host<(?<resourceId>\d+), (?<resourceHostname>.+?)> \(monitored by collector <(?<collectorId>\d+), (?<collectorName>.+?)>\), (?<additionalInfo>.+?), ( via API token (?<apiTokenId>.+))?$");
+		private static readonly Regex UpdateDeviceDataSourceInstanceRegex = new(@"""Action=Update""; ""Type=Instance""; ""Device=(?<resourceHostname>.+?)""; ""InstanceId=(?<instanceId>\d+)""; ""Description=(?<description>\d+)$");
+		private static readonly Regex CreateSdtRegex = new(@"Update host<(?<resourceId>\d+), (?<resourceHostname>.+?)> \(monitored by collector <(?<collectorId>\d+), (?<collectorName>.+?)>\), (?<additionalInfo>.+?), ( via API token (?<apiTokenId>.+))?$");
 
 		/// <summary>
 		/// Converts a logItem to an AuditItem
@@ -90,8 +90,5 @@ namespace LogicMonitor.Api.Extensions
 			}
 			return auditEvent;
 		}
-
-		private static string GetNotSupportedString(string description, Regex updateResourceRegex)
-			=> $"Failed to match LogItem '{description}' with regex: '{updateResourceRegex}'";
 	}
 }
