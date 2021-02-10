@@ -100,10 +100,10 @@ namespace LogicMonitor.Api.LogicModules
 		public object DisableDpAlertHostGroups { get; set; }
 
 		/// <summary>
-		///     The parentDeviceGroupAlertExprList
+		///     The parent DeviceGroup Alert Expression List
 		/// </summary>
 		[DataMember(Name = "parentDeviceGroupAlertExprList")]
-		public List<string> ParentDeviceGroupAlertExprList { get; set; }
+		public List<ParentDeviceGroupAlertExpression> ParentDeviceGroupAlertExprList { get; set; }
 
 		/// <summary>
 		///     The Global alert expression

@@ -55,6 +55,35 @@ namespace LogicMonitor.Api.Test.Alerts
 		}
 
 		[Fact]
+		public async void AlertLevelPropertyIsPopulated()
+		{
+			var closedItemsFilter = new Filter<Alert>
+			{
+				FilterItems = new List<FilterItem<Alert>>
+					{
+						new Eq<Alert>(nameof(Alert.IsCleared), "*"),
+						new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
+					},
+				Properties = new List<string>
+				{
+					nameof(Alert.EndOnSeconds),
+					nameof(Alert.Severity)
+				},
+				Order = new Order<Alert>
+				{
+					Property = nameof(Alert.EndOnSeconds),
+					Direction = OrderDirection.Desc
+				},
+				Take = 300
+			};
+			var alerts = await PortalClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
+			Assert.NotNull(alerts);
+			Assert.NotEmpty(alerts);
+			Assert.DoesNotContain(alerts, a => a.EndOnSeconds == 0);
+			Assert.All(alerts, a => Assert.NotEqual(AlertLevel.Unknown,a.AlertLevel));
+		}
+
+		[Fact]
 		public async void GetAlerts_SdtsMatchRequest()
 		{
 			// Arrange
