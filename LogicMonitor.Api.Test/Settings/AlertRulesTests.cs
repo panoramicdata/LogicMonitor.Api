@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		{
 		}
 
-		private async Task Main(PortalClient portalClient, string alertRuleName, bool enableAlertClear)
+		private static async Task Main(PortalClient portalClient, string alertRuleName, bool enableAlertClear)
 		{
 			var alertRule = (await portalClient.GetAllAsync<AlertRule>().ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName);
 
@@ -29,8 +29,8 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void DisableAndReEnableClearedAlerts()
 		{
 			var portalClient = PortalClient;
-			await Main(portalClient, "ReportMagic", true).ConfigureAwait(false);
-			await Main(portalClient, "ReportMagic", false).ConfigureAwait(false);
+			await Main(portalClient, AlertRuleName, true).ConfigureAwait(false);
+			await Main(portalClient, AlertRuleName, false).ConfigureAwait(false);
 		}
 
 		[Fact]

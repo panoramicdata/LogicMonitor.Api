@@ -1,4 +1,3 @@
-using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.OpsNotes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,6 +16,7 @@ namespace LogicMonitor.Api.Converters
 				"devicegroup" => new DeviceGroupOpsNoteScope(),
 				"website" => new WebsiteOpsNoteScope(),
 				"websitegroup" => new WebsiteGroupOpsNoteScope(),
+				"groupall" => new AllGroupOpsNoteScope(),
 				_ => throw new NotSupportedException($"OpsNoteScopeConverter.cs needs updating to include {type}."),
 			};
 		}

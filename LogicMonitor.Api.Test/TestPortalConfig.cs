@@ -34,6 +34,8 @@ namespace LogicMonitor.Api.Test
 			DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"];
 			AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"]);
 			AccountHasBillingInformation = bool.Parse(Configuration["Config:AccountHasBillingInformation"]);
+			WebsiteName = Configuration["Config:WebsiteName"];
+			AlertRuleName = Configuration["Config:AlertRuleName"];
 		}
 
 		public static IConfigurationRoot Configuration { get; set; }
@@ -58,6 +60,10 @@ namespace LogicMonitor.Api.Test
 
 		public string DeviceGroupFullPath { get; }
 
+		public string WebsiteName { get; }
+
 		internal int CollectorId { get; }
+
+		public string AlertRuleName { get; }
 	}
 }

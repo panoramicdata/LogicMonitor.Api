@@ -28,6 +28,12 @@ namespace LogicMonitor.Api.Reports
 		public int ReportCount { get; set; }
 
 		/// <summary>
+		/// Matched report count
+		/// </summary>
+		[DataMember(Name = "matchedReportCount")]
+		public int MatchedReportCount { get; set; }
+
+		/// <summary>
 		/// User permission
 		/// </summary>
 		[DataMember(Name = "userPermission")]

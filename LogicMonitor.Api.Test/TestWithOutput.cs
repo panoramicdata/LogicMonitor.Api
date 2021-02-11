@@ -18,6 +18,10 @@ namespace LogicMonitor.Api.Test
 
 		protected string WebsiteGroupFullPath { get; }
 
+		protected string AlertRuleName { get; }
+
+		protected string WebsiteName { get; }
+
 		protected string DeviceGroupFullPath { get; }
 
 		protected int ServiceDeviceId { get; }
@@ -47,9 +51,11 @@ namespace LogicMonitor.Api.Test
 			NetflowDeviceId = testPortalConfig.NetflowDeviceId;
 			DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 			WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
+			WebsiteName = testPortalConfig.WebsiteName;
 			SnmpDeviceId = testPortalConfig.SnmpDeviceId;
 			AllWidgetsDashboardId = testPortalConfig.AllWidgetsDashboardId;
 			AccountHasBillingInformation = testPortalConfig.AccountHasBillingInformation;
+			AlertRuleName = testPortalConfig.AlertRuleName;
 			var nowUtc = DateTime.UtcNow;
 			StartEpoch = nowUtc.AddDays(-30).SecondsSinceTheEpoch();
 			EndEpoch = nowUtc.SecondsSinceTheEpoch();

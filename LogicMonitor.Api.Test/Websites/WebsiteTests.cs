@@ -71,7 +71,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteByName_Exists_Succeeds()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>("PDL-WEB-RM-Prod-Www").ConfigureAwait(false);
+			var website = await PortalClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
 			// One service should be returned
 			Assert.NotNull(website);
@@ -88,7 +88,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteGraphData()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>(" PDL-WEB-RM-Prod-Www").ConfigureAwait(false);
+			var website = await PortalClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
 			var endDateTime = DateTime.UtcNow;
 			var startDateTime = endDateTime.AddMonths(-1);
