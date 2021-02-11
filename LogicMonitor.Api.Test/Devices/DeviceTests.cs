@@ -189,7 +189,7 @@ namespace LogicMonitor.Api.Test.Devices
 					}
 				}, CancellationToken.None)
 				.ConfigureAwait(false);
-			Assert.True(deviceInstances.Count > 300);
+			Assert.True(deviceInstances.Count > 10);
 		}
 
 		[Fact]

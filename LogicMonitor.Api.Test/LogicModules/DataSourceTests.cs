@@ -293,7 +293,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async Task TestDeviceGroupAlertSettings()
 		{
-			var items = await PortalClient.GetDeviceGroupDataPointConfigurationAsync(144, 3).ConfigureAwait(false);
+			var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
+			var items = await PortalClient.GetDeviceGroupDataPointConfigurationAsync(deviceGroup.Id, 3).ConfigureAwait(false);
 			Assert.NotNull(items);
 		}
 

@@ -21,15 +21,29 @@ namespace LogicMonitor.Api.Test.Devices
 		[Fact]
 		public async void GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 		{
-			var _ = await PortalClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, WindowsDeviceLargeDeviceDataSourceId).ConfigureAwait(false);
+			var dataSource = await PortalClient
+				.GetDataSourceByUniqueNameAsync("WinIf-")
+				.ConfigureAwait(false);
+			var deviceDataSource = await PortalClient
+				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id)
+				.ConfigureAwait(false);
+
+			var _ = await PortalClient
+				.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id)
+				.ConfigureAwait(false);
 		}
 
 		[Fact]
 		public async void OnlyMonitoredInstances()
 		{
-			var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("snmp64_If-").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var device = await GetSnmpDeviceAsync()
+				.ConfigureAwait(false);
+			var dataSource = await PortalClient
+				.GetDataSourceByUniqueNameAsync("snmp64_If-")
+				.ConfigureAwait(false);
+			var deviceDataSource = await PortalClient
+				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id)
+				.ConfigureAwait(false);
 			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 			{
 				Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
