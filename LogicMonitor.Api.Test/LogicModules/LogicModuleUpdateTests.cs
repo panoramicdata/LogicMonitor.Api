@@ -18,12 +18,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleDataSourceUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var dataSourceUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.DataSource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -36,12 +36,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleEventSourceUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var eventSourceUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.EventSource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -54,12 +54,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleConfigSourceUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var configSourceUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.ConfigSource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -72,12 +72,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModulePropertySourceUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var propertySourceUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -90,12 +90,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleTopologySourceUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var topologySourceUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.TopologySource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -108,12 +108,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleJobMonitorUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var _ =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -126,12 +126,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleAppliesToUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var _ =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -144,12 +144,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetLogicModuleSnmpSysOidUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var snmpSysOidUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.SnmpSysOIDMap, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -162,12 +162,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetAllLogicModuleUpdates()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var allUpdates =
-				await PortalClient
+				await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.All, version.Version.Major, default)
 					.ConfigureAwait(false);
 
@@ -180,12 +180,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditDataSource()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var dataSourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.DataSource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -197,7 +197,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 			{
 				var dataSourceToAudit = dataSourceUpdates[0];
 				var auditedDataSource =
-					await PortalClient.AuditDataSource(
+					await LogicMonitorClient.AuditDataSource(
 						dataSourceToAudit.LocalId,
 						dataSourceToAudit.Version,
 						default)
@@ -211,12 +211,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditEventSource()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var eventSourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.EventSource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -228,7 +228,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 			{
 				var eventSourceToAudit = eventSourceUpdates[0];
 				var auditedEventSource =
-					await PortalClient.AuditEventSource(
+					await LogicMonitorClient.AuditEventSource(
 						eventSourceToAudit.LocalId,
 						eventSourceToAudit.Version,
 						default)
@@ -242,12 +242,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditConfigSource()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var configSourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.ConfigSource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -259,7 +259,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 			{
 				var configSourceToAudit = configSourceUpdates[0];
 				var auditedConfigSource =
-					await PortalClient.AuditConfigSource(
+					await LogicMonitorClient.AuditConfigSource(
 						configSourceToAudit.LocalId,
 						configSourceToAudit.Version,
 						default)
@@ -273,12 +273,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void AuditPropertySource()
 		{
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var propertySourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -290,7 +290,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 			{
 				var propertySourceToAudit = propertySourceUpdates[0];
 				var auditedPropertySource =
-					await PortalClient.AuditPropertySource(
+					await LogicMonitorClient.AuditPropertySource(
 						propertySourceToAudit.LocalId,
 						propertySourceToAudit.Version,
 						default)
@@ -306,12 +306,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.DataSource;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var dataSourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -321,7 +321,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (dataSourceUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -341,12 +341,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.EventSource;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var eventSourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -356,7 +356,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (eventSourceUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -376,12 +376,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var configSourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -391,7 +391,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (configSourceUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -411,12 +411,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var propertySourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -426,7 +426,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (propertySourceUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -446,12 +446,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var topologySourceUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -461,7 +461,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (topologySourceUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -481,12 +481,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var jobMonitorUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -496,7 +496,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (jobMonitorUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -516,12 +516,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var appliesToFunctionUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -531,7 +531,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (appliesToFunctionUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportLogicModules(
 					logicModuleType,
 					new List<string>
@@ -551,12 +551,12 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;
 
-			var version = await PortalClient
+			var version = await LogicMonitorClient
 				.GetVersionAsync(default)
 				.ConfigureAwait(false);
 
 			var snmpSysOidMapUpdates =
-				(await PortalClient
+				(await LogicMonitorClient
 					.GetLogicModuleUpdates(logicModuleType, version.Version.Major, default)
 					.ConfigureAwait(false))
 				.Items
@@ -566,7 +566,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			if (snmpSysOidMapUpdates.Count > 0)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.ImportSnmpSysOidMap(
 					new List<SnmpSysOidMapImportItem>
 					{

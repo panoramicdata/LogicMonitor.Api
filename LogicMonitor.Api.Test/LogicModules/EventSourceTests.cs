@@ -15,10 +15,10 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetDeviceGroupEventSources()
 		{
-			var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
+			var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 			Assert.NotNull(deviceGroup);
 
-			var eventGroupDataSources = await PortalClient.GetAllDeviceGroupEventSourcesAsync(deviceGroup.Id).ConfigureAwait(false);
+			var eventGroupDataSources = await LogicMonitorClient.GetAllDeviceGroupEventSourcesAsync(deviceGroup.Id).ConfigureAwait(false);
 			Assert.NotEmpty(eventGroupDataSources);
 		}
 	}

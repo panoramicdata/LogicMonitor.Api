@@ -35,7 +35,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetApplications()
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-			var flowApplications = await PortalClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
+			var flowApplications = await LogicMonitorClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
 			{
 				TimePeriod = TimePeriod.OneDay,
 				DeviceId = device.Id
@@ -55,7 +55,7 @@ namespace LogicMonitor.Api.Test
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
-			var flowApplications = await PortalClient.GetDeviceGroupFlowApplicationsPageAsync(new DeviceGroupFlowApplicationsRequest
+			var flowApplications = await LogicMonitorClient.GetDeviceGroupFlowApplicationsPageAsync(new DeviceGroupFlowApplicationsRequest
 			{
 				TimePeriod = TimePeriod.Zoom,
 				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
@@ -80,7 +80,7 @@ namespace LogicMonitor.Api.Test
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
-			var flowBandwidths = await PortalClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
+			var flowBandwidths = await LogicMonitorClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
 			{
 				TimePeriod = TimePeriod.Zoom,
 				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
@@ -104,7 +104,7 @@ namespace LogicMonitor.Api.Test
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
-			var flows = await PortalClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
+			var flows = await LogicMonitorClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
 			{
 				TimePeriod = TimePeriod.Zoom,
 				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
@@ -160,7 +160,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetFlowEndpoints()
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-			var flowEndpoints = await PortalClient.GetFlowEndpointsPageAsync(new FlowEndpointsRequest
+			var flowEndpoints = await LogicMonitorClient.GetFlowEndpointsPageAsync(new FlowEndpointsRequest
 			{
 				TimePeriod = TimePeriod.OneDay,
 				DeviceId = device.Id
@@ -229,7 +229,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetFlows()
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-			var flows = await PortalClient.GetFlows(new FlowsRequest
+			var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
 			{
 				TimePeriod = TimePeriod.OneDay,
 				DeviceId = device.Id
@@ -264,7 +264,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetPorts()
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-			var flowPorts = await PortalClient.GetFlowPortsPageAsync(new FlowPortsRequest
+			var flowPorts = await LogicMonitorClient.GetFlowPortsPageAsync(new FlowPortsRequest
 			{
 				TimePeriod = TimePeriod.OneDay,
 				DeviceId = device.Id
@@ -283,7 +283,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetZoomTimeFlows()
 		{
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-			var flows = await PortalClient.GetFlows(new FlowsRequest
+			var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
 			{
 				DeviceId = device.Id,
 				TimePeriod = TimePeriod.Zoom,

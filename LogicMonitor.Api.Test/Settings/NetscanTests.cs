@@ -16,16 +16,16 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void CanGetNetscanById()
 		{
-			var netscan = (await PortalClient.GetAllAsync<Netscan>().ConfigureAwait(false))[0];
+			var netscan = (await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false))[0];
 
-			var refetchedNetscan = await PortalClient.GetAsync<Netscan>(netscan.Id).ConfigureAwait(false);
+			var refetchedNetscan = await LogicMonitorClient.GetAsync<Netscan>(netscan.Id).ConfigureAwait(false);
 			Assert.NotNull(refetchedNetscan);
 		}
 
 		[Fact]
 		public async void CreateNetscan()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 
 			var netscanGroups = await portalClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
 			var netscanGroup = netscanGroups.SingleOrDefault(npg => npg.Name == "LogicMonitor API Unit Tests");
@@ -159,7 +159,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void ListAllNetscans()
 		{
-			var netscans = await PortalClient.GetAllAsync<Netscan>().ConfigureAwait(false);
+			var netscans = await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false);
 			Assert.NotNull(netscans);
 			Assert.NotEmpty(netscans);
 
@@ -171,10 +171,10 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void ListFirst5Netscans()
 		{
-			var allNetscans = await PortalClient.GetAllAsync<Netscan>().ConfigureAwait(false);
+			var allNetscans = await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false);
 
 			const int expectedCount = 5;
-			var netscans = await PortalClient.GetPageAsync(new Filter<Netscan> { Skip = 0, Take = expectedCount }).ConfigureAwait(false);
+			var netscans = await LogicMonitorClient.GetPageAsync(new Filter<Netscan> { Skip = 0, Take = expectedCount }).ConfigureAwait(false);
 			Assert.NotNull(netscans);
 			Assert.Equal(allNetscans.Count, netscans.TotalCount);
 			Assert.NotEmpty(netscans.Items);

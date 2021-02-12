@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetAll()
 		{
-			var snmpSysOidMaps = await PortalClient.GetAllAsync<SnmpSysOidMap>().ConfigureAwait(false);
+			var snmpSysOidMaps = await LogicMonitorClient.GetAllAsync<SnmpSysOidMap>().ConfigureAwait(false);
 			Assert.NotNull(snmpSysOidMaps);
 			Assert.All(snmpSysOidMaps, snmpSysOidMap => Assert.NotNull(snmpSysOidMap.Oid));
 			Assert.All(snmpSysOidMaps, snmpSysOidMap => Assert.NotNull(snmpSysOidMap.Categories));

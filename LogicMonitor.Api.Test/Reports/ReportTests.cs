@@ -15,7 +15,7 @@ namespace LogicMonitor.Api.Test.Reports
 		[Fact]
 		public async void GetAllReportGroups()
 		{
-			var reportGroups = await PortalClient.GetAllAsync<ReportGroup>().ConfigureAwait(false);
+			var reportGroups = await LogicMonitorClient.GetAllAsync<ReportGroup>().ConfigureAwait(false);
 			Assert.NotNull(reportGroups);
 			Assert.NotEmpty(reportGroups);
 		}
@@ -23,7 +23,7 @@ namespace LogicMonitor.Api.Test.Reports
 		[Fact]
 		public async void GetAllReports()
 		{
-			var reports = await PortalClient.GetAllAsync<Report>().ConfigureAwait(false);
+			var reports = await LogicMonitorClient.GetAllAsync<Report>().ConfigureAwait(false);
 			Assert.NotNull(reports);
 			Assert.NotEmpty(reports);
 		}
@@ -32,7 +32,7 @@ namespace LogicMonitor.Api.Test.Reports
 		public async void CrudReportGroups()
 		{
 			// Delete it if it already exists
-			foreach (var existingReportGroup in await PortalClient.GetAllAsync(new Filter<ReportGroup>
+			foreach (var existingReportGroup in await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup>
 			{
 				FilterItems = new List<FilterItem<ReportGroup>>
 				{
@@ -40,18 +40,18 @@ namespace LogicMonitor.Api.Test.Reports
 				}
 			}).ConfigureAwait(false))
 			{
-				await PortalClient.DeleteAsync(existingReportGroup).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(existingReportGroup).ConfigureAwait(false);
 			}
 
 			// Create it
-			var reportGroup = await PortalClient.CreateAsync(new ReportGroupCreationDto
+			var reportGroup = await LogicMonitorClient.CreateAsync(new ReportGroupCreationDto
 			{
 				Name = "Test Name",
 				Description = "Test Description"
 			}).ConfigureAwait(false);
 
 			// Delete it again
-			await PortalClient.DeleteAsync(reportGroup).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(reportGroup).ConfigureAwait(false);
 		}
 	}
 }

@@ -18,11 +18,11 @@ namespace LogicMonitor.Api.Test.Dashboards
 		public async void GetBigNumberWidgetData_Succeeds()
 		{
 			// Multi-number
-			var widgetData = await PortalClient.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
+			var widgetData = await LogicMonitorClient.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData);
 
 			// Single-number
-			var widgetData2 = await PortalClient.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
+			var widgetData2 = await LogicMonitorClient.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData2);
 		}
 
@@ -32,13 +32,13 @@ namespace LogicMonitor.Api.Test.Dashboards
 			var utcNow = DateTimeOffset.UtcNow;
 
 			// Multi-number
-			var widgetData = await PortalClient.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
+			var widgetData = await LogicMonitorClient.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData);
 			Assert.NotNull(widgetData.ResultList);
 			Assert.NotEmpty(widgetData.ResultList);
 
 			// Single-number
-			var widgetData2 = await PortalClient.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
+			var widgetData2 = await LogicMonitorClient.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 			Assert.NotNull(widgetData2);
 			Assert.NotEqual(0, widgetData2.Availability);
 			Assert.Null(widgetData2.ResultList);
@@ -48,9 +48,9 @@ namespace LogicMonitor.Api.Test.Dashboards
 		public async void Clone()
 		{
 			// This one has all the different widget types on
-			var originalDashboard = await PortalClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
+			var originalDashboard = await LogicMonitorClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
 
-			var newDashboard = await PortalClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
+			var newDashboard = await LogicMonitorClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
 			{
 				Name = "All widgets clone",
 				Description = "I'm a clone and so if my wife.",
@@ -59,7 +59,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 				WidgetsOrder = originalDashboard.WidgetsOrder
 			}).ConfigureAwait(false);
 
-			var newDashboardRefetch = await PortalClient.
+			var newDashboardRefetch = await LogicMonitorClient.
 				GetAsync<Dashboard>(newDashboard.Id)
 				.ConfigureAwait(false);
 
@@ -67,7 +67,7 @@ namespace LogicMonitor.Api.Test.Dashboards
 			Assert.NotNull(newDashboardRefetch);
 
 			// Delete the clone
-			await PortalClient
+			await LogicMonitorClient
 				.DeleteAsync(newDashboard)
 				.ConfigureAwait(false);
 		}
@@ -76,8 +76,8 @@ namespace LogicMonitor.Api.Test.Dashboards
 		public async void Get()
 		{
 			// This one has all the different widget types on
-			var dashboard = await PortalClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
-			var widgets = await PortalClient.GetWidgetsByDashboardNameAsync("All Widgets").ConfigureAwait(false);
+			var dashboard = await LogicMonitorClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
+			var widgets = await LogicMonitorClient.GetWidgetsByDashboardNameAsync("All Widgets").ConfigureAwait(false);
 			Assert.NotNull(dashboard);
 			Assert.NotNull(widgets);
 			Assert.Equal(19, widgets.Count); // There are 24 different types of widget

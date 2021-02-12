@@ -22,14 +22,14 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetRoles()
 		{
-			var roles = await PortalClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+			var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 			Assert.NotNull(roles);
 			Assert.NotNull(roles.Items);
 			Assert.True(roles.Items.Count > 0);
 
 			foreach (var role in roles.Items)
 			{
-				var refetchedRole = await PortalClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
+				var refetchedRole = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
 				Assert.True(refetchedRole.Name == role.Name);
 			}
 		}
@@ -37,7 +37,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetForCurrentUser()
 		{
-			var roles = await PortalClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+			var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 			Assert.NotNull(roles);
 			Assert.NotNull(roles.Items);
 			Assert.True(roles.Items.Count > 0);
@@ -47,20 +47,20 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void CreateUpdateDelete()
 		{
 			// Ensure there is no existing role called "Test"
-			var existingRole = (await PortalClient
+			var existingRole = (await LogicMonitorClient
 					.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } })
 					.ConfigureAwait(false))
 				.SingleOrDefault();
 			if(existingRole != null)
 			{
-				await PortalClient.DeleteAsync(existingRole).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(existingRole).ConfigureAwait(false);
 			}
 
-			var dashboardGroup = (await PortalClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var deviceGroup = (await PortalClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var websiteGroup = (await PortalClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var reportGroup = (await PortalClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var role = await PortalClient.CreateAsync(new RoleCreationDto
+			var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+			var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+			var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+			var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+			var role = await LogicMonitorClient.CreateAsync(new RoleCreationDto
 			{
 				CustomHelpLabel = "",
 				CustomHelpUrl = "",
@@ -121,11 +121,11 @@ namespace LogicMonitor.Api.Test.Settings
 			}).ConfigureAwait(false);
 
 			// Refetch
-			var refetch = await PortalClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
 			Assert.NotNull(refetch);
 
 			// Delete
-			await PortalClient.DeleteAsync(role).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(role).ConfigureAwait(false);
 		}
 	}
 }

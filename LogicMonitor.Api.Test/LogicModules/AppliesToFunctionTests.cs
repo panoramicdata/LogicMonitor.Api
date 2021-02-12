@@ -19,14 +19,14 @@ namespace LogicMonitor.Api.Test.LogicModules
 			var testAppliesToFunctionCode = $"displayname == \"{testAppliesToFunctionName}\"";
 
 			// Delete if already present
-			var existingAppliesToFunction = await PortalClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
+			var existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
 			if (existingAppliesToFunction != null)
 			{
-				await PortalClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
 			}
 
 			// Create
-			var createdAppliesToFunction = await PortalClient.CreateAsync(new AppliesToFunctionCreationDto
+			var createdAppliesToFunction = await LogicMonitorClient.CreateAsync(new AppliesToFunctionCreationDto
 			{
 				Name = testAppliesToFunctionName,
 				Description = testAppliesToFunctionDescription,
@@ -34,24 +34,24 @@ namespace LogicMonitor.Api.Test.LogicModules
 			}).ConfigureAwait(false);
 
 			// Refetch and check
-			existingAppliesToFunction = await PortalClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
+			existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
 			Assert.NotNull(existingAppliesToFunction);
 			Assert.Equal(createdAppliesToFunction.Id, existingAppliesToFunction.Id);
 
 			// Update
 			var newDescription = testAppliesToFunctionDescription + "2";
 			existingAppliesToFunction.Description = newDescription;
-			await PortalClient.PutAsync(existingAppliesToFunction).ConfigureAwait(false);
+			await LogicMonitorClient.PutAsync(existingAppliesToFunction).ConfigureAwait(false);
 
 			// Refetch and check
-			existingAppliesToFunction = await PortalClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
+			existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
 			Assert.Equal(newDescription, existingAppliesToFunction.Description);
 
 			// Delete
-			await PortalClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
 
 			// Refetch and check
-			existingAppliesToFunction = await PortalClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
+			existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
 			Assert.Null(existingAppliesToFunction);
 		}
 
@@ -110,7 +110,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void CustomerCodeWorks()
 		{
-			var matches = await PortalClient
+			var matches = await LogicMonitorClient
 				.GetAppliesToAsync("customer.code == \"PDL\"")
 				.ConfigureAwait(false);
 			Assert.NotNull(matches);

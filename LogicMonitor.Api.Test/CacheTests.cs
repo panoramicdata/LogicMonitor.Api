@@ -17,7 +17,7 @@ namespace LogicMonitor.Api.Test
 		public async void CacheTestFasterSecondTimeAround()
 		{
 			// Enable caching
-			PortalClient.UseCache = true;
+			LogicMonitorClient.UseCache = true;
 
 			var stopwatch = Stopwatch.StartNew();
 			var firstDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -45,11 +45,11 @@ namespace LogicMonitor.Api.Test
 		public async void CacheRefetchesAfterTimeout()
 		{
 			// Enable caching
-			PortalClient.UseCache = true;
-			PortalClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
+			LogicMonitorClient.UseCache = true;
+			LogicMonitorClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
 
 			// Make a call to force authentication
-			var _ = await PortalClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
+			var _ = await LogicMonitorClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
 
 			// Fetch a result
 			var stopwatch = Stopwatch.StartNew();
@@ -59,7 +59,7 @@ namespace LogicMonitor.Api.Test
 			Logger.LogInformation($"Duration 1 {firstDuration}");
 
 			// Wait for the cache timeout duration
-			await Task.Delay(PortalClient.CacheTimeSpan).ConfigureAwait(false);
+			await Task.Delay(LogicMonitorClient.CacheTimeSpan).ConfigureAwait(false);
 
 			// Re-fetch a result
 			stopwatch.Restart();
@@ -79,7 +79,7 @@ namespace LogicMonitor.Api.Test
 		public async void RateLimitCheckGetDeviceByDisplayNameAsync()
 		{
 			var stopwatch = Stopwatch.StartNew();
-			PortalClient.UseCache = true;
+			LogicMonitorClient.UseCache = true;
 			for (var n = 0; n < 1000; n++)
 			{
 				var innerStopwatch = Stopwatch.StartNew();

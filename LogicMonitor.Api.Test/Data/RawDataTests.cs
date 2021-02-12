@@ -16,12 +16,12 @@ namespace LogicMonitor.Api.Test.Data
 		public async void GetRawData()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstance =
-			(await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
+			(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
 			).Single();
-			var rawData = await PortalClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
+			var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 
 			Assert.NotNull(rawData);
 		}
@@ -32,12 +32,12 @@ namespace LogicMonitor.Api.Test.Data
 			var utcNow = DateTime.UtcNow;
 			var yesterday = utcNow - TimeSpan.FromDays(1);
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstance =
-			(await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
+			(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
 			).Single();
-			var rawData = await PortalClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow).ConfigureAwait(false);
+			var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow).ConfigureAwait(false);
 
 			Assert.NotNull(rawData);
 
@@ -51,7 +51,7 @@ namespace LogicMonitor.Api.Test.Data
 		[Fact]
 		public async void PollNow()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			var dataSource = await portalClient.GetDataSourceByUniqueNameAsync("WinService-").ConfigureAwait(false);
 			var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
@@ -69,14 +69,14 @@ namespace LogicMonitor.Api.Test.Data
 		public async void FetchInstanceData()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinIf-").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinIf-").ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
 
 			var end = DateTime.UtcNow;
 			var start = end.AddHours(-2);
 
-			var rawData = await PortalClient.GetFetchDataResponseAsync(deviceDataSourceInstances.Select(ddsi => ddsi.Id).ToList(), start, end).ConfigureAwait(false);
+			var rawData = await LogicMonitorClient.GetFetchDataResponseAsync(deviceDataSourceInstances.Select(ddsi => ddsi.Id).ToList(), start, end).ConfigureAwait(false);
 
 			Assert.NotNull(rawData);
 			Assert.Equal(deviceDataSourceInstances.Count, rawData.TotalCount);

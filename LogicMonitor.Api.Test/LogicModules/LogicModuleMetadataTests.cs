@@ -13,10 +13,10 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetDataSourceMetadata()
 		{
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
 			Assert.NotNull(dataSource);
 			Assert.NotEqual(0, dataSource.Id);
-			var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id).ConfigureAwait(false);
+			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id).ConfigureAwait(false);
 			CheckMetadata(logicModuleMetadata);
 		}
 

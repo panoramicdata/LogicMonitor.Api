@@ -43,7 +43,7 @@ namespace LogicMonitor.Api.Test
 			Logger = iTestOutputHelper.BuildLogger();
 
 			var testPortalConfig = new TestPortalConfig(Logger);
-			PortalClient = testPortalConfig.LogicMonitorClient;
+			LogicMonitorClient = testPortalConfig.LogicMonitorClient;
 			CollectorId = testPortalConfig.CollectorId;
 			WindowsDeviceId = testPortalConfig.WindowsDeviceId;
 			WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
@@ -68,7 +68,7 @@ namespace LogicMonitor.Api.Test
 
 		protected int EndEpoch { get; }
 
-		protected LogicMonitorClient PortalClient { get; }
+		protected LogicMonitorClient LogicMonitorClient { get; }
 
 		protected void AssertIsFast(int durationSeconds)
 			=> Assert.InRange(Stopwatch.ElapsedMilliseconds, 0, durationSeconds * 1000);
@@ -77,19 +77,19 @@ namespace LogicMonitor.Api.Test
 			=> DateTimeOffset.UtcNow.AddDays(-days).ToUnixTimeSeconds();
 
 		internal Task<Device> GetNetflowDeviceAsync()
-			=> PortalClient.GetAsync<Device>(NetflowDeviceId);
+			=> LogicMonitorClient.GetAsync<Device>(NetflowDeviceId);
 
 		protected Task<Device> GetServiceDeviceAsync()
-			=> PortalClient.GetAsync<Device>(ServiceDeviceId);
+			=> LogicMonitorClient.GetAsync<Device>(ServiceDeviceId);
 
 		protected Task<Device> GetWindowsDeviceAsync()
-			=> PortalClient.GetAsync<Device>(WindowsDeviceId);
+			=> LogicMonitorClient.GetAsync<Device>(WindowsDeviceId);
 
 		protected Task<Device> GetSnmpDeviceAsync()
-			=> PortalClient.GetAsync<Device>(SnmpDeviceId);
+			=> LogicMonitorClient.GetAsync<Device>(SnmpDeviceId);
 
 		protected Task<Dashboard> GetAllWidgetsDashboardAsync()
-			=> PortalClient.GetAsync<Dashboard>(AllWidgetsDashboardId);
+			=> LogicMonitorClient.GetAsync<Dashboard>(AllWidgetsDashboardId);
 
 		protected string GetWebsiteGroupFullPath()
 			=> WebsiteGroupFullPath;

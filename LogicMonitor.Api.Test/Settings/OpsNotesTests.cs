@@ -14,7 +14,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetOpsNotes()
 		{
-			var allOpsNotes = await PortalClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
+			var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
 			Assert.NotNull(allOpsNotes);
 		}
@@ -22,7 +22,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetOpsNotesTags()
 		{
-			var allOpsNotesTags = await PortalClient.GetAllAsync(new Filter<OpsNoteTag>
+			var allOpsNotesTags = await LogicMonitorClient.GetAllAsync(new Filter<OpsNoteTag>
 			{
 				Order = new Order<OpsNoteTag>
 				{

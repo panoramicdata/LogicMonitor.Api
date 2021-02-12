@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void Get()
 		{
-			var messageTemplate = await PortalClient.GetAsync<NewUserMessageTemplate>().ConfigureAwait(false);
+			var messageTemplate = await LogicMonitorClient.GetAsync<NewUserMessageTemplate>().ConfigureAwait(false);
 
 			Assert.False(string.IsNullOrWhiteSpace(messageTemplate.Subject));
 			Assert.False(string.IsNullOrWhiteSpace(messageTemplate.Body));

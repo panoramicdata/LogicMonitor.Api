@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void BasicTopologySourceTest()
 		{
-			var _ = await PortalClient.GetAllAsync<TopologySource>().ConfigureAwait(false);
+			var _ = await LogicMonitorClient.GetAllAsync<TopologySource>().ConfigureAwait(false);
 		}
 	}
 }

@@ -47,7 +47,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				},
 				Take = 300
 			};
-			var alerts = await PortalClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
+			var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
 			Assert.NotNull(alerts);
 			Assert.NotEmpty(alerts);
 			Assert.DoesNotContain(alerts, a => a.EndOnSeconds == 0);
@@ -76,7 +76,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				},
 				Take = 300
 			};
-			var alerts = await PortalClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
+			var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
 			Assert.NotNull(alerts);
 			Assert.NotEmpty(alerts);
 			Assert.DoesNotContain(alerts, a => a.EndOnSeconds == 0);
@@ -107,9 +107,9 @@ namespace LogicMonitor.Api.Test.Alerts
 			};
 
 			// Act
-			var allAlerts = await PortalClient.GetAlertsAsync(allFilter).ConfigureAwait(false);
-			var sdtAlerts = await PortalClient.GetAlertsAsync(sdtFilter).ConfigureAwait(false);
-			var nonSdtAlerts = await PortalClient.GetAlertsAsync(nonSdtFilter).ConfigureAwait(false);
+			var allAlerts = await LogicMonitorClient.GetAlertsAsync(allFilter).ConfigureAwait(false);
+			var sdtAlerts = await LogicMonitorClient.GetAlertsAsync(sdtFilter).ConfigureAwait(false);
+			var nonSdtAlerts = await LogicMonitorClient.GetAlertsAsync(nonSdtFilter).ConfigureAwait(false);
 
 			// Assert
 
@@ -163,7 +163,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		public async void GetAlertsAndCheckUnique()
 		{
 			var startEpoch = DateTime.UtcNow.AddDays(-1).SecondsSinceTheEpoch();
-			var alertList = await PortalClient.GetRestAlertsWithV84Bug(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8)).ConfigureAwait(false);
+			var alertList = await LogicMonitorClient.GetRestAlertsWithV84Bug(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8)).ConfigureAwait(false);
 
 			var unique = true;
 			foreach (var alert in alertList)
@@ -190,7 +190,7 @@ namespace LogicMonitor.Api.Test.Alerts
 					MonitorObjectId = device.Id,
 					StartUtcIsBefore = startUtcIsBefore
 				};
-				var alerts = await PortalClient.GetAlertsAsync(alertFilter).ConfigureAwait(false);
+				var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter).ConfigureAwait(false);
 				// TODO CheckAlertsAreValid(alerts);
 
 				// Make sure there are no alerts for hosts not mentioned by the hostFilter
@@ -228,7 +228,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				StartEpochIsAfter = utcNow.AddDays(-1).SecondsSinceTheEpoch(),
 				StartEpochIsBefore = utcNow.SecondsSinceTheEpoch()
 			};
-			var alerts = await PortalClient.GetAlertsAsync(alertFilter).ConfigureAwait(false);
+			var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter).ConfigureAwait(false);
 			// TODO CheckAlertsAreValid(alerts);
 
 			// Make sure there are no alerts for hosts not mentioned by the hostFilter
@@ -253,7 +253,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				OrderByProperty = nameof(Alert.StartOnSeconds),
 				OrderDirection = OrderDirection.Desc
 			};
-			var alertsNotIncludingCleared = await PortalClient.GetAlertsAsync(alertFilterNotIncludingCleared).ConfigureAwait(false);
+			var alertsNotIncludingCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterNotIncludingCleared).ConfigureAwait(false);
 			Assert.True(alertsNotIncludingCleared.Count > 0);
 			Assert.DoesNotContain(alertsNotIncludingCleared, a => !a.IsActive);
 			Assert.Contains(alertsNotIncludingCleared, a => a.IsActive);
@@ -270,7 +270,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				OrderByProperty = nameof(Alert.StartOnSeconds),
 				OrderDirection = OrderDirection.Desc
 			};
-			var alertsIncludngCleared = await PortalClient.GetAlertsAsync(alertFilterIncludingCleared).ConfigureAwait(false);
+			var alertsIncludngCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterIncludingCleared).ConfigureAwait(false);
 			Assert.True(alertsIncludngCleared.Count > 0);
 			Assert.Contains(alertsIncludngCleared, a => !a.IsActive);
 			Assert.Contains(alertsIncludngCleared, a => a.IsActive);
@@ -280,23 +280,23 @@ namespace LogicMonitor.Api.Test.Alerts
 		public async void GetFilteredAlerts_LevelsMatch()
 		{
 			var unfilteredAlerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }).ConfigureAwait(false);
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }).ConfigureAwait(false);
 			var criticalAlerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					StartEpochIsAfter = StartDateTimeSeconds,
 					StartEpochIsBefore = EndDateTimeSeconds,
 					Levels = new List<AlertLevel> { AlertLevel.Critical }
 				}).ConfigureAwait(false);
 			var errorAlerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					StartEpochIsAfter = StartDateTimeSeconds,
 					StartEpochIsBefore = EndDateTimeSeconds,
 					Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
 				}).ConfigureAwait(false);
 			var warningAlerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					StartEpochIsAfter = StartDateTimeSeconds,
 					StartEpochIsBefore = EndDateTimeSeconds,
@@ -318,7 +318,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		[Fact]
 		public async void GetFilteredAlertsBrokenLmRep1959()
 		{
-			var alerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var alerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				AckFilter = AckFilter.All,
 				StartEpochIsBefore = EndDateTimeSeconds,
@@ -338,7 +338,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		public async void GetFilteredAlertsDefaultPeriod()
 		{
 			var alerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }).ConfigureAwait(false);
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }).ConfigureAwait(false);
 			CheckAlertsAreValid(alerts);
 		}
 
@@ -346,7 +346,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		public async void GetFilteredAlertsFor2YearsAgoReturnsNoAlerts()
 		{
 			var alerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					StartEpochIsAfter = EndDateTime.AddYears(-2).SecondsSinceTheEpoch(),
 					StartEpochIsBefore = EndDateTime.AddYears(-2).AddDays(2).SecondsSinceTheEpoch()
@@ -359,7 +359,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		{
 			var startUtcIsAfterOrAt = EndDateTime.AddDays(-1);
 			var alerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					StartUtcIsAfter = startUtcIsAfterOrAt,
 					IsCleared = false,
@@ -373,7 +373,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		public async void GetFilteredAlertsForAlertsStartedThisWeekAndCleared()
 		{
 			var startUtcIsAfterOrAt = EndDateTime.AddDays(-7);
-			var alerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var alerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartUtcIsAfter = startUtcIsAfterOrAt,
 				IsCleared = true,
@@ -387,7 +387,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		public async void GetFilteredAlertsForDatacenter()
 		{
 			var alerts =
-				await PortalClient.GetAlertsAsync(new AlertFilter
+				await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					StartEpochIsAfter = StartDateTimeSeconds,
 					StartEpochIsBefore = EndDateTimeSeconds,
@@ -399,7 +399,7 @@ namespace LogicMonitor.Api.Test.Alerts
 			// Refetch with GetAlertAsync
 			foreach (var alert in alerts.Take(10))
 			{
-				var refetchedAlert = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+				var refetchedAlert = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
 				Assert.NotNull(refetchedAlert);
 				Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
 				Assert.Equal(alert.Id, refetchedAlert.Id);
@@ -411,7 +411,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		[Fact]
 		public async void GetFilteredAlertsForDev()
 		{
-			var alerts = await PortalClient.GetAlertsAsync(
+			var alerts = await LogicMonitorClient.GetAlertsAsync(
 				new AlertFilter
 				{
 					StartEpochIsAfter = 1470009600,
@@ -424,7 +424,7 @@ namespace LogicMonitor.Api.Test.Alerts
 			// Refetch with GetAlertAsync
 			foreach (var alert in alerts)
 			{
-				var refetchedAlert = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+				var refetchedAlert = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
 				Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
 				Assert.Equal(alert.Id, refetchedAlert.Id);
 				Assert.Equal(alert.AlertType, refetchedAlert.AlertType);
@@ -437,7 +437,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		{
 			var timespan = TimeSpan.FromDays(1);
 
-			var allAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var allAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartUtcIsAfter = DateTime.UtcNow - timespan,
 				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
@@ -454,7 +454,7 @@ namespace LogicMonitor.Api.Test.Alerts
 			}
 
 			// Get filtered alerts, error and above only
-			var errorAndAboveAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var errorAndAboveAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartUtcIsAfter = DateTime.UtcNow - timespan,
 				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
@@ -473,7 +473,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		{
 			var dateTimeOffset = DateTimeOffset.UtcNow.AddDays(-7);
 
-			var alerts = await PortalClient.GetAllAsync(new Filter<Alert>
+			var alerts = await LogicMonitorClient.GetAllAsync(new Filter<Alert>
 			{
 				FilterItems = new List<FilterItem<Alert>>
 				{
@@ -501,14 +501,14 @@ namespace LogicMonitor.Api.Test.Alerts
 			var oneDayAgo = nowUtc.AddDays(-1);
 
 			// Get all alerts
-			var allAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var allAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
 				StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
 			}).ConfigureAwait(false);
 
 			// Get all alerts NOT in SDT
-			var nonSdtAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var nonSdtAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
 				StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
@@ -517,7 +517,7 @@ namespace LogicMonitor.Api.Test.Alerts
 			Assert.All(nonSdtAlerts, alert => Assert.Null(alert.Sdt));
 
 			// Get all alerts in SDT
-			var sdtAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+			var sdtAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
 				StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
@@ -537,13 +537,13 @@ namespace LogicMonitor.Api.Test.Alerts
 			var s = new DateTimeOffset(startDate.Year, startDate.Month, startDate.Day, startDate.Hour, startDate.Minute, 0, TimeSpan.Zero);
 			var e = new DateTimeOffset(endDate.Year, endDate.Month, endDate.Day, endDate.Hour, endDate.Minute, 0, TimeSpan.Zero);
 
-			PortalClient.TimeOut = TimeSpan.FromSeconds(120);
-			PortalClient.AttemptCount = 5;
+			LogicMonitorClient.TimeOut = TimeSpan.FromSeconds(120);
+			LogicMonitorClient.AttemptCount = 5;
 
 			while (true)
 			{
 				// Alerts that start inside the range (same as web UI)
-				var inRangeAlerts = await PortalClient.GetAlertsAsync(new AlertFilter
+				var inRangeAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 				{
 					ResourceTemplateName = "Alert History",
 					IncludeCleared = true,

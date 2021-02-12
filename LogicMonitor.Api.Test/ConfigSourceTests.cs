@@ -16,7 +16,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetAllConfigSources()
 		{
-			var configSources = await PortalClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
+			var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.NotEmpty(configSources);
@@ -28,25 +28,25 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetConfigSourceById()
 		{
-			var configSources = await PortalClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
+			var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
 			Assert.NotEmpty(configSources);
-			var configSource = await PortalClient.GetAsync<ConfigSource>(configSources[0].Id).ConfigureAwait(false);
+			var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id).ConfigureAwait(false);
 			Assert.NotNull(configSource);
 		}
 
 		[Fact]
 		public async void GetConfigSourceAndAssociatedDevices()
 		{
-			var configSource = await PortalClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
+			var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
 			Assert.NotNull(configSource);
 
 			// Refetch and check
-			var refetch = await PortalClient.GetAsync<ConfigSource>(configSource.Id).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<ConfigSource>(configSource.Id).ConfigureAwait(false);
 			Assert.Equal("Cisco_IOS", refetch.Name);
 			Assert.Equal(configSource.DisplayName, refetch.DisplayName);
 
 			// Get associated devices
-			var devices = await PortalClient.GetConfigSourceDevicesPageAsync(configSource.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+			var devices = await LogicMonitorClient.GetConfigSourceDevicesPageAsync(configSource.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 			Assert.NotEmpty(devices.Items);
 		}
 
@@ -56,7 +56,7 @@ namespace LogicMonitor.Api.Test
 			// NB Limit iterations at each level
 			const int maxIterations = 3;
 
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 			Assert.NotNull(device);
 

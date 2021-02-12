@@ -17,7 +17,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetAllCollectorGroupSettings()
 		{
-			var allCollectorGroupSettings = await PortalClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+			var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 			Assert.NotNull(allCollectorGroupSettings);
 			Assert.True(allCollectorGroupSettings.Count > 0);
 		}
@@ -25,14 +25,14 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetAllCollectors()
 		{
-			var collectors = await PortalClient.GetAllAsync<Collector>().ConfigureAwait(false);
+			var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 			Assert.NotNull(collectors);
 		}
 
 		[Fact]
 		public async void GetAllCollectorsSettings()
 		{
-			var allCollectorSettings = await PortalClient.GetAllAsync<Collector>().ConfigureAwait(false);
+			var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 			Assert.NotNull(allCollectorSettings);
 			Assert.True(allCollectorSettings.Count > 0);
 		}
@@ -40,10 +40,10 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetCollectorGroupSettings()
 		{
-			var collectorGroups = await PortalClient
+			var collectorGroups = await LogicMonitorClient
 				.GetAllAsync<CollectorGroup>()
 				.ConfigureAwait(false);
-			var pulsantCollectorGroupSettings = await PortalClient
+			var pulsantCollectorGroupSettings = await LogicMonitorClient
 				.GetAsync<CollectorGroup>(collectorGroups[0].Id)
 				.ConfigureAwait(false);
 			Assert.NotNull(pulsantCollectorGroupSettings);
@@ -52,7 +52,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetCollectorVersions_Unfiltered_Succeeds()
 		{
-			var collectorVersions = await PortalClient
+			var collectorVersions = await LogicMonitorClient
 				.GetAllCollectorVersionsAsync()
 				.ConfigureAwait(false);
 			Assert.NotNull(collectorVersions);
@@ -63,7 +63,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetCollectorVersions_FilteredStable_Succeeds()
 		{
-			var collectorVersions = await PortalClient
+			var collectorVersions = await LogicMonitorClient
 				.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
 				{
 					FilterItems = new List<FilterItem<CollectorVersion>>
@@ -80,7 +80,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetCollectorVersions_FilteredMandatory_Succeeds()
 		{
-			var collectorVersions = await PortalClient
+			var collectorVersions = await LogicMonitorClient
 				.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
 				{
 					FilterItems = new List<FilterItem<CollectorVersion>>

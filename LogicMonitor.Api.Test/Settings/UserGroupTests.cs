@@ -18,13 +18,13 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetUserGroups()
 		{
-			var userGroups = await PortalClient.GetAllAsync<UserGroup>().ConfigureAwait(false);
+			var userGroups = await LogicMonitorClient.GetAllAsync<UserGroup>().ConfigureAwait(false);
 			Assert.NotNull(userGroups);
 			Assert.NotEmpty(userGroups);
 
 			foreach (var user in userGroups)
 			{
-				var refetchedUser = await PortalClient.GetAsync<UserGroup>(user.Id).ConfigureAwait(false);
+				var refetchedUser = await LogicMonitorClient.GetAsync<UserGroup>(user.Id).ConfigureAwait(false);
 				Assert.True(refetchedUser.Name == user.Name);
 			}
 		}
@@ -33,27 +33,27 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void CreateUpdateDelete()
 		{
 			// Ensure there is no existing UserGroup called "Test"
-			var existingUserGroup = (await PortalClient
+			var existingUserGroup = (await LogicMonitorClient
 					.GetAllAsync(new Filter<UserGroup> { FilterItems = new List<FilterItem<UserGroup>> { new Eq<UserGroup>(nameof(UserGroup.Name), Value) } })
 					.ConfigureAwait(false))
 				.SingleOrDefault();
 			if (existingUserGroup != null)
 			{
-				await PortalClient.DeleteAsync(existingUserGroup).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(existingUserGroup).ConfigureAwait(false);
 			}
 
-			var userGroup = await PortalClient.CreateAsync(new UserGroupCreationDto
+			var userGroup = await LogicMonitorClient.CreateAsync(new UserGroupCreationDto
 			{
 				Name = Value,
 				Description = "Desc",
 			}).ConfigureAwait(false);
 
 			// Refetch
-			var refetch = await PortalClient.GetAsync<UserGroup>(userGroup.Id).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<UserGroup>(userGroup.Id).ConfigureAwait(false);
 			Assert.NotNull(refetch);
 
 			// Delete
-			await PortalClient.DeleteAsync(userGroup).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(userGroup).ConfigureAwait(false);
 		}
 	}
 }

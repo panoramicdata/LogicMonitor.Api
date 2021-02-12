@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void Get()
 		{
-			var accountSettings = await PortalClient.GetAsync<AccountSettings>().ConfigureAwait(false);
+			var accountSettings = await LogicMonitorClient.GetAsync<AccountSettings>().ConfigureAwait(false);
 			Assert.NotNull(accountSettings);
 			Assert.True(accountSettings.DeviceCount > 0);
 		}
@@ -27,7 +27,7 @@ namespace LogicMonitor.Api.Test.Settings
 				return;
 			}
 
-			var billingInformation = await PortalClient.GetAsync<BillingInformation>().ConfigureAwait(false);
+			var billingInformation = await LogicMonitorClient.GetAsync<BillingInformation>().ConfigureAwait(false);
 
 			Assert.NotNull(billingInformation);
 			Assert.NotNull(billingInformation.InvoiceDetails);

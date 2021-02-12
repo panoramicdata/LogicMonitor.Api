@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetAll()
 		{
-			var escalationChains = await PortalClient.GetAllAsync<EscalationChain>().ConfigureAwait(false);
+			var escalationChains = await LogicMonitorClient.GetAllAsync<EscalationChain>().ConfigureAwait(false);
 			Assert.NotNull(escalationChains);
 			Assert.True(escalationChains.Count > 0);
 		}

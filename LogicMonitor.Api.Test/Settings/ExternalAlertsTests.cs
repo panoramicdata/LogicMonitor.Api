@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetAll()
 		{
-			var items = await PortalClient.GetAllAsync<ExternalAlert>().ConfigureAwait(false);
+			var items = await LogicMonitorClient.GetAllAsync<ExternalAlert>().ConfigureAwait(false);
 			Assert.NotNull(items);
 			Assert.True(items.Count > 0);
 		}

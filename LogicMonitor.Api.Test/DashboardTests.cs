@@ -14,7 +14,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetDashboardsNoWidgets()
 		{
-			var dashboards = await PortalClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
+			var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(dashboards.Count > 0);
@@ -26,7 +26,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetDashboardsWithWidgets()
 		{
-			var dashboards = await PortalClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
+			var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(dashboards.Count > 0);

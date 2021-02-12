@@ -18,13 +18,13 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetRoleGroups()
 		{
-			var roleGroups = await PortalClient.GetAllAsync<RoleGroup>().ConfigureAwait(false);
+			var roleGroups = await LogicMonitorClient.GetAllAsync<RoleGroup>().ConfigureAwait(false);
 			Assert.NotNull(roleGroups);
 			Assert.NotEmpty(roleGroups);
 
 			foreach (var role in roleGroups)
 			{
-				var refetchedRole = await PortalClient.GetAsync<RoleGroup>(role.Id).ConfigureAwait(false);
+				var refetchedRole = await LogicMonitorClient.GetAsync<RoleGroup>(role.Id).ConfigureAwait(false);
 				Assert.True(refetchedRole.Name == role.Name);
 			}
 		}
@@ -33,27 +33,27 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void CreateUpdateDelete()
 		{
 			// Ensure there is no existing RoleGroup called "Test"
-			var existingRoleGroup = (await PortalClient
+			var existingRoleGroup = (await LogicMonitorClient
 					.GetAllAsync(new Filter<RoleGroup> { FilterItems = new List<FilterItem<RoleGroup>> { new Eq<RoleGroup>(nameof(RoleGroup.Name), Value) } })
 					.ConfigureAwait(false))
 				.SingleOrDefault();
 			if (existingRoleGroup != null)
 			{
-				await PortalClient.DeleteAsync(existingRoleGroup).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(existingRoleGroup).ConfigureAwait(false);
 			}
 
-			var roleGroup = await PortalClient.CreateAsync(new RoleGroupCreationDto
+			var roleGroup = await LogicMonitorClient.CreateAsync(new RoleGroupCreationDto
 			{
 				Name = Value,
 				Description = "Desc",
 			}).ConfigureAwait(false);
 
 			// Refetch
-			var refetch = await PortalClient.GetAsync<RoleGroup>(roleGroup.Id).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<RoleGroup>(roleGroup.Id).ConfigureAwait(false);
 			Assert.NotNull(refetch);
 
 			// Delete
-			await PortalClient.DeleteAsync(roleGroup).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(roleGroup).ConfigureAwait(false);
 		}
 	}
 }

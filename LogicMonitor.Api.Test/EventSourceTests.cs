@@ -18,15 +18,15 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetXml()
 		{
-			var eventSource = await PortalClient.GetByNameAsync<EventSource>("DNS A Record Check").ConfigureAwait(false);
-			var xml = await PortalClient.GetEventSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
+			var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("DNS A Record Check").ConfigureAwait(false);
+			var xml = await LogicMonitorClient.GetEventSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
 			Assert.NotNull(xml);
 		}
 
 		[Fact]
 		public async void GetAllEventSources()
 		{
-			var eventSourcePage = await PortalClient.GetPageAsync(new Filter<EventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+			var eventSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<EventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(eventSourcePage.Items.Count > 0);
@@ -50,7 +50,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetEventSourceByName()
 		{
 			var stopwatch = Stopwatch.StartNew();
-			var eventSource = await PortalClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
+			var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.NotNull(eventSource);
@@ -63,7 +63,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetDeviceEventSources()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var deviceEventSources = await PortalClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+			var deviceEventSources = await LogicMonitorClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
 			// Make sure that we have groups and they are not null
 			Assert.NotNull(deviceEventSources);
@@ -71,7 +71,7 @@ namespace LogicMonitor.Api.Test
 			foreach (var deviceEventSource in deviceEventSources.Items)
 			{
 				// Refetch
-				var deviceDataSourceRefetch = await PortalClient.GetDeviceEventSourceAsync(device.Id, deviceEventSource.Id).ConfigureAwait(false);
+				var deviceDataSourceRefetch = await LogicMonitorClient.GetDeviceEventSourceAsync(device.Id, deviceEventSource.Id).ConfigureAwait(false);
 
 				// Make sure they are the same
 				Assert.Equal(device.Id, deviceDataSourceRefetch.DeviceId);
@@ -82,7 +82,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetFilteredEventSources()
 		{
 			const string groupName = "Integrator";
-			var eventSources = await PortalClient.GetAllAsync(new Filter<EventSource>
+			var eventSources = await LogicMonitorClient.GetAllAsync(new Filter<EventSource>
 			{
 				FilterItems = new List<FilterItem<EventSource>>
 				{

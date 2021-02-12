@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetIntegrations()
 		{
-			var integrations = await PortalClient.GetAllAsync<Integration>().ConfigureAwait(false);
+			var integrations = await LogicMonitorClient.GetAllAsync<Integration>().ConfigureAwait(false);
 
 			// Text should be set
 			Assert.All(integrations, on => Assert.False(string.IsNullOrWhiteSpace(on.Name)));

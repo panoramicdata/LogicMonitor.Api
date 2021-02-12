@@ -53,9 +53,9 @@ namespace LogicMonitor.Api.Test.Alerts
 			};
 
 			// Act
-			var allAlerts = await PortalClient.GetAllAsync(allFilter).ConfigureAwait(false);
-			var sdtAlerts = await PortalClient.GetAllAsync(sdtFilter).ConfigureAwait(false);
-			var nonSdtAlerts = await PortalClient.GetAllAsync(nonSdtFilter).ConfigureAwait(false);
+			var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter).ConfigureAwait(false);
+			var sdtAlerts = await LogicMonitorClient.GetAllAsync(sdtFilter).ConfigureAwait(false);
+			var nonSdtAlerts = await LogicMonitorClient.GetAllAsync(nonSdtFilter).ConfigureAwait(false);
 
 			// Assert
 
@@ -128,7 +128,7 @@ namespace LogicMonitor.Api.Test.Alerts
 				}
 			};
 
-			var allAlerts = await PortalClient.GetAllAsync(allFilter).ConfigureAwait(false);
+			var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter).ConfigureAwait(false);
 
 			var unique = true;
 			foreach (var alert in allAlerts)
@@ -158,9 +158,9 @@ namespace LogicMonitor.Api.Test.Alerts
 				};
 
 				// Refetch each alert
-				foreach (var alert in await PortalClient.GetAllAsync(alertFilter).ConfigureAwait(false))
+				foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter).ConfigureAwait(false))
 				{
-					var _ = await PortalClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+					var _ = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
 				}
 			}
 		}
@@ -180,14 +180,14 @@ namespace LogicMonitor.Api.Test.Alerts
 			};
 
 			// Act
-			var alerts = await PortalClient.GetAllAsync(filter).ConfigureAwait(false);
+			var alerts = await LogicMonitorClient.GetAllAsync(filter).ConfigureAwait(false);
 			Assert.All(alerts, alert => severities.Contains(alert.Severity));
 		}
 
 		[Fact]
 		public async void GetAlertThing()
 		{
-			var result = await PortalClient
+			var result = await LogicMonitorClient
 						.GetJObjectAsync("alert/alerts/DS18021744", CancellationToken.None)
 						.ConfigureAwait(false);
 			Assert.NotNull(result);

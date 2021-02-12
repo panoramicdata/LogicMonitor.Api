@@ -61,7 +61,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetAllWebsites()
 		{
-			var websites = await PortalClient.GetAllAsync<Website>().ConfigureAwait(false);
+			var websites = await LogicMonitorClient.GetAllAsync<Website>().ConfigureAwait(false);
 
 			// Services should be returned
 			Assert.NotNull(websites);
@@ -71,7 +71,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteByName_Exists_Succeeds()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
+			var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
 			// One service should be returned
 			Assert.NotNull(website);
@@ -80,7 +80,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteByName_DoesNotExist_ReturnsNull()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>("DoesNotExist").ConfigureAwait(false);
+			var website = await LogicMonitorClient.GetByNameAsync<Website>("DoesNotExist").ConfigureAwait(false);
 			// Null should be returned
 			Assert.Null(website);
 		}
@@ -88,7 +88,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteGraphData()
 		{
-			var website = await PortalClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
+			var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
 			var endDateTime = DateTime.UtcNow;
 			var startDateTime = endDateTime.AddMonths(-1);
@@ -100,7 +100,7 @@ namespace LogicMonitor.Api.Test.Websites
 				EndDateTime = endDateTime,
 				TimePeriod = TimePeriod.Zoom
 			};
-			var graphData = await PortalClient.GetGraphDataAsync(graphDataRequest).ConfigureAwait(false);
+			var graphData = await LogicMonitorClient.GetGraphDataAsync(graphDataRequest).ConfigureAwait(false);
 			Assert.NotNull(graphData);
 			Assert.NotEmpty(graphData.Lines);
 			var firstLine = graphData.Lines.FirstOrDefault();
@@ -113,12 +113,12 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteGroupByFullPath()
 		{
-			var websiteGroup0 = await PortalClient.GetWebsiteGroupByFullPathAsync(string.Empty).ConfigureAwait(false);
+			var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty).ConfigureAwait(false);
 			Assert.NotNull(websiteGroup0);
 			Assert.Equal(string.Empty, websiteGroup0.FullPath);
-			var websiteGroup1 = await PortalClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
+			var websiteGroup1 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
 			Assert.NotNull(websiteGroup1);
-			var websiteGroup2 = await PortalClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
+			var websiteGroup2 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
 			Assert.NotNull(websiteGroup2);
 			Assert.NotEqual(websiteGroup0.Id, websiteGroup2.Id);
 		}
@@ -126,7 +126,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void GetWebsiteGroupById()
 		{
-			var websiteGroup = await PortalClient.GetAsync<WebsiteGroup>(1).ConfigureAwait(false);
+			var websiteGroup = await LogicMonitorClient.GetAsync<WebsiteGroup>(1).ConfigureAwait(false);
 
 			Assert.NotNull(websiteGroup);
 			Assert.NotNull(websiteGroup.ChildWebsiteGroups);
@@ -140,7 +140,7 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void SetWebsiteMonitorCheckpoints()
 		{
-			var websiteMonitorCheckpoints = await PortalClient.GetAllAsync<WebsiteMonitorCheckpoint>().ConfigureAwait(false);
+			var websiteMonitorCheckpoints = await LogicMonitorClient.GetAllAsync<WebsiteMonitorCheckpoint>().ConfigureAwait(false);
 
 			// Some website folders should be returned
 			Assert.True(websiteMonitorCheckpoints.Count > 0);
@@ -153,14 +153,14 @@ namespace LogicMonitor.Api.Test.Websites
 		public async void CrudWebsiteGroupsAndWebsites()
 		{
 			// Ensure the website group doesn't exist
-			var oldWebsiteGroup = await PortalClient.GetWebsiteGroupByFullPathAsync("Test Name").ConfigureAwait(false);
+			var oldWebsiteGroup = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync("Test Name").ConfigureAwait(false);
 			if (oldWebsiteGroup != null)
 			{
-				await PortalClient.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id).ConfigureAwait(false);
 			}
 
 			// Ensure the website doesn't exist
-			var oldWebsites = await PortalClient.GetAllAsync(new Filter<Website>
+			var oldWebsites = await LogicMonitorClient.GetAllAsync(new Filter<Website>
 			{
 				FilterItems = new List<FilterItem<Website>>
 				{
@@ -169,11 +169,11 @@ namespace LogicMonitor.Api.Test.Websites
 			}).ConfigureAwait(false);
 			foreach (var oldWebsite in oldWebsites)
 			{
-				await PortalClient.DeleteAsync<Website>(oldWebsite.Id).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync<Website>(oldWebsite.Id).ConfigureAwait(false);
 			}
 
 			// Create it
-			var websiteGroup = await PortalClient.CreateAsync(new WebsiteGroupCreationDto
+			var websiteGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
 			{
 				Name = "Test Name",
 				Description = "Test Description",
@@ -189,7 +189,7 @@ namespace LogicMonitor.Api.Test.Websites
 			try
 			{
 				// Create the website
-				var website = await PortalClient
+				var website = await LogicMonitorClient
 					.CreateAsync(GetWebsiteCreationDto(websiteGroup.Id, nameof(CrudWebsiteGroupsAndWebsites)))
 					.ConfigureAwait(false);
 				Assert.NotNull(website);
@@ -202,14 +202,14 @@ namespace LogicMonitor.Api.Test.Websites
 					.ConfigureAwait(false);
 
 				// Delete it
-				await PortalClient
+				await LogicMonitorClient
 					.DeleteAsync<Website>(website.Id)
 					.ConfigureAwait(false);
 			}
 			finally
 			{
 				// Delete it again
-				await PortalClient.DeleteAsync(websiteGroup).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(websiteGroup).ConfigureAwait(false);
 			}
 		}
 
@@ -217,60 +217,60 @@ namespace LogicMonitor.Api.Test.Websites
 		public async void SetWebsiteCustomProperty()
 		{
 			var website =
-				await PortalClient.GetByNameAsync<Website>(nameof(SetWebsiteCustomProperty)).ConfigureAwait(false)
-				?? await PortalClient.CreateAsync(GetWebsiteCreationDto(1, nameof(SetWebsiteCustomProperty))).ConfigureAwait(false);
+				await LogicMonitorClient.GetByNameAsync<Website>(nameof(SetWebsiteCustomProperty)).ConfigureAwait(false)
+				?? await LogicMonitorClient.CreateAsync(GetWebsiteCreationDto(1, nameof(SetWebsiteCustomProperty))).ConfigureAwait(false);
 
 			const string propertyName = "blah";
 			const string value1 = "test1";
 			const string value2 = "test2";
 
 			// Set it to an expected value
-			await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1).ConfigureAwait(false);
-			var deviceProperties = await PortalClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1).ConfigureAwait(false);
+			var deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
 			var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 			Assert.Equal(1, actual);
 
 			// Set it to a different value
-			await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2).ConfigureAwait(false);
-			deviceProperties = await PortalClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2).ConfigureAwait(false);
+			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 			Assert.Equal(1, actual);
 
 			// Set it to null (delete it)
-			await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null).ConfigureAwait(false);
-			deviceProperties = await PortalClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null).ConfigureAwait(false);
+			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
 			Assert.Equal(0, actual);
 
 			// This should fail as there is nothing to delete
-			var deletionException = await Record.ExceptionAsync(async () => await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
+			var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
 			Assert.IsType<LogicMonitorApiException>(deletionException);
 
-			var updateException = await Record.ExceptionAsync(async () => await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
+			var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
 			Assert.IsType<InvalidOperationException>(updateException);
 
-			var createNullException = await Record.ExceptionAsync(async () => await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
+			var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
 			Assert.IsType<InvalidOperationException>(createNullException);
 
 			// Create one without checking
-			await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
-			deviceProperties = await PortalClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
+			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 			Assert.Equal(1, actual);
 
 			// Update one without checking
-			await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
-			deviceProperties = await PortalClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
+			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 			Assert.Equal(1, actual);
 
 			// Delete one without checking
-			await PortalClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
-			deviceProperties = await PortalClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
+			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
 			Assert.Equal(0, actual);
 
-			await PortalClient.DeleteAsync(website).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(website).ConfigureAwait(false);
 		}
 	}
 }

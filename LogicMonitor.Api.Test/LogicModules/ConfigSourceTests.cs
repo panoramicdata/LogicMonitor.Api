@@ -15,8 +15,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetXml()
 		{
-			var eventSource = await PortalClient.GetConfigSourceByNameAsync("Test ConfigSource").ConfigureAwait(false);
-			var xml = await PortalClient.GetConfigSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
+			var eventSource = await LogicMonitorClient.GetConfigSourceByNameAsync("Test ConfigSource").ConfigureAwait(false);
+			var xml = await LogicMonitorClient.GetConfigSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
 
 			Assert.NotNull(xml);
 		}

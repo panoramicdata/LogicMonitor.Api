@@ -19,7 +19,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetAllCollectorGroups()
 		{
-			var collectorGroups = await PortalClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+			var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 			Assert.NotNull(collectorGroups);
 			Assert.NotEmpty(collectorGroups);
 		}
@@ -27,7 +27,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetCollectorGroups()
 		{
-			var collectorGroups = await PortalClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+			var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 			Assert.NotEmpty(collectorGroups);
 			Assert.True(collectorGroups.All(cg => cg.Id != 0));
 			Assert.True(collectorGroups.All(cg => cg.Name != null));
@@ -39,7 +39,7 @@ namespace LogicMonitor.Api.Test.Settings
 		public async void CrudCollectorGroup()
 		{
 			// Try to get this item
-			var collectorGroups = await PortalClient.GetAllAsync(new Filter<CollectorGroup>
+			var collectorGroups = await LogicMonitorClient.GetAllAsync(new Filter<CollectorGroup>
 			{
 				FilterItems = new List<FilterItem<CollectorGroup>>
 					{
@@ -49,12 +49,12 @@ namespace LogicMonitor.Api.Test.Settings
 
 			foreach (var priorCollectorGroup in collectorGroups)
 			{
-				await PortalClient.DeleteAsync(priorCollectorGroup).ConfigureAwait(false);
+				await LogicMonitorClient.DeleteAsync(priorCollectorGroup).ConfigureAwait(false);
 			}
 			// There are now none with this name
 
 			// Create one
-			var newCollectorGroup = await PortalClient.CreateAsync(new CollectorGroupCreationDto
+			var newCollectorGroup = await LogicMonitorClient.CreateAsync(new CollectorGroupCreationDto
 			{
 				Name = TestName,
 				Description = TestDescription,
@@ -66,7 +66,7 @@ namespace LogicMonitor.Api.Test.Settings
 			Assert.NotNull(newCollectorGroup);
 			Assert.NotEqual(0, newCollectorGroup.Id);
 
-			var newCollectorGroupRefetch = await PortalClient.GetAsync<CollectorGroup>(newCollectorGroup.Id).ConfigureAwait(false);
+			var newCollectorGroupRefetch = await LogicMonitorClient.GetAsync<CollectorGroup>(newCollectorGroup.Id).ConfigureAwait(false);
 			Assert.NotNull(newCollectorGroupRefetch);
 			Assert.NotNull(newCollectorGroupRefetch.Name);
 			Assert.NotNull(newCollectorGroupRefetch.Description);
@@ -77,10 +77,10 @@ namespace LogicMonitor.Api.Test.Settings
 			Assert.Equal("b", newCollectorGroupRefetch.CustomProperties[0].Value);
 
 			// Put
-			await PortalClient.PutAsync(newCollectorGroupRefetch).ConfigureAwait(false);
+			await LogicMonitorClient.PutAsync(newCollectorGroupRefetch).ConfigureAwait(false);
 
 			// Delete
-			await PortalClient.DeleteAsync(newCollectorGroupRefetch).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(newCollectorGroupRefetch).ConfigureAwait(false);
 		}
 	}
 }

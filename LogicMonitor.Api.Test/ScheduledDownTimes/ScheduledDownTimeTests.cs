@@ -20,7 +20,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		[Fact]
 		public async void GetDeviceScheduledDownTimes()
 		{
-			var sdts = await PortalClient.GetAllAsync(new Filter<ScheduledDownTime>
+			var sdts = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 			{
 				FilterItems = new List<FilterItem<ScheduledDownTime>>
 				{
@@ -34,7 +34,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		[Fact]
 		public async void AddAndDeleteADeviceSdt()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			// var device = await portalClient.GetDeviceByDisplayNameAsync(portalConfig.WindowsDeviceDisplayName);
 			const string initialComment = "Woo";
 			var deviceId = WindowsDeviceId;
@@ -94,7 +94,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		[Fact]
 		public async void AddAndDeleteADeviceGroupSdt()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			const string initialComment = "Woo";
 			const int deviceGroupId = 1; // The root
 			var sdtCreationDto = new DeviceGroupScheduledDownTimeCreationDto(deviceGroupId)
@@ -153,7 +153,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		[Fact]
 		public async void AddAndDeleteACollectorSdt()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			var collector = (await portalClient
 				.GetAllAsync(new Filter<Collectors.Collector> { Take = 1 })
 				.ConfigureAwait(false))
@@ -217,7 +217,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		[Fact]
 		public async void GetScheduledDownTimesFilteredByDevice()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 
 			var allScheduledDownTimes = await portalClient.GetAllAsync<ScheduledDownTime>().ConfigureAwait(false);
 
@@ -250,19 +250,19 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 			const string deviceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
 
 			// Ensure DeviceGroup is NOT present
-			var deviceGroup = await PortalClient
+			var deviceGroup = await LogicMonitorClient
 				.GetDeviceGroupByFullPathAsync(deviceGroupName)
 				.ConfigureAwait(false);
 
 			if (deviceGroup != null)
 			{
-				await PortalClient
+				await LogicMonitorClient
 					.DeleteAsync(deviceGroup)
 					.ConfigureAwait(false);
 			}
 
 			// Create DeviceGroup
-			deviceGroup = await PortalClient
+			deviceGroup = await LogicMonitorClient
 				.CreateAsync(new DeviceGroupCreationDto
 				{
 					ParentId = "1",
@@ -271,7 +271,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 				.ConfigureAwait(false);
 
 			// Get ping DataSource
-			var dataSource = (await PortalClient
+			var dataSource = (await LogicMonitorClient
 				.GetAllAsync(new Filter<DataSource>
 				{
 					FilterItems = new List<FilterItem<DataSource>>
@@ -294,18 +294,18 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 			};
 
 			// Check the created SDT looks right
-			var createdSdt = await PortalClient
+			var createdSdt = await LogicMonitorClient
 				.CreateAsync(sdtCreationDto)
 				.ConfigureAwait(false);
 			Assert.NotNull(createdSdt);
 
 			// Clean up
-			await PortalClient
+			await LogicMonitorClient
 				.DeleteAsync<ScheduledDownTime>(createdSdt.Id)
 				.ConfigureAwait(false);
 
 			// Remove the device group
-			await PortalClient
+			await LogicMonitorClient
 				.DeleteAsync(deviceGroup)
 				.ConfigureAwait(false);
 		}
@@ -314,7 +314,7 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		public async void CreatePingDataSourceInstanceSdtOnEmptyDeviceGroup()
 		{
 			// Get ping DataSource
-			var dataSource = (await PortalClient
+			var dataSource = (await LogicMonitorClient
 				.GetAllAsync(new Filter<DataSource>
 				{
 					FilterItems = new List<FilterItem<DataSource>>
@@ -325,11 +325,11 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 				.ConfigureAwait(false))
 				.Single();
 
-			var deviceDataSource = await PortalClient
+			var deviceDataSource = await LogicMonitorClient
 				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id)
 				.ConfigureAwait(false);
 
-			var deviceDataSourceInstance = (await PortalClient
+			var deviceDataSourceInstance = (await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id)
 				.ConfigureAwait(false))
 				.Single();
@@ -344,13 +344,13 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 			};
 
 			// Check the created SDT looks right
-			var createdSdt = await PortalClient
+			var createdSdt = await LogicMonitorClient
 				.CreateAsync(sdtCreationDto)
 				.ConfigureAwait(false);
 			Assert.NotNull(createdSdt);
 
 			// Clean up
-			await PortalClient
+			await LogicMonitorClient
 				.DeleteAsync<ScheduledDownTime>(createdSdt.Id)
 				.ConfigureAwait(false);
 		}

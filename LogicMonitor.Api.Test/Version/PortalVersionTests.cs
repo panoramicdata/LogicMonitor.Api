@@ -12,7 +12,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetPortalVersion()
 		{
-			var portalVersion = await PortalClient.GetVersionAsync().ConfigureAwait(false);
+			var portalVersion = await LogicMonitorClient.GetVersionAsync().ConfigureAwait(false);
 			Assert.NotNull((object)portalVersion.Version);
 			Assert.NotNull((object)portalVersion.Version.Module);
 			Assert.NotNull(portalVersion.Extra);

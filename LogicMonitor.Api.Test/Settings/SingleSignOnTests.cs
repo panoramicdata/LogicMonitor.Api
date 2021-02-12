@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetSingleSignOnData()
 		{
-			var allOpsNotes = await PortalClient.GetAsync<SingleSignOn>().ConfigureAwait(false);
+			var allOpsNotes = await LogicMonitorClient.GetAsync<SingleSignOn>().ConfigureAwait(false);
 
 			// Text should be set
 			Assert.NotEmpty(allOpsNotes.SamlVersion);

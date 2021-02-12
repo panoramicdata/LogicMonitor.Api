@@ -19,7 +19,12 @@ namespace LogicMonitor.Api
 		/// <param name="httpResponseMessage"></param>
 		public PortalResponse(HttpResponseMessage httpResponseMessage)
 		{
-			var responseBody = httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+			var responseBody = httpResponseMessage
+				.Content
+				.ReadAsStringAsync()
+				.ConfigureAwait(false)
+				.GetAwaiter()
+				.GetResult();
 			Init(responseBody);
 			HttpStatusCode = httpResponseMessage.StatusCode;
 			ErrorMessage = IsSuccessStatusCode ? null : httpResponseMessage.StatusCode.ToString();
@@ -76,36 +81,31 @@ namespace LogicMonitor.Api
 		/// <summary>
 		///    Whether the HttpStatusCode is of an error type
 		/// </summary>
-		public bool IsSuccessStatusCode
+		public bool IsSuccessStatusCode =>
+			(int)HttpStatusCode == 207 // MultiStatus
+			|| HttpStatusCode switch
 		{
-			get
-			{
-				switch (HttpStatusCode)
-				{
-					case HttpStatusCode.Continue:
-					case HttpStatusCode.SwitchingProtocols:
-					case HttpStatusCode.OK:
-					case HttpStatusCode.Created:
-					case HttpStatusCode.Accepted:
-					case HttpStatusCode.NonAuthoritativeInformation:
-					case HttpStatusCode.NoContent:
-					case HttpStatusCode.ResetContent:
-					case HttpStatusCode.PartialContent:
-					case HttpStatusCode.MultipleChoices:
-					case HttpStatusCode.MovedPermanently:
-					case HttpStatusCode.Found:
-					case HttpStatusCode.SeeOther:
-					case HttpStatusCode.NotModified:
-					case HttpStatusCode.UseProxy:
-					case HttpStatusCode.Unused:
-					case HttpStatusCode.TemporaryRedirect:
-						return true;
-
-					default:
-						return false;
-				}
-			}
-		}
+			HttpStatusCode.Continue
+			or HttpStatusCode.SwitchingProtocols
+			or HttpStatusCode.OK
+			or HttpStatusCode.Created
+			or HttpStatusCode.Accepted
+			or HttpStatusCode.NonAuthoritativeInformation
+			or HttpStatusCode.NoContent
+			or HttpStatusCode.ResetContent
+			or HttpStatusCode.PartialContent
+			or HttpStatusCode.MultipleChoices
+			or HttpStatusCode.MovedPermanently
+			or HttpStatusCode.Found
+			or HttpStatusCode.SeeOther
+			or HttpStatusCode.NotModified
+			or HttpStatusCode.UseProxy
+			or HttpStatusCode.Unused
+			or HttpStatusCode.TemporaryRedirect
+				=> true,
+			_
+				=> false,
+		};
 
 		/// <summary>
 		///    Parse a JSON string into an object of type T.

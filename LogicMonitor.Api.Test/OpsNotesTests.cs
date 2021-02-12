@@ -24,7 +24,7 @@ namespace LogicMonitor.Api.Test
 		public async void GetOpsNotes()
 		{
 			// Create an ops note
-			var newOpsNote = await PortalClient.CreateAsync(new OpsNoteCreationDto
+			var newOpsNote = await LogicMonitorClient.CreateAsync(new OpsNoteCreationDto
 			{
 				DateTimeUtcSeconds = DateTime.UtcNow.SecondsSinceTheEpoch(),
 				Note = $"LogicMonitor.Api.Test run on {DateTime.UtcNow}",
@@ -34,7 +34,7 @@ namespace LogicMonitor.Api.Test
 
 			await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
 
-			var allOpsNotes = await PortalClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
+			var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(allOpsNotes.Count > 0);

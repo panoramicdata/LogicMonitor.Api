@@ -13,13 +13,13 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetRecipientGroupTests()
 		{
-			var recipientGroups = await PortalClient.GetAllAsync<RecipientGroup>().ConfigureAwait(false);
+			var recipientGroups = await LogicMonitorClient.GetAllAsync<RecipientGroup>().ConfigureAwait(false);
 			Assert.NotNull(recipientGroups);
 			Assert.True(recipientGroups.Count > 0);
 
 			foreach (var recipientGroup in recipientGroups)
 			{
-				var refetchedRole = await PortalClient.GetAsync<RecipientGroup>(recipientGroup.Id).ConfigureAwait(false);
+				var refetchedRole = await LogicMonitorClient.GetAsync<RecipientGroup>(recipientGroup.Id).ConfigureAwait(false);
 				Assert.True(refetchedRole.GroupName == recipientGroup.GroupName);
 			}
 		}

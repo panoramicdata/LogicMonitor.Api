@@ -12,7 +12,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetTimeZoneSetting()
 		{
-			var timeZoneSetting = await PortalClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
+			var timeZoneSetting = await LogicMonitorClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
 
 			// Text should be set
 			Assert.False(string.IsNullOrWhiteSpace(timeZoneSetting.TimeZone));

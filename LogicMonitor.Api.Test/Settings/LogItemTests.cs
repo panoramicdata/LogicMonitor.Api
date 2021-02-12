@@ -17,7 +17,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void Get()
 		{
-			var accessLogItems = await PortalClient.GetAllAsync(new Filter<LogItem>
+			var accessLogItems = await LogicMonitorClient.GetAllAsync(new Filter<LogItem>
 			{
 				FilterItems = new List<FilterItem<LogItem>>
 				{
@@ -42,7 +42,7 @@ namespace LogicMonitor.Api.Test.Settings
 		{
 			const int skip = 0;
 			const int take = 1000;
-			var accessLogItems = await PortalClient
+			var accessLogItems = await LogicMonitorClient
 				.GetLogItemsAsync(new LogFilter(
 					skip,
 					take,

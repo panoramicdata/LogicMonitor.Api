@@ -15,7 +15,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void ExecuteDebugCommand()
 		{
-			var debugCommandResponse = await PortalClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8").ConfigureAwait(false);
+			var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8").ConfigureAwait(false);
 
 			// Check for valid response
 			Assert.NotNull(debugCommandResponse);
@@ -25,7 +25,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void ExecuteDebugCommandAndWaitForResult()
 		{
-			var debugCommandResponse = await PortalClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100).ConfigureAwait(false);
+			var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100).ConfigureAwait(false);
 
 			// Check for valid response
 			Assert.NotNull(debugCommandResponse);
@@ -36,7 +36,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetCollectors()
 		{
-			var collectors = await PortalClient.GetAllAsync<Collector>().ConfigureAwait(false);
+			var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.NotEmpty(collectors);
@@ -47,7 +47,7 @@ namespace LogicMonitor.Api.Test.Settings
 			// Get each one by id
 			foreach (var collector in collectors)
 			{
-				var refetchedCollector = await PortalClient.GetAsync<Collector>(collector.Id).ConfigureAwait(false);
+				var refetchedCollector = await LogicMonitorClient.GetAsync<Collector>(collector.Id).ConfigureAwait(false);
 				// TODO - make sure they match
 			}
 		}
@@ -55,10 +55,10 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetCollector()
 		{
-			var collectors = await PortalClient.GetAllAsync<Collector>().ConfigureAwait(false);
+			var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 			Assert.NotNull(collectors);
 			Assert.NotEmpty(collectors);
-			var refetchedCollector = await PortalClient
+			var refetchedCollector = await LogicMonitorClient
 				.GetAsync<Collector>(collectors[0].Id)
 				.ConfigureAwait(false);
 
@@ -68,7 +68,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void Get1Collector()
 		{
-			var collector = await PortalClient
+			var collector = await LogicMonitorClient
 				.GetAsync<Collector>(CollectorId, default)
 				.ConfigureAwait(false);
 

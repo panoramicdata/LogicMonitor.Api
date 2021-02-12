@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Alerts
 		[Fact]
 		public async void GetAlertStat()
 		{
-			var alertStat = await PortalClient.GetAsync<AlertStat>().ConfigureAwait(false);
+			var alertStat = await LogicMonitorClient.GetAsync<AlertStat>().ConfigureAwait(false);
 			Assert.NotNull(alertStat);
 		}
 	}

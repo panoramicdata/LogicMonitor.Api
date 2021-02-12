@@ -24,17 +24,17 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetDeviceGroupDataSources()
 		{
-			var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
+			var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 			Assert.NotNull(deviceGroup);
 
-			var deviceGroupDataSources = await PortalClient.GetAllDeviceGroupDataSourcesAsync(deviceGroup.Id).ConfigureAwait(false);
+			var deviceGroupDataSources = await LogicMonitorClient.GetAllDeviceGroupDataSourcesAsync(deviceGroup.Id).ConfigureAwait(false);
 			Assert.NotEmpty(deviceGroupDataSources);
 		}
 
 		[Fact]
 		public async void GetDeviceGroupDeviceDataSourceInstances()
 		{
-			var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
+			var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 			Assert.NotNull(deviceGroup);
 			Assert.NotEqual(0, deviceGroup.Id);
 			// We have the device group
@@ -42,13 +42,13 @@ namespace LogicMonitor.Api.Test.LogicModules
 			// Determine the DataSources
 			var dataSourcesIds = new List<DataSource>
 				{
-					await PortalClient.GetDataSourceByUniqueNameAsync("Ping").ConfigureAwait(false),
-					await PortalClient.GetDataSourceByUniqueNameAsync("dns").ConfigureAwait(false)
+					await LogicMonitorClient.GetDataSourceByUniqueNameAsync("Ping").ConfigureAwait(false),
+					await LogicMonitorClient.GetDataSourceByUniqueNameAsync("dns").ConfigureAwait(false)
 				}
 				.Select(ds => ds.Id)
 				.ToList();
 
-			var deviceDataSourceInstances = await PortalClient
+			var deviceDataSourceInstances = await LogicMonitorClient
 				.GetInstancesAsync(LogicModuleType.DataSource, deviceGroup.Id, dataSourcesIds)
 				.ConfigureAwait(false);
 
@@ -58,10 +58,10 @@ namespace LogicMonitor.Api.Test.LogicModules
 			var sum = 0;
 			foreach (var deviceDataSourceInstance in deviceDataSourceInstances)
 			{
-				var device = await PortalClient
+				var device = await LogicMonitorClient
 					.GetAsync<Device>(deviceDataSourceInstance.DeviceId.Value)
 					.ConfigureAwait(false);
-				var refetchedDeviceDataSourceInstanceCount = (await PortalClient
+				var refetchedDeviceDataSourceInstanceCount = (await LogicMonitorClient
 				 .GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceDataSourceInstance.DeviceId.Value, deviceDataSourceInstance.DataSourceId.Value)
 				 .ConfigureAwait(false)).InstanceCount;
 				Assert.NotEqual(0, refetchedDeviceDataSourceInstanceCount);
@@ -104,7 +104,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetWinService()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			var windowsServices = await portalClient.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService).ConfigureAwait(false);
 			Assert.NotNull(windowsServices);
@@ -115,7 +115,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetMonitoredWinService()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			var windowsServices = await portalClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService).ConfigureAwait(false);
 			Assert.NotNull(windowsServices);
@@ -126,8 +126,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetXml()
 		{
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
-			var xml = await PortalClient.GetDataSourceXmlAsync(dataSource.Id).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var xml = await LogicMonitorClient.GetDataSourceXmlAsync(dataSource.Id).ConfigureAwait(false);
 
 			Assert.NotNull(xml);
 		}
@@ -135,7 +135,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetDataSourcesPage()
 		{
-			var dataSourcePage = await PortalClient.GetPageAsync(new Filter<DataSource> { Skip = 0, Take = 10 }).ConfigureAwait(false);
+			var dataSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<DataSource> { Skip = 0, Take = 10 }).ConfigureAwait(false);
 
 			// Make sure that some are returned
 			Assert.True(dataSourcePage.Items.Count > 0);
@@ -158,7 +158,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetAllDataSources()
 		{
-			var dataSources = await PortalClient.GetAllAsync<DataSource>().ConfigureAwait(false);
+			var dataSources = await LogicMonitorClient.GetAllAsync<DataSource>().ConfigureAwait(false);
 			Assert.NotNull(dataSources);
 			Assert.NotEmpty(dataSources);
 		}
@@ -167,11 +167,11 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void GetDataPointThresholdDetailsForDeviceDataSourceInstance()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstances = await LogicMonitorClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }).ConfigureAwait(false);
 			var deviceDataSourceInstance = deviceDataSourceInstances.Items[0];
-			var dataPointDetails = await PortalClient.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
+			var dataPointDetails = await LogicMonitorClient.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 			var dataPointConfiguration = dataPointDetails.Items[0];
 			Assert.NotNull(dataPointConfiguration?.GlobalAlertExpr);
 		}
@@ -179,7 +179,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetDataSourceByUniqueName_ValidName_Ok()
 		{
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 			Assert.NotNull(dataSource);
 		}
 
@@ -187,7 +187,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void GetDataSourceByUniqueName_ValidNameWithSpaces_Ok()
 		{
 			const string DataSourceName = "IP Addresses";
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync(DataSourceName).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync(DataSourceName).ConfigureAwait(false);
 			Assert.NotNull(dataSource);
 			Assert.Equal(DataSourceName, dataSource.Name);
 		}
@@ -195,14 +195,14 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetDataSourceByUniqueName_BadName_Null()
 		{
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU-").ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU-").ConfigureAwait(false);
 			Assert.Null(dataSource);
 		}
 
 		[Fact]
 		public async void GetDeviceDataSourceInstances()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
 			Assert.NotNull(device);
 
@@ -293,8 +293,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async Task TestDeviceGroupAlertSettings()
 		{
-			var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
-			var items = await PortalClient.GetDeviceGroupDataPointConfigurationAsync(deviceGroup.Id, 3).ConfigureAwait(false);
+			var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
+			var items = await LogicMonitorClient.GetDeviceGroupDataPointConfigurationAsync(deviceGroup.Id, 3).ConfigureAwait(false);
 			Assert.NotNull(items);
 		}
 
@@ -359,7 +359,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			var stopwatch = Stopwatch.StartNew();
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var deviceDataSources = await PortalClient.GetDeviceDataSourcesPageAsync(
+			var deviceDataSources = await LogicMonitorClient.GetDeviceDataSourcesPageAsync(
 				device.Id,
 				new Filter<DeviceDataSource>
 				{
@@ -390,7 +390,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void GetDeviceDataSources()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var deviceDataSources = await PortalClient.GetDeviceDataSourcesPageAsync(device.Id, new Filter<DeviceDataSource>
+			var deviceDataSources = await LogicMonitorClient.GetDeviceDataSourcesPageAsync(device.Id, new Filter<DeviceDataSource>
 			{
 				Skip = 0,
 				Take = 10,
@@ -407,14 +407,14 @@ namespace LogicMonitor.Api.Test.LogicModules
 			foreach (var deviceDataSource in deviceDataSources.Items)
 			{
 				// Refetch
-				var deviceDataSourceRefetch = await PortalClient.GetDeviceDataSourceAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
+				var deviceDataSourceRefetch = await LogicMonitorClient.GetDeviceDataSourceAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
 
 				// Make sure they are the same
 				Assert.Equal(device.Id, deviceDataSourceRefetch.DeviceId);
 				Assert.Equal(deviceDataSource.CreatedOnSeconds, deviceDataSourceRefetch.CreatedOnSeconds);
 
 				// Get the instances
-				var deviceDataSourceInstances = (await PortalClient.GetDeviceDataSourceInstancesPageAsync(
+				var deviceDataSourceInstances = (await LogicMonitorClient.GetDeviceDataSourceInstancesPageAsync(
 					device.Id,
 					deviceDataSource.Id,
 					new Filter<DeviceDataSourceInstance>
@@ -425,7 +425,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					}).ConfigureAwait(false)).Items;
 
 				// Get the groups
-				var deviceDataSourceGroups = await PortalClient.GetDeviceDataSourceGroupsPageAsync(
+				var deviceDataSourceGroups = await LogicMonitorClient.GetDeviceDataSourceGroupsPageAsync(
 					device.Id,
 					deviceDataSource.Id,
 					new Filter<DeviceDataSourceGroup>
@@ -448,7 +448,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void GetFilteredDataSources()
 		{
 			const string groupName = ".Net";
-			var dataSourcesPage = await PortalClient.GetAllAsync(new Filter<DataSource>
+			var dataSourcesPage = await LogicMonitorClient.GetAllAsync(new Filter<DataSource>
 			{
 				FilterItems = new List<FilterItem<DataSource>>
 				{
@@ -472,7 +472,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void GetDataSourceGroupsQuickly()
 		{
 			// Get all DataSourceGroups
-			var dataSources = await PortalClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.Group) } }).ConfigureAwait(false);
+			var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.Group) } }).ConfigureAwait(false);
 
 			var distinctGroups = dataSources.Select(ds => ds.Group).Distinct().ToList();
 
@@ -483,7 +483,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void GetDataSourceCollectionMethodsQuickly()
 		{
 			// Get all DataSource Collection methods
-			var dataSources = await PortalClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.CollectionMethod) } }).ConfigureAwait(false);
+			var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.CollectionMethod) } }).ConfigureAwait(false);
 			Assert.NotNull(dataSources);
 		}
 
@@ -491,8 +491,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void WindowsServerDisks()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			Assert.Equal(device.Id, deviceDataSource.DeviceId);
 			Assert.Equal(dataSource.Id, deviceDataSource.DataSourceId);
 		}

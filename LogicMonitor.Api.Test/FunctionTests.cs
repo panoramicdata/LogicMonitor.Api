@@ -12,7 +12,7 @@ namespace LogicMonitor.Api.Test
 		[Fact]
 		public async void GetApplications()
 		{
-			var things = await PortalClient.GetAppliesToAsync("isCisco()").ConfigureAwait(false);
+			var things = await LogicMonitorClient.GetAppliesToAsync("isCisco()").ConfigureAwait(false);
 			Assert.NotNull(things);
 			Assert.NotEmpty(things);
 		}

@@ -667,12 +667,13 @@ namespace LogicMonitor.Api
 			return valueInt;
 		}
 
-		private string RequestUri(string subUrl) => $"https://{AccountName}.logicmonitor.com/santaba/rest/{subUrl}";
+		private string RequestUri(string subUrl) => subUrl == "log/ingest"
+			? $"https://{AccountName}.logicmonitor.com/rest/{subUrl}"
+			: $"https://{AccountName}.logicmonitor.com/santaba/rest/{subUrl}";
 
 		private async Task<HttpResponseMessage> GetHttpResponseMessage(HttpRequestMessage requestMessage, string subUrl, string data, CancellationToken cancellationToken)
 		{
 			var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
-			//var epoch = 1525088468757;
 			var subUrl2 = subUrl.Contains("?")
 			? subUrl.Substring(0, subUrl.IndexOf("?", StringComparison.Ordinal))
 			: subUrl;
@@ -1019,7 +1020,8 @@ namespace LogicMonitor.Api
 				{
 					using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
 					{
-						httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken).ConfigureAwait(false);
+						httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken)
+							.ConfigureAwait(false);
 					}
 					_logger.LogDebug($"{prefix} complete");
 				}

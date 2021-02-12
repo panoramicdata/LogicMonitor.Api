@@ -15,20 +15,20 @@ namespace LogicMonitor.Api.Test.Devices
 		[Fact]
 		public async void GetAllDeviceDataSourceInstancesAsync()
 		{
-			var _ = await PortalClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId).ConfigureAwait(false);
+			var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId).ConfigureAwait(false);
 		}
 
 		[Fact]
 		public async void GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 		{
-			var dataSource = await PortalClient
+			var dataSource = await LogicMonitorClient
 				.GetDataSourceByUniqueNameAsync("WinIf-")
 				.ConfigureAwait(false);
-			var deviceDataSource = await PortalClient
+			var deviceDataSource = await LogicMonitorClient
 				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id)
 				.ConfigureAwait(false);
 
-			var _ = await PortalClient
+			var _ = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id)
 				.ConfigureAwait(false);
 		}
@@ -38,13 +38,13 @@ namespace LogicMonitor.Api.Test.Devices
 		{
 			var device = await GetSnmpDeviceAsync()
 				.ConfigureAwait(false);
-			var dataSource = await PortalClient
+			var dataSource = await LogicMonitorClient
 				.GetDataSourceByUniqueNameAsync("snmp64_If-")
 				.ConfigureAwait(false);
-			var deviceDataSource = await PortalClient
+			var deviceDataSource = await LogicMonitorClient
 				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id)
 				.ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
+			var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 			{
 				Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
 				ExtraFilters = new List<FilterItem<DeviceDataSourceInstance>>

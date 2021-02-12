@@ -25,14 +25,14 @@ namespace LogicMonitor.Api.Test.Data
 		public async void GetForecastGraphData()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
-			var dataSourceGraphs = await PortalClient.GetDataSourceGraphsAsync(dataSource.Id).ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var dataSourceGraphs = await LogicMonitorClient.GetDataSourceGraphsAsync(dataSource.Id).ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
 			var deviceDataSourceInstance = deviceDataSourceInstances[0];
 			var dataSourceGraph = dataSourceGraphs[0];
 			var virtualDataPoint = dataSourceGraph.DataPoints[0];
-			var forecastGraphData = await PortalClient.GetForecastGraphDataAsync(new ForecastDataRequest
+			var forecastGraphData = await LogicMonitorClient.GetForecastGraphDataAsync(new ForecastDataRequest
 			{
 				TrainingTimePeriod = TrainingTimePeriod.SixMonths,
 				ForecastTimePeriod = ForecastTimePeriod.OneMonth,
@@ -49,19 +49,19 @@ namespace LogicMonitor.Api.Test.Data
 		{
 			var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
 			Assert.NotNull(device);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("snmp64_If-").ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("snmp64_If-").ConfigureAwait(false);
 			Assert.NotNull(dataSource);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 			Assert.NotNull(deviceDataSource);
-			var deviceDataSourceInstanceGroups = await PortalClient.GetDeviceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstanceGroups = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
 			Assert.NotNull(deviceDataSourceInstanceGroups);
 			Assert.NotEmpty(deviceDataSourceInstanceGroups);
 			var deviceDataSourceInstanceGroup = deviceDataSourceInstanceGroups.Skip(1).First();
-			var deviceDataSourceInstanceGroupRefetch = await PortalClient.GetDeviceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name).ConfigureAwait(false);
+			var deviceDataSourceInstanceGroupRefetch = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name).ConfigureAwait(false);
 			Assert.NotNull(deviceDataSourceInstanceGroupRefetch);
 			Assert.Equal(deviceDataSourceInstanceGroup.Name, deviceDataSourceInstanceGroupRefetch.Name);
 
-			var overviewGraph = await PortalClient.GetDeviceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets").ConfigureAwait(false);
+			var overviewGraph = await LogicMonitorClient.GetDeviceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets").ConfigureAwait(false);
 			Assert.NotNull(overviewGraph);
 			var graphDataRequest = new DeviceDataSourceGraphDataRequest
 			{
@@ -73,7 +73,7 @@ namespace LogicMonitor.Api.Test.Data
 				Width = 500
 			};
 			graphDataRequest.Validate();
-			var graphData = await PortalClient.GetGraphDataAsync(graphDataRequest).ConfigureAwait(false);
+			var graphData = await LogicMonitorClient.GetGraphDataAsync(graphDataRequest).ConfigureAwait(false);
 			Assert.NotNull(graphData);
 		}
 
@@ -85,7 +85,7 @@ namespace LogicMonitor.Api.Test.Data
 		{
 			var utcNow = DateTime.UtcNow;
 			var netflowDevice = await GetNetflowDeviceAsync().ConfigureAwait(false);
-			var _ = await PortalClient.GetGraphDataAsync(new NetflowGraphDataRequest
+			var _ = await LogicMonitorClient.GetGraphDataAsync(new NetflowGraphDataRequest
 			{
 				DeviceId = netflowDevice.Id,
 				StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
@@ -116,7 +116,7 @@ namespace LogicMonitor.Api.Test.Data
 			};
 
 			// Send the request
-			var data = await PortalClient.GetGraphDataAsync(request).ConfigureAwait(false);
+			var data = await LogicMonitorClient.GetGraphDataAsync(request).ConfigureAwait(false);
 
 			// Check there is at least one line of data
 			Assert.True(data.Lines.Count > 0);
@@ -125,15 +125,15 @@ namespace LogicMonitor.Api.Test.Data
 		[Fact]
 		public async void GetGraphData_X250()
 		{
-			PortalClient.UseCache = true;
+			LogicMonitorClient.UseCache = true;
 			var utcNow = DateTime.UtcNow;
 			var startDateTime = utcNow.FirstDayOfLastMonth();
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
-			var dataSourceGraph = await PortalClient.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage").ConfigureAwait(false);
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage").ConfigureAwait(false);
 			Assert.NotNull(dataSourceGraph);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>()).ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>()).ConfigureAwait(false);
 			var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
 			{
 				DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
@@ -146,7 +146,7 @@ namespace LogicMonitor.Api.Test.Data
 			for (var n = 0; n < 250; n++)
 			{
 				Logger.LogInformation($"{n:000}: {sw.ElapsedMilliseconds:00000}ms");
-				await PortalClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
+				await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
 			}
 		}
 
@@ -158,22 +158,22 @@ namespace LogicMonitor.Api.Test.Data
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 			Assert.NotNull(device);
 
-			var dataSource = await PortalClient
+			var dataSource = await LogicMonitorClient
 				.GetDataSourceByUniqueNameAsync("WinCPU")
 				.ConfigureAwait(false);
 			Assert.NotNull(dataSource);
 
-			var dataSourceGraph = await PortalClient
+			var dataSourceGraph = await LogicMonitorClient
 				.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage")
 				.ConfigureAwait(false);
 			Assert.NotNull(dataSourceGraph);
 
-			var deviceDataSource = await PortalClient
+			var deviceDataSource = await LogicMonitorClient
 				.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id)
 				.ConfigureAwait(false);
 			Assert.NotNull(deviceDataSource);
 
-			var deviceDataSourceInstances = await PortalClient
+			var deviceDataSourceInstances = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>())
 				.ConfigureAwait(false);
 			Assert.NotNull(deviceDataSourceInstances);
@@ -189,16 +189,16 @@ namespace LogicMonitor.Api.Test.Data
 			};
 
 			//  Ensure Caching is enabled
-			PortalClient.UseCache = true;
+			LogicMonitorClient.UseCache = true;
 
-			var graphData = await PortalClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
+			var graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
 			Assert.NotEmpty(graphData.Lines);
 			Assert.Equal(startDateTime, graphData.StartTimeUtc);
 			Assert.NotNull(graphData.Lines[0].ColorString);
 
 			// Ensure that subsequent fetches are fast
 			var stopwatch = Stopwatch.StartNew();
-			graphData = await PortalClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
+			graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
 			Assert.NotNull(graphData);
 			stopwatch.Stop();
 			Assert.True(stopwatch.ElapsedMilliseconds < 50);
@@ -212,7 +212,7 @@ namespace LogicMonitor.Api.Test.Data
 			var dashboard = await GetAllWidgetsDashboardAsync().ConfigureAwait(false);
 			Assert.NotNull(dashboard);
 
-			var widgets = await PortalClient.GetWidgetsByDashboardIdAsync(dashboard.Id).ConfigureAwait(false);
+			var widgets = await LogicMonitorClient.GetWidgetsByDashboardIdAsync(dashboard.Id).ConfigureAwait(false);
 			Assert.NotNull(widgets);
 			Assert.NotEmpty(widgets);
 
@@ -226,7 +226,7 @@ namespace LogicMonitor.Api.Test.Data
 				StartDateTime = startDateTime,
 				EndDateTime = utcNow.LastDayOfLastMonth()
 			};
-			var graphData = await PortalClient.GetGraphDataAsync(widgetGraphDataRequest).ConfigureAwait(false);
+			var graphData = await LogicMonitorClient.GetGraphDataAsync(widgetGraphDataRequest).ConfigureAwait(false);
 			Assert.NotEmpty(graphData.Lines);
 			Assert.Equal(startDateTime, graphData.StartTimeUtc);
 			Assert.NotNull(graphData.Lines[0].ColorString);
@@ -236,9 +236,9 @@ namespace LogicMonitor.Api.Test.Data
 		public async void GetWinCpuDeviceDataSourceInstancesFromDev()
 		{
 			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			var dataSource = await PortalClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
-			var deviceDataSource = await PortalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-			var deviceDataSourceInstances = await PortalClient
+			var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
+			var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
+			var deviceDataSourceInstances = await LogicMonitorClient
 					.GetAllDeviceDataSourceInstancesAsync(
 						device.Id,
 						deviceDataSource.Id,

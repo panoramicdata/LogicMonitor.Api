@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.RecycleBin
 		[Fact]
 		public async void GetAllRecycleBinItems()
 		{
-			var recycleBinItems = await PortalClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
+			var recycleBinItems = await LogicMonitorClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
 			Assert.NotNull(recycleBinItems);
 		}
 	}

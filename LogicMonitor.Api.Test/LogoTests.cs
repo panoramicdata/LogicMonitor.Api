@@ -18,7 +18,7 @@ namespace LogicMonitor.Api.Test
 		{
 			foreach (var imageType in Enum.GetValues(typeof(ImageType)).Cast<ImageType>())
 			{
-				var buffer = await PortalClient.GetImageByteArrayAsync(imageType).ConfigureAwait(false);
+				var buffer = await LogicMonitorClient.GetImageByteArrayAsync(imageType).ConfigureAwait(false);
 				var image = Image.Load(buffer);
 				Assert.True(image.Width > 0);
 			}

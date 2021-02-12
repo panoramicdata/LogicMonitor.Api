@@ -19,8 +19,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		[Fact]
 		public async void GetJson()
 		{
-			var propertySource = await PortalClient.GetByNameAsync<PropertySource>("Test PropertySource").ConfigureAwait(false);
-			var json = await PortalClient.GetPropertySourceJsonAsync(propertySource.Id).ConfigureAwait(false);
+			var propertySource = await LogicMonitorClient.GetByNameAsync<PropertySource>("Test PropertySource").ConfigureAwait(false);
+			var json = await LogicMonitorClient.GetPropertySourceJsonAsync(propertySource.Id).ConfigureAwait(false);
 
 			Assert.NotNull(json);
 		}

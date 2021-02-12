@@ -28,7 +28,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void DisableAndReEnableClearedAlerts()
 		{
-			var portalClient = PortalClient;
+			var portalClient = LogicMonitorClient;
 			await Main(portalClient, AlertRuleName, true).ConfigureAwait(false);
 			await Main(portalClient, AlertRuleName, false).ConfigureAwait(false);
 		}
@@ -36,7 +36,7 @@ namespace LogicMonitor.Api.Test.Settings
 		[Fact]
 		public async void GetAlertRules()
 		{
-			var alertRules = await PortalClient.GetAllAsync<AlertRule>().ConfigureAwait(false);
+			var alertRules = await LogicMonitorClient.GetAllAsync<AlertRule>().ConfigureAwait(false);
 			Assert.NotNull(alertRules);
 			Assert.True(alertRules.Count > 0);
 
@@ -44,9 +44,9 @@ namespace LogicMonitor.Api.Test.Settings
 			foreach (var alertRule in alertRules)
 			{
 				// Save it
-				await PortalClient.SaveAlertRuleAsync(alertRule).ConfigureAwait(false);
+				await LogicMonitorClient.SaveAlertRuleAsync(alertRule).ConfigureAwait(false);
 
-				var refetchedAlertRule = await PortalClient.GetAsync<AlertRule>(alertRule.Id).ConfigureAwait(false);
+				var refetchedAlertRule = await LogicMonitorClient.GetAsync<AlertRule>(alertRule.Id).ConfigureAwait(false);
 				Assert.Equal(alertRule.Id, refetchedAlertRule.Id);
 				// Other tests?
 
