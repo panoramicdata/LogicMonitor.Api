@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using LogicMonitor.Api.Logging;
 using Xunit;
 using Xunit.Abstractions;
 
