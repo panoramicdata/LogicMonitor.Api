@@ -16,33 +16,33 @@ namespace LogicMonitor.Api.Test
 		[InlineData("AlertStatus", typeof(Device))]
 		[InlineData("Acked", typeof(Collector))]
 		public void IsPropertyReadonlyTest_ShouldReturnTrue(string propertyName, Type classType)
-			=> Assert.True(PortalClient.IsPropertyReadOnly(propertyName, classType));
+			=> Assert.True(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType));
 
 		[Theory]
 		[InlineData("AlertStatusPriority", typeof(Device))]
 		[InlineData("CanUseRemoteSession", typeof(Device))]
 		[InlineData("AckComment", typeof(Collector))]
 		public void IsPropertyReadonlyTest_ShouldReturnFalse(string propertyName, Type classType)
-			=> Assert.False(PortalClient.IsPropertyReadOnly(propertyName, classType));
+			=> Assert.False(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType));
 
 		[Theory]
 		[InlineData("lastRawDataTime", typeof(Device))]
 		[InlineData("lastDataTime", typeof(Device))]
 		[InlineData("ackedOn", typeof(Collector))]
 		public void IsPropertyReadonlyTest_PreferJsonName_ShouldReturnTrue(string propertyName, Type classType)
-			=> Assert.True(PortalClient.IsPropertyReadOnly(propertyName, classType, true));
+			=> Assert.True(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType, true));
 
 		[Theory]
 		[InlineData("customProperties", typeof(Device))]
 		[InlineData("canUseRemoteSession", typeof(Device))]
 		[InlineData("backupAgentId", typeof(Collector))]
 		public void IsPropertyReadonlyTest_PreferJsonName_ShouldReturnFalse(string propertyName, Type classType)
-			=> Assert.False(PortalClient.IsPropertyReadOnly(propertyName, classType, true));
+			=> Assert.False(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType, true));
 
 		[Fact]
 		public void IsPropertyReadonlyTest_NonExistentProperty_ShouldThrowException()
 		{
-			var exception = Record.Exception(() => Assert.False(PortalClient.IsPropertyReadOnly("xxx", typeof(Device))));
+			var exception = Record.Exception(() => Assert.False(LogicMonitorClient.IsPropertyReadOnly("xxx", typeof(Device))));
 			Assert.NotNull(exception);
 			Assert.IsType<PropertyNotFoundException>(exception);
 			Assert.Equal("Could not find property on Device with name xxx.", exception.Message);

@@ -43,7 +43,7 @@ namespace LogicMonitor.Api.Test
 			Logger = iTestOutputHelper.BuildLogger();
 
 			var testPortalConfig = new TestPortalConfig(Logger);
-			PortalClient = testPortalConfig.PortalClient;
+			PortalClient = testPortalConfig.LogicMonitorClient;
 			CollectorId = testPortalConfig.CollectorId;
 			WindowsDeviceId = testPortalConfig.WindowsDeviceId;
 			WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
@@ -68,7 +68,7 @@ namespace LogicMonitor.Api.Test
 
 		protected int EndEpoch { get; }
 
-		protected PortalClient PortalClient { get; }
+		protected LogicMonitorClient PortalClient { get; }
 
 		protected void AssertIsFast(int durationSeconds)
 			=> Assert.InRange(Stopwatch.ElapsedMilliseconds, 0, durationSeconds * 1000);

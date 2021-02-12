@@ -10,7 +10,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///     Settings Portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets the time zone setting for the current user

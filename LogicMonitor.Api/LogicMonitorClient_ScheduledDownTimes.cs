@@ -10,7 +10,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///    Scheduled Down Time portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///    Get Scheduled Down Times

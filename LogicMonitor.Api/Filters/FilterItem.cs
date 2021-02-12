@@ -54,7 +54,7 @@ namespace LogicMonitor.Api.Filters
 		/// <inheritdoc />
 		public override string ToString()
 		{
-			var field = PortalClient.GetSerializationName<T>(Property);
+			var field = LogicMonitorClient.GetSerializationName<T>(Property);
 
 			string valueString;
 			switch (Value)
@@ -75,7 +75,7 @@ namespace LogicMonitor.Api.Filters
 					}
 					else if (Value.GetType().IsEnum)
 					{
-						valueString = PortalClient.GetSerializationNameFromEnumMember(Value);
+						valueString = LogicMonitorClient.GetSerializationNameFromEnumMember(Value);
 					}
 					valueString = Value.ToString();
 					break;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LogicMonitor.Api
 {
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets all Devices that match the AppliesTo string.

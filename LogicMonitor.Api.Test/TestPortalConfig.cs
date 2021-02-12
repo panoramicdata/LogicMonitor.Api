@@ -16,11 +16,14 @@ namespace LogicMonitor.Api.Test
 				.AddJsonFile("appsettings.json");
 			Configuration = builder.Build();
 
-			PortalClient = new PortalClient(
-				Configuration["Config:Account"],
-				Configuration["Config:AccessId"],
-				Configuration["Config:AccessKey"],
-				logger)
+			LogicMonitorClient = new LogicMonitorClient(new LogicMonitorClientOptions
+			{
+				Account = Configuration["Config:Account"],
+				AccessId = Configuration["Config:AccessId"],
+				AccessKey = Configuration["Config:AccessKey"],
+				Logger = logger
+			}
+			)
 			{
 				StrictPagingTotalChecking = true
 			};
@@ -40,7 +43,7 @@ namespace LogicMonitor.Api.Test
 
 		public static IConfigurationRoot Configuration { get; set; }
 
-		public PortalClient PortalClient { get; }
+		public LogicMonitorClient LogicMonitorClient { get; }
 
 		public int NetflowDeviceId { get; }
 

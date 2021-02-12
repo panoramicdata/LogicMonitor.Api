@@ -7,7 +7,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///    Websites Portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///    Gets the current portal's version.

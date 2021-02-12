@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace LogicMonitor.Api
 {
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Backs up all supported aspects of LogicMonitor configuration to a file as a GZipped Json string.

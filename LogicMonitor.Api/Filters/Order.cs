@@ -26,7 +26,7 @@ namespace LogicMonitor.Api.Filters
 				throw new InvalidOperationException("Field cannot be empty.");
 			}
 
-			var orderField = PortalClient.GetSerializationName<T>(Property);
+			var orderField = LogicMonitorClient.GetSerializationName<T>(Property);
 			return $"sort={(Direction == OrderDirection.Desc ? "-" : string.Empty)}{orderField}";
 		}
 	}

@@ -13,7 +13,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///     DataSource portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets a list of all DataSources.

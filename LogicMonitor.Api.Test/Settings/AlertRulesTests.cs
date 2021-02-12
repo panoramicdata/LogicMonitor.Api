@@ -13,7 +13,7 @@ namespace LogicMonitor.Api.Test.Settings
 		{
 		}
 
-		private static async Task Main(PortalClient portalClient, string alertRuleName, bool enableAlertClear)
+		private static async Task Main(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 		{
 			var alertRule = (await portalClient.GetAllAsync<AlertRule>().ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName);
 

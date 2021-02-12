@@ -6,7 +6,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///    PropertySource portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets the JSON for a PropertySource (it is NOT XML!).

@@ -78,7 +78,7 @@ namespace LogicMonitor.Api.Filters
 				{
 					continue;
 				}
-				yield return PortalClient.GetSerializationName<T>(propertyName);
+				yield return LogicMonitorClient.GetSerializationName<T>(propertyName);
 			}
 		}
 

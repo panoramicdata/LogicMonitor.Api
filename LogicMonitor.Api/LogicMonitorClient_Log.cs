@@ -11,7 +11,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///     LogItems
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		private const int LogItemsMaxTake = 49;
 

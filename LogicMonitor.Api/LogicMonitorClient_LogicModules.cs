@@ -8,7 +8,7 @@ namespace LogicMonitor.Api
 {   /// <summary>
 	///     Metadata
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets LogicModule metadata

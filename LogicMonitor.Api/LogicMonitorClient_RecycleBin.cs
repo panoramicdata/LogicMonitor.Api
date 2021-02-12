@@ -7,7 +7,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///    Recycle bin Portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///    Restores items in the recycle bin

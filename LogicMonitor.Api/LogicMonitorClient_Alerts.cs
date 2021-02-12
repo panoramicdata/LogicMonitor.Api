@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace LogicMonitor.Api
 {
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		private const int AlertsMaxTake = 300;
 		private readonly Random randomGenerator = new Random();

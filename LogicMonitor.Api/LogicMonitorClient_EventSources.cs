@@ -11,7 +11,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///     EventSource portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets a list of all EventSources.

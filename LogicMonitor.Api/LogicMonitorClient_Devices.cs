@@ -17,7 +17,7 @@ namespace LogicMonitor.Api
 	/// <summary>
 	///     Device Portal interaction
 	/// </summary>
-	public partial class PortalClient
+	public partial class LogicMonitorClient
 	{
 		/// <summary>
 		///     Gets devices by HostName
