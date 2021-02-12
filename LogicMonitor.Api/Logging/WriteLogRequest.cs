@@ -43,14 +43,14 @@ namespace LogicMonitor.Api.Logging
 
 		private string GetPrefix(WriteLogLevel level) => level switch
 		{
-			WriteLogLevel.Trace => "[TRCE]",
-			WriteLogLevel.Debug => "[DEBG]",
-			WriteLogLevel.Info => "[INFO]",
-			WriteLogLevel.Warning => "[WARN]",
-			WriteLogLevel.Error => "[EROR]",
-			WriteLogLevel.Critical => "[CRIT]",
-			WriteLogLevel.Fatal => "[FATL]",
-			_ => throw new NotSupportedException($"Error level {level} not supported.");
+			WriteLogLevel.Trace => "[TRCE] ",
+			WriteLogLevel.Debug => "[DEBG] ",
+			WriteLogLevel.Info => "[INFO] ",
+			WriteLogLevel.Warning => "[WARN] ",
+			WriteLogLevel.Error => "[EROR] ",
+			WriteLogLevel.Critical => "[CRIT] ",
+			WriteLogLevel.Fatal => "[FATL] ",
+			_ => throw new NotSupportedException($"Error level {level} not supported.")
 		};
 	}
 }
