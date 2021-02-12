@@ -25,7 +25,7 @@ namespace LogicMonitor.Api.Logging
 		{
 			this["_lm.resourceId"] = new Dictionary<string, string>
 			{
-				{ "deviceId", resourceId.ToString() }
+				{ "system.deviceId", resourceId.ToString() }
 			};
 
 			this["message"] = message;
