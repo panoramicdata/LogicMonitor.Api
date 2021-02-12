@@ -3,7 +3,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
-		<Copyright>Copyright © Panoramic Data Limited 2020</Copyright>
+		<Copyright>Copyright © Panoramic Data Limited 2021</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageIcon>Icon.png</PackageIcon>
@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.147.1</Version>
-		<PackageReleaseNotes>Moved to the new, preferred "LogicMonitorClient".</PackageReleaseNotes>
+		<Version>2.147.2</Version>
+		<PackageReleaseNotes>Logging to LM Logs now works.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
