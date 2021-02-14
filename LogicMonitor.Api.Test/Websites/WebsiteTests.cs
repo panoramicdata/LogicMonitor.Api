@@ -16,7 +16,7 @@ namespace LogicMonitor.Api.Test.Websites
 		private const string ExpectedAlertExpression = "< 90 60 30";
 
 		private static WebsiteCreationDto GetWebsiteCreationDto(int websiteGroupId, string name)
-			=> new WebsiteCreationDto
+			=> new()
 			{
 				WebsiteGroupId = websiteGroupId.ToString(),
 				Name = name,

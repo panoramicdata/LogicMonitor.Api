@@ -443,7 +443,7 @@ namespace LogicMonitor.Api
 			{
 				// TODO - support more than just this LogicModuleType
 				var appliesToFunction = (await GetAsync<DataSource>(logicModuleId, cancellationToken).ConfigureAwait(false)).AppliesTo;
-				appliesToDeviceIds[logicModuleId] = (await GetAppliesToAsync(appliesToFunction).ConfigureAwait(false)).Select(atr => atr.Id).ToList();
+				appliesToDeviceIds[logicModuleId] = (await GetAppliesToAsync(appliesToFunction).ConfigureAwait(false)).ConvertAll(atr => atr.Id);
 			}
 
 			// Get a list of deviceGroupIds
@@ -462,8 +462,8 @@ namespace LogicMonitor.Api
 					{
 						Properties = new List<string> { nameof(Device.Id) }
 					}).ConfigureAwait(false))
-					.Select(d => d.Id)
-					.ToList();
+					.ConvertAll(d => d.Id)
+;
 
 				// Iterate over all devices where the appliesTo matches
 				foreach (var logicModuleId in logicModuleIds)

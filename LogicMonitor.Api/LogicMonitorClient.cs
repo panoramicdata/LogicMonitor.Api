@@ -32,7 +32,7 @@ namespace LogicMonitor.Api
 	{
 		#region Fields
 
-		private static readonly HttpMethod PatchHttpMethod = new HttpMethod("PATCH");
+		private static readonly HttpMethod PatchHttpMethod = new("PATCH");
 
 		private readonly HttpClientHandler _handler;
 
@@ -57,7 +57,7 @@ namespace LogicMonitor.Api
 		public string AccountName { get; }
 
 		private static readonly Regex V3HackRegex =
-			new Regex("/setting/registry/metadata|/setting/admin|setting/role|/setting/logicmodules/listcore|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjob|function|oid)/(\\d/audit)|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjobs|functions|oids)/importcore");
+			new("/setting/registry/metadata|/setting/admin|setting/role|/setting/logicmodules/listcore|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjob|function|oid)/(\\d/audit)|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjobs|functions|oids)/importcore");
 
 		#endregion Fields
 

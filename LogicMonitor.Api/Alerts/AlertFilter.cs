@@ -346,7 +346,7 @@ namespace LogicMonitor.Api.Alerts
 		///    Clones the object
 		/// </summary>
 		/// <returns></returns>
-		public AlertFilter Clone() => new AlertFilter
+		public AlertFilter Clone() => new()
 		{
 			AckFilter = AckFilter,
 			AlertRuleName = AlertRuleName,
@@ -365,7 +365,7 @@ namespace LogicMonitor.Api.Alerts
 			Id = Id,
 			InternalId = InternalId,
 			IncludeCleared = IncludeCleared,
-			Levels = Levels.Select(l => l).ToList(),
+			Levels = Levels.ConvertAll(l => l), // Clone
 			OrderByProperty = OrderByProperty,
 			OrderDirection = OrderDirection,
 			Properties = Properties,

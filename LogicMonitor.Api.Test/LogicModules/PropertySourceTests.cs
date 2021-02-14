@@ -3,8 +3,6 @@ using Xunit;
 using Xunit.Abstractions;
 
 // Older, now deprecated methods are still tested here
-#pragma warning disable 618
-
 namespace LogicMonitor.Api.Test.LogicModules
 {
 	public class PropertySourceTests : TestWithOutput
@@ -26,5 +24,3 @@ namespace LogicMonitor.Api.Test.LogicModules
 		}
 	}
 }
-
-#pragma warning restore 618

@@ -1,7 +1,6 @@
 using LogicMonitor.Api.Flows;
 using LogicMonitor.Api.Time;
 using System;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -58,7 +57,7 @@ namespace LogicMonitor.Api.Test
 			var flowApplications = await LogicMonitorClient.GetDeviceGroupFlowApplicationsPageAsync(new DeviceGroupFlowApplicationsRequest
 			{
 				TimePeriod = TimePeriod.Zoom,
-				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
+				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0]),
 				SortDirection = SortDirection.Ascending,
 				SortFlowField = FlowField.Usage,
 				Take = 100,
@@ -83,7 +82,7 @@ namespace LogicMonitor.Api.Test
 			var flowBandwidths = await LogicMonitorClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
 			{
 				TimePeriod = TimePeriod.Zoom,
-				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
+				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0]),
 				SortDirection = SortDirection.Ascending,
 				SortFlowField = FlowField.Usage,
 				Take = 100,
@@ -107,7 +106,7 @@ namespace LogicMonitor.Api.Test
 			var flows = await LogicMonitorClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
 			{
 				TimePeriod = TimePeriod.Zoom,
-				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",").First()),
+				DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0]),
 				SortDirection = SortDirection.Ascending,
 				SortFlowField = FlowField.Usage,
 				Take = 100,

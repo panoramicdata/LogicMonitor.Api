@@ -20,43 +20,43 @@ namespace LogicMonitor.Api.Alerts
 		NoneNoneNone,
 
 		/// <summary>
-		/// None none SDT
+		/// None / none / SDT
 		/// </summary>
 		[EnumMember(Value = "none-none-SDT")]
 		NoneNoneSdt,
 
 		/// <summary>
-		/// None SDT none
+		/// None / SDT / none
 		/// </summary>
 		[EnumMember(Value = "none-SDT-none")]
 		NoneSdtNone,
 
 		/// <summary>
-		/// SDT none none
+		/// SDT / none / none
 		/// </summary>
 		[EnumMember(Value = "SDT-none-none")]
 		SdtNoneNone,
 
 		/// <summary>
-		/// None SDT SDT
+		/// None / SDT / SDT
 		/// </summary>
 		[EnumMember(Value = "none-SDT-SDT")]
 		NoneSdtSdt,
 
 		/// <summary>
-		/// Sdt SDT none
+		/// Sdt / SDT / none
 		/// </summary>
 		[EnumMember(Value = "SDT-SDT-none")]
 		SdtSdtNone,
 
 		/// <summary>
-		/// Sdt none SDT
+		/// Sdt / none / SDT
 		/// </summary>
 		[EnumMember(Value = "SDT-none-SDT")]
 		SdtNoneSdt,
 
 		/// <summary>
-		/// SDT SDT SDT
+		/// SDT / SDT / SDT
 		/// </summary>
 		[EnumMember(Value = "SDT-SDT-SDT")]
 		SdtSdtSdt,

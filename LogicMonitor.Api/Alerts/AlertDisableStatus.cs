@@ -24,43 +24,43 @@ namespace LogicMonitor.Api.Alerts
 		NoneNoneNone,
 
 		/// <summary>
-		/// None none disable
+		/// None / none / disable
 		/// </summary>
 		[EnumMember(Value = "none-none-disable")]
 		NoneNoneDisable,
 
 		/// <summary>
-		/// None disable none
+		/// None / disable / none
 		/// </summary>
 		[EnumMember(Value = "none-disable-none")]
 		NoneDisableNone,
 
 		/// <summary>
-		/// Disable none none
+		/// Disable / none / none
 		/// </summary>
 		[EnumMember(Value = "disable-none-none")]
 		DisableNoneNone,
 
 		/// <summary>
-		/// None disable disable
+		/// None / disable / disable
 		/// </summary>
 		[EnumMember(Value = "none-disable-disable")]
 		NoneDisableDisable,
 
 		/// <summary>
-		/// Disable disable none
+		/// Disable / disable / none
 		/// </summary>
 		[EnumMember(Value = "disable-disable-none")]
 		DisableDisableNone,
 
 		/// <summary>
-		/// Disable none disable
+		/// Disable / none / disable
 		/// </summary>
 		[EnumMember(Value = "disable-none-disable")]
 		DisableNoneDisable,
 
 		/// <summary>
-		/// Disable disable disable
+		/// Disable / disable / disable
 		/// </summary>
 		[EnumMember(Value = "disable-disable-disable")]
 		DisableDisableDisable,

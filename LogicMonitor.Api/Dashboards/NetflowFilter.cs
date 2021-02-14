@@ -46,21 +46,12 @@ namespace LogicMonitor.Api.Dashboards
 			get => _direction;
 			set
 			{
-				switch (value)
+				_direction = value switch
 				{
-					case "":
-						_direction = "bidirectional";
-						break;
-
-					case "bidirectional":
-					case "leftwards":
-					case "rightwards":
-						_direction = value;
-						break;
-
-					default:
-						throw new ArgumentOutOfRangeException($"Unexpected direction {value}");
-				}
+					"" => "bidirectional",
+					"bidirectional" or "leftwards" or "rightwards" => value,
+					_ => throw new ArgumentOutOfRangeException($"Unexpected direction {value}"),
+				};
 			}
 		}
 

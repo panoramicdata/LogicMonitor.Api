@@ -8,9 +8,9 @@ namespace LogicMonitor.Api
 {
 	internal class Cache<TIndex, TValue>
 	{
-		private readonly ConcurrentDictionary<TIndex, CachedItem<TValue>> _cache = new ConcurrentDictionary<TIndex, CachedItem<TValue>>();
+		private readonly ConcurrentDictionary<TIndex, CachedItem<TValue>> _cache = new();
 		private TimeSpan _maxAge;
-		private readonly object _ageLock = new object();
+		private readonly object _ageLock = new();
 		private DateTime _lastAged;
 		private readonly ILogger _logger;
 
@@ -101,7 +101,7 @@ namespace LogicMonitor.Api
 
 				_lastAged = DateTime.UtcNow;
 			}
-			_logger.LogTrace($"CACHE AGE COMPLETE");
+			_logger.LogTrace("CACHE AGE COMPLETE");
 		}
 	}
 }

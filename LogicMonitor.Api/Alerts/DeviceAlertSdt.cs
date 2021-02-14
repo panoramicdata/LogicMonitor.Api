@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
 {
-
 	/// <summary>
 	/// A device alert SDT
 	/// </summary>

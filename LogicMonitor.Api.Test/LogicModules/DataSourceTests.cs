@@ -45,8 +45,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					await LogicMonitorClient.GetDataSourceByUniqueNameAsync("Ping").ConfigureAwait(false),
 					await LogicMonitorClient.GetDataSourceByUniqueNameAsync("dns").ConfigureAwait(false)
 				}
-				.Select(ds => ds.Id)
-				.ToList();
+				.ConvertAll(ds => ds.Id);
 
 			var deviceDataSourceInstances = await LogicMonitorClient
 				.GetInstancesAsync(LogicModuleType.DataSource, deviceGroup.Id, dataSourcesIds)

@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
 {
-
 	/// <summary>
 	/// A website group alert SDT
 	/// </summary>

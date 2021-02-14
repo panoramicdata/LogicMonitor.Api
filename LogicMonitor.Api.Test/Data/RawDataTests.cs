@@ -76,7 +76,7 @@ namespace LogicMonitor.Api.Test.Data
 			var end = DateTime.UtcNow;
 			var start = end.AddHours(-2);
 
-			var rawData = await LogicMonitorClient.GetFetchDataResponseAsync(deviceDataSourceInstances.Select(ddsi => ddsi.Id).ToList(), start, end).ConfigureAwait(false);
+			var rawData = await LogicMonitorClient.GetFetchDataResponseAsync(deviceDataSourceInstances.ConvertAll(ddsi => ddsi.Id), start, end).ConfigureAwait(false);
 
 			Assert.NotNull(rawData);
 			Assert.Equal(deviceDataSourceInstances.Count, rawData.TotalCount);

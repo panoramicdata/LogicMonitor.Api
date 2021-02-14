@@ -90,9 +90,7 @@ namespace LogicMonitor.Api.LogicModules
 				case 29:
 				case 30:
 				case 31:
-#pragma warning disable RCS1032 // Remove redundant parentheses.
 					var numbers = Enumerable.Range(networkParts[3], (2 << (32 - bitsInteger)) - 1).ToList();
-#pragma warning restore RCS1032 // Remove redundant parentheses.
 					Code = $"join(system.ips, \",\") =~ \"(^|,){networkParts[0]}\\\\.{networkParts[1]}\\\\.{networkParts[2]}\\\\.({string.Join("|", numbers)})(,|$)\"";
 					return;
 				case 32:

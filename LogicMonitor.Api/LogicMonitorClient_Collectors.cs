@@ -73,7 +73,7 @@ namespace LogicMonitor.Api
 				suburl += $"collectorVersion={collectorVersion}&";
 			}
 			suburl += $"token={downloadToken.Token}&";
-			suburl += $"monitorOthers=true&";
+			suburl += "monitorOthers=true&";
 			suburl += $"collectorSize={collectorSize.ToString().ToLowerInvariant()}&";
 			suburl += "v=2";
 

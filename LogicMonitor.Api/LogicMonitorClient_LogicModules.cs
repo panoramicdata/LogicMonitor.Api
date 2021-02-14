@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace LogicMonitor.Api
 {   /// <summary>
-	///     Metadata
-	/// </summary>
+	 ///     Metadata
+	 /// </summary>
 	public partial class LogicMonitorClient
 	{
 		/// <summary>
@@ -28,17 +28,12 @@ namespace LogicMonitor.Api
 
 			string GetText()
 			{
-				switch (logicModuleType)
+				return logicModuleType switch
 				{
-					case LogicModuleType.PropertySource:
-						return "property_rule";
-
-					case LogicModuleType.JobMonitor:
-					case LogicModuleType.AppliesToFunction:
-						throw new NotSupportedException($"LogicMonitor does not support metadata for {logicModuleType}s.");
-					default:
-						return logicModuleType.ToString().ToLowerInvariant();
-				}
+					LogicModuleType.PropertySource => "property_rule",
+					LogicModuleType.JobMonitor or LogicModuleType.AppliesToFunction => throw new NotSupportedException($"LogicMonitor does not support metadata for {logicModuleType}s."),
+					_ => logicModuleType.ToString().ToLowerInvariant(),
+				};
 			}
 		}
 

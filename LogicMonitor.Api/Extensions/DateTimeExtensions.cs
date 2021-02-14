@@ -8,7 +8,7 @@ namespace LogicMonitor.Api.Extensions
 	/// </summary>
 	internal static class DateTimeExtensions
 	{
-		private static readonly DateTime TheEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+		private static readonly DateTime TheEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		/// <summary>
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970
@@ -64,7 +64,7 @@ namespace LogicMonitor.Api.Extensions
 		/// <param name="dateTime">The DateTime</param>
 		/// <returns></returns>
 		public static DateTime ToSecondLevel(this DateTime dateTime)
-			=> new DateTime(dateTime.Ticks / TimeSpan.TicksPerSecond * TimeSpan.TicksPerSecond);
+			=> new(dateTime.Ticks / TimeSpan.TicksPerSecond * TimeSpan.TicksPerSecond);
 
 		/// <summary>
 		/// The number of milliseconds that this DateTime is past midnight on 1st January 1970
@@ -75,7 +75,7 @@ namespace LogicMonitor.Api.Extensions
 			=> (long)dateTime.SecondsSinceTheEpoch() * 1000;
 
 		private static DateTime FirstDayOfThisMonth(this DateTime dateTime)
-			=> new DateTime(dateTime.Year, dateTime.Month, 1);
+			=> new(dateTime.Year, dateTime.Month, 1);
 
 		/// <summary>
 		/// Midnight on the first day of the month prior to this DateTime

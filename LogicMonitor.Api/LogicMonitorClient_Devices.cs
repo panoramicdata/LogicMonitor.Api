@@ -105,7 +105,7 @@ namespace LogicMonitor.Api
 				name,
 				value,
 				mode,
-				$"device/devices",
+				"device/devices",
 				cancellationToken
 				);
 
@@ -135,7 +135,7 @@ namespace LogicMonitor.Api
 				name,
 				value,
 				mode,
-				$"device/groups",
+				"device/groups",
 				cancellationToken);
 
 		/// <summary>
@@ -347,7 +347,7 @@ namespace LogicMonitor.Api
 					{
 						continue;
 					}
-					(deviceGroup.Devices ?? (deviceGroup.Devices = new List<Device>())).Add(device);
+					(deviceGroup.Devices ??= new List<Device>()).Add(device);
 					deviceGroup.DeviceCount = deviceGroup.Devices.Count;
 				}
 			}

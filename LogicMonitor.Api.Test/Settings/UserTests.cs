@@ -59,9 +59,7 @@ namespace LogicMonitor.Api.Test.Settings
 				FirstName = "first",
 				LastName = "last",
 				Email = "david@davidbond.net",
-#pragma warning disable SCS0015 // Hardcoded password
 				Password = "Abc123!!!",
-#pragma warning restore SCS0015 // Hardcoded password
 				Password1 = "Abc123!!!",
 				ForcePasswordChange = true,
 				TwoFAEnabled = false,

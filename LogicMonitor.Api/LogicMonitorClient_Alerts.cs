@@ -16,7 +16,7 @@ namespace LogicMonitor.Api
 	public partial class LogicMonitorClient
 	{
 		private const int AlertsMaxTake = 300;
-		private readonly Random randomGenerator = new Random();
+		private readonly Random randomGenerator = new();
 
 		/// <summary>
 		///     Gets a list of alerts.

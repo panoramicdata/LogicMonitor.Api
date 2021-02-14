@@ -25,6 +25,5 @@ namespace LogicMonitor.Api.Alerts
 		/// </summary>
 		[DataMember(Name = "websiteName")]
 		public string WebsiteName { get; set; }
-
 	}
 }

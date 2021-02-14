@@ -109,7 +109,7 @@ namespace LogicMonitor.Api.Test.Data
 			// Create the request
 			var request = new NetflowDeviceGroupGraphDataRequest
 			{
-				DeviceGroupId = int.Parse(netflowDevice.DeviceGroupIdsString.Split(",").First()),
+				DeviceGroupId = int.Parse(netflowDevice.DeviceGroupIdsString.Split(",")[0]),
 				StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
 				EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
 				TimePeriod = TimePeriod.Zoom
