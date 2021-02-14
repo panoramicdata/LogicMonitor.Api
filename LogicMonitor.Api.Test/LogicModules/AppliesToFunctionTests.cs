@@ -15,8 +15,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 		public async void CreateUpdateAndDelete()
 		{
 			const string testAppliesToFunctionName = "XxxUnitTest";
-			var testAppliesToFunctionDescription = $"{testAppliesToFunctionName} - Description";
-			var testAppliesToFunctionCode = $"displayname == \"{testAppliesToFunctionName}\"";
+			const string testAppliesToFunctionDescription = testAppliesToFunctionName + " - Description";
+			const string testAppliesToFunctionCode = "displayname == \"" + testAppliesToFunctionName + "\"";
 
 			// Delete if already present
 			var existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
@@ -39,7 +39,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 			Assert.Equal(createdAppliesToFunction.Id, existingAppliesToFunction.Id);
 
 			// Update
-			var newDescription = testAppliesToFunctionDescription + "2";
+			const string newDescription = testAppliesToFunctionDescription + "2";
 			existingAppliesToFunction.Description = newDescription;
 			await LogicMonitorClient.PutAsync(existingAppliesToFunction).ConfigureAwait(false);
 

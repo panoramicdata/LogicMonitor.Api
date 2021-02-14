@@ -31,7 +31,7 @@ namespace LogicMonitor.Api.PushMetrics
 		/// * All characters except , ; / * [ ] ? ' " ` ## and newline are allowed
 		/// * Spaces allowed except at start or end
 		/// * Should not contain backslashes(\).
-		/// * *<?,;`\\n characters not allowed
+		/// * *?,;`\\n&lt; characters not allowed
 		/// </summary>
 		[DataMember(Name = "instanceDisplayName")]
 		public string DisplayName { get; set; }
