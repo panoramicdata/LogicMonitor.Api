@@ -1,3 +1,4 @@
+using FluentAssertions;
 using LogicMonitor.Api.LogicModules;
 using System;
 using Xunit;
@@ -35,8 +36,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			// Refetch and check
 			existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
-			Assert.NotNull(existingAppliesToFunction);
-			Assert.Equal(createdAppliesToFunction.Id, existingAppliesToFunction.Id);
+			existingAppliesToFunction.Should().NotBeNull();
+			createdAppliesToFunction.Id.Should().Be(existingAppliesToFunction.Id);
 
 			// Update
 			const string newDescription = testAppliesToFunctionDescription + "2";
@@ -45,14 +46,14 @@ namespace LogicMonitor.Api.Test.LogicModules
 
 			// Refetch and check
 			existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
-			Assert.Equal(newDescription, existingAppliesToFunction.Description);
+			existingAppliesToFunction.Description.Should().Be(newDescription);
 
 			// Delete
 			await LogicMonitorClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
 
 			// Refetch and check
 			existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
-			Assert.Null(existingAppliesToFunction);
+			existingAppliesToFunction.Should().BeNull();
 		}
 
 		[Theory]
@@ -61,7 +62,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 		{
 			var appliesToFunction = new AppliesToFunction();
 			appliesToFunction.SetCodeFromCidr(input);
-			Assert.Equal(expected, appliesToFunction.Code);
+			appliesToFunction.Code.Should().Be(expected);
 		}
 
 		[Theory]
@@ -113,8 +114,8 @@ namespace LogicMonitor.Api.Test.LogicModules
 			var matches = await LogicMonitorClient
 				.GetAppliesToAsync("customer.code == \"PDL\"")
 				.ConfigureAwait(false);
-			Assert.NotNull(matches);
-			Assert.NotEmpty(matches);
+			matches.Should().NotBeNull();
+			matches.Should().NotBeEmpty();
 		}
 	}
 }
