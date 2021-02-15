@@ -667,7 +667,7 @@ namespace LogicMonitor.Api
 			return valueInt;
 		}
 
-		private string RequestUri(string subUrl) => subUrl == "log/ingest"
+		private string RequestUri(string subUrl) => subUrl == "log/ingest" || subUrl == "metric/ingest"
 			? $"https://{AccountName}.logicmonitor.com/rest/{subUrl}"
 			: $"https://{AccountName}.logicmonitor.com/santaba/rest/{subUrl}";
 

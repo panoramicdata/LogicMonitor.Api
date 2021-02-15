@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 
 namespace LogicMonitor.Api.Test.Logging
 {
-	public class LoggingTests : TestWithOutput
+	public class PushMetricTests : TestWithOutput
 	{
-		public LoggingTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
+		public PushMetricTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 		{
 		}
 

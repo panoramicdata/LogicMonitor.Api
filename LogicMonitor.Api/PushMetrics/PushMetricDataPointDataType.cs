@@ -3,13 +3,13 @@
 namespace LogicMonitor.Api.PushMetrics
 {
 	/// <summary>
-	/// A push metric data point type
+	/// A push metric datapoint data type
 	/// </summary>
 	[DataContract]
-	public enum PushMetricDataPointType
+	public enum PushMetricDataPointDataType
 	{
 		/// <summary>
-		/// Guage
+		/// Gauge
 		/// </summary>
 		[EnumMember(Value = "guage")]
 		Guage,

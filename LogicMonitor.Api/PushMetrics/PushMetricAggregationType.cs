@@ -3,10 +3,10 @@
 namespace LogicMonitor.Api.PushMetrics
 {
 	/// <summary>
-	/// A push metric data type
+	/// A push metric aggregation type
 	/// </summary>
 	[DataContract]
-	public enum PushMetricDataType
+	public enum PushMetricAggregationType
 	{
 		/// <summary>
 		/// None

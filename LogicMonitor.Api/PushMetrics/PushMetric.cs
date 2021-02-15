@@ -90,7 +90,7 @@ namespace LogicMonitor.Api.PushMetrics
 		/// * Hyphen allowed only at the end; hyphen must be used with at least one other character
 		/// </summary>
 		[DataMember(Name = "dataSource")]
-		public string DataSource { get; set; }
+		public string DataSourceName { get; set; }
 
 		/// <summary>
 		/// DataSource display name.
