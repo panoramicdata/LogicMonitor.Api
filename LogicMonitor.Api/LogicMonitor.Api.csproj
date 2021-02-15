@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.147.3</Version>
-		<PackageReleaseNotes>Added optional logging level to WriteLogAsync() calls.</PackageReleaseNotes>
+		<Version>2.147.4</Version>
+		<PackageReleaseNotes>Added push metric support.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
