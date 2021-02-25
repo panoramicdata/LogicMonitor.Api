@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Users
@@ -6,6 +7,7 @@ namespace LogicMonitor.Api.Users
 	/// A Role privilege
 	/// </summary>
 	[DataContract]
+	[DebuggerDisplay("{ObjectType} {ObjectId} {ObjectName} {Operation} {SubOperation}")]
 	public class RolePrivilege
 	{
 		/// <summary>
