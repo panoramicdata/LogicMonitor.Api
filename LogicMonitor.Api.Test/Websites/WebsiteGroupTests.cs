@@ -1,5 +1,7 @@
+using FluentAssertions;
 using LogicMonitor.Api.Websites;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -81,6 +83,42 @@ namespace LogicMonitor.Api.Test.Websites
 			deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
 			Assert.Equal(0, actual);
+		}
+
+		[Fact]
+		public async void WebsiteGroupCreationShouldSetProperties()
+		{
+			// Create it
+			var websiteGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
+			{
+				Name = "Test Name",
+				Description = "Test Description",
+				IsAlertingDisabled = false,
+				IsMonitoringDisabled = false,
+				ParentGroupFullPath = "",
+				ParentId = "1",
+				Properties = new List<Property>
+					{new Property {Name = "name", Value = "value"}},
+				//TestLocation = new TestLocation { All = false, SmgIds = new List<int> { 3, 4 } }
+			}).ConfigureAwait(false);
+
+			try
+			{
+				// Check everything was set correctly
+				websiteGroup.Name.Should().Be("Test Name");
+				websiteGroup.Description.Should().Be("Test Description");
+				websiteGroup.DisableAlerting.Should().BeFalse();
+				websiteGroup.StopMonitoring.Should().BeFalse();
+				websiteGroup.FullPath.Should().Be("Test Name");
+				websiteGroup.ParentId.Should().Be(1);
+				//websiteGroup.TestLocation.Should().BeEquivalentTo(new TestLocation { All = false, SmgIds = new List<int> { 3, 4 } });
+				websiteGroup.CustomProperties.Should().BeEquivalentTo(new List<Property> { new Property { Name = "name", Value = "value" } });
+			}
+			finally
+			{
+				// Delete it
+				await LogicMonitorClient.DeleteAsync(websiteGroup).ConfigureAwait(false);
+			}
 		}
 	}
 }

@@ -101,7 +101,7 @@ namespace LogicMonitor.Api.Websites
 		public List<WebsiteGroup> ChildWebsiteGroups { get; set; }
 
 		/// <summary>
-		/// The test location
+		/// The test location - This doesn't seem to be populated with anything useful any more (historical?)
 		/// </summary>
 		[DataMember(Name = "testLocation")]
 		public TestLocation TestLocation { get; set; }

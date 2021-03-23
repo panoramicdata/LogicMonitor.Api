@@ -183,7 +183,7 @@ namespace LogicMonitor.Api.Test.Websites
 				ParentId = "1",
 				Properties = new List<Property>
 					{new Property {Name = "name", Value = "value"}},
-				TestLocation = new TestLocation { All = true, SmgIds = new List<int> { 1, 2, 4, 3, 5, 6 } }
+				//TestLocation = new TestLocation { All = true, SmgIds = new List<int> { 1, 2, 4, 3, 5, 6 } }
 			}).ConfigureAwait(false);
 
 			try
