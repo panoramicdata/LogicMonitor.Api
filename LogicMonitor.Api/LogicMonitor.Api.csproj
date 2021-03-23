@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.147.4</Version>
-		<PackageReleaseNotes>Added push metric support.</PackageReleaseNotes>
+		<Version>2.147.5</Version>
+		<PackageReleaseNotes>Fixed setting Properties in WebsiteGroupCreationDto.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
