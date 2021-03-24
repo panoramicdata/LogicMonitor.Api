@@ -31,7 +31,9 @@ namespace LogicMonitor.Api.LogicModules
 		///    The time alerting was disabled in seconds since the Epoch
 		/// </summary>
 		[DataMember(Name = "alertingDisabledOn")]
-		public AlertingDisabledOn AlertingDisabledOnSeconds { get; set; }
+		public object AlertingDisabledOn { get; set; }
+		// LogicMonitor sometimes returns a string, so the following cannot be used
+		// public AlertingDisabledOn AlertingDisabledOn { get;set; }
 
 		/// <summary>
 		///    The event source type

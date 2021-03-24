@@ -2,6 +2,8 @@ using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Attributes;
 using LogicMonitor.Api.Extensions;
 using LogicMonitor.Api.LogicModules;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -31,7 +33,9 @@ namespace LogicMonitor.Api.Devices
 		/// </summary>
 		[SantabaReadOnly]
 		[DataMember(Name = "alertingDisabledOn")]
-		public AlertingDisabledOn AlertingDisabledOn { get; set; }
+		public object AlertingDisabledOn { get; set; }
+		// LogicMonitor sometimes returns a string, so the following cannot be used
+		// public AlertingDisabledOn AlertingDisabledOn { get;set; }
 
 		/// <summary>
 		///    The alert status

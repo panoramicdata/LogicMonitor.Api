@@ -298,11 +298,13 @@ namespace LogicMonitor.Api.Devices
 		public bool IsAlertingDisabled { get; set; }
 
 		/// <summary>
-		///    Disable Alerting
+		///     The Alerting disabled on
 		/// </summary>
 		[SantabaReadOnly]
 		[DataMember(Name = "alertingDisabledOn")]
-		public AlertingDisabledOn AlertingDisabledOn { get; set; }
+		public object AlertingDisabledOn { get; set; }
+		// LogicMonitor sometimes returns a string, so the following cannot be used
+		// public AlertingDisabledOn AlertingDisabledOn { get;set; }
 
 		/// <summary>
 		///    The Parent Group Type
