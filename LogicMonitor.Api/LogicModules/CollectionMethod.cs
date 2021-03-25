@@ -96,6 +96,12 @@ namespace LogicMonitor.Api.LogicModules
 		AwsAutoScalingServiceLimits,
 
 		/// <summary>
+		/// AWS EBS Volumes Snapshot
+		/// </summary>
+		[EnumMember(Value = "awsebsvolumesnapshot")]
+		AwsEbsVolumesSnapshot,
+
+		/// <summary>
 		/// AWS EC2 Scheduled Events
 		/// </summary>
 		[EnumMember(Value = "awsec2scheduledevents")]
@@ -110,8 +116,26 @@ namespace LogicMonitor.Api.LogicModules
 		/// <summary>
 		/// AWS SES Service Limits
 		/// </summary>
+		[EnumMember(Value = "awsrdsservicelimits")]
+		AwsRdsServiceLimits,
+
+		/// <summary>
+		/// AWS SES Service Limits
+		/// </summary>
 		[EnumMember(Value = "awssesservicelimits")]
 		AwsSesServiceLimits,
+
+		/// <summary>
+		/// Azure Automation Account Certificate
+		/// </summary>
+		[EnumMember(Value = "azureautomationaccountcertificate")]
+		AzureAutomationAccountCertificate,
+
+		/// <summary>
+		/// Azure App Service Environment Multi Role Pool
+		/// </summary>
+		[EnumMember(Value = "azureappserviceenvironmentmultirolepool")]
+		AzureAppServiceEnvironmentMultiRolePool,
 
 		/// <summary>
 		/// Azure express route circuit peering
@@ -162,6 +186,12 @@ namespace LogicMonitor.Api.LogicModules
 		AzureVmBackupStatus,
 
 		/// <summary>
+		/// Azure VNG Connection
+		/// </summary>
+		[EnumMember(Value = "azurevngconnection")]
+		AzureVngConnection,
+
+		/// <summary>
 		/// Azure SDK
 		/// </summary>
 		[EnumMember(Value = "azuresdk")]
@@ -178,6 +208,12 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[EnumMember(Value = "azurevmservicelimits")]
 		AzureVmServiceLimits,
+
+		/// <summary>
+		/// Azure Web Job
+		/// </summary>
+		[EnumMember(Value = "azurewebjob")]
+		AzureWebJob,
 
 		/// <summary>
 		/// AWS Cloud watch
@@ -286,6 +322,12 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[EnumMember(Value = "ping")]
 		Ping,
+
+		/// <summary>
+		/// pushmodules
+		/// </summary>
+		[EnumMember(Value = "pushmodules")]
+		PushModules,
 
 		/// <summary>
 		/// script
