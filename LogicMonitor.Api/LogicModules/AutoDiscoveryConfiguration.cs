@@ -55,5 +55,11 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[DataMember(Name = "filters")]
 		public AutoDiscoveryFilter[] AutoDiscoveryFilters { get; set; }
+
+		/// <summary>
+		/// The datasource name
+		/// </summary>
+		[DataMember(Name = "dataSourceName")]
+		public string DataSourceName { get; set; }
 	}
 }
