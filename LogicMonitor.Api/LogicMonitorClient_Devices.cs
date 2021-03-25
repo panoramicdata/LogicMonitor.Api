@@ -6,6 +6,7 @@ using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.LogicModules;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -617,5 +618,166 @@ namespace LogicMonitor.Api
 		/// <returns></returns>
 		public Task<List<DeviceDataSourceInstance>> GetAllDeviceInstances(int deviceId, Filter<DeviceDataSourceInstance> filter, CancellationToken cancellationToken)
 			=> GetAllInternalAsync(filter, $"device/devices/{deviceId}/instances", cancellationToken);
+
+		/// <summary>
+		/// Get Alerts for a Device by ID
+		/// </summary>
+		/// <param name="deviceId">The Device ID</param>
+		/// <param name="filter">The Alert Filter</param>
+		/// <param name="cancellationToken">The CancellationToken</param>
+		/// <returns>A List of Alerts</returns>
+		public async Task<List<Alert>> GetDeviceAlertsByIdAsync(
+			int deviceId,
+			AlertFilter filter,
+			CancellationToken cancellationToken = default)
+		{
+			// Ensure that the filter CANNOT override the device ID set!
+			filter.RemoveMonitorObjectReferences();
+
+			var (alerts, limitReached) = await
+				GetDeviceAlertsByIdNormalAsync(deviceId, filter, false, cancellationToken)
+				.ConfigureAwait(false);
+
+			if (limitReached)
+			{
+				// Fall back to the chunked method
+				alerts = await GetDeviceAlertsByIdChunkedAsync(deviceId, filter, TimeSpan.FromHours(24)).ConfigureAwait(false);
+			}
+
+			if (filter?.IsCleared == true)
+			{
+				return alerts.Where(a => a.IsCleared).ToList();
+			}
+			if (filter?.IsCleared == false)
+			{
+				return alerts.Where(a => !a.IsCleared).ToList();
+			}
+			return alerts;
+		}
+
+		/// <summary>
+		///     This version of the call requests hourly chunks
+		/// </summary>
+		/// <param name="deviceId">The Device ID</param>
+		/// <param name="filter"></param>
+		/// <param name="chunkSize">The chunk size (TimeSpan)</param>
+		internal async Task<List<Alert>> GetDeviceAlertsByIdChunkedAsync(
+			int deviceId,
+			AlertFilter filter,
+			TimeSpan chunkSize)
+		{
+			// Ensure that the filter CANNOT override the device ID set!
+			filter.RemoveMonitorObjectReferences();
+
+			var originalStartEpochIsAfter = filter.StartEpochIsAfter;
+			var originalStartEpochIsBefore = filter.StartEpochIsBefore;
+			var utcNow = DateTime.UtcNow;
+			if (filter.StartEpochIsAfter == null)
+			{
+				filter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
+			}
+			if (filter.StartEpochIsBefore == null)
+			{
+				filter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
+			}
+			var allAlerts = new ConcurrentBag<Alert>();
+
+			var alertFilterList = ((long)filter.StartEpochIsAfter).ToDateTimeUtc()
+				.GetChunkedTimeRangeList(((long)filter.StartEpochIsBefore).ToDateTimeUtc(), chunkSize)
+				.Select(t =>
+				{
+					var newAlertFilter = filter.Clone();
+					newAlertFilter.ResetSearch();
+					newAlertFilter.StartEpochIsAfter = t.Item1.SecondsSinceTheEpoch() - 1; // Take one off to include anything raised on that exact second
+					newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
+					return newAlertFilter;
+				});
+			await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
+			{
+				await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
+				foreach (var alert in (await GetDeviceAlertsByIdNormalAsync(deviceId, individualAlertFilter, true).ConfigureAwait(false)).alerts)
+				{
+					allAlerts.Add(alert);
+				}
+			})).ConfigureAwait(false);
+
+			filter.StartEpochIsAfter = originalStartEpochIsAfter;
+			filter.StartEpochIsBefore = originalStartEpochIsBefore;
+
+			return allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue).ToList();
+		}
+
+		/// <summary>
+		///		Get device alerts with an alert filter (not all properties in the filter are used)
+		/// </summary>
+		/// <param name="deviceId">The Device ID</param>
+		/// <param name="filter">An AlertFilter</param>
+		/// <param name="calledFromChunked"></param>
+		/// <param name="cancellationToken">The CancellationToken</param>
+		/// <returns>A List of Alerts and whether the limit was reached</returns>
+		internal async Task<(List<Alert> alerts, bool limitReached)> GetDeviceAlertsByIdNormalAsync(
+			int deviceId,
+			AlertFilter filter,
+			bool calledFromChunked = false,
+			CancellationToken cancellationToken = default)
+		{
+			// Ensure that the filter CANNOT override the device ID set!
+			filter.RemoveMonitorObjectReferences();
+
+			// Ensure skip is set (or 0)
+			if (filter.Skip == null)
+			{
+				filter.Skip = 0;
+			}
+
+			var maxAlertCount = int.MaxValue;
+			if (filter.Take != null)
+			{
+				if (filter.Take > AlertsMaxTake)
+				{
+					maxAlertCount = (int)filter.Take;
+					filter.Take = AlertsMaxTake;
+				}
+				else
+				{
+					maxAlertCount = (int)filter.Take;
+				}
+			}
+			else
+			{
+				filter.Take = AlertsMaxTake;
+			}
+
+			var allAlerts = new List<Alert>();
+			do
+			{
+				var page = await GetBySubUrlAsync<Page<Alert>>($"device/devices/{deviceId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
+
+				allAlerts.AddRange(page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id)).ToList());
+
+				if (!calledFromChunked && allAlerts.Count >= 5000)
+				{
+					// When there are more than 5000 (anywhere near the 10,000 limit), return and use the chunked method instead
+					return (new List<Alert>(), true);
+				}
+
+				if (page.Items?.Count == 0)
+				{
+					break;
+				}
+
+				if (filter.SearchId == null && !string.IsNullOrWhiteSpace(page.SearchId))
+				{
+					// We can re-use the searchId
+					filter.SearchId = page.SearchId;
+				}
+
+				filter.Skip += AlertsMaxTake;
+				filter.Take = Math.Min(AlertsMaxTake, maxAlertCount - allAlerts.Count);
+			}
+			while (filter.Take != 0);
+
+			return (allAlerts, false);
+		}
 	}
 }

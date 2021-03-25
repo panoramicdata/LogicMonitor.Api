@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Data;
 using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.Time;
@@ -108,6 +109,29 @@ namespace LogicMonitor.Api.Test.Websites
 			Assert.NotNull(firstLine.Data);
 			var firstData = firstLine.Data.FirstOrDefault();
 			Assert.NotNull(firstData);
+		}
+
+		[Fact]
+		public async void GetWebsiteAlertsWithFilterAsync()
+		{
+			var alertFilter = new AlertFilter
+			{
+				IncludeCleared = true,
+				Levels = new List<AlertLevel>
+				 {
+					 AlertLevel.Warning,
+					 AlertLevel.Error,
+					 AlertLevel.Critical
+				 }
+			};
+
+			// Get the Website
+			var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
+			Assert.NotNull(website);
+
+			// Get the Alerts
+			var allAlerts = await LogicMonitorClient.GetWebsiteAlertsByIdAsync(website.Id, alertFilter, default).ConfigureAwait(false);
+			Assert.NotNull(allAlerts);
 		}
 
 		[Fact]

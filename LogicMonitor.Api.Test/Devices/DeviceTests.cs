@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Collectors;
 using LogicMonitor.Api.Devices;
 using LogicMonitor.Api.Filters;
@@ -532,6 +533,30 @@ namespace LogicMonitor.Api.Test.Devices
 			var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id).ConfigureAwait(false);
 			Assert.NotNull(alertsPage);
 			Assert.Equal(alertsPage.TotalCount, alertsPage.Items.Count);
+		}
+
+		[Fact]
+		public async void GetDeviceAlertsWithFilterAsync()
+		{
+			var alertFilter = new AlertFilter
+			{
+				 IncludeCleared = true,
+				 Levels = new List<AlertLevel>
+				 {
+					 AlertLevel.Warning,
+					 AlertLevel.Error,
+					 AlertLevel.Critical
+				 },
+				StartUtcIsAfter = DateTime.UtcNow.AddDays(-25)
+			};
+
+			// Get the Device
+			var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+			Assert.NotNull(device);
+
+			// Get the Alerts
+			var allAlerts = await LogicMonitorClient.GetDeviceAlertsByIdAsync(device.Id, alertFilter, default).ConfigureAwait(false);
+			Assert.NotNull(allAlerts);
 		}
 
 		[Fact]

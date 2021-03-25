@@ -55,6 +55,7 @@ namespace LogicMonitor.Api
 			return alerts;
 		}
 
+
 		/// <summary>
 		///     This version of the call requests hourly chunks
 		/// </summary>

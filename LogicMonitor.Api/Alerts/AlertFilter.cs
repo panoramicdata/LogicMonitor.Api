@@ -246,6 +246,18 @@ namespace LogicMonitor.Api.Alerts
 		}
 
 		/// <summary>
+		/// Remove any filter items that would specify a Device etc.
+		/// Required because some API calls (like /device/devices/{Device ID}/alerts
+		/// ALREADY have a device ID in the URL, and so it should NOT be set again!
+		/// </summary>
+		public void RemoveMonitorObjectReferences()
+		{
+			MonitorObjectId = null;
+			MonitorObjectName = string.Empty;
+			MonitorObjectGroupFullPaths?.Clear();
+		}
+
+		/// <summary>
 		///    The query string for REST calls
 		/// </summary>
 		/// <returns></returns>
