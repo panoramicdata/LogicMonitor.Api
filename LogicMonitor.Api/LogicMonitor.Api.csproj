@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.150.0</Version>
-		<PackageReleaseNotes>Unborked alertingDisabledOn.  v150 support.</PackageReleaseNotes>
+		<Version>2.150.1</Version>
+		<PackageReleaseNotes>Added new calls to get alerts by ID for websites and devices.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
