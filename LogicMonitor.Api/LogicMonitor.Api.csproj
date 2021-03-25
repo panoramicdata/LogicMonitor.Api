@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.147.4</Version>
-		<PackageReleaseNotes>Added push metric support.</PackageReleaseNotes>
+		<Version>2.150.0</Version>
+		<PackageReleaseNotes>Unborked alertingDisabledOn.  v150 support.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -36,7 +36,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-		<PackageReference Include="SecurityCodeScan" Version="3.5.4">
+		<PackageReference Include="SecurityCodeScan.VS2019" Version="5.1.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

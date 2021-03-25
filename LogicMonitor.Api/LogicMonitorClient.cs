@@ -311,6 +311,11 @@ namespace LogicMonitor.Api
 		public virtual async Task<T> GetByNameAsync<T>(string name, CancellationToken cancellationToken = default)
 		where T : NamedItem, IHasEndpoint, new()
 		{
+			if (name is null)
+			{
+				throw new ArgumentNullException(nameof(name));
+			}
+
 			var items = await GetAllAsync(new Filter<T>
 			{
 				FilterItems = new List<FilterItem<T>>
