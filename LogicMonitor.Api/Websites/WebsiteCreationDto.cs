@@ -156,7 +156,7 @@ namespace LogicMonitor.Api.Websites
 		/// <summary>
 		/// The website properties
 		/// </summary>
-		[DataMember(Name = "websiteProperties")]
+		[DataMember(Name = "properties")]
 		public List<Property> WebsiteProperties { get; set; }
 
 		/// <summary>
