@@ -119,7 +119,7 @@ namespace LogicMonitor.Api.Websites
 		public Level OverallAlertLevel { get; set; }
 
 		/// <summary>
-		/// globalSmAlertCond
+		/// pageLoadAlertTimeInMS
 		/// </summary>
 		[DataMember(Name = "pageLoadAlertTimeInMS")]
 		public int PageLoadAlertTimeInMs { get; set; }
