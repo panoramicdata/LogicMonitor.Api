@@ -164,5 +164,12 @@ namespace LogicMonitor.Api.Websites
 		/// </summary>
 		[DataMember(Name = "alertExpr")]
 		public string AlertExpression { get; set; }
+
+
+		/// <summary>
+		/// Whether to ignore SSL errors
+		/// </summary>
+		[DataMember(Name = "ignoreSSL")]
+		public bool IgnoreSsl { get; set; }
 	}
 }
