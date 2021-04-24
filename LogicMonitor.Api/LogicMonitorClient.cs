@@ -485,6 +485,7 @@ namespace LogicMonitor.Api
 			_logger.LogDebug($"{prefix} {subUrl}...");
 
 			var jsonString = JsonConvert.SerializeObject(@object);
+			_logger.LogTrace($"{prefix} jsonString:\r\n{jsonString}");
 			using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 			HttpResponseMessage httpResponseMessage;
 			// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
@@ -1016,7 +1017,7 @@ namespace LogicMonitor.Api
 			// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
 			var data = JsonConvert.SerializeObject(@object, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 			//var subUrl1 = "rest/" + (subUrl ?? "functions/");
-
+			_logger.LogTrace($"{prefix} body:\r\n{data}");
 			HttpResponseMessage httpResponseMessage;
 			// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
 			while (true)

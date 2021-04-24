@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.151.2</Version>
-		<PackageReleaseNotes>Added missing PageLoadAlertTimeInMs to WebsiteCreationDto.</PackageReleaseNotes>
+		<Version>2.151.3</Version>
+		<PackageReleaseNotes>Added trace level log entries for POST and PUT body contents.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
