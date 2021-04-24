@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.151.4</Version>
-		<PackageReleaseNotes>Added trace level log entries for POST and PUT body contents.</PackageReleaseNotes>
+		<Version>2.151.5</Version>
+		<PackageReleaseNotes>Changed Website OverallAlertLevel and IndividualAlertLevel to Level from string.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

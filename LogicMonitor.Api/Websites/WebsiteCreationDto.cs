@@ -121,13 +121,13 @@ namespace LogicMonitor.Api.Websites
 		///    The overallAlertLevel
 		/// </summary>
 		[DataMember(Name = "overallAlertLevel")]
-		public string OverallAlertLevel { get; set; }
+		public Level OverallAlertLevel { get; set; }
 
 		/// <summary>
 		///    The individualAlertLevel
 		/// </summary>
 		[DataMember(Name = "individualAlertLevel")]
-		public string IndividualAlertLevel { get; set; }
+		public Level IndividualAlertLevel { get; set; }
 
 		/// <summary>
 		///    The individualSmAlertEnable
