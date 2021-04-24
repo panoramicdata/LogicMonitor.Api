@@ -175,6 +175,6 @@ namespace LogicMonitor.Api.Websites
 		/// pageLoadAlertTimeInMS
 		/// </summary>
 		[DataMember(Name = "pageLoadAlertTimeInMS")]
-		public int PageLoadAlertTimeInMs { get; set; }
+		public int? PageLoadAlertTimeInMs { get; set; }
 	}
 }
