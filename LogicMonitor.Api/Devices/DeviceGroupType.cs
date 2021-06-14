@@ -778,12 +778,12 @@ namespace LogicMonitor.Api.Devices
 		///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
 		///     This entry provides a workaround.
 		/// </summary>
-		Unknown2001 = 127,
+		Unknown2001 = 2001,
 
 		/// <summary>
 		///     Occasionally, LogicMonitor returns "2003" as the device group type.  It is believed that this is a bug in LogicMonitor.
 		///     This entry provides a workaround.
 		/// </summary>
-		Unknown2003 = 128
+		Unknown2003 = 2003
 	}
 }
