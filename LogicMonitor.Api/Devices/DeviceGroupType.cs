@@ -30,573 +30,760 @@ namespace LogicMonitor.Api.Devices
 		Normal = 2,
 
 		/// <summary>
+		///     AwsWorkSpaceDirectorySubgroup
+		/// </summary>
+		[EnumMember(Value = "AwsWorkSpaceDirectorySubgroup")]
+		AwsWorkSpaceDirectorySubgroup = 3,
+
+		/// <summary>
+		///     AppStream
+		/// </summary>
+		[EnumMember(Value = "AppStream")]
+		AppStream = 4,
+
+		/// <summary>
+		///     AWS/StepFunctions
+		/// </summary>
+		[EnumMember(Value = "AWS/StepFunctions")]
+		AwsStepFunctions = 5,
+
+		/// <summary>
+		///     AWS/Cognito
+		/// </summary>
+		[EnumMember(Value = "AWS/Cognito")]
+		AwsCognito = 6,
+
+		/// <summary>
+		///     AwsElasticBeanstalkSubgroup
+		/// </summary>
+		[EnumMember(Value = "AwsElasticBeanstalkSubgroup")]
+		AwsElasticBeanstalkSubgroup = 7,
+
+		/// <summary>
+		///     AWS/SageMaker
+		/// </summary>
+		[EnumMember(Value = "AWS/SageMaker")]
+		AwsSageMaker = 8,
+
+		/// <summary>
+		///     AWS/ElasticTranscoder
+		/// </summary>
+		[EnumMember(Value = "AWS/ElasticTranscoder")]
+		AwsElasticTranscoder = 9,
+
+		/// <summary>
+		///     AWS/Route53Resolver
+		/// </summary>
+		[EnumMember(Value = "AWS/Route53Resolver")]
+		AwsRoute53Resolver = 10,
+		
+		/// <summary>
+		///     AWS/AppStream
+		/// </summary>
+		[EnumMember(Value = "AWS/AppStream")]
+		AwsAppStream = 11,
+
+		/// <summary>
+		///     AWS/Athena
+		/// </summary>
+		[EnumMember(Value = "AWS/Athena")]
+		AwsAthena = 12,
+
+		/// <summary>
+		///     AWS/OpsWorks
+		/// </summary>
+		[EnumMember(Value = "AWS/OpsWorks")]
+		AwsOpsWorks = 13,
+		
+		/// <summary>
+		///     AWS/DocDB
+		/// </summary>
+		[EnumMember(Value = "AWS/DocDB")]
+		AwsDocDB = 14,
+
+		/// <summary>
+		///     AWS/EventBridge
+		/// </summary>
+		[EnumMember(Value = "AWS/EventBridge")]
+		AwsEventBridge = 15,
+
+		/// <summary>
+		///     AWS/AmazonMQ
+		/// </summary>
+		[EnumMember(Value = "AWS/AmazonMQ")]
+		AwsAmazonMQ = 16,
+
+		/// <summary>
+		///     AWS/Glue
+		/// </summary>
+		[EnumMember(Value = "AWS/Glue")]
+		AwsGlue = 17,
+
+		/// <summary>
+		///     AWS/MediaConnect
+		/// </summary>
+		[EnumMember(Value = "AWS/MediaConnect")]
+		AwsMediaConnect = 18,
+
+		/// <summary>
+		///     AWS/MediaStore
+		/// </summary>
+		[EnumMember(Value = "AWS/MediaStore")]
+		AwsMediaStore = 19,
+
+		/// <summary>
+		///     AWS/MediaConvert
+		/// </summary>
+		[EnumMember(Value = "AWS/MediaConvert")]
+		AwsMediaConvert = 20,
+
+		/// <summary>
+		///     AWS/MediaPackageLive
+		/// </summary>
+		[EnumMember(Value = "AWS/MediaPackageLive")]
+		AwsMediaPackageLive = 21,
+
+		/// <summary>
+		///     AWS/MediaPackageVOD
+		/// </summary>
+		[EnumMember(Value = "AWS/MediaPackageVOD")]
+		AwsMediaPackageVOD = 22,
+
+		/// <summary>
+		///     AWS/MediaTailor
+		/// </summary>
+		[EnumMember(Value = "AWS/MediaTailor")]
+		AwsMediaTailor = 23,
+
+		/// <summary>
 		///     AWS/AwsRoot
 		/// </summary>
 		[EnumMember(Value = "AWS/AwsRoot")]
-		AwsRoot = 3,
+		AwsRoot = 24,
+
+		/// <summary>
+		///     AWS/CloudSearch
+		/// </summary>
+		[EnumMember(Value = "AWS/CloudSearch")]
+		AwsCloudSearch = 25,
+
+		/// <summary>
+		///     AWS/CodeBuild
+		/// </summary>
+		[EnumMember(Value = "AWS/CodeBuild")]
+		AwsCodeBuild = 26,
 
 		/// <summary>
 		///     AWS/EC2
 		/// </summary>
 		[EnumMember(Value = "AWS/EC2")]
-		AwsEc2 = 4,
+		AwsEc2 = 27,
+
+		/// <summary>
+		///     AWS/DmsReplicationTasks
+		/// </summary>
+		[EnumMember(Value = "AWS/DmsReplicationTasks")]
+		AwsDmsReplicationTasks = 28,
 
 		/// <summary>
 		///     AWS/DynamoDB
 		/// </summary>
 		[EnumMember(Value = "AWS/DynamoDB")]
-		AwsDynamoDb = 5,
+		AwsDynamoDb = 29,
 
 		/// <summary>
 		///     AWS/ElastiCache
 		/// </summary>
 		[EnumMember(Value = "AWS/ElastiCache")]
-		AwsElastiCache = 6,
+		AwsElastiCache = 30,
 
 		/// <summary>
 		///     AWS/ELB
 		/// </summary>
 		[EnumMember(Value = "AWS/ELB")]
-		AwsElb = 7,
+		AwsElb = 31,
 
 		/// <summary>
 		///     AWS/EBS
 		/// </summary>
 		[EnumMember(Value = "AWS/EBS")]
-		AwsEbs = 8,
+		AwsEbs = 32,
 
 		/// <summary>
 		///     AWS/SQS
 		/// </summary>
 		[EnumMember(Value = "AWS/SQS")]
-		AwsSqs = 9,
+		AwsSqs = 33,
 
 		/// <summary>
 		///     AWS/RDS
 		/// </summary>
 		[EnumMember(Value = "AWS/RDS")]
-		AwsRds = 10,
+		AwsRds = 34,
 
 		/// <summary>
 		///     AWS/Route53
 		/// </summary>
 		[EnumMember(Value = "AWS/Route53")]
-		AwsRoute53 = 11,
+		AwsRoute53 = 35,
 
 		/// <summary>
 		///     AWS/S3
 		/// </summary>
 		[EnumMember(Value = "AWS/S3")]
-		AwsS3 = 12,
+		AwsS3 = 36,
 
 		/// <summary>
 		///     AWS/SNS
 		/// </summary>
 		[EnumMember(Value = "AWS/SNS")]
-		AwsSns = 13,
+		AwsSns = 37,
 
 		/// <summary>
 		///     AWS/AutoScaling
 		/// </summary>
 		[EnumMember(Value = "AWS/AutoScaling")]
-		AwsAutoScaling = 14,
+		AwsAutoScaling = 38,
 
 		/// <summary>
 		///     AWS/APIGateway
 		/// </summary>
 		[EnumMember(Value = "AWS/APIGateway")]
-		AwsApiGateway = 15,
+		AwsApiGateway = 39,
 
 		/// <summary>
 		///     AWS/ApplicationELB
 		/// </summary>
 		[EnumMember(Value = "AWS/ApplicationELB")]
-		AwsApplicationElb = 16,
+		AwsApplicationElb = 40,
+
+		/// <summary>
+		///     AWS/FSx
+		/// </summary>
+		[EnumMember(Value = "AWS/FSx")]
+		AwsFSx = 41,
 
 		/// <summary>
 		///     AWS/Kinesis
 		/// </summary>
 		[EnumMember(Value = "AWS/Kinesis")]
-		AwsKinesis = 17,
+		AwsKinesis = 42,
+
+		/// <summary>
+		///     AWS/KinesisVideo
+		/// </summary>
+		[EnumMember(Value = "AWS/KinesisVideo")]
+		AwsKinesisVideo = 43,
+
+		/// <summary>
+		///     AWS/MSKBroker
+		/// </summary>
+		[EnumMember(Value = "AWS/MSKBroker")]
+		AwsMSKBroker = 44,
+
+		/// <summary>
+		///     AWS/MSKCluster
+		/// </summary>
+		[EnumMember(Value = "AWS/MSKCluster")]
+		AwsMSKCluster = 45,
 
 		/// <summary>
 		///     AWS/RedShift
 		/// </summary>
 		[EnumMember(Value = "AWS/RedShift")]
-		AwsRedShift = 18,
+		AwsRedShift = 46,
 
+		/// <summary>
+		///     AWS/TransitGateway
+		/// </summary>
+		[EnumMember(Value = "AWS/TransitGateway")]
+		AwsTransitGateway = 47,
+		
 		/// <summary>
 		///     Azure/AzureRoot
 		/// </summary>
 		[EnumMember(Value = "Azure/AzureRoot")]
-		AzureAzureRoot = 19,
+		AzureAzureRoot = 48,
 
 		/// <summary>
 		///     Azure/AppService
 		/// </summary>
 		[EnumMember(Value = "Azure/AppService")]
-		AzureAppService = 20,
+		AzureAppService = 49,
 
 		/// <summary>
 		///     Azure/SQLDatabase
 		/// </summary>
 		[EnumMember(Value = "Azure/SQLDatabase")]
-		AzureSqlDatabase = 21,
+		AzureSqlDatabase = 50,
 
 		/// <summary>
 		///     Azure/VirtualMachine
 		/// </summary>
 		[EnumMember(Value = "Azure/VirtualMachine")]
-		AzureVirtualMachine = 22,
+		AzureVirtualMachine = 51,
 
 		/// <summary>
 		///     AWS/CloudFront
 		/// </summary>
 		[EnumMember(Value = "AWS/CloudFront")]
-		AwsCloudFront = 23,
+		AwsCloudFront = 52,
 
 		/// <summary>
 		///     Azure/EventHub
 		/// </summary>
 		[EnumMember(Value = "Azure/EventHub")]
-		AzureEventHub = 24,
+		AzureEventHub = 53,
 
 		/// <summary>
 		///     Azure/RedisCache
 		/// </summary>
 		[EnumMember(Value = "Azure/RedisCache")]
-		AzureRedisCache = 25,
+		AzureRedisCache = 54,
 
 		/// <summary>
 		///     Azure/VirtualMachineScaleSet
 		/// </summary>
 		[EnumMember(Value = "Azure/VirtualMachineScaleSet")]
-		VirtualMachineScaleSet = 26,
+		VirtualMachineScaleSet = 55,
 
 		/// <summary>
 		///     Azure/VirtualMachineScaleSetVm
 		/// </summary>
 		[EnumMember(Value = "Azure/VirtualMachineScaleSetVM")]
-		VirtualMachineScaleSetVm = 27,
+		VirtualMachineScaleSetVm = 56,
 
 		/// <summary>
 		///     AWS/Lambda
 		/// </summary>
 		[EnumMember(Value = "AWS/Lambda")]
-		AwsLambda = 28,
+		AwsLambda = 57,
 
 		/// <summary>
 		///     AWS/ECS
 		/// </summary>
 		[EnumMember(Value = "AWS/ECS")]
-		AwsEcs = 29,
+		AwsEcs = 58,
 
 		/// <summary>
 		///     AWS/EFS
 		/// </summary>
 		[EnumMember(Value = "AWS/EFS")]
-		AwsEfs = 30,
+		AwsEfs = 59,
 
 		/// <summary>
 		///     AWS/Elasticsearch
 		/// </summary>
 		[EnumMember(Value = "AWS/Elasticsearch")]
-		AwsElasticsearch = 31,
+		AwsElasticsearch = 60,
 
 		/// <summary>
 		///     AWS/SWF-ActivityType
 		/// </summary>
 		[EnumMember(Value = "AWS/SWF-ActivityType")]
-		AwsSwfActivityType = 32,
+		AwsSwfActivityType = 61,
 
 		/// <summary>
 		///     AWS/SWF-Workflows
 		/// </summary>
 		[EnumMember(Value = "AWS/SWF-WorkflowType")]
-		AwsSwfWorkflows = 33,
+		AwsSwfWorkflows = 62,
 
 		/// <summary>
 		///     AWS/EMR
 		/// </summary>
 		[EnumMember(Value = "AWS/EMR")]
-		AwsEmr = 34,
+		AwsEmr = 63,
 
 		/// <summary>
 		///     Azure/ApplicationGateway
 		/// </summary>
 		[EnumMember(Value = "Azure/ApplicationGateway")]
-		AzureApplicationGateway = 35,
+		AzureApplicationGateway = 64,
 
 		/// <summary>
 		///     Azure/IoTHub
 		/// </summary>
 		[EnumMember(Value = "Azure/IoTHub")]
-		AzureIotHub = 36,
+		AzureIotHub = 65,
 
 		/// <summary>
 		///     Azure/ServiceBus
 		/// </summary>
 		[EnumMember(Value = "Azure/ServiceBus")]
-		AzureServiceBus = 37,
+		AzureServiceBus = 66,
 
 		/// <summary>
 		///     Azure/Function
 		/// </summary>
 		[EnumMember(Value = "Azure/Function")]
-		AzureFunction = 38,
+		AzureFunction = 67,
 
 		/// <summary>
 		///     Azure/VirtualMachineScaleSet
 		/// </summary>
 		[EnumMember(Value = "Azure/VirtualMachineScaleSet")]
-		AzureVirtualMachineScaleSet = 39,
+		AzureVirtualMachineScaleSet = 68,
 
 		/// <summary>
 		///     Azure/VirtualMachineScaleSetVM
 		/// </summary>
 		[EnumMember(Value = "Azure/VirtualMachineScaleSetVM")]
-		AzureVirtualMachineScaleSetVm = 40,
+		AzureVirtualMachineScaleSetVm = 69,
 
 		/// <summary>
 		///     Azure/VirtualMachineScaleSetVM
 		/// </summary>
 		[EnumMember(Value = "AzureVmScaleSetSubgroup")]
-		AzureVmScaleSetSubgroup = 41,
+		AzureVmScaleSetSubgroup = 70,
 
 		/// <summary>
 		///     AwsAutoscalingSubgroup
 		/// </summary>
 		[EnumMember(Value = "AwsAutoscalingSubgroup")]
-		AwsAutoscalingSubgroup = 42,
+		AwsAutoscalingSubgroup = 71,
 
 		/// <summary>
 		///     AWS/VPN
 		/// </summary>
 		[EnumMember(Value = "AWS/VPN")]
-		AwsVpn = 43,
+		AwsVpn = 72,
 
 		/// <summary>
 		///     AWS/Firehose
 		/// </summary>
 		[EnumMember(Value = "AWS/Firehose")]
-		AwsFirehose = 44,
+		AwsFirehose = 73,
 
 		/// <summary>
 		///     AWS/SES
 		/// </summary>
 		[EnumMember(Value = "AWS/SES")]
-		AwsSes = 45,
+		AwsSes = 74,
 
 		/// <summary>
 		///     AWS/NetworkELB
 		/// </summary>
 		[EnumMember(Value = "AWS/NetworkELB")]
-		AwsNetworkElb = 46,
+		AwsNetworkElb = 75,
 
 		/// <summary>
 		///     AWS/WorkSpace
 		/// </summary>
 		[EnumMember(Value = "AWS/WorkSpace")]
-		AwsWorkSpace = 47,
+		AwsWorkSpace = 76,
 
 		/// <summary>
 		///     AWS/DirectConnect
 		/// </summary>
 		[EnumMember(Value = "AWS/DirectConnect")]
-		AwsDirectConnect = 48,
+		AwsDirectConnect = 77,
+
+
+		/// <summary>
+		///     Azure/SignalR
+		/// </summary>
+		[EnumMember(Value = "Azure/SignalR")]
+		AzureSignalR = 78,
 
 		/// <summary>
 		///     Azure/AnalysisService
 		/// </summary>
 		[EnumMember(Value = "Azure/AnalysisService")]
-		AzureAnalysisService = 49,
+		AzureAnalysisService = 79,
+
+		/// <summary>
+		///     Azure/TrafficManager
+		/// </summary>
+		[EnumMember(Value = "Azure/TrafficManager")]
+		AzureTrafficManager = 80,
 
 		/// <summary>
 		///     Azure/MySQL
 		/// </summary>
 		[EnumMember(Value = "Azure/MySQL")]
-		AzureMySql = 50,
+		AzureMySql = 81,
 
 		/// <summary>
 		///     Azure/PostgreSQL
 		/// </summary>
 		[EnumMember(Value = "Azure/PostgreSQL")]
-		AzurePostgreSql = 51,
+		AzurePostgreSql = 82,
 
 		/// <summary>
 		///     Azure/StorageAccount
 		/// </summary>
 		[EnumMember(Value = "Azure/StorageAccount")]
-		AzureStorageAccount = 52,
+		AzureStorageAccount = 83,
 
 		/// <summary>
 		///     Azure/StorageAccountSubGroup
 		/// </summary>
 		[EnumMember(Value = "AzureStorageAccountSubgroup")]
-		AzureStorageAccountSubGroup = 53,
+		AzureStorageAccountSubGroup = 84,
 
 		/// <summary>
 		///     AWS/NATGateway
 		/// </summary>
 		[EnumMember(Value = "AWS/NATGateway")]
-		AwsNatGateway = 54,
+		AwsNatGateway = 85,
 
 		/// <summary>
 		///     Azure/BlobStorage
 		/// </summary>
 		[EnumMember(Value = "Azure/BlobStorage")]
-		AzureBlobStorage = 55,
+		AzureBlobStorage = 86,
 
 		/// <summary>
 		///     Azure/FileStorage
 		/// </summary>
 		[EnumMember(Value = "Azure/FileStorage")]
-		AzureFileStorage = 56,
+		AzureFileStorage = 87,
 
 		/// <summary>
 		///     Azure/QueueStorage
 		/// </summary>
 		[EnumMember(Value = "Azure/QueueStorage")]
-		AzureQueueStorage = 57,
+		AzureQueueStorage = 88,
 
 		/// <summary>
 		///     Azure/TableStorage
 		/// </summary>
 		[EnumMember(Value = "Azure/TableStorage")]
-		AzureTableStorage = 58,
+		AzureTableStorage = 89,
 
 		/// <summary>
 		///     Azure/ApiManagement
 		/// </summary>
 		[EnumMember(Value = "Azure/ApiManagement")]
-		AzureApiManagement = 59,
+		AzureApiManagement = 90,
 
 		/// <summary>
 		///     AWS/ElasticBeanstalk
 		/// </summary>
 		[EnumMember(Value = "AWS/ElasticBeanstalk")]
-		AwsElasticBeanstalk = 60,
+		AwsElasticBeanstalk = 91,
 
 		/// <summary>
 		///     AWS/WorkSpaceDirectory
 		/// </summary>
 		[EnumMember(Value = "AWS/WorkSpaceDirectory")]
-		AwsWorkSpaceDirectory = 61,
+		AwsWorkSpaceDirectory = 92,
 
 		/// <summary>
 		///     Azure/AppServicePlan
 		/// </summary>
 		[EnumMember(Value = "Azure/AppServicePlan")]
-		AzureAppServicePlan = 62,
+		AzureAppServicePlan = 93,
 
 		/// <summary>
 		///     Azure/AutomationAccount
 		/// </summary>
 		[EnumMember(Value = "Azure/AutomationAccount")]
-		AzureAutomationAccount = 63,
+		AzureAutomationAccount = 94,
 
 		/// <summary>
 		///     Azure/CosmosDB
 		/// </summary>
 		[EnumMember(Value = "Azure/CosmosDB")]
-		AzureCosmosDb = 64,
+		AzureCosmosDb = 95,
 
 		/// <summary>
 		///     Azure/DataLakeAnalytics
 		/// </summary>
 		[EnumMember(Value = "Azure/DataLakeAnalytics")]
-		AzureDataLakeAnalytics = 65,
+		AzureDataLakeAnalytics = 96,
 
 		/// <summary>
 		///     Azure/DataLakeStore
 		/// </summary>
 		[EnumMember(Value = "Azure/DataLakeStore")]
-		AzureDataLakeStore = 66,
+		AzureDataLakeStore = 97,
 
 		/// <summary>
 		///     Azure/ExpressRouteCircuit
 		/// </summary>
 		[EnumMember(Value = "Azure/ExpressRouteCircuit")]
-		AzureExpressRouteCircuit = 67,
+		AzureExpressRouteCircuit = 98,
 
 		/// <summary>
 		///     Azure/VirtualNetworkGateway
 		/// </summary>
 		[EnumMember(Value = "Azure/VirtualNetworkGateway")]
-		AzureVirtualNetworkGateway = 68,
+		AzureVirtualNetworkGateway = 99,
 
 		/// <summary>
 		///     Azure/AppServicePlanSubgroup
 		/// </summary>
 		[EnumMember(Value = "AzureAppServicePlanSubgroup")]
-		AzureAppServicePlanSubgroup = 69,
+		AzureAppServicePlanSubgroup = 100,
 
 		/// <summary>
 		///     Azure/AppServicePlanSubgroup
 		/// </summary>
 		[EnumMember(Value = "BizService")]
-		Service = 70,
+		Service = 101,
 
 		/// <summary>
 		///     AWS/DmsReplication
 		/// </summary>
 		[EnumMember(Value = "AWS/DmsReplication")]
-		AwsDmsReplication = 71,
+		AwsDmsReplication = 102,
 
 		/// <summary>
 		///     Azure/MariaDB
 		/// </summary>
 		[EnumMember(Value = "Azure/MariaDB")]
-		AzureMariaDb = 72,
+		AzureMariaDb = 103,
 
 		/// <summary>
 		///     Azure/ApplicationInsights
 		/// </summary>
 		[EnumMember(Value = "Azure/ApplicationInsights")]
-		AzureApplicationInsights = 73,
+		AzureApplicationInsights = 104,
 
 		/// <summary>
 		///     Azure/Firewall
 		/// </summary>
 		[EnumMember(Value = "Azure/Firewall")]
-		AzureFirewall = 74,
+		AzureFirewall = 105,
 
 		/// <summary>
 		///     Azure/SQLElasticPool
 		/// </summary>
 		[EnumMember(Value = "Azure/SQLElasticPool")]
-		AzureSQLElasticPool = 75,
+		AzureSQLElasticPool = 106,
 
 		/// <summary>
 		///     Azure/SQLManagedInstance
 		/// </summary>
 		[EnumMember(Value = "Azure/SQLManagedInstance")]
-		AzureSQLManagedInstance = 76,
+		AzureSQLManagedInstance = 107,
 
 		/// <summary>
 		///     Azure/SQLManagedInstance
 		/// </summary>
 		[EnumMember(Value = "Azure/HDInsight")]
-		AzureHDInsight = 77,
+		AzureHDInsight = 108,
 
 		/// <summary>
 		///     Azure/RecoveryServices
 		/// </summary>
 		[EnumMember(Value = "Azure/RecoveryServices")]
-		AzureRecoveryServices = 78,
+		AzureRecoveryServices = 109,
 
 		/// <summary>
 		///     Azure/NetworkInterface
 		/// </summary>
 		[EnumMember(Value = "Azure/NetworkInterface")]
-		AzureNetworkInterface = 79,
+		AzureNetworkInterface = 110,
 
 		/// <summary>
 		///     Azure/BatchAccount
 		/// </summary>
 		[EnumMember(Value = "Azure/BatchAccount")]
-		AzureBatchAccount = 80,
+		AzureBatchAccount = 111,
 
 		/// <summary>
 		///     Azure/LogicApps
 		/// </summary>
 		[EnumMember(Value = "Azure/LogicApps")]
-		AzureLogicApps = 81,
+		AzureLogicApps = 112,
 
 		/// <summary>
 		///     Azure/DataFactory
 		/// </summary>
 		[EnumMember(Value = "Azure/DataFactory")]
-		AzureDataFactory = 82,
+		AzureDataFactory = 113,
 
 		/// <summary>
 		///     Azure/PublicIP
 		/// </summary>
 		[EnumMember(Value = "Azure/PublicIP")]
-		AzurePublicIP = 83,
+		AzurePublicIP = 114,
 
 		/// <summary>
 		///     Azure/StreamAnalytics
 		/// </summary>
 		[EnumMember(Value = "Azure/StreamAnalytics")]
-		AzureStreamAnalytics = 84,
+		AzureStreamAnalytics = 115,
 
 		/// <summary>
 		///     Azure/EventGrid
 		/// </summary>
 		[EnumMember(Value = "Azure/EventGrid")]
-		AzureEventGrid = 85,
+		AzureEventGrid = 116,
 
 		/// <summary>
 		///     Azure/LoadBalancers
 		/// </summary>
 		[EnumMember(Value = "Azure/LoadBalancers")]
-		AzureLoadBalancers = 86,
+		AzureLoadBalancers = 117,
 
 		/// <summary>
 		///     Azure/ServiceFabricMesh
 		/// </summary>
 		[EnumMember(Value = "Azure/ServiceFabricMesh")]
-		AzureServiceFabricMesh = 87,
+		AzureServiceFabricMesh = 118,
 
 		/// <summary>
 		///     Azure/CognitiveSearch
 		/// </summary>
 		[EnumMember(Value = "Azure/CognitiveSearch")]
-		AzureCognitiveSearch = 88,
+		AzureCognitiveSearch = 119,
 
 		/// <summary>
 		///     Azure/CognitiveServices
 		/// </summary>
 		[EnumMember(Value = "Azure/CognitiveServices")]
-		AzureCognitiveServices = 89,
+		AzureCognitiveServices = 120,
 
 		/// <summary>
 		///     Azure/MLWorkspaces
 		/// </summary>
 		[EnumMember(Value = "Azure/MLWorkspaces")]
-		AzureMLWorkspaces = 90,
+		AzureMLWorkspaces = 121,
 
 		/// <summary>
 		///     Azure/FrontDoors
 		/// </summary>
 		[EnumMember(Value = "Azure/FrontDoors")]
-		AzureFrontDoors = 91,
+		AzureFrontDoors = 122,
 
 		/// <summary>
 		///     Azure/KeyVault
 		/// </summary>
 		[EnumMember(Value = "Azure/KeyVault")]
-		AzureKeyVault = 92,
+		AzureKeyVault = 123,
 
 		/// <summary>
 		///     Azure/RelayNamespaces
 		/// </summary>
 		[EnumMember(Value = "Azure/RelayNamespaces")]
-		AzureRelayNamespaces = 93,
+		AzureRelayNamespaces = 124,
 
 		/// <summary>
 		///     Azure/NotificationHubs
 		/// </summary>
 		[EnumMember(Value = "Azure/NotificationHubs")]
-		AzureNotificationHubs = 94,
+		AzureNotificationHubs = 125,
 
 		/// <summary>
 		///     Azure/AppServiceEnvironment
 		/// </summary>
 		[EnumMember(Value = "Azure/AppServiceEnvironment")]
-		AzureAppServiceEnvironment = 95,
+		AzureAppServiceEnvironment = 126,
 
 		/// <summary>
 		///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
 		///     This entry provides a workaround.
 		/// </summary>
-		Unknown2001 = 2001,
+		Unknown2001 = 127,
 
 		/// <summary>
 		///     Occasionally, LogicMonitor returns "2003" as the device group type.  It is believed that this is a bug in LogicMonitor.
 		///     This entry provides a workaround.
 		/// </summary>
-		Unknown2003 = 2003
+		Unknown2003 = 128
 	}
 }

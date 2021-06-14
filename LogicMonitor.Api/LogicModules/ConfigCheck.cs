@@ -12,6 +12,12 @@ namespace LogicMonitor.Api.LogicModules
 		/// <summary>
 		/// The type
 		/// </summary>
+		[DataMember(Name = "alertTransitionInterval")]
+		public string AlertTransitionInterval { get; set; }
+
+		/// <summary>
+		/// The type
+		/// </summary>
 		[DataMember(Name = "type")]
 		public string Type { get; set; }
 

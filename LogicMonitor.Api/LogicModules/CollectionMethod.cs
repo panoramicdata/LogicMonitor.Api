@@ -252,6 +252,12 @@ namespace LogicMonitor.Api.LogicModules
 		GcpBilling,
 
 		/// <summary>
+		/// GCP Billing Big Query
+		/// </summary>
+		[EnumMember(Value = "gcpbillingbigquery")]
+		GcpBillingBigQuery,
+
+		/// <summary>
 		/// GCP Compute Service Limits
 		/// </summary>
 		[EnumMember(Value = "gcpcomputeservicelimits")]
@@ -328,6 +334,18 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[EnumMember(Value = "pushmodules")]
 		PushModules,
+
+		/// <summary>
+		/// saasoffice365csvreport
+		/// </summary>
+		[EnumMember(Value = "saasoffice365csvreport")]
+		SaasOffice365CsvReport,
+
+		/// <summary>
+		/// saasoffice365sharepointreport
+		/// </summary>
+		[EnumMember(Value = "saasoffice365sharepointreport")]
+		SaasOffice365SharepointReport,
 
 		/// <summary>
 		/// script

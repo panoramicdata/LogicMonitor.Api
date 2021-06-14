@@ -173,21 +173,83 @@ namespace LogicMonitor.Api
 		/// <returns>A list of Devices</returns>
 		public async Task<List<Device>> GetDevicesByDeviceGroupFullPathAsync(string deviceGroupFullPaths, bool recurse, CancellationToken cancellationToken = default)
 		{
-			var deviceGroups = await GetAllAsync<DeviceGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
-
 			var devices = new List<Device>();
+
 			foreach (var searchDeviceGroupName in deviceGroupFullPaths.Split(';').Select(path => path.TrimStart()).ToList())
 			{
-				// Make sure that the deviceGroup exists and throw an argument exception if not
-				var checkedDeviceGroup = await GetDeviceGroupByFullPathAsync(searchDeviceGroupName, cancellationToken).ConfigureAwait(false);
-
-				var groups = deviceGroups.Where(deviceGroup => recurse
-						? deviceGroup.FullPath.StartsWith(searchDeviceGroupName)
-						: deviceGroup.FullPath == searchDeviceGroupName)
-					.ToList();
-				foreach (var deviceGroup in groups)
+				// Make sure the Device Group exists
+				if (await GetDeviceGroupByFullPathAsync(searchDeviceGroupName, cancellationToken).ConfigureAwait(false)
+					is DeviceGroup checkedDeviceGroup)
 				{
-					devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device> { Skip = 0, Take = 300 }).ConfigureAwait(false));
+					List<DeviceGroup> deviceGroups;
+
+					// The root
+					if (checkedDeviceGroup.Id == 1)
+					{
+						deviceGroups =
+							recurse
+								// All Device Groups
+								? await GetAllAsync<DeviceGroup>(cancellationToken: cancellationToken)
+									.ConfigureAwait(false)
+								// Only the root
+								: await GetAllAsync(
+									new Filter<DeviceGroup>
+									{
+										FilterItems = new List<FilterItem<DeviceGroup>>
+										{
+											new Eq<DeviceGroup>(nameof(DeviceGroup.Id), 1)
+										}
+									},
+									cancellationToken: cancellationToken)
+								.ConfigureAwait(false);
+					}
+					else
+					{
+						deviceGroups =
+							recurse
+								? await GetAllAsync(
+									new Filter<DeviceGroup>
+									{
+										FilterItems = new List<FilterItem<DeviceGroup>>
+										{
+											new Includes<DeviceGroup>(nameof(DeviceGroup.FullPath), checkedDeviceGroup.FullPath)
+										}
+									},
+									cancellationToken: cancellationToken)
+								.ConfigureAwait(false)
+								: await GetAllAsync(
+									new Filter<DeviceGroup>
+									{
+										FilterItems = new List<FilterItem<DeviceGroup>>
+										{
+											new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), searchDeviceGroupName)
+										}
+									},
+									cancellationToken: cancellationToken)
+								.ConfigureAwait(false);
+					}
+
+					// Ensure the one we actually found is included
+					if (deviceGroups.Any(dg => dg.Id != checkedDeviceGroup.Id))
+					{
+						deviceGroups.Add(checkedDeviceGroup);
+					}
+
+					if (recurse)
+					{
+						if (checkedDeviceGroup.Id != 1)	// Not the root
+						{
+							// Filter out the ones where the full path did not START with the searched-for group, as we could
+							// only use a Includes<DeviceGroup> filter and not a StartsWith (there isn't one!)
+							deviceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchDeviceGroupName));
+						}
+					}
+
+					// Get the Devices
+					foreach (var deviceGroup in deviceGroups)
+					{
+						devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device> { Skip = 0, Take = 300 }).ConfigureAwait(false));
+					}
 				}
 			}
 			return devices

@@ -27,6 +27,12 @@ namespace LogicMonitor.Api.LogicModules
 		public string LessThan { get; set; }
 
 		/// <summary>
+		///    LessThanOrEqual
+		/// </summary>
+		[DataMember(Name = "lte")]
+		public string LessThanOrEqualTo2 { get; set; }
+
+		/// <summary>
 		///    LessThanOrEqualTo
 		/// </summary>
 		[DataMember(Name = "le")]
