@@ -3,7 +3,7 @@
 		"Account": "mycompany",
 		"AccessId": "XXXXXXXXXXXXXXXXXXXX",
 		"AccessKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-		"CollectorId": 12,
+		"CollectorId": 248,
 		"WindowsDeviceId": 34,
 		"WindowsDeviceLargeDeviceDataSourceId": 6144,
 		"ServiceDeviceId": 1053,
@@ -13,6 +13,8 @@
 		"WebsiteGroupFullPath": "Path to Test Website Group",
 		"AllWidgetsDashboardIdComment": "This should be a dashboard with all available types of LogicMonitor widget on.",
 		"AllWidgetsDashboardId": 74,
-		"AccountHasBillingInformation": true
+		"AccountHasBillingInformation": true,
+		"AlertRuleName": "Critical and Error catch all",
+		"WebsiteName": "PDL-WEB-RM-PROD-API"
 	}
 }
