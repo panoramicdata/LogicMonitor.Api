@@ -328,6 +328,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					{
 						dataSourceUpdates[0].Name
 					},
+					version.Version.Major,
 					default)
 					.ConfigureAwait(false);
 			}
@@ -363,6 +364,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					{
 						eventSourceUpdates[0].Name
 					},
+					version.Version.Major,
 					default)
 					.ConfigureAwait(false);
 			}
@@ -433,6 +435,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					{
 						propertySourceUpdates[0].Name
 					},
+					version.Version.Major,
 					default)
 					.ConfigureAwait(false);
 			}
@@ -468,6 +471,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 					{
 						topologySourceUpdates[0].Name
 					},
+					version.Version.Major,
 					default)
 					.ConfigureAwait(false);
 			}
@@ -576,6 +580,7 @@ namespace LogicMonitor.Api.Test.LogicModules
 							Oid = snmpSysOidMapUpdates[0].Name
 						}
 					},
+					version.Version.Major,
 					default)
 					.ConfigureAwait(false);
 			}
