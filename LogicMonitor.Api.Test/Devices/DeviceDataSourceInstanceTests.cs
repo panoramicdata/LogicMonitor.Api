@@ -47,13 +47,12 @@ namespace LogicMonitor.Api.Test.Devices
 			var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 			{
 				Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
-				ExtraFilters = new List<FilterItem<DeviceDataSourceInstance>>
+				FilterItems = new List<FilterItem<DeviceDataSourceInstance>>
 				{
 					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 				}
 			}).ConfigureAwait(false);
 
-			// BROKEN - extraFilters appears not to work!
 			Assert.All(deviceDataSourceInstances, dsi => Assert.False(dsi.StopMonitoring));
 		}
 	}
