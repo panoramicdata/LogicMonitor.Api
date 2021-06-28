@@ -52,7 +52,9 @@ namespace LogicMonitor.Api.Test.Websites
 						}
 					},
 				TriggerSslExpirationAlerts = true,
-				AlertExpression = ExpectedAlertExpression
+				AlertExpression = ExpectedAlertExpression,
+				IndividualAlertLevel = Level.Warning,
+				OverallAlertLevel = Level.Warning
 			};
 
 		public WebsiteTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
@@ -240,61 +242,63 @@ namespace LogicMonitor.Api.Test.Websites
 		[Fact]
 		public async void SetWebsiteCustomProperty()
 		{
-			var website =
-				await LogicMonitorClient.GetByNameAsync<Website>(nameof(SetWebsiteCustomProperty)).ConfigureAwait(false)
-				?? await LogicMonitorClient.CreateAsync(GetWebsiteCreationDto(1, nameof(SetWebsiteCustomProperty))).ConfigureAwait(false);
+			var website = await LogicMonitorClient.CreateAsync(GetWebsiteCreationDto(16, nameof(SetWebsiteCustomProperty))).ConfigureAwait(false);
+			try
+			{
+				const string propertyName = "blah";
+				const string value1 = "test1";
+				const string value2 = "test2";
 
-			const string propertyName = "blah";
-			const string value1 = "test1";
-			const string value2 = "test2";
+				// Set it to an expected value
+				await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1).ConfigureAwait(false);
+				var deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+				var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
+				Assert.Equal(1, actual);
 
-			// Set it to an expected value
-			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1).ConfigureAwait(false);
-			var deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
-			var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
-			Assert.Equal(1, actual);
+				// Set it to a different value
+				await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2).ConfigureAwait(false);
+				deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+				actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
+				Assert.Equal(1, actual);
 
-			// Set it to a different value
-			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2).ConfigureAwait(false);
-			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
-			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
-			Assert.Equal(1, actual);
+				// Set it to null (delete it)
+				await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null).ConfigureAwait(false);
+				deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+				actual = deviceProperties.Count(dp => dp.Name == propertyName);
+				Assert.Equal(0, actual);
 
-			// Set it to null (delete it)
-			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null).ConfigureAwait(false);
-			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
-			actual = deviceProperties.Count(dp => dp.Name == propertyName);
-			Assert.Equal(0, actual);
+				// This should fail as there is nothing to delete
+				var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
+				Assert.IsType<LogicMonitorApiException>(deletionException);
 
-			// This should fail as there is nothing to delete
-			var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
-			Assert.IsType<LogicMonitorApiException>(deletionException);
+				var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
+				Assert.IsType<InvalidOperationException>(updateException);
 
-			var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
-			Assert.IsType<InvalidOperationException>(updateException);
+				var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
+				Assert.IsType<InvalidOperationException>(createNullException);
 
-			var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
-			Assert.IsType<InvalidOperationException>(createNullException);
+				// Create one without checking
+				await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
+				deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+				actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
+				Assert.Equal(1, actual);
 
-			// Create one without checking
-			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
-			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
-			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
-			Assert.Equal(1, actual);
+				// Update one without checking
+				await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
+				deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+				actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
+				Assert.Equal(1, actual);
 
-			// Update one without checking
-			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
-			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
-			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
-			Assert.Equal(1, actual);
-
-			// Delete one without checking
-			await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
-			deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
-			actual = deviceProperties.Count(dp => dp.Name == propertyName);
-			Assert.Equal(0, actual);
-
-			await LogicMonitorClient.DeleteAsync(website).ConfigureAwait(false);
+				// Delete one without checking
+				await LogicMonitorClient.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
+				deviceProperties = await LogicMonitorClient.GetWebsitePropertiesAsync(website.Id).ConfigureAwait(false);
+				actual = deviceProperties.Count(dp => dp.Name == propertyName);
+				Assert.Equal(0, actual);
+			}
+			finally
+			{
+				await LogicMonitorClient.DeleteAsync(website).ConfigureAwait(false);
+			}
 		}
 	}
 }
