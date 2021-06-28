@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Humanizer;
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Extensions;
@@ -86,24 +87,32 @@ namespace LogicMonitor.Api.Test.Alerts
 		[Fact]
 		public async void GetAlerts_SdtsMatchRequest()
 		{
+			// This unit test currently fails horribly due to some inability of the LogicMonitor API to sort the Alerts by Id descending
+
 			// Arrange
 			var allFilter = new AlertFilter
 			{
 				SdtFilter = SdtFilter.All,
 				StartEpochIsAfter = StartDateTimeSeconds,
-				StartEpochIsBefore = EndDateTimeSeconds
+				StartEpochIsBefore = EndDateTimeSeconds,
+				OrderByProperty = nameof(Alert.Id),
+				OrderDirection = OrderDirection.Desc
 			};
 			var sdtFilter = new AlertFilter
 			{
 				SdtFilter = SdtFilter.Sdt,
 				StartEpochIsAfter = StartDateTimeSeconds,
-				StartEpochIsBefore = EndDateTimeSeconds
+				StartEpochIsBefore = EndDateTimeSeconds,
+				OrderByProperty = nameof(Alert.Id),
+				OrderDirection = OrderDirection.Desc
 			};
 			var nonSdtFilter = new AlertFilter
 			{
 				SdtFilter = SdtFilter.NonSdt,
 				StartEpochIsAfter = StartDateTimeSeconds,
-				StartEpochIsBefore = EndDateTimeSeconds
+				StartEpochIsBefore = EndDateTimeSeconds,
+				OrderByProperty = nameof(Alert.Id),
+				OrderDirection = OrderDirection.Desc
 			};
 
 			// Act
@@ -113,7 +122,19 @@ namespace LogicMonitor.Api.Test.Alerts
 
 			// Assert
 
-			// Alert counts add up
+			// All the ids should be unique
+			allAlerts.Select(a => a.Id).Should().OnlyHaveUniqueItems();
+			sdtAlerts.Select(a => a.Id).Should().OnlyHaveUniqueItems();
+			nonSdtAlerts.Select(a => a.Id).Should().OnlyHaveUniqueItems();
+
+			// Troubleshooting stuff
+			var extraNonSdtAlertIds = nonSdtAlerts.Select(a => a.Id).Except(allAlerts.Select(a => a.Id)).ToList();
+			var extraAllAlertIds = allAlerts.Select(a => a.Id).Except(nonSdtAlerts.Select(a => a.Id)).ToList();
+
+			var extraNonSdtAlerts = nonSdtAlerts.Where(a => extraNonSdtAlertIds.Contains(a.Id)).ToList();
+			var extraAllSdtAlerts = allAlerts.Where(a => extraAllAlertIds.Contains(a.Id)).ToList();
+
+			// Alert counts should add up
 			Assert.Equal(allAlerts.Count, sdtAlerts.Count + nonSdtAlerts.Count);
 
 			// Alerts have the expected SDT status
