@@ -6,12 +6,7 @@ namespace LogicMonitor.Api
 	/// Item identified by a string
 	/// </summary>
 	[DataContract]
-	public abstract class StringIdentifiedItem
+	public abstract class StringIdentifiedItem : IdentifiedItemBase<string>
 	{
-		/// <summary>
-		/// The Id
-		/// </summary>
-		[DataMember(Name = "id")]
-		public string Id { get; set; }
 	}
 }
