@@ -390,10 +390,16 @@ namespace LogicMonitor.Api.Alerts
 			Take = Take,
 			SearchId = SearchId,
 			NextRecipient = NextRecipient,
-			AckedBy = AckedBy
+			AckedBy = AckedBy,
+			DataPointId = DataPointId,
+			InstanceId = InstanceId,
+			IsCleared = IsCleared,
+			ResourceTemplateId = ResourceTemplateId,
 		};
 
 		/// <inheritdoc />
-		public override string ToString() => $"StartUtcIsAfter: {StartUtcIsAfter?.ToString("yyyy-MM-dd HH:mm")}, StartUtcIsBefore: {StartUtcIsBefore?.ToString("yyyy-MM-dd HH:mm")}";
+		public override string ToString() =>
+			$"StartUtcIsAfter: {StartUtcIsAfter?.ToString("yyyy-MM-dd HH:mm")}, " +
+			$"StartUtcIsBefore: {StartUtcIsBefore?.ToString("yyyy-MM-dd HH:mm")}";
 	}
 }
