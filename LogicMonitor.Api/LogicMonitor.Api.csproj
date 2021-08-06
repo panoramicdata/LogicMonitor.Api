@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.154.0</Version>
-		<PackageReleaseNotes>Support added for 154. Alert filtering bug fixed.</PackageReleaseNotes>
+		<Version>2.154.1</Version>
+		<PackageReleaseNotes>Added TopologyGroupCreationDto.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
