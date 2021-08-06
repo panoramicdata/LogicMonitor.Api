@@ -127,5 +127,6 @@ namespace LogicMonitor.Api.Users
 		/// A list of user groups to which to add the user.
 		/// </summary>
 		[DataMember(Name = "adminGroupIds")]
+		public List<int> UserGroupIds { get; set; } = new List<int> { 1 };
 	}
 }
