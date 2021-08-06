@@ -10,45 +10,51 @@ namespace LogicMonitor.Api.Users
 	public class RoleCreationDto : CreationDto<Role>
 	{
 		/// <summary>
-		/// name
+		/// Name
 		/// </summary>
 		[DataMember(Name = "name")]
 		public string Name { get; set; }
 
 		/// <summary>
-		/// description
+		/// Description
 		/// </summary>
 		[DataMember(Name = "description")]
 		public string Description { get; set; }
 
 		/// <summary>
-		/// requireEULA
+		/// Whether EULA acceptance is required
 		/// </summary>
 		[DataMember(Name = "requireEULA")]
 		public bool RequireEULA { get; set; }
 
 		/// <summary>
-		/// twoFARequired
+		/// Whether two factor authentication is required
 		/// </summary>
 		[DataMember(Name = "twoFARequired")]
 		public bool TwoFactorAuthenticationRequired { get; set; }
 
 		/// <summary>
-		/// customHelpLabel
+		/// Custom Help label
 		/// </summary>
 		[DataMember(Name = "customHelpLabel")]
 		public string CustomHelpLabel { get; set; }
 
 		/// <summary>
-		/// customHelpURL
+		/// Custom Help URL
 		/// </summary>
 		[DataMember(Name = "customHelpURL")]
 		public string CustomHelpUrl { get; set; }
 
 		/// <summary>
-		/// privileges
+		/// Privileges
 		/// </summary>
 		[DataMember(Name = "privileges")]
 		public List<RolePrivilege> Privileges { get; set; }
+
+		/// <summary>
+		/// Role Group ID
+		/// </summary>
+		[DataMember(Name = "roleGroupId")]
+		public int RoleGroupId { get; set; } = 1;
 	}
 }

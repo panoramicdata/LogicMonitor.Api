@@ -122,5 +122,10 @@ namespace LogicMonitor.Api.Users
 		/// </summary>
 		[DataMember(Name = "apionly")]
 		public bool ApiOnly { get; set; }
+
+		/// <summary>
+		/// A list of user groups to which to add the user.
+		/// </summary>
+		[DataMember(Name = "adminGroupIds")]
 	}
 }
