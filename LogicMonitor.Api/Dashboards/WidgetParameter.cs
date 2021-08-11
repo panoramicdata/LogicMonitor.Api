@@ -23,7 +23,6 @@ namespace LogicMonitor.Api.Dashboards
 		/// <summary>
 		/// The ToString override
 		/// </summary>
-		/// <returns></returns>
 		public override string ToString() => $"Name={Name}, Value={Value}";
 	}
 }

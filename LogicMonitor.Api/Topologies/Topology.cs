@@ -36,7 +36,6 @@ namespace LogicMonitor.Api.Topologies
 		/// <summary>
 		/// The REST API endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "topology/topologies";
 	}
 }

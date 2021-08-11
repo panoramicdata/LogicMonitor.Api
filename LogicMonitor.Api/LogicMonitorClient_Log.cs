@@ -20,7 +20,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="logFilter"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		// public List<LogItem> GetLogItemsAsync(LogFilter logFilter) => Get<LogItemCollection>(ApiMethod.Do, $"onesetting?func=getAccessLog&needTotal=true&orderBy=happenedOn&orderDirection=desc&start={logFilter.Skip}&results={logFilter.Take}").AccessLogItems;
 		public async Task<List<LogItem>> GetLogItemsAsync(LogFilter logFilter = null, CancellationToken cancellationToken = default)
 		{

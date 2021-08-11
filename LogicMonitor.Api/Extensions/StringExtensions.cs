@@ -28,7 +28,6 @@ namespace LogicMonitor.Api.Extensions
 		/// that include "+". There may be other characters that require this also!
 		/// </summary>
 		/// <param name="value"></param>
-		/// <returns></returns>
 		public static string EscapePlusCharacter(this string value)
 			=> value.Replace("+", "%2B");
 	}

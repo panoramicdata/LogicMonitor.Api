@@ -59,7 +59,6 @@ namespace LogicMonitor.Api.RecycleBin
 		/// <summary>
 		/// The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "recyclebin/recycles";
 	}
 }

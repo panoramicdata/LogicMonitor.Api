@@ -28,7 +28,6 @@ namespace LogicMonitor.Api
 		///     Backs up all supported aspects of LogicMonitor configuration to a file as a GZipped Json string.
 		/// </summary>
 		/// <param name="fileInfo"></param>
-		/// <returns></returns>
 		public async Task BackupAllToFileAsync(FileInfo fileInfo)
 		{
 			var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo })

@@ -14,7 +14,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970
 		/// </summary>
 		/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
-		/// <returns></returns>
 		public static DateTime ToDateTimeUtc(this long secondsSinceTheEpoch)
 			=> TheEpoch.AddSeconds(secondsSinceTheEpoch);
 
@@ -22,7 +21,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970
 		/// </summary>
 		/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
-		/// <returns></returns>
 		public static DateTime ToDateTimeUtc(this int secondsSinceTheEpoch)
 			=> TheEpoch.AddSeconds(secondsSinceTheEpoch);
 
@@ -30,7 +28,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970 or null if zero
 		/// </summary>
 		/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
-		/// <returns></returns>
 		public static DateTime? ToNullableDateTimeUtc(this int secondsSinceTheEpoch)
 			=> secondsSinceTheEpoch == 0 ? (DateTime?)null : secondsSinceTheEpoch.ToDateTimeUtc();
 
@@ -38,7 +35,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970
 		/// </summary>
 		/// <param name="msSinceTheEpoch">the number of seconds since the Epoch</param>
-		/// <returns></returns>
 		public static DateTime ToDateTimeUtcFromMs(this long msSinceTheEpoch)
 			=> TheEpoch.AddMilliseconds(msSinceTheEpoch);
 
@@ -46,7 +42,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970 or null if zero
 		/// </summary>
 		/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
-		/// <returns></returns>
 		public static DateTime? ToNullableDateTimeUtc(this long secondsSinceTheEpoch)
 			=> secondsSinceTheEpoch == 0 ? (DateTime?)null : secondsSinceTheEpoch.ToDateTimeUtc();
 
@@ -54,7 +49,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970
 		/// </summary>
 		/// <param name="dateTime">The DateTime</param>
-		/// <returns></returns>
 		public static int SecondsSinceTheEpoch(this DateTime dateTime)
 			=> (int)(dateTime - TheEpoch).TotalSeconds;
 
@@ -62,7 +56,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of seconds that this DateTime is past midnight on 1st January 1970
 		/// </summary>
 		/// <param name="dateTime">The DateTime</param>
-		/// <returns></returns>
 		public static DateTime ToSecondLevel(this DateTime dateTime)
 			=> new(dateTime.Ticks / TimeSpan.TicksPerSecond * TimeSpan.TicksPerSecond);
 
@@ -70,7 +63,6 @@ namespace LogicMonitor.Api.Extensions
 		/// The number of milliseconds that this DateTime is past midnight on 1st January 1970
 		/// </summary>
 		/// <param name="dateTime">The DateTime</param>
-		/// <returns></returns>
 		public static long MillisecondsSinceTheEpoch(this DateTime dateTime)
 			=> (long)dateTime.SecondsSinceTheEpoch() * 1000;
 
@@ -81,7 +73,6 @@ namespace LogicMonitor.Api.Extensions
 		/// Midnight on the first day of the month prior to this DateTime
 		/// </summary>
 		/// <param name="dateTime"></param>
-		/// <returns></returns>
 		public static DateTime FirstDayOfLastMonth(this DateTime dateTime)
 			=> dateTime.FirstDayOfThisMonth().AddMonths(-1);
 
@@ -89,7 +80,6 @@ namespace LogicMonitor.Api.Extensions
 		/// Midnight on the first day this DateTime's month
 		/// </summary>
 		/// <param name="dateTime"></param>
-		/// <returns></returns>
 		public static DateTime LastDayOfLastMonth(this DateTime dateTime)
 			=> dateTime.FirstDayOfThisMonth().AddDays(-1);
 

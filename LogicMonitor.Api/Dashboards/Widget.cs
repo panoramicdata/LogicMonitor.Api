@@ -148,7 +148,6 @@ namespace LogicMonitor.Api.Dashboards
 		/// <summary>
 		///     The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "dashboard/widgets";
 	}
 }

@@ -92,7 +92,6 @@ namespace LogicMonitor.Api.Collectors
 		/// <summary>
 		///    The subUrl for setting by id
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "setting/collector/groups";
 	}
 }

@@ -260,7 +260,6 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		///    The query string for REST calls
 		/// </summary>
-		/// <returns></returns>
 		public Filter<Alert> GetFilter()
 		{
 			// Either Cleared or IncludeCleared can be specified, but not both
@@ -357,7 +356,6 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		///    Clones the object
 		/// </summary>
-		/// <returns></returns>
 		public AlertFilter Clone() => new()
 		{
 			AckFilter = AckFilter,

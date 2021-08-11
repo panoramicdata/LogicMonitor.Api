@@ -44,7 +44,6 @@ namespace LogicMonitor.Api
 		/// <summary>
 		/// Used for flow queries
 		/// </summary>
-		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
 		protected string GetTimePartialQueryStringNew()
 		{
@@ -70,7 +69,6 @@ namespace LogicMonitor.Api
 		/// <summary>
 		/// IRequest abstract method
 		/// </summary>
-		/// <returns></returns>
 		public abstract string GetQueryString();
 	}
 }

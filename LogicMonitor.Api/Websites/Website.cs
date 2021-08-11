@@ -265,7 +265,6 @@ namespace LogicMonitor.Api.Websites
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "website/websites";
 	}
 }

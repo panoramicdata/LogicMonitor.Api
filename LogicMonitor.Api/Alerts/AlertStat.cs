@@ -71,7 +71,6 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "alert/stat";
 	}
 }

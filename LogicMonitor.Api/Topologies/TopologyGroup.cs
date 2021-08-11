@@ -26,7 +26,6 @@ namespace LogicMonitor.Api.Topologies
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "topology/groups";
 
 		/// <summary>

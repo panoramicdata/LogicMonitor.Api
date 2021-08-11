@@ -335,7 +335,6 @@ namespace LogicMonitor.Api.Devices
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "device/groups";
 
 		/// <summary>

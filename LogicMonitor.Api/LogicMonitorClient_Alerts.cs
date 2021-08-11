@@ -184,7 +184,6 @@ namespace LogicMonitor.Api
 		///     Gets a single alert.  The alertType is no longer required as the alert id now contains the type.
 		/// </summary>
 		/// <param name="id">Alert id</param>
-		/// <returns></returns>
 		public async Task<Alert> GetAlertAsync(string id)
 		{
 			var alerts = await GetAllAsync(new Filter<Alert>
@@ -232,7 +231,6 @@ namespace LogicMonitor.Api
 		/// <param name="alertId">The non-unique alert id</param>
 		/// <param name="acknowledgementComment">The acknowledgement comment</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public async Task AcknowledgeAlert(string alertId, string acknowledgementComment, CancellationToken cancellationToken = default)
 			=> await PostAsync<AlertAcknowledgement, EmptyResponse>(
 				new AlertAcknowledgement { AcknowledgementComment = acknowledgementComment },

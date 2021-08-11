@@ -11,7 +11,6 @@ namespace LogicMonitor.Api.Extensions
 		/// Convert a color to the HTML equivalent e.g. #FF0000
 		/// </summary>
 		/// <param name="color"></param>
-		/// <returns></returns>
 		public static string ToHtml(this Color color) => "#" +
 				color.R.ToString("X2") +
 				color.G.ToString("X2") +

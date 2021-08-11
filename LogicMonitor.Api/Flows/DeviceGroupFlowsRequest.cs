@@ -13,7 +13,6 @@ namespace LogicMonitor.Api.Flows
 		/// <summary>
 		/// IRequest Gets Query String
 		/// </summary>
-		/// <returns></returns>
 		public override string GetQueryString()
 			=> $"device/groups/{DeviceGroupId}/netflow/flows?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}{GetTimePartialQueryStringNew()}&size={Take}&offset={Skip}&qosType={QosType}";
 	}

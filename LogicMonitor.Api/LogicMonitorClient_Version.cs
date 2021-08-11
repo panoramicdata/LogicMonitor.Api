@@ -13,7 +13,6 @@ namespace LogicMonitor.Api
 		///    Gets the current portal's version.
 		/// </summary>
 		/// <param name="cancellationToken">An optional cancellation token</param>
-		/// <returns></returns>
 		public Task<PortalVersion> GetVersionAsync(CancellationToken cancellationToken = default)
 			=> GetVersionAsync(AccountName, cancellationToken);
 
@@ -22,7 +21,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="accountName"></param>
 		/// <param name="cancellationToken">An optional cancellation token</param>
-		/// <returns></returns>
 		public static async Task<PortalVersion> GetVersionAsync(string accountName, CancellationToken cancellationToken = default)
 		{
 			// The actual Get method

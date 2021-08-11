@@ -18,7 +18,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="configSourceName"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		[Obsolete("Use GetByNameAsync<ConfigSource> instead")]
 		public Task<ConfigSource> GetConfigSourceByNameAsync(string configSourceName, CancellationToken cancellationToken = default)
 			=> GetByNameAsync<ConfigSource>(configSourceName, cancellationToken);
@@ -29,7 +28,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceId">The device id</param>
 		/// <param name="filter">Filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<DeviceConfigSource>> GetDeviceConfigSourcesPageAsync(
 			int deviceId,
 			Filter<DeviceConfigSource> filter,
@@ -45,7 +43,6 @@ namespace LogicMonitor.Api
 		/// <param name="configSourceId">The config source id</param>
 		/// <param name="filter">Filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<Device>> GetConfigSourceDevicesPageAsync(
 			int configSourceId,
 			Filter<DeviceConfigSource> filter,
@@ -59,7 +56,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceId">The device id</param>
 		/// <param name="deviceConfigSourceId">The device config source id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<DeviceConfigSource> GetDeviceConfigSourceAsync(
 			int deviceId,
 			int deviceConfigSourceId,
@@ -73,7 +69,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceConfigSourceId">The device config source id</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<DeviceConfigSourceInstance>> GetDeviceConfigSourceInstancesPage(
 			int deviceId,
 			int deviceConfigSourceId,
@@ -88,7 +83,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceConfigSourceId">The device config source id</param>
 		/// <param name="deviceConfigSourceInstanceId">The device config source instance id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<DeviceConfigSourceInstance> GetDeviceConfigSourceInstanceAsync(
 			int deviceId,
 			int deviceConfigSourceId,
@@ -105,7 +99,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceConfigSourceInstanceId">The device config source instance id</param>
 		/// <param name="filter">Filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<DeviceConfigSourceInstanceConfig>> GetDeviceConfigSourceInstanceConfigsPageAsync(
 			int deviceId,
 			int deviceConfigSourceId,
@@ -124,7 +117,6 @@ namespace LogicMonitor.Api
 		/// <param name="id"></param>
 		/// <param name="timestamp">The timestamp</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<DeviceConfigSourceInstanceConfig> GetDeviceConfigSourceInstanceConfigByIdAndTimestampAsync(
 			int deviceId,
 			int deviceConfigSourceId,
@@ -141,7 +133,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceId"></param>
 		/// <param name="configSourceId"></param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public async Task<DeviceConfigSource> GetDeviceConfigSourceByDeviceIdAndConfigSourceIdAsync(
 			int deviceId,
 			int configSourceId,

@@ -18,7 +18,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="dashboardName"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		[Obsolete("Use GetByNameAsync<Dashboard> instead", true)]
 		public Task<Dashboard> GetDashboardByNameAsync(string dashboardName, CancellationToken cancellationToken = default)
 			=> GetByNameAsync<Dashboard>(dashboardName, cancellationToken);
@@ -28,7 +27,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="dashboardName"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task<List<Widget>> GetWidgetsByDashboardNameAsync(string dashboardName, CancellationToken cancellationToken = default)
 		{
 			var dashboard = await GetByNameAsync<Dashboard>(dashboardName, cancellationToken).ConfigureAwait(false);
@@ -45,7 +43,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="dashboardGroupFullPath">The full path</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task<DashboardGroup> GetDashboardGroupByFullPathAsync(string dashboardGroupFullPath, CancellationToken cancellationToken = default)
 			=> (await GetAllAsync(new Filter<DashboardGroup>
 			{
@@ -61,7 +58,6 @@ namespace LogicMonitor.Api
 		/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(int parentDashboardGroupId, Filter<DashboardGroup> filter = null, CancellationToken cancellationToken = default)
 			=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/groups", cancellationToken);
 
@@ -71,7 +67,6 @@ namespace LogicMonitor.Api
 		/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard> filter = null, CancellationToken cancellationToken = default)
 			=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/dashboards", cancellationToken);
 
@@ -82,7 +77,6 @@ namespace LogicMonitor.Api
 		/// <param name="start">The start date</param>
 		/// <param name="end">The end date</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<WidgetData> GetWidgetDataAsync(
 			int widgetId,
 			DateTimeOffset start,
@@ -108,7 +102,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="dashboardId">The Id of the dashboard</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public async Task<List<Widget>> GetWidgetsByDashboardIdAsync(
 			int dashboardId,
 			CancellationToken cancellationToken = default)

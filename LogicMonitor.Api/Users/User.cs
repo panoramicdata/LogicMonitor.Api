@@ -213,7 +213,6 @@ namespace LogicMonitor.Api.Users
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "setting/admins";
 
 		/// <summary>

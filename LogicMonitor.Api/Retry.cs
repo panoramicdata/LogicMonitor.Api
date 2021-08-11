@@ -15,7 +15,6 @@ namespace LogicMonitor.Api
 		/// <param name="maxTryCount">The maximum number of attempts to be made (default is 10)</param>
 		/// <param name="retryInterval">The period to wait between attempts (default is for immediate retry)</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		internal static async Task<T> Do<T>(
 			Func<Task<T>> action,
 			int maxTryCount,

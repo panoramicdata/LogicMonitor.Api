@@ -186,7 +186,6 @@ namespace LogicMonitor.Api.Netscans
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "setting/netscans";
 
 		/// <summary>

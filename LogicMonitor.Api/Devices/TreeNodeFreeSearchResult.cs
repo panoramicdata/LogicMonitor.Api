@@ -59,7 +59,6 @@ namespace LogicMonitor.Api.Devices
 		/// <summary>
 		/// ToString override
 		/// </summary>
-		/// <returns></returns>
 		public override string ToString() => $"{Type} \"{Name}\" ({EntityId}){(string.IsNullOrWhiteSpace(Location) ? string.Empty : $" on {Location}")}";
 	}
 }

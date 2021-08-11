@@ -8,7 +8,6 @@ namespace LogicMonitor.Api
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		string Endpoint();
 	}
 }

@@ -34,7 +34,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="deviceGroupId">The device group Id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<List<DeviceGroupEventSource>> GetAllDeviceGroupEventSourcesAsync(
 			int deviceGroupId,
 			CancellationToken cancellationToken = default)
@@ -45,7 +44,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="eventSourceName"></param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		[Obsolete("Use GetByNameAsync<EventSource> instead", true)]
 		public Task<EventSource> GetEventSourceByNameAsync(
 			string eventSourceName,
@@ -58,7 +56,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceId">The Device Id</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<DeviceEventSource>> GetDeviceEventSourcesPageAsync(
 			int deviceId,
 			Filter<DeviceEventSource> filter,
@@ -71,7 +68,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceId">The Device Id</param>
 		/// <param name="deviceEventSourceId"></param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<DeviceEventSource> GetDeviceEventSourceAsync(
 			int deviceId,
 			int deviceEventSourceId,
@@ -85,7 +81,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceEventSourceId"></param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<DeviceEventSourceGroup>> GetDeviceEventSourceGroupsPageAsync(
 			int deviceId,
 			int deviceEventSourceId,
@@ -99,7 +94,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceGroupId">The device group id</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<EventSourceAppliesToCollection>> GetEventSourceAppliesToCollectionsPageAsync(
 			int deviceGroupId,
 			Filter<EventSourceAppliesToCollection> filter,
@@ -113,7 +107,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="deviceId"></param>
 		/// <param name="eventSourceId"></param>
-		/// <returns></returns>
 		public async Task<DeviceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(int deviceId, int eventSourceId)
 		{
 			// TODO - Make this use a search field

@@ -11,7 +11,6 @@ namespace LogicMonitor.Api.Netscans
 		/// <summary>
 		///    The subUrl for setting by id
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "setting/netscans/groups";
 	}
 }

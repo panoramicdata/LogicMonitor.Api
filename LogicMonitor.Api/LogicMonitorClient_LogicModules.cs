@@ -16,7 +16,6 @@ namespace LogicMonitor.Api
 		/// <param name="logicModuleType">The LogicModule type.  Note that not all types are supported by LogicMonitor.</param>
 		/// <param name="id">The LogicModule Id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<LogicModuleMetadata> GetLogicModuleMetadata(
 			LogicModuleType logicModuleType,
 			int id,
@@ -93,7 +92,6 @@ namespace LogicMonitor.Api
 		/// <param name="dataSourceId"></param>
 		/// <param name="auditVersion"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task<DataSource> AuditDataSource(int dataSourceId, long auditVersion, CancellationToken cancellationToken = default)
 			=> await PostAsync<LogicModuleUpdateVersion, DataSource>
 			(
@@ -108,7 +106,6 @@ namespace LogicMonitor.Api
 		/// <param name="eventSourceId"></param>
 		/// <param name="auditVersion"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task<EventSource> AuditEventSource(int eventSourceId, long auditVersion, CancellationToken cancellationToken = default)
 			=> await PostAsync<LogicModuleUpdateVersion, EventSource>
 			(
@@ -123,7 +120,6 @@ namespace LogicMonitor.Api
 		/// <param name="configSourceId"></param>
 		/// <param name="auditVersion"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task<ConfigSource> AuditConfigSource(int configSourceId, long auditVersion, CancellationToken cancellationToken = default)
 			=> await PostAsync<LogicModuleUpdateVersion, ConfigSource>
 			(
@@ -138,7 +134,6 @@ namespace LogicMonitor.Api
 		/// <param name="propertySourceId"></param>
 		/// <param name="auditVersion"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task<PropertySource> AuditPropertySource(int propertySourceId, long auditVersion, CancellationToken cancellationToken = default)
 			=> await PostAsync<LogicModuleUpdateVersion, PropertySource>
 			(
@@ -154,7 +149,6 @@ namespace LogicMonitor.Api
 		/// <param name="logicModuleNames">A list of LogicModule names</param>
 		/// <param name="repositoryVersion">The LogicMonitor repository version</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task ImportLogicModules(
 			LogicModuleType logicModuleType,
 			List<string> logicModuleNames,
@@ -190,7 +184,6 @@ namespace LogicMonitor.Api
 		/// <param name="snmpSysOidMapImportItems">A list of LogicModule names</param>
 		/// <param name="repositoryVersion">The LogicMonitor Repository version</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task ImportSnmpSysOidMap(
 			List<SnmpSysOidMapImportItem> snmpSysOidMapImportItems,
 			int repositoryVersion,

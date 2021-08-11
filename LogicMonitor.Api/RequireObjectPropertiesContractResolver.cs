@@ -13,7 +13,6 @@ namespace LogicMonitor.Api
 		/// Create an object contract
 		/// </summary>
 		/// <param name="objectType">The object type</param>
-		/// <returns></returns>
 		protected override JsonObjectContract CreateObjectContract(Type objectType)
 		{
 			var contract = base.CreateObjectContract(objectType);

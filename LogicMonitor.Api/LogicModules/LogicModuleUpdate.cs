@@ -131,7 +131,6 @@ namespace LogicMonitor.Api.LogicModules
 		/// <summary>
 		/// The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "setting/logicmodules/listcore";
 	}
 }

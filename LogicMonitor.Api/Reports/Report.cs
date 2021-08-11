@@ -125,7 +125,6 @@ namespace LogicMonitor.Api.Reports
 		/// <summary>
 		///    The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "report/reports";
 	}
 }

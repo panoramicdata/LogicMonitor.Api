@@ -173,7 +173,6 @@ namespace LogicMonitor.Api.Data
 		/// <summary>
 		/// String representation
 		/// </summary>
-		/// <returns></returns>
 		public override string ToString() => $"{Legend} ({ColorName})";
 	}
 }

@@ -28,7 +28,6 @@ namespace LogicMonitor.Api.Settings
 		/// <summary>
 		///     The endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "setting/integrations";
 	}
 }

@@ -25,7 +25,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<Page<Role>> GetRolesForCurrentUserPageAsync(Filter<Role> filter, CancellationToken cancellationToken = default)
 		{
 			if (filter != null && filter.Order == null)

@@ -20,7 +20,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="websiteGroupId">The parent website group id.  The root website group is 1.</param>
 		/// <param name="cancellationToken">An optional cancellation token</param>
-		/// <returns></returns>
 		[Obsolete("Use GetAsync<WebsiteGroup> instead", true)]
 		public Task<WebsiteGroup> GetWebsiteGroupByIdAsync(int websiteGroupId, CancellationToken cancellationToken = default)
 			=> GetAsync<WebsiteGroup>(websiteGroupId, cancellationToken);
@@ -31,7 +30,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="websiteGroupFullPath">The website group full path.  The root is "/".</param>
 		/// <param name="cancellationToken">Optional cancellation token</param>
-		/// <returns></returns>
 		public async Task<WebsiteGroup> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken = default)
 		{
 			if (websiteGroupFullPath == null)
@@ -72,7 +70,6 @@ namespace LogicMonitor.Api
 		/// If you know that the property is NOT already set and you want to set the value, use Create.
 		/// </param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task SetWebsiteCustomPropertyAsync(
 			int websiteId,
 			string name,
@@ -177,7 +174,6 @@ namespace LogicMonitor.Api
 		/// If you know that the property is NOT already set and you want to set the value, use Create.
 		/// </param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task SetWebsiteGroupCustomPropertyAsync(
 			int websiteGroupId,
 			string name,

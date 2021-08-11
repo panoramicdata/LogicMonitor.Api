@@ -19,7 +19,6 @@ namespace LogicMonitor.Api
 		///     Gets all collectors
 		/// </summary>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		[Obsolete("Use GetAllAsync<Collector>() instead")]
 		public Task<List<Collector>> GetAllCollectorsAsync(CancellationToken cancellationToken = default)
 			=> GetAllAsync<Collector>(cancellationToken);
@@ -40,7 +39,6 @@ namespace LogicMonitor.Api
 		/// <param name="collectorGroupId">The collector group id</param>
 		/// <param name="filter">The filter</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public Task<List<Collector>> GetAllCollectorsByCollectorGroupId(int collectorGroupId, Filter<Collector> filter = null, CancellationToken cancellationToken = default)
 			=> GetAllAsync(filter, $"setting/collector/groups/{collectorGroupId}/collectors", cancellationToken);
 
@@ -54,7 +52,6 @@ namespace LogicMonitor.Api
 		/// <param name="collectorSize">The Collector size</param>
 		/// <param name="collectorVersion">The collector version (e.g. 26001 for 26.001)</param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task DownloadCollector(
 			int collectorId,
 			FileInfo fileInfo,

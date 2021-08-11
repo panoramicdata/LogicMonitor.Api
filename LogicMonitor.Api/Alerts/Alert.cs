@@ -287,13 +287,11 @@ namespace LogicMonitor.Api.Alerts
 		/// <summary>
 		/// The alert endpoint
 		/// </summary>
-		/// <returns></returns>
 		public string Endpoint() => "alert/alerts";
 
 		/// <summary>
 		///    ToString
 		/// </summary>
-		/// <returns></returns>
 		public override string ToString() => $"{Id} : {MonitorObjectName}/{AlertType} : {AlertLevel}/{DataPointName ?? "no datapoint"}";
 	}
 }

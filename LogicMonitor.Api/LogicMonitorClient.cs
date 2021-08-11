@@ -185,7 +185,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<List<T>> GetAllAsync<T>(CancellationToken cancellationToken) where T : IHasEndpoint, new()
 			=> GetAllInternalAsync((Filter<T>)null, new T().Endpoint(), cancellationToken);
 
@@ -196,7 +195,6 @@ namespace LogicMonitor.Api
 		/// <param name="filter"></param>
 		/// <param name="subUrl"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<List<T>> GetAllAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken = default) where T : new()
 			=> GetAllInternalAsync(filter, subUrl, cancellationToken);
 
@@ -206,7 +204,6 @@ namespace LogicMonitor.Api
 		/// <typeparam name="T"></typeparam>
 		/// <param name="subUrl"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<List<T>> GetAllAsync<T>(string subUrl, CancellationToken cancellationToken = default) where T : new()
 			=> GetAllInternalAsync(default(Filter<T>), subUrl, cancellationToken);
 
@@ -216,7 +213,6 @@ namespace LogicMonitor.Api
 		/// <typeparam name="T"></typeparam>
 		/// <param name="filter"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public Task<List<T>> GetAllAsync<T>(Filter<T> filter = null, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
 			=> GetAllInternalAsync(filter, new T().Endpoint(), cancellationToken);
 
@@ -227,7 +223,6 @@ namespace LogicMonitor.Api
 		/// <param name="filter"></param>
 		/// <param name="subUrl"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		private async Task<List<T>> GetAllInternalAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
 		{
 			var requestedTake = filter?.Take ?? int.MaxValue;
@@ -276,7 +271,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <typeparam name="T">The item to get</typeparam>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public virtual Task<T> GetAsync<T>(CancellationToken cancellationToken = default) where T : class, IHasSingletonEndpoint, new()
 			=> GetBySubUrlAsync<T>(new T().Endpoint(), cancellationToken);
 
@@ -286,7 +280,6 @@ namespace LogicMonitor.Api
 		/// <param name="id">The item id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <typeparam name="T">The item to get</typeparam>
-		/// <returns></returns>
 		public virtual Task<T> GetAsync<T>(int id, CancellationToken cancellationToken = default) where T : IdentifiedItem, IHasEndpoint, new()
 			=> GetBySubUrlAsync<T>($"{new T().Endpoint()}/{id}", cancellationToken);
 
@@ -297,7 +290,6 @@ namespace LogicMonitor.Api
 		/// <param name="filter"></param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <typeparam name="T">The item to get</typeparam>
-		/// <returns></returns>
 		public virtual Task<T> GetAsync<T>(int id, Filter<T> filter, CancellationToken cancellationToken = default) where T : IdentifiedItem, IHasEndpoint, new()
 			=> GetBySubUrlAsync<T>($"{new T().Endpoint()}/{id}?{filter}", cancellationToken);
 
@@ -307,7 +299,6 @@ namespace LogicMonitor.Api
 		/// <typeparam name="T"></typeparam>
 		/// <param name="name"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public virtual async Task<T> GetByNameAsync<T>(string name, CancellationToken cancellationToken = default)
 		where T : NamedItem, IHasEndpoint, new()
 		{
@@ -339,7 +330,6 @@ namespace LogicMonitor.Api
 		/// <param name="id">The item id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <typeparam name="T">The item to get</typeparam>
-		/// <returns></returns>
 		public virtual Task<T> GetAsync<T>(string id, CancellationToken cancellationToken = default) where T : StringIdentifiedItem, IHasEndpoint, new()
 		=> GetBySubUrlAsync<T>($"{new T().Endpoint()}/{id}", cancellationToken);
 
@@ -349,7 +339,6 @@ namespace LogicMonitor.Api
 		/// <typeparam name="T"></typeparam>
 		/// <param name="object"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public virtual Task<T> ExecuteAsync<T>(T @object, CancellationToken cancellationToken = default) where T : IdentifiedItem, IExecutable, new()
 		=> GetBySubUrlAsync<T>($"{@object.Endpoint()}/{@object.Id}/executenow", cancellationToken);
 
@@ -359,7 +348,6 @@ namespace LogicMonitor.Api
 		/// <param name="id">The item id</param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <typeparam name="T">The item to get</typeparam>
-		/// <returns></returns>
 		public virtual Task<T> ExecuteAsync<T>(int id, CancellationToken cancellationToken = default) where T : IdentifiedItem, IExecutable, new()
 		=> GetBySubUrlAsync<T>($"{new T().Endpoint()}/{id}/executenow", cancellationToken);
 
@@ -384,7 +372,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <typeparam name="T">The type</typeparam>
 		/// <param name="propertyName">The property</param>
-		/// <returns></returns>
 		public static string GetSerializationName<T>(string propertyName)
 		{
 			var propertyInfos = typeof(T).GetProperties();
@@ -402,7 +389,6 @@ namespace LogicMonitor.Api
 		/// Get the serialization name for a specified enum type
 		/// </summary>
 		/// <param name="enumObject">The property</param>
-		/// <returns></returns>
 		public static string GetSerializationNameFromEnumMember(object enumObject)
 		{
 			var type = enumObject.GetType();
@@ -453,7 +439,6 @@ namespace LogicMonitor.Api
 		/// <param name="object">The object to update</param>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		/// <exception cref="AggregateException"></exception>
 		public virtual async Task PutAsync<T>(T @object, CancellationToken cancellationToken = default) where T : IdentifiedItem, IHasEndpoint
 		// The ignoreReference permits forcing appliesTo functions and is ignored for other types
@@ -465,7 +450,6 @@ namespace LogicMonitor.Api
 		/// <param name="object">The object to update</param>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		/// <exception cref="AggregateException"></exception>
 		public virtual async Task PutStringIdentifiedItemAsync<T>(T @object, CancellationToken cancellationToken = default) where T : StringIdentifiedItem, IHasEndpoint
 		// The ignoreReference permits forcing appliesTo functions and is ignored for other types
@@ -477,7 +461,6 @@ namespace LogicMonitor.Api
 		/// <param name="subUrl">The subURL</param>
 		/// <param name="object">The updated object</param>
 		/// <param name="cancellationToken">An optional CancellationToken</param>
-		/// <returns></returns>
 		public async Task PutAsync(string subUrl, object @object, CancellationToken cancellationToken = default)
 		{
 			var httpMethod = HttpMethod.Put;
@@ -555,7 +538,6 @@ namespace LogicMonitor.Api
 		/// <param name="hardDelete">Whether to hard delete.</param>
 		/// <param name="cancellationToken">The optional cancellation token</param>
 		/// <typeparam name="T">The type of the item to delete</typeparam>
-		/// <returns></returns>
 		public virtual async Task DeleteAsync<T>(
 			T @object,
 			bool hardDelete = true,
@@ -571,7 +553,6 @@ namespace LogicMonitor.Api
 		/// <param name="hardDelete">Whether to hard delete.</param>
 		/// <param name="cancellationToken">The optional cancellation token</param>
 		/// <typeparam name="T">The type of the item to delete</typeparam>
-		/// <returns></returns>
 		public virtual async Task DeleteStringIdentifiedAsync<T>(
 		T @object,
 		bool hardDelete = true,
@@ -587,7 +568,6 @@ namespace LogicMonitor.Api
 		/// <param name="hardDelete">Whether to hard delete.</param>
 		/// <param name="cancellationToken">The optional cancellation token</param>
 		/// <typeparam name="T">The type of the item to delete</typeparam>
-		/// <returns></returns>
 		public virtual async Task DeleteAsync<T>(
 		int id,
 		bool hardDelete = true,
@@ -603,7 +583,6 @@ namespace LogicMonitor.Api
 		/// <param name="hardDelete">Whether to hard delete.</param>
 		/// <param name="cancellationToken">The optional cancellation token</param>
 		/// <typeparam name="T">The type of the item to delete</typeparam>
-		/// <returns></returns>
 		public virtual async Task DeleteAsync<T>(
 		 string id,
 		 bool hardDelete = true,
@@ -616,7 +595,6 @@ namespace LogicMonitor.Api
 		/// <param name="deviceDataSourceInstance">The DeviceDataSourceInstance to delete</param>
 		/// <param name="hardDelete">Whether to hard delete.</param>
 		/// <param name="cancellationToken">The optional cancellation token</param>
-		/// <returns></returns>
 		public virtual async Task DeleteAsync(
 			DeviceDataSourceInstance deviceDataSourceInstance,
 			bool hardDelete = true,
@@ -629,7 +607,6 @@ namespace LogicMonitor.Api
 		/// <param name="creationDto"></param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
 		public virtual Task<T> CreateAsync<T>(CreationDto<T> creationDto, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
 			=> PostAsync<CreationDto<T>, T>(creationDto, new T().Endpoint(), cancellationToken);
 
@@ -723,7 +700,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="subUrl">The subUrl</param>
 		/// <param name="cancellationToken">The cancellation token.</param>
-		/// <returns></returns>
 		public Task<JObject> GetJObjectAsync(string subUrl, CancellationToken cancellationToken)
 		=> GetAsync<JObject>(UseCache, subUrl, cancellationToken);
 
@@ -732,7 +708,6 @@ namespace LogicMonitor.Api
 		/// </summary>
 		/// <param name="subUrl"></param>
 		/// <param name="cancellationToken"></param>
-		/// <returns></returns>
 		public async Task DeleteAsync(string subUrl, CancellationToken cancellationToken = default)
 		{
 			var httpMethod = HttpMethod.Delete;
@@ -842,7 +817,6 @@ namespace LogicMonitor.Api
 		/// <param name="subUrl"></param>
 		/// <param name="cancellationToken">The cancellation token</param>
 		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
 		/// <exception cref="LogicMonitorApiException"></exception>
 		private async Task<T> GetAsync<T>(bool permitCacheIfEnabled, string subUrl, CancellationToken cancellationToken) where T : class, new()
 		{
@@ -1007,7 +981,6 @@ namespace LogicMonitor.Api
 		/// <param name="object">The posted object </param>
 		/// <param name="subUrl">The endpoint</param>
 		/// <param name="cancellationToken">An optional CancellationToken</param>
-		/// <returns></returns>
 		public async Task<TOut> PostAsync<TIn, TOut>(TIn @object, string subUrl, CancellationToken cancellationToken = default) where TOut : new()
 		{
 			var httpMethod = HttpMethod.Post;
@@ -1099,7 +1072,6 @@ namespace LogicMonitor.Api
 		/// <param name="entity"></param>
 		/// <param name="fieldsToUpdate">The fields to update</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		/// <exception cref="AggregateException"></exception>
 		public virtual async Task PatchAsync<T>(T entity, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken = default) where T : IPatchable
 		=> await PatchAsync($"{entity.Endpoint()}/{entity.Id}", fieldsToUpdate, cancellationToken).ConfigureAwait(false);
@@ -1196,7 +1168,6 @@ namespace LogicMonitor.Api
 		/// <param name="collectorId">The ID of the collector on which the command was executed</param>
 		/// <param name="sessionId">The request ID from the ExecuteDebugCommandResponse</param>
 		/// <param name="cancellationToken">The optional cancellation token</param>
-		/// <returns></returns>
 		public Task<ExecuteDebugCommandResponse> GetDebugCommandResultAsync(int collectorId, int sessionId, CancellationToken cancellationToken = default)
 		=> GetBySubUrlAsync<ExecuteDebugCommandResponse>($"debug/{sessionId}?collectorId={collectorId}&_={DateTime.UtcNow.Ticks}", cancellationToken);
 
@@ -1208,7 +1179,6 @@ namespace LogicMonitor.Api
 		/// <param name="timeoutMs">The maximum amount of time to wait (default 10000 ms)</param>
 		/// <param name="sleepIntervalMs">The sleep interval between attempts to retrieve the response (default 500ms)</param>
 		/// <param name="cancellationToken">The cancellation token</param>
-		/// <returns></returns>
 		public async Task<ExecuteDebugCommandResponse> ExecuteDebugCommandAndWaitForResultAsync(int collectorId, string commandText, int timeoutMs = 10000, int sleepIntervalMs = 500, CancellationToken cancellationToken = default)
 		{
 			var executeDebugCommandResponse = await ExecuteDebugCommandAsync(collectorId, commandText, cancellationToken).ConfigureAwait(false);
@@ -1358,7 +1328,6 @@ namespace LogicMonitor.Api
 		/// <param name="id">The id of the item being cloned</param>
 		/// <param name="cloneRequest">The clone request</param>
 		/// <param name="cancellationToken">An optional CancellationToken</param>
-		/// <returns></returns>
 		public Task<T> CloneAsync<T>(int id, CloneRequest<T> cloneRequest, CancellationToken cancellationToken = default) where T : IHasEndpoint, ICloneableItem, new()
 			=> PostAsync<CloneRequest<T>, T>(cloneRequest, $"{new T().Endpoint()}/{id}/clone", cancellationToken);
 	}

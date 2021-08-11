@@ -17,7 +17,6 @@ namespace LogicMonitor.Api.Converters
 		/// <param name="jObject">
 		/// contents of JSON object that will be deserialized
 		/// </param>
-		/// <returns></returns>
 		protected abstract T Create(Type objectType, JObject jObject);
 
 		/// <inheritdoc />

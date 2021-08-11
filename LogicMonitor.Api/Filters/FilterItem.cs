@@ -86,7 +86,6 @@ namespace LogicMonitor.Api.Filters
 		/// <summary>
 		///     Creates output as a json string
 		/// </summary>
-		/// <returns></returns>
 		public object ToJsonString() => JsonConvert.SerializeObject(this);
 	}
 }

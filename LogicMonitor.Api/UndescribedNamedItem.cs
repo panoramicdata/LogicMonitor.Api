@@ -18,7 +18,6 @@ namespace LogicMonitor.Api
 		///    Equals override
 		/// </summary>
 		/// <param name="obj"></param>
-		/// <returns></returns>
 		public override bool Equals(object obj)
 		{
 			if (obj == null || obj.GetType() != GetType())
@@ -36,7 +35,6 @@ namespace LogicMonitor.Api
 		/// <summary>
 		///    Get Hashcode override
 		/// </summary>
-		/// <returns></returns>
 		public override int GetHashCode() => base.GetHashCode()
 				   + (Name ?? string.Empty).GetHashCode();
 
