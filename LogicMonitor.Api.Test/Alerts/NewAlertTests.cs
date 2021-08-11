@@ -1,7 +1,6 @@
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Extensions;
 using LogicMonitor.Api.Filters;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;

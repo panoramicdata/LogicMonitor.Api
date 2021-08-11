@@ -1,7 +1,6 @@
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Attributes;
 using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.LogicModules;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;

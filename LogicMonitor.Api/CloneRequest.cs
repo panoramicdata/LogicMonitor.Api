@@ -1,6 +1,3 @@
-using LogicMonitor.Api.Dashboards;
-using System.Collections.Generic;
-
 namespace LogicMonitor.Api
 {
 	/// <summary>

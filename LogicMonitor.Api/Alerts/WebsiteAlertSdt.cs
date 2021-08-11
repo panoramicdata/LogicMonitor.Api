@@ -1,6 +1,4 @@
-﻿using LogicMonitor.Api.Converters;
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.Alerts
 {
