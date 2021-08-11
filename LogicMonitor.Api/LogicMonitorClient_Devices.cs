@@ -228,7 +228,7 @@ namespace LogicMonitor.Api
 
 					if (recurse)
 					{
-						if (checkedDeviceGroup.Id != 1)	// Not the root
+						if (checkedDeviceGroup.Id != 1)  // Not the root
 						{
 							// Filter out the ones where the full path did not START with the searched-for group, as we could
 							// only use a Includes<DeviceGroup> filter and not a StartsWith (there isn't one!)

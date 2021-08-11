@@ -50,12 +50,5 @@ namespace LogicMonitor.Api.Websites
 		/// </summary>
 		[DataMember(Name = "properties")]
 		public List<Property> Properties { get; set; }
-
-		/// <summary>
-		/// The test location
-		/// </summary>
-		/// THIS HAS BEEN REMOVED BECAUSE IT SEEMS TO NO LONGER HAVE ANY FUNCTION
-		//[DataMember(Name = "testLocation")]
-		//public TestLocation TestLocation { get; set; }
 	}
 }
