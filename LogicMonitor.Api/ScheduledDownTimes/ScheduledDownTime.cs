@@ -144,7 +144,7 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		public int DurationMinutes { get; set; }
 
 		/// <summary>
-		///    St5art date time local
+		///    Start date time local
 		/// </summary>
 		[DataMember(Name = "startDateTimeOnLocal")]
 		public string StartDateTimeLocal { get; set; }
