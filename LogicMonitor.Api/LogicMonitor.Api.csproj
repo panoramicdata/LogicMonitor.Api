@@ -20,7 +20,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.154.2</Version>
+		<Version>2.154.3</Version>
 		<PackageReleaseNotes>Added missing 'tracesManageTab' user privilege type enum.</PackageReleaseNotes>
 
 	</PropertyGroup>
