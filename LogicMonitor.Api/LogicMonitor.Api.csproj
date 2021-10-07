@@ -21,7 +21,7 @@
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
 		<Version>2.154.2</Version>
-		<PackageReleaseNotes>Updated RoleCreationDto and UserCreationDto to permit group and role membership.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added missing 'tracesManageTab' user privilege type enum.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
