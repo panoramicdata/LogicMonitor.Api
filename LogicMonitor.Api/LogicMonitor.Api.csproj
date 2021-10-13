@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.154.3</Version>
-		<PackageReleaseNotes>Added missing 'tracesManageTab' user privilege type enum.</PackageReleaseNotes>
+		<Version>2.154.4</Version>
+		<PackageReleaseNotes>Added LogicMonitorClient.GetXYZHistorySdts methods for devices, device groups, etc.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
