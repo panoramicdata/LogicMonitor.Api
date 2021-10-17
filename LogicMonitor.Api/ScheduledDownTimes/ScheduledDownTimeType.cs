@@ -97,5 +97,13 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		[EnumMember(Value = "DeviceClusterAlertDefSDT")]
 		DeviceClusterAlertDefSdt,
 		// Have not created a CreationDto yet...
+
+		// UI shows ResourceGroupSDT but the API returns DeviceGroupSDT
+		//[EnumMember(Value = "ResourceGroupSDT")]
+		//ResourceGroup,
+
+		// UI shows ResourceSDT but the API returns DeviceSDT
+		//[EnumMember(Value = "ResourceSDT")]
+		//Resource
 	}
 }

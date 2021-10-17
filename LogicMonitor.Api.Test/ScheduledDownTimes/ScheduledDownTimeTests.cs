@@ -32,6 +32,45 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes
 		}
 
 		[Fact]
+		public async void GetHistoricDeviceScheduledDownTimes()
+		{
+			// Device
+			var testsdts =
+				await LogicMonitorClient.GetDeviceHistorySdts(1053, default)
+				.ConfigureAwait(false);
+
+			// Device Group
+			var deviceGroupHistorySdts =
+				await LogicMonitorClient.GetDeviceGroupHistorySdts(1516, default)
+				.ConfigureAwait(false);
+
+			// Device
+			var deviceHistorySdts =
+				await LogicMonitorClient.GetDeviceHistorySdts(1765, default)
+				.ConfigureAwait(false);
+
+			// Device Data Source
+			var deviceDataSourceHistorySdts =
+				await LogicMonitorClient.GetDeviceDataSourceHistorySdts(1765, 98562, default)
+				.ConfigureAwait(false);
+
+			// Device Data Source Instance
+			var deviceDataSourceInstanceHistorySdts =
+				await LogicMonitorClient.GetDeviceDataSourceInstanceHistorySdts(1765, 98562, 244662832, default)
+				.ConfigureAwait(false);
+
+			// Website Group
+			var websiteGroupHistorySdts =
+				await LogicMonitorClient.GetWebsiteGroupHistorySdts(20, default)
+				.ConfigureAwait(false);
+
+			// Website
+			var websiteHistorySdts =
+				await LogicMonitorClient.GetWebsiteHistorySdts(350, default)
+				.ConfigureAwait(false);
+		}
+
+		[Fact]
 		public async void AddAndDeleteADeviceSdt()
 		{
 			var portalClient = LogicMonitorClient;

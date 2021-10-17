@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using LogicMonitor.Api.Extensions;
+using System;
+using System.Runtime.Serialization;
 
 namespace LogicMonitor.Api.ScheduledDownTimes
 {
@@ -49,5 +51,17 @@ namespace LogicMonitor.Api.ScheduledDownTimes
 		/// </summary>
 		[DataMember(Name = "duration")]
 		public int DurationMinutes { get; set; }
+
+		/// <summary>
+		/// Start DateTime UTC
+		/// </summary>
+		[IgnoreDataMember]
+		public DateTime StartDateTimeUtc => StartDateTimeMs.ToDateTimeUtcFromMs();
+
+		/// <summary>
+		/// End DateTime UTC
+		/// </summary>
+		[IgnoreDataMember]
+		public DateTime EndDateTimeUtc => EndDateTimeMs.ToDateTimeUtcFromMs();
 	}
 }

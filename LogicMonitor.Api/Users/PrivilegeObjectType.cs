@@ -88,5 +88,11 @@ namespace LogicMonitor.Api.Users
 		/// </summary>
 		[EnumMember(Value = "logs")]
 		Logs,
+
+		/// <summary>
+		/// TracesManageTab
+		/// </summary>
+		[EnumMember(Value = "tracesManageTab")]
+		TracesManageTab,
 	}
 }
