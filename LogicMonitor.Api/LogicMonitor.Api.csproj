@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.154.5</Version>
-		<PackageReleaseNotes>Fixed DeviceDataSource SDT which was not setting DeviceDataSourceId</PackageReleaseNotes>
+		<Version>2.154.6</Version>
+		<PackageReleaseNotes>Fixed broken GetDevicesByDeviceGroupFullPathAsync which was only taking 300 devices</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

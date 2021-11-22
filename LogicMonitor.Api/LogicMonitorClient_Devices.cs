@@ -239,7 +239,10 @@ namespace LogicMonitor.Api
 					// Get the Devices
 					foreach (var deviceGroup in deviceGroups)
 					{
-						devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device> { Skip = 0, Take = 300 }).ConfigureAwait(false));
+						devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, null).ConfigureAwait(false));
+
+						// NO! This does NOT return enough devices - only 300!
+						//devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device> { Skip = 0, Take = 300 }).ConfigureAwait(false));
 					}
 				}
 			}
