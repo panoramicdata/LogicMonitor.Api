@@ -1,19 +1,18 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+/// <summary>
+///     Text Widget
+/// </summary>
+public class TextWidgetCreationDto : WidgetCreationDto<TextWidget>
 {
 	/// <summary>
-	///     Text Widget
+	///     The text HTML content
 	/// </summary>
-	public class TextWidgetCreationDto : WidgetCreationDto<TextWidget>
-	{
-		/// <summary>
-		///     The text HTML content
-		/// </summary>
-		[DataMember(Name = "content")]
-		public string Content { get; set; }
+	[DataMember(Name = "content")]
+	public string Content { get; set; }
 
-		/// <inheritdoc />
-		public override string Type { get; } = "text";
-	}
+	/// <inheritdoc />
+	public override string Type { get; } = "text";
 }

@@ -1,13 +1,12 @@
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+/// <summary>
+///    Entities with patch support
+/// </summary>
+public interface IPatchable : IHasEndpoint
 {
 	/// <summary>
-	///    Entities with patch support
+	///    The entity's patch id
 	/// </summary>
-	public interface IPatchable : IHasEndpoint
-	{
-		/// <summary>
-		///    The entity's patch id
-		/// </summary>
-		int Id { get; }
-	}
+	int Id { get; }
 }

@@ -1,17 +1,16 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Data
+namespace LogicMonitor.Api.Data;
+
+/// <summary>
+/// A fetch data request
+/// </summary>
+[DataContract]
+public class FetchDataRequest
 {
 	/// <summary>
-	/// A fetch data request
+	/// The comma-separated instance ids
 	/// </summary>
-	[DataContract]
-	public class FetchDataRequest
-	{
-		/// <summary>
-		/// The comma-separated instance ids
-		/// </summary>
-		[DataMember(Name = "instanceIds")]
-		public string InstanceIds { get; set; }
-	}
+	[DataMember(Name = "instanceIds")]
+	public string InstanceIds { get; set; }
 }

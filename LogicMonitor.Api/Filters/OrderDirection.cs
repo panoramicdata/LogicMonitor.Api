@@ -1,18 +1,17 @@
-﻿namespace LogicMonitor.Api.Filters
+﻿namespace LogicMonitor.Api.Filters;
+
+/// <summary>
+/// An order direction
+/// </summary>
+public enum OrderDirection : byte
 {
 	/// <summary>
-	/// An order direction
+	/// Ascending
 	/// </summary>
-	public enum OrderDirection : byte
-	{
-		/// <summary>
-		/// Ascending
-		/// </summary>
-		Asc = 1,
+	Asc = 1,
 
-		/// <summary>
-		/// Descending
-		/// </summary>
-		Desc = 2,
-	}
+	/// <summary>
+	/// Descending
+	/// </summary>
+	Desc = 2,
 }

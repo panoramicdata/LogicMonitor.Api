@@ -1,18 +1,17 @@
-namespace LogicMonitor.Api.Settings
+namespace LogicMonitor.Api.Settings;
+
+/// <summary>
+/// Collector download type
+/// </summary>
+public enum CollectorDownloadType
 {
 	/// <summary>
-	/// Collector download type
+	/// Bootstrap
 	/// </summary>
-	public enum CollectorDownloadType
-	{
-		/// <summary>
-		/// Bootstrap
-		/// </summary>
-		Bootstrap,
+	Bootstrap,
 
-		/// <summary>
-		/// Full package
-		/// </summary>
-		FullPackage,
-	}
+	/// <summary>
+	/// Full package
+	/// </summary>
+	FullPackage,
 }

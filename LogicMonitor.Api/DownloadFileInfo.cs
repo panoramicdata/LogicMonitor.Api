@@ -1,9 +1,8 @@
 using System.IO;
 
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+internal class DownloadFileInfo
 {
-	internal class DownloadFileInfo
-	{
-		public FileInfo FileInfo { get; set; }
-	}
+	public FileInfo FileInfo { get; set; }
 }

@@ -1,9 +1,8 @@
 using System;
 
-namespace LogicMonitor.Api.Attributes
+namespace LogicMonitor.Api.Attributes;
+
+[AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
+internal class SantabaReadOnly : Attribute
 {
-	[AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
-	internal class SantabaReadOnly : Attribute
-	{
-	}
 }

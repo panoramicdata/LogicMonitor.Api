@@ -1,28 +1,27 @@
-﻿namespace LogicMonitor.Api.Logs
+﻿namespace LogicMonitor.Api.Logs;
+
+/// <summary>
+/// The action type of an audit event
+/// </summary>
+public enum AuditEventActionType
 {
 	/// <summary>
-	/// The action type of an audit event
+	/// Unknown / not set
 	/// </summary>
-	public enum AuditEventActionType
-	{
-		/// <summary>
-		/// Unknown / not set
-		/// </summary>
-		Unknown,
+	Unknown,
 
-		/// <summary>
-		/// Create
-		/// </summary>
-		Create,
+	/// <summary>
+	/// Create
+	/// </summary>
+	Create,
 
-		/// <summary>
-		/// Update
-		/// </summary>
-		Update,
+	/// <summary>
+	/// Update
+	/// </summary>
+	Update,
 
-		/// <summary>
-		/// Delete
-		/// </summary>
-		Delete,
-	}
+	/// <summary>
+	/// Delete
+	/// </summary>
+	Delete,
 }

@@ -1,13 +1,12 @@
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+/// <summary>
+/// A validation issue
+/// </summary>
+public abstract class ValidationIssue
 {
 	/// <summary>
-	/// A validation issue
+	/// The message
 	/// </summary>
-	public abstract class ValidationIssue
-	{
-		/// <summary>
-		/// The message
-		/// </summary>
-		public string Message { get; }
-	}
+	public string Message { get; }
 }

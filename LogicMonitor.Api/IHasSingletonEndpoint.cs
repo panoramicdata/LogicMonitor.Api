@@ -1,13 +1,12 @@
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+/// <summary>
+///    Provides the ability to get by id and by page
+/// </summary>
+public interface IHasSingletonEndpoint
 {
 	/// <summary>
-	///    Provides the ability to get by id and by page
+	///    The endpoint
 	/// </summary>
-	public interface IHasSingletonEndpoint
-	{
-		/// <summary>
-		///    The endpoint
-		/// </summary>
-		string Endpoint();
-	}
+	string Endpoint();
 }

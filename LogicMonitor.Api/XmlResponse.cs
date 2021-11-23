@@ -1,13 +1,12 @@
-﻿namespace LogicMonitor.Api
+﻿namespace LogicMonitor.Api;
+
+/// <summary>
+/// An XML response
+/// </summary>
+public class XmlResponse
 {
 	/// <summary>
-	/// An XML response
+	/// The content
 	/// </summary>
-	public class XmlResponse
-	{
-		/// <summary>
-		/// The content
-		/// </summary>
-		public string Content { get; set; }
-	}
+	public string Content { get; set; }
 }

@@ -1,23 +1,22 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Collectors
+namespace LogicMonitor.Api.Collectors;
+
+/// <summary>
+///    Collector Release information
+/// </summary>
+[DataContract]
+public class CollectorRelease
 {
 	/// <summary>
-	///    Collector Release information
+	///    The general deployment release
 	/// </summary>
-	[DataContract]
-	public class CollectorRelease
-	{
-		/// <summary>
-		///    The general deployment release
-		/// </summary>
-		[DataMember(Name = "gd")]
-		public int Gd { get; set; }
+	[DataMember(Name = "gd")]
+	public int Gd { get; set; }
 
-		/// <summary>
-		///    The early deployment release
-		/// </summary>
-		[DataMember(Name = "ed")]
-		public int Ed { get; set; }
-	}
+	/// <summary>
+	///    The early deployment release
+	/// </summary>
+	[DataMember(Name = "ed")]
+	public int Ed { get; set; }
 }

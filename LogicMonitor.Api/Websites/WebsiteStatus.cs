@@ -1,28 +1,27 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Websites
+namespace LogicMonitor.Api.Websites;
+
+/// <summary>
+/// The website status
+/// </summary>
+public enum WebsiteStatus
 {
 	/// <summary>
-	/// The website status
+	/// Unknown
 	/// </summary>
-	public enum WebsiteStatus
-	{
-		/// <summary>
-		/// Unknown
-		/// </summary>
-		[EnumMember(Value = "unknown")]
-		Unknown = 0,
+	[EnumMember(Value = "unknown")]
+	Unknown = 0,
 
-		/// <summary>
-		/// Alive
-		/// </summary>
-		[EnumMember(Value = "alive")]
-		Alive = 1,
+	/// <summary>
+	/// Alive
+	/// </summary>
+	[EnumMember(Value = "alive")]
+	Alive = 1,
 
-		/// <summary>
-		/// Alive
-		/// </summary>
-		[EnumMember(Value = "dead")]
-		Dead = 2,
-	}
+	/// <summary>
+	/// Alive
+	/// </summary>
+	[EnumMember(Value = "dead")]
+	Dead = 2,
 }

@@ -2,37 +2,36 @@
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Websites
+namespace LogicMonitor.Api.Websites;
+
+/// <summary>
+/// A website type
+/// </summary>
+[DataContract]
+[JsonConverter(typeof(StringEnumConverter))]
+public enum WebsiteType
 {
 	/// <summary>
-	/// A website type
+	/// Unknown website type
 	/// </summary>
-	[DataContract]
-	[JsonConverter(typeof(StringEnumConverter))]
-	public enum WebsiteType
-	{
-		/// <summary>
-		/// Unknown website type
-		/// </summary>
-		[EnumMember(Value = "unknown")]
-		Unknown = 0,
+	[EnumMember(Value = "unknown")]
+	Unknown = 0,
 
-		/// <summary>
-		/// Web check website type
-		/// </summary>
-		[EnumMember(Value = "webcheck")]
-		WebCheck,
+	/// <summary>
+	/// Web check website type
+	/// </summary>
+	[EnumMember(Value = "webcheck")]
+	WebCheck,
 
-		/// <summary>
-		/// Ping website type
-		/// </summary>
-		[EnumMember(Value = "pingcheck")]
-		Ping,
+	/// <summary>
+	/// Ping website type
+	/// </summary>
+	[EnumMember(Value = "pingcheck")]
+	Ping,
 
-		/// <summary>
-		/// Synthetic website type
-		/// </summary>
-		[EnumMember(Value = "synthetic")]
-		Synthetic,
-	}
+	/// <summary>
+	/// Synthetic website type
+	/// </summary>
+	[EnumMember(Value = "synthetic")]
+	Synthetic,
 }

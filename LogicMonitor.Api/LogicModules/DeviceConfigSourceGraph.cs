@@ -1,12 +1,11 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.LogicModules
+namespace LogicMonitor.Api.LogicModules;
+
+/// <summary>
+/// A device config source graph
+/// </summary>
+[DataContract]
+public class DeviceConfigSourceGraph
 {
-	/// <summary>
-	/// A device config source graph
-	/// </summary>
-	[DataContract]
-	public class DeviceConfigSourceGraph
-	{
-	}
 }

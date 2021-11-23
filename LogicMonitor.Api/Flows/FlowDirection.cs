@@ -1,28 +1,27 @@
-﻿namespace LogicMonitor.Api.Flows
+﻿namespace LogicMonitor.Api.Flows;
+
+/// <summary>
+/// Flow direction
+/// </summary>
+public enum FlowDirection
 {
 	/// <summary>
-	/// Flow direction
+	/// Unknown / not set
 	/// </summary>
-	public enum FlowDirection
-	{
-		/// <summary>
-		/// Unknown / not set
-		/// </summary>
-		Unknown = 0,
+	Unknown = 0,
 
-		/// <summary>
-		/// All directions
-		/// </summary>
-		All = 1,
+	/// <summary>
+	/// All directions
+	/// </summary>
+	All = 1,
 
-		/// <summary>
-		/// All directions
-		/// </summary>
-		In = 2,
+	/// <summary>
+	/// All directions
+	/// </summary>
+	In = 2,
 
-		/// <summary>
-		/// All directions
-		/// </summary>
-		Out = 3,
-	}
+	/// <summary>
+	/// All directions
+	/// </summary>
+	Out = 3,
 }

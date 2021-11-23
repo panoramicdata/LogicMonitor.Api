@@ -1,18 +1,17 @@
-﻿namespace LogicMonitor.Api
+﻿namespace LogicMonitor.Api;
+
+/// <summary>
+/// The image type
+/// </summary>
+public enum ImageType
 {
 	/// <summary>
-	/// The image type
+	/// The company logo
 	/// </summary>
-	public enum ImageType
-	{
-		/// <summary>
-		/// The company logo
-		/// </summary>
-		CompanyLogo,
+	CompanyLogo,
 
-		/// <summary>
-		/// The login logo
-		/// </summary>
-		LoginLogo
-	}
+	/// <summary>
+	/// The login logo
+	/// </summary>
+	LoginLogo
 }

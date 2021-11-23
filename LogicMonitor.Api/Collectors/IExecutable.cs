@@ -1,9 +1,8 @@
-namespace LogicMonitor.Api.Collectors
+namespace LogicMonitor.Api.Collectors;
+
+/// <summary>
+///    Provides the ability to execute the item
+/// </summary>
+public interface IExecutable : IHasEndpoint
 {
-	/// <summary>
-	///    Provides the ability to execute the item
-	/// </summary>
-	public interface IExecutable : IHasEndpoint
-	{
-	}
 }

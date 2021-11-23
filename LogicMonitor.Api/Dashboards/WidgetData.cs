@@ -1,60 +1,59 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+/// <summary>
+/// Widget data
+/// </summary>
+[DataContract]
+public class WidgetData
 {
 	/// <summary>
-	/// Widget data
+	///     Type
 	/// </summary>
-	[DataContract]
-	public class WidgetData
-	{
-		/// <summary>
-		///     Type
-		/// </summary>
-		[DataMember(Name = "type")]
-		public string Type { get; set; }
+	[DataMember(Name = "type")]
+	public string Type { get; set; }
 
-		/// <summary>
-		///     Title
-		/// </summary>
-		[DataMember(Name = "title")]
-		public string Title { get; set; }
+	/// <summary>
+	///     Title
+	/// </summary>
+	[DataMember(Name = "title")]
+	public string Title { get; set; }
 
-		/// <summary>
-		///     Availability
-		/// </summary>
-		[DataMember(Name = "availability")]
-		public double? Availability { get; set; }
+	/// <summary>
+	///     Availability
+	/// </summary>
+	[DataMember(Name = "availability")]
+	public double? Availability { get; set; }
 
-		/// <summary>
-		///     Color level
-		/// </summary>
-		[DataMember(Name = "colorLevel")]
-		public int? ColorLevel { get; set; }
+	/// <summary>
+	///     Color level
+	/// </summary>
+	[DataMember(Name = "colorLevel")]
+	public int? ColorLevel { get; set; }
 
-		/// <summary>
-		///     Data
-		/// </summary>
-		[DataMember(Name = "data")]
-		public List<WidgetDataItem> Data { get; set; }
+	/// <summary>
+	///     Data
+	/// </summary>
+	[DataMember(Name = "data")]
+	public List<WidgetDataItem> Data { get; set; }
 
-		/// <summary>
-		///     Result list (used by SLA Multi widget)
-		/// </summary>
-		[DataMember(Name = "resultList")]
-		public List<WidgetDataItem> ResultList { get; set; }
+	/// <summary>
+	///     Result list (used by SLA Multi widget)
+	/// </summary>
+	[DataMember(Name = "resultList")]
+	public List<WidgetDataItem> ResultList { get; set; }
 
-		/// <summary>
-		///     Column headers
-		/// </summary>
-		[DataMember(Name = "columnHeaders")]
-		public List<WidgetColumnHeader> ColumnHeaders { get; set; }
+	/// <summary>
+	///     Column headers
+	/// </summary>
+	[DataMember(Name = "columnHeaders")]
+	public List<WidgetColumnHeader> ColumnHeaders { get; set; }
 
-		/// <summary>
-		///     Rows
-		/// </summary>
-		[DataMember(Name = "rows")]
-		public List<WidgetRow> Rows { get; set; }
-	}
+	/// <summary>
+	///     Rows
+	/// </summary>
+	[DataMember(Name = "rows")]
+	public List<WidgetRow> Rows { get; set; }
 }

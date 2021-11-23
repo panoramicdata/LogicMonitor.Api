@@ -1,13 +1,12 @@
-﻿namespace LogicMonitor.Api.OpsNotes
+﻿namespace LogicMonitor.Api.OpsNotes;
+
+/// <summary>
+///    An ops note activations
+/// </summary>
+public class OpsNoteActivation
 {
 	/// <summary>
-	///    An ops note activations
+	///    The activation status
 	/// </summary>
-	public class OpsNoteActivation
-	{
-		/// <summary>
-		///    The activation status
-		/// </summary>
-		public bool Activation { get; set; }
-	}
+	public bool Activation { get; set; }
 }

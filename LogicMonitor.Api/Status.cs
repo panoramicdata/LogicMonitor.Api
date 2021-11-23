@@ -1,39 +1,38 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+/// <summary>
+/// Status
+/// </summary>
+[DataContract]
+public enum Status
 {
 	/// <summary>
-	/// Status
+	/// Unknown
 	/// </summary>
-	[DataContract]
-	public enum Status
-	{
-		/// <summary>
-		/// Unknown
-		/// </summary>
-		[EnumMember(Value = "unknown")]
-		Unknown = 0,
+	[EnumMember(Value = "unknown")]
+	Unknown = 0,
 
-		/// <summary>
-		/// Normal
-		/// </summary>
-		Normal = 1,
+	/// <summary>
+	/// Normal
+	/// </summary>
+	Normal = 1,
 
-		/// <summary>
-		/// Dead
-		/// </summary>
-		Dead = 2,
+	/// <summary>
+	/// Dead
+	/// </summary>
+	Dead = 2,
 
-		/// <summary>
-		/// Unacknowledged Alert
-		/// </summary>
-		[EnumMember(Value = "alert-noconfirmed")]
-		AlertNoConfirmed = 3,
+	/// <summary>
+	/// Unacknowledged Alert
+	/// </summary>
+	[EnumMember(Value = "alert-noconfirmed")]
+	AlertNoConfirmed = 3,
 
-		/// <summary>
-		/// Acknowledged Alert
-		/// </summary>
-		[EnumMember(Value = "alert-confirmed")]
-		AlertConfirmed = 4,
-	}
+	/// <summary>
+	/// Acknowledged Alert
+	/// </summary>
+	[EnumMember(Value = "alert-confirmed")]
+	AlertConfirmed = 4,
 }

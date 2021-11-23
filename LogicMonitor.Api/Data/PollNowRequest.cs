@@ -1,23 +1,22 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Data
+namespace LogicMonitor.Api.Data;
+
+/// <summary>
+/// A poll now request
+/// </summary>
+[DataContract]
+public class PollNowRequest
 {
 	/// <summary>
-	/// A poll now request
+	/// The collector id
 	/// </summary>
-	[DataContract]
-	public class PollNowRequest
-	{
-		/// <summary>
-		/// The collector id
-		/// </summary>
-		[DataMember(Name = "agentId")]
-		public int CollectorId { get; set; }
+	[DataMember(Name = "agentId")]
+	public int CollectorId { get; set; }
 
-		/// <summary>
-		/// The request id
-		/// </summary>
-		[DataMember(Name = "requestId")]
-		public int RequestId { get; set; }
-	}
+	/// <summary>
+	/// The request id
+	/// </summary>
+	[DataMember(Name = "requestId")]
+	public int RequestId { get; set; }
 }

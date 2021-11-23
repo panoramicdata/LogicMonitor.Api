@@ -1,13 +1,12 @@
-namespace LogicMonitor.Api.Flows
+namespace LogicMonitor.Api.Flows;
+
+/// <summary>
+///    A request for flow endpoints.
+/// </summary>
+public class FlowEndpointsRequest : SortedFlowRequest
 {
 	/// <summary>
-	///    A request for flow endpoints.
+	///    Gets the query string
 	/// </summary>
-	public class FlowEndpointsRequest : SortedFlowRequest
-	{
-		/// <summary>
-		///    Gets the query string
-		/// </summary>
-		public override string GetQueryString() => $"device/devices/{DeviceId}/endpoints?filter=type:\"destination\"&sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}&netflowFilter={NetflowFilter.AsUrlEncodedString()}&size={Take}&offset={Skip}";
-	}
+	public override string GetQueryString() => $"device/devices/{DeviceId}/endpoints?filter=type:\"destination\"&sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}&netflowFilter={NetflowFilter.AsUrlEncodedString()}&size={Take}&offset={Skip}";
 }

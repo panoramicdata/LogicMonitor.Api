@@ -1,35 +1,34 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Alerts
+namespace LogicMonitor.Api.Alerts;
+
+/// <summary>
+/// A device data source SDT
+/// </summary>
+[DataContract]
+public class DeviceDataSourceAlertSdt : AlertSdt
 {
 	/// <summary>
-	/// A device data source SDT
+	/// The DataSource name
 	/// </summary>
-	[DataContract]
-	public class DeviceDataSourceAlertSdt : AlertSdt
-	{
-		/// <summary>
-		/// The DataSource name
-		/// </summary>
-		[DataMember(Name = "dataSourceName")]
-		public string DataSourceName { get; set; }
+	[DataMember(Name = "dataSourceName")]
+	public string DataSourceName { get; set; }
 
-		/// <summary>
-		/// The DataSource ID
-		/// </summary>
-		[DataMember(Name = "dataSourceId")]
-		public int DataSourceId { get; set; }
+	/// <summary>
+	/// The DataSource ID
+	/// </summary>
+	[DataMember(Name = "dataSourceId")]
+	public int DataSourceId { get; set; }
 
-		/// <summary>
-		/// The Device display name
-		/// </summary>
-		[DataMember(Name = "deviceDisplayName")]
-		public string DeviceDisplayName { get; set; }
+	/// <summary>
+	/// The Device display name
+	/// </summary>
+	[DataMember(Name = "deviceDisplayName")]
+	public string DeviceDisplayName { get; set; }
 
-		/// <summary>
-		/// The Device ID
-		/// </summary>
-		[DataMember(Name = "deviceId")]
-		public int DeviceId { get; set; }
-	}
+	/// <summary>
+	/// The Device ID
+	/// </summary>
+	[DataMember(Name = "deviceId")]
+	public int DeviceId { get; set; }
 }

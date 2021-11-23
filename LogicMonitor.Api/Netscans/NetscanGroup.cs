@@ -1,16 +1,15 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Netscans
+namespace LogicMonitor.Api.Netscans;
+
+/// <summary>
+///    A Netscan Policy
+/// </summary>
+[DataContract]
+public class NetscanGroup : NamedItem, IHasEndpoint
 {
 	/// <summary>
-	///    A Netscan Policy
+	///    The subUrl for setting by id
 	/// </summary>
-	[DataContract]
-	public class NetscanGroup : NamedItem, IHasEndpoint
-	{
-		/// <summary>
-		///    The subUrl for setting by id
-		/// </summary>
-		public string Endpoint() => "setting/netscans/groups";
-	}
+	public string Endpoint() => "setting/netscans/groups";
 }

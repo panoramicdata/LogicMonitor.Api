@@ -1,25 +1,24 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.ScheduledDownTimes
+namespace LogicMonitor.Api.ScheduledDownTimes;
+
+/// <summary>
+/// Website SDT creation DTO
+/// </summary>
+public class WebsiteScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 {
 	/// <summary>
-	/// Website SDT creation DTO
+	/// Constructor
 	/// </summary>
-	public class WebsiteScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+	/// <param name="websiteId"></param>
+	public WebsiteScheduledDownTimeCreationDto(int websiteId) : base(ScheduledDownTimeType.Website)
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="websiteId"></param>
-		public WebsiteScheduledDownTimeCreationDto(int websiteId) : base(ScheduledDownTimeType.Website)
-		{
-			WebsiteId = websiteId;
-		}
-
-		/// <summary>
-		/// The website id
-		/// </summary>
-		[DataMember(Name = "websiteId")]
-		public int WebsiteId { get; set; }
+		WebsiteId = websiteId;
 	}
+
+	/// <summary>
+	/// The website id
+	/// </summary>
+	[DataMember(Name = "websiteId")]
+	public int WebsiteId { get; set; }
 }

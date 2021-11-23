@@ -2,49 +2,48 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Users
+namespace LogicMonitor.Api.Users;
+
+/// <summary>
+/// A role privilege operation
+/// </summary>
+[DataContract]
+[JsonConverter(typeof(StringEnumConverter))]
+public enum RolePrivilegeOperation
 {
 	/// <summary>
-	/// A role privilege operation
+	/// Read
 	/// </summary>
-	[DataContract]
-	[JsonConverter(typeof(StringEnumConverter))]
-	public enum RolePrivilegeOperation
-	{
-		/// <summary>
-		/// Read
-		/// </summary>
-		[EnumMember(Value = "read")]
-		Read,
+	[EnumMember(Value = "read")]
+	Read,
 
-		/// <summary>
-		/// Write
-		/// </summary>
-		[EnumMember(Value = "write")]
-		Write,
+	/// <summary>
+	/// Write
+	/// </summary>
+	[EnumMember(Value = "write")]
+	Write,
 
-		/// <summary>
-		/// Ack
-		/// </summary>
-		[EnumMember(Value = "ack")]
-		Ack,
+	/// <summary>
+	/// Ack
+	/// </summary>
+	[EnumMember(Value = "ack")]
+	Ack,
 
-		/// <summary>
-		/// None
-		/// </summary>
-		[EnumMember(Value = "none")]
-		None,
+	/// <summary>
+	/// None
+	/// </summary>
+	[EnumMember(Value = "none")]
+	None,
 
-		/// <summary>
-		/// SDT
-		/// </summary>
-		[EnumMember(Value = "sdt")]
-		Sdt,
+	/// <summary>
+	/// SDT
+	/// </summary>
+	[EnumMember(Value = "sdt")]
+	Sdt,
 
-		/// <summary>
-		/// Threshold
-		/// </summary>
-		[EnumMember(Value = "threshold")]
-		Threshold
-	}
+	/// <summary>
+	/// Threshold
+	/// </summary>
+	[EnumMember(Value = "threshold")]
+	Threshold
 }

@@ -1,23 +1,22 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Websites
+namespace LogicMonitor.Api.Websites;
+
+/// <summary>
+/// A website parameter
+/// </summary>
+[DataContract]
+public class WebsiteParameter : NamedEntity
 {
 	/// <summary>
-	/// A website parameter
+	/// The website id
 	/// </summary>
-	[DataContract]
-	public class WebsiteParameter : NamedEntity
-	{
-		/// <summary>
-		/// The website id
-		/// </summary>
-		[DataMember(Name = "websiteId")]
-		public int WebsiteId { get; set; }
+	[DataMember(Name = "websiteId")]
+	public int WebsiteId { get; set; }
 
-		/// <summary>
-		/// The website id
-		/// </summary>
-		[DataMember(Name = "value")]
-		public string Value { get; set; }
-	}
+	/// <summary>
+	/// The website id
+	/// </summary>
+	[DataMember(Name = "value")]
+	public string Value { get; set; }
 }

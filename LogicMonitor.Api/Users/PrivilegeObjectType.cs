@@ -2,97 +2,96 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Users
+namespace LogicMonitor.Api.Users;
+
+/// <summary>
+/// A role privilege object type
+/// </summary>
+[DataContract]
+[JsonConverter(typeof(StringEnumConverter))]
+public enum PrivilegeObjectType
 {
 	/// <summary>
-	/// A role privilege object type
+	/// Dashboard
 	/// </summary>
-	[DataContract]
-	[JsonConverter(typeof(StringEnumConverter))]
-	public enum PrivilegeObjectType
-	{
-		/// <summary>
-		/// Dashboard
-		/// </summary>
-		[EnumMember(Value = "dashboard")]
-		Dashboard,
+	[EnumMember(Value = "dashboard")]
+	Dashboard,
 
-		/// <summary>
-		/// DashboardGroup
-		/// </summary>
-		[EnumMember(Value = "dashboard_group")]
-		DashboardGroup,
+	/// <summary>
+	/// DashboardGroup
+	/// </summary>
+	[EnumMember(Value = "dashboard_group")]
+	DashboardGroup,
 
-		/// <summary>
-		/// DeviceGroup
-		/// </summary>
-		[EnumMember(Value = "host_group")]
-		DeviceGroup,
+	/// <summary>
+	/// DeviceGroup
+	/// </summary>
+	[EnumMember(Value = "host_group")]
+	DeviceGroup,
 
-		/// <summary>
-		/// Help
-		/// </summary>
-		[EnumMember(Value = "help")]
-		Help,
+	/// <summary>
+	/// Help
+	/// </summary>
+	[EnumMember(Value = "help")]
+	Help,
 
-		/// <summary>
-		/// ReportGroup
-		/// </summary>
-		[EnumMember(Value = "report_group")]
-		ReportGroup,
+	/// <summary>
+	/// ReportGroup
+	/// </summary>
+	[EnumMember(Value = "report_group")]
+	ReportGroup,
 
-		/// <summary>
-		/// WebsiteGroup
-		/// </summary>
-		[EnumMember(Value = "website_group")]
-		WebsiteGroup,
+	/// <summary>
+	/// WebsiteGroup
+	/// </summary>
+	[EnumMember(Value = "website_group")]
+	WebsiteGroup,
 
-		/// <summary>
-		/// Setting
-		/// </summary>
-		[EnumMember(Value = "setting")]
-		Setting,
+	/// <summary>
+	/// Setting
+	/// </summary>
+	[EnumMember(Value = "setting")]
+	Setting,
 
-		/// <summary>
-		/// Setting
-		/// </summary>
-		[EnumMember(Value = "remoteSession")]
-		RemoteSession,
+	/// <summary>
+	/// Setting
+	/// </summary>
+	[EnumMember(Value = "remoteSession")]
+	RemoteSession,
 
-		/// <summary>
-		/// DeviceDashboard
-		/// </summary>
-		[EnumMember(Value = "deviceDashboard")]
-		DeviceDashboard,
+	/// <summary>
+	/// DeviceDashboard
+	/// </summary>
+	[EnumMember(Value = "deviceDashboard")]
+	DeviceDashboard,
 
-		/// <summary>
-		/// ConfigNeedDeviceManagePermission
-		/// </summary>
-		[EnumMember(Value = "configNeedDeviceManagePermission")]
-		ConfigNeedDeviceManagePermission,
+	/// <summary>
+	/// ConfigNeedDeviceManagePermission
+	/// </summary>
+	[EnumMember(Value = "configNeedDeviceManagePermission")]
+	ConfigNeedDeviceManagePermission,
 
-		/// <summary>
-		/// Map
-		/// </summary>
-		[EnumMember(Value = "map")]
-		Map,
+	/// <summary>
+	/// Map
+	/// </summary>
+	[EnumMember(Value = "map")]
+	Map,
 
-		/// <summary>
-		/// Resource Map Tab
-		/// </summary>
-		[EnumMember(Value = "resourceMapTab")]
-		ResourceMapTab,
+	/// <summary>
+	/// Resource Map Tab
+	/// </summary>
+	[EnumMember(Value = "resourceMapTab")]
+	ResourceMapTab,
 
-		/// <summary>
-		/// Logs
-		/// </summary>
-		[EnumMember(Value = "logs")]
-		Logs,
+	/// <summary>
+	/// Logs
+	/// </summary>
+	[EnumMember(Value = "logs")]
+	Logs,
 
-		/// <summary>
-		/// TracesManageTab
-		/// </summary>
-		[EnumMember(Value = "tracesManageTab")]
-		TracesManageTab,
-	}
+	/// <summary>
+	/// TracesManageTab
+	/// </summary>
+	[EnumMember(Value = "tracesManageTab")]
+	TracesManageTab,
 }

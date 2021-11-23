@@ -1,18 +1,17 @@
-﻿namespace LogicMonitor.Api.Filters
+﻿namespace LogicMonitor.Api.Filters;
+
+/// <summary>
+/// The filter type
+/// </summary>
+public enum FilterType
 {
 	/// <summary>
-	/// The filter type
+	/// And
 	/// </summary>
-	public enum FilterType
-	{
-		/// <summary>
-		/// And
-		/// </summary>
-		And,
+	And,
 
-		/// <summary>
-		/// Or
-		/// </summary>
-		Or
-	}
+	/// <summary>
+	/// Or
+	/// </summary>
+	Or
 }

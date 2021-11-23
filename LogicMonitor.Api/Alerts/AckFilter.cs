@@ -1,23 +1,22 @@
-﻿namespace LogicMonitor.Api.Alerts
+﻿namespace LogicMonitor.Api.Alerts;
+
+/// <summary>
+/// Filter used when retrieving alerts
+/// </summary>
+public enum AckFilter : byte
 {
 	/// <summary>
-	/// Filter used when retrieving alerts
+	/// All alerts
 	/// </summary>
-	public enum AckFilter : byte
-	{
-		/// <summary>
-		/// All alerts
-		/// </summary>
-		All = 0,
+	All = 0,
 
-		/// <summary>
-		/// Acknowledged alerts only
-		/// </summary>
-		Acked = 1,
+	/// <summary>
+	/// Acknowledged alerts only
+	/// </summary>
+	Acked = 1,
 
-		/// <summary>
-		/// Unacknowledged alerts only
-		/// </summary>
-		Nonacked = 2,
-	}
+	/// <summary>
+	/// Unacknowledged alerts only
+	/// </summary>
+	Nonacked = 2,
 }

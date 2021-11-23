@@ -1,33 +1,32 @@
-﻿namespace LogicMonitor.Api.Logs
+﻿namespace LogicMonitor.Api.Logs;
+
+/// <summary>
+/// The originator type of an audit event
+/// </summary>
+public enum AuditEventOriginatorType
 {
 	/// <summary>
-	/// The originator type of an audit event
+	/// Unknown / not set
 	/// </summary>
-	public enum AuditEventOriginatorType
-	{
-		/// <summary>
-		/// Unknown / not set
-		/// </summary>
-		Unknown,
+	Unknown,
 
-		/// <summary>
-		/// Collector Active Discovery
-		/// </summary>
-		System,
+	/// <summary>
+	/// Collector Active Discovery
+	/// </summary>
+	System,
 
-		/// <summary>
-		/// Collector Kubenetes
-		/// </summary>
-		CollectorKubernetes,
+	/// <summary>
+	/// Collector Kubenetes
+	/// </summary>
+	CollectorKubernetes,
 
-		/// <summary>
-		/// Collector (other)
-		/// </summary>
-		CollectorOther,
+	/// <summary>
+	/// Collector (other)
+	/// </summary>
+	CollectorOther,
 
-		/// <summary>
-		/// User-initiated
-		/// </summary>
-		User
-	}
+	/// <summary>
+	/// User-initiated
+	/// </summary>
+	User
 }

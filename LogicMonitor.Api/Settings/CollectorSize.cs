@@ -1,28 +1,27 @@
-﻿namespace LogicMonitor.Api.Settings
+﻿namespace LogicMonitor.Api.Settings;
+
+/// <summary>
+/// Collector size
+/// </summary>
+public enum CollectorSize
 {
 	/// <summary>
-	/// Collector size
+	/// Nano
 	/// </summary>
-	public enum CollectorSize
-	{
-		/// <summary>
-		/// Nano
-		/// </summary>
-		Nano,
+	Nano,
 
-		/// <summary>
-		/// Small
-		/// </summary>
-		Small,
+	/// <summary>
+	/// Small
+	/// </summary>
+	Small,
 
-		/// <summary>
-		/// Medium
-		/// </summary>
-		Medium,
+	/// <summary>
+	/// Medium
+	/// </summary>
+	Medium,
 
-		/// <summary>
-		/// Large
-		/// </summary>
-		Large,
-	}
+	/// <summary>
+	/// Large
+	/// </summary>
+	Large,
 }

@@ -1,24 +1,23 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Reports
+namespace LogicMonitor.Api.Reports;
+
+/// <summary>
+/// A role report
+/// </summary>
+[DataContract]
+public class RoleReport : Report
 {
 	/// <summary>
-	/// A role report
+	/// The display format
 	/// </summary>
-	[DataContract]
-	public class RoleReport : Report
-	{
-		/// <summary>
-		/// The display format
-		/// </summary>
-		[DataMember(Name = "displayFormat")]
-		public string DisplayFormat { get; set; }
+	[DataMember(Name = "displayFormat")]
+	public string DisplayFormat { get; set; }
 
-		/// <summary>
-		/// The columns
-		/// </summary>
-		[DataMember(Name = "columns")]
-		public List<ReportColumn> Columns { get; set; }
-	}
+	/// <summary>
+	/// The columns
+	/// </summary>
+	[DataMember(Name = "columns")]
+	public List<ReportColumn> Columns { get; set; }
 }

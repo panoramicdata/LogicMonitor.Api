@@ -1,18 +1,17 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Reports
+namespace LogicMonitor.Api.Reports;
+
+/// <summary>
+/// An Word Template report
+/// </summary>
+[DataContract]
+public class WordTemplateReport : DateRangeReport
 {
 	/// <summary>
-	/// An Word Template report
+	/// The macros
 	/// </summary>
-	[DataContract]
-	public class WordTemplateReport : DateRangeReport
-	{
-		/// <summary>
-		/// The macros
-		/// </summary>
-		[DataMember(Name = "macros")]
-		public List<object> Macros { get; set; }
-	}
+	[DataMember(Name = "macros")]
+	public List<object> Macros { get; set; }
 }

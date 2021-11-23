@@ -1,17 +1,16 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.OpsNotes
+namespace LogicMonitor.Api.OpsNotes;
+
+/// <summary>
+/// An ops note scope creation DTO
+/// </summary>
+[DataContract]
+public abstract class OpsNoteScopeCreationDto
 {
 	/// <summary>
-	/// An ops note scope creation DTO
+	/// The tag name
 	/// </summary>
-	[DataContract]
-	public abstract class OpsNoteScopeCreationDto
-	{
-		/// <summary>
-		/// The tag name
-		/// </summary>
-		[DataMember(Name = "type")]
-		public string Type { get; set; }
-	}
+	[DataMember(Name = "type")]
+	public string Type { get; set; }
 }

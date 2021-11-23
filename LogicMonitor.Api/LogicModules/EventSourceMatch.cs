@@ -1,23 +1,22 @@
 using LogicMonitor.Api.Alerts;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.LogicModules
+namespace LogicMonitor.Api.LogicModules;
+
+/// <summary>
+/// An EventSource match
+/// </summary>
+public class EventSourceMatch
 {
 	/// <summary>
-	/// An EventSource match
+	/// Pattern
 	/// </summary>
-	public class EventSourceMatch
-	{
-		/// <summary>
-		/// Pattern
-		/// </summary>
-		[DataMember(Name = "pattern")]
-		public string Pattern { get; set; }
+	[DataMember(Name = "pattern")]
+	public string Pattern { get; set; }
 
-		/// <summary>
-		/// AlertLevel
-		/// </summary>
-		[DataMember(Name = "alertLevel")]
-		public AlertLevel AlertLevel { get; set; }
-	}
+	/// <summary>
+	/// AlertLevel
+	/// </summary>
+	[DataMember(Name = "alertLevel")]
+	public AlertLevel AlertLevel { get; set; }
 }

@@ -1,17 +1,16 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.PushMetrics
+namespace LogicMonitor.Api.PushMetrics;
+
+/// <summary>
+/// A Push Metric response's resource ids
+/// </summary>
+[DataContract]
+public class PushMetricResponseResourceIds
 {
 	/// <summary>
-	/// A Push Metric response's resource ids
+	/// The device id
 	/// </summary>
-	[DataContract]
-	public class PushMetricResponseResourceIds
-	{
-		/// <summary>
-		/// The device id
-		/// </summary>
-		[DataMember(Name = "system.deviceId")]
-		public string DeviceId { get; set; }
-	}
+	[DataMember(Name = "system.deviceId")]
+	public string DeviceId { get; set; }
 }

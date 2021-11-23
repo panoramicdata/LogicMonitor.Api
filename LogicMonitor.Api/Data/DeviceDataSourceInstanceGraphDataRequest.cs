@@ -1,37 +1,36 @@
 using System;
 
-namespace LogicMonitor.Api.Data
+namespace LogicMonitor.Api.Data;
+
+/// <summary>
+///    A request for device graph data for a DeviceDataSource
+/// </summary>
+public class DeviceDataSourceInstanceGraphDataRequest : GraphDataRequest
 {
 	/// <summary>
-	///    A request for device graph data for a DeviceDataSource
+	///    The DataSourceGraph Id.
+	///    If null, DataSourceGraphName must be non-null
 	/// </summary>
-	public class DeviceDataSourceInstanceGraphDataRequest : GraphDataRequest
+	public int DataSourceGraphId { get; set; }
+
+	/// <summary>
+	///    The DataSourceInstance Id
+	/// </summary>
+	public int DeviceDataSourceInstanceId { get; set; }
+
+	internal override string SubUrl => $"device/devicedatasourceinstances/{DeviceDataSourceInstanceId}/graphs/{DataSourceGraphId}/data?{TimePart}";
+
+	/// <inheritdoc />
+	public override void Validate()
 	{
-		/// <summary>
-		///    The DataSourceGraph Id.
-		///    If null, DataSourceGraphName must be non-null
-		/// </summary>
-		public int DataSourceGraphId { get; set; }
-
-		/// <summary>
-		///    The DataSourceInstance Id
-		/// </summary>
-		public int DeviceDataSourceInstanceId { get; set; }
-
-		internal override string SubUrl => $"device/devicedatasourceinstances/{DeviceDataSourceInstanceId}/graphs/{DataSourceGraphId}/data?{TimePart}";
-
-		/// <inheritdoc />
-		public override void Validate()
+		if (DataSourceGraphId <= 0 && DataSourceGraphId != -1)
 		{
-			if (DataSourceGraphId <= 0 && DataSourceGraphId != -1)
-			{
-				throw new ArgumentException("DataSourceGraphId must be specified.");
-			}
-			if (DeviceDataSourceInstanceId <= 0)
-			{
-				throw new ArgumentException("DeviceDataSourceInstanceId must be specified.");
-			}
-			ValidateInternal();
+			throw new ArgumentException("DataSourceGraphId must be specified.");
 		}
+		if (DeviceDataSourceInstanceId <= 0)
+		{
+			throw new ArgumentException("DeviceDataSourceInstanceId must be specified.");
+		}
+		ValidateInternal();
 	}
 }

@@ -1,25 +1,24 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.OpsNotes
+namespace LogicMonitor.Api.OpsNotes;
+
+/// <summary>
+/// A device group Ops Note Scope creation DTO
+/// </summary>
+[DataContract]
+public class DeviceGroupOpsNoteScopeCreationDto : OpsNoteScopeCreationDto
 {
 	/// <summary>
-	/// A device group Ops Note Scope creation DTO
+	/// Constructor
 	/// </summary>
-	[DataContract]
-	public class DeviceGroupOpsNoteScopeCreationDto : OpsNoteScopeCreationDto
+	public DeviceGroupOpsNoteScopeCreationDto()
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public DeviceGroupOpsNoteScopeCreationDto()
-		{
-			Type = "devicegroup";
-		}
-
-		/// <summary>
-		/// The device Id
-		/// </summary>
-		[DataMember(Name = "groupId")]
-		public int DeviceGroupId { get; set; }
+		Type = "devicegroup";
 	}
+
+	/// <summary>
+	/// The device Id
+	/// </summary>
+	[DataMember(Name = "groupId")]
+	public int DeviceGroupId { get; set; }
 }

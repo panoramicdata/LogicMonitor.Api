@@ -1,28 +1,27 @@
-﻿namespace LogicMonitor.Api.Logs
+﻿namespace LogicMonitor.Api.Logs;
+
+/// <summary>
+/// The entity type of an audit event
+/// </summary>
+public enum AuditEventEntityType
 {
 	/// <summary>
-	/// The entity type of an audit event
+	/// Unknown
 	/// </summary>
-	public enum AuditEventEntityType
-	{
-		/// <summary>
-		/// Unknown
-		/// </summary>
-		Unknown,
+	Unknown,
 
-		/// <summary>
-		/// Resource
-		/// </summary>
-		Resource,
+	/// <summary>
+	/// Resource
+	/// </summary>
+	Resource,
 
-		/// <summary>
-		/// Devcie DataSource Instance
-		/// </summary>
-		DeviceDataSourceInstance,
+	/// <summary>
+	/// Devcie DataSource Instance
+	/// </summary>
+	DeviceDataSourceInstance,
 
-		/// <summary>
-		/// Scheduled Down Time
-		/// </summary>
-		ScheduledDownTime,
-	}
+	/// <summary>
+	/// Scheduled Down Time
+	/// </summary>
+	ScheduledDownTime,
 }

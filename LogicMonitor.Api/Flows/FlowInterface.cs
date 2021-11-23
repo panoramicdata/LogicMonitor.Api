@@ -2,36 +2,35 @@ using LogicMonitor.Api.Extensions;
 using System;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Flows
+namespace LogicMonitor.Api.Flows;
+
+/// <summary>
+/// A flow interface
+/// </summary>
+[DataContract]
+public class FlowInterface
 {
 	/// <summary>
-	/// A flow interface
+	/// Time the last data was observed UTC in seconds since the Epoch
 	/// </summary>
-	[DataContract]
-	public class FlowInterface
-	{
-		/// <summary>
-		/// Time the last data was observed UTC in seconds since the Epoch
-		/// </summary>
-		[DataMember(Name = "lastDataTime")]
-		public long LastDataDateTimeUtcSeconds { get; set; }
+	[DataMember(Name = "lastDataTime")]
+	public long LastDataDateTimeUtcSeconds { get; set; }
 
-		/// <summary>
-		/// Time the last data was observed UTC in seconds since the Epoch
-		/// </summary>
-		[IgnoreDataMember]
-		public DateTime LastDataDateTimeUtc => LastDataDateTimeUtcSeconds.ToDateTimeUtc();
+	/// <summary>
+	/// Time the last data was observed UTC in seconds since the Epoch
+	/// </summary>
+	[IgnoreDataMember]
+	public DateTime LastDataDateTimeUtc => LastDataDateTimeUtcSeconds.ToDateTimeUtc();
 
-		/// <summary>
-		/// The index of the interface on the device with ID DeviceId.
-		/// </summary>
-		[DataMember(Name = "index")]
-		public int Index { get; set; }
+	/// <summary>
+	/// The index of the interface on the device with ID DeviceId.
+	/// </summary>
+	[DataMember(Name = "index")]
+	public int Index { get; set; }
 
-		/// <summary>
-		/// Name
-		/// </summary>
-		[DataMember(Name = "name")]
-		public string Name { get; set; }
-	}
+	/// <summary>
+	/// Name
+	/// </summary>
+	[DataMember(Name = "name")]
+	public string Name { get; set; }
 }

@@ -1,48 +1,47 @@
-﻿namespace LogicMonitor.Api.ScheduledDownTimes
+﻿namespace LogicMonitor.Api.ScheduledDownTimes;
+
+/// <summary>
+/// A scheduled down time entity type
+/// </summary>
+public enum ScheduledDownTimeEntityType
 {
 	/// <summary>
-	/// A scheduled down time entity type
+	/// Unknown
 	/// </summary>
-	public enum ScheduledDownTimeEntityType
-	{
-		/// <summary>
-		/// Unknown
-		/// </summary>
-		Unknown = 0,
+	Unknown = 0,
 
-		/// <summary>
-		/// Device
-		/// </summary>
-		Device = 1,
+	/// <summary>
+	/// Device
+	/// </summary>
+	Device = 1,
 
-		/// <summary>
-		/// DeviceGroup
-		/// </summary>
-		DeviceGroup = 2,
+	/// <summary>
+	/// DeviceGroup
+	/// </summary>
+	DeviceGroup = 2,
 
-		/// <summary>
-		/// DataSourceInstance
-		/// </summary>
-		Instance = 3,
+	/// <summary>
+	/// DataSourceInstance
+	/// </summary>
+	Instance = 3,
 
-		/// <summary>
-		/// DataSource
-		/// </summary>
-		DataSource = 4,
+	/// <summary>
+	/// DataSource
+	/// </summary>
+	DataSource = 4,
 
-		/// <summary>
-		/// DataSourceInstanceGroup
-		/// </summary>
-		InstanceGroup = 5,
+	/// <summary>
+	/// DataSourceInstanceGroup
+	/// </summary>
+	InstanceGroup = 5,
 
-		/// <summary>
-		/// Collector
-		/// </summary>
-		Agent = 6,
+	/// <summary>
+	/// Collector
+	/// </summary>
+	Agent = 6,
 
-		/// <summary>
-		/// Website
-		/// </summary>
-		Website = 7,
-	}
+	/// <summary>
+	/// Website
+	/// </summary>
+	Website = 7,
 }

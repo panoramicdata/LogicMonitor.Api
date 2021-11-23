@@ -1,17 +1,16 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Alerts
+namespace LogicMonitor.Api.Alerts;
+
+/// <summary>
+/// A website alert SDT
+/// </summary>
+[DataContract]
+public class WebsiteAlertSdt : AlertSdt
 {
 	/// <summary>
-	/// A website alert SDT
+	/// The website id
 	/// </summary>
-	[DataContract]
-	public class WebsiteAlertSdt : AlertSdt
-	{
-		/// <summary>
-		/// The website id
-		/// </summary>
-		[DataMember(Name = "websiteId")]
-		public int DeviceId { get; set; }
-	}
+	[DataMember(Name = "websiteId")]
+	public int DeviceId { get; set; }
 }

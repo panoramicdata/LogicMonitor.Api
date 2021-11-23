@@ -1,26 +1,25 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Websites
+namespace LogicMonitor.Api.Websites;
+
+/// <summary>
+/// Website authentication credentials
+/// </summary>
+[DataContract]
+public class WebsiteAuthentication
 {
 	/// <summary>
-	/// Website authentication credentials
+	/// User name
 	/// </summary>
-	[DataContract]
-	public class WebsiteAuthentication
-	{
-		/// <summary>
-		/// User name
-		/// </summary>
-		public string UserName { get; set; }
+	public string UserName { get; set; }
 
-		/// <summary>
-		/// Authentication type
-		/// </summary>
-		public WebsiteAuthenticationType WebsiteAuthenticationType { get; set; }
+	/// <summary>
+	/// Authentication type
+	/// </summary>
+	public WebsiteAuthenticationType WebsiteAuthenticationType { get; set; }
 
-		/// <summary>
-		/// Password
-		/// </summary>
-		public string Password { get; set; }
-	}
+	/// <summary>
+	/// Password
+	/// </summary>
+	public string Password { get; set; }
 }

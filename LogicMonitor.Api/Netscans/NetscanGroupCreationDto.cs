@@ -1,23 +1,22 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Netscans
+namespace LogicMonitor.Api.Netscans;
+
+/// <summary>
+///    A Netscan Policy
+/// </summary>
+[DataContract]
+public class NetscanGroupCreationDto : CreationDto<NetscanGroup>
 {
 	/// <summary>
-	///    A Netscan Policy
+	///    Name
 	/// </summary>
-	[DataContract]
-	public class NetscanGroupCreationDto : CreationDto<NetscanGroup>
-	{
-		/// <summary>
-		///    Name
-		/// </summary>
-		[DataMember(Name = "name")]
-		public string Name { get; set; }
+	[DataMember(Name = "name")]
+	public string Name { get; set; }
 
-		/// <summary>
-		///    Description
-		/// </summary>
-		[DataMember(Name = "description")]
-		public string Description { get; set; }
-	}
+	/// <summary>
+	///    Description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; }
 }

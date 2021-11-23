@@ -9,66 +9,66 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace LogicMonitor.Api.Test.Settings
+namespace LogicMonitor.Api.Test.Settings;
+
+public class RoleTests : TestWithOutput
 {
-	public class RoleTests : TestWithOutput
+	private const string Value = "Unit Test Role";
+
+	public RoleTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
-		private const string Value = "Unit Test Role";
+	}
 
-		public RoleTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
+	[Fact]
+	public async void GetRoles()
+	{
+		var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		Assert.NotNull(roles);
+		Assert.NotNull(roles.Items);
+		Assert.True(roles.Items.Count > 0);
+
+		foreach (var role in roles.Items)
 		{
+			var refetchedRole = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
+			Assert.True(refetchedRole.Name == role.Name);
+		}
+	}
+
+	[Fact]
+	public async void GetForCurrentUser()
+	{
+		var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		Assert.NotNull(roles);
+		Assert.NotNull(roles.Items);
+		Assert.True(roles.Items.Count > 0);
+	}
+
+	[Fact]
+	public async void CreateUpdateDelete()
+	{
+		// Ensure there is no existing role called "Test"
+		var existingRole = (await LogicMonitorClient
+				.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } })
+				.ConfigureAwait(false))
+			.SingleOrDefault();
+		if (existingRole != null)
+		{
+			await LogicMonitorClient.DeleteAsync(existingRole).ConfigureAwait(false);
 		}
 
-		[Fact]
-		public async void GetRoles()
+		var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+		var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+		var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+		var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+		var role = await LogicMonitorClient.CreateAsync(new RoleCreationDto
 		{
-			var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-			Assert.NotNull(roles);
-			Assert.NotNull(roles.Items);
-			Assert.True(roles.Items.Count > 0);
-
-			foreach (var role in roles.Items)
-			{
-				var refetchedRole = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
-				Assert.True(refetchedRole.Name == role.Name);
-			}
-		}
-
-		[Fact]
-		public async void GetForCurrentUser()
-		{
-			var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-			Assert.NotNull(roles);
-			Assert.NotNull(roles.Items);
-			Assert.True(roles.Items.Count > 0);
-		}
-
-		[Fact]
-		public async void CreateUpdateDelete()
-		{
-			// Ensure there is no existing role called "Test"
-			var existingRole = (await LogicMonitorClient
-					.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } })
-					.ConfigureAwait(false))
-				.SingleOrDefault();
-			if(existingRole != null)
-			{
-				await LogicMonitorClient.DeleteAsync(existingRole).ConfigureAwait(false);
-			}
-
-			var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-			var role = await LogicMonitorClient.CreateAsync(new RoleCreationDto
-			{
-				CustomHelpLabel = "",
-				CustomHelpUrl = "",
-				Description = "Desc",
-				Name = Value,
-				RequireEULA = false,
-				TwoFactorAuthenticationRequired = false,
-				Privileges = new List<RolePrivilege>
+			CustomHelpLabel = "",
+			CustomHelpUrl = "",
+			Description = "Desc",
+			Name = Value,
+			RequireEULA = false,
+			TwoFactorAuthenticationRequired = false,
+			Privileges = new List<RolePrivilege>
 				{
 					new RolePrivilege
 					{
@@ -118,14 +118,13 @@ namespace LogicMonitor.Api.Test.Settings
 						Operation = RolePrivilegeOperation.Read
 					},
 				}
-			}).ConfigureAwait(false);
+		}).ConfigureAwait(false);
 
-			// Refetch
-			var refetch = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
-			Assert.NotNull(refetch);
+		// Refetch
+		var refetch = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
+		Assert.NotNull(refetch);
 
-			// Delete
-			await LogicMonitorClient.DeleteAsync(role).ConfigureAwait(false);
-		}
+		// Delete
+		await LogicMonitorClient.DeleteAsync(role).ConfigureAwait(false);
 	}
 }

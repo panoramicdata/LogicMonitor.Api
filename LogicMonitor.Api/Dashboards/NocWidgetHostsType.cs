@@ -1,9 +1,8 @@
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+internal enum NocWidgetHostsType
 {
-	internal enum NocWidgetHostsType
-	{
-		Unknown = 0,
-		Host = 1,
-		Group = 2,
-	}
+	Unknown = 0,
+	Host = 1,
+	Group = 2,
 }

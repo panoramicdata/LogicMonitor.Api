@@ -1,59 +1,58 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Alerts
+namespace LogicMonitor.Api.Alerts;
+
+/// <summary>
+///     The destination type
+/// </summary>
+[DataContract]
+public enum DestinationType
 {
 	/// <summary>
-	///     The destination type
+	///     Unknown
 	/// </summary>
-	[DataContract]
-	public enum DestinationType
-	{
-		/// <summary>
-		///     Unknown
-		/// </summary>
-		[EnumMember(Value = "unknown")]
-		Unknown = 0,
+	[EnumMember(Value = "unknown")]
+	Unknown = 0,
 
-		/// <summary>
-		///     Simple
-		/// </summary>
-		[EnumMember(Value = "simple")]
-		Simple = 1,
+	/// <summary>
+	///     Simple
+	/// </summary>
+	[EnumMember(Value = "simple")]
+	Simple = 1,
 
-		/// <summary>
-		///     Single
-		/// </summary>
-		[EnumMember(Value = "single")]
-		Single = 2,
+	/// <summary>
+	///     Single
+	/// </summary>
+	[EnumMember(Value = "single")]
+	Single = 2,
 
-		/// <summary>
-		///     Time-based
-		/// </summary>
-		[EnumMember(Value = "timebased")]
-		TimeBased = 3,
+	/// <summary>
+	///     Time-based
+	/// </summary>
+	[EnumMember(Value = "timebased")]
+	TimeBased = 3,
 
-		/// <summary>
-		///     Group
-		/// </summary>
-		[EnumMember(Value = "GROUP")]
-		Group = 4,
+	/// <summary>
+	///     Group
+	/// </summary>
+	[EnumMember(Value = "GROUP")]
+	Group = 4,
 
-		/// <summary>
-		///     Group
-		/// </summary>
-		[EnumMember(Value = "ARBITRARY")]
-		Arbitrary = 5,
+	/// <summary>
+	///     Group
+	/// </summary>
+	[EnumMember(Value = "ARBITRARY")]
+	Arbitrary = 5,
 
-		/// <summary>
-		///     Admin
-		/// </summary>
-		[EnumMember(Value = "admin")]
-		Admin = 6,
+	/// <summary>
+	///     Admin
+	/// </summary>
+	[EnumMember(Value = "admin")]
+	Admin = 6,
 
-		/// <summary>
-		///     Admin
-		/// </summary>
-		[EnumMember(Value = "ADMIN")]
-		AdminCapitalised = Admin
-	}
+	/// <summary>
+	///     Admin
+	/// </summary>
+	[EnumMember(Value = "ADMIN")]
+	AdminCapitalised = Admin
 }

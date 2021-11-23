@@ -1,29 +1,28 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Reports
+namespace LogicMonitor.Api.Reports;
+
+/// <summary>
+///    A ReportGroup creation DTO
+/// </summary>
+[DataContract]
+public class ReportGroupCreationDto : CreationDto<ReportGroup>
 {
 	/// <summary>
-	///    A ReportGroup creation DTO
+	///    The name
 	/// </summary>
-	[DataContract]
-	public class ReportGroupCreationDto : CreationDto<ReportGroup>
-	{
-		/// <summary>
-		///    The name
-		/// </summary>
-		[DataMember(Name = "name")]
-		public string Name { get; set; }
+	[DataMember(Name = "name")]
+	public string Name { get; set; }
 
-		/// <summary>
-		///    The description
-		/// </summary>
-		[DataMember(Name = "description")]
-		public string Description { get; set; }
+	/// <summary>
+	///    The description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; }
 
-		/// <summary>
-		///    ToString override
-		/// </summary>
-		/// <returns>Name</returns>
-		public override string ToString() => Name;
-	}
+	/// <summary>
+	///    ToString override
+	/// </summary>
+	/// <returns>Name</returns>
+	public override string ToString() => Name;
 }

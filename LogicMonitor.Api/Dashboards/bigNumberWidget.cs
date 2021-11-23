@@ -1,23 +1,22 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+/// <summary>
+///     A big number widget
+/// </summary>
+[DataContract]
+public class BigNumberWidget : Widget
 {
 	/// <summary>
-	///     A big number widget
+	///     The alert filter
 	/// </summary>
-	[DataContract]
-	public class BigNumberWidget : Widget
-	{
-		/// <summary>
-		///     The alert filter
-		/// </summary>
-		[DataMember(Name = "bigNumberInfo")]
-		public BigNumberInfo BigNumberInfo { get; set; }
+	[DataMember(Name = "bigNumberInfo")]
+	public BigNumberInfo BigNumberInfo { get; set; }
 
-		/// <summary>
-		///     The display settings
-		/// </summary>
-		[DataMember(Name = "displaySettings")]
-		public object DisplaySettings { get; set; }
-	}
+	/// <summary>
+	///     The display settings
+	/// </summary>
+	[DataMember(Name = "displaySettings")]
+	public object DisplaySettings { get; set; }
 }

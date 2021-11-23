@@ -2,19 +2,18 @@ using LogicMonitor.Api.Converters;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Collectors
+namespace LogicMonitor.Api.Collectors;
+
+/// <summary>
+/// An automatic upgrade info
+/// </summary>
+[DataContract]
+[JsonConverter(typeof(AutomaticUpgradeInfoConverter))]
+public abstract class AutomaticUpgradeInfo
 {
 	/// <summary>
-	/// An automatic upgrade info
+	/// The type
 	/// </summary>
-	[DataContract]
-	[JsonConverter(typeof(AutomaticUpgradeInfoConverter))]
-	public abstract class AutomaticUpgradeInfo
-	{
-		/// <summary>
-		/// The type
-		/// </summary>
-		[DataMember(Name = "type")]
-		public string Type { get; set; }
-	}
+	[DataMember(Name = "type")]
+	public string Type { get; set; }
 }

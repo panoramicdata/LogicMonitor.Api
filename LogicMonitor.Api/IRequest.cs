@@ -1,7 +1,6 @@
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+internal interface IRequest
 {
-	internal interface IRequest
-	{
-		string GetQueryString();
-	}
+	string GetQueryString();
 }

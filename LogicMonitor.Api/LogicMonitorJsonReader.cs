@@ -1,23 +1,22 @@
 using Newtonsoft.Json;
 using System.IO;
 
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+internal class LogicMonitorJsonReader : JsonTextReader
 {
-	internal class LogicMonitorJsonReader : JsonTextReader
+	public LogicMonitorJsonReader(TextReader reader) : base(reader)
 	{
-		public LogicMonitorJsonReader(TextReader reader) : base(reader)
-		{
-		}
+	}
 
-		public override bool Read()
-		{
-			var hasToken = base.Read();
+	public override bool Read()
+	{
+		var hasToken = base.Read();
 
-			if (hasToken && TokenType == JsonToken.PropertyName && Value?.Equals("type") == true)
-			{
-				SetToken(JsonToken.PropertyName, "$type");
-			}
-			return hasToken;
+		if (hasToken && TokenType == JsonToken.PropertyName && Value?.Equals("type") == true)
+		{
+			SetToken(JsonToken.PropertyName, "$type");
 		}
+		return hasToken;
 	}
 }

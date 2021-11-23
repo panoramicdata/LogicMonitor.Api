@@ -1,17 +1,16 @@
 using LogicMonitor.Api.Converters;
 using Newtonsoft.Json;
 
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+/// <summary>
+///    Map Point
+/// </summary>
+[JsonConverter(typeof(MapPointConverter))]
+public class MapPoint
 {
 	/// <summary>
-	///    Map Point
+	///    The type
 	/// </summary>
-	[JsonConverter(typeof(MapPointConverter))]
-	public class MapPoint
-	{
-		/// <summary>
-		///    The type
-		/// </summary>
-		public string Type { get; set; }
-	}
+	public string Type { get; set; }
 }

@@ -1,83 +1,82 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+/// <summary>
+/// A custom graph widget data point
+/// </summary>
+[DataContract]
+public class CustomGraphWidgetDataPoint : IdentifiedItem
 {
 	/// <summary>
-	/// A custom graph widget data point
+	/// The entity's name
 	/// </summary>
-	[DataContract]
-	public class CustomGraphWidgetDataPoint : IdentifiedItem
-	{
-		/// <summary>
-		/// The entity's name
-		/// </summary>
-		[DataMember(Name = "name")]
-		public string Name { get; set; }
+	[DataMember(Name = "name")]
+	public string Name { get; set; }
 
-		/// <summary>
-		/// The consolidate function
-		/// </summary>
-		[DataMember(Name = "consolidateFunction")]
-		public ConsolidateFunction ConsolidateFunction { get; set; }
+	/// <summary>
+	/// The consolidate function
+	/// </summary>
+	[DataMember(Name = "consolidateFunction")]
+	public ConsolidateFunction ConsolidateFunction { get; set; }
 
-		/// <summary>
-		/// The custom Graph Id
-		/// </summary>
-		[DataMember(Name = "customGraphId")]
-		public int CustomGraphId { get; set; }
+	/// <summary>
+	/// The custom Graph Id
+	/// </summary>
+	[DataMember(Name = "customGraphId")]
+	public int CustomGraphId { get; set; }
 
-		/// <summary>
-		/// The dataPoint Id
-		/// </summary>
-		[DataMember(Name = "dataPointId")]
-		public int DataPointId { get; set; }
+	/// <summary>
+	/// The dataPoint Id
+	/// </summary>
+	[DataMember(Name = "dataPointId")]
+	public int DataPointId { get; set; }
 
-		/// <summary>
-		/// The dataPoint Name
-		/// </summary>
-		[DataMember(Name = "dataPointName")]
-		public string DataPointName { get; set; }
+	/// <summary>
+	/// The dataPoint Name
+	/// </summary>
+	[DataMember(Name = "dataPointName")]
+	public string DataPointName { get; set; }
 
-		/// <summary>
-		/// The aggregateFunction
-		/// </summary>
-		[DataMember(Name = "aggregateFunction")]
-		public string AggregateFunction { get; set; }
+	/// <summary>
+	/// The aggregateFunction
+	/// </summary>
+	[DataMember(Name = "aggregateFunction")]
+	public string AggregateFunction { get; set; }
 
-		/// <summary>
-		/// The dataSource Id
-		/// </summary>
-		[DataMember(Name = "dataSourceId")]
-		public int DataSourceId { get; set; }
+	/// <summary>
+	/// The dataSource Id
+	/// </summary>
+	[DataMember(Name = "dataSourceId")]
+	public int DataSourceId { get; set; }
 
-		/// <summary>
-		/// The dataSourceFullName
-		/// </summary>
-		[DataMember(Name = "dataSourceFullName")]
-		public string DataSourceFullName { get; set; }
+	/// <summary>
+	/// The dataSourceFullName
+	/// </summary>
+	[DataMember(Name = "dataSourceFullName")]
+	public string DataSourceFullName { get; set; }
 
-		/// <summary>
-		/// The deviceDisplay Name
-		/// </summary>
-		[DataMember(Name = "deviceDisplayName")]
-		public StringSpecification DeviceDisplayName { get; set; }
+	/// <summary>
+	/// The deviceDisplay Name
+	/// </summary>
+	[DataMember(Name = "deviceDisplayName")]
+	public StringSpecification DeviceDisplayName { get; set; }
 
-		/// <summary>
-		/// The deviceGroupFullPath
-		/// </summary>
-		[DataMember(Name = "deviceGroupFullPath")]
-		public StringSpecification DeviceGroupFullPath { get; set; }
+	/// <summary>
+	/// The deviceGroupFullPath
+	/// </summary>
+	[DataMember(Name = "deviceGroupFullPath")]
+	public StringSpecification DeviceGroupFullPath { get; set; }
 
-		/// <summary>
-		/// The instanceName
-		/// </summary>
-		[DataMember(Name = "instanceName")]
-		public StringSpecification DataSourceInstanceName { get; set; }
+	/// <summary>
+	/// The instanceName
+	/// </summary>
+	[DataMember(Name = "instanceName")]
+	public StringSpecification DataSourceInstanceName { get; set; }
 
-		/// <summary>
-		/// The display
-		/// </summary>
-		[DataMember(Name = "display")]
-		public Display Display { get; set; }
-	}
+	/// <summary>
+	/// The display
+	/// </summary>
+	[DataMember(Name = "display")]
+	public Display Display { get; set; }
 }

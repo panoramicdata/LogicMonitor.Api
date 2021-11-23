@@ -1,18 +1,17 @@
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.LogicModules
+namespace LogicMonitor.Api.LogicModules;
+
+/// <summary>
+/// Value check must
+/// </summary>
+[DataContract]
+public class ValueCheckMust
 {
 	/// <summary>
-	/// Value check must
+	///    The variable
 	/// </summary>
-	[DataContract]
-	public class ValueCheckMust
-	{
-		/// <summary>
-		///    The variable
-		/// </summary>
-		[DataMember(Name = "range")]
+	[DataMember(Name = "range")]
 
-		public ValueCheckRange Range { get; set; }
-	}
+	public ValueCheckRange Range { get; set; }
 }

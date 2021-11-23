@@ -1,18 +1,17 @@
-﻿namespace LogicMonitor.Api.Flows
+﻿namespace LogicMonitor.Api.Flows;
+
+/// <summary>
+/// A sort direction
+/// </summary>
+public enum SortDirection
 {
 	/// <summary>
-	/// A sort direction
+	/// Ascending
 	/// </summary>
-	public enum SortDirection
-	{
-		/// <summary>
-		/// Ascending
-		/// </summary>
-		Ascending,
+	Ascending,
 
-		/// <summary>
-		/// Descending
-		/// </summary>
-		Descending
-	}
+	/// <summary>
+	/// Descending
+	/// </summary>
+	Descending
 }

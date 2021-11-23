@@ -1,13 +1,12 @@
-﻿namespace LogicMonitor.Api.Data
+﻿namespace LogicMonitor.Api.Data;
+
+/// <summary>
+/// Validation interface
+/// </summary>
+public interface IValidate
 {
 	/// <summary>
-	/// Validation interface
+	/// Throws an exception if invalid
 	/// </summary>
-	public interface IValidate
-	{
-		/// <summary>
-		/// Throws an exception if invalid
-		/// </summary>
-		void Validate();
-	}
+	void Validate();
 }

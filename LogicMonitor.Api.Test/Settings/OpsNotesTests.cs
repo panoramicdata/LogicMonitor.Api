@@ -3,36 +3,35 @@ using LogicMonitor.Api.OpsNotes;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace LogicMonitor.Api.Test.Settings
+namespace LogicMonitor.Api.Test.Settings;
+
+public class OpsNoteTests : TestWithOutput
 {
-	public class OpsNoteTests : TestWithOutput
+	public OpsNoteTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
-		public OpsNoteTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-		{
-		}
+	}
 
-		[Fact]
-		public async void GetOpsNotes()
-		{
-			var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
+	[Fact]
+	public async void GetOpsNotes()
+	{
+		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
-			Assert.NotNull(allOpsNotes);
-		}
+		Assert.NotNull(allOpsNotes);
+	}
 
-		[Fact]
-		public async void GetOpsNotesTags()
+	[Fact]
+	public async void GetOpsNotesTags()
+	{
+		var allOpsNotesTags = await LogicMonitorClient.GetAllAsync(new Filter<OpsNoteTag>
 		{
-			var allOpsNotesTags = await LogicMonitorClient.GetAllAsync(new Filter<OpsNoteTag>
+			Order = new Order<OpsNoteTag>
 			{
-				Order = new Order<OpsNoteTag>
-				{
-					Direction = OrderDirection.Asc,
-					Property = nameof(OpsNoteTag.Name)
-				}
-			}).ConfigureAwait(false);
+				Direction = OrderDirection.Asc,
+				Property = nameof(OpsNoteTag.Name)
+			}
+		}).ConfigureAwait(false);
 
-			// Text should be set
-			Assert.All(allOpsNotesTags, on => Assert.False(string.IsNullOrWhiteSpace(on.Name)));
-		}
+		// Text should be set
+		Assert.All(allOpsNotesTags, on => Assert.False(string.IsNullOrWhiteSpace(on.Name)));
 	}
 }

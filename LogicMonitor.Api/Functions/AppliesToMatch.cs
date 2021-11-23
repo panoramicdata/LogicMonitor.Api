@@ -1,32 +1,31 @@
 ﻿using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Functions
+namespace LogicMonitor.Api.Functions;
+
+/// <summary>
+///     An applies to match
+/// </summary>
+[DataContract]
+public class AppliesToMatch
 {
 	/// <summary>
-	///     An applies to match
+	///     The type (e.g. Device / Website)
 	/// </summary>
-	[DataContract]
-	public class AppliesToMatch
-	{
-		/// <summary>
-		///     The type (e.g. Device / Website)
-		/// </summary>
-		[DataMember(Name = "type")]
-		public MonitoredObjectType Type { get; set; }
+	[DataMember(Name = "type")]
+	public MonitoredObjectType Type { get; set; }
 
-		/// <summary>
-		///     The id
-		/// </summary>
-		[DataMember(Name = "id")]
-		public int Id { get; set; }
+	/// <summary>
+	///     The id
+	/// </summary>
+	[DataMember(Name = "id")]
+	public int Id { get; set; }
 
-		/// <summary>
-		///     The name
-		/// </summary>
-		[DataMember(Name = "name")]
-		public string Name { get; set; }
+	/// <summary>
+	///     The name
+	/// </summary>
+	[DataMember(Name = "name")]
+	public string Name { get; set; }
 
-		/// <inheritdoc />
-		public override string ToString() => $"{Type} {Id}: {Name}";
-	}
+	/// <inheritdoc />
+	public override string ToString() => $"{Type} {Id}: {Name}";
 }

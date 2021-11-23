@@ -1,48 +1,47 @@
-namespace LogicMonitor.Api.Filters
+namespace LogicMonitor.Api.Filters;
+
+/// <summary>
+/// Comparator
+/// </summary>
+public enum Comparator
 {
 	/// <summary>
-	/// Comparator
+	/// Equals
 	/// </summary>
-	public enum Comparator
-	{
-		/// <summary>
-		/// Equals
-		/// </summary>
-		Eq,
+	Eq,
 
-		/// <summary>
-		/// Greater than or equal to
-		/// </summary>
-		Ge,
+	/// <summary>
+	/// Greater than or equal to
+	/// </summary>
+	Ge,
 
-		/// <summary>
-		/// Greater than
-		/// </summary>
-		Gt,
+	/// <summary>
+	/// Greater than
+	/// </summary>
+	Gt,
 
-		/// <summary>
-		/// Includes
-		/// </summary>
-		Includes,
+	/// <summary>
+	/// Includes
+	/// </summary>
+	Includes,
 
-		/// <summary>
-		/// Less than or equal to
-		/// </summary>
-		Le,
+	/// <summary>
+	/// Less than or equal to
+	/// </summary>
+	Le,
 
-		/// <summary>
-		/// Less than
-		/// </summary>
-		Lt,
+	/// <summary>
+	/// Less than
+	/// </summary>
+	Lt,
 
-		/// <summary>
-		/// Not equal
-		/// </summary>
-		Ne,
+	/// <summary>
+	/// Not equal
+	/// </summary>
+	Ne,
 
-		/// <summary>
-		/// Does not include
-		/// </summary>
-		NotIncludes
-	}
+	/// <summary>
+	/// Does not include
+	/// </summary>
+	NotIncludes
 }

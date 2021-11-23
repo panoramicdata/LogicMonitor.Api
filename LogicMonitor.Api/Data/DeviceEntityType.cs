@@ -1,23 +1,22 @@
-﻿namespace LogicMonitor.Api.Data
+﻿namespace LogicMonitor.Api.Data;
+
+/// <summary>
+/// The device entity type
+/// </summary>
+public enum DeviceEntityType
 {
 	/// <summary>
-	/// The device entity type
+	/// Unknown
 	/// </summary>
-	public enum DeviceEntityType
-	{
-		/// <summary>
-		/// Unknown
-		/// </summary>
-		Unknown = 0,
+	Unknown = 0,
 
-		/// <summary>
-		/// DataSource instance
-		/// </summary>
-		DataSourceInstance = 1,
+	/// <summary>
+	/// DataSource instance
+	/// </summary>
+	DataSourceInstance = 1,
 
-		/// <summary>
-		/// The DataSource
-		/// </summary>
-		DataSource = 2
-	}
+	/// <summary>
+	/// The DataSource
+	/// </summary>
+	DataSource = 2
 }

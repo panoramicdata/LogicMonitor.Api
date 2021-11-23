@@ -1,9 +1,8 @@
-namespace LogicMonitor.Api
+namespace LogicMonitor.Api;
+
+/// <summary>
+///    A Cloneable item
+/// </summary>
+public interface ICloneableItem
 {
-	/// <summary>
-	///    A Cloneable item
-	/// </summary>
-	public interface ICloneableItem
-	{
-	}
 }

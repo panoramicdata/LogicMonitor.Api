@@ -1,29 +1,28 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Dashboards
+namespace LogicMonitor.Api.Dashboards;
+
+/// <summary>
+///     A Google Map widget creation DTO
+/// </summary>
+[DataContract]
+public class GoogleMapWidgetCreationDto : WidgetCreationDto<GoogleMapWidget>
 {
 	/// <summary>
-	///     A Google Map widget creation DTO
+	///     The name
 	/// </summary>
-	[DataContract]
-	public class GoogleMapWidgetCreationDto : WidgetCreationDto<GoogleMapWidget>
-	{
-		/// <summary>
-		///     The name
-		/// </summary>
-		public override string Type { get; } = "gmap";
+	public override string Type { get; } = "gmap";
 
-		/// <summary>
-		///     The name
-		/// </summary>
-		[DataMember(Name = "widgetTokens")]
-		public List<Property> CustomProperties { get; set; }
+	/// <summary>
+	///     The name
+	/// </summary>
+	[DataMember(Name = "widgetTokens")]
+	public List<Property> CustomProperties { get; set; }
 
-		/// <summary>
-		///     The name
-		/// </summary>
-		[DataMember(Name = "mapPoints")]
-		public List<MapPoint> MapPoints { get; set; }
-	}
+	/// <summary>
+	///     The name
+	/// </summary>
+	[DataMember(Name = "mapPoints")]
+	public List<MapPoint> MapPoints { get; set; }
 }

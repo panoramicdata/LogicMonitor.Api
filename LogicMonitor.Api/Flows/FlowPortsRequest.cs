@@ -1,15 +1,14 @@
-﻿namespace LogicMonitor.Api.Flows
+﻿namespace LogicMonitor.Api.Flows;
+
+/// <summary>
+///    A request for flow ports.
+/// </summary>
+public class FlowPortsRequest : SortedFlowRequest
 {
 	/// <summary>
-	///    A request for flow ports.
+	///    Gets the query string
 	/// </summary>
-	public class FlowPortsRequest : SortedFlowRequest
-	{
-		/// <summary>
-		///    Gets the query string
-		/// </summary>
-		public override string GetQueryString()
-			=>
-			$"device/devices/{DeviceId}/ports?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}&direction={FlowDirection.ToString().ToLowerInvariant()}{GetTimePartialQueryStringNew()}&netflowFilter={NetflowFilter.AsUrlEncodedString()}&size={Take}&offset={Skip}";
-	}
+	public override string GetQueryString()
+		=>
+		$"device/devices/{DeviceId}/ports?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}&direction={FlowDirection.ToString().ToLowerInvariant()}{GetTimePartialQueryStringNew()}&netflowFilter={NetflowFilter.AsUrlEncodedString()}&size={Take}&offset={Skip}";
 }

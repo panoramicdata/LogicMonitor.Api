@@ -3,31 +3,30 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 
-namespace LogicMonitor.Api.Settings
+namespace LogicMonitor.Api.Settings;
+
+/// <summary>
+///     An integration
+/// </summary>
+[DataContract]
+[JsonConverter(typeof(IntegrationsConverter))]
+[DebuggerDisplay("{Type}:{Name}")]
+public class Integration : NamedItem, IHasEndpoint
 {
 	/// <summary>
-	///     An integration
+	///     The integration type
 	/// </summary>
-	[DataContract]
-	[JsonConverter(typeof(IntegrationsConverter))]
-	[DebuggerDisplay("{Type}:{Name}")]
-	public class Integration : NamedItem, IHasEndpoint
-	{
-		/// <summary>
-		///     The integration type
-		/// </summary>
-		[DataMember(Name = "type")]
-		public string Type { get; set; }
+	[DataMember(Name = "type")]
+	public string Type { get; set; }
 
-		/// <summary>
-		///     Extra configuration
-		/// </summary>
-		[DataMember(Name = "extra")]
-		public string Extra { get; set; }
+	/// <summary>
+	///     Extra configuration
+	/// </summary>
+	[DataMember(Name = "extra")]
+	public string Extra { get; set; }
 
-		/// <summary>
-		///     The endpoint
-		/// </summary>
-		public string Endpoint() => "setting/integrations";
-	}
+	/// <summary>
+	///     The endpoint
+	/// </summary>
+	public string Endpoint() => "setting/integrations";
 }

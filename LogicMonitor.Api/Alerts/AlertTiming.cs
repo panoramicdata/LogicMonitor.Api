@@ -1,18 +1,17 @@
-﻿namespace LogicMonitor.Api.Alerts
+﻿namespace LogicMonitor.Api.Alerts;
+
+/// <summary>
+/// AlertTiming
+/// </summary>
+public enum AlertTiming
 {
 	/// <summary>
-	/// AlertTiming
+	/// Overlap
 	/// </summary>
-	public enum AlertTiming
-	{
-		/// <summary>
-		/// Overlap
-		/// </summary>
-		Overlap = 0,
+	Overlap = 0,
 
-		/// <summary>
-		/// Start
-		/// </summary>
-		Start = 1,
-	}
+	/// <summary>
+	/// Start
+	/// </summary>
+	Start = 1,
 }
