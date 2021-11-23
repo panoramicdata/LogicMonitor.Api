@@ -84,28 +84,28 @@ namespace LogicMonitor.Api
 		public bool IsSuccessStatusCode =>
 			(int)HttpStatusCode == 207 // MultiStatus
 			|| HttpStatusCode switch
-		{
-			HttpStatusCode.Continue
-			or HttpStatusCode.SwitchingProtocols
-			or HttpStatusCode.OK
-			or HttpStatusCode.Created
-			or HttpStatusCode.Accepted
-			or HttpStatusCode.NonAuthoritativeInformation
-			or HttpStatusCode.NoContent
-			or HttpStatusCode.ResetContent
-			or HttpStatusCode.PartialContent
-			or HttpStatusCode.MultipleChoices
-			or HttpStatusCode.MovedPermanently
-			or HttpStatusCode.Found
-			or HttpStatusCode.SeeOther
-			or HttpStatusCode.NotModified
-			or HttpStatusCode.UseProxy
-			or HttpStatusCode.Unused
-			or HttpStatusCode.TemporaryRedirect
-				=> true,
-			_
-				=> false,
-		};
+			{
+				HttpStatusCode.Continue
+				or HttpStatusCode.SwitchingProtocols
+				or HttpStatusCode.OK
+				or HttpStatusCode.Created
+				or HttpStatusCode.Accepted
+				or HttpStatusCode.NonAuthoritativeInformation
+				or HttpStatusCode.NoContent
+				or HttpStatusCode.ResetContent
+				or HttpStatusCode.PartialContent
+				or HttpStatusCode.MultipleChoices
+				or HttpStatusCode.MovedPermanently
+				or HttpStatusCode.Found
+				or HttpStatusCode.SeeOther
+				or HttpStatusCode.NotModified
+				or HttpStatusCode.UseProxy
+				or HttpStatusCode.Unused
+				or HttpStatusCode.TemporaryRedirect
+					=> true,
+				_
+					=> false,
+			};
 
 		/// <summary>
 		///    Parse a JSON string into an object of type T.
@@ -121,6 +121,12 @@ namespace LogicMonitor.Api
 				if (typeof(T) == typeof(EmptyResponse))
 				{
 					return new T();
+				}
+
+				// If this is a "NoContent" response, return null.
+				if (HttpStatusCode == HttpStatusCode.NoContent)
+				{
+					return default;
 				}
 
 				// If a success code was not received, throw an exception

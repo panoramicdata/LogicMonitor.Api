@@ -27,7 +27,12 @@ namespace LogicMonitor.Api.Test.Alerts
 			// Make sure that all have Unique Ids
 			foreach (var alertType in Enum.GetValues(typeof(AlertType)).Cast<AlertType>())
 			{
-				Assert.False(alerts.Where(a => a.AlertType == alertType).Select(a => a.Id).HasDuplicates());
+				alerts
+					.Where(a => a.AlertType == alertType)
+					.Select(a => a.Id)
+					.HasDuplicates()
+					.Should()
+					.BeFalse();
 			}
 		}
 
@@ -49,10 +54,9 @@ namespace LogicMonitor.Api.Test.Alerts
 				Take = 300
 			};
 			var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
-			Assert.NotNull(alerts);
-			Assert.NotEmpty(alerts);
-			Assert.DoesNotContain(alerts, a => a.EndOnSeconds == 0);
-			// var closedAlerts = alerts.Where(a => a.EndOnSeconds > 0).ToList();
+			alerts.Should().NotBeNull();
+			alerts.Should().NotBeEmpty();
+			alerts.Should().NotContain(a => a.EndOnSeconds == 0);
 		}
 
 		[Fact]
@@ -78,10 +82,10 @@ namespace LogicMonitor.Api.Test.Alerts
 				Take = 300
 			};
 			var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter).ConfigureAwait(false);
-			Assert.NotNull(alerts);
-			Assert.NotEmpty(alerts);
-			Assert.DoesNotContain(alerts, a => a.EndOnSeconds == 0);
-			Assert.All(alerts, a => Assert.NotEqual(AlertLevel.Unknown, a.AlertLevel));
+			alerts.Should().NotBeNull();
+			alerts.Should().NotBeEmpty();
+			alerts.Should().NotContain(a => a.EndOnSeconds == 0);
+			alerts.Should().NotContain(a => a.AlertLevel == AlertLevel.Unknown);
 		}
 
 		[Fact]
@@ -135,50 +139,12 @@ namespace LogicMonitor.Api.Test.Alerts
 			var extraAllSdtAlerts = allAlerts.Where(a => extraAllAlertIds.Contains(a.Id)).ToList();
 
 			// Alert counts should add up
-			Assert.Equal(allAlerts.Count, sdtAlerts.Count + nonSdtAlerts.Count);
+			(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 			// Alerts have the expected SDT status
 			Assert.True(sdtAlerts.All(a => a.InScheduledDownTime));
 			Assert.True(nonSdtAlerts.All(a => !a.InScheduledDownTime));
 		}
-
-		//[Fact]
-		//public async void GetAlerts_AckMatchesRequest()
-		//{
-		//	// Arrange
-		//	var allFilter = new AlertFilter
-		//	{
-		//		AckFilter = AckFilter.All,
-		//		StartEpochIsAfter = StartDateTimeSeconds,
-		//		StartEpochIsBefore = EndDateTimeSeconds
-		//	};
-		//	var ackFilter = new AlertFilter
-		//	{
-		//		AckFilter = AckFilter.Acked,
-		//		StartEpochIsAfter = StartDateTimeSeconds,
-		//		StartEpochIsBefore = EndDateTimeSeconds
-		//	};
-		//	var nonAckFilter = new AlertFilter
-		//	{
-		//		AckFilter = AckFilter.Nonacked,
-		//		StartEpochIsAfter = StartDateTimeSeconds,
-		//		StartEpochIsBefore = EndDateTimeSeconds
-		//	};
-
-		//	// Act
-		//	var allAlerts = await DefaultPortalClient.GetAlertsAsync(allFilter).ConfigureAwait(false);
-		//	var ackAlerts = await DefaultPortalClient.GetAlertsAsync(ackFilter).ConfigureAwait(false);
-		//	var nonAckAlerts = await DefaultPortalClient.GetAlertsAsync(nonAckFilter).ConfigureAwait(false);
-
-		//	// Assert
-
-		//	// Alert counts add up
-		//	Assert.Equal(allAlerts.Count, ackAlerts.Count + nonAckAlerts.Count);
-
-		//	// Alerts have the expected Ack status
-		//	Assert.True(ackAlerts.All(a => a.Acked));
-		//	Assert.True(nonAckAlerts.All(a => !a.Acked));
-		//}
 
 		[Fact]
 		public async void GetAlertsAndCheckUnique()
@@ -194,7 +160,7 @@ namespace LogicMonitor.Api.Test.Alerts
 					unique = false;
 				}
 			}
-			Assert.True(unique);
+			unique.Should().BeTrue();
 		}
 
 		[Fact]
@@ -434,26 +400,37 @@ namespace LogicMonitor.Api.Test.Alerts
 		}
 
 		[Fact]
-		public async void GetFilteredAlertsForDev()
+		public async void NonExistentAlertShouldReturnNull()
+		{
+			var alert = await LogicMonitorClient
+				.GetAlertAsync("DS1234")
+				.ConfigureAwait(false);
+			alert.Should().BeNull();
+		}
+
+		[Fact]
+		public async void GetFilteredAlertsForOneDay()
 		{
 			var alerts = await LogicMonitorClient.GetAlertsAsync(
 				new AlertFilter
 				{
-					StartEpochIsAfter = 1470009600,
-					StartEpochIsBefore = 1471564800,
-					MonitorObjectId = WindowsDeviceId,
+					StartEpochIsAfter = DaysAgoAsUnixSeconds(1),
 					Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
 				}).ConfigureAwait(false);
 			CheckAlertsAreValid(alerts);
+			alerts.Count.Should().NotBe(0);
 
 			// Refetch with GetAlertAsync
 			foreach (var alert in alerts)
 			{
-				var refetchedAlert = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+				var refetchedAlert = await LogicMonitorClient
+					.GetAlertAsync(alert.Id)
+					.ConfigureAwait(false);
+				refetchedAlert.Should().NotBeNull();
 				refetchedAlert.MonitorObjectId.Should().Be(alert.MonitorObjectId);
 				refetchedAlert.Id.Should().Be(alert.Id);
 				refetchedAlert.AlertType.Should().Be(alert.AlertType);
-				refetchedAlert.DetailMessage?.Body.Should().Be(alert.DetailMessage?.Body);
+				refetchedAlert.DetailMessage?.Body.Should().NotBeNull();
 			}
 		}
 

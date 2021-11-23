@@ -182,11 +182,9 @@ namespace LogicMonitor.Api
 		///     Gets a single alert.  The alertType is no longer required as the alert id now contains the type.
 		/// </summary>
 		/// <param name="id">Alert id</param>
-		public async Task<Alert> GetAlertAsync(string id, CancellationToken cancellationToken = default)
-		{
-			var alerts = await GetAllAsync<Alert>($"alert/alerts/{id}?needMessage=true", cancellationToken).ConfigureAwait(false);
-			return alerts.FirstOrDefault();
-		}
+		/// <param name="cancellationToken"></param>
+		public Task<Alert> GetAlertAsync(string id, CancellationToken cancellationToken = default)
+			 => GetAsync<Alert>(true, $"alert/alerts/{id}?needMessage=true", cancellationToken);
 
 		/// <summary>
 		/// Gets a message template set
