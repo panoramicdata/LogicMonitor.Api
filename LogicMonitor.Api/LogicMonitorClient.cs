@@ -238,15 +238,17 @@ namespace LogicMonitor.Api
 			{
 				// Get a page
 				var page = await GetPageAsync(filter, subUrl, cancellationToken).ConfigureAwait(false);
-				list.AddRange(page.Items);
+				var pageItems = page.Items ?? new List<T>();
+				var pageTotalCount = page?.TotalCount ?? 0;
+				list.AddRange(pageItems);
 
 				// Some endpoints return a negative total count
-				var expectedTotal = Math.Min(page.TotalCount < 0 ? int.MaxValue : page.TotalCount, requestedTake);
+				var expectedTotal = Math.Min(pageTotalCount < 0 ? int.MaxValue : pageTotalCount, requestedTake);
 
 				// Did we zero this time
 				// OR do we already have all items?
 				// OR Special case - OpsNotesTags don't like being paged.
-				if (page.Items.Count == 0
+				if (pageItems.Count == 0
 					|| list.Count >= expectedTotal
 					|| typeof(T) == typeof(OpsNoteTag))
 				{
