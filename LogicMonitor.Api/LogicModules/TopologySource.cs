@@ -21,6 +21,12 @@ namespace LogicMonitor.Api.LogicModules
 		public int? AuditVersion { get; set; }
 
 		/// <summary>
+		/// The checksum
+		/// </summary>
+		[DataMember(Name = "checksum")]
+		public string Checksum { get; set; }
+
+		/// <summary>
 		/// The collection interval in seconds
 		/// </summary>
 		[DataMember(Name = "collectInterval")]
@@ -33,10 +39,28 @@ namespace LogicMonitor.Api.LogicModules
 		public CollectorAttribute CollectorAttribute { get; set; }
 
 		/// <summary>
+		/// The collection method
+		/// </summary>
+		[DataMember(Name = "collectionMethod")]
+		public CollectionMethod CollectionMethod { get; set; }
+
+		/// <summary>
 		/// The Group name
 		/// </summary>
 		[DataMember(Name = "group")]
 		public string Group { get; set; }
+
+		/// <summary>
+		/// The installation metadata
+		/// </summary>
+		[DataMember(Name = "installationMetadata")]
+		public object InstallationMetadata { get; set; }
+
+		/// <summary>
+		/// The lineage id
+		/// </summary>
+		[DataMember(Name = "lineageId")]
+		public string LineageId { get; set; }
 
 		/// <summary>
 		/// Tags

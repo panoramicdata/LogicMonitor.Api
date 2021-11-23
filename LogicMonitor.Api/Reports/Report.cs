@@ -117,6 +117,12 @@ namespace LogicMonitor.Api.Reports
 		public string CustomReportTypeName { get; set; }
 
 		/// <summary>
+		/// When the report Link expires
+		/// </summary>
+		[DataMember(Name = "reportLinkExpire")]
+		public string ReportLinkExpire { get; set; }
+
+		/// <summary>
 		/// The report link number
 		/// </summary>
 		[DataMember(Name = "reportLinkNum")]

@@ -22,6 +22,12 @@ namespace LogicMonitor.Api.Reports
 		public string HostsValType { get; set; }
 
 		/// <summary>
+		/// Whether this is Base 1024
+		/// </summary>
+		[DataMember(Name = "isBase1024")]
+		public bool IsBase1024 { get; set; }
+
+		/// <summary>
 		/// The columns to sort by
 		/// </summary>
 		[DataMember(Name = "sortedBy")]

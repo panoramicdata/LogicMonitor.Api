@@ -46,7 +46,7 @@ namespace LogicMonitor.Api.Test.PushMetrics
 									DataType = PushMetricDataPointDataType.Counter,
 									Values = new Dictionary<DateTimeOffset, int>
 									{
-										[DateTimeOffset.UtcNow] = 10
+										[DateTimeOffset.UtcNow.AddSeconds(-20)] = 10
 									}.ToLogicMonitorDictionary()
 								}
 							}

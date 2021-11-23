@@ -114,7 +114,13 @@ namespace LogicMonitor.Api.LogicModules
 		AwsEcsServiceDetails,
 
 		/// <summary>
-		/// AWS SES Service Limits
+		/// AWS RDS Performance Insights
+		/// </summary>
+		[EnumMember(Value = "awsrdsperformanceinsights")]
+		AwsRdsPerformanceInsights,
+
+		/// <summary>
+		/// AWS RDS Service Limits
 		/// </summary>
 		[EnumMember(Value = "awsrdsservicelimits")]
 		AwsRdsServiceLimits,
@@ -178,6 +184,18 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[EnumMember(Value = "azureresourcehealth")]
 		AzureResourceHealth,
+
+		/// <summary>
+		/// Azure Virtual Desktop Host Pools
+		/// </summary>
+		[EnumMember(Value = "azurevirtualdesktophostpools")]
+		AzureVirtualDesktopHostPools,
+
+		/// <summary>
+		/// Azure Virtual Desktop Session Hosts
+		/// </summary>
+		[EnumMember(Value = "azurevirtualdesktopsessionhosts")]
+		AzureVirtualDesktopSessionHosts,
 
 		/// <summary>
 		/// Azure VM Backup Status
@@ -330,10 +348,22 @@ namespace LogicMonitor.Api.LogicModules
 		Ping,
 
 		/// <summary>
+		/// Property
+		/// </summary>
+		[EnumMember(Value = "property")]
+		Property,
+
+		/// <summary>
 		/// pushmodules
 		/// </summary>
 		[EnumMember(Value = "pushmodules")]
 		PushModules,
+
+		/// <summary>
+		/// saas airbrake
+		/// </summary>
+		[EnumMember(Value = "saasairbrake")]
+		SaasAirbrake,
 
 		/// <summary>
 		/// saasoffice365csvreport
@@ -346,6 +376,42 @@ namespace LogicMonitor.Api.LogicModules
 		/// </summary>
 		[EnumMember(Value = "saasoffice365sharepointreport")]
 		SaasOffice365SharepointReport,
+
+		/// <summary>
+		/// saasoffice365subscribedskus
+		/// </summary>
+		[EnumMember(Value = "saasoffice365subscribedskus")]
+		Saasoffice365SubscribedSkus,
+
+		/// <summary>
+		/// saassalesforcejson
+		/// </summary>
+		[EnumMember(Value = "saassalesforcejson")]
+		SaasSalesforceJson,
+
+		/// <summary>
+		/// saassalesforcesoqlquery
+		/// </summary>
+		[EnumMember(Value = "saassalesforcesoqlquery")]
+		SaasSalesforceSoqlQuery,
+
+		/// <summary>
+		/// saas status
+		/// </summary>
+		[EnumMember(Value = "saasstatus")]
+		SaasStatus,
+
+		/// <summary>
+		/// saas zoom json
+		/// </summary>
+		[EnumMember(Value = "saaszoomjson")]
+		SaasZoomJson,
+
+		/// <summary>
+		/// saas zoom plan usage
+		/// </summary>
+		[EnumMember(Value = "saaszoomplanusage")]
+		SaasZoomPlanUsage,
 
 		/// <summary>
 		/// script
@@ -392,7 +458,7 @@ namespace LogicMonitor.Api.LogicModules
 		/// <summary>
 		/// Webpage (different spelling of property in the JSON!)
 		/// </summary>
-		[EnumMember(Value = "Webpage")]	// version 136 introduced this issue!
+		[EnumMember(Value = "Webpage")] // version 136 introduced this issue!
 		Webpage1,
 
 		/// <summary>

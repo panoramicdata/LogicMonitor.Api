@@ -191,7 +191,9 @@ namespace LogicMonitor.Api
 				{
 					new Eq<Alert>(nameof(Alert.Id), id),
 					new Eq<Alert>(nameof(Alert.IsCleared), "*"),
-				}
+				},
+				// Get everything, even the DetailMessage
+				Properties = typeof(Alert).GetProperties().Select(p => p.Name).ToList()
 			}).ConfigureAwait(false);
 			return alerts.FirstOrDefault();
 		}

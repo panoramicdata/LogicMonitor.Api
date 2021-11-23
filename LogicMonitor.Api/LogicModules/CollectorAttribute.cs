@@ -232,6 +232,12 @@ namespace LogicMonitor.Api.LogicModules
 		public string Port { get; set; }
 
 		/// <summary>
+		///     The properties
+		/// </summary>
+		[DataMember(Name = "properties")]
+		public string Properties { get; set; }
+
+		/// <summary>
 		///     The query
 		/// </summary>
 		[DataMember(Name = "query")]

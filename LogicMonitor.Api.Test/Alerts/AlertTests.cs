@@ -422,6 +422,9 @@ namespace LogicMonitor.Api.Test.Alerts
 			{
 				var refetchedAlert = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
 				Assert.NotNull(refetchedAlert);
+				Assert.NotNull(refetchedAlert.DetailMessage);
+				Assert.NotNull(refetchedAlert.DetailMessage.Subject);
+				Assert.NotNull(refetchedAlert.DetailMessage.Body);
 				Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
 				Assert.Equal(alert.Id, refetchedAlert.Id);
 				Assert.Equal(alert.AlertType, refetchedAlert.AlertType);

@@ -123,6 +123,12 @@ namespace LogicMonitor.Api.LogicModules
 		public List<DisabledGroup> GroupsDisabledThisSource { get; set; }
 
 		/// <summary>
+		/// groupsDisabledThisSource
+		/// </summary>
+		[DataMember(Name = "isUNCInstance")]
+		public bool? IsUncInstance { get; set; }
+
+		/// <summary>
 		/// The last collected time in seconds since the Epoch
 		/// </summary>
 		[DataMember(Name = "lastCollectedTime")]

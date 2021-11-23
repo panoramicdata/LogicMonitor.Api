@@ -22,6 +22,24 @@ namespace LogicMonitor.Api.Settings
 		public bool AlertTotalIncludingAnyInSdt { get; set; }
 
 		/// <summary>
+		///     The number of committed devices
+		/// </summary>
+		[DataMember(Name = "numberOfCommittedDevices")]
+		public int CommittedDeviceCount { get; set; }
+
+		/// <summary>
+		///     The number of committed config devices
+		/// </summary>
+		[DataMember(Name = "numberOfCommittedConfigDevices")]
+		public int CommittedConfigDeviceCount { get; set; }
+
+		/// <summary>
+		///     The number of committed services
+		/// </summary>
+		[DataMember(Name = "numberOfCommittedServices")]
+		public int CommittedServiceCount { get; set; }
+
+		/// <summary>
 		///     The current AWS device count
 		/// </summary>
 		[DataMember(Name = "numOfAWSDevices")]

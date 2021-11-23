@@ -48,6 +48,12 @@ namespace LogicMonitor.Api.Settings
 		public ApiTokenStatus Status { get; set; }
 
 		/// <summary>
+		/// The type.  If null, V1
+		/// </summary>
+		[DataMember(Name = "type")]
+		public ApiTokenType? Type { get; set; }
+
+		/// <summary>
 		/// A note
 		/// </summary>
 		[DataMember(Name = "note")]

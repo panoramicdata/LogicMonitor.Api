@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Web;
 
@@ -78,6 +79,18 @@ namespace LogicMonitor.Api.Dashboards
 		/// </summary>
 		[DataMember(Name = "ifName")]
 		public string InterfaceName { get; set; }
+
+		/// <summary>
+		/// The IP version
+		/// </summary>
+		[DataMember(Name = "ipVersion")]
+		public string IpVersion { get; set; }
+
+		/// <summary>
+		/// The conversation
+		/// </summary>
+		[DataMember(Name = "conversation")]
+		public List<NetflowFilterConversation> Conversations { get; set; }
 
 		/// <summary>
 		/// Converts to a URL encoded string for the query URL
