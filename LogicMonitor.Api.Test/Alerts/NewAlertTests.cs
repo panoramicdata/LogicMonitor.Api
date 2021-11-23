@@ -1,3 +1,4 @@
+using FluentAssertions;
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Extensions;
 using LogicMonitor.Api.Filters;
@@ -159,7 +160,10 @@ namespace LogicMonitor.Api.Test.Alerts
 				// Refetch each alert
 				foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter).ConfigureAwait(false))
 				{
-					var _ = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
+					var a = await LogicMonitorClient
+						.GetAlertAsync(alert.Id)
+						.ConfigureAwait(false);
+					a.DetailMessage.Should().NotBeNull();
 				}
 			}
 		}

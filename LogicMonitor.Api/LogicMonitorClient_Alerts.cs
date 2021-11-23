@@ -1,7 +1,6 @@
 using LogicMonitor.Api.Alerts;
 using LogicMonitor.Api.Devices;
 using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
 using LogicMonitor.Api.Settings;
 using LogicMonitor.Api.Websites;
 using System;
@@ -183,18 +182,9 @@ namespace LogicMonitor.Api
 		///     Gets a single alert.  The alertType is no longer required as the alert id now contains the type.
 		/// </summary>
 		/// <param name="id">Alert id</param>
-		public async Task<Alert> GetAlertAsync(string id)
+		public async Task<Alert> GetAlertAsync(string id, CancellationToken cancellationToken = default)
 		{
-			var alerts = await GetAllAsync(new Filter<Alert>
-			{
-				FilterItems = new List<FilterItem<Alert>>
-				{
-					new Eq<Alert>(nameof(Alert.Id), id),
-					new Eq<Alert>(nameof(Alert.IsCleared), "*"),
-				},
-				// Get everything, even the DetailMessage
-				Properties = typeof(Alert).GetProperties().Select(p => p.Name).ToList()
-			}).ConfigureAwait(false);
+			var alerts = await GetAllAsync<Alert>($"alert/alerts/{id}?needMessage=true", cancellationToken).ConfigureAwait(false);
 			return alerts.FirstOrDefault();
 		}
 

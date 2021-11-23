@@ -421,14 +421,15 @@ namespace LogicMonitor.Api.Test.Alerts
 			foreach (var alert in alerts.Take(10))
 			{
 				var refetchedAlert = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
-				Assert.NotNull(refetchedAlert);
-				Assert.NotNull(refetchedAlert.DetailMessage);
-				Assert.NotNull(refetchedAlert.DetailMessage.Subject);
-				Assert.NotNull(refetchedAlert.DetailMessage.Body);
-				Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
-				Assert.Equal(alert.Id, refetchedAlert.Id);
-				Assert.Equal(alert.AlertType, refetchedAlert.AlertType);
-				Assert.Equal(alert.DetailMessage?.Body, refetchedAlert.DetailMessage?.Body);
+				refetchedAlert.Should().NotBeNull();
+				refetchedAlert.DetailMessage.Should().NotBeNull();
+				refetchedAlert.DetailMessage.Subject.Should().NotBeNull();
+				refetchedAlert.DetailMessage.Body.Should().NotBeNull();
+				refetchedAlert.MonitorObjectId.Should().Be(alert.MonitorObjectId);
+				refetchedAlert.Id.Should().Be(alert.Id);
+				refetchedAlert.AlertType.Should().Be(alert.AlertType);
+				refetchedAlert.MonitorObjectId.Should().Be(alert.MonitorObjectId);
+				refetchedAlert.DetailMessage?.Body.Should().Be(alert.DetailMessage?.Body);
 			}
 		}
 
@@ -449,10 +450,10 @@ namespace LogicMonitor.Api.Test.Alerts
 			foreach (var alert in alerts)
 			{
 				var refetchedAlert = await LogicMonitorClient.GetAlertAsync(alert.Id).ConfigureAwait(false);
-				Assert.Equal(alert.MonitorObjectId, refetchedAlert.MonitorObjectId);
-				Assert.Equal(alert.Id, refetchedAlert.Id);
-				Assert.Equal(alert.AlertType, refetchedAlert.AlertType);
-				Assert.Equal(alert.DetailMessage?.Body, refetchedAlert.DetailMessage?.Body);
+				refetchedAlert.MonitorObjectId.Should().Be(alert.MonitorObjectId);
+				refetchedAlert.Id.Should().Be(alert.Id);
+				refetchedAlert.AlertType.Should().Be(alert.AlertType);
+				refetchedAlert.DetailMessage?.Body.Should().Be(alert.DetailMessage?.Body);
 			}
 		}
 
