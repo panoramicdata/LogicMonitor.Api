@@ -1,9 +1,4 @@
-﻿using LogicMonitor.Api.Alerts;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-
-namespace LogicMonitor.Api.Converters;
+﻿namespace LogicMonitor.Api.Converters;
 
 internal class AlertSdtConverter : JsonCreationConverter<AlertSdt>
 {

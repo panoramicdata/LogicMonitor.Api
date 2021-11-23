@@ -1,7 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using System;
-
 namespace LogicMonitor.Api.ScheduledDownTimes;
 
 /// <summary>

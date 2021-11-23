@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
-
 namespace LogicMonitor.Api;
 
 /// <summary>

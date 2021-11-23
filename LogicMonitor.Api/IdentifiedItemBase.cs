@@ -1,8 +1,4 @@
-﻿using LogicMonitor.Api.Attributes;
-using System;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api;
+﻿namespace LogicMonitor.Api;
 
 /// <summary>
 /// An entity with a LogicMonitor Id

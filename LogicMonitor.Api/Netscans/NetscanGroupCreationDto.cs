@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Netscans;
+﻿namespace LogicMonitor.Api.Netscans;
 
 /// <summary>
 ///    A Netscan Policy

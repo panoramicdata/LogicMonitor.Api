@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Alerts;
 
 /// <summary>

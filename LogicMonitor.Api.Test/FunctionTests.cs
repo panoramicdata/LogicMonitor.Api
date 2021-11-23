@@ -1,6 +1,3 @@
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test;
 
 public class FunctionTests : TestWithOutput

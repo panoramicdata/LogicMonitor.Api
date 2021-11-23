@@ -1,3 +1,1 @@
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("LogicMonitor.Api.Test")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("LogicMonitor.Api.Test")]

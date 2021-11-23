@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Logging;
+﻿namespace LogicMonitor.Api.Logging;
 
 /// <summary>
 /// A request to write to a log against a resource id

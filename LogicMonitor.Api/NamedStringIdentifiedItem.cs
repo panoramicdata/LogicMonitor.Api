@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api;
+﻿namespace LogicMonitor.Api;
 
 /// <summary>
 /// Item identified by a string

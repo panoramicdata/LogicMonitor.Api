@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Devices;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>

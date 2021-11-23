@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Dashboards;
+﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
 /// Pie chart widget info

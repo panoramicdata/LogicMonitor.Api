@@ -1,7 +1,3 @@
-using LogicMonitor.Api.PushMetrics;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 /// <summary>

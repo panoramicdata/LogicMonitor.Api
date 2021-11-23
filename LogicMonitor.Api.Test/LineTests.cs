@@ -1,7 +1,3 @@
-using LogicMonitor.Api.Data;
-using System.Drawing;
-using Xunit;
-
 namespace LogicMonitor.Api.Test;
 
 public class LineTests

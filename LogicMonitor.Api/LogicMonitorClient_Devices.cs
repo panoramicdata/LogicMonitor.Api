@@ -1,18 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.DeviceProcesses;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -729,7 +714,7 @@ public partial class LogicMonitorClient
 				var newAlertFilter = filter.Clone();
 				newAlertFilter.ResetSearch();
 				newAlertFilter.StartEpochIsAfter = t.Item1.SecondsSinceTheEpoch() - 1; // Take one off to include anything raised on that exact second
-					newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
+				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
 				return newAlertFilter;
 			});
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>

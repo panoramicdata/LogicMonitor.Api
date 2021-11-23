@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 public partial class LogicMonitorClient

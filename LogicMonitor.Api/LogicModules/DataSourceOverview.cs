@@ -1,6 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>

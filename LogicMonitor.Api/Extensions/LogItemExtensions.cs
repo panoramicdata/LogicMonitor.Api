@@ -1,7 +1,4 @@
-﻿using LogicMonitor.Api.Logs;
-using System.Text.RegularExpressions;
-
-namespace LogicMonitor.Api.Extensions;
+﻿namespace LogicMonitor.Api.Extensions;
 
 /// <summary>
 /// Log item extensions

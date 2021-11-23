@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Dashboards;
+﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
 /// An Website Graph widget

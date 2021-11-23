@@ -1,13 +1,3 @@
-using FluentAssertions;
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using System;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceGroupTests : TestWithOutput

@@ -1,7 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using System;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Netscans;
 
 /// <summary>

@@ -1,10 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Attributes;
-using LogicMonitor.Api.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Collectors;
 
 /// <summary>

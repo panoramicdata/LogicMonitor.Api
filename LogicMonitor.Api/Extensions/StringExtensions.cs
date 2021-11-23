@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace LogicMonitor.Api.Extensions;
+﻿namespace LogicMonitor.Api.Extensions;
 
 internal static class StringExtensions
 {

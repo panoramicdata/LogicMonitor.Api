@@ -1,8 +1,4 @@
-﻿using LogicMonitor.Api.Converters;
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Alerts;
+﻿namespace LogicMonitor.Api.Alerts;
 
 /// <summary>
 /// An alert SDT

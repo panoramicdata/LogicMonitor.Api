@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LogicMonitor.Api.Data;
+﻿namespace LogicMonitor.Api.Data;
 
 /// <summary>
 ///    A request for device graph data for a devicedatasource

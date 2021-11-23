@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Alerts;
+﻿namespace LogicMonitor.Api.Alerts;
 
 /// <summary>
 /// A device group alert SDT

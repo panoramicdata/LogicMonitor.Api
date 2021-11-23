@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.PushMetrics;
+﻿namespace LogicMonitor.Api.PushMetrics;
 
 /// <summary>
 /// A Push Metric Instance

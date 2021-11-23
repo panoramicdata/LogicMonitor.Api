@@ -1,9 +1,3 @@
-using LogicMonitor.Api.LogicModules;
-using System.Collections.Generic;
-using System.Threading;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceDataSourceTests : TestWithOutput

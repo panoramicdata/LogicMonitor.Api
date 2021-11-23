@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Collectors;
-using LogicMonitor.Api.Filters;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test;
 
 public class CollectorSettingTests

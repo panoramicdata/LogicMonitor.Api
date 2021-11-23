@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
-
-namespace LogicMonitor.Api;
+﻿namespace LogicMonitor.Api;
 
 /// <summary>
 ///     The main client for querying the portal.

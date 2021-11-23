@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Websites;
+﻿namespace LogicMonitor.Api.Websites;
 
 /// <summary>
 /// Website checkpoint

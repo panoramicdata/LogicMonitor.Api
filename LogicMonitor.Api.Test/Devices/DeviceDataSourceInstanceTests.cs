@@ -1,10 +1,4 @@
-﻿using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace LogicMonitor.Api.Test.Devices;
+﻿namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceDataSourceInstanceTests : TestWithOutput
 {

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Settings;
+﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
 ///    A time zone setting

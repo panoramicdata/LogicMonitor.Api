@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.LogicModules;
+﻿namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
 /// The DataPoint configuration

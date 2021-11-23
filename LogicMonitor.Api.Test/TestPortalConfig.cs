@@ -1,8 +1,3 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using System.Reflection;
-
 namespace LogicMonitor.Api.Test;
 
 internal class TestPortalConfig

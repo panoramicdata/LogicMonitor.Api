@@ -1,17 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Collectors;
-using LogicMonitor.Api.Dashboards;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.LogicModules;
-using LogicMonitor.Api.Logs;
-using LogicMonitor.Api.OpsNotes;
-using LogicMonitor.Api.ScheduledDownTimes;
-using LogicMonitor.Api.Settings;
-using LogicMonitor.Api.Users;
-using LogicMonitor.Api.Websites;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Backup;
 
 /// <summary>

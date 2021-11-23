@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using System;
-using System.Linq;
-using Xunit;
-
 namespace LogicMonitor.Api.Test.Extensions;
 
 public class DateTimeExtensionTests

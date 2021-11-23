@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Converters;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Reports;
 
 /// <summary>

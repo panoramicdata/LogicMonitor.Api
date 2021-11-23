@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.OpsNotes;
 
 /// <summary>

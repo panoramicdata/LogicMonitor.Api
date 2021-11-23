@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Logging;
+﻿namespace LogicMonitor.Api.Logging;
 
 /// <summary>
 /// A response to a WriteLogRequest

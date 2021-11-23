@@ -1,10 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.Settings;
-using LogicMonitor.Api.Users;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 /// <summary>

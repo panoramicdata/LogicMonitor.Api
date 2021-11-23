@@ -1,9 +1,3 @@
-using LogicMonitor.Api.LogicModules;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.LogicModules;
 
 public class LogicModuleUpdateTests : TestWithOutput

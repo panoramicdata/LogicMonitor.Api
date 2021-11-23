@@ -1,15 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Data;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.Time;
-using LogicMonitor.Api.Websites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Websites;
 
 public class WebsiteTests : TestWithOutput
@@ -38,7 +26,7 @@ public class WebsiteTests : TestWithOutput
 				{
 						new WebsiteStep
 						{
-							MatchType = MatchType.Plain,
+							MatchType = Api.Websites.MatchType.Plain,
 							HttpSchema = HttpSchema.Https,
 							HttpMethod = "get",
 							Url = "/",

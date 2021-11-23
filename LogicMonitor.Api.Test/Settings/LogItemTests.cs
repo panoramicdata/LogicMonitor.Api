@@ -1,11 +1,3 @@
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.Logs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Settings;
 
 public class LogItemTests : TestWithOutput

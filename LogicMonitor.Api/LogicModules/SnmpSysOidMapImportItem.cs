@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.LogicModules;
+﻿namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
 /// An SNMP SysOID Map ID and Name for import

@@ -1,12 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.OpsNotes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test;
 
 /// <summary>

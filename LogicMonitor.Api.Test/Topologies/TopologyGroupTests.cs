@@ -1,10 +1,4 @@
-﻿using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.Topologies;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace LogicMonitor.Api.Test.Topologies;
+﻿namespace LogicMonitor.Api.Test.Topologies;
 
 public class TopologyGroupTests : TestWithOutput
 {

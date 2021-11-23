@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using System;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Data;
 
 public class RawDataTests : TestWithOutput

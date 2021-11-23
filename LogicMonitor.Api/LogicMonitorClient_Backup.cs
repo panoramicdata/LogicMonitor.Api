@@ -1,25 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Backup;
-using LogicMonitor.Api.Collectors;
-using LogicMonitor.Api.Dashboards;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using LogicMonitor.Api.Netscans;
-using LogicMonitor.Api.OpsNotes;
-using LogicMonitor.Api.ScheduledDownTimes;
-using LogicMonitor.Api.Settings;
-using LogicMonitor.Api.Users;
-using LogicMonitor.Api.Websites;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 public partial class LogicMonitorClient

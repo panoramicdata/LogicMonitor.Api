@@ -1,7 +1,4 @@
-﻿using LogicMonitor.Api.Data;
-using System.Threading;
-using System.Threading.Tasks;
-
+﻿
 namespace LogicMonitor.Api;
 
 public partial class LogicMonitorClient

@@ -1,5 +1,3 @@
-using System;
-
 namespace LogicMonitor.Api.Data;
 
 /// <summary>

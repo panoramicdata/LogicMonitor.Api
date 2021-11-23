@@ -1,11 +1,3 @@
-using FluentAssertions;
-using LogicMonitor.Api.Websites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Websites;
 
 public class WebsiteGroupTests : TestWithOutput

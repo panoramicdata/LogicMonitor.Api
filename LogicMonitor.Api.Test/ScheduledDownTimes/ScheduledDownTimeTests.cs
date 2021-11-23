@@ -1,14 +1,3 @@
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using LogicMonitor.Api.ScheduledDownTimes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.ScheduledDownTimes;
 
 public class ScheduledDownTimeTests : TestWithOutput

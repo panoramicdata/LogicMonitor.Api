@@ -1,8 +1,4 @@
-﻿using LogicMonitor.Api.ScheduledDownTimes;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Data;
+﻿namespace LogicMonitor.Api.Data;
 
 /// <summary>
 /// A collection of History SDTs

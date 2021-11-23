@@ -1,6 +1,3 @@
-using LogicMonitor.Api.Time;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>

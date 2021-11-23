@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.DeviceProcesses;
+﻿namespace LogicMonitor.Api.DeviceProcesses;
 
 /// <summary>
 ///     A process running on a device

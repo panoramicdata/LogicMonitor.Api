@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Data;
+﻿namespace LogicMonitor.Api.Data;
 
 /// <summary>
 /// A poll now result

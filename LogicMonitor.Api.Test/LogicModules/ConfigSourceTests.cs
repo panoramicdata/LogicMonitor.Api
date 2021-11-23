@@ -1,6 +1,3 @@
-using Xunit;
-using Xunit.Abstractions;
-
 // Older, now deprecated methods are still tested here
 #pragma warning disable 618
 

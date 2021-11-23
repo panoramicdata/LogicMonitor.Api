@@ -1,8 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Websites;
+﻿namespace LogicMonitor.Api.Websites;
 
 /// <summary>
 /// A website type

@@ -1,7 +1,3 @@
-using Newtonsoft.Json;
-using System;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>

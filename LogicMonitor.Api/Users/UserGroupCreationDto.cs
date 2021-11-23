@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Users;
+﻿namespace LogicMonitor.Api.Users;
 
 /// <summary>
 /// RoleGroup creation DTO

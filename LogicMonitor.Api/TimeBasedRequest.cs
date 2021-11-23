@@ -1,7 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Time;
-using System;
-
 namespace LogicMonitor.Api;
 
 /// <summary>

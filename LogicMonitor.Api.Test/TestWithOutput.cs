@@ -1,13 +1,3 @@
-using LogicMonitor.Api.Dashboards;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Extensions;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test;
 
 public abstract class TestWithOutput

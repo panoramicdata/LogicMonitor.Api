@@ -1,8 +1,4 @@
-﻿using LogicMonitor.Api.Extensions;
-using System;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.ScheduledDownTimes;
+﻿namespace LogicMonitor.Api.ScheduledDownTimes;
 
 /// <summary>
 /// Historic Scheduled Down Time

@@ -1,12 +1,3 @@
-using LogicMonitor.Api.Data;
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.LogicModules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 /// <summary>

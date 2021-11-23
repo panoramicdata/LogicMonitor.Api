@@ -1,8 +1,4 @@
-﻿using LogicMonitor.Api.LogicModules;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace LogicMonitor.Api.Test.Settings;
+﻿namespace LogicMonitor.Api.Test.Settings;
 
 public class SysOidsTests : TestWithOutput
 {

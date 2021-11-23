@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Settings;
+﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
 /// An API token type

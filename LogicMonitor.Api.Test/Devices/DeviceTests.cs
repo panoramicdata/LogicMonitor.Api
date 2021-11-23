@@ -1,18 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Collectors;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using LogicMonitor.Api.RecycleBin;
-using LogicMonitor.Api.ScheduledDownTimes;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceTests : TestWithOutput

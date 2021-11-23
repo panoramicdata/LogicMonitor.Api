@@ -1,7 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Alerts;
 
 public class AlertStatTests : TestWithOutput

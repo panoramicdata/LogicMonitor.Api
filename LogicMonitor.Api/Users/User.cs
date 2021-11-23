@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Settings;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Users;
 
 /// <summary>

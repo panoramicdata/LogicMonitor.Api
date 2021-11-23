@@ -1,9 +1,3 @@
-using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Linq;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Filters;
 
 /// <summary>

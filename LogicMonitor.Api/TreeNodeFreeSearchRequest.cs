@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api;
+﻿namespace LogicMonitor.Api;
 
 /// <summary>
 /// A tree node free search request

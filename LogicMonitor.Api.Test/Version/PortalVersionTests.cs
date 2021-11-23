@@ -1,6 +1,3 @@
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Settings;
 
 public class PortalVersionTests : TestWithOutput

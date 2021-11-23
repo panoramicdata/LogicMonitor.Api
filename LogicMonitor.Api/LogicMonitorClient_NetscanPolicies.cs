@@ -1,7 +1,3 @@
-using LogicMonitor.Api.Netscans;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace LogicMonitor.Api;
 
 public partial class LogicMonitorClient

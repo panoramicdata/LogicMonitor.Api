@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Functions;
+﻿namespace LogicMonitor.Api.Functions;
 
 /// <summary>
 ///     An applies to match

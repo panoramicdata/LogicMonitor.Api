@@ -1,5 +1,3 @@
-using System.Drawing;
-
 namespace LogicMonitor.Api.Extensions;
 
 /// <summary>

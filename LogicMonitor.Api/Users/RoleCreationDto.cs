@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Users;
 
 /// <summary>

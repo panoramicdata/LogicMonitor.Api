@@ -1,11 +1,3 @@
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Extensions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Websites;
 
 /// <summary>

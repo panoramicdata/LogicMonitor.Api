@@ -1,14 +1,3 @@
-using LogicMonitor.Api.Collectors;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.Settings;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test;
 
 public class CollectorTests

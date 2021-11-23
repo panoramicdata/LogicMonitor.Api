@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace LogicMonitor.Api.PushMetrics;
+﻿namespace LogicMonitor.Api.PushMetrics;
 
 /// <summary>
 /// Push Metric extensions

@@ -1,10 +1,3 @@
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.Reports;
-using LogicMonitor.Api.Users;
-using System.Collections.Generic;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Users;
 
 public class UserGroupTests : TestWithOutput

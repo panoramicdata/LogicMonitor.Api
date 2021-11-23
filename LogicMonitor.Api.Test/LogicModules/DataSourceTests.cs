@@ -1,15 +1,3 @@
-using LogicMonitor.Api.DeviceProcesses;
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-
 // Older, now deprecated methods are still tested here
 #pragma warning disable 618
 

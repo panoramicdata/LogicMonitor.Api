@@ -1,6 +1,3 @@
-using LogicMonitor.Api.Dashboards;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Alerts;
 
 /// <summary>

@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Collectors;
-using LogicMonitor.Api.Devices;
-using System;
-using Xunit;
-
 namespace LogicMonitor.Api.Test;
 
 public class IsPropertyReadonlyTests

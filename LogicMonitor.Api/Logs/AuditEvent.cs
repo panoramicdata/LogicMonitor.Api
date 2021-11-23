@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LogicMonitor.Api.Logs;
+﻿namespace LogicMonitor.Api.Logs;
 
 /// <summary>
 /// An interpreted AuditItem

@@ -1,12 +1,3 @@
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test;
 
 public class EventSourceTests : TestWithOutput

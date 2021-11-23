@@ -15,9 +15,21 @@ using LogicMonitor.Api;
 
 [...]
 
-public async Task GetAllDevices()
+public static async Task GetAllDevices(ILogger logger, CancellationToken cancellationToken)
 {
-	var portalClient = new PortalClient("acme", "accessTokenId", "accessTokenKey");
-	var devices = await portalClient.GetAllAsync<Device>().ConfigureAwait(false);
+	using var logicMonitorClient = new LogicMonitorClient(
+		new LogicMonitorClientOptions
+		{
+			Account = "acme",
+			AccessId = "accessId",
+			AccessKey = "accessKey",
+			Logger = logger
+		}
+	);
+
+	var devices = await logicMonitorClient
+		.GetAllAsync<Device>(cancellationToken)
+		.ConfigureAwait(false);
+
 	Console.WriteLine($"Device Count: {devices.Count}");
 }

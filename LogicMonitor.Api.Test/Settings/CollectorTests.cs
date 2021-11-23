@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Collectors;
-using Microsoft.Extensions.Logging;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Settings;
 
 public class CollectorTests : TestWithOutput

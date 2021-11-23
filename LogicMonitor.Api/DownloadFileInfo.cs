@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace LogicMonitor.Api;
 
 internal class DownloadFileInfo

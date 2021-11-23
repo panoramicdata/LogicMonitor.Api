@@ -1,5 +1,3 @@
-using LogicMonitor.Api.Dashboards;
-
 namespace LogicMonitor.Api.Flows;
 
 /// <summary>

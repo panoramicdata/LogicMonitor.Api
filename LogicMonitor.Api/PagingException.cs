@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api;
+﻿namespace LogicMonitor.Api;
 
 /// <summary>
 /// An exception ocurring during REST API Paging

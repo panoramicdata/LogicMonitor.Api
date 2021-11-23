@@ -1,9 +1,3 @@
-using FluentAssertions;
-using LogicMonitor.Api.LogicModules;
-using System;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.LogicModules;
 
 public class AppliesToFunctionTests : TestWithOutput

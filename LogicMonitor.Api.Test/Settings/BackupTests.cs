@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Backup;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Settings;
 
 public class BackupTests : TestWithOutput

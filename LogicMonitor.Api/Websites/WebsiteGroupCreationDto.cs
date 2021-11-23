@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Websites;
+﻿namespace LogicMonitor.Api.Websites;
 
 /// <summary>
 /// A ServiceGroup creation DTO

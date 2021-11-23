@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace LogicMonitor.Api.Test.Logging;
+﻿namespace LogicMonitor.Api.Test.Logging;
 
 public class PushMetricTests : TestWithOutput
 {

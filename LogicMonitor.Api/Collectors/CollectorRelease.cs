@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.Collectors;
+﻿namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
 ///    Collector Release information

@@ -1,6 +1,3 @@
-using LogicMonitor.Api.Attributes;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Topologies;
 
 /// <summary>

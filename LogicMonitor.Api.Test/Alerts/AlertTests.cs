@@ -1,15 +1,3 @@
-using FluentAssertions;
-using Humanizer;
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Alerts;
 
 public class AlertTests : TestWithOutput

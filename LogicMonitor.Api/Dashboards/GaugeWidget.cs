@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>A Gauge widget</summary>

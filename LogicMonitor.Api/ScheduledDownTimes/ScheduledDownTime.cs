@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Time;
-using System;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.ScheduledDownTimes;
 
 /// <summary>

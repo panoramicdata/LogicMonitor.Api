@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace LogicMonitor.Api;
+﻿namespace LogicMonitor.Api;
 
 /// <summary>
 /// LogicMonitor Client options

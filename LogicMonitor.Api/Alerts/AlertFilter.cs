@@ -1,9 +1,3 @@
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace LogicMonitor.Api.Alerts;
 
 /// <summary>

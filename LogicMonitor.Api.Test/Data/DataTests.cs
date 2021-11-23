@@ -1,18 +1,3 @@
-using LogicMonitor.Api.Dashboards;
-using LogicMonitor.Api.Data;
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using LogicMonitor.Api.Time;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Data;
 
 public class DataTests : TestWithOutput

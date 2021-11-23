@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace LogicMonitor.Api.Test;
+﻿namespace LogicMonitor.Api.Test;
 
 public static class EnumerableExtensions
 {

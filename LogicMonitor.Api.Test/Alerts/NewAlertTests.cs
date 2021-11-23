@@ -1,14 +1,3 @@
-using FluentAssertions;
-using LogicMonitor.Api.Alerts;
-using LogicMonitor.Api.Extensions;
-using LogicMonitor.Api.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Alerts;
 
 public class NewAlertTests : TestWithOutput

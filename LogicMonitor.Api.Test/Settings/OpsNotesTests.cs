@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.OpsNotes;
-using Xunit;
-using Xunit.Abstractions;
-
 namespace LogicMonitor.Api.Test.Settings;
 
 public class OpsNoteTests : TestWithOutput

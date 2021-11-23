@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.PushMetrics;
+﻿namespace LogicMonitor.Api.PushMetrics;
 
 /// <summary>
 /// A push metric datapoint data type

@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace LogicMonitor.Api.OpsNotes;
+﻿namespace LogicMonitor.Api.OpsNotes;
 
 /// <summary>
 /// A website group ops note scope

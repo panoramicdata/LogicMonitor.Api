@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Settings;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-
 namespace LogicMonitor.Api.Converters;
 
 internal class IntegrationsConverter : JsonCreationConverter<Integration>

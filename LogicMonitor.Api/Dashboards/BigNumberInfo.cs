@@ -1,7 +1,3 @@
-using LogicMonitor.Api.LogicModules;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
