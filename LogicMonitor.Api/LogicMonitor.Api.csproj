@@ -20,7 +20,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.161.7</Version>
+		<Version>2.161.8</Version>
 		<PackageReleaseNotes>Attempted fix for Linux systems where double.Parse("No Data", out var result) returns double.Infinity</PackageReleaseNotes>
 
 	</PropertyGroup>
