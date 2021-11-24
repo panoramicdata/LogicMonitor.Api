@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.161.5</Version>
-		<PackageReleaseNotes>Fixed GetAlert issue</PackageReleaseNotes>
+		<Version>2.161.6</Version>
+		<PackageReleaseNotes>Added trace logging of get responses</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
