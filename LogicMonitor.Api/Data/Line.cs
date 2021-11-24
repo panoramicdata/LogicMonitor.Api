@@ -70,7 +70,11 @@ public class Line
 	[IgnoreDataMember]
 	public double?[] Data
 	{
-		get => DataInternal.Select(@object => double.TryParse(@object.ToString(), out var result) ? result : (double?)null).ToArray();
+		get => DataInternal.Select(@object =>
+			@object as string == "No Data" ? null
+			: double.TryParse(@object.ToString(), out var result) ? result
+			: (double?)null
+		).ToArray();
 		set => DataInternal = value.Select(v => v ?? (object)"No Data").ToArray();
 	}
 

@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.161.6</Version>
-		<PackageReleaseNotes>Added trace logging of get responses</PackageReleaseNotes>
+		<Version>2.161.7</Version>
+		<PackageReleaseNotes>Attempted fix for Linux systems where double.Parse("No Data", out var result) returns double.Infinity</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
