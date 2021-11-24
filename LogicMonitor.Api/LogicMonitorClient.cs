@@ -858,6 +858,7 @@ public partial class LogicMonitorClient : IDisposable
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 					var message = $"{prefix} failed on attempt {++failureCount}: {responseBody}";
 					_logger.LogDebug(message);
+					_logger.LogTrace(responseBody);
 					if (failureCount < AttemptCount)
 					{
 						_logger.LogDebug($"{prefix} Retrying..");
@@ -894,11 +895,13 @@ public partial class LogicMonitorClient : IDisposable
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
 			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			_logger.LogTrace(content);
 			return new XmlResponse { Content = content } as T;
 		}
 		else if (typeof(T) == typeof(List<byte>))
 		{
 			var content = await httpResponseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+			_logger.LogTrace("Byte Array");
 			return content.ToList() as T;
 		}
 		else if (typeof(T) == typeof(DownloadFileInfo))
@@ -925,11 +928,13 @@ public partial class LogicMonitorClient : IDisposable
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 			var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
 			_logger.LogDebug(message);
+			_logger.LogTrace(responseBody);
 			throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, message);
 		}
 
 		// Return the object
 		T deserializedObject;
+		_logger.LogTrace(portalResponse.Data.ToString());
 		try
 		{
 			deserializedObject = portalResponse.GetObject(JsonConverters);
