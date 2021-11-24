@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.161.8</Version>
-		<PackageReleaseNotes>Attempted fix for Linux systems where double.Parse("No Data", out var result) returns double.Infinity</PackageReleaseNotes>
+		<Version>2.161.9</Version>
+		<PackageReleaseNotes>Attempted positive infinity fix</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
