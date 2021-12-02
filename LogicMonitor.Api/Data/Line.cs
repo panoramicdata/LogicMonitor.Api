@@ -71,9 +71,13 @@ public class Line
 	public double?[] Data
 	{
 		get => DataInternal.Select(@object =>
-			@object as double? == double.PositiveInfinity ? null
-			: double.TryParse(@object.ToString(), out var result) ? result
-			: (double?)null
+			@object as double? == double.PositiveInfinity	// No, as object as double? is always null
+				? null
+				: (@object as string == "Infinity")
+					? null
+					: double.TryParse(@object.ToString(), out var result)
+						? result
+							: (double?)null
 		).ToArray();
 		set => DataInternal = value.Select(v => v ?? (object)"No Data").ToArray();
 	}
