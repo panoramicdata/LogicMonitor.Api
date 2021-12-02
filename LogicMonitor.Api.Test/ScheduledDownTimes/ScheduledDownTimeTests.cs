@@ -27,36 +27,43 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var testsdts =
 			await LogicMonitorClient.GetDeviceHistorySdts(1053, default)
 			.ConfigureAwait(false);
+		testsdts.Should().NotBeNull();
 
 		// Device Group
-		var deviceGroupHistorySdts =
+		var _deviceGroupHistorySdts =
 			await LogicMonitorClient.GetDeviceGroupHistorySdts(1516, default)
 			.ConfigureAwait(false);
+		_deviceGroupHistorySdts.Should().NotBeNull();
 
 		// Device
 		var deviceHistorySdts =
 			await LogicMonitorClient.GetDeviceHistorySdts(1765, default)
 			.ConfigureAwait(false);
+		deviceHistorySdts.Should().NotBeNull();
 
 		// Device Data Source
 		var deviceDataSourceHistorySdts =
 			await LogicMonitorClient.GetDeviceDataSourceHistorySdts(1765, 98562, default)
 			.ConfigureAwait(false);
+		deviceDataSourceHistorySdts.Should().NotBeNull();
 
 		// Device Data Source Instance
 		var deviceDataSourceInstanceHistorySdts =
 			await LogicMonitorClient.GetDeviceDataSourceInstanceHistorySdts(1765, 98562, 244662832, default)
 			.ConfigureAwait(false);
+		deviceDataSourceInstanceHistorySdts.Should().NotBeNull();
 
 		// Website Group
 		var websiteGroupHistorySdts =
 			await LogicMonitorClient.GetWebsiteGroupHistorySdts(20, default)
 			.ConfigureAwait(false);
+		websiteGroupHistorySdts.Should().NotBeNull();
 
 		// Website
 		var websiteHistorySdts =
 			await LogicMonitorClient.GetWebsiteHistorySdts(350, default)
 			.ConfigureAwait(false);
+		websiteHistorySdts.Should().NotBeNull();
 	}
 
 	[Fact]

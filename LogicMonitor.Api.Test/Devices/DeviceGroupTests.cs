@@ -104,7 +104,7 @@ public class DeviceGroupTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		// Make sure that some are returned
-		deviceGroup.Count.Should().Be(1);
+		deviceGroup.Should().ContainSingle();
 	}
 
 	[Fact]
