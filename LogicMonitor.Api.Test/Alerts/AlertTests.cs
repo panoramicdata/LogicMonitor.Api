@@ -115,9 +115,9 @@ public class AlertTests : TestWithOutput
 		// Assert
 
 		// All the ids should be unique
-		allAlerts.Select(a => a.Id).Should().OnlyHaveUniqueItems();
-		sdtAlerts.Select(a => a.Id).Should().OnlyHaveUniqueItems();
-		nonSdtAlerts.Select(a => a.Id).Should().OnlyHaveUniqueItems();
+		allAlerts.Should().OnlyHaveUniqueItems(a => a.Id);
+		sdtAlerts.Should().OnlyHaveUniqueItems(a => a.Id);
+		nonSdtAlerts.Should().OnlyHaveUniqueItems(a => a.Id);
 
 		// Troubleshooting stuff
 		var extraNonSdtAlertIds = nonSdtAlerts.Select(a => a.Id).Except(allAlerts.Select(a => a.Id)).ToList();
@@ -406,7 +406,7 @@ public class AlertTests : TestWithOutput
 				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
 			}).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
-		alerts.Count.Should().NotBe(0);
+		alerts.Should().NotHaveCount(0);
 
 		// Refetch with GetAlertAsync
 		foreach (var alert in alerts)
