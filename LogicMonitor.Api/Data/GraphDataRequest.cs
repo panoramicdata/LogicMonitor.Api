@@ -62,10 +62,12 @@ public abstract class GraphDataRequest : GraphDataRequestBase
 				{
 					throw new ArgumentException("If TimePeriod is not specified, StartDateTime and EndDateTime must both be specified.");
 				}
+
 				if (StartDateTime >= EndDateTime)
 				{
 					throw new ArgumentException("Start time must be before end time.");
 				}
+
 				break;
 		}
 	}

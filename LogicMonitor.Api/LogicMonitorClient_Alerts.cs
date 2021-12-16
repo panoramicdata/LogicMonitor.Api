@@ -35,10 +35,12 @@ public partial class LogicMonitorClient
 		{
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
+
 		if (alertFilter?.IsCleared == false)
 		{
 			return alerts.Where(a => !a.IsCleared).ToList();
 		}
+
 		return alerts;
 	}
 
@@ -56,10 +58,12 @@ public partial class LogicMonitorClient
 		{
 			alertFilter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
 		}
+
 		if (alertFilter.StartEpochIsBefore == null)
 		{
 			alertFilter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
 		}
+
 		var allAlerts = new ConcurrentBag<Alert>();
 
 		var alertFilterList = ((long)alertFilter.StartEpochIsAfter).ToDateTimeUtc()
@@ -114,6 +118,7 @@ public partial class LogicMonitorClient
 		{
 			correctedAlertFilter.Skip = 0;
 		}
+
 		int maxAlertCount;
 		if (correctedAlertFilter.Take != null)
 		{

@@ -56,6 +56,7 @@ public partial class LogicMonitorClient
 			throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
 				nameof(deviceDataSourceId));
 		}
+
 		return filteredDeviceDataSource.OverviewGraphs;
 	}
 

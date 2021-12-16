@@ -34,14 +34,17 @@ public class Line
 		{
 			return h - '0';
 		}
+
 		if (h >= 'a' && h <= 'f')
 		{
 			return h - 'a' + 10;
 		}
+
 		if (h >= 'A' && h <= 'F')
 		{
 			return h - 'A' + 10;
 		}
+
 		throw new ArgumentOutOfRangeException();
 	}
 

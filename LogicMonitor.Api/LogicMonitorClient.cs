@@ -56,7 +56,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <summary>
 	///     Whether to use the cache
 	/// </summary>
-	public bool UseCache;
+	public bool UseCache { get; set; }
 
 	private int attemptCount = 1;
 
@@ -83,6 +83,7 @@ public partial class LogicMonitorClient : IDisposable
 			{
 				throw new ArgumentOutOfRangeException("Must be >= 1.");
 			}
+
 			attemptCount = value;
 		}
 	}
@@ -206,6 +207,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			filter = new Filter<T>();
 		}
+
 		filter.Take = Math.Min(300, requestedTake);
 		filter.Skip = 0;
 		var list = new List<T>();
@@ -407,6 +409,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			return int.Parse(match.Groups["version"].Value);
 		}
+
 		throw new FormatException("Could not determine the portal version.");
 	}
 
@@ -457,6 +460,7 @@ public partial class LogicMonitorClient : IDisposable
 			{
 				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 			}
+
 			_logger.LogDebug($"{prefix} complete");
 
 			// Check the outer HTTP status code
@@ -471,6 +475,7 @@ public partial class LogicMonitorClient : IDisposable
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
+
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 					_logger.LogDebug($"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody);
@@ -705,6 +710,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
 				}
+
 				_logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
 			}
 			catch (Exception e)
@@ -716,6 +722,7 @@ public partial class LogicMonitorClient : IDisposable
 					_logger.LogDebug($"{prefix} Retrying..");
 					continue;
 				}
+
 				_logger.LogDebug($"{prefix} Giving up.");
 				throw;
 			}
@@ -826,6 +833,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
 				}
+
 				_logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
 			}
 			catch (Exception e)
@@ -838,6 +846,7 @@ public partial class LogicMonitorClient : IDisposable
 					await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 					continue;
 				}
+
 				_logger.LogDebug($"{prefix} Giving up.");
 				throw;
 			}
@@ -866,6 +875,7 @@ public partial class LogicMonitorClient : IDisposable
 						await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
+
 					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, message);
 				}
 				// We have been told to back off
@@ -912,6 +922,7 @@ public partial class LogicMonitorClient : IDisposable
 			{
 				input.CopyTo(output);
 			}
+
 			return new DownloadFileInfo
 			{
 				FileInfo = tempFileInfo
@@ -984,6 +995,7 @@ public partial class LogicMonitorClient : IDisposable
 					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken)
 						.ConfigureAwait(false);
 				}
+
 				_logger.LogDebug($"{prefix} complete");
 			}
 
@@ -1073,6 +1085,7 @@ public partial class LogicMonitorClient : IDisposable
 				using var requestMessage = new HttpRequestMessage(PatchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content };
 				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 			}
+
 			_logger.LogDebug($"{prefix} complete");
 
 			if (!httpResponseMessage.IsSuccessStatusCode)
@@ -1183,8 +1196,10 @@ public partial class LogicMonitorClient : IDisposable
 			{
 				break;
 			}
+
 			await Task.Delay(sleepIntervalMs, cancellationToken).ConfigureAwait(false);
 		}
+
 		return debugCommandResult;
 	}
 
@@ -1233,6 +1248,7 @@ public partial class LogicMonitorClient : IDisposable
 							cancellationToken).ConfigureAwait(false);
 					}
 				}
+
 				break;
 
 			case SetPropertyMode.Create:

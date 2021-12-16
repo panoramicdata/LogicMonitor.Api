@@ -128,6 +128,7 @@ public partial class LogicMonitorClient
 		{
 			filter.Order = new Order<Device> { Property = nameof(Device.Id), Direction = OrderDirection.Asc };
 		}
+
 		return GetBySubUrlAsync<Page<Device>>($"device/devices?{filter}", cancellationToken);
 	}
 
@@ -231,6 +232,7 @@ public partial class LogicMonitorClient
 				}
 			}
 		}
+
 		return devices
 			.DistinctBy(d => d.Id)
 			.ToList();
@@ -265,6 +267,7 @@ public partial class LogicMonitorClient
 		{
 			deviceList.Add(await GetAsync<Device>(deviceResult.EntityId, cancellationToken).ConfigureAwait(false));
 		}
+
 		return deviceList;
 	}
 
@@ -383,10 +386,12 @@ public partial class LogicMonitorClient
 				{
 					continue;
 				}
+
 				(deviceGroup.Devices ??= new List<Device>()).Add(device);
 				deviceGroup.DeviceCount = deviceGroup.Devices.Count;
 			}
 		}
+
 		return requestedRootGroup;
 	}
 
@@ -478,6 +483,7 @@ public partial class LogicMonitorClient
 			{
 				return jObject.ToObject<Page<DeviceProcess>>();
 			}
+
 			await Task.Delay(500).ConfigureAwait(false);
 		}
 	}
@@ -605,11 +611,13 @@ public partial class LogicMonitorClient
 					dpConfig.AlertExpression = alertExpression;
 					changeMade = true;
 				}
+
 				if (alertExpressionNote != null && dpConfig.AlertExpressionNote != alertExpressionNote)
 				{
 					dpConfig.AlertExpressionNote = alertExpressionNote;
 					changeMade = true;
 				}
+
 				if (disableAlerting.HasValue && dpConfig.DisableAlerting != disableAlerting)
 				{
 					dpConfig.DisableAlerting = disableAlerting.Value;
@@ -617,6 +625,7 @@ public partial class LogicMonitorClient
 				}
 			}
 		}
+
 		if (changeMade)
 		{
 			await PutAsync(url, dataPointConfigurationCollection, cancellationToken).ConfigureAwait(false);
@@ -673,10 +682,12 @@ public partial class LogicMonitorClient
 		{
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
+
 		if (filter?.IsCleared == false)
 		{
 			return alerts.Where(a => !a.IsCleared).ToList();
 		}
+
 		return alerts;
 	}
 
@@ -701,10 +712,12 @@ public partial class LogicMonitorClient
 		{
 			filter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
 		}
+
 		if (filter.StartEpochIsBefore == null)
 		{
 			filter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
 		}
+
 		var allAlerts = new ConcurrentBag<Alert>();
 
 		var alertFilterList = ((long)filter.StartEpochIsAfter).ToDateTimeUtc()

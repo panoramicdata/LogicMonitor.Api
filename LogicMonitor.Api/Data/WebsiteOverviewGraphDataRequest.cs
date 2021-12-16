@@ -36,10 +36,12 @@ public class WebsiteOverviewGraphDataRequest : GraphDataRequest
 		{
 			throw new ArgumentException("WebsiteId must be specified.");
 		}
+
 		if (WebsiteGraphType == WebsiteGraphType.Unknown)
 		{
 			throw new ArgumentException("WebsiteGraphType must be specified.");
 		}
+
 		ValidateInternal();
 	}
 }

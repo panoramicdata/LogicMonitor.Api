@@ -68,6 +68,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 					return Enum.Parse(objectType, defaultName);
 #endif
 				}
+
 				throw new FormatException($"Unsupported string for {enumType.Name}: {enumText}");
 			case JsonToken.Integer:
 				var enumVal = Convert.ToInt32(reader.Value);
@@ -86,6 +87,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 				{
 					return Enum.Parse(objectType, defaultName);
 				}
+
 				throw new FormatException($"Unsupported integer for {enumType.Name}: {enumVal} and {enumType} has no 'Unknown' member.");
 			default:
 				throw new FormatException($"Unsupported tokenType: {reader.TokenType}");

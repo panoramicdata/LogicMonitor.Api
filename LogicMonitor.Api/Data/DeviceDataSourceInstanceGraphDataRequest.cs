@@ -25,10 +25,12 @@ public class DeviceDataSourceInstanceGraphDataRequest : GraphDataRequest
 		{
 			throw new ArgumentException("DataSourceGraphId must be specified.");
 		}
+
 		if (DeviceDataSourceInstanceId <= 0)
 		{
 			throw new ArgumentException("DeviceDataSourceInstanceId must be specified.");
 		}
+
 		ValidateInternal();
 	}
 }

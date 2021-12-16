@@ -146,6 +146,7 @@ public class PortalResponse<T> where T : new()
 			{
 				throw new LogicMonitorServiceUnavailableException(dataString);
 			}
+
 			throw new DeserializationException(dataString, e);
 		}
 		catch (JsonReaderException e)
@@ -154,6 +155,7 @@ public class PortalResponse<T> where T : new()
 			{
 				throw new LogicMonitorServiceUnavailableException(dataString);
 			}
+
 			throw new DeserializationException(dataString, e);
 		}
 	}

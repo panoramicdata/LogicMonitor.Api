@@ -24,10 +24,12 @@ public class DeviceDataSourceGraphDataRequest : GraphDataRequest
 		{
 			throw new ArgumentException("DataSourceInstanceGroupId must be specified.");
 		}
+
 		if (OverviewGraphId <= 0)
 		{
 			throw new ArgumentException("OverviewGraphId must be specified.");
 		}
+
 		ValidateInternal();
 	}
 }

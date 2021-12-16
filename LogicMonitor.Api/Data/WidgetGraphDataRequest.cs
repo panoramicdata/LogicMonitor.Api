@@ -19,6 +19,7 @@ public class WidgetGraphDataRequest : GraphDataRequest
 		{
 			throw new ArgumentException("WidgetId must be specified.");
 		}
+
 		ValidateInternal();
 	}
 }

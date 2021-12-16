@@ -16,14 +16,17 @@ public static class AlertStatusExtensions
 		{
 			return AlertLevel.Critical;
 		}
+
 		if (alertStatusString.Contains("Error"))
 		{
 			return AlertLevel.Error;
 		}
+
 		if (alertStatusString.Contains("Warn"))
 		{
 			return AlertLevel.Warning;
 		}
+
 		return null;
 	}
 

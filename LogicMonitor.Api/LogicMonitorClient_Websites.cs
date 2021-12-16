@@ -26,6 +26,7 @@ public partial class LogicMonitorClient
 		{
 			throw new ArgumentNullException(nameof(websiteGroupFullPath));
 		}
+
 		if (string.IsNullOrWhiteSpace(websiteGroupFullPath) || websiteGroupFullPath == "/")
 		{
 			return await GetAsync<WebsiteGroup>(1, cancellationToken).ConfigureAwait(false);
@@ -42,8 +43,10 @@ public partial class LogicMonitorClient
 			{
 				return null;
 			}
+
 			currentWebsiteGroupId = websiteOverview.Id;
 		}
+
 		return await GetBySubUrlAsync<WebsiteGroup>($"website/groups/{currentWebsiteGroupId}", cancellationToken).ConfigureAwait(false);
 	}
 
@@ -86,6 +89,7 @@ public partial class LogicMonitorClient
 			default:
 				throw new InvalidOperationException($"Only to be used for {nameof(Website)} and {nameof(WebsiteGroup)}.");
 		}
+
 		switch (mode)
 		{
 			case SetPropertyMode.Create:
@@ -94,12 +98,14 @@ public partial class LogicMonitorClient
 				{
 					throw new InvalidOperationException("Value cannot be null if the mode is create or update.");
 				}
+
 				break;
 			case SetPropertyMode.Delete:
 				if (value != null)
 				{
 					throw new ArgumentException("If mode is delete, value must be set to null", nameof(value));
 				}
+
 				break;
 		}
 
@@ -148,6 +154,7 @@ public partial class LogicMonitorClient
 					break;
 			}
 		}
+
 		await PutAsync(websiteOrGroup, cancellationToken).ConfigureAwait(false);
 	}
 
@@ -232,10 +239,12 @@ public partial class LogicMonitorClient
 		{
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
+
 		if (filter?.IsCleared == false)
 		{
 			return alerts.Where(a => !a.IsCleared).ToList();
 		}
+
 		return alerts;
 	}
 
@@ -260,10 +269,12 @@ public partial class LogicMonitorClient
 		{
 			filter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
 		}
+
 		if (filter.StartEpochIsBefore == null)
 		{
 			filter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
 		}
+
 		var allAlerts = new ConcurrentBag<Alert>();
 
 		var alertFilterList = ((long)filter.StartEpochIsAfter).ToDateTimeUtc()

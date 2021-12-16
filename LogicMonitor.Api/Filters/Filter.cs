@@ -73,6 +73,7 @@ public class Filter<T>
 			{
 				continue;
 			}
+
 			yield return LogicMonitorClient.GetSerializationName<T>(propertyName);
 		}
 	}
@@ -83,6 +84,7 @@ public class Filter<T>
 		{
 			return;
 		}
+
 		FilterItems.Add(new FilterItem<T> { Property = property, Operation = operation, Value = value });
 	}
 }

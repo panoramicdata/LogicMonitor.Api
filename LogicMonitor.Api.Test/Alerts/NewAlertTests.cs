@@ -127,6 +127,7 @@ public class NewAlertTests : TestWithOutput
 				unique = false;
 			}
 		}
+
 		Assert.True(unique);
 	}
 

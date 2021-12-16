@@ -20,6 +20,7 @@ public class WebsiteGroupTests : TestWithOutput
 				.DeleteAsync(existingWebsiteGroup)
 				.ConfigureAwait(false);
 		}
+
 		var deviceGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
 		{
 			ParentId = "1",

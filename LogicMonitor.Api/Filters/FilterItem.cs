@@ -71,9 +71,11 @@ public class FilterItem<T>
 				{
 					valueString = LogicMonitorClient.GetSerializationNameFromEnumMember(Value);
 				}
+
 				valueString = Value.ToString();
 				break;
 		}
+
 		return field + Operation + valueString;
 	}
 

@@ -281,6 +281,7 @@ public class AlertFilter
 		{
 			filter.Order = new Order<Alert> { Direction = OrderDirection, Property = OrderByProperty };
 		}
+
 		if (Properties != null)
 		{
 			filter.Properties = Properties;
@@ -289,10 +290,12 @@ public class AlertFilter
 				filter.Properties.Add(nameof(Alert.Id));
 			}
 		}
+
 		if (Skip != null)
 		{
 			filter.Skip = Skip.Value;
 		}
+
 		if (Take != null)
 		{
 			filter.Take = Take.Value;

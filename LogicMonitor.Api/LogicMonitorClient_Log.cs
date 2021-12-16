@@ -30,6 +30,7 @@ public partial class LogicMonitorClient
 		{
 			logFilter.Skip = 0;
 		}
+
 		int maxLogItemCount;
 		if (logFilter.Take != null)
 		{
@@ -58,6 +59,7 @@ public partial class LogicMonitorClient
 			{
 				break;
 			}
+
 			logFilter.Skip += LogItemsMaxTake;
 			logFilter.Take = Math.Min(LogItemsMaxTake, maxLogItemCount - allLogItems.Count);
 		}

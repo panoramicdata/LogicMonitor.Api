@@ -34,6 +34,7 @@ public partial class LogicMonitorClient
 		{
 			item.DataSourceId = dataSourceId;
 		}
+
 		return page.Items;
 	}
 
@@ -164,6 +165,7 @@ public partial class LogicMonitorClient
 		{
 			filter = new Filter<DataSourceGraph> { Skip = 0, Take = 300 };
 		}
+
 		var dataSourceOverviewGraphsPageAsync = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/ographs?{filter}", cancellationToken).ConfigureAwait(false);
 
 		// DataSourceId is no longer sent, but needed for backups.  Re-add.
@@ -298,6 +300,7 @@ public partial class LogicMonitorClient
 		{
 			filter = new Filter<DeviceDataSourceInstance>();
 		}
+
 		filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 		filter.Skip = 0;
 
@@ -313,8 +316,10 @@ public partial class LogicMonitorClient
 				{
 					throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}");
 				}
+
 				return items;
 			}
+
 			filter.Skip += filter.Take;
 		}
 	}
@@ -334,6 +339,7 @@ public partial class LogicMonitorClient
 		{
 			filter = new Filter<DeviceDataSourceInstance>();
 		}
+
 		filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 		filter.Skip = 0;
 
@@ -349,8 +355,10 @@ public partial class LogicMonitorClient
 				{
 					throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}");
 				}
+
 				return items;
 			}
+
 			filter.Skip += filter.Take;
 		}
 	}
@@ -374,6 +382,7 @@ public partial class LogicMonitorClient
 		{
 			filter = new Filter<InstanceProperty>();
 		}
+
 		filter.Take = 50; // LogicMonitor hardcoded value
 		filter.Skip = 0;
 
@@ -385,6 +394,7 @@ public partial class LogicMonitorClient
 			{
 				return items;
 			}
+
 			items.AddRange(itemsThisTime.Items);
 			filter.Skip += filter.Take;
 		}
@@ -463,6 +473,7 @@ public partial class LogicMonitorClient
 							{
 								continue;
 							}
+
 							deviceDataSourceInstances.Add(deviceDataSourceInstance);
 						}
 					}
@@ -582,6 +593,7 @@ public partial class LogicMonitorClient
 			{
 				return null;
 			}
+
 			throw;
 		}
 	}

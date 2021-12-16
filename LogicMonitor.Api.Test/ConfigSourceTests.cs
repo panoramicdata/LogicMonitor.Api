@@ -83,6 +83,7 @@ public class ConfigSourceTests : TestWithOutput
 					{
 						throw new Exception("Unexpected lack of timestamp");
 					}
+
 					var deviceConfigDetail = await portalClient.GetDeviceConfigSourceInstanceConfigByIdAndTimestampAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, deviceConfig.Id, deviceConfig.PollTimestampUtc.Value).ConfigureAwait(false);
 					Assert.NotNull(deviceConfigDetail);
 				}

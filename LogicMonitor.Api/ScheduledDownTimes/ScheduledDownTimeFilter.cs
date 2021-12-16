@@ -89,6 +89,7 @@ public class ScheduledDownTimeFilter
 		{
 			filter.Skip = Skip.Value;
 		}
+
 		if (Take != null)
 		{
 			filter.Take = Take.Value;
@@ -100,6 +101,7 @@ public class ScheduledDownTimeFilter
 		{
 			filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.Type), $"{Type}SDT");
 		}
+
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DeviceId), DeviceId);
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DataSourceInstanceId), DataSourceInstanceId);
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DataSourceInstanceGroupId), DataSourceInstanceGroupId);

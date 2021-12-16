@@ -138,6 +138,7 @@ public partial class LogicMonitorClient
 				var dataSourceOverviewGraphs = (await GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceGraph> { Skip = 0, Take = 300 }, cancellationToken).ConfigureAwait(false)).Items;
 				configurationBackup.DataSourceOverviewGraphs.AddRange(dataSourceOverviewGraphs);
 			}
+
 			progressReporter.StopSubTask();
 		}
 
@@ -264,6 +265,7 @@ public partial class LogicMonitorClient
 		{
 			return null;
 		}
+
 		byte[] result = null;
 		using (var outputStream = new FileStream(filePath, FileMode.Create))
 		using (var compressionStream = new GZipStream(outputStream, CompressionMode.Compress))
@@ -280,6 +282,7 @@ public partial class LogicMonitorClient
 			});
 			serializer.Serialize(jsonTextWriter, objectToWrite);
 		}
+
 		return result;
 	}
 }

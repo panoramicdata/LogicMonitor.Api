@@ -18,6 +18,7 @@ public class NetscanGroupTests : TestWithOutput
 		{
 			await LogicMonitorClient.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id).ConfigureAwait(false);
 		}
+
 		Assert.DoesNotContain(await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false), group => group.Name == name);
 		// Definitely not there now
 

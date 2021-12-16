@@ -148,6 +148,7 @@ public class AlertTests : TestWithOutput
 				unique = false;
 			}
 		}
+
 		unique.Should().BeTrue();
 	}
 

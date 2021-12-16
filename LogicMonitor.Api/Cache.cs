@@ -20,6 +20,7 @@ internal class Cache<TIndex, TValue>
 			{
 				throw new ArgumentOutOfRangeException("Value must be greater than zero");
 			}
+
 			_maxAge = value;
 
 			// Force age
@@ -97,6 +98,7 @@ internal class Cache<TIndex, TValue>
 
 			_lastAged = DateTime.UtcNow;
 		}
+
 		_logger.LogTrace("CACHE AGE COMPLETE");
 	}
 }

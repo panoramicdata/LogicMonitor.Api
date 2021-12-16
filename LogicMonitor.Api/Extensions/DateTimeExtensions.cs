@@ -103,6 +103,7 @@ internal static class DateTimeExtensions
 				chunkList.Add(new Tuple<DateTime, DateTime>(startDateTime, endDateTime));
 				return chunkList;
 			}
+
 			chunkList.Add(new Tuple<DateTime, DateTime>(startDateTime, nextDateTime));
 			startDateTime = nextDateTime;
 		}

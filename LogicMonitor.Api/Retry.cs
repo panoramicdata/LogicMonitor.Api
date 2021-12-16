@@ -32,6 +32,7 @@ internal static class Retry
 				{
 					await Task.Delay(retryInterval, cancellationToken).ConfigureAwait(false);
 				}
+
 				return await action().ConfigureAwait(false);
 			}
 			catch (Exception ex)

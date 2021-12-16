@@ -54,6 +54,7 @@ public class DataSourceTests : TestWithOutput
 			Assert.NotEqual(0, refetchedDeviceDataSourceInstanceCount);
 			sum += refetchedDeviceDataSourceInstanceCount;
 		}
+
 		Assert.Equal(deviceDataSourceInstances.Count, sum);
 	}
 
@@ -139,6 +140,7 @@ public class DataSourceTests : TestWithOutput
 			//TestOverviewGraphs(dataSource);
 			//TestGraphs(dataSource);
 		}
+
 		Logger.LogInformation(dataSourcesString);
 	}
 

@@ -47,6 +47,7 @@ public class AppliesToFunction : NamedItem, IHasEndpoint
 		{
 			throw new FormatException($"Network: {cidr} is badly formed.  Should contain one slash.");
 		}
+
 		var networkPart = subnetParts[0];
 		var bitsPart = subnetParts[1];
 		// We have the network and bits parts
@@ -56,6 +57,7 @@ public class AppliesToFunction : NamedItem, IHasEndpoint
 		{
 			throw new FormatException($"Network: {cidr} is badly formed.  Invalid IPv4 network address before the slash.");
 		}
+
 		var networkParts = networkPart.Split('.').Select(int.Parse).ToList();
 
 		if (!int.TryParse(bitsPart, out var bitsInteger) || bitsInteger < 0 || bitsInteger > 32)

@@ -34,6 +34,7 @@ public class EventSourceTests : TestWithOutput
 			//TestOverviewGraphs(dataSource);
 			//TestGraphs(dataSource);
 		}
+
 		Logger.LogInformation(eventSourcesString);
 	}
 

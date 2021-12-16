@@ -59,6 +59,7 @@ public partial class LogicMonitorClient
 		{
 			suburl += $"collectorVersion={collectorVersion}&";
 		}
+
 		suburl += $"token={downloadToken.Token}&";
 		suburl += "monitorOthers=true&";
 		suburl += $"collectorSize={collectorSize.ToString().ToLowerInvariant()}&";

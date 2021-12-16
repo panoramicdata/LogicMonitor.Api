@@ -31,6 +31,7 @@ public class DeviceDataSourceTests : TestWithOutput
 			{
 				continue;
 			}
+
 			deviceDataSources.Add(deviceDataSourceByDeviceIdAndDataSourceId);
 		}
 

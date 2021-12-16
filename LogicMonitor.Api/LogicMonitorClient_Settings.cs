@@ -28,6 +28,7 @@ public partial class LogicMonitorClient
 				Direction = OrderDirection.Asc
 			};
 		}
+
 		return GetAsync<Page<Role>>(false, $"setting/roles?{filter}", cancellationToken);
 	}
 
@@ -47,6 +48,7 @@ public partial class LogicMonitorClient
 				Direction = OrderDirection.Asc
 			};
 		}
+
 		return GetAsync<Page<EscalationChain>>(false, $"setting/alert/chains?{filter}", cancellationToken);
 	}
 

@@ -46,14 +46,17 @@ public class ForecastDataRequest : GraphDataRequestBase
 		{
 			throw new InvalidOperationException("GraphId must be specified");
 		}
+
 		if (DataSourceInstanceId <= 0)
 		{
 			throw new InvalidOperationException("DataSourceInstanceId must be specified");
 		}
+
 		if (ForecastTimePeriod == ForecastTimePeriod.Unknown)
 		{
 			throw new InvalidOperationException("ForecastTimePeriod must be specified");
 		}
+
 		if (TrainingTimePeriod == TrainingTimePeriod.Unknown)
 		{
 			throw new InvalidOperationException("TraingingTimePeriod must be specified");

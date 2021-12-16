@@ -85,6 +85,7 @@ public static class LogItemExtensions
 		{
 			// Not recognised
 		}
+
 		return auditEvent;
 	}
 }

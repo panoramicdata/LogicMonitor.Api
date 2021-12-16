@@ -14,6 +14,7 @@ internal class LogicMonitorJsonReader : JsonTextReader
 		{
 			SetToken(JsonToken.PropertyName, "$type");
 		}
+
 		return hasToken;
 	}
 }

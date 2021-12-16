@@ -43,6 +43,7 @@ public class RawDataSet
 							{
 								return valueAsDouble;
 							}
+
 							return (double?)null;
 						}
 					)
