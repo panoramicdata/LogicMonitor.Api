@@ -16,13 +16,13 @@ public class CacheTests : TestWithOutput
 		var firstDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
 
 		var firstDuration = stopwatch.Elapsed;
-		Logger.LogInformation($"Duration 1 {firstDuration}");
+		Logger.LogInformation("Duration 1 {firstDuration}", firstDuration);
 		stopwatch.Restart();
 
 		var secondDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
 
 		var secondDuration = stopwatch.Elapsed;
-		Logger.LogInformation($"Duration 2 {secondDuration}");
+		Logger.LogInformation("Duration 2 {secondDuration}", secondDuration);
 
 		// The second time should be shorter
 		Assert.True(secondDuration < firstDuration);
