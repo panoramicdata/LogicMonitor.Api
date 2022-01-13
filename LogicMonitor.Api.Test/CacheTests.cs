@@ -49,7 +49,7 @@ public class CacheTests : TestWithOutput
 		var firstDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		Assert.NotNull(firstDevice);
 		var firstDuration = stopwatch.Elapsed;
-		Logger.LogInformation($"Duration 1 {firstDuration}");
+		Logger.LogInformation("Duration 1 {firstDuration}", firstDuration);
 
 		// Wait for the cache timeout duration
 		await Task.Delay(LogicMonitorClient.CacheTimeSpan).ConfigureAwait(false);
@@ -59,7 +59,7 @@ public class CacheTests : TestWithOutput
 		var secondDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		Assert.NotNull(secondDevice);
 		var secondDuration = stopwatch.Elapsed;
-		Logger.LogInformation($"Duration 2 {secondDuration}");
+		Logger.LogInformation("Duration 2 {secondDuration}", secondDuration);
 
 		// The second time should NOT be really fast
 		Assert.True(secondDuration > TimeSpan.FromMilliseconds(100));
@@ -77,9 +77,9 @@ public class CacheTests : TestWithOutput
 		{
 			var innerStopwatch = Stopwatch.StartNew();
 			var _ = await GetWindowsDeviceAsync().ConfigureAwait(false);
-			Logger.LogInformation($"Run {n}: {innerStopwatch.ElapsedMilliseconds}ms");
+			Logger.LogInformation("Run {runIndex}: {milliseconds}ms", n, innerStopwatch.ElapsedMilliseconds);
 		}
 
-		Logger.LogInformation($"Complete in {stopwatch.ElapsedMilliseconds}ms");
+		Logger.LogInformation("Complete in {milliseconds}ms", stopwatch.ElapsedMilliseconds);
 	}
 }

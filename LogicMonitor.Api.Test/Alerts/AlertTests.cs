@@ -451,7 +451,7 @@ public class AlertTests : TestWithOutput
 			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
 		}).ConfigureAwait(false);
 
-		Logger.LogDebug($"{errorAndAboveAlerts.Count}");
+		Logger.LogDebug("{errorAndAboveCount}", errorAndAboveAlerts.Count);
 
 		// Ensure that the number of error and above is fewer than the total
 		Assert.True(errorAndAboveAlerts.Count < allAlerts.Count);
