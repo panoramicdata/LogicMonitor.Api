@@ -23,10 +23,13 @@ public class LogItemTests : TestWithOutput
 		}).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(accessLogItems.Count > 0);
+		(accessLogItems.Count > 0).Should().BeTrue();
 
 		// Make sure that all have Unique Ids
-		Assert.False(accessLogItems.Select(a => a.Id).HasDuplicates());
+		accessLogItems.Select(a => a.Id)
+			.HasDuplicates()
+			.Should()
+			.BeFalse();
 	}
 
 	[Fact]

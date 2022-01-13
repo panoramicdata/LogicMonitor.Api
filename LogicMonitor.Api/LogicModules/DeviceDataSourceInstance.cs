@@ -11,9 +11,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
-	// LogicMonitor sometimes returns a string, so the following cannot be used
-	// public AlertingDisabledOn AlertingDisabledOn { get;set; }
+	public AlertingDisabledOn AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	/// AlertDisableStatus

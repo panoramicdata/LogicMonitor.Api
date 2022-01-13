@@ -175,6 +175,12 @@ public class DataSource : NamedItem, IHasEndpoint
 	public string Technology { get; set; }
 
 	/// <summary>
+	///     Whether use use the WildValue as the UUID
+	/// </summary>
+	[DataMember(Name = "useWildValueAsUUID")]
+	public bool UseWildValueAsUuid { get; set; }
+
+	/// <summary>
 	///     The version
 	/// </summary>
 	[DataMember(Name = "version")]

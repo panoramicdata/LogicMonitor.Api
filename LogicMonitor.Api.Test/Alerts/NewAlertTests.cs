@@ -178,11 +178,11 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertThing()
+	public async void GetNoExistentAlertAsJObject()
 	{
 		var result = await LogicMonitorClient
-					.GetJObjectAsync("alert/alerts/DS18021744", CancellationToken.None)
+					.GetJObjectAsync("alert/alerts/DS_NonExistent", CancellationToken.None)
 					.ConfigureAwait(false);
-		Assert.NotNull(result);
+		result.Should().BeNull();
 	}
 }

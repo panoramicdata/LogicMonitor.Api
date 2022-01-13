@@ -55,8 +55,7 @@ public class WebsiteTests : TestWithOutput
 		var websites = await LogicMonitorClient.GetAllAsync<Website>().ConfigureAwait(false);
 
 		// Services should be returned
-		Assert.NotNull(websites);
-		Assert.NotEmpty(websites);
+		websites.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -65,7 +64,7 @@ public class WebsiteTests : TestWithOutput
 		var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
 		// One service should be returned
-		Assert.NotNull(website);
+		website.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -73,7 +72,7 @@ public class WebsiteTests : TestWithOutput
 	{
 		var website = await LogicMonitorClient.GetByNameAsync<Website>("DoesNotExist").ConfigureAwait(false);
 		// Null should be returned
-		Assert.Null(website);
+		website.Should().BeNull();
 	}
 
 	[Fact]
@@ -92,13 +91,13 @@ public class WebsiteTests : TestWithOutput
 			TimePeriod = TimePeriod.Zoom
 		};
 		var graphData = await LogicMonitorClient.GetGraphDataAsync(graphDataRequest).ConfigureAwait(false);
-		Assert.NotNull(graphData);
-		Assert.NotEmpty(graphData.Lines);
+		graphData.Should().NotBeNull();
+		graphData.Lines.Should().NotBeNullOrEmpty();
 		var firstLine = graphData.Lines.FirstOrDefault();
-		Assert.NotNull(firstLine);
-		Assert.NotNull(firstLine.Data);
+		firstLine.Should().NotBeNull();
+		firstLine.Data.Should().NotBeNull();
 		var firstData = firstLine.Data.FirstOrDefault();
-		Assert.NotNull(firstData);
+		firstData.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -117,24 +116,24 @@ public class WebsiteTests : TestWithOutput
 
 		// Get the Website
 		var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
-		Assert.NotNull(website);
+		website.Should().NotBeNull();
 
 		// Get the Alerts
 		var allAlerts = await LogicMonitorClient.GetWebsiteAlertsByIdAsync(website.Id, alertFilter, default).ConfigureAwait(false);
-		Assert.NotNull(allAlerts);
+		allAlerts.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void GetWebsiteGroupByFullPath()
 	{
 		var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty).ConfigureAwait(false);
-		Assert.NotNull(websiteGroup0);
-		Assert.Equal(string.Empty, websiteGroup0.FullPath);
+		websiteGroup0.Should().NotBeNull();
+		websiteGroup0.FullPath.Should().Be(string.Empty);
 		var websiteGroup1 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
-		Assert.NotNull(websiteGroup1);
+		websiteGroup1.Should().NotBeNull();
 		var websiteGroup2 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
-		Assert.NotNull(websiteGroup2);
-		Assert.NotEqual(websiteGroup0.Id, websiteGroup2.Id);
+		websiteGroup2.Should().NotBeNull();
+		websiteGroup0.Id.Should().NotBe(websiteGroup2.Id);
 	}
 
 	[Fact]
@@ -206,10 +205,10 @@ public class WebsiteTests : TestWithOutput
 			var website = await LogicMonitorClient
 				.CreateAsync(GetWebsiteCreationDto(websiteGroup.Id, nameof(CrudWebsiteGroupsAndWebsites)))
 				.ConfigureAwait(false);
-			Assert.NotNull(website);
-			Assert.Equal(websiteGroup.Id, website.WebsiteGroupId);
-			Assert.True(website.TriggerSslExpirationAlerts);
-			Assert.Equal(ExpectedAlertExpression, website.AlertExpression);
+			website.Should().NotBeNull(); ;
+			websiteGroup.Id.Should().Equals(website.WebsiteGroupId);
+			website.TriggerSslExpirationAlerts.Should().BeTrue();
+			ExpectedAlertExpression.Should().Be(website.AlertExpression);
 
 			// Wait to ensure that it was created
 			await Task.Delay(1000)
@@ -223,7 +222,9 @@ public class WebsiteTests : TestWithOutput
 		finally
 		{
 			// Delete it again
-			await LogicMonitorClient.DeleteAsync(websiteGroup).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync(websiteGroup)
+				.ConfigureAwait(false);
 		}
 	}
 

@@ -945,7 +945,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		// Return the object
 		T deserializedObject;
-		_logger.LogTrace(portalResponse.Data.ToString());
+		_logger.LogTrace(portalResponse.Data?.ToString());
 		try
 		{
 			deserializedObject = portalResponse.GetObject(JsonConverters);

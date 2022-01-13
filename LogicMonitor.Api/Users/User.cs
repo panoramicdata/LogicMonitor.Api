@@ -169,6 +169,12 @@ public class User : IdentifiedItem, IHasEndpoint
 	public string SetupWizardStatus { get; set; }
 
 	/// <summary>
+	///    The tenant ID
+	/// </summary>
+	[DataMember(Name = "tenantId")]
+	public int TenantId { get; set; }
+
+	/// <summary>
 	///    Two factor authentication is enabled
 	/// </summary>
 	[DataMember(Name = "timezone")]

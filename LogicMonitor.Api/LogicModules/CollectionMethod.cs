@@ -422,6 +422,12 @@ public enum CollectionMethod
 	Script2,
 
 	/// <summary>
+	/// Script
+	/// </summary>
+	[EnumMember(Value = "syntheticsselenium")]
+	SyntheticsSelenium,
+
+	/// <summary>
 	/// SNMP
 	/// </summary>
 	[EnumMember(Value = "snmp")]

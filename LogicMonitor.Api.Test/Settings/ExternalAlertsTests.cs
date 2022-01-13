@@ -11,6 +11,5 @@ public class ExternalAlertsTests : TestWithOutput
 	{
 		var items = await LogicMonitorClient.GetAllAsync<ExternalAlert>().ConfigureAwait(false);
 		Assert.NotNull(items);
-		Assert.True(items.Count > 0);
 	}
 }
