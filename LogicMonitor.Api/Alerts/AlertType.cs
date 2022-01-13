@@ -61,8 +61,14 @@ public enum AlertType
 	CollectorFailBack = 8,
 
 	/// <summary>
-	///    Collector fail back alert
+	///    Alert throttled alert
 	/// </summary>
 	[EnumMember(Value = "alertThrottledAlert")]
-	AlertThrottled = 9
+	AlertThrottled = 9,
+
+	/// <summary>
+	///    Log alert
+	/// </summary>
+	[EnumMember(Value = "logAlert")]
+	Log = 0
 }
