@@ -70,5 +70,5 @@ public enum AlertType
 	///    Log alert
 	/// </summary>
 	[EnumMember(Value = "logAlert")]
-	Log = 0
+	Log = 10
 }
