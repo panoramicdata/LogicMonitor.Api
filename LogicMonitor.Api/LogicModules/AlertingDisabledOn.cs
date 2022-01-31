@@ -1,10 +1,10 @@
 namespace LogicMonitor.Api.LogicModules;
 
-/// <summary>
-/// An Alerting Disabled on class
-/// LogicMonitor sometimes return this as a string,
-/// so this must be handled as an object until LogicMonitor fix this
-/// </summary>
+// <summary>
+// An Alerting Disabled on class
+// LogicMonitor sometimes return this as a string,
+// so this must be handled as an object until LogicMonitor fix this
+// </summary>
 //[DataContract]
 //public class AlertingDisabledOn : IdentifiedItem
 //{
