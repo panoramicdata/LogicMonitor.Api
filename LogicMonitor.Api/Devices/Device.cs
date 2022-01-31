@@ -23,7 +23,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "alertingDisabledOn")]
-	public AlertingDisabledOn AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    The alert status

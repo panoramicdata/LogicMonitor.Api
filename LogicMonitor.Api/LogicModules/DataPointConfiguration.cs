@@ -34,7 +34,7 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public AlertingDisabledOn AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///     The current Alert Id

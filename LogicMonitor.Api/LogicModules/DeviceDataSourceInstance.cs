@@ -11,7 +11,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public AlertingDisabledOn AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	/// AlertDisableStatus

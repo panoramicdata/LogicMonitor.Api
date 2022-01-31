@@ -5,14 +5,6 @@ namespace LogicMonitor.Api.LogicModules;
 /// LogicMonitor sometimes return this as a string,
 /// so this must be handled as an object until LogicMonitor fix this
 /// </summary>
-[DataContract]
-public class AlertingDisabledOn : object
-{
-}
-
-///// <summary>
-///// An Alerting Disabled on class
-///// </summary>
 //[DataContract]
 //public class AlertingDisabledOn : IdentifiedItem
 //{
