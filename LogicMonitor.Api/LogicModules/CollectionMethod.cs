@@ -332,6 +332,12 @@ public enum CollectionMethod
 	Netapp,
 
 	/// <summary>
+	/// Openmetrics
+	/// </summary>
+	[EnumMember(Value = "openmetrics")]
+	OpenMetrics,
+
+	/// <summary>
 	/// Perfmon
 	/// </summary>
 	[EnumMember(Value = "perfmon")]

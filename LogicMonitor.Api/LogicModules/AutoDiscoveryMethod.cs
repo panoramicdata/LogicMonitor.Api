@@ -317,4 +317,46 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "externalResourceType")]
 	public string ExternalResourceType { get; set; }
+
+	/// <summary>
+	/// Connect Timeout ms
+	/// </summary>
+	[DataMember(Name = "connectTimeout")]
+	public int ConnectTimeoutMs { get; set; }
+
+	/// <summary>
+	/// Read Timeout ms
+	/// </summary>
+	[DataMember(Name = "readTimeout")]
+	public int ReadTimeoutMs { get; set; }
+
+	/// <summary>
+	/// Group Label
+	/// </summary>
+	[DataMember(Name = "groupLabel")]
+	public string GroupLabel { get; set; }
+
+	/// <summary>
+	/// Metric Name
+	/// </summary>
+	[DataMember(Name = "metricName")]
+	public string MetricName { get; set; }
+
+	/// <summary>
+	/// Instance Label
+	/// </summary>
+	[DataMember(Name = "instanceLabel")]
+	public string InstanceLabel { get; set; }
+
+	/// <summary>
+	/// Headers
+	/// </summary>
+	[DataMember(Name = "headers")]
+	public string Headers { get; set; }
+
+	/// <summary>
+	/// Instance Property Tags
+	/// </summary>
+	[DataMember(Name = "instancePropertyTags")]
+	public string InstancePropertyTags { get; set; }
 }

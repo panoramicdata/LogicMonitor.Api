@@ -97,6 +97,12 @@ public class CollectorAttribute
 	public string Name { get; set; }
 
 	/// <summary>
+	///     Encoding
+	/// </summary>
+	[DataMember(Name = "encoding")]
+	public string Encoding { get; set; }
+
+	/// <summary>
 	///     The entity
 	/// </summary>
 	[DataMember(Name = "entity")]
@@ -113,6 +119,12 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "followRedirect")]
 	public string FollowRedirect { get; set; }
+
+	/// <summary>
+	///     Headers
+	/// </summary>
+	[DataMember(Name = "headers")]
+	public string Headers { get; set; }
 
 	/// <summary>
 	///     The IP address
@@ -221,6 +233,12 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "params")]
 	public List<string> Parameters { get; set; }
+
+	/// <summary>
+	///     Payload
+	/// </summary>
+	[DataMember(Name = "payload")]
+	public string Payload { get; set; }
 
 	/// <summary>
 	///     The port
@@ -365,4 +383,10 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "xenEntity")]
 	public string XenEntity { get; set; }
+
+	/// <summary>
+	///     Timeout
+	/// </summary>
+	[DataMember(Name = "timeout")]
+	public int Timeout { get; set; }
 }
