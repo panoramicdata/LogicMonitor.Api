@@ -8,5 +8,5 @@ public abstract class SortedFlowRequest : FlowRequest
 	/// <summary>
 	/// The flow field to sort by
 	/// </summary>
-	public FlowField SortFlowField { get; set; }
+	public FlowField SortFlowField { get; set; } = FlowField.Usage;
 }

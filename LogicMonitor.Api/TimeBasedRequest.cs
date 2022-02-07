@@ -8,7 +8,7 @@ public abstract class TimeBasedRequest : IRequest
 	/// <summary>
 	/// The time period
 	/// </summary>
-	public TimePeriod TimePeriod { get; set; }
+	public TimePeriod TimePeriod { get; set; } = TimePeriod.OneHour;
 
 	/// <summary>
 	/// The start date time

@@ -1,5 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
+[Collection("CollectorRelated")]
 public class CollectorGroupTests : TestWithOutput
 {
 	private const string TestName = "ApiTest";

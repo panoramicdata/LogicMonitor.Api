@@ -1,5 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
+[Collection("CollectorRelated")]
 public class CollectorTests : TestWithOutput
 {
 	public CollectorTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)

@@ -26,7 +26,7 @@ public class RoleGroupTests : TestWithOutput
 		{
 			FilterItems = new List<FilterItem<RoleGroup>>
 				{
-					new Eq<RoleGroup>(nameof(ReportGroup.Name), TestName)
+					new Eq<RoleGroup>(nameof(RoleGroup.Name), TestName)
 				}
 		}).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
@@ -39,7 +39,7 @@ public class RoleGroupTests : TestWithOutput
 		// Create it
 		var newItem = await LogicMonitorClient
 			.CreateAsync(
-				new ReportGroupCreationDto
+				new RoleGroupCreationDto
 				{
 					Name = TestName,
 					Description = "Test Description"

@@ -1,5 +1,6 @@
 namespace LogicMonitor.Api.Test;
 
+[Collection("CollectorRelated")]
 public class CollectorTests
 	: TestWithOutput
 {

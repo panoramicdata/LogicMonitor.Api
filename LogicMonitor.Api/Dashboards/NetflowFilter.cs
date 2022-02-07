@@ -6,14 +6,6 @@ namespace LogicMonitor.Api.Dashboards;
 [DataContract]
 public class NetflowFilter
 {
-	private string _direction = "bidirectional";
-
-	/// <summary>
-	/// The ifIdx
-	/// </summary>
-	[DataMember(Name = "ifIdx")]
-	public int InterfaceIndex { get; set; } = -1;
-
 	/// <summary>
 	/// The qosType
 	/// </summary>
@@ -21,40 +13,16 @@ public class NetflowFilter
 	public string QosType { get; set; } = "all";
 
 	/// <summary>
-	/// The nodeA
-	/// </summary>
-	[DataMember(Name = "nodeA")]
-	public string NodeA { get; set; } = "";
-
-	/// <summary>
-	/// The nodeB
-	/// </summary>
-	[DataMember(Name = "nodeB")]
-	public string NodeB { get; set; } = "";
-
-	/// <summary>
 	/// The direction
 	/// </summary>
 	[DataMember(Name = "direction")]
-	public string Direction
-	{
-		get => _direction;
-		set
-		{
-			_direction = value switch
-			{
-				"" => "bidirectional",
-				"bidirectional" or "leftwards" or "rightwards" => value,
-				_ => throw new ArgumentOutOfRangeException($"Unexpected direction {value}"),
-			};
-		}
-	}
+	public string Direction { get; set; } = "both";
 
 	/// <summary>
 	/// The protocol
 	/// </summary>
 	[DataMember(Name = "protocol")]
-	public string Protocol { get; set; } = "tcp,udp";
+	public string Protocol { get; set; } = "all";
 
 	/// <summary>
 	/// The ports
@@ -69,22 +37,28 @@ public class NetflowFilter
 	public int Top { get; set; } = 10;
 
 	/// <summary>
-	/// The ifName
-	/// </summary>
-	[DataMember(Name = "ifName")]
-	public string InterfaceName { get; set; }
-
-	/// <summary>
 	/// The IP version
 	/// </summary>
 	[DataMember(Name = "ipVersion")]
-	public string IpVersion { get; set; }
+	public string IpVersion { get; set; } = "both";
 
 	/// <summary>
 	/// The conversation
 	/// </summary>
 	[DataMember(Name = "conversation")]
-	public List<NetflowFilterConversation> Conversations { get; set; }
+	public List<NetflowFilterConversation> Conversations { get; set; } = new();
+
+	/// <summary>
+	/// The conversation
+	/// </summary>
+	[DataMember(Name = "nbarApplicationNames")]
+	public List<string> NbarApplicationNames { get; set; } = new();
+
+	/// <summary>
+	/// The conversation
+	/// </summary>
+	[DataMember(Name = "deviceInterfaces")]
+	public List<object> DeviceInterfaces { get; set; } = new();
 
 	/// <summary>
 	/// Converts to a URL encoded string for the query URL
@@ -97,9 +71,6 @@ public class NetflowFilter
 	/// </summary>
 	public void Validate()
 	{
-		if (InterfaceIndex < -1)
-		{
-			throw new ArgumentException("InterfaceIndex must be -1 for all interfaces or >= 0");
-		}
+
 	}
 }
