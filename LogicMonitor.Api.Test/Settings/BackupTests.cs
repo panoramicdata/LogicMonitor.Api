@@ -131,6 +131,17 @@ public class BackupTests : TestWithOutput
 		Assert.NotEmpty(backup.ConfigSources);
 	}
 
+
+	[Fact]
+	public async void Backup_ScheduledDownTimes()
+	{
+		var backup = await LogicMonitorClient
+			.BackupAsync(new ConfigurationBackupSpecification(false) { ScheduledDownTimes = true })
+			.ConfigureAwait(false);
+
+		backup.ScheduledDownTimes.Should().NotBeNullOrEmpty();
+	}
+
 	//[Fact(Skip = "Takes too long")]
 	//public async void Backup_DataSources()
 	//{

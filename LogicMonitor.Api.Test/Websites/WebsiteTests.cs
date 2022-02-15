@@ -4,47 +4,6 @@ public class WebsiteTests : TestWithOutput
 {
 	private const string ExpectedAlertExpression = "< 90 60 30";
 
-	private static WebsiteCreationDto GetWebsiteCreationDto(int websiteGroupId, string name)
-		=> new()
-		{
-			WebsiteGroupId = websiteGroupId.ToString(),
-			Name = name,
-			Description = "Description",
-			PollingIntervalMinutes = 1.ToString(),
-			Type = WebsiteType.WebCheck,
-			HttpSchema = HttpSchema.Https,
-			WebsiteProperties = new List<Property>
-				{
-						new Property
-						{
-							Name = "test",
-							Value = "test"
-						}
-},
-			Domain = "www.google.com",
-			Steps = new List<WebsiteStep>
-				{
-						new WebsiteStep
-						{
-							MatchType = Api.Websites.MatchType.Plain,
-							HttpSchema = HttpSchema.Https,
-							HttpMethod = "get",
-							Url = "/",
-							HttpVersion = "1.1",
-							Description = "Step 1",
-							Enable = true,
-							FollowRedirection = true,
-							Name = "Step 1",
-							Timeout = 5,
-							UseDefaultRoot = true
-						}
-				},
-			TriggerSslExpirationAlerts = true,
-			AlertExpression = ExpectedAlertExpression,
-			IndividualAlertLevel = Level.Warning,
-			OverallAlertLevel = Level.Warning
-		};
-
 	public WebsiteTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
 	}
@@ -121,33 +80,6 @@ public class WebsiteTests : TestWithOutput
 		// Get the Alerts
 		var allAlerts = await LogicMonitorClient.GetWebsiteAlertsByIdAsync(website.Id, alertFilter, default).ConfigureAwait(false);
 		allAlerts.Should().NotBeNull();
-	}
-
-	[Fact]
-	public async void GetWebsiteGroupByFullPath()
-	{
-		var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty).ConfigureAwait(false);
-		websiteGroup0.Should().NotBeNull();
-		websiteGroup0.FullPath.Should().Be(string.Empty);
-		var websiteGroup1 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
-		websiteGroup1.Should().NotBeNull();
-		var websiteGroup2 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
-		websiteGroup2.Should().NotBeNull();
-		websiteGroup0.Id.Should().NotBe(websiteGroup2.Id);
-	}
-
-	[Fact]
-	public async void GetWebsiteGroupById()
-	{
-		var websiteGroup = await LogicMonitorClient.GetAsync<WebsiteGroup>(1).ConfigureAwait(false);
-
-		Assert.NotNull(websiteGroup);
-		Assert.NotNull(websiteGroup.ChildWebsiteGroups);
-		Assert.True(websiteGroup.ChildWebsiteGroups.Count > 0);
-		Assert.Equal(0, websiteGroup.ParentId);
-		Assert.Equal(1, websiteGroup.Id);
-		Assert.False(string.IsNullOrWhiteSpace(websiteGroup.Name));
-		Assert.False(websiteGroup.FullPath == null);
 	}
 
 	[Fact]
@@ -288,5 +220,47 @@ public class WebsiteTests : TestWithOutput
 		{
 			await LogicMonitorClient.DeleteAsync(website).ConfigureAwait(false);
 		}
+
+
 	}
+	private static WebsiteCreationDto GetWebsiteCreationDto(int websiteGroupId, string name)
+	=> new()
+	{
+		WebsiteGroupId = websiteGroupId.ToString(),
+		Name = name,
+		Description = "Description",
+		PollingIntervalMinutes = 1.ToString(),
+		Type = WebsiteType.WebCheck,
+		HttpSchema = HttpSchema.Https,
+		WebsiteProperties = new List<Property>
+			{
+						new Property
+						{
+							Name = "test",
+							Value = "test"
+						}
+},
+		Domain = "www.google.com",
+		Steps = new List<WebsiteStep>
+			{
+						new WebsiteStep
+						{
+							MatchType = Api.Websites.MatchType.Plain,
+							HttpSchema = HttpSchema.Https,
+							HttpMethod = "get",
+							Url = "/",
+							HttpVersion = "1.1",
+							Description = "Step 1",
+							Enable = true,
+							FollowRedirection = true,
+							Name = "Step 1",
+							Timeout = 5,
+							UseDefaultRoot = true
+						}
+			},
+		TriggerSslExpirationAlerts = true,
+		AlertExpression = ExpectedAlertExpression,
+		IndividualAlertLevel = Level.Warning,
+		OverallAlertLevel = Level.Warning
+	};
 }

@@ -113,4 +113,31 @@ public class WebsiteGroupTests : TestWithOutput
 			await LogicMonitorClient.DeleteAsync(websiteGroup).ConfigureAwait(false);
 		}
 	}
+
+	[Fact]
+	public async void GetWebsiteGroupByFullPath()
+	{
+		var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty).ConfigureAwait(false);
+		websiteGroup0.Should().NotBeNull();
+		websiteGroup0.FullPath.Should().Be(string.Empty);
+		var websiteGroup1 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
+		websiteGroup1.Should().NotBeNull();
+		var websiteGroup2 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath).ConfigureAwait(false);
+		websiteGroup2.Should().NotBeNull();
+		websiteGroup0.Id.Should().NotBe(websiteGroup2.Id);
+	}
+
+	[Fact]
+	public async void GetWebsiteGroupById()
+	{
+		var websiteGroup = await LogicMonitorClient.GetAsync<WebsiteGroup>(1).ConfigureAwait(false);
+
+		Assert.NotNull(websiteGroup);
+		Assert.NotNull(websiteGroup.ChildWebsiteGroups);
+		Assert.True(websiteGroup.ChildWebsiteGroups.Count > 0);
+		Assert.Equal(0, websiteGroup.ParentId);
+		Assert.Equal(1, websiteGroup.Id);
+		Assert.False(string.IsNullOrWhiteSpace(websiteGroup.Name));
+		Assert.False(websiteGroup.FullPath == null);
+	}
 }

@@ -15,9 +15,6 @@ public class ConfigurationBackupSpecification
 		Alerting = includeAllByDefault;
 		Collectors = includeAllByDefault;
 		Dashboards = includeAllByDefault;
-#pragma warning disable CS0618 // Type or member is obsolete
-		LogicModules = includeAllByDefault;
-#pragma warning restore CS0618 // Type or member is obsolete
 		Devices = includeAllByDefault;
 		Integrations = includeAllByDefault;
 		Logs = includeAllByDefault;
@@ -47,32 +44,6 @@ public class ConfigurationBackupSpecification
 	///     Whether to back up Dashboards
 	/// </summary>
 	public bool Dashboards { get; set; }
-
-	/// <summary>
-	///     Whether to back up all LogicModules
-	/// </summary>
-	[Obsolete("Select individual LogicModules instead.")]
-	public bool LogicModules
-	{
-		get =>
-			AppliesToFunctions
-			&& ConfigSources
-			&& DataSources
-			&& EventSources
-			&& JobMonitors
-			&& PropertySources
-			&& SnmpSysOidMaps;
-		set
-		{
-			AppliesToFunctions = value;
-			ConfigSources = value;
-			DataSources = value;
-			EventSources = value;
-			JobMonitors = value;
-			PropertySources = value;
-			SnmpSysOidMaps = value;
-		}
-	}
 
 	/// <summary>
 	///     Whether to back up AppliesToFunctions
