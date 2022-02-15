@@ -46,7 +46,7 @@ public class CollectorTests
 		Assert.NotNull(testCollector);
 		var response = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(testCollector.Id, "!ping 8.8.8.8").ConfigureAwait(false);
 		Assert.NotNull(response);
-		Logger.LogInformation(response.Output);
+		Logger.LogInformation("{Output}", response.Output);
 	}
 
 	[Fact]
