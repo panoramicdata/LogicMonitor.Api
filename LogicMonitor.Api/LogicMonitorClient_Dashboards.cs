@@ -27,7 +27,7 @@ public partial class LogicMonitorClient
 			return null;
 		}
 
-		return await GetWidgetsByDashboardIdAsync(dashboard.Id).ConfigureAwait(false);
+		return await GetWidgetsByDashboardIdAsync(dashboard.Id, cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>
@@ -124,7 +124,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	public async Task DeleteDashboardGroupRecursivelyByIdAsync(int id, CancellationToken cancellationToken = default)
 	{
-		var dashboardGroup = await GetAsync<DashboardGroup>(id).ConfigureAwait(false);
+		var dashboardGroup = await GetAsync<DashboardGroup>(id, cancellationToken).ConfigureAwait(false);
 
 		// Delete its dashboards
 		foreach (var dashboard in dashboardGroup.Dashboards)
@@ -147,6 +147,6 @@ public partial class LogicMonitorClient
 		}
 
 		// Delete itself
-		await DeleteAsync(dashboardGroup).ConfigureAwait(false);
+		await DeleteAsync(dashboardGroup, cancellationToken: cancellationToken).ConfigureAwait(false);
 	}
 }

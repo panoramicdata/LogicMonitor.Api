@@ -108,8 +108,8 @@ public partial class LogicMonitorClient
 			var alertTypesOrNull = alertFilter.GetAlertTypes();
 			var alertTypesAreOnlyWebsite = alertTypesOrNull?.All(alertType => alertType == AlertType.Website) ?? false;
 			correctedAlertFilter.MonitorObjectName = alertTypesAreOnlyWebsite
-				? (await GetAsync<Website>(alertFilterMonitorObjectId.Value).ConfigureAwait(false)).Name
-				: (await GetAsync<Device>(alertFilterMonitorObjectId.Value).ConfigureAwait(false)).DisplayName;
+				? (await GetAsync<Website>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).Name
+				: (await GetAsync<Device>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).DisplayName;
 		}
 
 		// If take is specified, do only that chunk.

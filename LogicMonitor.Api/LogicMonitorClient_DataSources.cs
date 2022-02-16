@@ -429,7 +429,7 @@ public partial class LogicMonitorClient
 		{
 			// TODO - support more than just this LogicModuleType
 			var appliesToFunction = (await GetAsync<DataSource>(logicModuleId, cancellationToken).ConfigureAwait(false)).AppliesTo;
-			appliesToDeviceIds[logicModuleId] = (await GetAppliesToAsync(appliesToFunction).ConfigureAwait(false)).ConvertAll(atr => atr.Id);
+			appliesToDeviceIds[logicModuleId] = (await GetAppliesToAsync(appliesToFunction, cancellationToken).ConfigureAwait(false)).ConvertAll(atr => atr.Id);
 		}
 
 		// Get a list of deviceGroupIds
@@ -442,12 +442,10 @@ public partial class LogicMonitorClient
 			var deviceGroup = await GetAsync(deviceGroupIds[listIndex], deviceGroupFilter, cancellationToken).ConfigureAwait(false);
 			deviceGroupIds.AddRange(deviceGroup.SubGroups.Select(subGroup => subGroup.Id));
 
-			var deviceGroupDeviceIds = (await GetDevicesByDeviceGroupIdAsync(
-				deviceGroup.Id,
-				new Filter<Device>
-				{
-					Properties = new List<string> { nameof(Device.Id) }
-				}).ConfigureAwait(false))
+			var deviceGroupDeviceIds = (await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device>
+			{
+				Properties = new List<string> { nameof(Device.Id) }
+			}, cancellationToken).ConfigureAwait(false))
 				.ConvertAll(d => d.Id)
 ;
 
@@ -457,18 +455,18 @@ public partial class LogicMonitorClient
 				var deviceIds = appliesToDeviceIds[logicModuleId];
 				foreach (var deviceId in deviceGroupDeviceIds.Where(id => deviceIds.Contains(id)))
 				{
-					var deviceDataSource = await GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceId, logicModuleId).ConfigureAwait(false);
+					var deviceDataSource = await GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceId, logicModuleId, cancellationToken).ConfigureAwait(false);
 
 					if (instanceProperty == null)
 					{
-						deviceDataSourceInstances.AddRange(await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSource.Id, instanceFilter).ConfigureAwait(false));
+						deviceDataSourceInstances.AddRange(await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSource.Id, instanceFilter, cancellationToken).ConfigureAwait(false));
 					}
 					else
 					{
-						var thisDeviceDataSourceInstances = await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSource.Id, instanceFilter).ConfigureAwait(false);
+						var thisDeviceDataSourceInstances = await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSource.Id, instanceFilter, cancellationToken).ConfigureAwait(false);
 						foreach (var deviceDataSourceInstance in thisDeviceDataSourceInstances)
 						{
-							var instanceCustomProperties = await GetAllDeviceDataSourceInstanceProperties(deviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, filter).ConfigureAwait(false);
+							var instanceCustomProperties = await GetAllDeviceDataSourceInstanceProperties(deviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
 							if (!instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
 							{
 								continue;

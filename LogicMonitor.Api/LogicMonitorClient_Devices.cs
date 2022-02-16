@@ -225,7 +225,7 @@ public partial class LogicMonitorClient
 				// Get the Devices
 				foreach (var deviceGroup in deviceGroups)
 				{
-					devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, null).ConfigureAwait(false));
+					devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, null, cancellationToken).ConfigureAwait(false));
 
 					// NO! This does NOT return enough devices - only 300!
 					//devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device> { Skip = 0, Take = 300 }).ConfigureAwait(false));
@@ -368,7 +368,7 @@ public partial class LogicMonitorClient
 				parentGroup.SubGroups.Add(deviceGroup);
 			}
 
-			var detailedDeviceGroup = await GetAsync<DeviceGroup>(deviceGroup.Id).ConfigureAwait(false);
+			var detailedDeviceGroup = await GetAsync<DeviceGroup>(deviceGroup.Id, cancellationToken).ConfigureAwait(false);
 
 			deviceGroup.AlertStatus = detailedDeviceGroup.AlertStatus;
 		}
@@ -484,7 +484,7 @@ public partial class LogicMonitorClient
 				return jObject.ToObject<Page<DeviceProcess>>();
 			}
 
-			await Task.Delay(500).ConfigureAwait(false);
+			await Task.Delay(500, cancellationToken).ConfigureAwait(false);
 		}
 	}
 
