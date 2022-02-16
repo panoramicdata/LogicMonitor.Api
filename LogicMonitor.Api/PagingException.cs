@@ -54,7 +54,7 @@ public class PagingException : LogicMonitorApiException
 	public PagingException(
 		HttpMethod method,
 		string subUrl,
-		System.Net.HttpStatusCode httpStatusCode,
+		HttpStatusCode httpStatusCode,
 		string responseBody,
 		string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
 	{

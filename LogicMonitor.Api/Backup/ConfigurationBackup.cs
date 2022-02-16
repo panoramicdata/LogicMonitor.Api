@@ -148,7 +148,7 @@ public class ConfigurationBackup
 	///     NetscanPolicies
 	/// </summary>
 	[DataMember]
-	public List<Netscans.Netscan> Netscans { get; set; }
+	public List<Netscan> Netscans { get; set; }
 
 	/// <summary>
 	///     NewUserMessageTemplate

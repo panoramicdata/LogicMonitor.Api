@@ -13,11 +13,11 @@ public class ProgressReporter
 	/// Constructor
 	/// </summary>
 	/// <param name="logger"></param>
-	public ProgressReporter(ILogger logger)
+	public ProgressReporter(ILogger? logger)
 	{
 		_totalStopwatch = new Stopwatch();
 		_subTaskStopwatch = new Stopwatch();
-		_logger = logger;
+		_logger = logger ?? NullLogger.Instance;
 	}
 
 	/// <summary>
@@ -87,7 +87,7 @@ public class ProgressReporter
 	/// Notify of progress
 	/// </summary>
 	/// <param name="text"></param>
-	public void Notify(string text) => _logger?.LogInformation(text);
+	public void Notify(string text) => _logger?.LogInformation("{Message}", text);
 
 	/// <summary>
 	/// Stop

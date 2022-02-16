@@ -35,7 +35,7 @@ public class EventSourceTests : TestWithOutput
 			//TestGraphs(dataSource);
 		}
 
-		Logger.LogInformation(eventSourcesString);
+		Logger.LogInformation("{Message}", eventSourcesString);
 	}
 
 	[Fact]

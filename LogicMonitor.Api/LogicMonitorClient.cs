@@ -445,10 +445,10 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var httpMethod = HttpMethod.Put;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug($"{prefix} {subUrl}...");
+		_logger.LogDebug("{Prefix} {SubUrl}...", prefix, subUrl);
 
 		var jsonString = JsonConvert.SerializeObject(@object);
-		_logger.LogTrace($"{prefix} jsonString:\r\n{jsonString}");
+		_logger.LogTrace("{Prefix} jsonString:\r\n{JsonString}", prefix, jsonString);
 		using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
@@ -461,7 +461,7 @@ public partial class LogicMonitorClient : IDisposable
 				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 			}
 
-			_logger.LogDebug($"{prefix} complete");
+			_logger.LogDebug("{Prefix} complete", prefix);
 
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
@@ -471,13 +471,16 @@ public partial class LogicMonitorClient : IDisposable
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
 						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
 
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-					_logger.LogDebug($"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
+						prefix,
+						httpResponseMessage.StatusCode,
+						responseBody);
 					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody);
 				}
 				// We have been told to back off
@@ -492,7 +495,10 @@ public partial class LogicMonitorClient : IDisposable
 				var delayMs = 1000 * xRateLimitWindowSeconds;
 
 				// Wait some time and try again
-				_logger.LogInformation($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+				_logger.LogInformation("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+					prefix,
+					rateLimitInformation,
+					delayMs);
 				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 				// Try again
@@ -609,7 +615,7 @@ public partial class LogicMonitorClient : IDisposable
 		if (!httpResponseMessage.Headers.TryGetValues(header, out var valueStringEnumerable))
 		{
 			var message = $"Response header '{header}' is not an integer.";
-			_logger.LogDebug(message);
+			_logger.LogDebug("{Message}", message);
 			throw new LogicMonitorApiException(httpMethod, subUrl, httpStatusCode, responseBody, message);
 		}
 
@@ -692,9 +698,14 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken"></param>
 	public async Task DeleteAsync(string subUrl, CancellationToken cancellationToken = default)
 	{
+		if (subUrl is null)
+		{
+			throw new ArgumentNullException(nameof(subUrl));
+		}
+
 		var httpMethod = HttpMethod.Delete;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug($"{prefix} {subUrl} ...");
+		_logger.LogDebug("{Prefix} {SubUrl} ...", prefix, subUrl);
 
 		var stopwatch = Stopwatch.StartNew();
 		HttpResponseMessage httpResponseMessage;
@@ -711,19 +722,24 @@ public partial class LogicMonitorClient : IDisposable
 					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
 				}
 
-				_logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
+				_logger.LogDebug("{Prefix} complete (from remote: {ElapsedMilliseconds:N0}ms)",
+					prefix,
+					stopwatch.ElapsedMilliseconds);
 			}
 			catch (Exception e)
 			{
-				_logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
+				_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {StackTrace}",
+					prefix,
+					++failureCount,
+					e.ToString());
 				if (failureCount < AttemptCount)
 				{
 					// Try again
-					_logger.LogDebug($"{prefix} Retrying..");
+					_logger.LogDebug("{Prefix} Retrying..", prefix);
 					continue;
 				}
 
-				_logger.LogDebug($"{prefix} Giving up.");
+				_logger.LogDebug("{Prefix} Giving up.", prefix);
 				throw;
 			}
 
@@ -735,15 +751,17 @@ public partial class LogicMonitorClient : IDisposable
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
 						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
 
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-					var message = $"{prefix} failed: {responseBody}";
-					_logger.LogDebug(message);
-					throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+					_logger.LogDebug("{Prefix} failed with {StatusCode}: {ResponseBody}",
+						prefix,
+						httpResponseMessage.StatusCode,
+						responseBody);
+					throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed: {responseBody}");
 				}
 				// We have been told to back off
 
@@ -757,7 +775,10 @@ public partial class LogicMonitorClient : IDisposable
 				var delayMs = 1000 * xRateLimitWindowSeconds;
 
 				// Wait some time and try again
-				_logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+					prefix,
+					rateLimitInformation,
+					delayMs);
 				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 				// Try again
@@ -768,16 +789,18 @@ public partial class LogicMonitorClient : IDisposable
 			break;
 		}
 
-		_logger.LogDebug($"{prefix} complete");
+		_logger.LogDebug("{Prefix} complete", prefix);
 
 		// Check the outer HTTP status code
 		if (!httpResponseMessage.IsSuccessStatusCode)
 		{
 			// If a success code was not received, throw an exception
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-			_logger.LogDebug(message);
-			throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
+				prefix,
+				httpResponseMessage.StatusCode,
+				responseBody);
+			throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 		}
 
 		// Get the content
@@ -785,10 +808,9 @@ public partial class LogicMonitorClient : IDisposable
 		if (jsonString.Contains("group is not empty"))
 		{
 			// If a success code was not received, throw an exception
-			var message = $"{prefix} failed - group is not empty for suburl";
-			_logger.LogDebug(message);
+			_logger.LogDebug("{Prefix} failed - group is not empty for suburl", prefix);
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.PreconditionFailed, responseBody, message);
+			throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.PreconditionFailed, responseBody, $"{prefix} failed - group is not empty for suburl");
 		}
 	}
 
@@ -806,7 +828,7 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var httpMethod = HttpMethod.Get;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug($"{prefix} {subUrl} ...");
+		_logger.LogDebug("{Prefix} {SubUrl} ...", prefix, subUrl);
 
 		// Age the Cache
 		_cache.Age();
@@ -816,7 +838,9 @@ public partial class LogicMonitorClient : IDisposable
 		var useCache = permitCacheIfEnabled && UseCache;
 		if (useCache && _cache.TryGetValue(subUrl, out var cacheObject))
 		{
-			_logger.LogDebug($"{prefix} complete (from cache: {stopwatch.ElapsedMilliseconds:N0}ms)");
+			_logger.LogDebug("{Prefix} complete (from cache: {ElapsedMilliseconds:N0}ms)",
+				prefix,
+				stopwatch.ElapsedMilliseconds);
 			return (T)cacheObject;
 		}
 
@@ -834,20 +858,25 @@ public partial class LogicMonitorClient : IDisposable
 					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
 				}
 
-				_logger.LogDebug($"{prefix} complete (from remote: {stopwatch.ElapsedMilliseconds:N0}ms)");
+				_logger.LogDebug("{Prefix} complete (from remote: {ElapsedMilliseconds:N0}ms)",
+					prefix,
+					stopwatch.ElapsedMilliseconds);
 			}
 			catch (Exception e)
 			{
-				_logger.LogDebug($"{prefix} failed on attempt {++failureCount}: {e}");
+				_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {StackTrace}",
+					prefix,
+					++failureCount,
+					e.ToString());
 				if (failureCount < AttemptCount)
 				{
-					_logger.LogDebug($"{prefix} Retrying..");
+					_logger.LogDebug("{Prefix} Retrying..", prefix);
 					// Try again (after a short delay)
 					await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 					continue;
 				}
 
-				_logger.LogDebug($"{prefix} Giving up.");
+				_logger.LogDebug("{Prefix} Giving up.", prefix);
 				throw;
 			}
 
@@ -859,24 +888,25 @@ public partial class LogicMonitorClient : IDisposable
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
 						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
 
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-					var message = $"{prefix} failed on attempt {++failureCount}: {responseBody}";
-					_logger.LogDebug(message);
-					_logger.LogTrace(responseBody);
+					_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}",
+						prefix,
+						++failureCount,
+						responseBody);
 					if (failureCount < AttemptCount)
 					{
-						_logger.LogDebug($"{prefix} Retrying..");
+						_logger.LogDebug("{Prefix} Retrying..", prefix);
 						// Try again (after a short delay)
 						await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
 
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 				}
 				// We have been told to back off
 
@@ -890,7 +920,10 @@ public partial class LogicMonitorClient : IDisposable
 				var delayMs = 1000 * xRateLimitWindowSeconds;
 
 				// Wait some time and try again
-				_logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+					prefix,
+					rateLimitInformation,
+					delayMs);
 				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 				// Try again
@@ -905,7 +938,7 @@ public partial class LogicMonitorClient : IDisposable
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
 			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			_logger.LogTrace(content);
+			_logger.LogTrace("{Content}", content);
 			return new XmlResponse { Content = content } as T;
 		}
 		else if (typeof(T) == typeof(List<byte>))
@@ -937,22 +970,27 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			// If a success code was not received, throw an exception
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-			_logger.LogDebug(message);
-			_logger.LogTrace(responseBody);
-			throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, message);
+			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
+				prefix,
+				httpResponseMessage.StatusCode,
+				responseBody);
+			_logger.LogTrace("{ResponseBody}", responseBody);
+			throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 		}
 
 		// Return the object
-		T deserializedObject;
-		_logger.LogTrace(portalResponse.Data?.ToString());
+		T? deserializedObject;
+		_logger.LogTrace("{Data}", portalResponse.Data?.ToString());
 		try
 		{
 			deserializedObject = portalResponse.GetObject(JsonConverters);
 		}
 		catch (DeserializationException e)
 		{
-			_logger.LogError($"{prefix} Unable to deserialize\n{e.ResponseBody}\n{e.Message}");
+			_logger.LogError("{Prefix} Unable to deserialize\n{ResponseBody}\n{Message}",
+				prefix,
+				e.ResponseBody,
+				e.Message);
 			throw;
 		}
 
@@ -971,19 +1009,24 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	/// <typeparam name="TIn">The posted object type</typeparam>
 	/// <typeparam name="TOut">The returned object type</typeparam>
-	/// <param name="object">The posted object </param>
+	/// <param name="obj">The posted object </param>
 	/// <param name="subUrl">The endpoint</param>
 	/// <param name="cancellationToken">An optional CancellationToken</param>
-	public async Task<TOut> PostAsync<TIn, TOut>(TIn @object, string subUrl, CancellationToken cancellationToken = default) where TOut : new()
+	public async Task<TOut> PostAsync<TIn, TOut>(TIn obj, string subUrl, CancellationToken cancellationToken = default) where TOut : new()
 	{
+		if (subUrl is null)
+		{
+			throw new ArgumentNullException(nameof(subUrl));
+		}
+
 		var httpMethod = HttpMethod.Post;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug($"{prefix} {subUrl} ...");
+		_logger.LogDebug("{Prefix} {SubUrl} ...", prefix, subUrl);
 
 		// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
-		var data = JsonConvert.SerializeObject(@object, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+		var data = JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 		//var subUrl1 = "rest/" + (subUrl ?? "functions/");
-		_logger.LogTrace($"{prefix} body:\r\n{data}");
+		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
 		while (true)
@@ -996,7 +1039,7 @@ public partial class LogicMonitorClient : IDisposable
 						.ConfigureAwait(false);
 				}
 
-				_logger.LogDebug($"{prefix} complete");
+				_logger.LogDebug("{Prefix} complete", prefix);
 			}
 
 			// Check the outer HTTP status code
@@ -1008,15 +1051,17 @@ public partial class LogicMonitorClient : IDisposable
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
 						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
 					}
 					// If a success code was not received, throw an exception
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-					var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-					_logger.LogDebug(message);
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
+						prefix,
+						httpResponseMessage.StatusCode,
+						responseBody);
+					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 				}
 
 				// We have been told to back off
@@ -1030,7 +1075,10 @@ public partial class LogicMonitorClient : IDisposable
 				var delayMs = 1000 * xRateLimitWindowSeconds;
 
 				// Wait some time and try again
-				_logger.LogDebug($"{prefix} Rate limiting hit (with cancellation token): {rateLimitInformation}, waiting {delayMs:N0}ms");
+				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+					prefix,
+					rateLimitInformation,
+					delayMs);
 				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
 
 				// Try again
@@ -1075,7 +1123,7 @@ public partial class LogicMonitorClient : IDisposable
 		var prefix = GetPrefix(PatchHttpMethod);
 		var jsonString = JsonConvert.SerializeObject(fieldsToUpdate);
 
-		_logger.LogDebug($"{prefix} ...");
+		_logger.LogDebug("{Prefix} ...", prefix);
 		HttpResponseMessage httpResponseMessage;
 		while (true)
 		{
@@ -1086,22 +1134,24 @@ public partial class LogicMonitorClient : IDisposable
 				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 			}
 
-			_logger.LogDebug($"{prefix} complete");
+			_logger.LogDebug("{Prefix} complete", prefix);
 
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
 				if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 				{
 					// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
-					_logger.LogDebug($"{prefix} Service Unavailable. Waiting 10000ms");
+					_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 					await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 					continue;
 				}
 				// If a success code was not received, throw an exception
 				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-				var message = $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}";
-				_logger.LogDebug(message);
-				throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, message);
+				_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
+					prefix,
+					httpResponseMessage.StatusCode,
+					responseBody);
+				throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 			}
 
 			// Success, so finish

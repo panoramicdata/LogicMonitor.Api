@@ -3,6 +3,7 @@ namespace LogicMonitor.Api;
 /// <summary>
 /// A deserialization exception
 /// </summary>
+[Serializable]
 public class DeserializationException : LogicMonitorApiException
 {
 	/// <summary>
@@ -21,7 +22,7 @@ public class DeserializationException : LogicMonitorApiException
 	/// <param name="subUrl"></param>
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
-	public DeserializationException(HttpMethod method, string subUrl, System.Net.HttpStatusCode httpStatusCode, string responseBody) : base(method, subUrl, httpStatusCode, responseBody)
+	public DeserializationException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody) : base(method, subUrl, httpStatusCode, responseBody)
 	{
 	}
 
@@ -57,7 +58,7 @@ public class DeserializationException : LogicMonitorApiException
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
 	/// <param name="message"></param>
-	public DeserializationException(HttpMethod method, string subUrl, System.Net.HttpStatusCode httpStatusCode, string responseBody, string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
+	public DeserializationException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
 	{
 	}
 }

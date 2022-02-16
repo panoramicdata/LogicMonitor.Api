@@ -4,7 +4,7 @@ namespace LogicMonitor.Api;
 ///    A LogicMonitor API Portal response
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class PortalResponse<T> where T : new()
+internal class PortalResponse<T> where T : new()
 {
 	/// <summary>
 	///    Construct a PortalResponse from an HttpResponseMessage
@@ -41,11 +41,11 @@ public class PortalResponse<T> where T : new()
 
 		// Does the response contain the old wrapper?
 		var status = jObject["status"]?.ToString();
-		var errorMessage = ((JValue)jObject["errmsg"])?.ToString(CultureInfo.InvariantCulture);
+		var errorMessage = ((JValue?)jObject["errmsg"])?.ToString(CultureInfo.InvariantCulture);
 		if (status != null && jObject["data"] is JContainer data && errorMessage != null)
 		{
 			// Yes
-			HttpStatusCode = (HttpStatusCode)int.Parse(status);
+			HttpStatusCode = (HttpStatusCode)int.Parse(status, CultureInfo.InvariantCulture);
 			Data = data;
 			ErrorMessage = errorMessage;
 		}
@@ -69,7 +69,7 @@ public class PortalResponse<T> where T : new()
 	/// <summary>
 	///    The error message
 	/// </summary>
-	public string ErrorMessage { get; set; }
+	public string? ErrorMessage { get; set; }
 
 	/// <summary>
 	///    Whether the HttpStatusCode is of an error type
@@ -106,7 +106,7 @@ public class PortalResponse<T> where T : new()
 	/// </summary>
 	/// <param name="converters"></param>
 	/// <returns>The object of type T</returns>
-	public T GetObject(JsonConverter[] converters = null)
+	public T? GetObject(JsonConverter[]? converters = null)
 	{
 		// If no data was received, throw an exception
 		if (Data == null)

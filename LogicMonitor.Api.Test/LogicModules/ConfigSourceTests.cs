@@ -1,4 +1,3 @@
-// Older, now deprecated methods are still tested here
 namespace LogicMonitor.Api.Test.LogicModules;
 
 public class ConfigSourceTests : TestWithOutput
@@ -14,6 +13,6 @@ public class ConfigSourceTests : TestWithOutput
 		var eventSource = await LogicMonitorClient.GetConfigSourceByNameAsync("Test ConfigSource").ConfigureAwait(false);
 		var xml = await LogicMonitorClient.GetConfigSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
 
-		Assert.NotNull(xml);
+		xml.Should().NotBeNull();
 	}
 }

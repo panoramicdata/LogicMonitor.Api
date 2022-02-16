@@ -11,7 +11,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 		return type?.IsEnum ?? false;
 	}
 
-	private string GetEnumMemberAttrValue(Type type, object enumVal)
+	private static string GetEnumMemberAttrValue(Type type, object enumVal)
 	{
 		var memberInfos = type.GetMember(enumVal.ToString());
 		var memberInfo = memberInfos.SingleOrDefault(m => m.Name == enumVal.ToString());
@@ -71,11 +71,11 @@ internal class TolerantStringEnumConverter : JsonConverter
 
 				throw new FormatException($"Unsupported string for {enumType.Name}: {enumText}");
 			case JsonToken.Integer:
-				var enumVal = Convert.ToInt32(reader.Value);
+				var enumVal = Convert.ToInt32(reader.Value, CultureInfo.InvariantCulture);
 				var values = (int[])Enum.GetValues(enumType);
 				if (values.Contains(enumVal))
 				{
-					return Enum.Parse(enumType, enumVal.ToString());
+					return Enum.Parse(enumType, enumVal.ToString(CultureInfo.InvariantCulture));
 				}
 
 				if (isNullable)
@@ -96,5 +96,5 @@ internal class TolerantStringEnumConverter : JsonConverter
 
 	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => writer.WriteValue(value.ToString());
 
-	private bool IsNullableType(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);
+	private static bool IsNullableType(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);
 }

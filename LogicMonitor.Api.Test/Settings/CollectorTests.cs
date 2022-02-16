@@ -25,7 +25,7 @@ public class CollectorTests : TestWithOutput
 		// Check for valid response
 		Assert.NotNull(debugCommandResponse);
 		Assert.NotEmpty(debugCommandResponse.Output);
-		Logger.LogInformation(debugCommandResponse.Output);
+		Logger.LogInformation("{Message}", debugCommandResponse.Output);
 	}
 
 	[Fact]

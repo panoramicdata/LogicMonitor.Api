@@ -23,4 +23,12 @@
 	"SCS0005:Weak random generator",
 	Justification = "Not used for cryptography",
 	Scope = "member",
-	Target = "~M:LogicMonitor.Api.LogicMonitorClient.GetRestAlertsWithV84Bug(LogicMonitor.Api.Alerts.AlertFilter,System.TimeSpan)~System.Threading.Tasks.Task{System.Collections.Generic.List{LogicMonitor.Api.Alerts.Alert}}")] 
+	Target = "~M:LogicMonitor.Api.LogicMonitorClient.GetRestAlertsWithV84Bug(LogicMonitor.Api.Alerts.AlertFilter,System.TimeSpan)~System.Threading.Tasks.Task{System.Collections.Generic.List{LogicMonitor.Api.Alerts.Alert}}")]
+
+[assembly: SuppressMessage(
+	"Performance",
+	"CA1848:Use the LoggerMessage delegates",
+	Justification = "More effort than the benefits gained",
+	Scope = "namespaceanddescendants",
+	Target = "~N:LogicMonitor.Api")
+]

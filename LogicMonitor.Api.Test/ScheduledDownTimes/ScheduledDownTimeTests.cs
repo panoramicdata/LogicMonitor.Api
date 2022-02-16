@@ -232,7 +232,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	{
 		var portalClient = LogicMonitorClient;
 		var collector = (await portalClient
-			.GetAllAsync(new Filter<Collectors.Collector> { Take = 1 })
+			.GetAllAsync(new Filter<Collector> { Take = 1 })
 			.ConfigureAwait(false))
 			.SingleOrDefault();
 		collector.Should().NotBeNull();
