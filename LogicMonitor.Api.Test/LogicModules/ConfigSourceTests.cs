@@ -1,6 +1,4 @@
 // Older, now deprecated methods are still tested here
-#pragma warning disable 618
-
 namespace LogicMonitor.Api.Test.LogicModules;
 
 public class ConfigSourceTests : TestWithOutput
@@ -9,6 +7,7 @@ public class ConfigSourceTests : TestWithOutput
 	{
 	}
 
+	[Obsolete("Tests obsolete items")]
 	[Fact]
 	public async void GetXml()
 	{
@@ -18,5 +17,3 @@ public class ConfigSourceTests : TestWithOutput
 		Assert.NotNull(xml);
 	}
 }
-
-#pragma warning restore 618

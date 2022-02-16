@@ -38,10 +38,10 @@ public abstract class WidgetCreationDto<T> : CreationDto<T> where T : Widget
 	[JsonIgnore]
 	public int DashboardId
 	{
-#pragma warning disable 618
-		get => int.Parse(DashboardIdString);
-		set => DashboardIdString = value.ToString();
-#pragma warning restore 618
+#pragma warning disable CS0618 // Type or member is obsolete
+		get => int.Parse(DashboardIdString, CultureInfo.InvariantCulture);
+		set => DashboardIdString = value.ToString(CultureInfo.InvariantCulture);
+#pragma warning restore CS0618 // Type or member is obsolete
 	}
 
 	///// <summary>

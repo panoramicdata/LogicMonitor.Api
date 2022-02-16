@@ -1,6 +1,3 @@
-// Older, now deprecated methods are still tested here
-#pragma warning disable 618
-
 namespace LogicMonitor.Api.Test.LogicModules;
 
 public class DataSourceTests : TestWithOutput
@@ -158,8 +155,8 @@ public class DataSourceTests : TestWithOutput
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-		var deviceDataSourceInstances = await LogicMonitorClient.GetDeviceDataSourceInstancesPageAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }).ConfigureAwait(false);
-		var deviceDataSourceInstance = deviceDataSourceInstances.Items[0];
+		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }).ConfigureAwait(false);
+		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 		var dataPointConfiguration = dataPointDetails.Items[0];
 		Assert.NotNull(dataPointConfiguration?.GlobalAlertExpr);
@@ -202,7 +199,7 @@ public class DataSourceTests : TestWithOutput
 		Assert.NotNull(deviceDataSource);
 
 		var deviceDataSourceInstances = (await portalClient
-			.GetDeviceDataSourceInstancesPageAsync(
+			.GetAllDeviceDataSourceInstancesAsync(
 				device.Id,
 				deviceDataSource.Id,
 				new Filter<DeviceDataSourceInstance>
@@ -211,7 +208,7 @@ public class DataSourceTests : TestWithOutput
 					Take = 10,
 					Properties = new List<string> { nameof(DeviceDataSourceInstance.Id) }
 				})
-			.ConfigureAwait(false)).Items;
+			.ConfigureAwait(false));
 		Assert.NotNull(deviceDataSourceInstances);
 		foreach (var deviceDataSourceInstance in deviceDataSourceInstances)
 		{
@@ -348,7 +345,7 @@ public class DataSourceTests : TestWithOutput
 	{
 		var stopwatch = Stopwatch.StartNew();
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceDataSources = await LogicMonitorClient.GetDeviceDataSourcesPageAsync(
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(
 			device.Id,
 			new Filter<DeviceDataSource>
 			{
@@ -370,7 +367,7 @@ public class DataSourceTests : TestWithOutput
 		var durationMs = stopwatch.ElapsedMilliseconds;
 
 		Assert.NotNull(deviceDataSources);
-		var deviceDataSource = deviceDataSources.Items.SingleOrDefault();
+		var deviceDataSource = deviceDataSources.SingleOrDefault();
 		Assert.NotNull(deviceDataSource);
 		Assert.True(durationMs < 2000);
 	}
@@ -379,7 +376,7 @@ public class DataSourceTests : TestWithOutput
 	public async void GetDeviceDataSources()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceDataSources = await LogicMonitorClient.GetDeviceDataSourcesPageAsync(device.Id, new Filter<DeviceDataSource>
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
@@ -393,7 +390,7 @@ public class DataSourceTests : TestWithOutput
 		// Make sure that we have groups and they are not null
 		Assert.NotNull(deviceDataSources);
 
-		foreach (var deviceDataSource in deviceDataSources.Items)
+		foreach (var deviceDataSource in deviceDataSources)
 		{
 			// Refetch
 			var deviceDataSourceRefetch = await LogicMonitorClient.GetDeviceDataSourceAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
@@ -403,7 +400,7 @@ public class DataSourceTests : TestWithOutput
 			Assert.Equal(deviceDataSource.CreatedOnSeconds, deviceDataSourceRefetch.CreatedOnSeconds);
 
 			// Get the instances
-			var deviceDataSourceInstances = (await LogicMonitorClient.GetDeviceDataSourceInstancesPageAsync(
+			var deviceDataSourceInstances = (await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(
 				device.Id,
 				deviceDataSource.Id,
 				new Filter<DeviceDataSourceInstance>
@@ -411,7 +408,7 @@ public class DataSourceTests : TestWithOutput
 					Skip = 0,
 					Take = 300,
 					Properties = new List<string> { nameof(DeviceDataSourceInstance.Id) }
-				}).ConfigureAwait(false)).Items;
+				}).ConfigureAwait(false));
 
 			// Get the groups
 			var deviceDataSourceGroups = await LogicMonitorClient.GetDeviceDataSourceGroupsPageAsync(
@@ -486,5 +483,3 @@ public class DataSourceTests : TestWithOutput
 		Assert.Equal(dataSource.Id, deviceDataSource.DataSourceId);
 	}
 }
-
-#pragma warning restore 618

@@ -20,6 +20,11 @@ public partial class LogicMonitorClient
 	/// <returns>the configuration backup</returns>
 	public async Task<ConfigurationBackup> BackupAsync(ConfigurationBackupSpecification backupSpecification, CancellationToken cancellationToken = default)
 	{
+		if (backupSpecification is null)
+		{
+			throw new ArgumentNullException(nameof(backupSpecification));
+		}
+
 		var configurationBackup = new ConfigurationBackup();
 
 		var progressReporter = ProgressReporter.StartNew(_logger);
@@ -74,9 +79,9 @@ public partial class LogicMonitorClient
 			// Get with associated widgets populated
 			configurationBackup.DashboardGroups = await GetAllAsync<DashboardGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 			progressReporter.CompleteSubTaskAndStartNew("- Dashboards");
-			configurationBackup.Dashboards = await GetAllAsync<Dashboard>().ConfigureAwait(false);
+			configurationBackup.Dashboards = await GetAllAsync<Dashboard>(cancellationToken).ConfigureAwait(false);
 			progressReporter.CompleteSubTaskAndStartNew("- Widgets");
-			configurationBackup.Widgets = await GetAllAsync<Widget>().ConfigureAwait(false);
+			configurationBackup.Widgets = await GetAllAsync<Widget>(cancellationToken).ConfigureAwait(false);
 			progressReporter.StopSubTask();
 		}
 
@@ -290,24 +295,27 @@ public partial class LogicMonitorClient
 	/// Load a ConfigurationBackup from file
 	/// </summary>
 	/// <param name="fileInfo"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns></returns>
-	public async Task<ConfigurationBackup> LoadBackupAsync(FileInfo fileInfo)
-		=> await LoadAsync<ConfigurationBackup>(fileInfo);
+	public Task<ConfigurationBackup> LoadBackupAsync(FileInfo fileInfo, CancellationToken cancellationToken = default)
+		=> LoadAsync<ConfigurationBackup>(fileInfo ?? throw new ArgumentNullException(nameof(fileInfo)), _logger, cancellationToken);
 
-	private async Task<T> LoadAsync<T>(FileInfo fileInfo)
+	private static async Task<T> LoadAsync<T>(FileInfo fileInfo, ILogger _logger, CancellationToken cancellationToken)
 	{
+		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Loading file into memory");
 		var bytes = File.ReadAllBytes(fileInfo.FullName);
-		var json = await DecompressAsync(bytes);
-		var myObject = JsonConvert.DeserializeObject<T>(json);
-		return myObject;
-	}
 
-	private static async Task<string> DecompressAsync(byte[] bytes)
-	{
+		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Decompressing");
 		using var msi = new MemoryStream(bytes);
 		using var mso = new MemoryStream();
 		using var gs = new GZipStream(msi, CompressionMode.Decompress);
 		await gs.CopyToAsync(mso).ConfigureAwait(false);
-		return Encoding.UTF8.GetString(mso.ToArray());
+		var json = Encoding.UTF8.GetString(mso.ToArray());
+
+		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Deserializing");
+		var myObject = JsonConvert.DeserializeObject<T>(json);
+
+		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Complete");
+		return myObject;
 	}
 }

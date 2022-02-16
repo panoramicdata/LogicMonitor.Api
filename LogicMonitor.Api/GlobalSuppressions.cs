@@ -20,14 +20,7 @@
 
 [assembly: SuppressMessage(
 	"Security",
-	"SCS0018:Path traversal: injection possible in {1} argument passed to '{0}'",
-	Justification = "Assessed as safe as injection of a file write location is the method's intention.",
-	Scope = "member",
-	Target = "~M:LogicMonitor.Api.LogicMonitorClient.SerializeAndCompress``1(``0,System.String)~System.Byte[]")]
-
-[assembly: SuppressMessage(
-	"Security",
 	"SCS0005:Weak random generator",
 	Justification = "Not used for cryptography",
 	Scope = "member",
-	Target = "~M:LogicMonitor.Api.LogicMonitorClient.GetRestAlertsWithV84Bug(LogicMonitor.Api.Alerts.AlertFilter,System.TimeSpan)~System.Threading.Tasks.Task{System.Collections.Generic.List{LogicMonitor.Api.Alerts.Alert}}")]
+	Target = "~M:LogicMonitor.Api.LogicMonitorClient.GetRestAlertsWithV84Bug(LogicMonitor.Api.Alerts.AlertFilter,System.TimeSpan)~System.Threading.Tasks.Task{System.Collections.Generic.List{LogicMonitor.Api.Alerts.Alert}}")] 
