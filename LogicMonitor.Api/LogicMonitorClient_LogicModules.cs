@@ -199,7 +199,7 @@ public partial class LogicMonitorClient
 	}
 
 	private static string GetLogicModuleRepositoryUrl(int repositoryVersion)
-		=> repositoryVersion > 0
-		? $"v{repositoryVersion}.core.logicmonitor.com"
-		: throw new ArgumentOutOfRangeException("LogicModule Repository Version expected to be greater than 0.");
+		=> repositoryVersion <= 0
+		? throw new ArgumentOutOfRangeException(nameof(repositoryVersion), "LogicModule Repository Version expected to be greater than 0.")
+		: $"v{repositoryVersion}.core.logicmonitor.com";
 }

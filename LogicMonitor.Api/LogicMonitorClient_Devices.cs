@@ -318,6 +318,11 @@ public partial class LogicMonitorClient
 		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null,
 		CancellationToken cancellationToken = default)
 	{
+		if (searchText is null)
+		{
+			throw new ArgumentNullException(nameof(searchText));
+		}
+
 		var modifier = treeNodeFreeSearchResultType switch
 		{
 			TreeNodeFreeSearchResultType.DeviceDataSourceInstance => "i:",
@@ -325,7 +330,7 @@ public partial class LogicMonitorClient
 			TreeNodeFreeSearchResultType.Device => "d:",
 			TreeNodeFreeSearchResultType.DeviceGroup => "g:",
 			null => string.Empty,
-			_ => throw new ArgumentException(),
+			_ => throw new ArgumentException($"Unexpected value {treeNodeFreeSearchResultType}", nameof(treeNodeFreeSearchResultType)),
 		};
 		var treeNodeFreeSearchRequest = new TreeNodeFreeSearchRequest
 		{

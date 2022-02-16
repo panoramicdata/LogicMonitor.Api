@@ -45,7 +45,7 @@ public class Line
 			return h - 'A' + 10;
 		}
 
-		throw new ArgumentOutOfRangeException();
+		throw new ArgumentOutOfRangeException(nameof(h));
 	}
 
 	/// <summary>
@@ -74,7 +74,7 @@ public class Line
 	public double?[] Data
 	{
 		get => DataInternal.Select(@object =>
-			@object as double? == double.PositiveInfinity	// No, as object as double? is always null
+			@object as double? == double.PositiveInfinity   // No, as object as double? is always null
 				? null
 				: (@object as string == "Infinity")
 					? null

@@ -81,7 +81,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			if (value < 1)
 			{
-				throw new ArgumentOutOfRangeException("Must be >= 1.");
+				throw new ArgumentOutOfRangeException(nameof(value), "Must be >= 1.");
 			}
 
 			attemptCount = value;
@@ -373,7 +373,7 @@ public partial class LogicMonitorClient : IDisposable
 		var type = enumObject.GetType();
 		if (!type.IsEnum)
 		{
-			throw new ArgumentException(nameof(enumObject), $"{enumObject} is not an enum");
+			throw new ArgumentException($"{enumObject} is not an enum", nameof(enumObject));
 		}
 
 		var fieldInfos = type.GetFields();

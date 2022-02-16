@@ -18,7 +18,7 @@ internal class Cache<TIndex, TValue>
 			_logger.LogTrace("CACHE MAX AGE SET");
 			if (value < TimeSpan.Zero)
 			{
-				throw new ArgumentOutOfRangeException("Value must be greater than zero");
+				throw new ArgumentOutOfRangeException(nameof(value), "Value must be greater than zero");
 			}
 
 			_maxAge = value;
