@@ -20,8 +20,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.164.3</Version>
-		<PackageReleaseNotes>Added missing attributes for datasources.</PackageReleaseNotes>
+		<Version>2.165.0</Version>
+		<PackageReleaseNotes>v165 support.  Can now load backups from disk</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

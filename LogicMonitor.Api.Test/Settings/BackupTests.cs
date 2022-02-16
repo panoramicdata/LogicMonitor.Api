@@ -14,33 +14,33 @@ public class BackupTests : TestWithOutput
 			DataSources = false,
 			Logs = false
 		}).ConfigureAwait(false);
-		Assert.NotNull(configurationBackup);
+		configurationBackup.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void Backup_Users()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Users = true }).ConfigureAwait(false);
-		Assert.NotNull(backup);
-		Assert.NotNull(backup.RoleGroups);
-		Assert.NotNull(backup.Roles);
-		Assert.NotNull(backup.UserGroups);
-		Assert.NotNull(backup.Users);
+		backup.Should().NotBeNull();
+		backup.RoleGroups.Should().NotBeNull();
+		backup.Roles.Should().NotBeNull();
+		backup.UserGroups.Should().NotBeNull();
+		backup.Users.Should().NotBeNull();
 
 		var roleGroup = backup.RoleGroups[0];
-		Assert.NotNull(roleGroup);
+		roleGroup.Should().NotBeNull();
 
 		var role = backup.Roles[0];
-		Assert.NotNull(role);
+		role.Should().NotBeNull();
 
 		var userGroup = backup.UserGroups[0];
-		Assert.NotNull(userGroup);
+		userGroup.Should().NotBeNull();
 
 		var user = backup.Users[0];
-		Assert.NotNull(user);
+		user.Should().NotBeNull();
 
 		// CreatedBy is populated
-		Assert.False(string.IsNullOrWhiteSpace(user.CreatedBy));
+		user.CreatedBy.Should().NotBeNullOrWhiteSpace();
 	}
 
 	[Fact]
@@ -48,14 +48,12 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Alerting = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.AlertRules);
-		Assert.NotEmpty(backup.AlertRules);
+		backup.AlertRules.Should().NotBeNullOrEmpty();
 
-		Assert.NotNull(backup.EscalationChains);
-		Assert.NotEmpty(backup.EscalationChains);
+		backup.EscalationChains.Should().NotBeNullOrEmpty();
 
 		var acmeEscalationChain = backup.EscalationChains.SingleOrDefault(ec => ec.Name == "ReportMagic Operations");
-		Assert.NotNull(acmeEscalationChain);
+		acmeEscalationChain.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -63,8 +61,7 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Integrations = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.Integrations);
-		Assert.NotEmpty(backup.Integrations);
+		backup.Integrations.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -72,10 +69,8 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Dashboards = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.Dashboards);
-		Assert.NotEmpty(backup.Dashboards);
-		Assert.NotNull(backup.Widgets);
-		Assert.NotEmpty(backup.Widgets);
+		backup.Dashboards.Should().NotBeNullOrEmpty();
+		backup.Widgets.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -83,43 +78,15 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AccountSettings = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.CompanyLogo);
+		backup.CompanyLogo.Should().NotBeNull();
 	}
-
-	//[Fact(Skip = "Takes too long - testing individual items instead")]
-	//public async void Backup_LogicModules()
-	//{
-	//	var backup = await DefaultPortalClient.BackupAsync(new ConfigurationBackupSpecification(false) { LogicModules = true }).ConfigureAwait(false);
-
-	//	Assert.NotNull(backup.AppliesToFunctions);
-	//	Assert.NotEmpty(backup.AppliesToFunctions);
-
-	//	Assert.NotNull(backup.ConfigSources);
-	//	Assert.NotEmpty(backup.ConfigSources);
-
-	//	Assert.NotNull(backup.DataSources);
-	//	Assert.NotEmpty(backup.DataSources);
-
-	//	Assert.NotNull(backup.EventSources);
-	//	Assert.NotEmpty(backup.EventSources);
-
-	//	Assert.NotNull(backup.JobMonitors);
-	//	Assert.NotEmpty(backup.JobMonitors);
-
-	//	Assert.NotNull(backup.PropertySources);
-	//	Assert.NotEmpty(backup.PropertySources);
-
-	//	Assert.NotNull(backup.SnmpSysOidMaps);
-	//	Assert.NotEmpty(backup.SnmpSysOidMaps);
-	//}
 
 	[Fact]
 	public async void Backup_AppliesToFunctions()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AppliesToFunctions = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.AppliesToFunctions);
-		Assert.NotEmpty(backup.AppliesToFunctions);
+		backup.AppliesToFunctions.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -127,19 +94,40 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { ConfigSources = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.ConfigSources);
-		Assert.NotEmpty(backup.ConfigSources);
+		backup.ConfigSources.Should().NotBeNullOrEmpty();
 	}
 
 
 	[Fact]
 	public async void Backup_ScheduledDownTimes()
 	{
-		var backup = await LogicMonitorClient
-			.BackupAsync(new ConfigurationBackupSpecification(false) { ScheduledDownTimes = true })
-			.ConfigureAwait(false);
+		var fileInfo = new FileInfo(Path.GetTempFileName());
+		try
+		{
+			// Backup this specific item
+			var backup = await LogicMonitorClient
+				.BackupAsync(new ConfigurationBackupSpecification(false)
+				{
+					ScheduledDownTimes = true,
+					GzipFileInfo = fileInfo
+				})
+				.ConfigureAwait(false);
+			fileInfo.Exists.Should().BeTrue();
+			backup.ScheduledDownTimes.Should().NotBeNullOrEmpty();
 
-		backup.ScheduledDownTimes.Should().NotBeNullOrEmpty();
+			// Load back from disk
+			var reloadedBackup = await LogicMonitorClient
+				.LoadBackupAsync(fileInfo)
+				.ConfigureAwait(false);
+
+			reloadedBackup.Should().NotBeNull();
+			reloadedBackup.Should().BeEquivalentTo(backup);
+		}
+		finally
+		{
+			fileInfo.Delete();
+			fileInfo.Exists.Should().BeFalse();
+		}
 	}
 
 	//[Fact(Skip = "Takes too long")]

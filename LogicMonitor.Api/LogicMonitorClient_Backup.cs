@@ -250,7 +250,7 @@ public partial class LogicMonitorClient
 		{
 			progressReporter.Notify("Save");
 			progressReporter.StartSubTask("- Writing to disk");
-			SerializeAndCompress(configurationBackup, backupSpecification.GzipFileInfo.FullName);
+			SerializeAndCompress(configurationBackup, backupSpecification.GzipFileInfo);
 			progressReporter.StopSubTask();
 		}
 
@@ -259,7 +259,7 @@ public partial class LogicMonitorClient
 		return configurationBackup;
 	}
 
-	private static byte[] SerializeAndCompress<T>(T objectToWrite, string filePath) where T : class
+	private static byte[] SerializeAndCompress<T>(T objectToWrite, FileInfo fileInfo) where T : class
 	{
 		if (objectToWrite == null)
 		{
@@ -267,7 +267,7 @@ public partial class LogicMonitorClient
 		}
 
 		byte[] result = null;
-		using (var outputStream = new FileStream(filePath, FileMode.Create))
+		using (var outputStream = new FileStream(fileInfo.FullName, FileMode.Create))
 		using (var compressionStream = new GZipStream(outputStream, CompressionMode.Compress))
 		using (var sw = new StreamWriter(compressionStream))
 		using (var jsonTextWriter = new JsonTextWriter(sw))
@@ -284,5 +284,30 @@ public partial class LogicMonitorClient
 		}
 
 		return result;
+	}
+
+	/// <summary>
+	/// Load a ConfigurationBackup from file
+	/// </summary>
+	/// <param name="fileInfo"></param>
+	/// <returns></returns>
+	public async Task<ConfigurationBackup> LoadBackupAsync(FileInfo fileInfo)
+		=> await LoadAsync<ConfigurationBackup>(fileInfo);
+
+	private async Task<T> LoadAsync<T>(FileInfo fileInfo)
+	{
+		var bytes = File.ReadAllBytes(fileInfo.FullName);
+		var json = await DecompressAsync(bytes);
+		var myObject = JsonConvert.DeserializeObject<T>(json);
+		return myObject;
+	}
+
+	private static async Task<string> DecompressAsync(byte[] bytes)
+	{
+		using var msi = new MemoryStream(bytes);
+		using var mso = new MemoryStream();
+		using var gs = new GZipStream(msi, CompressionMode.Decompress);
+		await gs.CopyToAsync(mso).ConfigureAwait(false);
+		return Encoding.UTF8.GetString(mso.ToArray());
 	}
 }
