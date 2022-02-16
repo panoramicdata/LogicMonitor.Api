@@ -22,8 +22,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.165.0</Version>
-		<PackageReleaseNotes>v165 support.  Can now load backups from disk</PackageReleaseNotes>
+		<Version>2.165.1</Version>
+		<PackageReleaseNotes>Fixed nullability of ConfigurationBackupSpecification.GzipFileInfo</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

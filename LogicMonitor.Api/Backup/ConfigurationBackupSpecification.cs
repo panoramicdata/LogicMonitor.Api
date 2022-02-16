@@ -123,5 +123,5 @@ public class ConfigurationBackupSpecification
 	/// <summary>
 	///     The Gzip file info.  If null, no file is written
 	/// </summary>
-	public FileInfo GzipFileInfo { get; set; }
+	public FileInfo? GzipFileInfo { get; set; }
 }
