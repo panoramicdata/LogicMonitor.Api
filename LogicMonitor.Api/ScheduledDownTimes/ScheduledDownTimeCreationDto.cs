@@ -91,5 +91,5 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	///    The week of month (used for monthlyByWeek)
 	/// </summary>
 	[DataMember(Name = "weekOfMonth")]
-	public string WeekOfMonth { get; set; }
+	public WeekOfMonth WeekOfMonth { get; set; }
 }

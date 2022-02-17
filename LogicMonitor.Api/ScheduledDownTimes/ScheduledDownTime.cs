@@ -6,47 +6,19 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 [DataContract]
 public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 {
-	/// <summary>
-	///    The checkpoint id
-	/// </summary>
-	[DataMember(Name = "checkpointId")]
-	public int? CheckpointId { get; set; }
+	#region Basics
 
 	/// <summary>
-	///    The checkpoint name
+	///    Type
 	/// </summary>
-	[DataMember(Name = "checkpointName")]
-	public string? CheckpointName { get; set; }
+	[DataMember(Name = "type")]
+	public ScheduledDownTimeType Type { get; set; }
 
 	/// <summary>
-	///    The datasource Id
+	///    Weekday
 	/// </summary>
-	[DataMember(Name = "dataSourceId")]
-	public int? DataSourceId { get; set; }
-
-	/// <summary>
-	///    The dataSourceInstance Id
-	/// </summary>
-	[DataMember(Name = "dataSourceInstanceId")]
-	public int? DataSourceInstanceId { get; set; }
-
-	/// <summary>
-	///    The deviceDataSourceInstanceGroup Id
-	/// </summary>
-	[DataMember(Name = "deviceDataSourceInstanceGroupId")]
-	public int? DataSourceInstanceGroupId { get; set; }
-
-	/// <summary>
-	///    The deviceDataSourceInstanceGroup Name
-	/// </summary>
-	[DataMember(Name = "deviceDataSourceInstanceGroupName")]
-	public string? DataSourceInstanceGroupName { get; set; }
-
-	/// <summary>
-	///    The EventSource Name
-	/// </summary>
-	[DataMember(Name = "eventSourceName")]
-	public string? EventSourceName { get; set; }
+	[DataMember(Name = "isEffective")]
+	public bool IsEffective { get; set; }
 
 	/// <summary>
 	///    ScheduledDownTime type
@@ -66,6 +38,10 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	[DataMember(Name = "comment")]
 	public string Comment { get; set; } = string.Empty;
 
+	#endregion
+
+	#region Type-specific
+
 	/// <summary>
 	///    The collector description
 	/// </summary>
@@ -73,125 +49,22 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public string? CollectorDescription { get; set; }
 
 	/// <summary>
-	///    The Device Group Id
+	///    The checkpoint id
 	/// </summary>
-	[DataMember(Name = "deviceGroupId")]
-	public int? DeviceGroupId { get; set; }
+	[DataMember(Name = "checkpointId")]
+	public int? CheckpointId { get; set; }
 
 	/// <summary>
-	///    The Website Group Id
+	///    The checkpoint name
 	/// </summary>
-	[DataMember(Name = "websiteGroupId")]
-	public int? WebsiteGroupId { get; set; }
+	[DataMember(Name = "checkpointName")]
+	public string? CheckpointName { get; set; }
 
 	/// <summary>
-	///    The Website Group Name
+	///    The datasource Id
 	/// </summary>
-	[DataMember(Name = "websiteGroupName")]
-	public string? WebsiteGroupName { get; set; }
-
-	/// <summary>
-	///    The DeviceGroup full path
-	/// </summary>
-	[DataMember(Name = "deviceGroupFullPath")]
-	public string? DeviceGroupFullPath { get; set; }
-
-	/// <summary>
-	///    Weekday
-	/// </summary>
-	[DataMember(Name = "weekDay")]
-	public WeekDay? WeekDay { get; set; }
-
-	/// <summary>
-	///    Month day
-	/// </summary>
-	[DataMember(Name = "monthDay")]
-	public int? MonthDay { get; set; }
-
-	/// <summary>
-	///    Hour
-	/// </summary>
-	[DataMember(Name = "hour")]
-	public int Hour { get; set; }
-
-	/// <summary>
-	///    Minute
-	/// </summary>
-	[DataMember(Name = "minute")]
-	public int Minute { get; set; }
-
-	/// <summary>
-	///    End Hour
-	/// </summary>
-	[DataMember(Name = "endHour")]
-	public int EndHour { get; set; }
-
-	/// <summary>
-	///    End Minute
-	/// </summary>
-	[DataMember(Name = "endMinute")]
-	public int? EndMinute { get; set; }
-
-	/// <summary>
-	///    Duration in minutes
-	/// </summary>
-	[DataMember(Name = "duration")]
-	public int? DurationMinutes { get; set; }
-
-	/// <summary>
-	///    Start date time local
-	/// </summary>
-	[DataMember(Name = "startDateTimeOnLocal")]
-	public string StartDateTimeLocal { get; set; } = string.Empty;
-
-	/// <summary>
-	///    Start date time local
-	/// </summary>
-	[DataMember(Name = "startDateTime")]
-	public long? StartDateTimeMs { get; set; }
-
-	/// <summary>
-	/// Start DateTime UTC
-	/// </summary>
-	[IgnoreDataMember]
-	public DateTime? StartDateTimeUtc => StartDateTimeMs?.ToDateTimeUtcFromMs();
-
-	/// <summary>
-	///    End date time local
-	/// </summary>
-	[DataMember(Name = "endDateTimeOnLocal")]
-	public string? EndDateTimeLocal { get; set; }
-
-	/// <summary>
-	///    End date time local
-	/// </summary>
-	[DataMember(Name = "endDateTime")]
-	public long? EndDateTimeMs { get; set; }
-
-	/// <summary>
-	/// End DateTime UTC
-	/// </summary>
-	[IgnoreDataMember]
-	public DateTime? EndDateTimeUtc => EndDateTimeMs?.ToDateTimeUtcFromMs();
-
-	/// <summary>
-	///    Weekday
-	/// </summary>
-	[DataMember(Name = "isEffective")]
-	public bool IsEffective { get; set; }
-
-	/// <summary>
-	/// The time zone
-	/// </summary>
-	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; } = string.Empty;
-
-	/// <summary>
-	///    Type
-	/// </summary>
-	[DataMember(Name = "type")]
-	public ScheduledDownTimeType Type { get; set; }
-
+	[DataMember(Name = "dataSourceId")]
+	public int? DataSourceId { get; set; }
 	/// <summary>
 	///    DeviceDataSourceId
 	/// </summary>
@@ -245,12 +118,142 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "collectorId")]
 	public int? CollectorId { get; set; }
+	/// <summary>
+	///    The dataSourceInstance Id
+	/// </summary>
+	[DataMember(Name = "dataSourceInstanceId")]
+	public int? DataSourceInstanceId { get; set; }
+
+	/// <summary>
+	///    The deviceDataSourceInstanceGroup Id
+	/// </summary>
+	[DataMember(Name = "deviceDataSourceInstanceGroupId")]
+	public int? DataSourceInstanceGroupId { get; set; }
+
+	/// <summary>
+	///    The deviceDataSourceInstanceGroup Name
+	/// </summary>
+	[DataMember(Name = "deviceDataSourceInstanceGroupName")]
+	public string? DataSourceInstanceGroupName { get; set; }
+
+	/// <summary>
+	///    The Device Group Id
+	/// </summary>
+	[DataMember(Name = "deviceGroupId")]
+	public int? DeviceGroupId { get; set; }
+
+	/// <summary>
+	///    The DeviceGroup full path
+	/// </summary>
+	[DataMember(Name = "deviceGroupFullPath")]
+	public string? DeviceGroupFullPath { get; set; }
+
+	/// <summary>
+	///    The Website Group Id
+	/// </summary>
+	[DataMember(Name = "websiteGroupId")]
+	public int? WebsiteGroupId { get; set; }
+
+	/// <summary>
+	///    The Website Group Name
+	/// </summary>
+	[DataMember(Name = "websiteGroupName")]
+	public string? WebsiteGroupName { get; set; }
+
+	#endregion
+
+	#region Time-related
+	/// <summary>
+	///    Weekday
+	/// </summary>
+	[DataMember(Name = "weekDay")]
+	public WeekDay? WeekDay { get; set; }
+
+	/// <summary>
+	///    Month day
+	/// </summary>
+	[DataMember(Name = "monthDay")]
+	public int MonthDay { get; set; }
+
+	/// <summary>
+	///    Hour
+	/// </summary>
+	[DataMember(Name = "hour")]
+	public int Hour { get; set; }
+
+	/// <summary>
+	///    Minute
+	/// </summary>
+	[DataMember(Name = "minute")]
+	public int Minute { get; set; }
+
+	/// <summary>
+	///    End Hour
+	/// </summary>
+	[DataMember(Name = "endHour")]
+	public int EndHour { get; set; }
+
+	/// <summary>
+	///    End Minute
+	/// </summary>
+	[DataMember(Name = "endMinute")]
+	public int EndMinute { get; set; }
+
+	/// <summary>
+	///    Duration in minutes
+	/// </summary>
+	[DataMember(Name = "duration")]
+	public int DurationMinutes { get; set; }
+
+	/// <summary>
+	///    Start date time local
+	/// </summary>
+	[DataMember(Name = "startDateTimeOnLocal")]
+	public string StartDateTimeLocal { get; set; } = string.Empty;
+
+	/// <summary>
+	///    Start date time local
+	/// </summary>
+	[DataMember(Name = "startDateTime")]
+	public long StartDateTimeMs { get; set; }
+
+	/// <summary>
+	/// Start DateTime UTC
+	/// </summary>
+	[IgnoreDataMember]
+	public DateTime StartDateTimeUtc => StartDateTimeMs.ToDateTimeUtcFromMs();
+
+	/// <summary>
+	///    End date time local
+	/// </summary>
+	[DataMember(Name = "endDateTimeOnLocal")]
+	public string EndDateTimeLocal { get; set; } = string.Empty;
+
+	/// <summary>
+	///    End date time local
+	/// </summary>
+	[DataMember(Name = "endDateTime")]
+	public long EndDateTimeMs { get; set; }
+
+	/// <summary>
+	/// End DateTime UTC
+	/// </summary>
+	[IgnoreDataMember]
+	public DateTime EndDateTimeUtc => EndDateTimeMs.ToDateTimeUtcFromMs();
+
+	/// <summary>
+	/// The time zone
+	/// </summary>
+	[DataMember(Name = "timezone")]
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Week of Month
 	/// </summary>
 	[DataMember(Name = "weekOfMonth")]
-	public string? WeekOfMonth { get; set; }
+	public WeekOfMonth WeekOfMonth { get; set; } = WeekOfMonth.None;
+
+	#endregion
 
 	/// <inheritdoc />
 	public string Endpoint() => "sdt/sdts";
