@@ -16,30 +16,30 @@ public enum WeekOfMonth
 	/// <summary>
 	/// One
 	/// </summary>
-	[EnumMember(Value = "1")]
-	One = 1,
+	[EnumMember(Value = "First")]
+	First = 1,
 
 	/// <summary>
 	/// Two
 	/// </summary>
-	[EnumMember(Value = "2")]
-	Two = 2,
+	[EnumMember(Value = "Second")]
+	Second = 2,
 
 	/// <summary>
 	/// Three
 	/// </summary>
-	[EnumMember(Value = "3")]
-	Three = 3,
+	[EnumMember(Value = "Third")]
+	Third = 3,
 
 	/// <summary>
 	/// Four
 	/// </summary>
-	[EnumMember(Value = "4")]
-	Four = 4,
+	[EnumMember(Value = "Forth")]
+	Fourth = 4,
 
 	/// <summary>
 	/// Five
 	/// </summary>
-	[EnumMember(Value = "5")]
-	Five = 5
+	[EnumMember(Value = "Last")]
+	Last = 5
 }
