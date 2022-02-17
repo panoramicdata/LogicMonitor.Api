@@ -37,11 +37,11 @@ public class DeviceDataSourceInstanceScheduledDownTimeCreationDto : ScheduledDow
 	///    The data source id
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceId")]
-	public int DataSourceInstanceId { get; set; }
+	public int? DataSourceInstanceId { get; set; }
 
 	/// <summary>
 	///    The datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceName")]
-	public string DataSourceInstanceName { get; set; }
+	public string? DataSourceInstanceName { get; set; }
 }
