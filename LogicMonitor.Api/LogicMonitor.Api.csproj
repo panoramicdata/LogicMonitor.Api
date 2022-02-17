@@ -22,7 +22,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<PackageReleaseNotes>Updated Scheduled Down Time cration DTOs</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated Scheduled Down Time creation DTOs</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
