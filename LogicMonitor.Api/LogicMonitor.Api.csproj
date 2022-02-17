@@ -22,7 +22,6 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<!-- This refers to the LogicMonitor version -->
-		<Version>2.165.2</Version>
 		<PackageReleaseNotes>Updated Scheduled Down Time cration DTOs</PackageReleaseNotes>
 
 	</PropertyGroup>
@@ -37,6 +36,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Nerdbank.GitVersioning" Version="3.4.255">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 	<ItemGroup>
