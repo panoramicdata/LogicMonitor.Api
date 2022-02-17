@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LogicMonitor.Api.Test.Settings;
 
 public class RoleTests : TestWithOutput
@@ -62,25 +64,25 @@ public class RoleTests : TestWithOutput
 					new RolePrivilege
 					{
 						ObjectType = PrivilegeObjectType.DashboardGroup,
-						ObjectId = dashboardGroup.Id.ToString(),
+						ObjectId = dashboardGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
 					new RolePrivilege
 					{
 						ObjectType = PrivilegeObjectType.DeviceGroup,
-						ObjectId = deviceGroup.Id.ToString(),
+						ObjectId = deviceGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
 					new RolePrivilege
 					{
 						ObjectType = PrivilegeObjectType.WebsiteGroup,
-						ObjectId = websiteGroup.Id.ToString(),
+						ObjectId = websiteGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
 					new RolePrivilege
 					{
 						ObjectType = PrivilegeObjectType.ReportGroup,
-						ObjectId = reportGroup.Id.ToString(),
+						ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
 					new RolePrivilege
@@ -103,7 +105,7 @@ public class RoleTests : TestWithOutput
 					new RolePrivilege
 					{
 						ObjectType = PrivilegeObjectType.ReportGroup,
-						ObjectId = reportGroup.Id.ToString(),
+						ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
 				}

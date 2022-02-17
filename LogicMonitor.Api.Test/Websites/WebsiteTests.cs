@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LogicMonitor.Api.Test.Websites;
 
 public class WebsiteTests : TestWithOutput
@@ -226,10 +228,10 @@ public class WebsiteTests : TestWithOutput
 	private static WebsiteCreationDto GetWebsiteCreationDto(int websiteGroupId, string name)
 	=> new()
 	{
-		WebsiteGroupId = websiteGroupId.ToString(),
+		WebsiteGroupId = websiteGroupId.ToString(CultureInfo.InvariantCulture),
 		Name = name,
 		Description = "Description",
-		PollingIntervalMinutes = 1.ToString(),
+		PollingIntervalMinutes = 1.ToString(CultureInfo.InvariantCulture),
 		Type = WebsiteType.WebCheck,
 		HttpSchema = HttpSchema.Https,
 		WebsiteProperties = new List<Property>

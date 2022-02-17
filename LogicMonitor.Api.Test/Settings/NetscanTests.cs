@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LogicMonitor.Api.Test.Settings;
 
 public class NetscanTests : TestWithOutput
@@ -52,7 +54,7 @@ public class NetscanTests : TestWithOutput
 		{
 			Name = name,
 			Description = description,
-			CollectorId = collectorId.ToString(),
+			CollectorId = collectorId.ToString(CultureInfo.InvariantCulture),
 			Credentials = new NetscanCredentials
 			{
 				DeviceGroupId = credentialsDeviceGroupId,
@@ -69,7 +71,7 @@ public class NetscanTests : TestWithOutput
 				Recipients = netscanScheduleScheduleRecipients
 			},
 			//GroupName = netscanGroupName,
-			GroupId = netscanGroup.Id.ToString(),
+			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
 			SubnetScanRange = subnetScanRange,
 			ExcludedIpAddresses = excludedIpAddresses,
 			Ddr = new NetscanDdr

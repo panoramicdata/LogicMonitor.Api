@@ -315,7 +315,7 @@ public class AlertFilter
 		filter.AppendFilterItemIfNotNull(nameof(Alert.AlertEscalationChainName), EscalationChainName);
 		filter.AppendFilterItemIfNotNull(nameof(Alert.AlertEscalationChainId), EscalationChainId);
 		filter.AppendFilterItemIfNotNull(nameof(Alert.NextRecipient), NextRecipient);
-		filter.AppendFilterItemIfNotNull(nameof(Alert.Severity), Levels?.OrderByDescending(l => l).Select(l => ((int)l).ToString()).ToList());
+		filter.AppendFilterItemIfNotNull(nameof(Alert.Severity), Levels?.OrderByDescending(l => l).Select(l => ((int)l).ToString(CultureInfo.InvariantCulture)).ToList());
 		filter.AppendFilterItemIfNotNull(nameof(Alert.InScheduledDownTime), SdtFilter == SdtFilter.All ? null : (SdtFilter == SdtFilter.Sdt).ToString().ToLowerInvariant());
 		filter.AppendFilterItemIfNotNull(nameof(Alert.MonitorObjectGroups), MonitorObjectGroupFullPaths);
 		filter.AppendFilterItemIfNotNull(nameof(Alert.MonitorObjectName), MonitorObjectName);
