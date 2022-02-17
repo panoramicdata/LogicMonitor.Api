@@ -4,25 +4,28 @@ internal class AlertSdtConverter : JsonCreationConverter<AlertSdt>
 {
 	protected override AlertSdt Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = (
+			(jObject["type"] ?? throw new FormatException("Type is missing"))
+				.Value<string>() ?? throw new FormatException("Type should be a string")).ToUpperInvariant();
 		return type switch
 		{
-			"collectorsdt" => new CollectorAlertSdt(),
-			"devicebatchjobsdt" => new DeviceBatchJobAlertSdt(),
-			"deviceclusteralertdefsdt" => new DeviceClusterAlertDefSdt(),
-			"devicedatasourceinstancesdt" => new DeviceDataSourceInstanceAlertSdt(),
-			"devicedatasourceinstancegroupsdt" => new DeviceDataSourceInstanceGroupAlertSdt(),
-			"devicedatasourcesdt" => new DeviceDataSourceAlertSdt(),
-			"deviceeventsourcesdt" => new DeviceEventSourceAlertSdt(),
-			"devicegroupsdt" => new DeviceGroupAlertSdt(),
-			"resourcesdt" => new DeviceAlertSdt(),
-			"servicesdt" => new ServiceAlertSdt(),
-			"websitesdt" => new WebsiteAlertSdt(),
-			"websitecheckpointsdt" => new WebsiteCheckpointAlertSdt(),
-			"websitegroupsdt" => new WebsiteGroupAlertSdt(),
+			"COLLECTORSDT" => new CollectorAlertSdt(),
+			"DEVICEBATCHJOBSDT" => new DeviceBatchJobAlertSdt(),
+			"DEVICECLUSTERALERTDEFSDT" => new DeviceClusterAlertDefSdt(),
+			"DEVICEDATASOURCEINSTANCESDT" => new DeviceDataSourceInstanceAlertSdt(),
+			"DEVICEDATASOURCEINSTANCEGROUPSDT" => new DeviceDataSourceInstanceGroupAlertSdt(),
+			"DEVICEDATASOURCESDT" => new DeviceDataSourceAlertSdt(),
+			"DEVICEEVENTSOURCESDT" => new DeviceEventSourceAlertSdt(),
+			"DEVICEGROUPSDT" => new DeviceGroupAlertSdt(),
+			"RESOURCESDT" => new DeviceAlertSdt(),
+			"SERVICESDT" => new ServiceAlertSdt(),
+			"WEBSITESDT" => new WebsiteAlertSdt(),
+			"WEBSITECHECKPOINTSDT" => new WebsiteCheckpointAlertSdt(),
+			"WEBSITEGROUPSDT" => new WebsiteGroupAlertSdt(),
 			_ => throw new NotSupportedException($"AlertSdtConverter.cs needs updating to include {type}."),
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotSupportedException();
+	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+		=> throw new NotSupportedException();
 }

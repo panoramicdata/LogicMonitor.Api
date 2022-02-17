@@ -112,19 +112,19 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    Hour
 	/// </summary>
 	[DataMember(Name = "hour")]
-	public int? Hour { get; set; }
+	public int Hour { get; set; }
 
 	/// <summary>
 	///    Minute
 	/// </summary>
 	[DataMember(Name = "minute")]
-	public int? Minute { get; set; }
+	public int Minute { get; set; }
 
 	/// <summary>
 	///    End Hour
 	/// </summary>
 	[DataMember(Name = "endHour")]
-	public int? EndHour { get; set; }
+	public int EndHour { get; set; }
 
 	/// <summary>
 	///    End Minute
@@ -136,7 +136,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    Duration in minutes
 	/// </summary>
 	[DataMember(Name = "duration")]
-	public int DurationMinutes { get; set; }
+	public int? DurationMinutes { get; set; }
 
 	/// <summary>
 	///    Start date time local
@@ -166,13 +166,13 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    End date time local
 	/// </summary>
 	[DataMember(Name = "endDateTime")]
-	public long EndDateTimeMs { get; set; }
+	public long? EndDateTimeMs { get; set; }
 
 	/// <summary>
 	/// End DateTime UTC
 	/// </summary>
 	[IgnoreDataMember]
-	public DateTime EndDateTimeUtc => EndDateTimeMs.ToDateTimeUtcFromMs();
+	public DateTime? EndDateTimeUtc => EndDateTimeMs?.ToDateTimeUtcFromMs();
 
 	/// <summary>
 	///    Weekday
