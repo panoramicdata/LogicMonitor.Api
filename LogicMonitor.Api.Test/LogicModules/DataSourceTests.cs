@@ -138,7 +138,7 @@ public class DataSourceTests : TestWithOutput
 			//TestGraphs(dataSource);
 		}
 
-		Logger.LogInformation("{dataSourcesString}", dataSourcesString);
+		Logger.LogInformation("{DataSourcesString}", dataSourcesString);
 	}
 
 	[Fact]
