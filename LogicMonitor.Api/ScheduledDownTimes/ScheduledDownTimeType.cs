@@ -62,22 +62,10 @@ public enum ScheduledDownTimeType
 	DeviceDataSource,
 
 	/// <summary>
-	/// Device Event Source
-	/// </summary>
-	[EnumMember(Value = "DeviceEventSourceSDT")]
-	DeviceEventSource,
-
-	/// <summary>
 	/// Device Data Source Instance
 	/// </summary>
 	[EnumMember(Value = "DeviceDataSourceInstanceSDT")]
 	DeviceDataSourceInstance,
-
-	/// <summary>
-	/// Device Data Source Instance Group
-	/// </summary>
-	[EnumMember(Value = "DeviceDataSourceInstanceGroupSDT")]
-	DeviceDataSourceInstanceGroup,
 
 	/// <summary>
 	/// Service
@@ -93,12 +81,4 @@ public enum ScheduledDownTimeType
 	[EnumMember(Value = "DeviceClusterAlertDefSDT")]
 	DeviceClusterAlertDefSdt,
 	// Have not created a CreationDto yet...
-
-	// UI shows ResourceGroupSDT but the API returns DeviceGroupSDT
-	//[EnumMember(Value = "ResourceGroupSDT")]
-	//ResourceGroup,
-
-	// UI shows ResourceSDT but the API returns DeviceSDT
-	//[EnumMember(Value = "ResourceSDT")]
-	//Resource
 }
