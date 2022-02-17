@@ -14,6 +14,68 @@ public enum ScheduledDownTimeType
 	Unknown,
 
 	/// <summary>
+	/// Collector
+	/// </summary>
+	[EnumMember(Value = "CollectorSDT")]
+	Collector,
+
+	/// <summary>
+	/// Device
+	/// </summary>
+	[EnumMember(Value = "DeviceSDT")]
+	Device,
+
+	/// <summary>
+	/// Device Batch Job
+	/// </summary>
+	[EnumMember(Value = "DeviceBatchJobSDT")]
+	DeviceBatchJob,
+
+	/// <summary>
+	/// Device Cluster Alert Def
+	/// </summary>
+	[EnumMember(Value = "DeviceClusterAlertDefSDT")]
+	DeviceClusterAlertDefSdt,
+
+	/// <summary>
+	/// Device Data Source
+	/// </summary>
+	[EnumMember(Value = "DeviceDataSourceSDT")]
+	DeviceDataSource,
+
+	/// <summary>
+	/// Device Data Source Instance Group
+	/// </summary>
+	[EnumMember(Value = "DeviceDataSourceInstanceGroupSDT")]
+	DeviceDataSourceInstanceGroup,
+
+	/// <summary>
+	/// Device Data Source Instance
+	/// </summary>
+	[EnumMember(Value = "DeviceDataSourceInstanceSDT")]
+	DeviceDataSourceInstance,
+
+	/// <summary>
+	/// Device Event Source
+	/// </summary>
+	[EnumMember(Value = "DeviceEventSourceSDT")]
+	DeviceEventSource,
+
+	/// <summary>
+	/// Device Group
+	/// </summary>
+	[EnumMember(Value = "DeviceGroupSDT")]
+	DeviceGroup,
+
+	/// <summary>
+	/// Service
+	/// </summary>
+	[EnumMember(Value = "ServiceSDT")]
+	Service,
+	// Have not created a CreationDto as adding an SDT to a service in the UI appears
+	// to use a resourceSDT, so this may not be required
+
+	/// <summary>
 	/// Website
 	/// </summary>
 	[EnumMember(Value = "WebsiteSDT")]
@@ -30,55 +92,4 @@ public enum ScheduledDownTimeType
 	/// </summary>
 	[EnumMember(Value = "WebsiteCheckpointSDT")]
 	WebsiteCheckpoint,
-
-	/// <summary>
-	/// Device
-	/// </summary>
-	[EnumMember(Value = "DeviceSDT")]
-	Device,
-
-	/// <summary>
-	/// Device Group
-	/// </summary>
-	[EnumMember(Value = "DeviceGroupSDT")]
-	DeviceGroup,
-
-	/// <summary>
-	/// Collector
-	/// </summary>
-	[EnumMember(Value = "CollectorSDT")]
-	Collector,
-
-	/// <summary>
-	/// Device Batch Job
-	/// </summary>
-	[EnumMember(Value = "DeviceBatchJobSDT")]
-	DeviceBatchJob,
-
-	/// <summary>
-	/// Device Data Source
-	/// </summary>
-	[EnumMember(Value = "DeviceDataSourceSDT")]
-	DeviceDataSource,
-
-	/// <summary>
-	/// Device Data Source Instance
-	/// </summary>
-	[EnumMember(Value = "DeviceDataSourceInstanceSDT")]
-	DeviceDataSourceInstance,
-
-	/// <summary>
-	/// Service
-	/// </summary>
-	[EnumMember(Value = "ServiceSDT")]
-	Service,
-	// Have not created a CreationDto as adding an SDT to a service in the UI appears
-	// to use a resourceSDT, so this may not be required
-
-	/// <summary>
-	/// Device Cluster Alert Def
-	/// </summary>
-	[EnumMember(Value = "DeviceClusterAlertDefSDT")]
-	DeviceClusterAlertDefSdt,
-	// Have not created a CreationDto yet...
 }
