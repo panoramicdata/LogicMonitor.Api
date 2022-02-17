@@ -102,6 +102,12 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public string? DataSourceInstanceName { get; set; }
 
 	/// <summary>
+	///    EventSourceName
+	/// </summary>
+	[DataMember(Name = "eventSourceName")]
+	public string? EventSourceName { get; set; }
+
+	/// <summary>
 	///    The Website Id
 	/// </summary>
 	[DataMember(Name = "websiteId")]
