@@ -10,7 +10,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The checkpoint id
 	/// </summary>
 	[DataMember(Name = "checkpointId")]
-	public int CheckpointId { get; set; }
+	public int? CheckpointId { get; set; }
 
 	/// <summary>
 	///    The checkpoint name
@@ -22,19 +22,19 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The datasource Id
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
-	public int DataSourceId { get; set; }
+	public int? DataSourceId { get; set; }
 
 	/// <summary>
 	///    The dataSourceInstance Id
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceId")]
-	public int DataSourceInstanceId { get; set; }
+	public int? DataSourceInstanceId { get; set; }
 
 	/// <summary>
 	///    The deviceDataSourceInstanceGroup Id
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceInstanceGroupId")]
-	public int DataSourceInstanceGroupId { get; set; }
+	public int? DataSourceInstanceGroupId { get; set; }
 
 	/// <summary>
 	///    The deviceDataSourceInstanceGroup Name

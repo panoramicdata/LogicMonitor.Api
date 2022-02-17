@@ -150,6 +150,7 @@ public partial class LogicMonitorClient : IDisposable
 		// Sign out
 		_client.Dispose();
 		_handler.Dispose();
+		GC.SuppressFinalize(this);
 	}
 
 	#endregion Constructor / Dispose

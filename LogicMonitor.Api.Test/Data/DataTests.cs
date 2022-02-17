@@ -130,7 +130,7 @@ public class DataTests : TestWithOutput
 		var stopwatch = Stopwatch.StartNew();
 		for (var n = 0; n < 250; n++)
 		{
-			Logger.LogInformation("{n:000}: {milliseconds:00000}ms", n, stopwatch.ElapsedMilliseconds);
+			Logger.LogInformation("{N:000}: {ElapsedMS:00000}ms", n, stopwatch.ElapsedMilliseconds);
 			await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
 		}
 	}
