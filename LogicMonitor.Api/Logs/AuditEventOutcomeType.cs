@@ -3,7 +3,7 @@
 /// <summary>
 /// The entity type of an audit event
 /// </summary>
-public enum AuditEventEntityType
+public enum AuditEventOutcomeType
 {
 	/// <summary>
 	/// Unknown
@@ -11,17 +11,12 @@ public enum AuditEventEntityType
 	Unknown,
 
 	/// <summary>
-	/// Resource
+	/// Success
 	/// </summary>
-	Resource,
+	Success,
 
 	/// <summary>
-	/// Device DataSource Instance
+	/// Failure
 	/// </summary>
-	DeviceDataSourceInstance,
-
-	/// <summary>
-	/// Scheduled Down Time
-	/// </summary>
-	ScheduledDownTime,
+	Failure,
 }

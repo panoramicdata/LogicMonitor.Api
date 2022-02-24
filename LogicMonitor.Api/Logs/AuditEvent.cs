@@ -46,34 +46,49 @@ public class AuditEvent
 	public AuditEventActionType ActionType { get; internal set; }
 
 	/// <summary>
-	/// Whether the interpretation was successful
+	/// The outcome type
 	/// </summary>
-	public bool IsInterpreted { get; internal set; }
+	public AuditEventOutcomeType OutcomeType { get; internal set; }
 
 	/// <summary>
-	/// The Id of the entity
+	/// The resource id
 	/// </summary>
-	public int? EntityId { get; internal set; }
+	public int? ResourceId { get; internal set; }
 
 	/// <summary>
-	/// Entity notes
+	/// The resource name
 	/// </summary>
-	public string EntityNotes { get; internal set; }
+	public string? ResourceName { get; internal set; }
 
 	/// <summary>
-	/// The Id of the collector
+	/// The DataSource id
+	/// </summary>
+	public int? DataSourceId { get; internal set; }
+
+	/// <summary>
+	/// The DataSource name
+	/// </summary>
+	public string? DataSourceName { get; internal set; }
+
+	/// <summary>
+	/// The Instance id
+	/// </summary>
+	public int? InstanceId { get; internal set; }
+
+	/// <summary>
+	/// The Instance name
+	/// </summary>
+	public string? InstanceName { get; internal set; }
+
+	/// <summary>
+	/// The collector id
 	/// </summary>
 	public int? CollectorId { get; internal set; }
 
 	/// <summary>
-	/// The Id of the accessToken
-	/// </summary>
-	public string AccessTokenId { get; internal set; }
-
-	/// <summary>
 	/// The collector name
 	/// </summary>
-	public string CollectorName { get; internal set; }
+	public string? CollectorName { get; internal set; }
 
 	/// <summary>
 	/// Any other information
@@ -84,4 +99,6 @@ public class AuditEvent
 	/// The API Token Id
 	/// </summary>
 	public string ApiTokenId { get; internal set; }
+
+	public List<int?>? DataSourceNewInstanceIds { get; internal set; }
 }

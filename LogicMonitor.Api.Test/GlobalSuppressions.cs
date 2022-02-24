@@ -12,3 +12,10 @@ using System.Diagnostics.CodeAnalysis;
 	Scope = "namespaceanddescendants",
 	Target = "~N:LogicMonitor.Api.Test")
 ]
+[assembly: SuppressMessage(
+	"Naming",
+	"CA1707:Identifiers should not contain underscores",
+	Justification = "Underscores are appropriate for unit tests",
+	Scope = "namespaceanddescendants",
+	Target = "~N:LogicMonitor.Api.Test")
+]
