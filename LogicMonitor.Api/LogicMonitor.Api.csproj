@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Updated Scheduled Down Time creation DTOs</PackageReleaseNotes>
+		<PackageReleaseNotes>Improved AuditEvent parsing</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
