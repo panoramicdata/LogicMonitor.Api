@@ -138,7 +138,7 @@ public partial class LogicMonitorClient : IDisposable
 		using var hmac = new System.Security.Cryptography.HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) };
 		var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
 		var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
-		var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower();
+		var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower(CultureInfo.InvariantCulture);
 		return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
 	}
 
