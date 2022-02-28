@@ -34,7 +34,7 @@ public enum WeekOfMonth
 	/// <summary>
 	/// Four
 	/// </summary>
-	[EnumMember(Value = "Forth")]
+	[EnumMember(Value = "Fourth")]
 	Fourth = 4,
 
 	/// <summary>
