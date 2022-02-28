@@ -51,9 +51,6 @@ public class BackupTests : TestWithOutput
 		backup.AlertRules.Should().NotBeNullOrEmpty();
 
 		backup.EscalationChains.Should().NotBeNullOrEmpty();
-
-		var acmeEscalationChain = backup.EscalationChains.SingleOrDefault(ec => ec.Name == "ReportMagic Operations");
-		acmeEscalationChain.Should().NotBeNull();
 	}
 
 	[Fact]
