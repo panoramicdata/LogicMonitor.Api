@@ -394,6 +394,6 @@ public class AlertFilter
 
 	/// <inheritdoc />
 	public override string ToString() =>
-		$"StartUtcIsAfter: {StartUtcIsAfter?.ToString("yyyy-MM-dd HH:mm")}, " +
-		$"StartUtcIsBefore: {StartUtcIsBefore?.ToString("yyyy-MM-dd HH:mm")}";
+		$"StartUtcIsAfter: {StartUtcIsAfter?.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)}, " +
+		$"StartUtcIsBefore: {StartUtcIsBefore?.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture)}";
 }

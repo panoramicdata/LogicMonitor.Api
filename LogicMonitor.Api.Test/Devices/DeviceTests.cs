@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceTests : TestWithOutput
@@ -66,7 +68,7 @@ public class DeviceTests : TestWithOutput
 		{
 			Name = deviceGroupName,
 			Description = deviceGroupDescription,
-			ParentId = deviceGroupParentId.ToString()
+			ParentId = deviceGroupParentId.ToString(CultureInfo.InvariantCulture)
 		}).ConfigureAwait(false);
 
 		foreach (var finalHardDelete in new bool[] { false, true })
@@ -208,7 +210,7 @@ public class DeviceTests : TestWithOutput
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var refresh = await LogicMonitorClient.GetAsync<Device>(device.Id).ConfigureAwait(false);
 		Assert.True(refresh.CreatedOnSeconds > 0);
-		Assert.True(refresh.CreatedOnUtc.Value > DateTime.Parse("2012-07-24"));
+		Assert.True(refresh.CreatedOnUtc.Value > DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
 	}
 
 	[Fact]
@@ -217,8 +219,8 @@ public class DeviceTests : TestWithOutput
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		Assert.NotNull(device);
 		var jObject = JObject.FromObject(device);
-		Assert.Equal(device.Id, int.Parse(jObject["id"].ToString()));
-		Assert.Empty(jObject.Properties().Where(p => string.Equals(p.Name, nameof(Device.AutoPropertiesAssignedOnUtc), StringComparison.InvariantCultureIgnoreCase)));
+		Assert.Equal(device.Id, int.Parse(jObject["id"].ToString(), CultureInfo.InvariantCulture));
+		Assert.Empty(jObject.Properties().Where(p => string.Equals(p.Name, nameof(Device.AutoPropertiesAssignedOnUtc), StringComparison.OrdinalIgnoreCase)));
 	}
 
 	[Fact]

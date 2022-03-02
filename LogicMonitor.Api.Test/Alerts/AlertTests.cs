@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Test.Extensions;
+
 namespace LogicMonitor.Api.Test.Alerts;
 
 public class AlertTests : TestWithOutput

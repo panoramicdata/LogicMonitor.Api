@@ -100,5 +100,8 @@ public class AuditEvent
 	/// </summary>
 	public string ApiTokenId { get; internal set; }
 
+	/// <summary>
+	/// The DataSource new instance ids
+	/// </summary>
 	public List<int?>? DataSourceNewInstanceIds { get; internal set; }
 }

@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Test.Extensions;
+
 namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]

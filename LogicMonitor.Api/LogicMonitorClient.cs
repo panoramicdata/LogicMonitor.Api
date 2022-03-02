@@ -408,7 +408,7 @@ public partial class LogicMonitorClient : IDisposable
 		var match = versionRegex.Match(responseText);
 		if (match.Success)
 		{
-			return int.Parse(match.Groups["version"].Value);
+			return int.Parse(match.Groups["version"].Value, CultureInfo.InvariantCulture);
 		}
 
 		throw new FormatException("Could not determine the portal version.");

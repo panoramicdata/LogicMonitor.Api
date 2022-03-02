@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace LogicMonitor.Api.Test.Data;
 
 public class DataTests : TestWithOutput
@@ -94,7 +96,7 @@ public class DataTests : TestWithOutput
 		// Create the request
 		var request = new NetflowDeviceGroupGraphDataRequest
 		{
-			DeviceGroupId = int.Parse(netflowDevice.DeviceGroupIdsString.Split(",")[0]),
+			DeviceGroupId = int.Parse(netflowDevice.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
 			StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
 			EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
 			TimePeriod = TimePeriod.Zoom
