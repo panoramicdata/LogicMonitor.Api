@@ -16,6 +16,11 @@ public enum AuditEventActionType
 	Create,
 
 	/// <summary>
+	/// Read
+	/// </summary>
+	Read,
+
+	/// <summary>
 	/// Update
 	/// </summary>
 	Update,

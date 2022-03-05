@@ -89,7 +89,7 @@ public class AuditEventTests : TestWithOutput
 		for (var i = 0; i < 3000; i += 300)
 		{
 			var logItems = await LogicMonitorClient
-				.GetLogItemsAsync(new LogFilter(300, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc))
+				.GetLogItemsAsync(new LogFilter(i, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc))
 				.ConfigureAwait(false);
 
 			foreach (var logItem in logItems)
