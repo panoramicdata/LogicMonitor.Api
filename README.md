@@ -2,6 +2,8 @@
 
 The LogicMonitor REST API nuget package, authored by Panoramic Data Limited.
 
+[![Nuget](https://img.shields.io/nuget/v/LogicMonitor.Api)](https://www.nuget.org/packages/LogicMonitor.Api/)
+
 If you want some LogicMonitor software developed, come find us at: https://www.panoramicdata.com/ !
 
 To get started, watch the videos here:
