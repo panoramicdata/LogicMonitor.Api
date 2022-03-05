@@ -13,22 +13,22 @@ public class AuditEvent
 	/// <summary>
 	/// The user that initiated the event
 	/// </summary>
-	public string UserName { get; internal set; }
+	public string? UserName { get; internal set; }
 
 	/// <summary>
 	/// The host that initiated the event
 	/// </summary>
-	public string Host { get; internal set; }
+	public string? Host { get; internal set; }
 
 	/// <summary>
 	/// The original description from the LogItem
 	/// </summary>
-	public string OriginalDescription { get; internal set; }
+	public string OriginalDescription { get; internal set; } = string.Empty;
 
 	/// <summary>
 	/// The event's session Id
 	/// </summary>
-	public string SessionId { get; internal set; }
+	public string? SessionId { get; internal set; }
 
 	/// <summary>
 	/// The originator type
@@ -93,15 +93,25 @@ public class AuditEvent
 	/// <summary>
 	/// Any other information
 	/// </summary>
-	public string AdditionalInformation { get; internal set; }
+	public string? AdditionalInformation { get; internal set; }
 
 	/// <summary>
 	/// The API Token Id
 	/// </summary>
-	public string ApiTokenId { get; internal set; }
+	public string? ApiTokenId { get; internal set; }
 
 	/// <summary>
 	/// The DataSource new instance ids
 	/// </summary>
-	public List<int?>? DataSourceNewInstanceIds { get; internal set; }
+	public ICollection<int?>? DataSourceNewInstanceIds { get; internal set; }
+
+	/// <summary>
+	/// The ResourceGroup name
+	/// </summary>
+	public string? ResourceGroupName { get; internal set; }
+
+	/// <summary>
+	/// The property name
+	/// </summary>
+	public string? PropertyName { get; internal set; }
 }

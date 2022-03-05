@@ -34,8 +34,14 @@ public static class LogItemExtensions
 		@"^""Action=Add""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=Failed device operation,  adddevice_failed : error  \((?<additionalInfo>.+?)\)""$",
 		RegexOptions.Singleline
 	);
-
-
+	private static readonly Regex CollectorScheduledHealthCheck = new(
+		@"^Scheduled health check scripts for all collectors$",
+		RegexOptions.Singleline
+	);
+	private static readonly Regex UpdateResourceGroupPropertySuccessRegex = new(
+		@"^Update the host group\((?<resourceGroupName>.+?)\)'s property\(name=(?<propertyName>.+?)\) via API token (?<apiTokenId>.+?).$",
+		RegexOptions.Singleline
+	);
 
 	/// <summary>
 	/// Converts a logItem to an AuditItem
@@ -180,12 +186,31 @@ public static class LogItemExtensions
 			auditEvent.InstanceName = updateResourceMatch.Groups["instanceName"].Value;
 			auditEvent.AdditionalInformation = updateResourceMatch.Groups["additionalInfo"].Value;
 		}
+		else if (CollectorScheduledHealthCheck.IsMatch(logItem.Description))
+		{
+			// Example: "Scheduled health check scripts for all collectors"
+			auditEvent.ActionType = AuditEventActionType.ScheduledHealthCheckScript;
+			auditEvent.EntityType = AuditEventEntityType.AllCollectors;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Unknown;
+		}
+		else if (UpdateResourceGroupPropertySuccessRegex.IsMatch(logItem.Description))
+		{
+			// Example: "Update the host group(PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-PROD)'s property(name=kubernetes.version.history) via API token MZkW3Ldwg5S84s5eWUc7."
+			auditEvent.ActionType = AuditEventActionType.Update;
+			auditEvent.EntityType = AuditEventEntityType.ResourceGroupProperty;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			var updateResourceMatch = UpdateDeviceDataSourceInstanceByNameRegex.Match(logItem.Description);
+
+			auditEvent.ResourceGroupName = updateResourceMatch.Groups["resourceGroupName"].Value;
+			auditEvent.PropertyName = updateResourceMatch.Groups["resourceGroupNamepropertyName"].Value;
+			auditEvent.ApiTokenId = updateResourceMatch.Groups["apiTokenId"].Value;
+		}
 		else
 		{
 			// Not recognised
-			auditEvent.ActionType = AuditEventActionType.Unknown;
-			auditEvent.EntityType = AuditEventEntityType.Unknown;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Unknown;
+			auditEvent.ActionType = AuditEventActionType.None;
+			auditEvent.EntityType = AuditEventEntityType.None;
+			auditEvent.OutcomeType = AuditEventOutcomeType.None;
 		}
 
 		return auditEvent;

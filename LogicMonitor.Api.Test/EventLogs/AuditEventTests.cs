@@ -65,19 +65,19 @@ public class AuditEventTests : TestWithOutput
 
 		var auditEvent = logItem.ToAuditEvent();
 
-		auditEvent.ActionType.Should().NotBe(AuditEventActionType.Unknown);
+		auditEvent.ActionType.Should().NotBe(AuditEventActionType.None);
 		auditEvent.ActionType.Should().Be(auditEventActionType);
 
 		(auditEvent.DateTime - nowUtc).TotalSeconds.Should().BeLessThanOrEqualTo(1);
 
-		auditEvent.EntityType.Should().NotBe(AuditEventEntityType.Unknown);
+		auditEvent.EntityType.Should().NotBe(AuditEventEntityType.None);
 		auditEvent.EntityType.Should().Be(auditEventEntityType);
 
 		auditEvent.Host.Should().Be(ipAddress);
 
 		auditEvent.OriginalDescription.Should().Be(description);
 
-		auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.Unknown);
+		auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
 		auditEvent.OutcomeType.Should().Be(auditEventOutcomeType);
 	}
 
@@ -96,9 +96,9 @@ public class AuditEventTests : TestWithOutput
 			{
 				var auditEvent = logItem.ToAuditEvent();
 				auditEvent.Should().NotBeNull();
-				auditEvent.ActionType.Should().NotBe(AuditEventActionType.Unknown);
-				auditEvent.EntityType.Should().NotBe(AuditEventEntityType.Unknown);
-				auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.Unknown);
+				auditEvent.ActionType.Should().NotBe(AuditEventActionType.None);
+				auditEvent.EntityType.Should().NotBe(AuditEventEntityType.None);
+				auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
 			}
 		}
 	}

@@ -8,7 +8,7 @@ public enum AuditEventActionType
 	/// <summary>
 	/// Unknown / not set
 	/// </summary>
-	Unknown,
+	None,
 
 	/// <summary>
 	/// Create
@@ -24,4 +24,9 @@ public enum AuditEventActionType
 	/// Delete
 	/// </summary>
 	Delete,
+
+	/// <summary>
+	/// Scheduled health check script
+	/// </summary>
+	ScheduledHealthCheckScript,
 }

@@ -6,9 +6,9 @@
 public enum AuditEventOutcomeType
 {
 	/// <summary>
-	/// Unknown
+	/// None
 	/// </summary>
-	Unknown,
+	None,
 
 	/// <summary>
 	/// Success
@@ -19,4 +19,9 @@ public enum AuditEventOutcomeType
 	/// Failure
 	/// </summary>
 	Failure,
+
+	/// <summary>
+	/// Unknown (e.g. a process has started)
+	/// </summary>
+	Unknown,
 }

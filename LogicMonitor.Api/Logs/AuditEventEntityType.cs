@@ -8,7 +8,7 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Unknown
 	/// </summary>
-	Unknown,
+	None,
 
 	/// <summary>
 	/// Resource
@@ -24,4 +24,14 @@ public enum AuditEventEntityType
 	/// Scheduled Down Time
 	/// </summary>
 	ScheduledDownTime,
+
+	/// <summary>
+	/// All Collectors
+	/// </summary>
+	AllCollectors,
+
+	/// <summary>
+	/// A ResourceGroup property
+	/// </summary>
+	ResourceGroupProperty,
 }
