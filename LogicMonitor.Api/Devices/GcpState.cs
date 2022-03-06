@@ -1,10 +1,10 @@
-namespace LogicMonitor.Api.Devices;
+﻿namespace LogicMonitor.Api.Devices;
 
 /// <summary>
-/// AWS State
+/// GCP State
 /// </summary>
 [DataContract]
-public enum AwsState
+public enum GcpState
 {
 	/// <summary>
 	/// Unknown

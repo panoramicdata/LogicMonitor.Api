@@ -85,7 +85,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "gcpState")]
-	public AzureState GcpState { get; set; }
+	public GcpState GcpState { get; set; }
 
 	/// <summary>
 	///    Whether the device can use remote session

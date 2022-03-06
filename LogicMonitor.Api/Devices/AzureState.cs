@@ -12,12 +12,17 @@ public enum AzureState
 	Unknown = 0,
 
 	/// <summary>
-	/// TODO Unknown state 1
+	/// Running
 	/// </summary>
-	Unknown1 = 1,
+	Running = 1,
 
 	/// <summary>
-	/// TODO Unknown state 2
+	/// Stopped
 	/// </summary>
-	Unknown2 = 2,
+	Stopped = 2,
+
+	/// <summary>
+	/// Terminated
+	/// </summary>
+	Terminated = 3,
 }
