@@ -61,6 +61,30 @@ public class NetflowFilter
 	public List<object> DeviceInterfaces { get; set; } = new();
 
 	/// <summary>
+	/// The interface index
+	/// </summary>
+	[DataMember(Name = "ifIdx")]
+	public int InterfaceIndex { get; set; }
+
+	/// <summary>
+	/// The interface index
+	/// </summary>
+	[DataMember(Name = "ifName")]
+	public string InterfaceName { get; set; }
+
+	/// <summary>
+	/// Node A
+	/// </summary>
+	[DataMember(Name = "nodeA")]
+	public string NodeA { get; set; }
+
+	/// <summary>
+	/// Node A
+	/// </summary>
+	[DataMember(Name = "nodeB")]
+	public string NodeB { get; set; }
+
+	/// <summary>
 	/// Converts to a URL encoded string for the query URL
 	/// </summary>
 	internal string AsUrlEncodedString()

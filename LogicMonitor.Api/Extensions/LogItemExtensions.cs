@@ -5,9 +5,12 @@
 /// </summary>
 public static class LogItemExtensions
 {
-
 	private static readonly Regex ResourceSuccessRegex = new(
 		@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>\d+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$",
+		RegexOptions.Singleline
+	);
+	private static readonly Regex ResourceSuccess2Regex = new(
+		@"^(?<action>Add)ed device (?<resourceName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$",
 		RegexOptions.Singleline
 	);
 	private static readonly Regex ResourceGroupPropertySuccessRegex = new(
@@ -40,6 +43,11 @@ public static class LogItemExtensions
 	);
 	private static readonly Regex CollectorScheduledHealthCheck = new(
 		@"^Scheduled health check scripts for all collectors$",
+		RegexOptions.Singleline
+	);
+	// "Action=Add"; "Type=DataSource"; "DataSourceName=Kubernetes_Script_Uptime"; "DeviceName=lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"; "DeviceId=7589"; "Description=Addition of datasource to device"; "DataSourceId=101626885"; "DeviceDataSourceId=532526"
+	private static readonly Regex DataSourceRegex = new(
+		@"^""""Action=(?<action>Add|Fetch|Update)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<additionalInfo>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$",
 		RegexOptions.Singleline
 	);
 
@@ -85,6 +93,21 @@ public static class LogItemExtensions
 			auditEvent.CollectorName = match.Groups["collectorName"].Value;
 			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
 			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
+			return auditEvent;
+		}
+		if ((match = ResourceSuccess2Regex.Match(logItem.Description)).Success)
+		{
+			// Example: Added device lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD (7589)  via API token MZkW3Ldwg5S84s5eWUc7{[{"name":"kubernetes.label.app","value":"lm-collector-panoramic-5"}, {"name":"auto.clustername","value":"PDL-K8S-PROD"}, {"name":"auto.selflink","value":"/apis/apps/v1/namespaces/lm-collector-panoramic/deployments/lm-collector-panoramic-5"}, {"name":"kubernetes.resourceCreatedOn","value":"1646988769"}, {"name":"auto.uid","value":"8536007f-be25-445d-bea5-b1434c1e6ca8"}, {"name":"auto.resourcename","value":"lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"}, {"name":"auto.namespace","value":"lm-collector-panoramic"}, {"name":"auto.name","value":"lm-collector-panoramic-5"}, {"name":"system.categories","value":"KubernetesDeployment"}]}
+
+			auditEvent.ActionType = GetAction(match);
+			auditEvent.EntityType = AuditEventEntityType.Resource;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+
+			var resourceIdString = match.Groups["resourceId"].Value;
+			auditEvent.ResourceId = resourceIdString == "NA" ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
+			auditEvent.ResourceName = match.Groups["resourceName"].Value;
+			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
+			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
 			return auditEvent;
 		}
 
@@ -214,6 +237,25 @@ public static class LogItemExtensions
 			auditEvent.ResourceGroupName = match.Groups["resourceGroupName"].Value;
 			auditEvent.PropertyName = match.Groups["resourceGroupNamepropertyName"].Value;
 			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
+			return auditEvent;
+		}
+		if ((match = DataSourceRegex.Match(logItem.Description)).Success)
+		{
+			// Example: "Action=Add"; "Type=DataSource"; "DataSourceName=Kubernetes_Script_Uptime"; "DeviceName=lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"; "DeviceId=7589"; "Description=Addition of datasource to device"; "DataSourceId=101626885"; "DeviceDataSourceId=532526"
+			auditEvent.ActionType = GetAction(match);
+			auditEvent.EntityType = AuditEventEntityType.ResourceGroupProperty;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+
+			auditEvent.DataSourceName = match.Groups["dataSourceName"].Value;
+			auditEvent.DataSourceId = int.Parse(match.Groups["dataSourceId"].Value, CultureInfo.InvariantCulture);
+			auditEvent.DeviceDataSourceId = int.Parse(match.Groups["deviceDataSourceId"].Value, CultureInfo.InvariantCulture);
+
+			auditEvent.ResourceName = match.Groups["resourceName"].Value;
+			auditEvent.ResourceId = int.Parse(match.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
+			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
+
+			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
+
 			return auditEvent;
 		}
 

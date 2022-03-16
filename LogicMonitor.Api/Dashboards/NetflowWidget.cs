@@ -16,7 +16,7 @@ public class NetflowWidget : Widget
 	/// The interface index
 	/// </summary>
 	[DataMember(Name = "ifIdx")]
-	public int IfIdx { get; set; }
+	public int InterfaceIndex { get; set; }
 
 	/// <summary>
 	/// The device display name

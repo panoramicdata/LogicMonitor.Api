@@ -35,11 +35,11 @@ public class PushMetricTests : TestWithOutput
 							{
 								Name = "DataPoint1",
 								Description = "DataPoint 1",
-									//AggregationType = PushMetricAggregationType.Mean,
-									DataType = PushMetricDataPointDataType.Counter,
+								//AggregationType = PushMetricAggregationType.Mean,
+								DataType = PushMetricDataPointDataType.Counter,
 								Values = new Dictionary<DateTimeOffset, int>
 								{
-									[DateTimeOffset.UtcNow.AddSeconds(-20)] = 10
+									[DateTimeOffset.UtcNow.AddSeconds(-2)] = 10
 								}.ToLogicMonitorDictionary()
 							}
 						}

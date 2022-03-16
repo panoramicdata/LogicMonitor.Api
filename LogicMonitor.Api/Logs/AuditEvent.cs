@@ -114,4 +114,9 @@ public class AuditEvent
 	/// The property name
 	/// </summary>
 	public string? PropertyName { get; internal set; }
+
+	/// <summary>
+	/// The DeviceDataSource Id
+	/// </summary>
+	public int DeviceDataSourceId { get; internal set; }
 }
