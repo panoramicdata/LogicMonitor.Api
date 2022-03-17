@@ -118,13 +118,13 @@ public class WebsiteCreationDto : CreationDto<Website>
 	///    The overallAlertLevel
 	/// </summary>
 	[DataMember(Name = "overallAlertLevel")]
-	public Level OverallAlertLevel { get; set; }
+	public Level OverallAlertLevel { get; set; } = Level.Warning;
 
 	/// <summary>
 	///    The individualAlertLevel
 	/// </summary>
 	[DataMember(Name = "individualAlertLevel")]
-	public Level IndividualAlertLevel { get; set; }
+	public Level IndividualAlertLevel { get; set; } = Level.Warning;
 
 	/// <summary>
 	///    The individualSmAlertEnable
