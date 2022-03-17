@@ -21,7 +21,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async void CreateAndRemoveDeviceAndDeviceGroup()
 	{
-		var portalClient = LogicMonitorClient;
+		var logicMonitorClient = LogicMonitorClient;
 
 		// Device properties
 		const string deviceName = "8.8.8.8";
@@ -47,24 +47,32 @@ public class DeviceTests : TestWithOutput
 		var deviceForDeletion = await LogicMonitorClient.GetDeviceByDisplayNameAsync(deviceDisplayName).ConfigureAwait(false);
 		if (deviceForDeletion != null)
 		{
-			await portalClient.DeleteAsync(deviceForDeletion).ConfigureAwait(false);
+			await logicMonitorClient
+				.DeleteAsync(deviceForDeletion)
+				.ConfigureAwait(false);
 		}
 
 		// Delete device group if it already exists
-		var deviceGroupForDeletion = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(deviceGroupName).ConfigureAwait(false);
+		var deviceGroupForDeletion = await LogicMonitorClient
+			.GetDeviceGroupByFullPathAsync(deviceGroupName)
+			.ConfigureAwait(false);
 		if (deviceGroupForDeletion != null)
 		{
-			await portalClient.DeleteAsync(deviceGroupForDeletion).ConfigureAwait(false);
+			await logicMonitorClient
+				.DeleteAsync(deviceGroupForDeletion)
+				.ConfigureAwait(false);
 		}
 
 		// Get an active collector
-		var collectorId = (await portalClient.GetAllAsync<Collector>().ConfigureAwait(false))
+		var collectorId = (await logicMonitorClient
+			.GetAllAsync<Collector>()
+			.ConfigureAwait(false))
 		.OrderBy(c => c.Id)
 		.FirstOrDefault(c => !c.IsDown)?.Id;
-		Assert.NotNull(collectorId);
+		collectorId.Should().NotBeNull();
 
 		// Create device group
-		var deviceGroup = await portalClient.CreateAsync(new DeviceGroupCreationDto
+		var deviceGroup = await logicMonitorClient.CreateAsync(new DeviceGroupCreationDto
 		{
 			Name = deviceGroupName,
 			Description = deviceGroupDescription,
@@ -89,78 +97,91 @@ public class DeviceTests : TestWithOutput
 				EnableNetflow = deviceEnableNetflow,
 				PreferredCollectorId = collectorId.Value
 			};
-			var deviceFromCreation = await portalClient.CreateAsync(deviceCreationDto).ConfigureAwait(false);
+			var deviceFromCreation = await logicMonitorClient.CreateAsync(deviceCreationDto).ConfigureAwait(false);
 
-			foreach (var device in new[] { deviceFromCreation, await portalClient.GetAsync<Device>(deviceFromCreation.Id).ConfigureAwait(false) })
+			foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Device>(deviceFromCreation.Id).ConfigureAwait(false) })
 			{
-				Assert.Equal(deviceName, device.Name);
-				Assert.Equal(deviceDisplayName, device.DisplayName);
-				Assert.Equal(deviceDescription, device.Description);
-				Assert.Equal(deviceLink, device.Link);
-				Assert.NotNull(device.CustomProperties);
-				Assert.Equal(1, device.CustomProperties.Count(p => p.Name == devicePropertyName && p.Value == devicePropertyValue));
-				Assert.Equal(devicePropertyName, device.CustomProperties[0].Name);
-				Assert.Equal(devicePropertyValue, device.CustomProperties[0].Value);
-				Assert.Equal(deviceDisableAlerting, device.IsAlertingDisabled);
-				Assert.Equal(deviceEnableNetflow, device.EnableNetflow);
+				device.Name.Should().Be(deviceName);
+				device.DisplayName.Should().Be(deviceDisplayName);
+				device.Description.Should().Be(deviceDescription);
+				device.Link.Should().Be(deviceLink);
+				device.CustomProperties.Should().NotBeNull();
+				device.CustomProperties.Count(p => p.Name == devicePropertyName && p.Value == devicePropertyValue).Should().Be(1);
+				device.CustomProperties[0].Name.Should().Be(devicePropertyName);
+				device.CustomProperties[0].Value.Should().Be(devicePropertyValue);
+				device.IsAlertingDisabled.Should().Be(deviceDisableAlerting);
+				device.EnableNetflow.Should().Be(deviceEnableNetflow);
 			}
 
 			// Soft delete device
-			await portalClient.DeleteAsync(deviceFromCreation, false).ConfigureAwait(false);
+			await logicMonitorClient.DeleteAsync(deviceFromCreation, false).ConfigureAwait(false);
 
 			// Get recycle bin items
-			var recycleBinItems = await portalClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
+			var recycleBinItems = await logicMonitorClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
 
 			// Assert that the device is in the recycle bin
-			Assert.Contains(deviceFromCreation.Id, recycleBinItems.Select(i => i.ResourceId));
+			recycleBinItems.Select(i => i.ResourceId).Should().Contain(deviceFromCreation.Id);
 
 			// Get the recycle bin item
 			var recycleBinItem = recycleBinItems.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
-			Assert.NotNull(recycleBinItem);
-			Assert.Equal(recycleBinItem.ResourceName, deviceFromCreation.DisplayName);
-			Assert.Equal("device", recycleBinItem.ResourceType);
+			recycleBinItem.Should().NotBeNull();
+			deviceFromCreation.DisplayName.Should().Be(recycleBinItem.ResourceName);
+			recycleBinItem.ResourceType.Should().Be("device");
 
 			// Hard delete it?
 			if (finalHardDelete)
 			{
 				// Restore from recycle bin
-				await portalClient.RecycleBinRestoreAsync(new List<string> { recycleBinItem.Id }).ConfigureAwait(false);
+				await logicMonitorClient
+					.RecycleBinRestoreAsync(new List<string> { recycleBinItem.Id })
+					.ConfigureAwait(false);
 
 				// Get the recycle bin item and make sure it was restored correctly
-				recycleBinItems = await portalClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
-				recycleBinItem = recycleBinItems.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
+				recycleBinItems = await logicMonitorClient
+					.GetAllAsync<RecycleBinItem>()
+					.ConfigureAwait(false);
+				recycleBinItem = recycleBinItems
+					.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
 				Assert.Null(recycleBinItem);
 
 				// Do a regular hard delete
-				await portalClient.DeleteAsync(deviceFromCreation).ConfigureAwait(false);
+				await logicMonitorClient
+					.DeleteAsync(deviceFromCreation)
+					.ConfigureAwait(false);
 			}
 			else
 			{
 				// Remove from the recycle bin
-				await portalClient.RecycleBinDeleteAsync(new List<string> { recycleBinItem.Id }).ConfigureAwait(false);
+				await logicMonitorClient
+					.RecycleBinDeleteAsync(new List<string> { recycleBinItem.Id })
+					.ConfigureAwait(false);
 			}
 		}
 
 		// Delete device group
-		await portalClient.DeleteAsync(deviceGroup).ConfigureAwait(false);
+		await logicMonitorClient.DeleteAsync(deviceGroup).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public async void GetAllScheduledDownTimes()
 	{
-		var scheduledDownTimes = await LogicMonitorClient.GetAllAsync<ScheduledDownTime>().ConfigureAwait(false);
+		var scheduledDownTimes = await LogicMonitorClient
+			.GetAllAsync<ScheduledDownTime>()
+			.ConfigureAwait(false);
 
-		Assert.NotNull(scheduledDownTimes);
+		scheduledDownTimes.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void GetDevicePage()
 	{
 		const int MaxCount = 50;
-		var devicesPage = await LogicMonitorClient.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = MaxCount }).ConfigureAwait(false);
+		var devicesPage = await LogicMonitorClient
+			.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = MaxCount })
+			.ConfigureAwait(false);
 
-		Assert.NotNull(devicesPage);
-		Assert.True(devicesPage.Items.Count <= MaxCount);
+		devicesPage.Should().NotBeNull();
+		(devicesPage.Items.Count <= MaxCount).Should().BeTrue();
 	}
 
 	[Fact]
@@ -177,15 +198,14 @@ public class DeviceTests : TestWithOutput
 				}
 			}, CancellationToken.None)
 			.ConfigureAwait(false);
-		Assert.True(deviceInstances.Count > 10);
+		(deviceInstances.Count > 10).Should().BeTrue();
 	}
 
 	[Fact]
 	public async void GetDeviceByDeviceId()
 	{
 		var device = await LogicMonitorClient.GetAsync<Device>(77).ConfigureAwait(false);
-
-		Assert.NotNull(device);
+		device.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -193,7 +213,7 @@ public class DeviceTests : TestWithOutput
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var device2 = await LogicMonitorClient.GetDeviceByDisplayNameAsync(device.DisplayName).ConfigureAwait(false);
-		Assert.NotNull(device2);
+		device2.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -201,7 +221,7 @@ public class DeviceTests : TestWithOutput
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var devices = await LogicMonitorClient.GetDevicesByHostNameAsync(device.Name, 100).ConfigureAwait(false);
-		Assert.True(devices.Count == 1);
+		devices.Should().ContainSingle();
 	}
 
 	[Fact]
