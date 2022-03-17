@@ -6,6 +6,7 @@
 		<IsPackable>false</IsPackable>
 		<Nullable>enable</Nullable>
 		<AnalysisMode>All</AnalysisMode>
+		<Platforms>x64</Platforms>
 	</PropertyGroup>
 
 	<ItemGroup>
