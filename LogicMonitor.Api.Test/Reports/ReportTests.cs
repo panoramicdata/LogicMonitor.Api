@@ -10,16 +10,16 @@ public class ReportTests : TestWithOutput
 	public async void GetAllReportGroups()
 	{
 		var reportGroups = await LogicMonitorClient.GetAllAsync<ReportGroup>().ConfigureAwait(false);
-		Assert.NotNull(reportGroups);
-		Assert.NotEmpty(reportGroups);
+		reportGroups.Should().NotBeNull();
+		reportGroups.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async void GetAllReports()
 	{
 		var reports = await LogicMonitorClient.GetAllAsync<Report>().ConfigureAwait(false);
-		Assert.NotNull(reports);
-		Assert.NotEmpty(reports);
+		reports.Should().NotBeNull();
+		reports.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]

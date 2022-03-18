@@ -12,6 +12,6 @@ public class SingleSignOnTests : TestWithOutput
 		var allOpsNotes = await LogicMonitorClient.GetAsync<SingleSignOn>().ConfigureAwait(false);
 
 		// Text should be set
-		Assert.NotEmpty(allOpsNotes.SamlVersion);
+		allOpsNotes.SamlVersion.Should().NotBeNullOrEmpty();
 	}
 }

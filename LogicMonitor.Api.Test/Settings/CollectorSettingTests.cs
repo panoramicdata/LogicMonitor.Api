@@ -11,7 +11,7 @@ public class CollectorSettingTests
 	public async void GetAllCollectorGroupSettings()
 	{
 		var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-		Assert.NotNull(allCollectorGroupSettings);
+		allCollectorGroupSettings.Should().NotBeNull();
 		Assert.True(allCollectorGroupSettings.Count > 0);
 	}
 
@@ -19,14 +19,14 @@ public class CollectorSettingTests
 	public async void GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
-		Assert.NotNull(collectors);
+		collectors.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void GetAllCollectorsSettings()
 	{
 		var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
-		Assert.NotNull(allCollectorSettings);
+		allCollectorSettings.Should().NotBeNull();
 		Assert.True(allCollectorSettings.Count > 0);
 	}
 
@@ -39,7 +39,7 @@ public class CollectorSettingTests
 		var pulsantCollectorGroupSettings = await LogicMonitorClient
 			.GetAsync<CollectorGroup>(collectorGroups[0].Id)
 			.ConfigureAwait(false);
-		Assert.NotNull(pulsantCollectorGroupSettings);
+		pulsantCollectorGroupSettings.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -48,9 +48,9 @@ public class CollectorSettingTests
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync()
 			.ConfigureAwait(false);
-		Assert.NotNull(collectorVersions);
-		Assert.NotEmpty(collectorVersions);
-		Assert.All(collectorVersions, collectorVersion => Assert.NotEqual(0, collectorVersion.MajorVersion));
+		collectorVersions.Should().NotBeNull();
+		collectorVersions.Should().NotBeNullOrEmpty();
+		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.MajorVersion.Should().NotBe(0));
 	}
 
 	[Fact]
@@ -65,8 +65,8 @@ public class CollectorSettingTests
 				}
 			})
 			.ConfigureAwait(false);
-		Assert.NotNull(collectorVersions);
-		Assert.NotEmpty(collectorVersions);
+		collectorVersions.Should().NotBeNull();
+		collectorVersions.Should().NotBeNullOrEmpty();
 		Assert.All(collectorVersions, collectorVersion => Assert.True(collectorVersion.IsStable));
 	}
 
@@ -82,8 +82,8 @@ public class CollectorSettingTests
 				}
 			})
 			.ConfigureAwait(false);
-		Assert.NotNull(collectorVersions);
-		Assert.NotEmpty(collectorVersions);
+		collectorVersions.Should().NotBeNull();
+		collectorVersions.Should().NotBeNullOrEmpty();
 		Assert.All(collectorVersions, collectorVersion => Assert.True(collectorVersion.IsStable));
 	}
 }

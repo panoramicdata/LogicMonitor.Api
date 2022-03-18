@@ -95,6 +95,7 @@ public static class LogItemExtensions
 			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
 			return auditEvent;
 		}
+
 		if ((match = ResourceSuccess2Regex.Match(logItem.Description)).Success)
 		{
 			// Example: Added device lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD (7589)  via API token MZkW3Ldwg5S84s5eWUc7{[{"name":"kubernetes.label.app","value":"lm-collector-panoramic-5"}, {"name":"auto.clustername","value":"PDL-K8S-PROD"}, {"name":"auto.selflink","value":"/apis/apps/v1/namespaces/lm-collector-panoramic/deployments/lm-collector-panoramic-5"}, {"name":"kubernetes.resourceCreatedOn","value":"1646988769"}, {"name":"auto.uid","value":"8536007f-be25-445d-bea5-b1434c1e6ca8"}, {"name":"auto.resourcename","value":"lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"}, {"name":"auto.namespace","value":"lm-collector-panoramic"}, {"name":"auto.name","value":"lm-collector-panoramic-5"}, {"name":"system.categories","value":"KubernetesDeployment"}]}
@@ -239,6 +240,7 @@ public static class LogItemExtensions
 			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
 			return auditEvent;
 		}
+
 		if ((match = DataSourceRegex.Match(logItem.Description)).Success)
 		{
 			// Example: "Action=Add"; "Type=DataSource"; "DataSourceName=Kubernetes_Script_Uptime"; "DeviceName=lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"; "DeviceId=7589"; "Description=Addition of datasource to device"; "DataSourceId=101626885"; "DeviceDataSourceId=532526"

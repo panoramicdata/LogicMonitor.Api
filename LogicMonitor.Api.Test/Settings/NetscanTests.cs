@@ -14,7 +14,7 @@ public class NetscanTests : TestWithOutput
 		var netscan = (await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false))[0];
 
 		var refetchedNetscan = await LogicMonitorClient.GetAsync<Netscan>(netscan.Id).ConfigureAwait(false);
-		Assert.NotNull(refetchedNetscan);
+		refetchedNetscan.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -24,7 +24,7 @@ public class NetscanTests : TestWithOutput
 
 		var netscanGroups = await portalClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
 		var netscanGroup = netscanGroups.SingleOrDefault(npg => npg.Name == "LogicMonitor API Unit Tests");
-		Assert.NotNull(netscanGroup);
+		netscanGroup.Should().NotBeNull();
 		// We have the Unit test netscan  group
 
 		const string name = "LogicMonitor.Api UnitTest CreateNetscan";
@@ -111,39 +111,39 @@ public class NetscanTests : TestWithOutput
 
 		// Create one
 		var createdNetscan = await portalClient.CreateAsync(netscanCreationDto).ConfigureAwait(false);
-		Assert.NotNull(createdNetscan);
+		createdNetscan.Should().NotBeNull();
 		// Ensure that the  is returned as expected
 
-		Assert.Equal(name, createdNetscan.Name);
-		Assert.Equal(description, createdNetscan.Description);
-		Assert.Equal(collectorId, createdNetscan.CollectorId);
-		Assert.NotNull(createdNetscan.Credentials);
-		Assert.Equal(credentialsDeviceGroupId, createdNetscan.Credentials.DeviceGroupId);
+		createdNetscan.Name.Should().Be(name);
+		createdNetscan.Description.Should().Be(description);
+		createdNetscan.CollectorId.Should().Be(collectorId);
+		createdNetscan.Credentials.Should().NotBeNull();
+		createdNetscan.Credentials.DeviceGroupId.Should().Be(credentialsDeviceGroupId);
 		//Assert.True(credentialsCustom.SequenceEqual(createdNetscan.Credentials.Custom));
-		Assert.Equal(netscanMethod, createdNetscan.Method);
-		Assert.NotNull(createdNetscan.Schedule);
-		Assert.Equal(netscanScheduleType, createdNetscan.Schedule.Type);
-		Assert.Equal(netscanScheduleCron, createdNetscan.Schedule.Cron);
+		createdNetscan.Method.Should().Be(netscanMethod);
+		createdNetscan.Schedule.Should().NotBeNull();
+		createdNetscan.Schedule.Type.Should().Be(netscanScheduleType);
+		createdNetscan.Schedule.Cron.Should().Be(netscanScheduleCron);
 		//Assert.True(netscanScheduleWeekday.SequenceEqual(createdNetscan.Schedule.Weekday));
-		//Assert.Equal(netscanScheduleNthWeek, createdNetscan.Schedule.NthWeek);
-		Assert.Equal(netscanScheduleNotify, createdNetscan.Schedule.Notify);
+		//createdNetscan.Schedule.NthWeek.Should().Be(netscanScheduleNthWeek);
+		createdNetscan.Schedule.Notify.Should().Be(netscanScheduleNotify);
 		//Assert.True(netscanScheduleScheduleRecipients.SequenceEqual(createdNetscan.Schedule.Recipients));
-		Assert.Equal(netscanGroup.Name, createdNetscan.GroupName);
-		Assert.Equal(netscanGroup.Id, createdNetscan.GroupId);
-		Assert.Equal(subnetScanRange, createdNetscan.SubnetScanRange);
-		Assert.Equal(excludedIpAddresses, createdNetscan.ExcludedIpAddresses);
-		Assert.NotNull(createdNetscan.CreatorName);
-		Assert.NotNull(createdNetscan.Ddr);
-		Assert.NotNull(createdNetscan.Ddr.Assignment);
+		createdNetscan.GroupName.Should().Be(netscanGroup.Name);
+		createdNetscan.GroupId.Should().Be(netscanGroup.Id);
+		createdNetscan.SubnetScanRange.Should().Be(subnetScanRange);
+		createdNetscan.ExcludedIpAddresses.Should().Be(excludedIpAddresses);
+		createdNetscan.CreatorName.Should().NotBeNull();
+		createdNetscan.Ddr.Should().NotBeNull();
+		createdNetscan.Ddr.Assignment.Should().NotBeNull();
 		Assert.Single(createdNetscan.Ddr.Assignment);
-		Assert.Equal(assignmentDeviceGroupId, createdNetscan.Ddr.Assignment[0].DeviceGroupId);
-		Assert.Equal(assignmentType, createdNetscan.Ddr.Assignment[0].Type);
-		Assert.Equal(assignmentInclusionType, createdNetscan.Ddr.Assignment[0].InclusionType);
-		Assert.Equal(assignmentQuery, createdNetscan.Ddr.Assignment[0].Query);
-		Assert.Equal(assignmentDisableAlerting, createdNetscan.Ddr.Assignment[0].DisableAlerting);
-		Assert.Equal(ddrChangeName, createdNetscan.Ddr.ChangeName);
-		Assert.NotNull(createdNetscan.DuplicatesStrategy);
-		Assert.Equal(duplicatesStrategyType, createdNetscan.DuplicatesStrategy.Type);
+		createdNetscan.Ddr.Assignment[0].DeviceGroupId.Should().Be(assignmentDeviceGroupId);
+		createdNetscan.Ddr.Assignment[0].Type.Should().Be(assignmentType);
+		createdNetscan.Ddr.Assignment[0].InclusionType.Should().Be(assignmentInclusionType);
+		createdNetscan.Ddr.Assignment[0].Query.Should().Be(assignmentQuery);
+		createdNetscan.Ddr.Assignment[0].DisableAlerting.Should().Be(assignmentDisableAlerting);
+		createdNetscan.Ddr.ChangeName.Should().Be(ddrChangeName);
+		createdNetscan.DuplicatesStrategy.Should().NotBeNull();
+		createdNetscan.DuplicatesStrategy.Type.Should().Be(duplicatesStrategyType);
 		//Assert.True(duplicatedStrategyGroups.Select(obj=>).SequenceEqual(createdNetscan.DuplicatesStrategy.Groups));
 		//Assert.True(duplicatesStrategyCollectors.SequenceEqual(createdNetscan.DuplicatesStrategy.Collectors));
 
@@ -155,8 +155,8 @@ public class NetscanTests : TestWithOutput
 	public async void ListAllNetscans()
 	{
 		var netscans = await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false);
-		Assert.NotNull(netscans);
-		Assert.NotEmpty(netscans);
+		netscans.Should().NotBeNull();
+		netscans.Should().NotBeNullOrEmpty();
 
 		// Ids should all be distinct
 		var ids = netscans.Select(nsp => nsp.Id);
@@ -170,14 +170,14 @@ public class NetscanTests : TestWithOutput
 
 		const int expectedCount = 5;
 		var netscans = await LogicMonitorClient.GetPageAsync(new Filter<Netscan> { Skip = 0, Take = expectedCount }).ConfigureAwait(false);
-		Assert.NotNull(netscans);
-		Assert.Equal(allNetscans.Count, netscans.TotalCount);
-		Assert.NotEmpty(netscans.Items);
+		netscans.Should().NotBeNull();
+		netscans.TotalCount.Should().Be(allNetscans.Count);
+		netscans.Items.Should().NotBeNullOrEmpty();
 
 		// Ids should all be distinct
 		var ids = netscans.Items.Select(nsp => nsp.Id);
 		Assert.True(netscans.Items.Count == ids.Count());
 
-		Assert.Equal(expectedCount, netscans.Items.Count);
+		netscans.Items.Count.Should().Be(expectedCount);
 	}
 }

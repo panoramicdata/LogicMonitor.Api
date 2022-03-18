@@ -10,6 +10,6 @@ public class UnmonitoredDeviceTests : TestWithOutput
 	public async void GetUnmonitoredDevices()
 	{
 		var unmonitoredDevices = await LogicMonitorClient.GetAllAsync<UnmonitoredDevice>().ConfigureAwait(false);
-		Assert.NotNull(unmonitoredDevices);
+		unmonitoredDevices.Should().NotBeNull();
 	}
 }

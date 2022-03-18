@@ -10,16 +10,15 @@ public class UserTests : TestWithOutput
 	public async void GetUsers()
 	{
 		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-		Assert.NotNull(users);
-		Assert.NotNull(users.Items);
-		Assert.True(users.Items.Count > 0);
+		users.Should().NotBeNull();
+		users.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var user in users.Items)
 		{
 			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id).ConfigureAwait(false);
 			var roles = refetchedUser.Roles;
-			Assert.True(roles.Count > 0);
-			Assert.NotEmpty(user.UserGroupIds);
+			roles.Should().NotBeNullOrEmpty();
+			user.UserGroupIds.Should().NotBeNullOrEmpty();
 		}
 	}
 

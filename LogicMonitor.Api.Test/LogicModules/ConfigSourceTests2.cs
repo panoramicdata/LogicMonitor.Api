@@ -14,35 +14,35 @@ public class ConfigSourceTests2 : TestWithOutput
 		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotEmpty(configSources);
+		configSources.Should().NotBeNullOrEmpty();
 
 		// Make sure that all have Unique Ids
-		Assert.False(configSources.Select(c => c.Id).HasDuplicates());
+		configSources.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 	}
 
 	[Fact]
 	public async void GetConfigSourceById()
 	{
 		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
-		Assert.NotEmpty(configSources);
+		configSources.Should().NotBeNullOrEmpty();
 		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id).ConfigureAwait(false);
-		Assert.NotNull(configSource);
+		configSource.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void GetConfigSourceAndAssociatedDevices()
 	{
 		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
-		Assert.NotNull(configSource);
+		configSource.Should().NotBeNull();
 
 		// Refetch and check
 		var refetch = await LogicMonitorClient.GetAsync<ConfigSource>(configSource.Id).ConfigureAwait(false);
-		Assert.Equal("Cisco_IOS", refetch.Name);
-		Assert.Equal(configSource.DisplayName, refetch.DisplayName);
+		refetch.Name.Should().Be("Cisco_IOS");
+		refetch.DisplayName.Should().Be(configSource.DisplayName);
 
 		// Get associated devices
 		var devices = await LogicMonitorClient.GetConfigSourceDevicesPageAsync(configSource.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-		Assert.NotEmpty(devices.Items);
+		devices.Items.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -53,32 +53,32 @@ public class ConfigSourceTests2 : TestWithOutput
 
 		var portalClient = LogicMonitorClient;
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-		Assert.NotNull(device);
+		device.Should().NotBeNull();
 
 		var deviceConfigSources = (await portalClient.GetDeviceConfigSourcesPageAsync(device.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = maxIterations }).ConfigureAwait(false)).Items;
-		Assert.NotEmpty(deviceConfigSources);
+		deviceConfigSources.Should().NotBeNullOrEmpty();
 
 		foreach (var deviceConfigSource in deviceConfigSources)
 		{
 			// Get the deviceConfigSource
 			var deviceConfigSourceDetails = await portalClient.GetDeviceConfigSourceAsync(device.Id, deviceConfigSource.Id).ConfigureAwait(false);
-			Assert.NotNull(deviceConfigSourceDetails);
+			deviceConfigSourceDetails.Should().NotBeNull();
 
 			// Get the configSourceInstances
 			var deviceConfigSourceInstances = await portalClient.GetDeviceConfigSourceInstancesPage(device.Id, deviceConfigSource.Id, new Filter<DeviceConfigSourceInstance> { Skip = 0, Take = maxIterations }).ConfigureAwait(false);
-			Assert.NotNull(deviceConfigSourceInstances);
+			deviceConfigSourceInstances.Should().NotBeNull();
 			var configSourceInstances = deviceConfigSourceInstances.Items;
 			foreach (var deviceConfigSourceInstance in configSourceInstances)
 			{
 				// Get the configSourceInstance
 				var deviceConfigSourceInstanceDetails = await portalClient.GetDeviceConfigSourceInstanceAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id).ConfigureAwait(false);
-				Assert.NotNull(deviceConfigSourceInstanceDetails);
+				deviceConfigSourceInstanceDetails.Should().NotBeNull();
 
 				// Get the latest config for this deviceConfigSourceInstance
 				var deviceConfigs = await portalClient.GetDeviceConfigSourceInstanceConfigsPageAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, new Filter<DeviceConfigSourceInstanceConfig> { Skip = 0, Take = maxIterations }).ConfigureAwait(false);
-				Assert.NotNull(deviceConfigs);
+				deviceConfigs.Should().NotBeNull();
 				var deviceConfigItems = deviceConfigs.Items;
-				// Assert.NotEmpty(deviceConfigItems);
+				// deviceConfigItems.Should().NotBeNullOrEmpty();
 				foreach (var deviceConfig in deviceConfigItems)
 				{
 					if (deviceConfig.PollTimestampUtc == null)
@@ -87,7 +87,7 @@ public class ConfigSourceTests2 : TestWithOutput
 					}
 
 					var deviceConfigDetail = await portalClient.GetDeviceConfigSourceInstanceConfigByIdAndTimestampAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, deviceConfig.Id, deviceConfig.PollTimestampUtc.Value).ConfigureAwait(false);
-					Assert.NotNull(deviceConfigDetail);
+					deviceConfigDetail.Should().NotBeNull();
 				}
 			}
 		}

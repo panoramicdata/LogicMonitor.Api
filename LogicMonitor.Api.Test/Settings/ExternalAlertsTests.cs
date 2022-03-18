@@ -10,6 +10,6 @@ public class ExternalAlertsTests : TestWithOutput
 	public async void GetAll()
 	{
 		var items = await LogicMonitorClient.GetAllAsync<ExternalAlert>().ConfigureAwait(false);
-		Assert.NotNull(items);
+		items.Should().NotBeNull();
 	}
 }

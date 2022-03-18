@@ -17,7 +17,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
 				}
 		}).ConfigureAwait(false);
-		Assert.All(sdts, sdt => Assert.False(sdt.IsEffective));
+		Assert.All(sdts, sdt => sdt.IsEffective.Should().BeFalse());
 	}
 
 	[Fact]
@@ -161,9 +161,9 @@ public class ScheduledDownTimeTests : TestWithOutput
 		foreach (var sdt in scheduledDownTimes)
 		{
 			var refetchedSdt = await LogicMonitorClient.GetAsync<ScheduledDownTime>(sdt.Id).ConfigureAwait(false);
-			Assert.Equal(sdt.Id, refetchedSdt.Id);
-			Assert.Equal(sdt.DeviceId, refetchedSdt.DeviceId);
-			Assert.Equal(sdt.Comment, refetchedSdt.Comment);
+			refetchedSdt.Id.Should().Be(sdt.Id);
+			refetchedSdt.DeviceId.Should().Be(sdt.DeviceId);
+			refetchedSdt.Comment.Should().Be(sdt.Comment);
 		}
 
 		// Delete
@@ -263,8 +263,8 @@ public class ScheduledDownTimeTests : TestWithOutput
 
 		// Check the re-fetched SDT looks right
 		refetchSdt = await portalClient.GetAsync<ScheduledDownTime>(createdSdt.Id).ConfigureAwait(false);
-		Assert.Equal(newComment, refetchSdt.Comment);
-		Assert.Equal(collectorId, refetchSdt.CollectorId);
+		refetchSdt.Comment.Should().Be(newComment);
+		refetchSdt.CollectorId.Should().Be(collectorId);
 
 		// Get all scheduled downtimes (we have created one, so at least that one should be there)
 		var scheduledDownTimes = await portalClient.GetAllAsync(new Filter<ScheduledDownTime>
@@ -275,8 +275,8 @@ public class ScheduledDownTimeTests : TestWithOutput
 					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
 				}
 		}).ConfigureAwait(false);
-		Assert.NotNull(scheduledDownTimes);
-		Assert.NotEmpty(scheduledDownTimes);
+		scheduledDownTimes.Should().NotBeNull();
+		scheduledDownTimes.Should().NotBeNullOrEmpty();
 
 		// Get them all individually
 		foreach (var sdt in scheduledDownTimes)
@@ -299,7 +299,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var allScheduledDownTimes = await portalClient.GetAllAsync<ScheduledDownTime>().ConfigureAwait(false);
 
 		var deviceId = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Device)?.DeviceId;
-		Assert.NotNull(deviceId);
+		deviceId.Should().NotBeNull();
 		var filteredScheduledDownTimes = await portalClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
 			FilterItems = new List<FilterItem<ScheduledDownTime>>
@@ -309,15 +309,15 @@ public class ScheduledDownTimeTests : TestWithOutput
 				}
 		}
 		).ConfigureAwait(false);
-		Assert.NotNull(filteredScheduledDownTimes);
+		filteredScheduledDownTimes.Should().NotBeNull();
 
 		// Get them all individually
 		foreach (var sdt in filteredScheduledDownTimes)
 		{
 			var refetchedSdt = await portalClient.GetAsync<ScheduledDownTime>(sdt.Id).ConfigureAwait(false);
-			Assert.Equal(sdt.Id, refetchedSdt.Id);
-			Assert.Equal(deviceId, refetchedSdt.DeviceId);
-			Assert.Equal(sdt.Comment, refetchedSdt.Comment);
+			refetchedSdt.Id.Should().Be(sdt.Id);
+			refetchedSdt.DeviceId.Should().Be(deviceId);
+			refetchedSdt.Comment.Should().Be(sdt.Comment);
 		}
 	}
 
@@ -374,7 +374,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var createdSdt = await LogicMonitorClient
 			.CreateAsync(sdtCreationDto)
 			.ConfigureAwait(false);
-		Assert.NotNull(createdSdt);
+		createdSdt.Should().NotBeNull();
 
 		// Clean up
 		await LogicMonitorClient
@@ -424,7 +424,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var createdSdt = await LogicMonitorClient
 			.CreateAsync(sdtCreationDto)
 			.ConfigureAwait(false);
-		Assert.NotNull(createdSdt);
+		createdSdt.Should().NotBeNull();
 
 		// Clean up
 		await LogicMonitorClient

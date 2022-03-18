@@ -14,19 +14,19 @@ public class CollectorGroupTests : TestWithOutput
 	public async void GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-		Assert.NotNull(collectorGroups);
-		Assert.NotEmpty(collectorGroups);
+		collectorGroups.Should().NotBeNull();
+		collectorGroups.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async void GetCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-		Assert.NotEmpty(collectorGroups);
+		collectorGroups.Should().NotBeNullOrEmpty();
 		Assert.True(collectorGroups.All(cg => cg.Id != 0));
 		Assert.True(collectorGroups.All(cg => cg.Name != null));
 		// Bug in LogicMonitor's API
-		// Assert.NotEqual(0, collectorGroups.TotalCount);
+		// collectorGroups.TotalCount.Should().NotBe(0);
 	}
 
 	[Fact]
@@ -57,18 +57,18 @@ public class CollectorGroupTests : TestWithOutput
 					new Property { Name = "a", Value = "b" }
 				}
 		}).ConfigureAwait(false);
-		Assert.NotNull(newCollectorGroup);
-		Assert.NotEqual(0, newCollectorGroup.Id);
+		newCollectorGroup.Should().NotBeNull();
+		newCollectorGroup.Id.Should().NotBe(0);
 
 		var newCollectorGroupRefetch = await LogicMonitorClient.GetAsync<CollectorGroup>(newCollectorGroup.Id).ConfigureAwait(false);
-		Assert.NotNull(newCollectorGroupRefetch);
-		Assert.NotNull(newCollectorGroupRefetch.Name);
-		Assert.NotNull(newCollectorGroupRefetch.Description);
-		Assert.NotNull(newCollectorGroupRefetch.CustomProperties);
-		Assert.NotEmpty(newCollectorGroupRefetch.CustomProperties);
+		newCollectorGroupRefetch.Should().NotBeNull();
+		newCollectorGroupRefetch.Name.Should().NotBeNull();
+		newCollectorGroupRefetch.Description.Should().NotBeNull();
+		newCollectorGroupRefetch.CustomProperties.Should().NotBeNull();
+		newCollectorGroupRefetch.CustomProperties.Should().NotBeNullOrEmpty();
 		Assert.Single(newCollectorGroupRefetch.CustomProperties);
-		Assert.Equal("a", newCollectorGroupRefetch.CustomProperties[0].Name);
-		Assert.Equal("b", newCollectorGroupRefetch.CustomProperties[0].Value);
+		newCollectorGroupRefetch.CustomProperties[0].Name.Should().Be("a");
+		newCollectorGroupRefetch.CustomProperties[0].Value.Should().Be("b");
 
 		// Put
 		await LogicMonitorClient.PutAsync(newCollectorGroupRefetch).ConfigureAwait(false);

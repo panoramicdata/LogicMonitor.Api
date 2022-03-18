@@ -14,9 +14,8 @@ public class RoleTests : TestWithOutput
 	public async void GetRoles()
 	{
 		var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-		Assert.NotNull(roles);
-		Assert.NotNull(roles.Items);
-		Assert.True(roles.Items.Count > 0);
+		roles.Should().NotBeNull();
+		roles.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var role in roles.Items)
 		{
@@ -29,8 +28,8 @@ public class RoleTests : TestWithOutput
 	public async void GetForCurrentUser()
 	{
 		var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-		Assert.NotNull(roles);
-		Assert.NotNull(roles.Items);
+		roles.Should().NotBeNull();
+		roles.Items.Should().NotBeNull();
 		Assert.True(roles.Items.Count > 0);
 	}
 
@@ -113,7 +112,7 @@ public class RoleTests : TestWithOutput
 
 		// Refetch
 		var refetch = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
-		Assert.NotNull(refetch);
+		refetch.Should().NotBeNull();
 
 		// Delete
 		await LogicMonitorClient.DeleteAsync(role).ConfigureAwait(false);

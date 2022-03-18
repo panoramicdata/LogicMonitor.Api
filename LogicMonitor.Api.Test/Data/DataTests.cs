@@ -28,28 +28,28 @@ public class DataTests : TestWithOutput
 			DataPointLabel = virtualDataPoint.Name
 		}).ConfigureAwait(false);
 		Assert.Single(forecastGraphData.TrainingGraphData.Lines);
-		Assert.Equal(3, forecastGraphData.ForecastedGraphData.Lines.Count);
+		forecastGraphData.ForecastedGraphData.Lines.Count.Should().Be(3);
 	}
 
 	[Fact]
 	public async void GetOverviewGraphData()
 	{
 		var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
-		Assert.NotNull(device);
+		device.Should().NotBeNull();
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("snmp64_If-").ConfigureAwait(false);
-		Assert.NotNull(dataSource);
+		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
-		Assert.NotNull(deviceDataSource);
+		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstanceGroups = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false);
-		Assert.NotNull(deviceDataSourceInstanceGroups);
-		Assert.NotEmpty(deviceDataSourceInstanceGroups);
+		deviceDataSourceInstanceGroups.Should().NotBeNull();
+		deviceDataSourceInstanceGroups.Should().NotBeNullOrEmpty();
 		var deviceDataSourceInstanceGroup = deviceDataSourceInstanceGroups.Skip(1).First();
 		var deviceDataSourceInstanceGroupRefetch = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name).ConfigureAwait(false);
-		Assert.NotNull(deviceDataSourceInstanceGroupRefetch);
-		Assert.Equal(deviceDataSourceInstanceGroup.Name, deviceDataSourceInstanceGroupRefetch.Name);
+		deviceDataSourceInstanceGroupRefetch.Should().NotBeNull();
+		deviceDataSourceInstanceGroupRefetch.Name.Should().Be(deviceDataSourceInstanceGroup.Name);
 
 		var overviewGraph = await LogicMonitorClient.GetDeviceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets").ConfigureAwait(false);
-		Assert.NotNull(overviewGraph);
+		overviewGraph.Should().NotBeNull();
 		var graphDataRequest = new DeviceDataSourceGraphDataRequest
 		{
 			DataSourceInstanceGroupId = deviceDataSourceInstanceGroup.Id,
@@ -61,7 +61,7 @@ public class DataTests : TestWithOutput
 		};
 		graphDataRequest.Validate();
 		var graphData = await LogicMonitorClient.GetGraphDataAsync(graphDataRequest).ConfigureAwait(false);
-		Assert.NotNull(graphData);
+		graphData.Should().NotBeNull();
 	}
 
 	/// <summary>
@@ -106,7 +106,7 @@ public class DataTests : TestWithOutput
 		var data = await LogicMonitorClient.GetGraphDataAsync(request).ConfigureAwait(false);
 
 		// Check there is at least one line of data
-		Assert.True(data.Lines.Count > 0);
+		data.Lines.Should().NotBeEmpty();
 	}
 
 	[Fact]
@@ -118,7 +118,7 @@ public class DataTests : TestWithOutput
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 		var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage").ConfigureAwait(false);
-		Assert.NotNull(dataSourceGraph);
+		dataSourceGraph.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id).ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>()).ConfigureAwait(false);
 		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
@@ -143,28 +143,28 @@ public class DataTests : TestWithOutput
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		Assert.NotNull(device);
+		device.Should().NotBeNull();
 
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("WinCPU")
 			.ConfigureAwait(false);
-		Assert.NotNull(dataSource);
+		dataSource.Should().NotBeNull();
 
 		var dataSourceGraph = await LogicMonitorClient
 			.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage")
 			.ConfigureAwait(false);
-		Assert.NotNull(dataSourceGraph);
+		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
 			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id)
 			.ConfigureAwait(false);
-		Assert.NotNull(deviceDataSource);
+		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>())
 			.ConfigureAwait(false);
-		Assert.NotNull(deviceDataSourceInstances);
-		Assert.NotEmpty(deviceDataSourceInstances);
+		deviceDataSourceInstances.Should().NotBeNull();
+		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 
 		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
 		{
@@ -179,14 +179,14 @@ public class DataTests : TestWithOutput
 		LogicMonitorClient.UseCache = true;
 
 		var graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
-		Assert.NotEmpty(graphData.Lines);
-		Assert.Equal(startDateTime, graphData.StartTimeUtc);
-		Assert.NotNull(graphData.Lines[0].ColorString);
+		graphData.Lines.Should().NotBeNullOrEmpty();
+		graphData.StartTimeUtc.Should().Be(startDateTime);
+		graphData.Lines[0].ColorString.Should().NotBeNull();
 
 		// Ensure that subsequent fetches are fast
 		var stopwatch = Stopwatch.StartNew();
 		graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
-		Assert.NotNull(graphData);
+		graphData.Should().NotBeNull();
 		stopwatch.Stop();
 		Assert.True(stopwatch.ElapsedMilliseconds < 50);
 	}
@@ -197,14 +197,14 @@ public class DataTests : TestWithOutput
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 		var dashboard = await GetAllWidgetsDashboardAsync().ConfigureAwait(false);
-		Assert.NotNull(dashboard);
+		dashboard.Should().NotBeNull();
 
 		var widgets = await LogicMonitorClient.GetWidgetsByDashboardIdAsync(dashboard.Id).ConfigureAwait(false);
-		Assert.NotNull(widgets);
-		Assert.NotEmpty(widgets);
+		widgets.Should().NotBeNull();
+		widgets.Should().NotBeNullOrEmpty();
 
 		var firstCustomGraphWidget = widgets.Find(w => w.Type == "cgraph");
-		Assert.NotNull(firstCustomGraphWidget);
+		firstCustomGraphWidget.Should().NotBeNull();
 
 		var widgetGraphDataRequest = new WidgetGraphDataRequest
 		{
@@ -214,9 +214,9 @@ public class DataTests : TestWithOutput
 			EndDateTime = utcNow.LastDayOfLastMonth()
 		};
 		var graphData = await LogicMonitorClient.GetGraphDataAsync(widgetGraphDataRequest).ConfigureAwait(false);
-		Assert.NotEmpty(graphData.Lines);
-		Assert.Equal(startDateTime, graphData.StartTimeUtc);
-		Assert.NotNull(graphData.Lines[0].ColorString);
+		graphData.Lines.Should().NotBeNullOrEmpty();
+		graphData.StartTimeUtc.Should().Be(startDateTime);
+		graphData.Lines[0].ColorString.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -238,7 +238,7 @@ public class DataTests : TestWithOutput
 						},
 						Order = new Order<DeviceDataSourceInstance> { Property = nameof(DeviceDataSourceInstance.Name), Direction = OrderDirection.Asc }
 					}).ConfigureAwait(false);
-		Assert.NotNull(deviceDataSourceInstances);
-		Assert.NotEmpty(deviceDataSourceInstances);
+		deviceDataSourceInstances.Should().NotBeNull();
+		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 	}
 }

@@ -12,13 +12,13 @@ public class UserGroupTests : TestWithOutput
 	public async void GetUserGroups()
 	{
 		var userGroups = await LogicMonitorClient.GetAllAsync<UserGroup>().ConfigureAwait(false);
-		Assert.NotNull(userGroups);
-		Assert.NotEmpty(userGroups);
+		userGroups.Should().NotBeNull();
+		userGroups.Should().NotBeNullOrEmpty();
 
 		foreach (var user in userGroups)
 		{
 			var refetchedUser = await LogicMonitorClient.GetAsync<UserGroup>(user.Id).ConfigureAwait(false);
-			Assert.True(refetchedUser.Name == user.Name);
+			refetchedUser.Name.Should().Be(user.Name);
 		}
 	}
 
@@ -43,7 +43,7 @@ public class UserGroupTests : TestWithOutput
 
 		// Refetch
 		var refetch = await LogicMonitorClient.GetAsync<UserGroup>(userGroup.Id).ConfigureAwait(false);
-		Assert.NotNull(refetch);
+		refetch.Should().NotBeNull();
 
 		// Delete
 		await LogicMonitorClient.DeleteAsync(userGroup).ConfigureAwait(false);

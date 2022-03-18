@@ -11,7 +11,7 @@ public class MessageSettingsTests : TestWithOutput
 	{
 		var messageTemplate = await LogicMonitorClient.GetAsync<NewUserMessageTemplate>().ConfigureAwait(false);
 
-		Assert.False(string.IsNullOrWhiteSpace(messageTemplate.Subject));
-		Assert.False(string.IsNullOrWhiteSpace(messageTemplate.Body));
+		string.IsNullOrWhiteSpace(messageTemplate.Subject).Should().BeFalse();
+		string.IsNullOrWhiteSpace(messageTemplate.Body).Should().BeFalse();
 	}
 }

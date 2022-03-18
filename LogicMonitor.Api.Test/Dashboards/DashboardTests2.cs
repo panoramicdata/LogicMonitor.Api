@@ -14,10 +14,10 @@ public class DashboardTests2 : TestWithOutput
 		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(dashboards.Count > 0);
+		dashboards.Should().NotBeEmpty();
 
 		// Make sure that all have Unique Ids
-		Assert.False(dashboards.Select(c => c.Id).HasDuplicates());
+		dashboards.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 	}
 
 	[Fact]
@@ -26,9 +26,9 @@ public class DashboardTests2 : TestWithOutput
 		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(dashboards.Count > 0);
+		dashboards.Should().NotBeEmpty();
 
 		// Make sure that all have Unique Ids
-		Assert.False(dashboards.Select(c => c.Id).HasDuplicates());
+		dashboards.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 	}
 }

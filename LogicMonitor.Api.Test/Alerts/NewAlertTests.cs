@@ -49,7 +49,7 @@ public class NewAlertTests : TestWithOutput
 		// Assert
 
 		// Alert counts add up
-		Assert.Equal(allAlerts.Count, sdtAlerts.Count + nonSdtAlerts.Count);
+		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 		// Alerts have the expected SDT status
 		Assert.True(sdtAlerts.All(a => a.InScheduledDownTime));
@@ -97,7 +97,7 @@ public class NewAlertTests : TestWithOutput
 	//	var inAllButNotInExpected = allAlerts.Where(a => !expectedTotalAlertIds.Contains(a.Id));
 
 	//	// Alert counts add up
-	//	Assert.Equal(allAlerts.Count, ackedAlerts.Count + nonAckedAlerts.Count);
+	//	ackedAlerts.Count + nonAckedAlerts.Count.Should().Be(allAlerts.Count);
 
 	//	// Alerts have the expected Acked status
 	//	// NOTE This could be different if the AckedNote is blank, this seems to NOT bucket that alert into nonAckedAlerts

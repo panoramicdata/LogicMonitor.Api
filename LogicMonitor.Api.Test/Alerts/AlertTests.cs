@@ -329,7 +329,7 @@ public class AlertTests : TestWithOutput
 				StartEpochIsAfter = EndDateTime.AddYears(-2).SecondsSinceTheEpoch(),
 				StartEpochIsBefore = EndDateTime.AddYears(-2).AddDays(2).SecondsSinceTheEpoch()
 			}).ConfigureAwait(false);
-		Assert.Empty(alerts);
+		alerts.Should().BeEmpty();
 	}
 
 	[Fact]
@@ -475,16 +475,16 @@ public class AlertTests : TestWithOutput
 					new FilterItem<Alert> { Property = nameof(Alert.IsCleared), Operation=":", Value="*" },
 				}
 		}).ConfigureAwait(false);
-		Assert.NotNull(alerts);
+		alerts.Should().NotBeNull();
 	}
 
 	[Fact]
 	public void LevelDefaultsToError()
 	{
 		var alertFilter = new AlertFilter();
-		Assert.Equal(2, alertFilter.Levels.Count);
-		Assert.Equal(AlertLevel.Error, alertFilter.Levels[0]);
-		Assert.Equal(AlertLevel.Critical, alertFilter.Levels[1]);
+		alertFilter.Levels.Count.Should().Be(2);
+		alertFilter.Levels[0].Should().Be(AlertLevel.Error);
+		alertFilter.Levels[1].Should().Be(AlertLevel.Critical);
 	}
 
 	[Fact]
@@ -516,9 +516,9 @@ public class AlertTests : TestWithOutput
 			StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
 			SdtFilter = SdtFilter.Sdt
 		}).ConfigureAwait(false);
-		Assert.All(sdtAlerts, alert => Assert.NotNull(alert.Sdt));
+		Assert.All(sdtAlerts, alert => alert.Sdt.Should().NotBeNull());
 
 		// Make sure the numbers add up
-		Assert.Equal(allAlerts.Count, nonSdtAlerts.Count + sdtAlerts.Count);
+		(nonSdtAlerts.Count + sdtAlerts.Count).Should().Be(allAlerts.Count);
 	}
 }

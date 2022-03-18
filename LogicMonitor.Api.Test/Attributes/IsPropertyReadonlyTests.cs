@@ -18,7 +18,7 @@ public class IsPropertyReadonlyTests
 	[InlineData("CanUseRemoteSession", typeof(Device))]
 	[InlineData("AckComment", typeof(Collector))]
 	public void IsPropertyReadonlyTest_ShouldReturnFalse(string propertyName, Type classType)
-		=> Assert.False(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType));
+		=> LogicMonitorClient.IsPropertyReadOnly(propertyName, classType).Should().BeFalse();
 
 	[Theory]
 	[InlineData("lastRawDataTime", typeof(Device))]
@@ -32,14 +32,14 @@ public class IsPropertyReadonlyTests
 	[InlineData("canUseRemoteSession", typeof(Device))]
 	[InlineData("backupAgentId", typeof(Collector))]
 	public void IsPropertyReadonlyTest_PreferJsonName_ShouldReturnFalse(string propertyName, Type classType)
-		=> Assert.False(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType, true));
+		=> LogicMonitorClient.IsPropertyReadOnly(propertyName, classType, true).Should().BeFalse();
 
 	[Fact]
 	public void IsPropertyReadonlyTest_NonExistentProperty_ShouldThrowException()
 	{
-		var exception = Record.Exception(() => Assert.False(LogicMonitorClient.IsPropertyReadOnly("xxx", typeof(Device))));
-		Assert.NotNull(exception);
-		Assert.IsType<PropertyNotFoundException>(exception);
-		Assert.Equal("Could not find property on Device with name xxx.", exception.Message);
+		var exception = Record.Exception(() => LogicMonitorClient.IsPropertyReadOnly("xxx", typeof(Device)).Should().BeFalse());
+		exception.Should().NotBeNull();
+		exception.Should().BeOfType<PropertyNotFoundException>();
+		exception.Message.Should().Be("Could not find property on Device with name xxx.");
 	}
 }

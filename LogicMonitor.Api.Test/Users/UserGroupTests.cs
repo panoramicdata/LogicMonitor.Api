@@ -14,8 +14,8 @@ public class UserGroupTests : TestWithOutput
 		var items = await LogicMonitorClient
 			.GetAllAsync<UserGroup>()
 			.ConfigureAwait(false);
-		Assert.NotNull(items);
-		Assert.NotEmpty(items);
+		items.Should().NotBeNull();
+		items.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]

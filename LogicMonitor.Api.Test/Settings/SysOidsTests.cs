@@ -10,8 +10,8 @@ public class SysOidsTests : TestWithOutput
 	public async void GetAll()
 	{
 		var snmpSysOidMaps = await LogicMonitorClient.GetAllAsync<SnmpSysOidMap>().ConfigureAwait(false);
-		Assert.NotNull(snmpSysOidMaps);
-		Assert.All(snmpSysOidMaps, snmpSysOidMap => Assert.NotNull(snmpSysOidMap.Oid));
-		Assert.All(snmpSysOidMaps, snmpSysOidMap => Assert.NotNull(snmpSysOidMap.Categories));
+		snmpSysOidMaps.Should().NotBeNull();
+		Assert.All(snmpSysOidMaps, snmpSysOidMap => snmpSysOidMap.Oid.Should().NotBeNull());
+		Assert.All(snmpSysOidMaps, snmpSysOidMap => snmpSysOidMap.Categories.Should().NotBeNull());
 	}
 }

@@ -10,6 +10,6 @@ public class RecycleBinTests : TestWithOutput
 	public async void GetAllRecycleBinItems()
 	{
 		var recycleBinItems = await LogicMonitorClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
-		Assert.NotNull(recycleBinItems);
+		recycleBinItems.Should().NotBeNull();
 	}
 }

@@ -11,7 +11,7 @@ public class OpsNoteTests : TestWithOutput
 	{
 		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
-		Assert.NotNull(allOpsNotes);
+		allOpsNotes.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -27,6 +27,6 @@ public class OpsNoteTests : TestWithOutput
 		}).ConfigureAwait(false);
 
 		// Text should be set
-		Assert.All(allOpsNotesTags, on => Assert.False(string.IsNullOrWhiteSpace(on.Name)));
+		Assert.All(allOpsNotesTags, on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
 	}
 }

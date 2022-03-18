@@ -10,25 +10,25 @@ public class PortalVersionTests : TestWithOutput
 	public async void GetPortalVersion()
 	{
 		var portalVersion = await LogicMonitorClient.GetVersionAsync().ConfigureAwait(false);
-		Assert.NotNull((object)portalVersion.Version);
-		Assert.NotNull((object)portalVersion.Version.Module);
-		Assert.NotNull(portalVersion.Extra);
-		Assert.NotNull(portalVersion.Hash);
-		Assert.NotNull(portalVersion.BuildAt);
-		Assert.NotNull(portalVersion.Branch);
-		Assert.NotNull(portalVersion.ResultKey);
+		portalVersion.Version.Should().NotBeNull();
+		portalVersion.Version.Module.Should().NotBeNull();
+		portalVersion.Extra.Should().NotBeNull();
+		portalVersion.Hash.Should().NotBeNull();
+		portalVersion.BuildAt.Should().NotBeNull();
+		portalVersion.Branch.Should().NotBeNull();
+		portalVersion.ResultKey.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void GetPortalVersionStatic()
 	{
 		var portalVersion = await Api.LogicMonitorClient.GetVersionAsync("altius").ConfigureAwait(false);
-		Assert.NotNull((object)portalVersion.Version);
-		Assert.NotNull((object)portalVersion.Version.Module);
-		Assert.NotNull(portalVersion.Extra);
-		Assert.NotNull(portalVersion.Hash);
-		Assert.NotNull(portalVersion.BuildAt);
-		Assert.NotNull(portalVersion.Branch);
-		Assert.NotNull(portalVersion.ResultKey);
+		portalVersion.Version.Should().NotBeNull();
+		((object)portalVersion.Version.Module).Should().NotBeNull();
+		portalVersion.Extra.Should().NotBeNull();
+		portalVersion.Hash.Should().NotBeNull();
+		portalVersion.BuildAt.Should().NotBeNull();
+		portalVersion.Branch.Should().NotBeNull();
+		portalVersion.ResultKey.Should().NotBeNull();
 	}
 }

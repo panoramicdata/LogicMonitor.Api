@@ -13,7 +13,7 @@ public class LogoTests : TestWithOutput
 		{
 			var buffer = await LogicMonitorClient.GetImageByteArrayAsync(imageType).ConfigureAwait(false);
 			var image = SixLabors.ImageSharp.Image.Load(buffer);
-			Assert.True(image.Width > 0);
+			image.Width.Should().BeGreaterThan(0);
 		}
 	}
 }

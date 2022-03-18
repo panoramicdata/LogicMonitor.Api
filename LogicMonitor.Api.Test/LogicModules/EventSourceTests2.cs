@@ -13,7 +13,7 @@ public class EventSourceTests2 : TestWithOutput
 	{
 		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("DNS A Record Check").ConfigureAwait(false);
 		var xml = await LogicMonitorClient.GetEventSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
-		Assert.NotNull(xml);
+		xml.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -22,10 +22,10 @@ public class EventSourceTests2 : TestWithOutput
 		var eventSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<EventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(eventSourcePage.Items.Count > 0);
+		eventSourcePage.Items.Should().NotBeNullOrEmpty();
 
 		// Make sure that all have Unique Ids
-		Assert.False(eventSourcePage.Items.Select(c => c.Id).HasDuplicates());
+		eventSourcePage.Items.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 
 		// Check each one
 		var eventSourcesString = string.Empty;
@@ -47,10 +47,10 @@ public class EventSourceTests2 : TestWithOutput
 		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(eventSource);
-		Assert.False(string.IsNullOrWhiteSpace(eventSource.AppliesTo));
+		eventSource.Should().NotBeNull();
+		string.IsNullOrWhiteSpace(eventSource.AppliesTo).Should().BeFalse();
 		// The whole thing should take less than 10 seconds
-		Assert.InRange(stopwatch.ElapsedMilliseconds, 0, 20000);
+		stopwatch.ElapsedMilliseconds.Should().BeLessThan(20000);
 	}
 
 	[Fact]
@@ -60,7 +60,7 @@ public class EventSourceTests2 : TestWithOutput
 		var deviceEventSources = await LogicMonitorClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
 		// Make sure that we have groups and they are not null
-		Assert.NotNull(deviceEventSources);
+		deviceEventSources.Should().NotBeNull();
 
 		foreach (var deviceEventSource in deviceEventSources.Items)
 		{
@@ -68,7 +68,7 @@ public class EventSourceTests2 : TestWithOutput
 			var deviceDataSourceRefetch = await LogicMonitorClient.GetDeviceEventSourceAsync(device.Id, deviceEventSource.Id).ConfigureAwait(false);
 
 			// Make sure they are the same
-			Assert.Equal(device.Id, deviceDataSourceRefetch.DeviceId);
+			deviceDataSourceRefetch.DeviceId.Should().Be(device.Id);
 		}
 	}
 
@@ -85,9 +85,9 @@ public class EventSourceTests2 : TestWithOutput
 		}).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(eventSources);
-		Assert.NotEmpty(eventSources);
-		Assert.True(eventSources.Count < 20);
+		eventSources.Should().NotBeNull();
+		eventSources.Should().NotBeNullOrEmpty();
+		eventSources.Should().HaveCountLessThan(20);
 
 		// Make sure that they match the expected group
 		Assert.True(eventSources.All(item => item.Group == groupName));

@@ -21,7 +21,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.DataSource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.NotEmpty(dataSourceUpdates.Items);
+		dataSourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
 
 	/// <summary>
@@ -39,7 +39,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.EventSource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.NotNull(eventSourceUpdates.Items);
+		eventSourceUpdates.Items.Should().NotBeNull();
 	}
 
 	/// <summary>
@@ -57,7 +57,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.ConfigSource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.NotEmpty(configSourceUpdates.Items);
+		configSourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
 
 	/// <summary>
@@ -75,7 +75,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.NotEmpty(propertySourceUpdates.Items);
+		propertySourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
 
 	/// <summary>
@@ -93,7 +93,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.TopologySource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.NotEmpty(topologySourceUpdates.Items);
+		topologySourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
 
 	/// <summary>
@@ -111,7 +111,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		//Assert.NotEmpty(jobMonitorUpdates.Items);	// Usually none
+		//jobMonitorUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
 	}
 
 	/// <summary>
@@ -129,7 +129,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		//Assert.NotEmpty(appliesToUpdates.Items);	// Usually none
+		//appliesToUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
 	}
 
 	/// <summary>
@@ -147,7 +147,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.SnmpSysOIDMap, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.NotEmpty(snmpSysOidUpdates.Items);
+		snmpSysOidUpdates.Items.Should().NotBeNullOrEmpty();
 	}
 
 	/// <summary>

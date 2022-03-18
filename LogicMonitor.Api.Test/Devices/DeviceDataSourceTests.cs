@@ -19,7 +19,7 @@ public class DeviceDataSourceTests : TestWithOutput
 
 		// Get all windows devices in the datacenter
 		var devices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true).ConfigureAwait(false);
-		Assert.NotEmpty(devices);
+		devices.Should().NotBeNullOrEmpty();
 		// We have devices
 
 		// Find datacenter devices with WinCPU datasource
@@ -35,6 +35,6 @@ public class DeviceDataSourceTests : TestWithOutput
 			deviceDataSources.Add(deviceDataSourceByDeviceIdAndDataSourceId);
 		}
 
-		Assert.NotEmpty(deviceDataSources);
+		deviceDataSources.Should().NotBeNullOrEmpty();
 	}
 }

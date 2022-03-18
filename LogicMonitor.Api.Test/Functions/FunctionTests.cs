@@ -10,7 +10,7 @@ public class FunctionTests : TestWithOutput
 	public async void GetApplications()
 	{
 		var things = await LogicMonitorClient.GetAppliesToAsync("isCisco()").ConfigureAwait(false);
-		Assert.NotNull(things);
-		Assert.NotEmpty(things);
+		things.Should().NotBeNull();
+		things.Should().NotBeNullOrEmpty();
 	}
 }

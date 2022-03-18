@@ -12,8 +12,8 @@ public class RoleGroupTests : TestWithOutput
 	public async void GetRoleGroups()
 	{
 		var roleGroups = await LogicMonitorClient.GetAllAsync<RoleGroup>().ConfigureAwait(false);
-		Assert.NotNull(roleGroups);
-		Assert.NotEmpty(roleGroups);
+		roleGroups.Should().NotBeNull();
+		roleGroups.Should().NotBeNullOrEmpty();
 
 		foreach (var role in roleGroups)
 		{
@@ -43,7 +43,7 @@ public class RoleGroupTests : TestWithOutput
 
 		// Refetch
 		var refetch = await LogicMonitorClient.GetAsync<RoleGroup>(roleGroup.Id).ConfigureAwait(false);
-		Assert.NotNull(refetch);
+		refetch.Should().NotBeNull();
 
 		// Delete
 		await LogicMonitorClient.DeleteAsync(roleGroup).ConfigureAwait(false);

@@ -25,6 +25,6 @@ public class LogicModuleUpdateTests : TestWithOutput
 	//	Assert.True(logicModuleUpdates.Count > 0);
 
 	//	// Make sure that all have Unique locators
-	//	Assert.False(logicModuleUpdates.Select(a => a.Locator).HasDuplicates());
+	//	((logicModuleUpdates.Select(a => a.Locator).HasDuplicates())).Should().BeFalse();
 	//}
 }

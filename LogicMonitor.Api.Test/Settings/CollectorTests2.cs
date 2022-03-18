@@ -12,14 +12,14 @@ public class CollectorTests2
 	public async void GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-		Assert.NotNull(collectorGroups);
+		collectorGroups.Should().NotBeNull();
 		Assert.True(collectorGroups.Count > 0);
 
 		// Re-fetch each
 		foreach (var collectorGroup in collectorGroups)
 		{
 			var refetch = await LogicMonitorClient.GetAsync<CollectorGroup>(collectorGroup.Id).ConfigureAwait(false);
-			Assert.NotNull(refetch);
+			refetch.Should().NotBeNull();
 		}
 	}
 
@@ -27,14 +27,14 @@ public class CollectorTests2
 	public async void GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
-		Assert.NotNull(collectors);
+		collectors.Should().NotBeNull();
 		Assert.True(collectors.Count > 0);
 
 		// Re-fetch each
 		foreach (var collector in collectors)
 		{
 			var refetch = await LogicMonitorClient.GetAsync<Collector>(collector.Id).ConfigureAwait(false);
-			Assert.NotNull(refetch);
+			refetch.Should().NotBeNull();
 		}
 	}
 
@@ -43,9 +43,9 @@ public class CollectorTests2
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 		var testCollector = collectors.Find(c => !c.IsDown);
-		Assert.NotNull(testCollector);
+		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(testCollector.Id, "!ping 8.8.8.8").ConfigureAwait(false);
-		Assert.NotNull(response);
+		response.Should().NotBeNull();
 		Logger.LogInformation("{Output}", response.Output);
 	}
 
@@ -66,8 +66,8 @@ public class CollectorTests2
 			.OrderByDescending(v => v)
 			.ToList();
 
-		Assert.NotNull(collectorVersionInts);
-		Assert.NotEmpty(collectorVersionInts);
+		collectorVersionInts.Should().NotBeNull();
+		collectorVersionInts.Should().NotBeNullOrEmpty();
 
 		var collectorVersionInt = collectorVersionInts[0];
 

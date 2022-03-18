@@ -28,8 +28,8 @@ public class OpsNotesTests : TestWithOutput
 		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(allOpsNotes.Count > 0);
-		Assert.Contains(newOpsNote.Id, allOpsNotes.Select(o => o.Id));
+		allOpsNotes.Should().NotBeNullOrEmpty();
+		allOpsNotes.Select(o => o.Id).Should().Contain(newOpsNote.Id);
 	}
 
 	//[Fact]
@@ -50,18 +50,18 @@ public class OpsNotesTests : TestWithOutput
 	//	var createdOpsNote = await DefaultPortalClient.CreateAsync(opsNoteCreationDto).ConfigureAwait(false);
 
 	//	// Ensure that this OpsNote has an ID set
-	//	Assert.NotNull(createdOpsNote.Id);
-	//	Assert.False(string.IsNullOrWhiteSpace(createdOpsNote.Id));
+	//	createdOpsNote.Id.Should().NotBeNull();
+	//	((string.IsNullOrWhiteSpace(createdOpsNote.Id))).Should().BeFalse();
 
 	//	// Wait 2 seconds
 	//	await Task.Delay(5000).ConfigureAwait(false);
 
 	//	// Make sure the opsNote is now present when listing opsNotes and that all properties match
 	//	var refetchedOpsNote = await DefaultPortalClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
-	//	Assert.NotNull(refetchedOpsNote);
-	//	Assert.Equal(createdOpsNote.Note, refetchedOpsNote.Note);
-	//	Assert.Equal(utcNow, refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch());
-	//	Assert.Equal(createdOpsNote.Tags.Select(t => t.Name), refetchedOpsNote.Tags.Select(t => t.Name));
+	//	refetchedOpsNote.Should().NotBeNull();
+	//	refetchedOpsNote.Note.Should().Be(createdOpsNote.Note);
+	//	refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch().Should().Be(utcNow);
+	//	refetchedOpsNote.Tags.Select(t => t.Name).Should().Be(createdOpsNote.Tags.Select(t => t.Name));
 
 	//	// Remove the test OpsNote - this takes some time
 	//	await DefaultPortalClient.DeleteAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);

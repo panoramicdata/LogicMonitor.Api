@@ -15,7 +15,7 @@ public class CollectorTests : TestWithOutput
 		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8").ConfigureAwait(false);
 
 		// Check for valid response
-		Assert.NotNull(debugCommandResponse);
+		debugCommandResponse.Should().NotBeNull();
 		Assert.True(debugCommandResponse.SessionId > 0);
 	}
 
@@ -25,8 +25,8 @@ public class CollectorTests : TestWithOutput
 		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100).ConfigureAwait(false);
 
 		// Check for valid response
-		Assert.NotNull(debugCommandResponse);
-		Assert.NotEmpty(debugCommandResponse.Output);
+		debugCommandResponse.Should().NotBeNull();
+		debugCommandResponse.Output.Should().NotBeNullOrEmpty();
 		Logger.LogInformation("{Message}", debugCommandResponse.Output);
 	}
 
@@ -36,10 +36,10 @@ public class CollectorTests : TestWithOutput
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotEmpty(collectors);
+		collectors.Should().NotBeNullOrEmpty();
 
 		// Make sure that all have Unique Ids
-		Assert.False(collectors.Select(c => c.Id).HasDuplicates());
+		collectors.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 
 		// Get each one by id
 		foreach (var collector in collectors)
@@ -53,13 +53,13 @@ public class CollectorTests : TestWithOutput
 	public async void GetCollector()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
-		Assert.NotNull(collectors);
-		Assert.NotEmpty(collectors);
+		collectors.Should().NotBeNull();
+		collectors.Should().NotBeNullOrEmpty();
 		var refetchedCollector = await LogicMonitorClient
 			.GetAsync<Collector>(collectors[0].Id)
 			.ConfigureAwait(false);
 
-		Assert.NotNull(refetchedCollector);
+		refetchedCollector.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -69,6 +69,6 @@ public class CollectorTests : TestWithOutput
 			.GetAsync<Collector>(CollectorId, default)
 			.ConfigureAwait(false);
 
-		Assert.NotNull(collector);
+		collector.Should().NotBeNull();
 	}
 }

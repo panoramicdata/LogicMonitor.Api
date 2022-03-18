@@ -13,10 +13,10 @@ public class DateTimeExtensionTests
 	{
 		var dateTime = new DateTime(1975, 02, 17);
 		var list = dateTime.GetChunkedTimeRangeList(dateTime, TimeSpan.FromHours(1));
-		Assert.NotNull(list);
-		Assert.Single(list);
-		Assert.Equal(list.Single().Item1, dateTime);
-		Assert.Equal(list.Single().Item1, list.Single().Item2);
+		list.Should().NotBeNull();
+		list.Should().ContainSingle();
+		dateTime.Should().Be(list.Single().Item1);
+		list.Single().Item2.Should().Be(list.Single().Item1);
 	}
 
 	[Fact]
@@ -25,10 +25,10 @@ public class DateTimeExtensionTests
 		var startDateTime = new DateTime(1975, 02, 17);
 		var endDateTime = startDateTime.AddHours(1);
 		var list = startDateTime.GetChunkedTimeRangeList(endDateTime, TimeSpan.FromHours(1));
-		Assert.NotNull(list);
-		Assert.Single(list);
-		Assert.Equal(list.Single().Item1, startDateTime);
-		Assert.Equal(list.Single().Item2, endDateTime);
+		list.Should().NotBeNull();
+		list.Should().ContainSingle();
+		startDateTime.Should().Be(list.Single().Item1);
+		endDateTime.Should().Be(list.Single().Item2);
 	}
 
 	[Fact]
@@ -37,16 +37,16 @@ public class DateTimeExtensionTests
 		var startDateTime = new DateTime(1975, 02, 17);
 		var endDateTime = startDateTime.AddHours(1).AddMinutes(1);
 		var list = startDateTime.GetChunkedTimeRangeList(endDateTime, TimeSpan.FromHours(1));
-		Assert.NotNull(list);
-		Assert.Equal(2, list.Count);
+		list.Should().NotBeNull();
+		list.Should().HaveCount(2);
 
 		// First range
-		Assert.Equal(list[0].Item1, startDateTime);
-		Assert.Equal(list[0].Item2, startDateTime.AddHours(1));
+		startDateTime.Should().Be(list[0].Item1);
+		startDateTime.AddHours(1).Should().Be(list[0].Item2);
 
 		// Second range
-		Assert.Equal(list.Last().Item1, startDateTime.AddHours(1));
-		Assert.Equal(list.Last().Item2, endDateTime);
+		startDateTime.AddHours(1).Should().Be(list.Last().Item1);
+		endDateTime.Should().Be(list.Last().Item2);
 	}
 
 	[Fact]
@@ -55,16 +55,16 @@ public class DateTimeExtensionTests
 		var startDateTime = new DateTime(1975, 02, 17);
 		var endDateTime = startDateTime.AddHours(2).AddMinutes(1);
 		var list = startDateTime.GetChunkedTimeRangeList(endDateTime, TimeSpan.FromHours(2));
-		Assert.NotNull(list);
-		Assert.Equal(2, list.Count);
+		list.Should().NotBeNull();
+		list.Should().HaveCount(2);
 
 		// First range
-		Assert.Equal(list[0].Item1, startDateTime);
-		Assert.Equal(list[0].Item2, startDateTime.AddHours(2));
+		startDateTime.Should().Be(list[0].Item1);
+		startDateTime.AddHours(2).Should().Be(list[0].Item2);
 
 		// Second range
-		Assert.Equal(list.Last().Item1, startDateTime.AddHours(2));
-		Assert.Equal(list.Last().Item2, endDateTime);
+		startDateTime.AddHours(2).Should().Be(list.Last().Item1);
+		endDateTime.Should().Be(list.Last().Item2);
 	}
 
 	[Fact]
@@ -73,19 +73,19 @@ public class DateTimeExtensionTests
 		var startDateTime = new DateTime(1975, 02, 17);
 		var endDateTime = startDateTime.AddHours(2).AddMinutes(1);
 		var list = startDateTime.GetChunkedTimeRangeList(endDateTime, TimeSpan.FromHours(1));
-		Assert.NotNull(list);
-		Assert.Equal(3, list.Count);
+		list.Should().NotBeNull();
+		list.Should().HaveCount(3);
 
 		// First range
-		Assert.Equal(startDateTime, list[0].Item1);
-		Assert.Equal(startDateTime.AddHours(1), list[0].Item2);
+		list[0].Item1.Should().Be(startDateTime);
+		list[0].Item2.Should().Be(startDateTime.AddHours(1));
 
 		// Second range
-		Assert.Equal(startDateTime.AddHours(1), list.Skip(1).First().Item1);
-		Assert.Equal(startDateTime.AddHours(2), list.Skip(1).First().Item2);
+		list.Skip(1).First().Item1.Should().Be(startDateTime.AddHours(1));
+		list.Skip(1).First().Item2.Should().Be(startDateTime.AddHours(2));
 
 		// Last range
-		Assert.Equal(startDateTime.AddHours(2), list.Last().Item1);
-		Assert.Equal(endDateTime, list.Last().Item2);
+		list.Last().Item1.Should().Be(startDateTime.AddHours(2));
+		list.Last().Item2.Should().Be(endDateTime);
 	}
 }

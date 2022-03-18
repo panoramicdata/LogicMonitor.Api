@@ -12,7 +12,7 @@ public class DeviceGroupTests : TestWithOutput
 	public async void GetDeviceGroupByFullPath()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
-		Assert.NotEqual(AlertStatus.Unknown, deviceGroup.AlertStatus);
+		deviceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
@@ -38,7 +38,7 @@ public class DeviceGroupTests : TestWithOutput
 				true
 				)
 			.ConfigureAwait(false);
-		Assert.NotEqual(AlertStatus.Unknown, deviceGroup.AlertStatus);
+		deviceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
@@ -52,14 +52,14 @@ public class DeviceGroupTests : TestWithOutput
 	public async void GetDeviceGroupById()
 	{
 		var rootDeviceGroup = await LogicMonitorClient.GetAsync<DeviceGroup>(1).ConfigureAwait(false);
-		Assert.NotNull(rootDeviceGroup);
+		rootDeviceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async void GetRootDeviceGroupByFullPath()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync("").ConfigureAwait(false);
-		Assert.NotEqual(AlertStatus.Unknown, deviceGroup.AlertStatus);
+		deviceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
@@ -67,11 +67,11 @@ public class DeviceGroupTests : TestWithOutput
 	{
 		// For LMREP-4060, to test if there are any missing DeviceGroupTypes
 		var deviceGroups = await LogicMonitorClient.GetAllAsync<DeviceGroup>().ConfigureAwait(false);
-		Assert.NotNull(deviceGroups);
-		Assert.NotEmpty(deviceGroups);
+		deviceGroups.Should().NotBeNull();
+		deviceGroups.Should().NotBeNullOrEmpty();
 
 		// Make sure that all have Unique Ids
-		Assert.False(deviceGroups.Select(dg => dg.Id).HasDuplicates());
+		deviceGroups.Select(dg => dg.Id).HasDuplicates().Should().BeFalse();
 
 		// Make sure that all have non-zero Parent Ids
 		Assert.DoesNotContain(deviceGroups, dg => dg.Id != 1 && dg.ParentId == 0);
@@ -95,7 +95,7 @@ public class DeviceGroupTests : TestWithOutput
 		Assert.True(deviceGroups.Count > 0);
 
 		// Make sure that all have Unique Ids
-		Assert.False(deviceGroups.Select(c => c.Id).HasDuplicates());
+		deviceGroups.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 	}
 
 	[Fact]
@@ -118,7 +118,7 @@ public class DeviceGroupTests : TestWithOutput
 		Assert.True(deviceGroup.SubGroups.Count > 0);
 
 		// Make sure that all children have Unique Ids
-		Assert.False(deviceGroup.SubGroups.Select(c => c.Id).HasDuplicates());
+		deviceGroup.SubGroups.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 	}
 
 	/// <summary>
@@ -129,7 +129,7 @@ public class DeviceGroupTests : TestWithOutput
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 
-		Assert.NotNull(deviceGroup);
+		deviceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -153,47 +153,47 @@ public class DeviceGroupTests : TestWithOutput
 			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1).ConfigureAwait(false);
 			var deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
-			Assert.Equal(1, actual);
+			actual.Should().Be(1);
 
 			// Set it to a different value
 			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
-			Assert.Equal(1, actual);
+			actual.Should().Be(1);
 
 			// Set it to null (delete it)
 			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
-			Assert.Equal(0, actual);
+			actual.Should().Be(0);
 
 			// This should fail as there is nothing to delete
 			var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
-			Assert.IsType<LogicMonitorApiException>(deletionException);
+			deletionException.Should().BeOfType<LogicMonitorApiException>();
 
 			var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
-			Assert.IsType<InvalidOperationException>(updateException);
+			updateException.Should().BeOfType<InvalidOperationException>();
 
 			var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
-			Assert.IsType<InvalidOperationException>(createNullException);
+			createNullException.Should().BeOfType<InvalidOperationException>();
 
 			// Create one without checking
 			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
-			Assert.Equal(1, actual);
+			actual.Should().Be(1);
 
 			// Update one without checking
 			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
-			Assert.Equal(1, actual);
+			actual.Should().Be(1);
 
 			// Delete one without checking
 			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
-			Assert.Equal(0, actual);
+			actual.Should().Be(0);
 		}
 		finally
 		{

@@ -10,7 +10,7 @@ public class RecipientGroupTests : TestWithOutput
 	public async void GetRecipientGroupTests()
 	{
 		var recipientGroups = await LogicMonitorClient.GetAllAsync<RecipientGroup>().ConfigureAwait(false);
-		Assert.NotNull(recipientGroups);
+		recipientGroups.Should().NotBeNull();
 		Assert.True(recipientGroups.Count > 0);
 
 		foreach (var recipientGroup in recipientGroups)

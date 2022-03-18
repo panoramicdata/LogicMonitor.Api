@@ -11,9 +11,9 @@ public class EventSourceTests : TestWithOutput
 	public async void GetDeviceGroupEventSources()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
-		Assert.NotNull(deviceGroup);
+		deviceGroup.Should().NotBeNull();
 
 		var eventGroupDataSources = await LogicMonitorClient.GetAllDeviceGroupEventSourcesAsync(deviceGroup.Id).ConfigureAwait(false);
-		Assert.NotEmpty(eventGroupDataSources);
+		eventGroupDataSources.Should().NotBeNullOrEmpty();
 	}
 }

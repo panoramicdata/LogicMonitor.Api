@@ -17,13 +17,13 @@ public class FlowTests : TestWithOutput
 	//private void CheckExpectedLineCount(GraphData graphData, int expectedLineCount)
 	//{
 	//	// Make sure that data is returned
-	//	Assert.NotNull(graphData);
+	//	graphData.Should().NotBeNull();
 
 	//	// Make sure that data is returned
-	//	Assert.NotNull(graphData.Lines);
+	//	graphData.Lines.Should().NotBeNull();
 
 	//	// Make sure that data is returned
-	//	Assert.Equal(expectedLineCount, graphData.Lines.Count);
+	//	graphData.Lines.Count.Should().Be(expectedLineCount);
 	//}
 
 	[Fact]
@@ -38,11 +38,10 @@ public class FlowTests : TestWithOutput
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flowApplications.Items);
-		Assert.True(flowApplications.Items.Count > 0);
+		flowApplications.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//Assert.False(flows.Select(flow => flow.Id).HasDuplicates());
+		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	[Fact]
@@ -66,8 +65,7 @@ public class FlowTests : TestWithOutput
 		.ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flowApplications.Items);
-		Assert.True(flowApplications.Items.Count > 0);
+		flowApplications.Items.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -90,8 +88,7 @@ public class FlowTests : TestWithOutput
 		.ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flowBandwidths.Items);
-		Assert.True(flowBandwidths.Items.Count > 0);
+		flowBandwidths.Items.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -114,8 +111,7 @@ public class FlowTests : TestWithOutput
 		.ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flows.Items);
-		Assert.True(flows.Items.Count > 0);
+		flows.Items.Should().NotBeNullOrEmpty();
 	}
 
 	//[Fact]
@@ -127,11 +123,11 @@ public class FlowTests : TestWithOutput
 	//			new Filter<FlowInterface> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
 	//	// Make sure that some are returned
-	//	Assert.NotNull(deviceFlowInterfaces.Items);
+	//	deviceFlowInterfaces.Items.Should().NotBeNull();
 	//	Assert.True(deviceFlowInterfaces.Items.Count > 0);
 
 	//	// Make sure that interfaces are unique
-	//	Assert.False(deviceFlowInterfaces.Items.Select(flow => flow.Index).HasDuplicates());
+	//	((deviceFlowInterfaces.Items.Select(flow => flow.Index).HasDuplicates())).Should().BeFalse();
 	//}
 
 	//[Fact]
@@ -144,11 +140,11 @@ public class FlowTests : TestWithOutput
 	//			new Filter<FlowInterface> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
 	//	// Make sure that some are returned
-	//	Assert.NotNull(deviceFlowInterfaces.Items);
+	//	deviceFlowInterfaces.Items.Should().NotBeNull();
 	//	Assert.True(deviceFlowInterfaces.Items.Count > 0);
 
 	//	// Make sure that interfaces are unique
-	//	Assert.False(deviceFlowInterfaces.Items.Select(flow => flow.Index).HasDuplicates());
+	//	((deviceFlowInterfaces.Items.Select(flow => flow.Index).HasDuplicates())).Should().BeFalse();
 	//}
 
 	[Fact]
@@ -163,11 +159,10 @@ public class FlowTests : TestWithOutput
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flowEndpoints.Items);
-		Assert.True(flowEndpoints.Items.Count > 0);
+		flowEndpoints.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//Assert.False(flows.Select(flow => flow.Id).HasDuplicates());
+		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	//[Fact]
@@ -200,7 +195,7 @@ public class FlowTests : TestWithOutput
 
 	//	CheckExpectedLineCount(graphData, 11);
 
-	//	Assert.All(graphData.Lines, line => Assert.False(string.IsNullOrWhiteSpace(line.Legend)));
+	//	Assert.All(graphData.Lines, line => ((string.IsNullOrWhiteSpace(line.Legend)))).Should().BeFalse();
 	//}
 
 	//[Fact]
@@ -217,7 +212,7 @@ public class FlowTests : TestWithOutput
 
 	//	CheckExpectedLineCount(graphData, 11);
 
-	//	Assert.All(graphData.Lines, line => Assert.False(string.IsNullOrWhiteSpace(line.Legend)));
+	//	Assert.All(graphData.Lines, line => ((string.IsNullOrWhiteSpace(line.Legend)))).Should().BeFalse();
 	//}
 
 	[Fact]
@@ -232,11 +227,10 @@ public class FlowTests : TestWithOutput
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flows.Items);
-		Assert.True(flows.Items.Count > 0);
+		flows.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//Assert.False(flows.Select(flow => flow.Id).HasDuplicates());
+		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	//[Fact]
@@ -246,13 +240,13 @@ public class FlowTests : TestWithOutput
 	//	var flowInformation = TestPortalConfig.PortalClient.GetDeviceFlowInformation(device.Id);
 
 	//	// Make sure that interface list is present
-	//	Assert.NotNull(flowInformation.Interfaces);
+	//	flowInformation.Interfaces.Should().NotBeNull();
 
 	//	// Make sure that some are returned
 	//	Assert.True(flowInformation.Interfaces.Any());
 
 	//	// Make sure that flow interfaces have unique indexes
-	//	Assert.False(flowInformation.Interfaces.Select(@interface => @interface.InterfaceIndex).HasDuplicates());
+	//	((flowInformation.Interfaces.Select(@interface => @interface.InterfaceIndex).HasDuplicates())).Should().BeFalse();
 	//}
 
 	[Fact]
@@ -267,11 +261,10 @@ public class FlowTests : TestWithOutput
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flowPorts.Items);
-		Assert.True(flowPorts.Items.Count > 0);
+		flowPorts.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//Assert.False(flows.Select(flow => flow.Id).HasDuplicates());
+		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	[Fact]
@@ -288,7 +281,6 @@ public class FlowTests : TestWithOutput
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.NotNull(flows.Items);
-		Assert.True(flows.Items.Count > 0);
+		flows.Items.Should().NotBeNullOrEmpty();
 	}
 }

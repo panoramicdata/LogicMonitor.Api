@@ -10,8 +10,8 @@ public class AccountSettingsTests : TestWithOutput
 	public async void Get()
 	{
 		var accountSettings = await LogicMonitorClient.GetAsync<AccountSettings>().ConfigureAwait(false);
-		Assert.NotNull(accountSettings);
-		Assert.True(accountSettings.DeviceCount > 0);
+		accountSettings.Should().NotBeNull();
+		(accountSettings.DeviceCount > 0).Should().BeTrue();
 	}
 
 	[Fact]
@@ -25,8 +25,8 @@ public class AccountSettingsTests : TestWithOutput
 
 		var billingInformation = await LogicMonitorClient.GetAsync<BillingInformation>().ConfigureAwait(false);
 
-		Assert.NotNull(billingInformation);
-		Assert.NotNull(billingInformation.InvoiceDetails);
-		Assert.NotNull(billingInformation.PaymentInformation);
+		billingInformation.Should().NotBeNull();
+		billingInformation.InvoiceDetails.Should().NotBeNull();
+		billingInformation.PaymentInformation.Should().NotBeNull();
 	}
 }

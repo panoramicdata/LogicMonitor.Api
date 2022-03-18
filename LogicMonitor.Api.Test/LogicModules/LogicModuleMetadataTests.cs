@@ -10,8 +10,8 @@ public class LogicModuleMetadataTests : TestWithOutput
 	public async void GetDataSourceMetadata()
 	{
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
-		Assert.NotNull(dataSource);
-		Assert.NotEqual(0, dataSource.Id);
+		dataSource.Should().NotBeNull();
+		dataSource.Id.Should().NotBe(0);
 		var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id).ConfigureAwait(false);
 		CheckMetadata(logicModuleMetadata);
 	}
@@ -20,8 +20,8 @@ public class LogicModuleMetadataTests : TestWithOutput
 	//public async void GetEventSourceMetadata()
 	//{
 	//	var eventSource = await DefaultPortalClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
-	//	Assert.NotNull(eventSource);
-	//	Assert.NotEqual(0, eventSource.Id);
+	//	eventSource.Should().NotBeNull();
+	//	eventSource.Id.Should().NotBe(0);
 	//	var logicModuleMetadata = await DefaultPortalClient.GetLogicModuleMetadata(LogicModuleType.EventSource, eventSource.Id).ConfigureAwait(false);
 	//	CheckMetadata(logicModuleMetadata);
 	//}
@@ -30,8 +30,8 @@ public class LogicModuleMetadataTests : TestWithOutput
 	//public async void GetConfigSourceMetadata()
 	//{
 	//	var configSource = await PortalClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
-	//	Assert.NotNull(configSource);
-	//	Assert.NotEqual(0, configSource.Id);
+	//	configSource.Should().NotBeNull();
+	//	configSource.Id.Should().NotBe(0);
 	//	var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.ConfigSource, configSource.Id).ConfigureAwait(false);
 	//	CheckMetadata(logicModuleMetadata);
 	//}
@@ -40,19 +40,19 @@ public class LogicModuleMetadataTests : TestWithOutput
 	//public async void GetPropertySourceMetadata()
 	//{
 	//	var propertySource = await PortalClient.GetByNameAsync<PropertySource>("Cisco_Product_Info").ConfigureAwait(false);
-	//	Assert.NotNull(propertySource);
-	//	Assert.NotEqual(0, propertySource.Id);
+	//	propertySource.Should().NotBeNull();
+	//	propertySource.Id.Should().NotBe(0);
 	//	var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id).ConfigureAwait(false);
 	//	CheckMetadata(logicModuleMetadata);
 	//}
 
 	private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
 	{
-		Assert.NotNull(logicModuleMetadata);
-		Assert.NotNull(logicModuleMetadata.LmLocator);
-		Assert.NotNull(logicModuleMetadata.Namespace);
-		Assert.NotNull(logicModuleMetadata.Quality);
-		Assert.NotNull(logicModuleMetadata.RegistryVersion);
-		Assert.NotNull(logicModuleMetadata.Id);
+		logicModuleMetadata.Should().NotBeNull();
+		logicModuleMetadata.LmLocator.Should().NotBeNull();
+		logicModuleMetadata.Namespace.Should().NotBeNull();
+		logicModuleMetadata.Quality.Should().NotBeNull();
+		logicModuleMetadata.RegistryVersion.Should().NotBeNull();
+		logicModuleMetadata.Id.Should().NotBeNull();
 	}
 }

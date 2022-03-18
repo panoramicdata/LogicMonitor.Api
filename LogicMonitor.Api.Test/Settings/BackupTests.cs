@@ -132,8 +132,8 @@ public class BackupTests : TestWithOutput
 	//{
 	//	var backup = await DefaultPortalClient.BackupAsync(new ConfigurationBackupSpecification(false) { DataSources = true }).ConfigureAwait(false);
 
-	//	Assert.NotNull(backup.DataSources);
-	//	Assert.NotEmpty(backup.DataSources);
+	//	backup.DataSources.Should().NotBeNull();
+	//	backup.DataSources.Should().NotBeNullOrEmpty();
 	//}
 
 	[Fact]
@@ -141,8 +141,8 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { EventSources = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.EventSources);
-		Assert.NotEmpty(backup.EventSources);
+		backup.EventSources.Should().NotBeNull();
+		backup.EventSources.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -150,8 +150,8 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { JobMonitors = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.JobMonitors);
-		Assert.NotEmpty(backup.JobMonitors);
+		backup.JobMonitors.Should().NotBeNull();
+		backup.JobMonitors.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -159,9 +159,9 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { PropertySources = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup);
-		Assert.NotNull(backup.PropertySources);
-		Assert.NotEmpty(backup.PropertySources);
+		backup.Should().NotBeNull();
+		backup.PropertySources.Should().NotBeNull();
+		backup.PropertySources.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -172,9 +172,9 @@ public class BackupTests : TestWithOutput
 			ScheduledDownTimes = true
 		}).ConfigureAwait(false);
 
-		Assert.NotNull(backup);
-		Assert.NotNull(backup.ScheduledDownTimes);
-		Assert.NotEmpty(backup.ScheduledDownTimes);
+		backup.Should().NotBeNull();
+		backup.ScheduledDownTimes.Should().NotBeNull();
+		backup.ScheduledDownTimes.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -182,7 +182,7 @@ public class BackupTests : TestWithOutput
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { SnmpSysOidMaps = true }).ConfigureAwait(false);
 
-		Assert.NotNull(backup.SnmpSysOidMaps);
-		Assert.NotEmpty(backup.SnmpSysOidMaps);
+		backup.SnmpSysOidMaps.Should().NotBeNull();
+		backup.SnmpSysOidMaps.Should().NotBeNullOrEmpty();
 	}
 }

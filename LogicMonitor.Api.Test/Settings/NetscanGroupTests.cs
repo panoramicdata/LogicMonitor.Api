@@ -39,10 +39,10 @@ public class NetscanGroupTests : TestWithOutput
 	public async void CanGetNetscanGroups()
 	{
 		var allNetscanGroups = await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
-		Assert.NotNull(allNetscanGroups);
-		Assert.NotEmpty(allNetscanGroups);
+		allNetscanGroups.Should().NotBeNull();
+		allNetscanGroups.Should().NotBeNullOrEmpty();
 		var ids = allNetscanGroups.Select(nspg => nspg.Id);
 		Assert.True(allNetscanGroups.Count == ids.Count());
-		Assert.NotEmpty(allNetscanGroups);
+		allNetscanGroups.Should().NotBeNullOrEmpty();
 	}
 }

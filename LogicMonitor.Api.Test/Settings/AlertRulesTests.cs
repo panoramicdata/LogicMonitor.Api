@@ -30,7 +30,7 @@ public class AlertRulesTests : TestWithOutput
 	public async void GetAlertRules()
 	{
 		var alertRules = await LogicMonitorClient.GetAllAsync<AlertRule>().ConfigureAwait(false);
-		Assert.NotNull(alertRules);
+		alertRules.Should().NotBeNull();
 		Assert.True(alertRules.Count > 0);
 
 		// Get each one individually and check everything matches
@@ -40,7 +40,7 @@ public class AlertRulesTests : TestWithOutput
 			await LogicMonitorClient.SaveAlertRuleAsync(alertRule).ConfigureAwait(false);
 
 			var refetchedAlertRule = await LogicMonitorClient.GetAsync<AlertRule>(alertRule.Id).ConfigureAwait(false);
-			Assert.Equal(alertRule.Id, refetchedAlertRule.Id);
+			refetchedAlertRule.Id.Should().Be(alertRule.Id);
 			// Other tests?
 
 			// Only do one for now

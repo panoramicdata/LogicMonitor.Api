@@ -14,8 +14,8 @@ public class RoleGroupTests : TestWithOutput
 		var items = await LogicMonitorClient
 			.GetAllAsync<RoleGroup>()
 			.ConfigureAwait(false);
-		Assert.NotNull(items);
-		Assert.NotEmpty(items);
+		items.Should().NotBeNull();
+		items.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]

@@ -17,7 +17,7 @@ public class RawDataTests : TestWithOutput
 		).Single();
 		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 
-		Assert.NotNull(rawData);
+		rawData.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -33,7 +33,7 @@ public class RawDataTests : TestWithOutput
 		).Single();
 		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow).ConfigureAwait(false);
 
-		Assert.NotNull(rawData);
+		rawData.Should().NotBeNull();
 
 		Assert.All(rawData.UtcTimeStamps, r =>
 		{
@@ -52,11 +52,11 @@ public class RawDataTests : TestWithOutput
 		var deviceDataSourceInstance =
 		(await portalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id).ConfigureAwait(false)
 		).FirstOrDefault();
-		Assert.NotNull(deviceDataSourceInstance);
+		deviceDataSourceInstance.Should().NotBeNull();
 
 		var pollNowResponse = await portalClient.PollNowAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 
-		Assert.NotNull(pollNowResponse);
+		pollNowResponse.Should().NotBeNull();
 	}
 
 	[Fact]
@@ -72,9 +72,11 @@ public class RawDataTests : TestWithOutput
 
 		var rawData = await LogicMonitorClient.GetFetchDataResponseAsync(deviceDataSourceInstances.ConvertAll(ddsi => ddsi.Id), start, end).ConfigureAwait(false);
 
-		Assert.NotNull(rawData);
-		Assert.Equal(deviceDataSourceInstances.Count, rawData.TotalCount);
-		Assert.Equal(deviceDataSourceInstances.Count, rawData.InstanceFetchDataResponses.Count);
-		Assert.All(rawData.InstanceFetchDataResponses, response => Assert.Equal(dataSource.DataSourceDataPoints.Count, response.DataPoints.Length));
+		rawData.Should().NotBeNull();
+		rawData.TotalCount.Should().Be(deviceDataSourceInstances.Count);
+		rawData.InstanceFetchDataResponses.Count.Should().Be(deviceDataSourceInstances.Count);
+		rawData.InstanceFetchDataResponses
+			.Should()
+			.AllSatisfy(response => response.DataPoints.Length.Should().Be(dataSource.DataSourceDataPoints.Count));
 	}
 }

@@ -61,7 +61,7 @@ public abstract class TestWithOutput
 	protected LogicMonitorClient LogicMonitorClient { get; }
 
 	protected void AssertIsFast(int durationSeconds)
-		=> Assert.InRange(Stopwatch.ElapsedMilliseconds, 0, durationSeconds * 1000);
+		=> Stopwatch.ElapsedMilliseconds.Should().BeLessThan(durationSeconds * 1000);
 
 	protected static long DaysAgoAsUnixSeconds(int days)
 		=> DateTimeOffset.UtcNow.AddDays(-days).ToUnixTimeSeconds();
