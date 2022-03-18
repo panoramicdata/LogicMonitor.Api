@@ -1,4 +1,6 @@
-﻿namespace LogicMonitor.Api.Test.PushMetrics;
+﻿using System.Globalization;
+
+namespace LogicMonitor.Api.Test.PushMetrics;
 
 public class PushMetricTests : TestWithOutput
 {
@@ -14,7 +16,7 @@ public class PushMetricTests : TestWithOutput
 			{
 				ResourceIds = new()
 				{
-					["system.deviceId"] = WindowsDeviceId.ToString()
+					["system.deviceId"] = WindowsDeviceId.ToString(CultureInfo.InvariantCulture)
 				},
 				DataSourceName = "UnitTest_PushMetric_Succeeds",
 				DataSourceDisplayName = "PushMetric_Succeeds",

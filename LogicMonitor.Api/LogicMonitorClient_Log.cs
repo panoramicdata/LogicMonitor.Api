@@ -21,7 +21,7 @@ public partial class LogicMonitorClient
 			logFilter = new LogFilter(
 				0,
 				LogItemsMaxTake,
-				DateTime.Parse("1970-01-01"),
+				DateTime.Parse("1970-01-01", CultureInfo.InvariantCulture),
 				DateTime.UtcNow,
 				LogFilterSortOrder.HappenedOnAsc);
 		}

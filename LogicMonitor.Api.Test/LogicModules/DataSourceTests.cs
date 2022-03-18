@@ -57,37 +57,6 @@ public class DataSourceTests : TestWithOutput
 		sum.Should().Be(deviceDataSourceInstances.Count);
 	}
 
-	//[Fact]
-	//public async void GetDeviceGroupDeviceDataSourceInstancesWithRegexFilter()
-	//{
-	//	var deviceGroup = await PortalClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
-	//	deviceGroup.Should().NotBeNull();
-	//	deviceGroup.Id.Should().NotBe(0);
-	//	// We have the device group
-
-	//	// Determine the DataSources
-	//	var dataSourcesIds = new List<DataSource>
-	//		{
-	//			await PortalClient.GetDataSourceByUniqueNameAsync("snmp64_If-").ConfigureAwait(false),
-	//		}
-	//		.Select(ds => ds.Id)
-	//		.ToList();
-
-	//	var deviceDataSourceInstances = await PortalClient
-	//		.GetInstancesAsync(
-	//			LogicModuleType.DataSource,
-	//			deviceGroup.Id,
-	//			dataSourcesIds,
-	//			"port1",
-	//			new Regex("^true$"),
-	//			new Filter<InstanceProperty> { FilterItems = new List<FilterItem<InstanceProperty>> { new Eq<InstanceProperty>(nameof(InstanceProperty.Name), "port1") } })
-	//		.ConfigureAwait(false);
-
-	//	deviceDataSourceInstances.Should().NotBeNull();
-	//	deviceDataSourceInstances.Should().NotBeNullOrEmpty();
-	//	Assert.Single(deviceDataSourceInstances);
-	//}
-
 	[Fact]
 	public async void GetWinService()
 	{
@@ -161,7 +130,8 @@ public class DataSourceTests : TestWithOutput
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id).ConfigureAwait(false);
 		var dataPointConfiguration = dataPointDetails.Items[0];
-		dataPointConfiguration?.GlobalAlertExpr.Should().NotBeNull();
+		dataPointConfiguration.Should().NotBeNull();
+		dataPointConfiguration.GlobalAlertExpr.Should().NotBeNull();
 	}
 
 	[Fact]

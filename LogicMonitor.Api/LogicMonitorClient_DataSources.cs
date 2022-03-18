@@ -666,7 +666,7 @@ public partial class LogicMonitorClient
 		{
 			FilterItems = new List<FilterItem<DeviceDataSource>>
 				{
-					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceId), dataSourceId.ToString())
+					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceId), dataSourceId.ToString(CultureInfo.InvariantCulture))
 				}
 		}, cancellationToken).ConfigureAwait(false);
 		return deviceDataSources.SingleOrDefault();

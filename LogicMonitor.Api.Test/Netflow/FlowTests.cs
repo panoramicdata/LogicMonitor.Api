@@ -114,39 +114,6 @@ public class FlowTests : TestWithOutput
 		flows.Items.Should().NotBeNullOrEmpty();
 	}
 
-	//[Fact]
-	//public async void GetDeviceFlowInterfaces()
-	//{
-	//	var device = await _testPortalConfig.GetNetflowDeviceAsync().ConfigureAwait(false);
-	//	var deviceFlowInterfaces =
-	//		await _testPortalConfig.PortalClient.GetDeviceFlowInterfacesPageAsync(device.Id,
-	//			new Filter<FlowInterface> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-
-	//	// Make sure that some are returned
-	//	deviceFlowInterfaces.Items.Should().NotBeNull();
-	//	Assert.True(deviceFlowInterfaces.Items.Count > 0);
-
-	//	// Make sure that interfaces are unique
-	//	((deviceFlowInterfaces.Items.Select(flow => flow.Index).HasDuplicates())).Should().BeFalse();
-	//}
-
-	//[Fact]
-	//public async void GetDeviceFlowInterfaces2()
-	//{
-	//	var testPortalConfig = Master.GetTestPortalConfig();
-	//	var device = await testPortalConfig.GetNetflowDeviceAsync().ConfigureAwait(false);
-	//	var deviceFlowInterfaces =
-	//		await testPortalConfig.PortalClient.GetDeviceFlowInterfacesPageAsync(device.Id,
-	//			new Filter<FlowInterface> { Skip = 0, Take = 300 }).ConfigureAwait(false);
-
-	//	// Make sure that some are returned
-	//	deviceFlowInterfaces.Items.Should().NotBeNull();
-	//	Assert.True(deviceFlowInterfaces.Items.Count > 0);
-
-	//	// Make sure that interfaces are unique
-	//	((deviceFlowInterfaces.Items.Select(flow => flow.Index).HasDuplicates())).Should().BeFalse();
-	//}
-
 	[Fact]
 	public async void GetFlowEndpoints()
 	{
@@ -165,56 +132,6 @@ public class FlowTests : TestWithOutput
 		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
-	//[Fact]
-	//public async void GetFlowGraphDataAllDirections()
-	//{
-	//	var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-	//	var graphData = await PortalClient.GetGraphDataAsync(new NetflowGraphDataRequest
-	//	{
-	//		TimePeriod = TimePeriod.Zoom,
-	//		StartDateTime = _startDateTimeSeconds,
-	//		EndDateTime = _endDateTimeSeconds,
-	//		DeviceId = device.Id,
-	//	}).ConfigureAwait(false);
-
-	//	// Make sure that data is returned
-	//	CheckExpectedLineCount(graphData, 11);
-	//}
-
-	//[Fact]
-	//public async void GetFlowGraphDataInbound()
-	//{
-	//	var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-	//	var graphData = await PortalClient.GetGraphDataAsync(new NetflowGraphDataRequest
-	//	{
-	//		TimePeriod = TimePeriod.Zoom,
-	//		StartDateTime = _startDateTimeSeconds,
-	//		EndDateTime = _endDateTimeSeconds,
-	//		DeviceId = device.Id,
-	//	}).ConfigureAwait(false);
-
-	//	CheckExpectedLineCount(graphData, 11);
-
-	//	Assert.All(graphData.Lines, line => ((string.IsNullOrWhiteSpace(line.Legend)))).Should().BeFalse();
-	//}
-
-	//[Fact]
-	//public async void GetFlowGraphDataOutbound()
-	//{
-	//	var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-	//	var graphData = await PortalClient.GetGraphDataAsync(new NetflowGraphDataRequest
-	//	{
-	//		TimePeriod = TimePeriod.Zoom,
-	//		StartDateTime = _startDateTimeSeconds,
-	//		EndDateTime = _endDateTimeSeconds,
-	//		DeviceId = device.Id,
-	//	}).ConfigureAwait(false);
-
-	//	CheckExpectedLineCount(graphData, 11);
-
-	//	Assert.All(graphData.Lines, line => ((string.IsNullOrWhiteSpace(line.Legend)))).Should().BeFalse();
-	//}
-
 	[Fact]
 	public async void GetFlows()
 	{
@@ -232,22 +149,6 @@ public class FlowTests : TestWithOutput
 		// TODO Make sure that flows are unique in some way
 		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
-
-	//[Fact]
-	//public async void GetDeviceFlowInterfaceInformation()
-	//{
-	//	var device = TestPortalConfig.GetNetflowDeviceAsync();
-	//	var flowInformation = TestPortalConfig.PortalClient.GetDeviceFlowInformation(device.Id);
-
-	//	// Make sure that interface list is present
-	//	flowInformation.Interfaces.Should().NotBeNull();
-
-	//	// Make sure that some are returned
-	//	Assert.True(flowInformation.Interfaces.Any());
-
-	//	// Make sure that flow interfaces have unique indexes
-	//	((flowInformation.Interfaces.Select(@interface => @interface.InterfaceIndex).HasDuplicates())).Should().BeFalse();
-	//}
 
 	[Fact]
 	public async void GetPorts()

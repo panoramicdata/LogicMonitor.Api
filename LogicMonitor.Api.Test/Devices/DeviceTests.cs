@@ -142,7 +142,7 @@ public class DeviceTests : TestWithOutput
 					.ConfigureAwait(false);
 				recycleBinItem = recycleBinItems
 					.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
-				Assert.Null(recycleBinItem);
+				recycleBinItem.Should().BeNull();
 
 				// Do a regular hard delete
 				await logicMonitorClient
@@ -229,8 +229,8 @@ public class DeviceTests : TestWithOutput
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var refresh = await LogicMonitorClient.GetAsync<Device>(device.Id).ConfigureAwait(false);
-		Assert.True(refresh.CreatedOnSeconds > 0);
-		Assert.True(refresh.CreatedOnUtc.Value > DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
+		refresh.CreatedOnSeconds.Should().BePositive();
+		refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
 	}
 
 	[Fact]
@@ -240,23 +240,16 @@ public class DeviceTests : TestWithOutput
 		device.Should().NotBeNull();
 		var jObject = JObject.FromObject(device);
 		int.Parse(jObject["id"]!.ToString(), CultureInfo.InvariantCulture).Should().Be(device.Id);
-		Assert.Empty(jObject.Properties().Where(p => string.Equals(p.Name, nameof(Device.AutoPropertiesAssignedOnUtc), StringComparison.OrdinalIgnoreCase)));
+		jObject.Properties().Should().AllSatisfy(p => p.Name.Should().NotBe(nameof(Device.AutoPropertiesAssignedOnUtc)));
 	}
 
 	[Fact]
-	public async void GetDevicePropertiesContainsLocation()
+	public async void GetDevicePropertiesContainsExpected()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
-		Assert.Contains(deviceProperties, dp => dp.Name == "location");
-	}
-
-	[Fact]
-	public async void GetDevicePropertiesContainsAutoProperties()
-	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
-		Assert.Contains(deviceProperties, dp => dp.Type == PropertyType.Auto);
+		deviceProperties.Should().Contain(dp => dp.Name == "location");
+		deviceProperties.Should().Contain(dp => dp.Type == PropertyType.Auto);
 	}
 
 	[Fact]
@@ -271,15 +264,19 @@ public class DeviceTests : TestWithOutput
 
 		// Check
 		info.Should().NotBeNull();
-		//Assert.True(allPulsantDevices.TotalCount >= topFolderDevices.TotalCount);
-		//Assert.True(allPulsantDevices.All(d=>d.DisplayName!=null));
 	}
 
 	[Fact]
 	public void GetDevicesByDeviceGroupFullPath_InvalidDeviceGroup_ThrowsException()
 	{
-		Assert.ThrowsAsync<LogicMonitorApiException>(async () => { var collection = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", true).ConfigureAwait(false); });
-		Assert.ThrowsAsync<LogicMonitorApiException>(async () => { var collection = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", false).ConfigureAwait(false); });
+		LogicMonitorClient
+			.Invoking(async x => await x.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", true).ConfigureAwait(false))
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>();
+		LogicMonitorClient
+			.Invoking(async x => await x.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", false).ConfigureAwait(false))
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>();
 	}
 
 	[Fact]
@@ -291,8 +288,8 @@ public class DeviceTests : TestWithOutput
 		var topFolderDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, false).ConfigureAwait(false);
 
 		// Make sure there are more when recursing
-		Assert.True(allDatacenterDevices.Count > topFolderDevices.Count);
-		Assert.True(allDatacenterDevices.All(d => d.DisplayName is not null));
+		allDatacenterDevices.Should().HaveCountGreaterThan(topFolderDevices.Count);
+		allDatacenterDevices.Should().AllSatisfy(d => d.DisplayName.Should().NotBeNull());
 	}
 
 	[Fact]
@@ -392,7 +389,7 @@ public class DeviceTests : TestWithOutput
 		device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 
 		// Make sure that there are none called "test"
-		Assert.DoesNotContain(device.CustomProperties, p => p.Name == testPropertyName);
+		device.CustomProperties.Should().AllSatisfy(p => p.Name.Should().NotBe(testPropertyName));
 	}
 
 	[Fact]

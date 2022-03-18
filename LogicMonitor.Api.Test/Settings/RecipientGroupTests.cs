@@ -10,13 +10,12 @@ public class RecipientGroupTests : TestWithOutput
 	public async void GetRecipientGroupTests()
 	{
 		var recipientGroups = await LogicMonitorClient.GetAllAsync<RecipientGroup>().ConfigureAwait(false);
-		recipientGroups.Should().NotBeNull();
-		Assert.True(recipientGroups.Count > 0);
+		recipientGroups.Should().NotBeNullOrEmpty();
 
 		foreach (var recipientGroup in recipientGroups)
 		{
 			var refetchedRole = await LogicMonitorClient.GetAsync<RecipientGroup>(recipientGroup.Id).ConfigureAwait(false);
-			Assert.True(refetchedRole.GroupName == recipientGroup.GroupName);
+			refetchedRole.GroupName.Should().Be(recipientGroup.GroupName);
 		}
 	}
 }

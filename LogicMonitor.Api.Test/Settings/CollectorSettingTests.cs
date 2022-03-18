@@ -65,7 +65,7 @@ public class CollectorSettingTests
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
-		Assert.All(collectorVersions, collectorVersion => Assert.True(collectorVersion.IsStable));
+		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.IsStable.Should().BeTrue());
 	}
 
 	[Fact]
@@ -82,6 +82,6 @@ public class CollectorSettingTests
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
-		Assert.All(collectorVersions, collectorVersion => Assert.True(collectorVersion.IsStable));
+		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.IsStable.Should().BeTrue());
 	}
 }

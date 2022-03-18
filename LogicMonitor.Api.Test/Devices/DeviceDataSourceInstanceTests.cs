@@ -47,6 +47,6 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				}
 		}).ConfigureAwait(false);
 
-		Assert.All(deviceDataSourceInstances, dsi => dsi.StopMonitoring.Should().BeFalse());
+		deviceDataSourceInstances.Should().AllSatisfy(dsi => dsi.StopMonitoring.Should().BeFalse());
 	}
 }

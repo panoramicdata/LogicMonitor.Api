@@ -23,8 +23,8 @@ public class CollectorGroupTests : TestWithOutput
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
-		Assert.True(collectorGroups.All(cg => cg.Id != 0));
-		Assert.True(collectorGroups.All(cg => cg.Name is not null));
+		collectorGroups.Should().NotContain(cg => cg.Id == 0);
+		collectorGroups.Should().NotContain(cg => cg.Name == null);
 		// Bug in LogicMonitor's API
 		// collectorGroups.TotalCount.Should().NotBe(0);
 	}

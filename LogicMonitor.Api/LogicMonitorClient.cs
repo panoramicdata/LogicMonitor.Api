@@ -951,11 +951,9 @@ public partial class LogicMonitorClient : IDisposable
 		else if (typeof(T) == typeof(DownloadFileInfo))
 		{
 			var tempFileInfo = new FileInfo(Path.GetTempFileName());
-			using (Stream output = File.OpenWrite(tempFileInfo.FullName))
-			using (var input = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false))
-			{
-				input.CopyTo(output);
-			}
+			using Stream output = File.OpenWrite(tempFileInfo.FullName);
+			using var input = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+			await input.CopyToAsync(output).ConfigureAwait(false);
 
 			return new DownloadFileInfo
 			{

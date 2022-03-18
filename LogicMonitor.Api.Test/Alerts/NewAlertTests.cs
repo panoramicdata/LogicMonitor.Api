@@ -52,58 +52,9 @@ public class NewAlertTests : TestWithOutput
 		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 		// Alerts have the expected SDT status
-		Assert.True(sdtAlerts.All(a => a.InScheduledDownTime));
-		Assert.True(nonSdtAlerts.All(a => !a.InScheduledDownTime));
+		sdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeTrue());
+		nonSdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeFalse());
 	}
-
-	//[Fact]
-	//public async void GetAlerts_AckMatchesRequest()
-	//{
-	//	// Arrange
-	//	var allFilter = new Filter<Alert>
-	//	{
-	//		FilterItems = new List<FilterItem<Alert>>
-	//		{
-	//			new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-	//			new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-	//		}
-	//	};
-	//	var ackedFilter = new Filter<Alert>
-	//	{
-	//		FilterItems = new List<FilterItem<Alert>>
-	//		{
-	//			new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-	//			new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-	//			new Eq<Alert>(nameof(Alert.Acked), true)
-	//		}
-	//	};
-	//	var nonAckedFilter = new Filter<Alert>
-	//	{
-	//		FilterItems = new List<FilterItem<Alert>>
-	//		{
-	//			new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-	//			new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-	//			new Eq<Alert>(nameof(Alert.Acked), false)
-	//		}
-	//	};
-
-	//	// Act
-	//	var allAlerts = await DefaultPortalClient.GetAllAsync(allFilter).ConfigureAwait(false);
-	//	var ackedAlerts = await DefaultPortalClient.GetAllAsync(ackedFilter).ConfigureAwait(false);
-	//	var nonAckedAlerts = await DefaultPortalClient.GetAllAsync(nonAckedFilter).ConfigureAwait(false);
-
-	//	// Assert
-	//	var expectedTotalAlertIds = ackedAlerts.Union(nonAckedAlerts).Select(alert => alert.Id).ToList();
-	//	var inAllButNotInExpected = allAlerts.Where(a => !expectedTotalAlertIds.Contains(a.Id));
-
-	//	// Alert counts add up
-	//	ackedAlerts.Count + nonAckedAlerts.Count.Should().Be(allAlerts.Count);
-
-	//	// Alerts have the expected Acked status
-	//	// NOTE This could be different if the AckedNote is blank, this seems to NOT bucket that alert into nonAckedAlerts
-	//	Assert.True(ackedAlerts.All(a => a.Acked));
-	//	Assert.True(nonAckedAlerts.All(a => !a.Acked));
-	//}
 
 	[Fact]
 	public async void GetAlertsAndCheckUnique()
@@ -128,7 +79,7 @@ public class NewAlertTests : TestWithOutput
 			}
 		}
 
-		Assert.True(unique);
+		unique.Should().BeTrue();
 	}
 
 	[Fact]
@@ -174,7 +125,7 @@ public class NewAlertTests : TestWithOutput
 
 		// Act
 		var alerts = await LogicMonitorClient.GetAllAsync(filter).ConfigureAwait(false);
-		Assert.All(alerts, alert => severities.Contains(alert.Severity));
+		alerts.Should().AllSatisfy(alert => severities.Contains(alert.Severity).Should().BeTrue());
 	}
 
 	[Fact]

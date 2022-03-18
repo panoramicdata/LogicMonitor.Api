@@ -13,8 +13,5 @@ public class TimeTests : TestWithOutput
 
 		// Text should be set
 		string.IsNullOrWhiteSpace(timeZoneSetting.TimeZone).Should().BeFalse();
-
-		// Offset should be present (include to verify with non-GMT)
-		//Assert.True(timeZoneSetting.UtcOffsetSeconds != 0);
 	}
 }

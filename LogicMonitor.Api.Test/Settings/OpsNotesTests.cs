@@ -27,6 +27,6 @@ public class OpsNoteTests : TestWithOutput
 		}).ConfigureAwait(false);
 
 		// Text should be set
-		Assert.All(allOpsNotesTags, on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
+		allOpsNotesTags.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
 	}
 }

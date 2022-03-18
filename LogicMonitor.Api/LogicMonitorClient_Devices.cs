@@ -12,7 +12,7 @@ public partial class LogicMonitorClient
 	/// <param name="maxResultCount">Max result count.  May not exceed 100</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<Device>> GetDevicesByHostNameAsync(string deviceName, int maxResultCount, CancellationToken cancellationToken = default)
-		=> (await GetDevicesByNameAsync(deviceName, maxResultCount, cancellationToken).ConfigureAwait(false)).Where(d => string.Equals(d.Name, deviceName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+		=> (await GetDevicesByNameAsync(deviceName, maxResultCount, cancellationToken).ConfigureAwait(false)).Where(d => string.Equals(d.Name, deviceName, StringComparison.OrdinalIgnoreCase)).ToList();
 
 	/// <summary>
 	///     Gets device by DisplayName
@@ -23,12 +23,14 @@ public partial class LogicMonitorClient
 		=> (await GetAllAsync(new Filter<Device>
 		{
 			FilterItems = new List<FilterItem<Device>>
-			{
-					new Eq<Device>(nameof(Device.DisplayName), displayName.EscapeSlashes().EscapePlusCharacter())
-			}
+				{
+						new Eq<Device>(nameof(Device.DisplayName), (displayName ?? throw new ArgumentNullException(nameof(displayName)))
+							.EscapeSlashes()
+							.EscapePlusCharacter())
+				}
 		}, cancellationToken)
-		.ConfigureAwait(false))
-		.SingleOrDefault();
+			   .ConfigureAwait(false))
+			   .SingleOrDefault();
 
 	/// <summary>
 	///     Get device properties, in the following order:
@@ -218,7 +220,7 @@ public partial class LogicMonitorClient
 					{
 						// Filter out the ones where the full path did not START with the searched-for group, as we could
 						// only use a Includes<DeviceGroup> filter and not a StartsWith (there isn't one!)
-						deviceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchDeviceGroupName));
+						deviceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchDeviceGroupName, StringComparison.Ordinal));
 					}
 				}
 

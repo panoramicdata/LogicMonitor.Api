@@ -27,7 +27,7 @@ public class DataTests : TestWithOutput
 			GraphId = dataSourceGraph.Id,
 			DataPointLabel = virtualDataPoint.Name
 		}).ConfigureAwait(false);
-		Assert.Single(forecastGraphData.TrainingGraphData.Lines);
+		forecastGraphData.TrainingGraphData.Lines.Should().HaveCount(1);
 		forecastGraphData.ForecastedGraphData.Lines.Count.Should().Be(3);
 	}
 

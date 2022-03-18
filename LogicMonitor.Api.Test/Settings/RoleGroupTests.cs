@@ -18,7 +18,7 @@ public class RoleGroupTests : TestWithOutput
 		foreach (var role in roleGroups)
 		{
 			var refetchedRole = await LogicMonitorClient.GetAsync<RoleGroup>(role.Id).ConfigureAwait(false);
-			Assert.True(refetchedRole.Name == role.Name);
+			refetchedRole.Name.Should().Be(role.Name);
 		}
 	}
 

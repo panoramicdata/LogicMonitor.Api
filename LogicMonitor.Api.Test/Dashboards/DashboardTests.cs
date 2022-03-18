@@ -136,11 +136,11 @@ public class DashboardTests : TestWithOutput
 		customGraphWidget.GraphInfo.DataPoints[0].DataSourceFullName.Should().NotBeNull();
 		customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.Should().NotBeNull();
 		customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.Value.Should().NotBeNull();
-		Assert.True(customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.IsGlob);
+		customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.IsGlob.Should().BeTrue();
 		customGraphWidget.GraphInfo.DataPoints[0].DeviceGroupFullPath.Value.Should().NotBeNull();
-		Assert.True(customGraphWidget.GraphInfo.DataPoints[0].DeviceGroupFullPath.IsGlob);
+		customGraphWidget.GraphInfo.DataPoints[0].DeviceGroupFullPath.IsGlob.Should().BeTrue();
 		customGraphWidget.GraphInfo.DataPoints[0].DataSourceInstanceName.Value.Should().NotBeNull();
-		Assert.True(customGraphWidget.GraphInfo.DataPoints[0].DataSourceInstanceName.IsGlob);
+		customGraphWidget.GraphInfo.DataPoints[0].DataSourceInstanceName.IsGlob.Should().BeTrue();
 		customGraphWidget.GraphInfo.DataPoints[0].Display.Should().NotBeNull();
 		customGraphWidget.GraphInfo.DataPoints[0].Display.Option.Should().NotBeNull();
 		customGraphWidget.GraphInfo.DataPoints[0].Display.Legend.Should().NotBeNull();
@@ -162,13 +162,13 @@ public class DashboardTests : TestWithOutput
 		googleMapWidget.Should().NotBeNull();
 		googleMapWidget.MapPoints.Should().NotBeNull();
 		googleMapWidget.MapPoints.Should().NotBeNullOrEmpty();
-		Assert.True(googleMapWidget.MapPoints[0] is DeviceMapPoint);
+		googleMapWidget.MapPoints[0].Should().BeOfType<DeviceMapPoint>();
 		var deviceMapPoint = googleMapWidget.MapPoints[0] as DeviceMapPoint;
 		deviceMapPoint.Should().NotBeNull();
 		deviceMapPoint.Type.Should().Be("device");
 		deviceMapPoint.DeviceGroupFullPath.Should().NotBeNull();
 		deviceMapPoint.DeviceDisplayName.Should().NotBeNull();
-		Assert.True(deviceMapPoint.HasLocation);
+		deviceMapPoint.HasLocation.Should().BeTrue();
 
 		// Device and Website NOC widgets (now combined)
 		var nocWidgets = widgets.OfType<NocWidget>().ToList();
@@ -196,9 +196,9 @@ public class DashboardTests : TestWithOutput
 		pieChartWidget.Should().NotBeNull();
 		pieChartWidget.Info.Should().NotBeNull();
 		pieChartWidget.Info.Title.Should().NotBeNull();
-		Assert.True(pieChartWidget.Info.ShowLabelsAndLines);
+		pieChartWidget.Info.ShowLabelsAndLines.Should().BeTrue();
 		pieChartWidget.Info.MaxVisibleSliceCount.Should().NotBe(0);
-		Assert.True(pieChartWidget.Info.GroupRemainingAsOthers);
+		pieChartWidget.Info.GroupRemainingAsOthers.Should().BeTrue();
 		pieChartWidget.Info.DataPoints.Should().NotBeNull();
 		pieChartWidget.Info.DataPoints.Should().NotBeNullOrEmpty();
 		pieChartWidget.Info.DataPoints[0].DeviceGroupFullPath.Should().NotBeNull();
@@ -213,7 +213,7 @@ public class DashboardTests : TestWithOutput
 		pieChartWidget.Info.DataPoints[0].Aggregate.Should().BeTrue();
 		pieChartWidget.Info.DataPoints[0].AggregateFunction.Should().NotBeNull();
 		pieChartWidget.Info.VirtualDataPoints.Should().NotBeNull();
-		Assert.Empty(pieChartWidget.Info.VirtualDataPoints);
+		pieChartWidget.Info.VirtualDataPoints.Should().BeEmpty();
 		pieChartWidget.Info.Items.Should().NotBeNull();
 		pieChartWidget.Info.Items.Should().NotBeNullOrEmpty();
 		pieChartWidget.Info.Items[0].DataPointName.Should().NotBeNull();

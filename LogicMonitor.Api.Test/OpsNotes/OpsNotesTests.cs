@@ -32,45 +32,45 @@ public class OpsNotesTests : TestWithOutput
 		allOpsNotes.Select(o => o.Id).Should().Contain(newOpsNote.Id);
 	}
 
-	//[Fact]
-	//public async void AddRemoveOpsNote()
-	//{
-	//	var device = await DefaultGetWindowsDeviceAsync().ConfigureAwait(false);
-	//	var theEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-	//	var utcNow = (int)(DateTime.UtcNow - theEpoch).TotalSeconds;
-	//	var opsNoteCreationDto = new OpsNoteCreationDto
-	//	{
-	//		Note = "Test&@!\"£$%^&*()_+-=",
-	//		DateTimeUtcSeconds = utcNow,
-	//		Scopes = new List<OpsNoteScopeCreationDto>
-	//		{
-	//			new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id}
-	//		}
-	//	};
-	//	var createdOpsNote = await DefaultPortalClient.CreateAsync(opsNoteCreationDto).ConfigureAwait(false);
+	[Fact]
+	public async void AddRemoveOpsNote()
+	{
+		var device = await LogicMonitorClient.GetAsync<Device>(WindowsDeviceId).ConfigureAwait(false);
+		var theEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+		var utcNow = (int)(DateTime.UtcNow - theEpoch).TotalSeconds;
+		var opsNoteCreationDto = new OpsNoteCreationDto
+		{
+			Note = "Test&@!\"£$%^&*()_+-=",
+			DateTimeUtcSeconds = utcNow,
+			Scopes = new List<OpsNoteScopeCreationDto>
+			{
+				new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id}
+			}
+		};
+		var createdOpsNote = await LogicMonitorClient.CreateAsync(opsNoteCreationDto).ConfigureAwait(false);
 
-	//	// Ensure that this OpsNote has an ID set
-	//	createdOpsNote.Id.Should().NotBeNull();
-	//	((string.IsNullOrWhiteSpace(createdOpsNote.Id))).Should().BeFalse();
+		// Ensure that this OpsNote has an ID set
+		createdOpsNote.Id.Should().NotBeNull();
+		string.IsNullOrWhiteSpace(createdOpsNote.Id).Should().BeFalse();
 
-	//	// Wait 2 seconds
-	//	await Task.Delay(5000).ConfigureAwait(false);
+		// Wait 2 seconds
+		await Task.Delay(5000).ConfigureAwait(false);
 
-	//	// Make sure the opsNote is now present when listing opsNotes and that all properties match
-	//	var refetchedOpsNote = await DefaultPortalClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
-	//	refetchedOpsNote.Should().NotBeNull();
-	//	refetchedOpsNote.Note.Should().Be(createdOpsNote.Note);
-	//	refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch().Should().Be(utcNow);
-	//	refetchedOpsNote.Tags.Select(t => t.Name).Should().Be(createdOpsNote.Tags.Select(t => t.Name));
+		// Make sure the opsNote is now present when listing opsNotes and that all properties match
+		var refetchedOpsNote = await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
+		refetchedOpsNote.Should().NotBeNull();
+		refetchedOpsNote.Note.Should().Be(createdOpsNote.Note);
+		refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch().Should().Be(utcNow);
+		//refetchedOpsNote.Tags.Select(t => t.Name).Should().Be(createdOpsNote.Tags.Select(t => t.Name));
 
-	//	// Remove the test OpsNote - this takes some time
-	//	await DefaultPortalClient.DeleteAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
+		// Remove the test OpsNote - this takes some time
+		await LogicMonitorClient.DeleteAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
 
-	//	// Wait 2 seconds
-	//	await Task.Delay(2000).ConfigureAwait(false);
+		// Wait 2 seconds
+		await Task.Delay(2000).ConfigureAwait(false);
 
-	//	// Make sure that it is gone
-	//	refetchedOpsNote = await DefaultPortalClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
-	//	Assert.Null(refetchedOpsNote);
-	//}
+		// Make sure that it is gone
+		refetchedOpsNote = await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
+		refetchedOpsNote.Should().BeNull();
+	}
 }

@@ -74,7 +74,7 @@ public class DeviceGroupTests : TestWithOutput
 		deviceGroups.Select(dg => dg.Id).HasDuplicates().Should().BeFalse();
 
 		// Make sure that all have non-zero Parent Ids
-		Assert.DoesNotContain(deviceGroups, dg => dg.Id != 1 && dg.ParentId == 0);
+		deviceGroups.Should().AllSatisfy(dg => (dg.Id == 1 || dg.ParentId != 0).Should().BeTrue());
 	}
 
 	[Fact]
@@ -83,7 +83,7 @@ public class DeviceGroupTests : TestWithOutput
 		var deviceGroupProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(1).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(deviceGroupProperties.Count > 0);
+		deviceGroupProperties.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -92,7 +92,7 @@ public class DeviceGroupTests : TestWithOutput
 		var deviceGroups = (await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false)).SubGroups;
 
 		// Make sure that some are returned
-		Assert.True(deviceGroups.Count > 0);
+		deviceGroups.Should().NotBeNullOrEmpty();
 
 		// Make sure that all have Unique Ids
 		deviceGroups.Select(c => c.Id).HasDuplicates().Should().BeFalse();
@@ -115,7 +115,7 @@ public class DeviceGroupTests : TestWithOutput
 		var deviceGroup = await LogicMonitorClient.GetAsync<DeviceGroup>(1).ConfigureAwait(false);
 
 		// Make sure that some are returned
-		Assert.True(deviceGroup.SubGroups.Count > 0);
+		deviceGroup.SubGroups.Should().NotBeNullOrEmpty();
 
 		// Make sure that all children have Unique Ids
 		deviceGroup.SubGroups.Select(c => c.Id).HasDuplicates().Should().BeFalse();

@@ -11,7 +11,7 @@ public class IsPropertyReadonlyTests
 	[InlineData("AlertStatus", typeof(Device))]
 	[InlineData("Acked", typeof(Collector))]
 	public void IsPropertyReadonlyTest_ShouldReturnTrue(string propertyName, Type classType)
-		=> Assert.True(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType));
+		=> LogicMonitorClient.IsPropertyReadOnly(propertyName, classType).Should().BeTrue();
 
 	[Theory]
 	[InlineData("AlertStatusPriority", typeof(Device))]
@@ -25,7 +25,7 @@ public class IsPropertyReadonlyTests
 	[InlineData("lastDataTime", typeof(Device))]
 	[InlineData("ackedOn", typeof(Collector))]
 	public void IsPropertyReadonlyTest_PreferJsonName_ShouldReturnTrue(string propertyName, Type classType)
-		=> Assert.True(LogicMonitorClient.IsPropertyReadOnly(propertyName, classType, true));
+		=> LogicMonitorClient.IsPropertyReadOnly(propertyName, classType, true).Should().BeTrue();
 
 	[Theory]
 	[InlineData("customProperties", typeof(Device))]

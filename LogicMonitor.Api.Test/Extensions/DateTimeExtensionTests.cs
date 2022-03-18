@@ -3,10 +3,18 @@ namespace LogicMonitor.Api.Test.Extensions;
 public class DateTimeExtensionTests
 {
 	[Fact]
-	public void InvalidValuesThrowsException() => Assert.Throws<ArgumentException>(() => new DateTime(1976, 02, 18).GetChunkedTimeRangeList(new DateTime(1975, 02, 17), TimeSpan.FromHours(1)));
+	public void InvalidValuesThrowsException()
+		=> new DateTime(1976, 02, 18)
+		.Invoking(x => x.GetChunkedTimeRangeList(new DateTime(1975, 02, 17), TimeSpan.FromHours(1)))
+		.Should()
+		.Throw<ArgumentException>();
 
 	[Fact]
-	public void RangeToLargeThrowsException() => Assert.Throws<ArgumentException>(() => new DateTime(1975, 02, 17).GetChunkedTimeRangeList(new DateTime(1978, 04, 25), TimeSpan.FromHours(1)));
+	public void RangeToLargeThrowsException()
+		 => new DateTime(1975, 02, 17)
+		.Invoking(x => x.GetChunkedTimeRangeList(new DateTime(1978, 04, 25), TimeSpan.FromHours(1)))
+		.Should()
+		.Throw<ArgumentException>();
 
 	[Fact]
 	public void ValuesEqualBringsBackSingleItem()

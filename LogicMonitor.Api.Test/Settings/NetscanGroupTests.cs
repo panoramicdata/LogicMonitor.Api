@@ -36,10 +36,12 @@ public class NetscanGroupTests : TestWithOutput
 			Description = description
 		};
 		var newNetscanGroup = await LogicMonitorClient.CreateAsync(netscanGroupCreationDto).ConfigureAwait(false);
-		Assert.Contains(await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false), group => group.Name == name);
+		var netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
+		netscanGroupsRefetched.Should().Contain(group => group.Name == name);
 
 		await LogicMonitorClient.DeleteAsync(newNetscanGroup).ConfigureAwait(false);
-		Assert.DoesNotContain(await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false), group => group.Name == name);
+		netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
+		netscanGroupsRefetched.Should().NotContain(group => group.Name == name);
 	}
 
 	[Fact]

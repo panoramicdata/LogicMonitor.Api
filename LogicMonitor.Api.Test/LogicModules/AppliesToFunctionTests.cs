@@ -15,7 +15,7 @@ public class AppliesToFunctionTests : TestWithOutput
 
 		// Delete if already present
 		var existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
-		if (existingAppliesToFunction is not null)
+		if (existingAppliesToFunction != null)
 		{
 			await LogicMonitorClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
 		}
@@ -67,10 +67,8 @@ public class AppliesToFunctionTests : TestWithOutput
 	[InlineData("x/x")]
 	[InlineData("1.2.333.0/24")]
 	public void AppliesToFromCidrTests_ThrowsFormatException(string input)
-	{
-		var appliesToFunction = new AppliesToFunction();
-		Assert.Throws<FormatException>(() => appliesToFunction.SetCodeFromCidr(input));
-	}
+		=> new AppliesToFunction().Invoking(x => x.SetCodeFromCidr(input))
+			.Should().Throw<FormatException>();
 
 	[Theory]
 	[InlineData("0.0.0.0/0")]
@@ -97,10 +95,8 @@ public class AppliesToFunctionTests : TestWithOutput
 	[InlineData("0.0.0.0/21")]
 	[InlineData("0.0.0.0/22")]
 	public void AppliesToFromCidrTests_ThrowsNotSupportedException(string input)
-	{
-		var appliesToFunction = new AppliesToFunction();
-		Assert.Throws<NotSupportedException>(() => appliesToFunction.SetCodeFromCidr(input));
-	}
+		=> new AppliesToFunction().Invoking(x => x.SetCodeFromCidr(input))
+			.Should().Throw<NotSupportedException>();
 
 	[Fact]
 	public async void CustomerCodeWorks()

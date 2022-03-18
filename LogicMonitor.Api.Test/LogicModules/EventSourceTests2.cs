@@ -90,7 +90,7 @@ public class EventSourceTests2 : TestWithOutput
 		eventSources.Should().HaveCountLessThan(20);
 
 		// Make sure that they match the expected group
-		Assert.True(eventSources.All(item => item.Group == groupName));
+		eventSources.Should().AllSatisfy(item => item.Group.Should().Be(groupName));
 
 		// The whole thing should take less than 5 seconds
 		AssertIsFast(5);

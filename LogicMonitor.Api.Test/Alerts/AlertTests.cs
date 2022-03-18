@@ -172,7 +172,7 @@ public class AlertTests : TestWithOutput
 			// TODO CheckAlertsAreValid(alerts);
 
 			// Make sure there are no alerts for hosts not mentioned by the hostFilter
-			Assert.DoesNotContain(alerts, alert => alert.MonitorObjectName != device.DisplayName);
+			alerts.Should().AllSatisfy(alert => alert.MonitorObjectName.Should().Be(device.DisplayName));
 			Assert.All(alerts, alert => Assert.Contains(alert.AlertType, alertTypes));
 			Assert.All(alerts, alert => Assert.True(alert.StartOnUtc < startUtcIsBefore));
 		}
@@ -210,10 +210,9 @@ public class AlertTests : TestWithOutput
 		// TODO CheckAlertsAreValid(alerts);
 
 		// Make sure there are no alerts for hosts not mentioned by the hostFilter
-		Assert.True(alerts.All(alert => alert.MonitorObjectName == device.DisplayName));
-		//Assert.True(alerts.All(alert => alert.MonitorObjectGroups.Any(mog => mog.FullPath.StartsWith(deviceGroupFullPathFilter.Replace("*", "")))));
-		Assert.True(alerts.All(alert => alert.InstanceName.StartsWith(dataSourceNameFilter)));
-		Assert.True(alerts.All(alert => alert.DataPointName.StartsWith(dataPointNameFilter)));
+		alerts.Should().AllSatisfy(alert => alert.MonitorObjectName.Should().Be(device.DisplayName));
+		Assert.True(alerts.All(alert => alert.InstanceName.StartsWith(dataSourceNameFilter, StringComparison.Ordinal)));
+		Assert.True(alerts.All(alert => alert.DataPointName.StartsWith(dataPointNameFilter, StringComparison.Ordinal)));
 	}
 
 	[Fact]
@@ -232,7 +231,7 @@ public class AlertTests : TestWithOutput
 			OrderDirection = OrderDirection.Desc
 		};
 		var alertsNotIncludingCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterNotIncludingCleared).ConfigureAwait(false);
-		Assert.True(alertsNotIncludingCleared.Count > 0);
+		alertsNotIncludingCleared.Should().HaveCountGreaterThan(0);
 		Assert.DoesNotContain(alertsNotIncludingCleared, a => !a.IsActive);
 		Assert.Contains(alertsNotIncludingCleared, a => a.IsActive);
 
@@ -282,15 +281,15 @@ public class AlertTests : TestWithOutput
 			}).ConfigureAwait(false);
 
 		// Ensure that all alerts are at the appropriate level
-		Assert.True(unfilteredAlerts.All(a => a.AlertLevel >= AlertLevel.Error));
-		Assert.True(criticalAlerts.All(a => a.AlertLevel >= AlertLevel.Critical));
-		Assert.True(errorAlerts.All(a => a.AlertLevel >= AlertLevel.Error));
-		Assert.True(warningAlerts.All(a => a.AlertLevel >= AlertLevel.Warning));
+		unfilteredAlerts.Should().AllSatisfy(a => (a.AlertLevel >= AlertLevel.Error).Should().BeTrue());
+		criticalAlerts.Should().AllSatisfy(a => (a.AlertLevel >= AlertLevel.Critical).Should().BeTrue());
+		errorAlerts.Should().AllSatisfy(a => (a.AlertLevel >= AlertLevel.Error).Should().BeTrue());
+		warningAlerts.Should().AllSatisfy(a => (a.AlertLevel >= AlertLevel.Warning).Should().BeTrue());
 
 		// Ensure that the counts make sense
-		Assert.True(unfilteredAlerts.Count == errorAlerts.Count);
-		Assert.True(criticalAlerts.Count <= errorAlerts.Count);
-		Assert.True(errorAlerts.Count <= warningAlerts.Count);
+		unfilteredAlerts.Should().HaveCount(errorAlerts.Count);
+		criticalAlerts.Count.Should().BeLessThanOrEqualTo(errorAlerts.Count);
+		errorAlerts.Count.Should().BeLessThanOrEqualTo(warningAlerts.Count);
 	}
 
 	[Fact]
@@ -386,7 +385,7 @@ public class AlertTests : TestWithOutput
 			refetchedAlert.Id.Should().Be(alert.Id);
 			refetchedAlert.AlertType.Should().Be(alert.AlertType);
 			refetchedAlert.MonitorObjectId.Should().Be(alert.MonitorObjectId);
-			refetchedAlert.DetailMessage?.Body.Should().Be(alert.DetailMessage?.Body);
+			refetchedAlert.DetailMessage?.Body.Should().Be(alert.DetailMessage.Body);
 		}
 	}
 

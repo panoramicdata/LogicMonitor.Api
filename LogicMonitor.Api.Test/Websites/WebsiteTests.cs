@@ -90,7 +90,7 @@ public class WebsiteTests : TestWithOutput
 		var websiteMonitorCheckpoints = await LogicMonitorClient.GetAllAsync<WebsiteMonitorCheckpoint>().ConfigureAwait(false);
 
 		// Some website folders should be returned
-		Assert.True(websiteMonitorCheckpoints.Count > 0);
+		websiteMonitorCheckpoints.Should().NotBeNullOrEmpty();
 
 		//// Website folders should have unique Ids
 		//((websiteMonitorCheckpoints.Select(c => c.Id).HasDuplicates())).Should().BeFalse();

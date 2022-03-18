@@ -35,10 +35,11 @@ public class RawDataTests : TestWithOutput
 
 		rawData.Should().NotBeNull();
 
-		Assert.All(rawData.UtcTimeStamps, r =>
+		rawData.UtcTimeStamps.Should().AllSatisfy(r =>
 		{
 			var dataDateTime = r.ToDateTimeUtcFromMs();
-			Assert.True(yesterday <= dataDateTime && dataDateTime <= utcNow);
+			(yesterday <= dataDateTime).Should().BeTrue();
+			(dataDateTime <= utcNow).Should().BeTrue();
 		});
 	}
 

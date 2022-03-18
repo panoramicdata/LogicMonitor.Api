@@ -119,15 +119,11 @@ public class NetscanTests : TestWithOutput
 		createdNetscan.CollectorId.Should().Be(collectorId);
 		createdNetscan.Credentials.Should().NotBeNull();
 		createdNetscan.Credentials.DeviceGroupId.Should().Be(credentialsDeviceGroupId);
-		//Assert.True(credentialsCustom.SequenceEqual(createdNetscan.Credentials.Custom));
 		createdNetscan.Method.Should().Be(netscanMethod);
 		createdNetscan.Schedule.Should().NotBeNull();
 		createdNetscan.Schedule.Type.Should().Be(netscanScheduleType);
 		createdNetscan.Schedule.Cron.Should().Be(netscanScheduleCron);
-		//Assert.True(netscanScheduleWeekday.SequenceEqual(createdNetscan.Schedule.Weekday));
-		//createdNetscan.Schedule.NthWeek.Should().Be(netscanScheduleNthWeek);
 		createdNetscan.Schedule.Notify.Should().Be(netscanScheduleNotify);
-		//Assert.True(netscanScheduleScheduleRecipients.SequenceEqual(createdNetscan.Schedule.Recipients));
 		createdNetscan.GroupName.Should().Be(netscanGroup.Name);
 		createdNetscan.GroupId.Should().Be(netscanGroup.Id);
 		createdNetscan.SubnetScanRange.Should().Be(subnetScanRange);
@@ -144,8 +140,6 @@ public class NetscanTests : TestWithOutput
 		createdNetscan.Ddr.ChangeName.Should().Be(ddrChangeName);
 		createdNetscan.DuplicatesStrategy.Should().NotBeNull();
 		createdNetscan.DuplicatesStrategy.Type.Should().Be(duplicatesStrategyType);
-		//Assert.True(duplicatedStrategyGroups.Select(obj=>).SequenceEqual(createdNetscan.DuplicatesStrategy.Groups));
-		//Assert.True(duplicatesStrategyCollectors.SequenceEqual(createdNetscan.DuplicatesStrategy.Collectors));
 
 		// Clean up
 		await portalClient.DeleteAsync(createdNetscan).ConfigureAwait(false);
@@ -176,8 +170,7 @@ public class NetscanTests : TestWithOutput
 
 		// Ids should all be distinct
 		var ids = netscans.Items.Select(nsp => nsp.Id);
-		Assert.True(netscans.Items.Count == ids.Count());
-
+		netscans.Items.Should().HaveSameCount(ids);
 		netscans.Items.Count.Should().Be(expectedCount);
 	}
 }
