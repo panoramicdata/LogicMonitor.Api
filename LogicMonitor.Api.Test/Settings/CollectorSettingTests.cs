@@ -11,8 +11,7 @@ public class CollectorSettingTests
 	public async void GetAllCollectorGroupSettings()
 	{
 		var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-		allCollectorGroupSettings.Should().NotBeNull();
-		Assert.True(allCollectorGroupSettings.Count > 0);
+		allCollectorGroupSettings.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
@@ -26,8 +25,7 @@ public class CollectorSettingTests
 	public async void GetAllCollectorsSettings()
 	{
 		var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
-		allCollectorSettings.Should().NotBeNull();
-		Assert.True(allCollectorSettings.Count > 0);
+		allCollectorSettings.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]

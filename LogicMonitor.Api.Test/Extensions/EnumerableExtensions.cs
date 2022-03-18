@@ -1,5 +1,4 @@
-﻿using LogicMonitor.Api.Test;
-namespace LogicMonitor.Api.Test.Extensions;
+﻿namespace LogicMonitor.Api.Test.Extensions;
 
 public static class EnumerableExtensions
 {
@@ -7,12 +6,12 @@ public static class EnumerableExtensions
 
 	private static bool HasDuplicates<T>(this IEnumerable<T> subjects, IEqualityComparer<T> comparer)
 	{
-		if (subjects == null)
+		if (subjects is null)
 		{
 			throw new ArgumentNullException(nameof(subjects));
 		}
 
-		if (comparer == null)
+		if (comparer is null)
 		{
 			throw new ArgumentNullException(nameof(comparer));
 		}

@@ -16,7 +16,7 @@ public class CollectorTests : TestWithOutput
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
-		Assert.True(debugCommandResponse.SessionId > 0);
+		debugCommandResponse.SessionId.Should().BePositive();
 	}
 
 	[Fact]

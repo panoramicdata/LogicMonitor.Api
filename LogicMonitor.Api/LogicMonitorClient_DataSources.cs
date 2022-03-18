@@ -24,7 +24,7 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken = default)
 	{
 		var page = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs", cancellationToken).ConfigureAwait(false);
-		if (page.Items == null)
+		if (page.Items is null)
 		{
 			return new List<DataSourceGraph>();
 		}
@@ -161,7 +161,7 @@ public partial class LogicMonitorClient
 		Filter<DataSourceGraph> filter = null,
 		CancellationToken cancellationToken = default)
 	{
-		if (filter == null)
+		if (filter is null)
 		{
 			filter = new Filter<DataSourceGraph> { Skip = 0, Take = 300 };
 		}
@@ -296,7 +296,7 @@ public partial class LogicMonitorClient
 		Filter<DeviceDataSourceInstance> filter = null,
 		CancellationToken cancellationToken = default)
 	{
-		if (filter == null)
+		if (filter is null)
 		{
 			filter = new Filter<DeviceDataSourceInstance>();
 		}
@@ -335,7 +335,7 @@ public partial class LogicMonitorClient
 		Filter<DeviceDataSourceInstance> filter = null,
 		CancellationToken cancellationToken = default)
 	{
-		if (filter == null)
+		if (filter is null)
 		{
 			filter = new Filter<DeviceDataSourceInstance>();
 		}
@@ -378,7 +378,7 @@ public partial class LogicMonitorClient
 		Filter<InstanceProperty> filter = null,
 		CancellationToken cancellationToken = default)
 	{
-		if (filter == null)
+		if (filter is null)
 		{
 			filter = new Filter<InstanceProperty>();
 		}
@@ -457,7 +457,7 @@ public partial class LogicMonitorClient
 				{
 					var deviceDataSource = await GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceId, logicModuleId, cancellationToken).ConfigureAwait(false);
 
-					if (instanceProperty == null)
+					if (instanceProperty is null)
 					{
 						deviceDataSourceInstances.AddRange(await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSource.Id, instanceFilter, cancellationToken).ConfigureAwait(false));
 					}

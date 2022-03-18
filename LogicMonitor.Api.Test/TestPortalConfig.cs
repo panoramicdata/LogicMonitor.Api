@@ -5,7 +5,7 @@ internal class TestPortalConfig
 	internal TestPortalConfig(ILogger logger)
 	{
 		var location = typeof(TestPortalConfig).GetTypeInfo().Assembly.Location;
-		var dirPath = Path.Combine(Path.GetDirectoryName(location), "../../..");
+		var dirPath = Path.Combine(Path.GetDirectoryName(location), "../../../..");
 		var builder = new ConfigurationBuilder()
 			.SetBasePath(dirPath)
 			.AddJsonFile("appsettings.json");

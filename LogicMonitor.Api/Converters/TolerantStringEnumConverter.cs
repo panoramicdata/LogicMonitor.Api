@@ -40,7 +40,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 					// This just does it by name - we need to use the EnumMemberAttribute
 					//var match = names
 					//	.FirstOrDefault(n => string.Equals(n, enumText, StringComparison.OrdinalIgnoreCase));
-					//if (match != null)
+					//if (match is not null)
 					//{
 					//	return Enum.Parse(enumType, match);
 					//}
@@ -49,7 +49,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 					var match = Array.Find(Enum
 						.GetNames(objectType), name => GetEnumMemberAttrValue(objectType, Enum.Parse(enumType, name)) == enumText);
 
-					if (match != null)
+					if (match is not null)
 					{
 						return Enum.Parse(enumType, match);
 					}
@@ -60,7 +60,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 					return null;
 				}
 
-				if (defaultName != null)
+				if (defaultName is not null)
 				{
 #if DEBUG
 						throw new Exception($"{objectType} missing an enum member for {enumText}");
@@ -83,7 +83,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 					return null;
 				}
 
-				if (defaultName != null)
+				if (defaultName is not null)
 				{
 					return Enum.Parse(objectType, defaultName);
 				}

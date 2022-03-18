@@ -16,10 +16,10 @@ public partial class LogicMonitorClient
 	{
 		// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
 		//var alerts =
-		//	alertFilter?.StartUtcIsAfter != null
-		//		&& alertFilter.StartUtcIsBefore != null
-		//		&& alertFilter.EndUtcIsAfter == null
-		//		&& alertFilter.EndUtcIsBefore == null
+		//	alertFilter?.StartUtcIsAfter is not null
+		//		&& alertFilter.StartUtcIsBefore is not null
+		//		&& alertFilter.EndUtcIsAfter is null
+		//		&& alertFilter.EndUtcIsBefore is null
 		//			? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false)
 		//			: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
 
@@ -54,12 +54,12 @@ public partial class LogicMonitorClient
 		var originalStartEpochIsAfter = alertFilter.StartEpochIsAfter;
 		var originalStartEpochIsBefore = alertFilter.StartEpochIsBefore;
 		var utcNow = DateTime.UtcNow;
-		if (alertFilter.StartEpochIsAfter == null)
+		if (alertFilter.StartEpochIsAfter is null)
 		{
 			alertFilter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
 		}
 
-		if (alertFilter.StartEpochIsBefore == null)
+		if (alertFilter.StartEpochIsBefore is null)
 		{
 			alertFilter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
 		}
@@ -114,13 +114,13 @@ public partial class LogicMonitorClient
 
 		// If take is specified, do only that chunk.
 
-		if (correctedAlertFilter.Skip == null)
+		if (correctedAlertFilter.Skip is null)
 		{
 			correctedAlertFilter.Skip = 0;
 		}
 
 		int maxAlertCount;
-		if (correctedAlertFilter.Take != null)
+		if (correctedAlertFilter.Take is not null)
 		{
 			if (correctedAlertFilter.Take > AlertsMaxTake)
 			{
@@ -158,7 +158,7 @@ public partial class LogicMonitorClient
 			}
 
 			// Adjust the alertFilter
-			if (correctedAlertFilter.SearchId == null && !string.IsNullOrWhiteSpace(page.SearchId))
+			if (correctedAlertFilter.SearchId is null && !string.IsNullOrWhiteSpace(page.SearchId))
 			{
 				// We can re-use the searchId
 				correctedAlertFilter.SearchId = page.SearchId;

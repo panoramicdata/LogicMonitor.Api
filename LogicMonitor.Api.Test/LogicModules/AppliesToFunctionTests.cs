@@ -15,7 +15,7 @@ public class AppliesToFunctionTests : TestWithOutput
 
 		// Delete if already present
 		var existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName).ConfigureAwait(false);
-		if (existingAppliesToFunction != null)
+		if (existingAppliesToFunction is not null)
 		{
 			await LogicMonitorClient.DeleteAsync(existingAppliesToFunction).ConfigureAwait(false);
 		}

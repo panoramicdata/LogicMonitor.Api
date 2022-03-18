@@ -257,19 +257,19 @@ public class AlertFilter
 	public Filter<Alert> GetFilter()
 	{
 		// Either Cleared or IncludeCleared can be specified, but not both
-		if (IsCleared != null && IncludeCleared != null)
+		if (IsCleared is not null && IncludeCleared is not null)
 		{
 			throw new InvalidOperationException("Either IsCleared or IncludeCleared can be specified, but not both.  Try setting IncludeCleared to null.");
 		}
 
 		// If IsCleared is false, it is not valid to set either EndDateTimes
-		if (IsCleared == false && (EndEpochIsAfter != null || EndEpochIsBefore != null))
+		if (IsCleared == false && (EndEpochIsAfter is not null || EndEpochIsBefore is not null))
 		{
 			throw new InvalidOperationException("Either IsCleared set to false OR and EndTime filter can be set, but not both.");
 		}
 
 		// Either AlertType or AlertTypes may be set, or neither, but not both
-		if (AlertType != null && AlertTypes != null)
+		if (AlertType is not null && AlertTypes is not null)
 		{
 			throw new InvalidOperationException("Either AlertType or AlertTypes may be set, or neither, but not both.");
 		}
@@ -277,12 +277,12 @@ public class AlertFilter
 		// Create the filter
 		var filter = new Filter<Alert>();
 
-		if (OrderByProperty != null)
+		if (OrderByProperty is not null)
 		{
 			filter.Order = new Order<Alert> { Direction = OrderDirection, Property = OrderByProperty };
 		}
 
-		if (Properties != null)
+		if (Properties is not null)
 		{
 			filter.Properties = Properties;
 			if (!filter.Properties.Any(p => p == nameof(Alert.Id)))
@@ -291,12 +291,12 @@ public class AlertFilter
 			}
 		}
 
-		if (Skip != null)
+		if (Skip is not null)
 		{
 			filter.Skip = Skip.Value;
 		}
 
-		if (Take != null)
+		if (Take is not null)
 		{
 			filter.Take = Take.Value;
 		}
@@ -328,7 +328,7 @@ public class AlertFilter
 		filter.AppendFilterItemIfNotNull(nameof(Alert.InstanceId), InstanceId);
 
 		// The IncludeCleared approach
-		if (IncludeCleared != null)
+		if (IncludeCleared is not null)
 		{
 			filter.AppendFilterItemIfNotNull(nameof(Alert.IsCleared), IncludeCleared == true ? "*" : null);
 		}

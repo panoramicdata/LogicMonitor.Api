@@ -99,13 +99,6 @@ public class WebsiteTests : TestWithOutput
 	[Fact]
 	public async void CrudWebsiteGroupsAndWebsites()
 	{
-		// Ensure the website group doesn't exist
-		var oldWebsiteGroup = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync("Test Name").ConfigureAwait(false);
-		if (oldWebsiteGroup != null)
-		{
-			await LogicMonitorClient.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id).ConfigureAwait(false);
-		}
-
 		// Ensure the website doesn't exist
 		var oldWebsites = await LogicMonitorClient.GetAllAsync(new Filter<Website>
 		{
@@ -118,6 +111,14 @@ public class WebsiteTests : TestWithOutput
 		{
 			await LogicMonitorClient.DeleteAsync<Website>(oldWebsite.Id).ConfigureAwait(false);
 		}
+
+		// Ensure the website group doesn't exist
+		var oldWebsiteGroup = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync("Test Name").ConfigureAwait(false);
+		if (oldWebsiteGroup is not null)
+		{
+			await LogicMonitorClient.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id).ConfigureAwait(false);
+		}
+
 
 		// Create it
 		var websiteGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
@@ -139,23 +140,29 @@ public class WebsiteTests : TestWithOutput
 			var website = await LogicMonitorClient
 				.CreateAsync(GetWebsiteCreationDto(websiteGroup.Id, nameof(CrudWebsiteGroupsAndWebsites)))
 				.ConfigureAwait(false);
-			website.Should().NotBeNull(); ;
-			websiteGroup.Id.Should().Equals(website.WebsiteGroupId);
-			website.TriggerSslExpirationAlerts.Should().BeTrue();
-			ExpectedAlertExpression.Should().Be(website.AlertExpression);
+			website.Should().NotBeNull();
+			try
+			{
+				websiteGroup.Id.Should().Be(website.WebsiteGroupId);
+				website.TriggerSslExpirationAlerts.Should().BeTrue();
+				ExpectedAlertExpression.Should().Be(website.AlertExpression);
 
-			// Wait to ensure that it was created
-			await Task.Delay(1000)
-				.ConfigureAwait(false);
-
-			// Delete it
-			await LogicMonitorClient
-				.DeleteAsync<Website>(website.Id)
-				.ConfigureAwait(false);
+				// Wait to ensure that it was created
+				await Task.Delay(1000)
+					.ConfigureAwait(false);
+			}
+			finally
+			{
+				// Delete it
+				await LogicMonitorClient
+					.DeleteAsync<Website>(website.Id)
+					.ConfigureAwait(false);
+			}
 		}
 		finally
 		{
 			// Delete it again
+
 			await LogicMonitorClient
 				.DeleteAsync(websiteGroup)
 				.ConfigureAwait(false);

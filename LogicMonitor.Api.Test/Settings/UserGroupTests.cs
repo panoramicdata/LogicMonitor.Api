@@ -30,7 +30,7 @@ public class UserGroupTests : TestWithOutput
 				.GetAllAsync(new Filter<UserGroup> { FilterItems = new List<FilterItem<UserGroup>> { new Eq<UserGroup>(nameof(UserGroup.Name), Value) } })
 				.ConfigureAwait(false))
 			.SingleOrDefault();
-		if (existingUserGroup != null)
+		if (existingUserGroup is not null)
 		{
 			await LogicMonitorClient.DeleteAsync(existingUserGroup).ConfigureAwait(false);
 		}

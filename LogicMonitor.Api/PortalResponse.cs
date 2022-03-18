@@ -42,7 +42,7 @@ internal class PortalResponse<T> where T : new()
 		// Does the response contain the old wrapper?
 		var status = jObject["status"]?.ToString();
 		var errorMessage = ((JValue?)jObject["errmsg"])?.ToString(CultureInfo.InvariantCulture);
-		if (status != null && jObject["data"] is JContainer data && errorMessage != null)
+		if (status is not null && jObject["data"] is JContainer data && errorMessage is not null)
 		{
 			// Yes
 			HttpStatusCode = (HttpStatusCode)int.Parse(status, CultureInfo.InvariantCulture);
@@ -109,7 +109,7 @@ internal class PortalResponse<T> where T : new()
 	public T? GetObject(JsonConverter[]? converters = null)
 	{
 		// If no data was received, throw an exception
-		if (Data == null)
+		if (Data is null)
 		{
 			if (typeof(T) == typeof(EmptyResponse))
 			{

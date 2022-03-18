@@ -18,7 +18,7 @@ public abstract class UndescribedNamedItem : IdentifiedItem
 	/// <param name="obj"></param>
 	public override bool Equals(object obj)
 	{
-		if (obj == null || obj.GetType() != GetType())
+		if (obj is null || obj.GetType() != GetType())
 		{
 			return false;
 		}
@@ -26,7 +26,7 @@ public abstract class UndescribedNamedItem : IdentifiedItem
 		var logicMonitorNamedEntity = obj as NamedItem;
 
 		return base.Equals(logicMonitorNamedEntity)
-			   && logicMonitorNamedEntity != null
+			   && logicMonitorNamedEntity is not null
 			   && logicMonitorNamedEntity.Name == Name;
 	}
 

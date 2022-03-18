@@ -55,7 +55,7 @@ public partial class LogicMonitorClient
 		var downloadToken = await GetBySubUrlAsync<DownloadToken>($"setting/collector/collectors/{collectorId}/downloadToken", cancellationToken).ConfigureAwait(false);
 
 		var suburl = $"setting/collector/collectors/{collectorId}/{ (collectorDownloadType == CollectorDownloadType.Bootstrap ? "bootstraps" : "installers") }/{collectorPlatformAndArchitecture.ToString().ToLowerInvariant()}?";
-		if (collectorVersion != null)
+		if (collectorVersion is not null)
 		{
 			suburl += $"collectorVersion={collectorVersion}&";
 		}

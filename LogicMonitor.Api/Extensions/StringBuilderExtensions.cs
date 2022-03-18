@@ -7,7 +7,7 @@ internal static class StringBuilderExtensions
 	private static void AppendIfNotNullInternal(StringBuilder stringBuilder, string parameter, object value, string @operator, string delimiter, bool encodeResult)
 	{
 		// Null function if the object is null
-		if (value == null)
+		if (value is null)
 		{
 			return;
 		}

@@ -331,7 +331,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			.GetDeviceGroupByFullPathAsync(deviceGroupName)
 			.ConfigureAwait(false);
 
-		if (deviceGroup != null)
+		if (deviceGroup is not null)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(deviceGroup)

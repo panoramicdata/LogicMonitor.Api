@@ -30,7 +30,7 @@ public class RoleGroupTests : TestWithOutput
 				.GetAllAsync(new Filter<RoleGroup> { FilterItems = new List<FilterItem<RoleGroup>> { new Eq<RoleGroup>(nameof(RoleGroup.Name), Value) } })
 				.ConfigureAwait(false))
 			.SingleOrDefault();
-		if (existingRoleGroup != null)
+		if (existingRoleGroup is not null)
 		{
 			await LogicMonitorClient.DeleteAsync(existingRoleGroup).ConfigureAwait(false);
 		}

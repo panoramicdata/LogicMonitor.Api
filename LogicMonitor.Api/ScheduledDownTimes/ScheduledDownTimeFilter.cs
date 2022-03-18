@@ -80,24 +80,24 @@ public class ScheduledDownTimeFilter
 	{
 		var filter = new Filter<ScheduledDownTime>();
 
-		if (OrderByProperty != null)
+		if (OrderByProperty is not null)
 		{
 			filter.Order = new Order<ScheduledDownTime> { Direction = OrderDirection, Property = OrderByProperty.LowerCaseFirst() };
 		}
 
-		if (Skip != null)
+		if (Skip is not null)
 		{
 			filter.Skip = Skip.Value;
 		}
 
-		if (Take != null)
+		if (Take is not null)
 		{
 			filter.Take = Take.Value;
 		}
 
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.IsEffective), IsEffective);
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DeviceGroupId), DeviceGroupId);
-		if (Type != null)
+		if (Type is not null)
 		{
 			filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.Type), $"{Type}SDT");
 		}

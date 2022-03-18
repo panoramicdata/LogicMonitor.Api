@@ -20,7 +20,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<Role>> GetRolesForCurrentUserPageAsync(Filter<Role> filter, CancellationToken cancellationToken = default)
 	{
-		if (filter != null && filter.Order == null)
+		if (filter is not null && filter.Order is null)
 		{
 			filter.Order = new Order<Role>
 			{
@@ -40,7 +40,7 @@ public partial class LogicMonitorClient
 	/// <returns>The escalation chains</returns>
 	public Task<Page<EscalationChain>> GetEscalationChainsPageAsync(Filter<EscalationChain> filter, CancellationToken cancellationToken = default)
 	{
-		if (filter != null && filter.Order == null)
+		if (filter is not null && filter.Order is null)
 		{
 			filter.Order = new Order<EscalationChain>
 			{

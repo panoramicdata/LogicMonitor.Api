@@ -10,7 +10,7 @@ public class AlertRulesTests : TestWithOutput
 	{
 		var alertRule = (await portalClient.GetAllAsync<AlertRule>().ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName);
 
-		if (alertRule == null)
+		if (alertRule is null)
 		{
 			throw new ArgumentException($"No alert rule found with name {alertRuleName}");
 		}
@@ -30,8 +30,7 @@ public class AlertRulesTests : TestWithOutput
 	public async void GetAlertRules()
 	{
 		var alertRules = await LogicMonitorClient.GetAllAsync<AlertRule>().ConfigureAwait(false);
-		alertRules.Should().NotBeNull();
-		Assert.True(alertRules.Count > 0);
+		alertRules.Should().NotBeNullOrEmpty();
 
 		// Get each one individually and check everything matches
 		foreach (var alertRule in alertRules)

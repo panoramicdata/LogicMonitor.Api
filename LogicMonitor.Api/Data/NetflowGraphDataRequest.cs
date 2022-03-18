@@ -25,7 +25,7 @@ public class NetflowGraphDataRequest : GraphDataRequest
 			throw new ArgumentException("NetflowDeviceId must be specified");
 		}
 
-		if (NetflowFilter == null)
+		if (NetflowFilter is null)
 		{
 			throw new ArgumentException("NetflowFilter must not be null.");
 		}

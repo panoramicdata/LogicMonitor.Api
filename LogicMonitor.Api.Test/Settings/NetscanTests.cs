@@ -104,7 +104,7 @@ public class NetscanTests : TestWithOutput
 
 		// Remove any existing  by this name
 		var existingNetscan = (await portalClient.GetAllAsync<Netscan>().ConfigureAwait(false)).SingleOrDefault(nsp => nsp.Name == name);
-		if (existingNetscan != null)
+		if (existingNetscan is not null)
 		{
 			await portalClient.DeleteAsync(existingNetscan).ConfigureAwait(false);
 		}
@@ -135,7 +135,7 @@ public class NetscanTests : TestWithOutput
 		createdNetscan.CreatorName.Should().NotBeNull();
 		createdNetscan.Ddr.Should().NotBeNull();
 		createdNetscan.Ddr.Assignment.Should().NotBeNull();
-		Assert.Single(createdNetscan.Ddr.Assignment);
+		createdNetscan.Ddr.Assignment.Should().HaveCount(1);
 		createdNetscan.Ddr.Assignment[0].DeviceGroupId.Should().Be(assignmentDeviceGroupId);
 		createdNetscan.Ddr.Assignment[0].Type.Should().Be(assignmentType);
 		createdNetscan.Ddr.Assignment[0].InclusionType.Should().Be(assignmentInclusionType);
@@ -160,7 +160,7 @@ public class NetscanTests : TestWithOutput
 
 		// Ids should all be distinct
 		var ids = netscans.Select(nsp => nsp.Id);
-		Assert.True(netscans.Count == ids.Count());
+		ids.Should().HaveCount(netscans.Count);
 	}
 
 	[Fact]

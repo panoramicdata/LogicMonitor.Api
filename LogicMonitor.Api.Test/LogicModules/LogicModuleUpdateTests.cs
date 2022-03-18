@@ -165,7 +165,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				.GetLogicModuleUpdates(LogicModuleType.All, version.Version.Major, default)
 				.ConfigureAwait(false);
 
-		Assert.True(allUpdates.Total > 0);
+		allUpdates.Total.Should().BePositive();
 	}
 
 	/// <summary>

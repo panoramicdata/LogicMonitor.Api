@@ -22,7 +22,7 @@ public partial class LogicMonitorClient
 	public async Task<List<Widget>> GetWidgetsByDashboardNameAsync(string dashboardName, CancellationToken cancellationToken = default)
 	{
 		var dashboard = await GetByNameAsync<Dashboard>(dashboardName, cancellationToken).ConfigureAwait(false);
-		if (dashboard == null)
+		if (dashboard is null)
 		{
 			return null;
 		}

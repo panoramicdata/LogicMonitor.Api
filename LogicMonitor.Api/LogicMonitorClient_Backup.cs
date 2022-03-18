@@ -251,7 +251,7 @@ public partial class LogicMonitorClient
 		}
 
 		// This one must be done last, to ensure that all retrieved data is sent to file
-		if (backupSpecification.GzipFileInfo != null)
+		if (backupSpecification.GzipFileInfo is not null)
 		{
 			progressReporter.Notify("Save");
 			progressReporter.StartSubTask("- Writing to disk");
@@ -266,7 +266,7 @@ public partial class LogicMonitorClient
 
 	private static byte[] SerializeAndCompress<T>(T objectToWrite, FileInfo fileInfo) where T : class
 	{
-		if (objectToWrite == null)
+		if (objectToWrite is null)
 		{
 			return null;
 		}

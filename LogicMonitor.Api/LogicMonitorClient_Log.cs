@@ -16,7 +16,7 @@ public partial class LogicMonitorClient
 	public async Task<List<LogItem>> GetLogItemsAsync(LogFilter logFilter = null, CancellationToken cancellationToken = default)
 	{
 		// If take is specified, do only that chunk.
-		if (logFilter == null)
+		if (logFilter is null)
 		{
 			logFilter = new LogFilter(
 				0,
@@ -26,13 +26,13 @@ public partial class LogicMonitorClient
 				LogFilterSortOrder.HappenedOnAsc);
 		}
 
-		if (logFilter.Skip == null)
+		if (logFilter.Skip is null)
 		{
 			logFilter.Skip = 0;
 		}
 
 		int maxLogItemCount;
-		if (logFilter.Take != null)
+		if (logFilter.Take is not null)
 		{
 			if (logFilter.Take > LogItemsMaxTake)
 			{

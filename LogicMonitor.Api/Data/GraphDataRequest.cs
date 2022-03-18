@@ -58,7 +58,7 @@ public abstract class GraphDataRequest : GraphDataRequestBase
 			case TimePeriod.Unknown:
 				throw new ArgumentException("TimePeriod cannot be Unknown if specified.");
 			case TimePeriod.Zoom:
-				if (StartDateTime == null || EndDateTime == null)
+				if (StartDateTime is null || EndDateTime is null)
 				{
 					throw new ArgumentException("If TimePeriod is not specified, StartDateTime and EndDateTime must both be specified.");
 				}

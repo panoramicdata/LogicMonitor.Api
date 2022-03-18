@@ -45,7 +45,7 @@ public class DeviceTests : TestWithOutput
 
 		// Delete device if it already exists
 		var deviceForDeletion = await LogicMonitorClient.GetDeviceByDisplayNameAsync(deviceDisplayName).ConfigureAwait(false);
-		if (deviceForDeletion != null)
+		if (deviceForDeletion is not null)
 		{
 			await logicMonitorClient
 				.DeleteAsync(deviceForDeletion)
@@ -56,7 +56,7 @@ public class DeviceTests : TestWithOutput
 		var deviceGroupForDeletion = await LogicMonitorClient
 			.GetDeviceGroupByFullPathAsync(deviceGroupName)
 			.ConfigureAwait(false);
-		if (deviceGroupForDeletion != null)
+		if (deviceGroupForDeletion is not null)
 		{
 			await logicMonitorClient
 				.DeleteAsync(deviceGroupForDeletion)
@@ -292,7 +292,7 @@ public class DeviceTests : TestWithOutput
 
 		// Make sure there are more when recursing
 		Assert.True(allDatacenterDevices.Count > topFolderDevices.Count);
-		Assert.True(allDatacenterDevices.All(d => d.DisplayName != null));
+		Assert.True(allDatacenterDevices.All(d => d.DisplayName is not null));
 	}
 
 	[Fact]
@@ -359,7 +359,7 @@ public class DeviceTests : TestWithOutput
 		const string testPropertyName = "test";
 		const string testPropertyValue = "testValue";
 		var errantProperty = device.CustomProperties.SingleOrDefault(p => p.Name == testPropertyName);
-		if (errantProperty != null)
+		if (errantProperty is not null)
 		{
 			device.CustomProperties.Remove(errantProperty);
 		}

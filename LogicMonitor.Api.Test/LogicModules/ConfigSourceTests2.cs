@@ -81,7 +81,7 @@ public class ConfigSourceTests2 : TestWithOutput
 				// deviceConfigItems.Should().NotBeNullOrEmpty();
 				foreach (var deviceConfig in deviceConfigItems)
 				{
-					if (deviceConfig.PollTimestampUtc == null)
+					if (deviceConfig.PollTimestampUtc is null)
 					{
 						throw new Exception("Unexpected lack of timestamp");
 					}

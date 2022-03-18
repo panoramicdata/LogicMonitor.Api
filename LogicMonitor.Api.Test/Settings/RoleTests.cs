@@ -41,7 +41,7 @@ public class RoleTests : TestWithOutput
 				.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } })
 				.ConfigureAwait(false))
 			.SingleOrDefault();
-		if (existingRole != null)
+		if (existingRole is not null)
 		{
 			await LogicMonitorClient.DeleteAsync(existingRole).ConfigureAwait(false);
 		}

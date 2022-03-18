@@ -35,7 +35,7 @@ public class DashboardTests : TestWithOutput
 		var widgetData2 = await LogicMonitorClient.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 		widgetData2.Should().NotBeNull();
 		widgetData2.Availability.Should().NotBe(0);
-		Assert.Null(widgetData2.ResultList);
+		widgetData2.ResultList.Should().BeNull();
 	}
 
 	[Fact]
@@ -210,7 +210,7 @@ public class DashboardTests : TestWithOutput
 		pieChartWidget.Info.DataPoints[0].DataPointId.Should().NotBe(0);
 		pieChartWidget.Info.DataPoints[0].Name.Should().NotBeNull();
 		pieChartWidget.Info.DataPoints[0].Top10.Should().BeFalse();
-		Assert.True(pieChartWidget.Info.DataPoints[0].Aggregate);
+		pieChartWidget.Info.DataPoints[0].Aggregate.Should().BeTrue();
 		pieChartWidget.Info.DataPoints[0].AggregateFunction.Should().NotBeNull();
 		pieChartWidget.Info.VirtualDataPoints.Should().NotBeNull();
 		Assert.Empty(pieChartWidget.Info.VirtualDataPoints);

@@ -464,7 +464,7 @@ public class DataSourceTests : TestWithOutput
 
 		var distinctGroups = dataSources.Select(ds => ds.Group).Distinct().ToList();
 
-		Assert.True(distinctGroups.Count > 1);
+		distinctGroups.Should().HaveCountGreaterThan(1);
 	}
 
 	[Fact]

@@ -124,7 +124,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<Device>> GetDevicesPageAsync(Filter<Device> filter, CancellationToken cancellationToken = default)
 	{
-		if (filter != null && filter.Order == null)
+		if (filter is not null && filter.Order is null)
 		{
 			filter.Order = new Order<Device> { Property = nameof(Device.Id), Direction = OrderDirection.Asc };
 		}
@@ -256,7 +256,7 @@ public partial class LogicMonitorClient
 	/// <exception cref="ArgumentNullException"></exception>
 	public async Task<List<Device>> GetDevicesByNameAsync(string searchString, int maxResultCount, CancellationToken cancellationToken = default)
 	{
-		if (searchString == null)
+		if (searchString is null)
 		{
 			throw new ArgumentNullException(nameof(searchString));
 		}
@@ -359,12 +359,12 @@ public partial class LogicMonitorClient
 		foreach (var deviceGroup in allDeviceGroups)
 		{
 			var parentGroup = allDeviceGroups.SingleOrDefault(g => g.Id == deviceGroup.ParentId) ?? (deviceGroupId == -1 ? requestedRootGroup : null);
-			if (parentGroup == null)
+			if (parentGroup is null)
 			{
 				continue;
 			}
 
-			if (parentGroup.SubGroups == null)
+			if (parentGroup.SubGroups is null)
 			{
 				parentGroup.SubGroups = new List<DeviceGroup> { deviceGroup };
 			}
@@ -387,7 +387,7 @@ public partial class LogicMonitorClient
 				.Select(dgId => allDeviceGroups.SingleOrDefault(g => g.Id == dgId)))
 			{
 				// Avoids a race condition
-				if (deviceGroup == null)
+				if (deviceGroup is null)
 				{
 					continue;
 				}
@@ -484,7 +484,7 @@ public partial class LogicMonitorClient
 		{
 			var jObject = await GetBySubUrlAsync<JObject>($"device/devices/{deviceId}/fetchProcessServiceTask/{taskId}", cancellationToken).ConfigureAwait(false);
 			var error = jObject.ToObject<ProcessServiceTaskResultError>();
-			if (error.ErrorMessage == null)
+			if (error.ErrorMessage is null)
 			{
 				return jObject.ToObject<Page<DeviceProcess>>();
 			}
@@ -611,13 +611,13 @@ public partial class LogicMonitorClient
 		{
 			if (dpConfig.DataPointId == dataPointId)
 			{
-				if (alertExpression != null && dpConfig.AlertExpression != alertExpression)
+				if (alertExpression is not null && dpConfig.AlertExpression != alertExpression)
 				{
 					dpConfig.AlertExpression = alertExpression;
 					changeMade = true;
 				}
 
-				if (alertExpressionNote != null && dpConfig.AlertExpressionNote != alertExpressionNote)
+				if (alertExpressionNote is not null && dpConfig.AlertExpressionNote != alertExpressionNote)
 				{
 					dpConfig.AlertExpressionNote = alertExpressionNote;
 					changeMade = true;
@@ -713,12 +713,12 @@ public partial class LogicMonitorClient
 		var originalStartEpochIsAfter = filter.StartEpochIsAfter;
 		var originalStartEpochIsBefore = filter.StartEpochIsBefore;
 		var utcNow = DateTime.UtcNow;
-		if (filter.StartEpochIsAfter == null)
+		if (filter.StartEpochIsAfter is null)
 		{
 			filter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
 		}
 
-		if (filter.StartEpochIsBefore == null)
+		if (filter.StartEpochIsBefore is null)
 		{
 			filter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
 		}
@@ -768,13 +768,13 @@ public partial class LogicMonitorClient
 		filter.RemoveMonitorObjectReferences();
 
 		// Ensure skip is set (or 0)
-		if (filter.Skip == null)
+		if (filter.Skip is null)
 		{
 			filter.Skip = 0;
 		}
 
 		var maxAlertCount = int.MaxValue;
-		if (filter.Take != null)
+		if (filter.Take is not null)
 		{
 			if (filter.Take > AlertsMaxTake)
 			{
@@ -809,7 +809,7 @@ public partial class LogicMonitorClient
 				break;
 			}
 
-			if (filter.SearchId == null && !string.IsNullOrWhiteSpace(page.SearchId))
+			if (filter.SearchId is null && !string.IsNullOrWhiteSpace(page.SearchId))
 			{
 				// We can re-use the searchId
 				filter.SearchId = page.SearchId;

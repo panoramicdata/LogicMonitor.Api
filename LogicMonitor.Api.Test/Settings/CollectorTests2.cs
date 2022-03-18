@@ -12,8 +12,7 @@ public class CollectorTests2
 	public async void GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-		collectorGroups.Should().NotBeNull();
-		Assert.True(collectorGroups.Count > 0);
+		collectorGroups.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collectorGroup in collectorGroups)
@@ -27,8 +26,7 @@ public class CollectorTests2
 	public async void GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
-		collectors.Should().NotBeNull();
-		Assert.True(collectors.Count > 0);
+		collectors.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collector in collectors)

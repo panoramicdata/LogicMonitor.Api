@@ -12,6 +12,6 @@ public class IntegrationTests : TestWithOutput
 		var integrations = await LogicMonitorClient.GetAllAsync<Integration>().ConfigureAwait(false);
 
 		// Text should be set
-		Assert.All(integrations, on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
+		integrations.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
 	}
 }

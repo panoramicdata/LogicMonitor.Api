@@ -204,7 +204,7 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var requestedTake = filter?.Take ?? int.MaxValue;
 		// Ensure filter is set up
-		if (filter == null)
+		if (filter is null)
 		{
 			filter = new Filter<T>();
 		}
@@ -356,7 +356,7 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var propertyInfos = typeof(T).GetProperties();
 		var property = propertyInfos.SingleOrDefault(p => p.Name == propertyName);
-		if (property == null)
+		if (property is null)
 		{
 			throw new ArgumentOutOfRangeException(nameof(propertyName), $"{propertyName} is not a property of {typeof(T).Name}.");
 		}
@@ -379,7 +379,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		var fieldInfos = type.GetFields();
 		var field = fieldInfos.SingleOrDefault(f => f.Name == enumObject.ToString());
-		if (field == null)
+		if (field is null)
 		{
 			throw new ArgumentOutOfRangeException(nameof(enumObject), $"{@enumObject} is not a member of enum {type.Name}.");
 		}
@@ -624,7 +624,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		var firstOrDefaultMatchingHeader = valueStringList.FirstOrDefault();
 
-		if (firstOrDefaultMatchingHeader == null)
+		if (firstOrDefaultMatchingHeader is null)
 		{
 			var message = $"'{header}' header value contains {valueStringList.Count} values.  Expecting just one.";
 			throw new LogicMonitorApiException(httpMethod, subUrl, httpStatusCode, responseBody, message);
@@ -1275,7 +1275,7 @@ public partial class LogicMonitorClient : IDisposable
 
 					// No exception thrown? It exists
 					// Are we deleting?
-					if (value == null)
+					if (value is null)
 					{
 						// Yes.
 						await DeleteAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
@@ -1291,7 +1291,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					// It doesn't exist
 					// so POST a new one (unless it's null, in which case nothing to do)
-					if (value != null)
+					if (value is not null)
 					{
 						var _ = await PostAsync<Property, Property>(
 							new Property { Name = name, Value = value },
@@ -1303,7 +1303,7 @@ public partial class LogicMonitorClient : IDisposable
 				break;
 
 			case SetPropertyMode.Create:
-				if (value == null)
+				if (value is null)
 				{
 					throw new InvalidOperationException("Value must not be set to null when creating the property.");
 				}
@@ -1312,7 +1312,7 @@ public partial class LogicMonitorClient : IDisposable
 				break;
 
 			case SetPropertyMode.Update:
-				if (value == null)
+				if (value is null)
 				{
 					throw new InvalidOperationException("Value must not be set to null when updating the property.");
 				}
@@ -1321,7 +1321,7 @@ public partial class LogicMonitorClient : IDisposable
 				break;
 
 			case SetPropertyMode.Delete:
-				if (value != null)
+				if (value is not null)
 				{
 					throw new InvalidOperationException("Value must be set to null when deleting the value.");
 				}
@@ -1362,7 +1362,7 @@ public partial class LogicMonitorClient : IDisposable
 			propertyInfo = logicMonitorClassType.GetProperty(name);
 		}
 
-		if (propertyInfo == null)
+		if (propertyInfo is null)
 		{
 			throw new PropertyNotFoundException($"Could not find property on {logicMonitorClassType.Name} with name {name}.");
 		}

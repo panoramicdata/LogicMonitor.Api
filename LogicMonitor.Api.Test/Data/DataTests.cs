@@ -188,7 +188,7 @@ public class DataTests : TestWithOutput
 		graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest).ConfigureAwait(false);
 		graphData.Should().NotBeNull();
 		stopwatch.Stop();
-		Assert.True(stopwatch.ElapsedMilliseconds < 50);
+		stopwatch.ElapsedMilliseconds.Should().BeLessThan(50);
 	}
 
 	[Fact]

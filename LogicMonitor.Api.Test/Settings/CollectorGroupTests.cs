@@ -24,7 +24,7 @@ public class CollectorGroupTests : TestWithOutput
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
 		Assert.True(collectorGroups.All(cg => cg.Id != 0));
-		Assert.True(collectorGroups.All(cg => cg.Name != null));
+		Assert.True(collectorGroups.All(cg => cg.Name is not null));
 		// Bug in LogicMonitor's API
 		// collectorGroups.TotalCount.Should().NotBe(0);
 	}
@@ -66,7 +66,7 @@ public class CollectorGroupTests : TestWithOutput
 		newCollectorGroupRefetch.Description.Should().NotBeNull();
 		newCollectorGroupRefetch.CustomProperties.Should().NotBeNull();
 		newCollectorGroupRefetch.CustomProperties.Should().NotBeNullOrEmpty();
-		Assert.Single(newCollectorGroupRefetch.CustomProperties);
+		newCollectorGroupRefetch.CustomProperties.Should().HaveCount(1);
 		newCollectorGroupRefetch.CustomProperties[0].Name.Should().Be("a");
 		newCollectorGroupRefetch.CustomProperties[0].Value.Should().Be("b");
 

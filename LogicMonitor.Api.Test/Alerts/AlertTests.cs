@@ -132,8 +132,8 @@ public class AlertTests : TestWithOutput
 		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 		// Alerts have the expected SDT status
-		Assert.True(sdtAlerts.All(a => a.InScheduledDownTime));
-		Assert.True(nonSdtAlerts.All(a => !a.InScheduledDownTime));
+		sdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeTrue());
+		nonSdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeFalse());
 	}
 
 	[Fact]
@@ -453,7 +453,7 @@ public class AlertTests : TestWithOutput
 			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
 		}).ConfigureAwait(false);
 
-		Logger.LogDebug("{errorAndAboveCount}", errorAndAboveAlerts.Count);
+		Logger.LogDebug("{ErrorAndAboveCount}", errorAndAboveAlerts.Count);
 
 		// Ensure that the number of error and above is fewer than the total
 		Assert.True(errorAndAboveAlerts.Count < allAlerts.Count);

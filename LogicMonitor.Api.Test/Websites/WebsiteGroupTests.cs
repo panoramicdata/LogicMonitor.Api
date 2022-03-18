@@ -14,7 +14,7 @@ public class WebsiteGroupTests : TestWithOutput
 		var existingWebsiteGroup = await LogicMonitorClient
 			.GetWebsiteGroupByFullPathAsync(testWebsiteGroupName)
 			.ConfigureAwait(false);
-		if (existingWebsiteGroup != null)
+		if (existingWebsiteGroup is not null)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingWebsiteGroup)
@@ -137,6 +137,6 @@ public class WebsiteGroupTests : TestWithOutput
 		websiteGroup.ParentId.Should().Be(0);
 		websiteGroup.Id.Should().Be(1);
 		string.IsNullOrWhiteSpace(websiteGroup.Name).Should().BeFalse();
-		(websiteGroup.FullPath == null).Should().BeFalse();
+		(websiteGroup.FullPath is null).Should().BeFalse();
 	}
 }

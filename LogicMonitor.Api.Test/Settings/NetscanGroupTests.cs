@@ -9,17 +9,24 @@ public class NetscanGroupTests : TestWithOutput
 	[Fact]
 	public async void CanCreateAndDeleteNetscanGroups()
 	{
-		var allNetscanGroups = await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
 		const string name = "API Unit Test CanCreateAndDeleteNetscanGroups";
 		const string description = "API Unit Test CanCreateAndDeleteNetscanGroups Description";
 
-		var existingTestNetscanGroup = allNetscanGroups.SingleOrDefault(group => group.Name == name);
-		if (existingTestNetscanGroup != null)
+		var allNetscanGroups = await LogicMonitorClient
+			.GetAllAsync<NetscanGroup>()
+			.ConfigureAwait(false);
+
+		var existingTestNetscanGroup = allNetscanGroups
+			.SingleOrDefault(group => group.Name == name);
+		if (existingTestNetscanGroup is not null)
 		{
 			await LogicMonitorClient.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id).ConfigureAwait(false);
 		}
 
-		Assert.DoesNotContain(await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false), group => group.Name == name);
+		var netscanGroups = await LogicMonitorClient
+			.GetAllAsync<NetscanGroup>()
+			.ConfigureAwait(false);
+		netscanGroups.Should().AllSatisfy(group => group.Name.Should().NotBe(name));
 		// Definitely not there now
 
 		// Create one
@@ -42,7 +49,6 @@ public class NetscanGroupTests : TestWithOutput
 		allNetscanGroups.Should().NotBeNull();
 		allNetscanGroups.Should().NotBeNullOrEmpty();
 		var ids = allNetscanGroups.Select(nspg => nspg.Id);
-		Assert.True(allNetscanGroups.Count == ids.Count());
-		allNetscanGroups.Should().NotBeNullOrEmpty();
+		ids.Should().HaveCount(allNetscanGroups.Count);
 	}
 }

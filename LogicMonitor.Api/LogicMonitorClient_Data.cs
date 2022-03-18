@@ -28,7 +28,7 @@ public partial class LogicMonitorClient
 	/// <exception cref="ArgumentNullException"></exception>
 	public Task<GraphData> GetGraphDataAsync(GraphDataRequest graphDataRequest, CancellationToken cancellationToken = default)
 	{
-		if (graphDataRequest == null)
+		if (graphDataRequest is null)
 		{
 			throw new ArgumentNullException(nameof(graphDataRequest));
 		}
@@ -51,7 +51,7 @@ public partial class LogicMonitorClient
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/575/devicedatasources
 		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
 		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId);
-		if (filteredDeviceDataSource == null)
+		if (filteredDeviceDataSource is null)
 		{
 			throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
 				nameof(deviceDataSourceId));

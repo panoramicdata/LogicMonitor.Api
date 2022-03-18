@@ -22,7 +22,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">Optional cancellation token</param>
 	public async Task<WebsiteGroup> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken = default)
 	{
-		if (websiteGroupFullPath == null)
+		if (websiteGroupFullPath is null)
 		{
 			throw new ArgumentNullException(nameof(websiteGroupFullPath));
 		}
@@ -39,7 +39,7 @@ public partial class LogicMonitorClient
 		{
 			var websiteGroupById = await GetAsync<WebsiteGroup>(currentWebsiteGroupId, cancellationToken).ConfigureAwait(false);
 			var websiteOverview = websiteGroupById.ChildWebsiteGroups?.SingleOrDefault(sov => sov.Name == localPath);
-			if (websiteOverview == null)
+			if (websiteOverview is null)
 			{
 				return null;
 			}
@@ -94,14 +94,14 @@ public partial class LogicMonitorClient
 		{
 			case SetPropertyMode.Create:
 			case SetPropertyMode.Update:
-				if (value == null)
+				if (value is null)
 				{
 					throw new InvalidOperationException("Value cannot be null if the mode is create or update.");
 				}
 
 				break;
 			case SetPropertyMode.Delete:
-				if (value != null)
+				if (value is not null)
 				{
 					throw new ArgumentException("If mode is delete, value must be set to null", nameof(value));
 				}
@@ -121,7 +121,7 @@ public partial class LogicMonitorClient
 		var websiteOrGroup = await GetAsync<T>(id, cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 		var existingCustomProperty = websiteOrGroup.CustomProperties.SingleOrDefault(cp => cp.Name == name);
-		if (existingCustomProperty != null)
+		if (existingCustomProperty is not null)
 		{
 			switch (value)
 			{
@@ -265,12 +265,12 @@ public partial class LogicMonitorClient
 		var originalStartEpochIsAfter = filter.StartEpochIsAfter;
 		var originalStartEpochIsBefore = filter.StartEpochIsBefore;
 		var utcNow = DateTime.UtcNow;
-		if (filter.StartEpochIsAfter == null)
+		if (filter.StartEpochIsAfter is null)
 		{
 			filter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
 		}
 
-		if (filter.StartEpochIsBefore == null)
+		if (filter.StartEpochIsBefore is null)
 		{
 			filter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
 		}
@@ -320,13 +320,13 @@ public partial class LogicMonitorClient
 		filter.RemoveMonitorObjectReferences();
 
 		// Ensure skip is set (or 0)
-		if (filter.Skip == null)
+		if (filter.Skip is null)
 		{
 			filter.Skip = 0;
 		}
 
 		var maxAlertCount = int.MaxValue;
-		if (filter.Take != null)
+		if (filter.Take is not null)
 		{
 			if (filter.Take > AlertsMaxTake)
 			{
@@ -361,7 +361,7 @@ public partial class LogicMonitorClient
 				break;
 			}
 
-			if (filter.SearchId == null && !string.IsNullOrWhiteSpace(page.SearchId))
+			if (filter.SearchId is null && !string.IsNullOrWhiteSpace(page.SearchId))
 			{
 				// We can re-use the searchId
 				filter.SearchId = page.SearchId;

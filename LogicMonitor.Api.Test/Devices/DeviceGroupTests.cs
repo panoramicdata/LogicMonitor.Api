@@ -45,7 +45,7 @@ public class DeviceGroupTests : TestWithOutput
 	public async void GetDeviceGroupByFullPath_InvalidDeviceGroup_ReturnsNull()
 	{
 		var nonExistentDeviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync("XXXXXX/YYYYYY").ConfigureAwait(false);
-		Assert.Null(nonExistentDeviceGroup);
+		nonExistentDeviceGroup.Should().BeNull();
 	}
 
 	[Fact]

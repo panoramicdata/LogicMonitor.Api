@@ -50,9 +50,9 @@ public class Filter<T>
 	public override string ToString()
 	{
 		Validate();
-		return QueryString != null
+		return QueryString is not null
 				  ? $"offset={Skip}&size={Take}&{QueryString}"
-				  : $"offset={Skip}&size={Take}{(Order == null ? string.Empty : $"&{Order}")}{(FilterItems == null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters == null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties == null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
+				  : $"offset={Skip}&size={Take}{(Order is null ? string.Empty : $"&{Order}")}{(FilterItems is null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters is null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties is null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
 	}
 
 	private void Validate()
@@ -69,7 +69,7 @@ public class Filter<T>
 		foreach (var propertyName in Properties)
 		{
 			var property = typeProperties.SingleOrDefault(p => p.Name == propertyName);
-			if (property == null)
+			if (property is null)
 			{
 				continue;
 			}
@@ -80,7 +80,7 @@ public class Filter<T>
 
 	internal void AppendFilterItemIfNotNull(string property, object value, string operation = ":")
 	{
-		if (value == null)
+		if (value is null)
 		{
 			return;
 		}
