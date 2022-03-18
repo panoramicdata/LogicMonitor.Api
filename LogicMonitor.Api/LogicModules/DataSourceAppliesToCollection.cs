@@ -51,5 +51,6 @@ public class DataSourceAppliesToCollection : IdentifiedItem
 	/// <summary>
 	/// Returns a string that represents the current object.
 	/// </summary>
-	public override string ToString() => $"{DataSourceDisplayName} ({DataSourceId}) with {DataSourceDevices?.Count.ToString() ?? "0"} devices";
+	public override string ToString()
+		=> $"{DataSourceDisplayName} ({DataSourceId}) with {DataSourceDevices?.Count.ToString(CultureInfo.InvariantCulture) ?? "0"} devices";
 }

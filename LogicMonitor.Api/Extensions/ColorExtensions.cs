@@ -10,7 +10,7 @@ internal static class ColorExtensions
 	/// </summary>
 	/// <param name="color"></param>
 	public static string ToHtml(this Color color) => "#" +
-			color.R.ToString("X2") +
-			color.G.ToString("X2") +
-			color.B.ToString("X2");
+			color.R.ToString("X2", CultureInfo.InvariantCulture) +
+			color.G.ToString("X2", CultureInfo.InvariantCulture) +
+			color.B.ToString("X2", CultureInfo.InvariantCulture);
 }

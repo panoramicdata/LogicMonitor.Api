@@ -52,7 +52,7 @@ public partial class LogicMonitorClient
 			case LogicModuleType.DataSource:
 			case LogicModuleType.EventSource:
 			case LogicModuleType.ConfigSource:
-				typeParameter = $"?type={logicModuleType.ToString().ToLower()}";
+				typeParameter = $"?type={logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}";
 				break;
 			case LogicModuleType.PropertySource:
 				typeParameter = "?type=propertyrules";
@@ -67,7 +67,7 @@ public partial class LogicMonitorClient
 				typeParameter = "?type=oid";
 				break;
 			case LogicModuleType.TopologySource:
-				typeParameter = $"?type={logicModuleType.ToString().ToLower()}s";
+				typeParameter = $"?type={logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}s";
 				break;
 		}
 
@@ -152,7 +152,7 @@ public partial class LogicMonitorClient
 	{
 		var typeEndpoint = logicModuleType switch
 		{
-			LogicModuleType.DataSource or LogicModuleType.EventSource or LogicModuleType.ConfigSource or LogicModuleType.TopologySource => $"{logicModuleType.ToString().ToLower()}s",
+			LogicModuleType.DataSource or LogicModuleType.EventSource or LogicModuleType.ConfigSource or LogicModuleType.TopologySource => $"{logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}s",
 			LogicModuleType.PropertySource => "propertyrules",
 			LogicModuleType.JobMonitor => "batchjobs",
 			LogicModuleType.AppliesToFunction => "functions",

@@ -51,5 +51,6 @@ public class EventSourceAppliesToCollection : IdentifiedItem
 	/// <summary>
 	/// Returns a string that represents the current object.
 	/// </summary>
-	public override string ToString() => $"{EventSourceDisplayName} ({EventSourceId}) with {EventSourceDevices?.Count.ToString() ?? "0"} devices";
+	public override string ToString()
+		=> $"{EventSourceDisplayName} ({EventSourceId}) with {EventSourceDevices?.Count.ToString(CultureInfo.InvariantCulture) ?? "0"} devices";
 }

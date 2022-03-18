@@ -14,7 +14,7 @@ public class Line
 	{
 		get
 		{
-			var color = ColorString.StartsWith("#") ? ColorString.Substring(1) : ColorString;
+			var color = ColorString.StartsWith("#", StringComparison.Ordinal) ? ColorString.Substring(1) : ColorString;
 			return color.Length switch
 			{
 				3 => Color.FromArgb(HexToInt(color[0]) * 255 / 16, HexToInt(color[1]) * 255 / 16, HexToInt(color[2]) * 255 / 16),

@@ -32,7 +32,7 @@ public class WriteLogRequest : Dictionary<string, object>
 	{
 		this["_lm.resourceId"] = new Dictionary<string, string>
 			{
-				{ "system.deviceId", resourceId.ToString() }
+				{ "system.deviceId", resourceId.ToString(CultureInfo.InvariantCulture) }
 			};
 		this["message"] = GetPrefix(level) + message;
 	}
