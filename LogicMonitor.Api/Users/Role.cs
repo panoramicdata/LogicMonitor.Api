@@ -34,25 +34,25 @@ public class Role : NamedItem, IHasEndpoint
 	///    A custom help label
 	/// </summary>
 	[DataMember(Name = "customHelpLabel")]
-	public string CustomHelpLabel { get; set; }
+	public string CustomHelpLabel { get; set; } = null!;
 
 	/// <summary>
 	///    A custom help URL
 	/// </summary>
 	[DataMember(Name = "customHelpUrl")]
-	public string CustomHelpUrl { get; set; }
+	public string CustomHelpUrl { get; set; } = null!;
 
 	/// <summary>
 	///    The associated user count
 	/// </summary>
 	[DataMember(Name = "associatedUserCount")]
-	public string AssociatedUserCount { get; set; }
+	public string AssociatedUserCount { get; set; } = null!;
 
 	/// <summary>
 	///    The associated user count
 	/// </summary>
 	[DataMember(Name = "privileges")]
-	public List<RolePrivilege> Privileges { get; set; }
+	public List<RolePrivilege> Privileges { get; set; } = null!;
 
 	/// <summary>
 	///    The role group id
@@ -65,6 +65,12 @@ public class Role : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "userPermission")]
 	public UserPermission? UserPermission { get; set; }
+
+	/// <summary>
+	///    Whether this is a SAML role
+	/// </summary>
+	[DataMember(Name = "isSamlRole")]
+	public bool IsSamlRole { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/roles";
