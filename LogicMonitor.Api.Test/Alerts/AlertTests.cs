@@ -8,6 +8,7 @@ public class AlertTests : TestWithOutput
 	{
 	}
 
+	private const string TestNoteComment = "Test Note";
 	private static readonly DateTime EndDateTime = DateTime.UtcNow.Date;
 	private static readonly int StartDateTimeSeconds = EndDateTime.AddDays(-7).SecondsSinceTheEpoch();
 	private static readonly int EndDateTimeSeconds = EndDateTime.SecondsSinceTheEpoch();
@@ -47,6 +48,44 @@ public class AlertTests : TestWithOutput
 		alerts.Should().NotBeNull();
 		alerts.Should().NotBeEmpty();
 		alerts.Should().NotContain(a => a.EndOnSeconds == 0);
+	}
+
+	[Fact]
+	public async void AddNoteToAlert()
+	{
+		var noNoteItemsFilter = new Filter<Alert>
+		{
+			FilterItems = new List<FilterItem<Alert>>
+			{
+				new Eq<Alert>(nameof(Alert.AckComment), string.Empty),
+			},
+			Properties = new List<string>
+			{
+				nameof(Alert.Id),
+				nameof(Alert.InternalId),
+			},
+			Take = 1
+		};
+		var alerts = await LogicMonitorClient
+			.GetAllAsync(noNoteItemsFilter)
+			.ConfigureAwait(false);
+		alerts.Should().NotBeNull();
+		alerts.Should().ContainSingle();
+
+		var alert = alerts[0];
+		alert.AckComment.Should().Be(null);
+
+		// Add a note
+		await LogicMonitorClient
+			.SetAlertNoteAsync(new[] { alert.Id }, TestNoteComment)
+			.ConfigureAwait(false);
+
+		var refetchedAlert = await LogicMonitorClient
+			.GetAlertAsync(alert.Id)
+			.ConfigureAwait(false);
+
+		refetchedAlert.Should().NotBeNull();
+		refetchedAlert.AckComment.Should().Be(TestNoteComment);
 	}
 
 	[Fact]

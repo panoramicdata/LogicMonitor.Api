@@ -32,7 +32,7 @@ public partial class LogicMonitorClient : IDisposable
 	public string AccountName { get; }
 
 	private static readonly Regex V3HackRegex =
-		new("/setting/registry/metadata|/setting/admin|setting/role|/setting/logicmodules/listcore|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjob|function|oid)/(\\d/audit)|topology|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjobs|functions|oids)/importcore");
+		new("/alert/alerts/note|/setting/registry/metadata|/setting/admin|setting/role|/setting/logicmodules/listcore|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjob|function|oid)/(\\d/audit)|topology|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjobs|functions|oids)/importcore");
 
 	#endregion Fields
 

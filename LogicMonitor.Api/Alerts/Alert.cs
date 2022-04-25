@@ -70,7 +70,7 @@ public class Alert : IHasEndpoint
 	///    The Acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
-	public string AckComment { get; set; }
+	public string? AckComment { get; set; }
 
 	/// <summary>
 	///    The alert rule name

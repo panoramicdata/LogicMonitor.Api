@@ -213,10 +213,29 @@ public partial class LogicMonitorClient
 	/// <param name="alertId">The non-unique alert id</param>
 	/// <param name="acknowledgementComment">The acknowledgement comment</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task AcknowledgeAlert(string alertId, string acknowledgementComment, CancellationToken cancellationToken = default)
+	public async Task AcknowledgeAlertAsync(
+		string alertId,
+		string acknowledgementComment,
+		CancellationToken cancellationToken = default)
 		=> await PostAsync<AlertAcknowledgement, EmptyResponse>(
 			new AlertAcknowledgement { AcknowledgementComment = acknowledgementComment },
 			$"alert/alerts/{alertId}/ack",
+			cancellationToken
+			).ConfigureAwait(false);
+
+	/// <summary>
+	/// Acknowledge an alert
+	/// </summary>
+	/// <param name="alertIds">The non-unique alert ids</param>
+	/// <param name="note">The note</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task SetAlertNoteAsync(
+		IList<string> alertIds,
+		string note,
+		CancellationToken cancellationToken = default)
+		=> await PostAsync<AlertNote, EmptyResponse>(
+			new AlertNote(alertIds, note),
+			$"alert/alerts/note",
 			cancellationToken
 			).ConfigureAwait(false);
 }
