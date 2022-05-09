@@ -93,7 +93,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceName">The DataSource name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The DataSource or null if no match</returns>
-	public async Task<DataSource> GetDataSourceByUniqueNameAsync(
+	public async Task<DataSource?> GetDataSourceByUniqueNameAsync(
 		string dataSourceName,
 		CancellationToken cancellationToken = default)
 	{
@@ -288,12 +288,12 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The device Id</param>
 	/// <param name="deviceDataSourceId">The device data source id</param>
-	/// <param name="filter">The filter to apply</param>
+	/// <param name="filter">The optional filter to apply</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
 		int deviceId,
 		int deviceDataSourceId,
-		Filter<DeviceDataSourceInstance> filter = null,
+		Filter<DeviceDataSourceInstance>? filter = null,
 		CancellationToken cancellationToken = default)
 	{
 		if (filter is null)

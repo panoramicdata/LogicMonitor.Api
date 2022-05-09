@@ -5,51 +5,91 @@
 /// </summary>
 public static class LogItemExtensions
 {
-	private static readonly Regex ResourceSuccessRegex = new(
-		@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>\d+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex ResourceSuccess2Regex = new(
-		@"^(?<action>Add)ed device (?<resourceName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex ResourceGroupPropertySuccessRegex = new(
-		@"^(?<action>Add|Fetch|Update) the host group\((?<resourceGroupName>.+?)\)'s property\(name=(?<propertyName>.+?)\) via API token (?<apiTokenId>.+?)..$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex DeviceDataSourceInstanceByIdRegex = new(
-		@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceId=(?<instanceId>.+?)""; ""Description=(?<description>.+?)""$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex DeviceDataSourceInstanceByNameRegex = new(
-		@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>(.+?deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),instanceChanges=\[instanceId=(?<instanceId>\d+?),oldValue=(?<instanceOldValue>.+?),newValue=(?<instanceNewValue>.+?)\].+?))""$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex DeviceDataSourceInstanceByNameFoundNewInstancesRegex = new(
-		@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=NA""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>Found new instance\(s\) for: (?<resourceName>.+?) \(CollectorID=(?<collectorId>\d+?)\) \[(?<dataSourceName>.+?)\]; New_InstanceIds=\[deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),dataSourceNewInstanceId\(s\)=(?<dataSourceNewInstanceIds>\d+?)];)""$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex DeviceDataSourceInstanceByNameDeletedInstancesRegex = new(
-	   @"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=NA""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>Instance\(s\) disappeared from: (?<resourceName>.+?) \(CollectorID=(?<collectorId>\d+?)\) \[(?<dataSourceName>.+?)\]; New_InstanceIds=\[deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),dataSourceDeletedInstanceId\(s\)=(?<instanceIds>\d+?)\];)""$",
-	   RegexOptions.Singleline
-	);
-	private static readonly Regex SdtRegex = new(
-		@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Device=(?<resourceName>.+?)""; ""InstanceId=(?<instanceId>.+?)""; ""Description=(?<description>\d+)""$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex DeviceOtherRegex = new(
-		@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.+?)""$",
-		RegexOptions.Singleline
-	);
-	private static readonly Regex CollectorScheduledHealthCheck = new(
-		@"^Scheduled health check scripts for all collectors$",
-		RegexOptions.Singleline
-	);
-	// "Action=Add"; "Type=DataSource"; "DataSourceName=Kubernetes_Script_Uptime"; "DeviceName=lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"; "DeviceId=7589"; "Description=Addition of datasource to device"; "DataSourceId=101626885"; "DeviceDataSourceId=532526"
-	private static readonly Regex DataSourceRegex = new(
-		@"^""""Action=(?<action>Add|Fetch|Update)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<additionalInfo>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$",
-		RegexOptions.Singleline
-	);
+
+	internal static void ValidateRegexs()
+	{
+		// Check that no two Regexs have the same id		
+		var regexIds = new HashSet<int>();
+		foreach (var regex in Regexs)
+		{
+			if (!regexIds.Add(regex.Id))
+			{
+				throw new InvalidDataException($"Duplicate regex id {regex.Id} found");
+			}
+		}
+	}
+
+	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
+
+	private static readonly List<LogItemRegex> Regexs = new()
+	{
+		new(01,
+			AuditEventEntityType.Resource,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<failed>Failed)(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
+		new(02,
+			AuditEventEntityType.Resource,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
+		new(03,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
+		new(14,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
+		new(04,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Add)ed device (?<resourceName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$", RegexOptions.Singleline)),
+		new(05,
+			AuditEventEntityType.ResourceGroupProperty,
+			new(@"^(?<action>Add|Fetch|Update) the host group\((?<resourceGroupName>.+?)\)'s property\(name=(?<propertyName>.+?)\) via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
+		new(06,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>(.+?deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),instanceChanges=\[instanceId=(?<instanceId>\d+?),oldValue=(?<instanceOldValue>.+?),newValue=(?<instanceNewValue>.+?)\];\];.+?))""$", RegexOptions.Singleline)),
+		new(07,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=NA""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>Instance\(s\) disappeared from: (?<resourceName>.+?) \(CollectorID=(?<collectorId>[-\d]+?)\) \[(?<dataSourceName>.+?)\]; New_InstanceIds=\[deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),dataSourceDeletedInstanceId\(s\)=(?<dataSourceDeletedInstanceIds>[\d,]+?)\];)""$", RegexOptions.Singleline)),
+		new(08,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=NA""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>Found new instance\(s\) for: (?<resourceName>.+?) \(CollectorID=(?<collectorId>[-\d]+?)\) \[(?<dataSourceNewInstanceNames>.+?)\]; New_InstanceIds=\[deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),dataSourceNewInstanceId\(s\)=(?<dataSourceNewInstanceIds>[\d,]+?)];)""$", RegexOptions.Singleline)),
+		new(09,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=NA""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<additionalInfo>Found new instance\(s\) for: (?<resourceName>.+?) \(CollectorID=(?<collectorId>[-\d]+?)\) \[(?<dataSourceNewInstanceNames>.+?)\]; Instance\(s\) disappeared from: (?<resourceName2>.+?) \(CollectorID=(?<collectorId2>[-\d]+?)\) \[(?<dataSourceDeletedInstanceNames>.+?)\]; New_InstanceIds=\[deviceId=(?<resourceId>\d+?),dataSourceId=(?<dataSourceId>\d+?),dataSourceNewInstanceId\(s\)=(?<dataSourceNewInstanceIds>[\d,]+?),dataSourceDeletedInstanceId\(s\)=(?<dataSourceDeletedInstanceIds>[\d,]+?)\];)""$", RegexOptions.Singleline)),
+		new(10,
+			AuditEventEntityType.AllCollectors,
+			new(@"^(?<scheduledHealthCheck>Scheduled health check scripts for all collectors)$", RegexOptions.Singleline)),
+		new(11,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceId=(?<instanceId>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
+		new(12,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Device=(?<resourceName>.+?)""; ""InstanceId=(?<instanceId>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
+		new(13,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+?).Nothing has been changed. via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(15,
+			AuditEventEntityType.DataSource,
+			new(@"""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?) \((?<resourceName>.+?)\)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
+		new(16,
+			AuditEventEntityType.ResourceProperty,
+			new(@"^(?<action>Add) property\(name=(?<propertyName>.+), value=(?<propertyValue>.+)\) to host\((?<resourceName>.+)\) via API token (?<apiTokenId>.+).$", RegexOptions.Singleline)),
+		new(17,
+			AuditEventEntityType.ResourceGroups,
+			new(@"^host\(id= (?<resourceId>.+?) ,name= (?<resourceName>.+?).(?<action>add) to groups, list: (?<groupList>.+?),add group number is (?<groupCount>.+?)$", RegexOptions.Singleline)),
+		new(18,
+			AuditEventEntityType.KubernetesHosts,
+			new(@"^(?<action>Delete) the Kubernetes hosts those were marked for deletion \[(?<kubernetesHosts>.+?)]$", RegexOptions.Singleline)),
+		new(19,
+			AuditEventEntityType.ResourceGroups,
+			new(@"^ host\(id=(?<resourceId>.+?),name =(?<resourceName>.+?)\) (?<action>add) to (?<groupName>.+?) ,appliesTo=(?<appliesTo>.+?) ,delete number is (?<deleteCount>.+?) ,add number is (?<addCount>.+?)$", RegexOptions.Singleline)),
+		new(20,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?) \((?<wildValue>.+?)\)""; ""Description=DataSourceName: (?<dataSourceName>.+?) ""$", RegexOptions.Singleline)),
+		new(21,
+			AuditEventEntityType.None,
+			new(@"^(?<loginName>.+?) signs in via SAML$", RegexOptions.Singleline)),
+		new(22,
+			AuditEventEntityType.None,
+			new(@"^Failed API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
+	};
 
 	/// <summary>
 	/// Converts a logItem to an AuditItem
@@ -77,204 +117,191 @@ public static class LogItemExtensions
 		};
 
 		// Interpret the description field
-		Match match;
-		if ((match = ResourceSuccessRegex.Match(logItem.Description)).Success)
+		var entityTypeMatch = GetMatchFromDescription(logItem.Description);
+		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)
 		{
-			// Example: Update host<2229, reportmagic-api.reportmagic-alpha.deploy-f8f96bc9-7d74-446f-a386-2c767fa8f5ce> (monitored by collector <254, pdl-k8s>), ,  via API token Xxxxxxxxxxxxxxxxxxxx
-
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.Resource;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			var resourceIdString = match.Groups["resourceId"].Value;
-			auditEvent.ResourceId = resourceIdString == "NA" ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.CollectorId = int.Parse(match.Groups["collectorId"].Value, CultureInfo.InvariantCulture);
-			auditEvent.CollectorName = match.Groups["collectorName"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
+			// Not recognised
 			return auditEvent;
 		}
 
-		if ((match = ResourceSuccess2Regex.Match(logItem.Description)).Success)
+		auditEvent.MatchedRegExId = entityTypeMatch.LogItemRegex.Id;
+		// Have we determined the EntityType already?
+		auditEvent.EntityType = entityTypeMatch.LogItemRegex.EntityType;
+		var match = entityTypeMatch.Match;
+		//if (auditEvent.EntityType == AuditEventEntityType.None)
+		//{
+		//	// Is this a DeviceDataSourceInstance entry?
+		//	if (entityTypeMatch.Groups["dataSourceNewInstanceIds"].Success
+		//		|| entityTypeMatch.Groups["dataSourceDeletedInstanceIds"].Success)
+		//	{
+		//		// YES
+		//		auditEvent.EntityType = AuditEventEntityType.DeviceDataSourceInstance;
+		//	}
+		//	else
+		//	{
+		//		// Is this a scheduledHealthCheck
+		//		if (entityTypeMatch.Groups["scheduledHealthCheck"].Success)
+		//		{
+		//			auditEvent.ActionType = AuditEventActionType.ScheduledHealthCheckScript;
+		//			auditEvent.EntityType = AuditEventEntityType.AllCollectors;
+		//			auditEvent.OutcomeType = AuditEventOutcomeType.Unknown;
+		//		}
+		//	}
+
+		//	if (auditEvent.EntityType == AuditEventEntityType.None) { }
+		//	// NO - Don't know the type, can't continue
+		//	return auditEvent;
+		//}
+
+		auditEvent.ActionType = GetAction(match);
+		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
+
+		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
+		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
+		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
+		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
+		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
+		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
+		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
+		if (auditEvent.MatchedRegExId == 22)
 		{
-			// Example: Added device lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD (7589)  via API token MZkW3Ldwg5S84s5eWUc7{[{"name":"kubernetes.label.app","value":"lm-collector-panoramic-5"}, {"name":"auto.clustername","value":"PDL-K8S-PROD"}, {"name":"auto.selflink","value":"/apis/apps/v1/namespaces/lm-collector-panoramic/deployments/lm-collector-panoramic-5"}, {"name":"kubernetes.resourceCreatedOn","value":"1646988769"}, {"name":"auto.uid","value":"8536007f-be25-445d-bea5-b1434c1e6ca8"}, {"name":"auto.resourcename","value":"lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"}, {"name":"auto.namespace","value":"lm-collector-panoramic"}, {"name":"auto.name","value":"lm-collector-panoramic-5"}, {"name":"system.categories","value":"KubernetesDeployment"}]}
-
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.Resource;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			var resourceIdString = match.Groups["resourceId"].Value;
-			auditEvent.ResourceId = resourceIdString == "NA" ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			return auditEvent;
-		}
-
-		if ((match = DeviceDataSourceInstanceByIdRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceId=NA"; "Description=Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; "
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.DeviceDataSourceInstance;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			var resourceIdString = match.Groups["resourceId"].Value;
-			auditEvent.ResourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
-			return auditEvent;
-		}
-
-		if ((match = DeviceDataSourceInstanceByNameFoundNewInstancesRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceId=NA"; "Description=Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; "
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.DeviceDataSourceInstance;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			var resourceIdString = match.Groups["resourceId"].Value;
-			auditEvent.ResourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName2"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			var dataSourceIdString = match.Groups["dataSourceId"].Value;
-			auditEvent.DataSourceId = int.Parse(dataSourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.DataSourceName = match.Groups["dataSourceName"].Value;
-			auditEvent.InstanceName = match.Groups["instanceName"].Value;
-			var dataSourceNewInstanceIdsString = match.Groups["dataSourceNewInstanceIds"].Value;
-			auditEvent.DataSourceNewInstanceIds = dataSourceNewInstanceIdsString
-				.Split(',')
-				.Select(subString => int.TryParse(subString, out var intValue) ? intValue : (int?)null)
-				.ToList();
-			return auditEvent;
-		}
-
-		if ((match = DeviceDataSourceInstanceByNameDeletedInstancesRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceId=NA"; "Description=Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; "
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.DeviceDataSourceInstance;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			var resourceIdString = match.Groups["resourceId"].Value;
-			auditEvent.ResourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			var dataSourceIdString = match.Groups["dataSourceId"].Value;
-			auditEvent.DataSourceId = int.Parse(dataSourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.DataSourceName = match.Groups["dataSourceName"].Value;
-			auditEvent.InstanceName = match.Groups["instanceName"].Value;
-			var dataSourceNewInstanceIdsString = match.Groups["instanceIds"].Value;
-			auditEvent.DataSourceNewInstanceIds = dataSourceNewInstanceIdsString
-				.Split(',')
-				.Select(subString => int.TryParse(subString, out var intValue) ? intValue : (int?)null)
-				.ToList();
-
-			return auditEvent;
-		}
-
-		if ((match = SdtRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Action=Add"; "Type=SDT"; "Description= Add SDT for Website Group Beta with scheduled downtime from 2021-01-07 12:15:00 GMT to 2021-01-07 13:10:00 GMT "
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.ScheduledDownTime;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			var resourceIdString = match.Groups["resourceId"].Value;
-			auditEvent.ResourceId = resourceIdString == "NA" ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.CollectorId = int.Parse(match.Groups["collectorId"].Value, CultureInfo.InvariantCulture);
-			auditEvent.CollectorName = match.Groups["collectorName"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
-			return auditEvent;
-		}
-
-		if ((match = DeviceOtherRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Action=Add"; "Type=Device"; "Device=ReportMagic beta-API (0)"; "Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic beta-API)"
-			// Example: "Action=Add"; "Type=Device"; "Device=ReportMagic alpha-Worker (0)"; "Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic alpha-Worker)"
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.Resource;
+			auditEvent.ActionType = AuditEventActionType.GeneralApi;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
-			auditEvent.ResourceId = int.Parse(match.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			return auditEvent;
 		}
 
-		if ((match = DeviceDataSourceInstanceByNameRegex.Match(logItem.Description)).Success)
+		auditEvent.DataSourceId = GetGroupValueAsIntOrNull(match, "dataSourceId");
+		auditEvent.DataSourceName = GetGroupValueAsStringOrNull(match, "dataSourceName");
+		auditEvent.InstanceId = GetGroupValueAsIntOrNull(match, "instanceId");
+		auditEvent.InstanceName = GetGroupValueAsStringOrNull(match, "instanceName");
+		auditEvent.WildValue = GetGroupValueAsStringOrNull(match, "wildValue");
+
+		auditEvent.PropertyName = GetGroupValueAsStringOrNull(match, "propertyName");
+		auditEvent.PropertyValue = GetGroupValueAsStringOrNull(match, "propertyValue");
+
+		auditEvent.DataSourceNewInstanceIds = match.Groups["dataSourceNewInstanceIds"].Success
+			? match.Groups["dataSourceNewInstanceIds"].Value
+				.Split(',')
+				.Select(subString => int.Parse(subString, CultureInfo.InvariantCulture))
+				.ToList()
+			: null;
+		auditEvent.DataSourceNewInstanceNames = match.Groups["dataSourceNewInstanceNames"].Success
+			? match.Groups["dataSourceNewInstanceNames"].Value
+				.Split(',')
+				.ToList()
+			: null;
+		auditEvent.DataSourceDeletedInstanceIds = match.Groups["dataSourceDeletedInstanceIds"].Success
+			? match.Groups["dataSourceDeletedInstanceIds"].Value
+				.Split(',')
+				.Select(subString => int.Parse(subString, CultureInfo.InvariantCulture))
+				.ToList()
+			: null;
+		auditEvent.DataSourceDeletedInstanceNames = match.Groups["dataSourceDeletedInstanceNames"].Success
+			? match.Groups["dataSourceDeletedInstanceNames"].Value
+				.Split(',')
+				.ToList()
+			: null;
+
+		if (match.Groups["kubernetesHosts"].Success)
 		{
-			// Example: "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceName=NA"; "Description=Value(s) changed for: pdl-k8s-test-03.panoramicdata.com-node-PDL-K8S-TEST (CollectorID=297) [Critical Linux Processes-java from 9947 to 22713]; valueChanges=[deviceId=3271,dataSourceId=94545589,instanceChanges=[instanceId=263219850,oldValue=22713,newValue=9947];];'"
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.DeviceDataSourceInstance;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			var instanceIdString = match.Groups["instanceId"].Value;
-			auditEvent.InstanceId = instanceIdString == "NA" ? null : int.Parse(instanceIdString, CultureInfo.InvariantCulture);
-			auditEvent.InstanceName = match.Groups["instanceName"].Value;
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-			return auditEvent;
+			var k8sHosts = match.Groups["kubernetesHosts"].ToString().Split(',').Select(h => h.Trim());
+			if (k8sHosts.Any())
+			{
+				auditEvent.ResourceIds ??= new();
+				auditEvent.ResourceNames ??= new();
+				foreach (var k8sHost in k8sHosts)
+				{
+					var k8sHostMatch = _k8sHostRegex.Match(k8sHost);
+					if (k8sHostMatch.Success)
+					{
+						auditEvent.ResourceIds.Add(int.Parse(k8sHostMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture));
+						auditEvent.ResourceNames.Add(k8sHostMatch.Groups["resourceName"].Value.ToString());
+					}
+				}
+			}
 		}
-
-		if ((match = CollectorScheduledHealthCheck.Match(logItem.Description)).Success)
+		else
 		{
-			// Example: "Scheduled health check scripts for all collectors"
-			auditEvent.ActionType = AuditEventActionType.ScheduledHealthCheckScript;
-			auditEvent.EntityType = AuditEventEntityType.AllCollectors;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Unknown;
-			return auditEvent;
+			int? resourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
+			var resourceName = GetGroupValueAsStringOrNull(match, "resourceName");
+			auditEvent.ResourceIds = resourceId is null ? null : new() { resourceId.Value };
+			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
 		}
 
-		if ((match = ResourceGroupPropertySuccessRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Update the host group(PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-PROD)'s property(name=kubernetes.version.history) via API token MZkW3Ldwg5S84s5eWUc7."
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.ResourceGroupProperty;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			auditEvent.ResourceGroupName = match.Groups["resourceGroupName"].Value;
-			auditEvent.PropertyName = match.Groups["resourceGroupNamepropertyName"].Value;
-			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
-			return auditEvent;
-		}
-
-		if ((match = DataSourceRegex.Match(logItem.Description)).Success)
-		{
-			// Example: "Action=Add"; "Type=DataSource"; "DataSourceName=Kubernetes_Script_Uptime"; "DeviceName=lm-collector-panoramic-5-deploy-lm-collector-panoramic-PDL-K8S-PROD"; "DeviceId=7589"; "Description=Addition of datasource to device"; "DataSourceId=101626885"; "DeviceDataSourceId=532526"
-			auditEvent.ActionType = GetAction(match);
-			auditEvent.EntityType = AuditEventEntityType.ResourceGroupProperty;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-			auditEvent.DataSourceName = match.Groups["dataSourceName"].Value;
-			auditEvent.DataSourceId = int.Parse(match.Groups["dataSourceId"].Value, CultureInfo.InvariantCulture);
-			auditEvent.DeviceDataSourceId = int.Parse(match.Groups["deviceDataSourceId"].Value, CultureInfo.InvariantCulture);
-
-			auditEvent.ResourceName = match.Groups["resourceName"].Value;
-			auditEvent.ResourceId = int.Parse(match.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
-			auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
-
-			auditEvent.AdditionalInformation = match.Groups["additionalInfo"].Value;
-
-			return auditEvent;
-		}
-
-		// Not recognised
-		auditEvent.ActionType = AuditEventActionType.None;
-		auditEvent.EntityType = AuditEventEntityType.None;
-		auditEvent.OutcomeType = AuditEventOutcomeType.None;
 		return auditEvent;
+
+		//if ((match = DeviceOtherRegex.Match(logItem.Description)).Success)
+		//{
+		//	// Example: "Action=Add"; "Type=Device"; "Device=ReportMagic beta-API (0)"; "Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic beta-API)"
+		//	// Example: "Action=Add"; "Type=Device"; "Device=ReportMagic alpha-Worker (0)"; "Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic alpha-Worker)"
+		//	auditEvent.ActionType = GetAction(match);
+		//	auditEvent.EntityType = AuditEventEntityType.Resource;
+		//	auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
+		//	auditEvent.ResourceId = int.Parse(match.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
+		//	auditEvent.ResourceName = match.Groups["resourceName"].Value;
+		//	return auditEvent;
+		//}
+
+		//if ((match = ResourceGroupPropertySuccessRegex.Match(logItem.Description)).Success)
+		//{
+		//	// Example: "Update the host group(PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-PROD)'s property(name=kubernetes.version.history) via API token MZkW3Ldwg5S84s5eWUc7."
+		//	auditEvent.ActionType = GetAction(match);
+		//	auditEvent.EntityType = AuditEventEntityType.ResourceGroupProperty;
+		//	auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+
+		//	auditEvent.ResourceGroupName = match.Groups["resourceGroupName"].Value;
+		//	auditEvent.PropertyName = match.Groups["resourceGroupNamepropertyName"].Value;
+		//	auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
+		//	return auditEvent;
+		//}
 	}
 
+	private static string? GetGroupValueAsStringOrNull(Match match, string groupName)
+		=> match.Groups[groupName].Success ? match.Groups[groupName].Value : null;
+
+	private static int? GetGroupValueAsIntOrNull(Match match, string groupName)
+		=> match.Groups[groupName].Success
+			? int.TryParse(match.Groups[groupName].Value, out var intValue) ? intValue : null
+			: null;
+
+	private static (LogItemRegex? LogItemRegex, Match? Match) GetMatchFromDescription(string description)
+		=> Regexs
+			.Select(entry => (LogItemRegex: entry, Match: entry.Regex.Match(description)))
+			.FirstOrDefault(entry => entry.Match.Success);
+
 	private static AuditEventActionType GetAction(Match value)
-		=> value.Groups["action"].Value switch
+	{
+		if (value.Groups["scheduledHealthCheck"].Success)
 		{
-			"Add" => AuditEventActionType.Create,
-			"Fetch" => AuditEventActionType.Read,
-			"Update" => AuditEventActionType.Update,
-			"Delete" => AuditEventActionType.Delete,
+			return AuditEventActionType.ScheduledHealthCheckScript;
+		}
+
+		if (value.Groups["loginName"].Success)
+		{
+			return AuditEventActionType.Login;
+		}
+
+		return value.Groups["action"].Value.ToUpperInvariant() switch
+		{
+			"ADD" => AuditEventActionType.Create,
+			"FETCH" => AuditEventActionType.Read,
+			"UPDATE" => AuditEventActionType.Update,
+			"DELETE" => AuditEventActionType.Delete,
 			_ => AuditEventActionType.None
 		};
+	}
+
+	private class LogItemRegex
+	{
+		public LogItemRegex(int id, AuditEventEntityType entityType, Regex regex)
+		{
+			Id = id;
+			EntityType = entityType;
+			Regex = regex;
+		}
+
+		public int Id { get; set; } = default!;
+		public AuditEventEntityType EntityType { get; set; } = default!;
+		public Regex Regex { get; set; } = default!;
+	}
+
 }

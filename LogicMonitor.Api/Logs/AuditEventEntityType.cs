@@ -11,7 +11,7 @@ public enum AuditEventEntityType
 	None,
 
 	/// <summary>
-	/// Resource
+	/// Device
 	/// </summary>
 	Resource,
 
@@ -31,7 +31,32 @@ public enum AuditEventEntityType
 	AllCollectors,
 
 	/// <summary>
-	/// A ResourceGroup property
+	/// A ResourceGroup Property
 	/// </summary>
 	ResourceGroupProperty,
+
+	/// <summary>
+	/// ResourceGroup
+	/// </summary>
+	ResourceGroup,
+
+	/// <summary>
+	/// DataSource
+	/// </summary>
+	DataSource,
+
+	/// <summary>
+	/// A Resource Property
+	/// </summary>
+	ResourceProperty,
+
+	/// <summary>
+	/// ResourceGroups
+	/// </summary>
+	ResourceGroups,
+
+	/// <summary>
+	/// K8s hosts
+	/// </summary>
+	KubernetesHosts
 }

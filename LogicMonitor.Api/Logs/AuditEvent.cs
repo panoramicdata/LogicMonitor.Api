@@ -1,4 +1,6 @@
-﻿namespace LogicMonitor.Api.Logs;
+﻿using System.Collections.ObjectModel;
+
+namespace LogicMonitor.Api.Logs;
 
 /// <summary>
 /// An interpreted AuditItem
@@ -53,12 +55,12 @@ public class AuditEvent
 	/// <summary>
 	/// The resource id
 	/// </summary>
-	public int? ResourceId { get; internal set; }
+	public Collection<int>? ResourceIds { get; internal set; }
 
 	/// <summary>
 	/// The resource name
 	/// </summary>
-	public string? ResourceName { get; internal set; }
+	public Collection<string>? ResourceNames { get; internal set; }
 
 	/// <summary>
 	/// The DataSource id
@@ -91,19 +93,39 @@ public class AuditEvent
 	public string? CollectorName { get; internal set; }
 
 	/// <summary>
-	/// Any other information
-	/// </summary>
-	public string? AdditionalInformation { get; internal set; }
-
-	/// <summary>
 	/// The API Token Id
 	/// </summary>
 	public string? ApiTokenId { get; internal set; }
 
 	/// <summary>
+	/// The API Path
+	/// </summary>
+	public string? ApiPath { get; internal set; }
+
+	/// <summary>
+	/// The API Method
+	/// </summary>
+	public string? ApiMethod { get; internal set; }
+
+	/// <summary>
 	/// The DataSource new instance ids
 	/// </summary>
-	public ICollection<int?>? DataSourceNewInstanceIds { get; internal set; }
+	public ICollection<int>? DataSourceNewInstanceIds { get; internal set; }
+
+	/// <summary>
+	/// The DataSource new instance names
+	/// </summary>
+	public ICollection<string>? DataSourceNewInstanceNames { get; internal set; }
+
+	/// <summary>
+	/// The DataSource deleted instance ids
+	/// </summary>
+	public ICollection<int>? DataSourceDeletedInstanceIds { get; internal set; }
+
+	/// <summary>
+	/// The DataSource deleted instance names
+	/// </summary>
+	public ICollection<string>? DataSourceDeletedInstanceNames { get; internal set; }
 
 	/// <summary>
 	/// The ResourceGroup name
@@ -111,12 +133,33 @@ public class AuditEvent
 	public string? ResourceGroupName { get; internal set; }
 
 	/// <summary>
-	/// The property name
+	/// The Property Name
 	/// </summary>
 	public string? PropertyName { get; internal set; }
 
 	/// <summary>
 	/// The DeviceDataSource Id
 	/// </summary>
-	public int DeviceDataSourceId { get; internal set; }
+	public int? DeviceDataSourceId { get; internal set; }
+
+	/// <summary>
+	/// The Id of the regex that resulted in the translation from the LogItem
+	/// -1 means a regex match was not made
+	/// </summary>
+	public int MatchedRegExId { get; internal set; } = -1;
+
+	/// <summary>
+	/// The Property Value
+	/// </summary>
+	public string? PropertyValue { get; internal set; }
+
+	/// <summary>
+	/// The WildValue - available when a DeviceDataSourceInstance was added without Ids
+	/// </summary>
+	public string? WildValue { get; internal set; }
+
+	/// <summary>
+	/// The login name for a login event
+	/// </summary>
+	public string? LoginName { get; internal set; }
 }
