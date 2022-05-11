@@ -502,7 +502,6 @@ public class AuditEventTests : TestWithOutput
 		);
 	}
 
-
 	[Fact]
 	public void UpdatePassword_Success()
 	{
@@ -514,6 +513,23 @@ public class AuditEventTests : TestWithOutput
 				AccountName = "some.user.admin",
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
+	[Fact]
+	public void DataSourceImport_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Import DataSource from repository.  Change details : Change datasource : NetApp_Cluster_FibreChannel, dsId=1211 {\nDataSourceContent\n}",
+			new()
+			{
+				MatchedRegExId = 27,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.DataSource,
+				DataSourceId = 1211,
+				DataSourceName = "NetApp_Cluster_FibreChannel",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);

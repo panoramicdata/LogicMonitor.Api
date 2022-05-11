@@ -101,6 +101,9 @@ public static class LogItemExtensions
 		new(26,
 			AuditEventEntityType.Account,
 			new(@"^(?<accountName>.+?) (?<action>update) password change password$", RegexOptions.Singleline)),
+		new(27,
+			AuditEventEntityType.DataSource,
+			new(@"^Import DataSource from repository.  Change details : Change datasource : (?<dataSourceName>.+?), dsId=(?<dataSourceId>.+?){(?<datasourceContent>.+)}$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
@@ -175,10 +178,17 @@ public static class LogItemExtensions
 		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
 		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
 		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
-		if (auditEvent.MatchedRegExId == 22)
+
+		// Add metadata that can't be extracted from the description using the regex
+		switch (auditEvent.MatchedRegExId)
 		{
-			auditEvent.ActionType = AuditEventActionType.GeneralApi;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
+			case 22:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
+				break;
+			case 27:
+				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
 		}
 
 		auditEvent.DataSourceId = GetGroupValueAsIntOrNull(match, "dataSourceId");
