@@ -58,5 +58,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// User account
 	/// </summary>
-	Account
+	Account,
+
+	/// <summary>
+	/// DataSourceGraph
+	/// </summary>
+	DataSourceGraph
 }

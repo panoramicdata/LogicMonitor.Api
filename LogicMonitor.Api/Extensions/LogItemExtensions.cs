@@ -104,6 +104,9 @@ public static class LogItemExtensions
 		new(27,
 			AuditEventEntityType.DataSource,
 			new(@"^Import DataSource from repository.  Change details : Change datasource : (?<dataSourceName>.+?), dsId=(?<dataSourceId>.+?){(?<datasourceContent>.+)}$", RegexOptions.Singleline)),
+		new(28,
+			AuditEventEntityType.DataSourceGraph,
+			new(@"""Action=(?<action>Add)""; ""Type=DataSourceGraph""; ""DataSourceName=(?<dataSourceName>.+?)""; ""Device=NA""; ""Description=Add datasource graph, graph=(?<graphName>.+?)\((?<graphId>.+?)\), ""$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>

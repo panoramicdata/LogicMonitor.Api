@@ -534,4 +534,20 @@ public class AuditEventTests : TestWithOutput
 			}
 		);
 	}
+
+	[Fact]
+	public void AddDataSourceGraph_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"""Action=Add""; ""Type=DataSourceGraph""; ""DataSourceName=test_NetApp_Cluster_FibreChannel""; ""Device=NA""; ""Description=Add datasource graph, graph=Signal/Sync Loss(8702), """,
+			new()
+			{
+				MatchedRegExId = 28,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSourceGraph,
+				DataSourceName = "test_NetApp_Cluster_FibreChannel",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
 }
