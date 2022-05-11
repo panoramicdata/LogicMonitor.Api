@@ -502,4 +502,20 @@ public class AuditEventTests : TestWithOutput
 		);
 	}
 
+
+	[Fact]
+	public void UpdatePassword_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"some.user.admin update password change password",
+			new()
+			{
+				MatchedRegExId = 26,
+				AccountName = "some.user.admin",
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
 }

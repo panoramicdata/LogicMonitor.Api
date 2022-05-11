@@ -98,6 +98,9 @@ public static class LogItemExtensions
 		new(25,
 			AuditEventEntityType.Account,
 			new(@"^(?<action>Add) a new account (?<accountName>.+?) \(administrator\)$", RegexOptions.Singleline)),
+		new(26,
+			AuditEventEntityType.Account,
+			new(@"^(?<accountName>.+?) (?<action>update) password change password$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
