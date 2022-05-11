@@ -418,11 +418,11 @@ public class AuditEventTests : TestWithOutput
 	public void SAMLLogin_Success()
 	{
 		AssertToAuditEventSucceeds(
-			@"some.user@domain.com signs in via SAML",
+			@"some.user123@domain.com signs in via SAML",
 			new()
 			{
 				MatchedRegExId = 21,
-				UserName = "some.user@domain.com",
+				LoginName = "some.user123@domain.com",
 				ActionType = AuditEventActionType.Login,
 				EntityType = AuditEventEntityType.None,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -443,6 +443,45 @@ public class AuditEventTests : TestWithOutput
 				ApiTokenId = "TOKENID",
 				ApiMethod = "GET",
 				ApiPath = "/santaba/rest/device/groups/1613/devices"
+			}
+		);
+	}
+
+	[Fact]
+	public void DeleteAwsHostsMultiple_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Delete the aws hosts [EU-W1:i-0ad560910aee79179(id=4573), EU-W1:i-0070bf1c74503d8ed(id=4574)]",
+			new()
+			{
+				MatchedRegExId = 23,
+				ResourceIds = new() {
+					4573,
+					4574
+				},
+				ResourceNames = new() {
+					"EU-W1:i-0ad560910aee79179",
+					"EU-W1:i-0070bf1c74503d8ed"
+				},
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
+	[Fact]
+	public void Login_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"some.user.admin signs in (adminId=123).",
+			new()
+			{
+				MatchedRegExId = 24,
+				LoginName = "some.user.admin",
+				ActionType = AuditEventActionType.Login,
+				EntityType = AuditEventEntityType.None,
+				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
 	}

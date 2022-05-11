@@ -76,7 +76,7 @@ public static class LogItemExtensions
 			new(@"^host\(id= (?<resourceId>.+?) ,name= (?<resourceName>.+?).(?<action>add) to groups, list: (?<groupList>.+?),add group number is (?<groupCount>.+?)$", RegexOptions.Singleline)),
 		new(18,
 			AuditEventEntityType.Resource,
-			new(@"^(?<action>Delete) the Kubernetes hosts those were marked for deletion \[(?<kubernetesHosts>.+?)]$", RegexOptions.Singleline)),
+			new(@"^(?<action>Delete) the Kubernetes hosts those were marked for deletion \[(?<multipleHosts>.+?)\]$", RegexOptions.Singleline)),
 		new(19,
 			AuditEventEntityType.ResourceGroups,
 			new(@"^ host\(id=(?<resourceId>.+?),name =(?<resourceName>.+?)\) (?<action>add) to (?<groupName>.+?) ,appliesTo=(?<appliesTo>.+?) ,delete number is (?<deleteCount>.+?) ,add number is (?<addCount>.+?)$", RegexOptions.Singleline)),
@@ -89,6 +89,12 @@ public static class LogItemExtensions
 		new(22,
 			AuditEventEntityType.None,
 			new(@"^Failed API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
+		new(23,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Delete) the aws hosts \[(?<multipleHosts>.+?)\]$", RegexOptions.Singleline)),
+		new(24,
+			AuditEventEntityType.None,
+			new(@"^(?<loginName>.+?) signs in \(adminId=(?<adminId>.+?)\)\.$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
@@ -175,6 +181,8 @@ public static class LogItemExtensions
 		auditEvent.InstanceName = GetGroupValueAsStringOrNull(match, "instanceName");
 		auditEvent.WildValue = GetGroupValueAsStringOrNull(match, "wildValue");
 
+		auditEvent.LoginName = GetGroupValueAsStringOrNull(match, "loginName");
+
 		auditEvent.PropertyName = GetGroupValueAsStringOrNull(match, "propertyName");
 		auditEvent.PropertyValue = GetGroupValueAsStringOrNull(match, "propertyValue");
 
@@ -201,9 +209,9 @@ public static class LogItemExtensions
 				.ToList()
 			: null;
 
-		if (match.Groups["kubernetesHosts"].Success)
+		if (match.Groups["multipleHosts"].Success)
 		{
-			var k8sHosts = match.Groups["kubernetesHosts"].ToString().Split(',').Select(h => h.Trim());
+			var k8sHosts = match.Groups["multipleHosts"].ToString().Split(',').Select(h => h.Trim());
 			if (k8sHosts.Any())
 			{
 				auditEvent.ResourceIds ??= new();
