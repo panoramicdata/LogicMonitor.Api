@@ -75,7 +75,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.ResourceGroups,
 			new(@"^host\(id= (?<resourceId>.+?) ,name= (?<resourceName>.+?).(?<action>add) to groups, list: (?<groupList>.+?),add group number is (?<groupCount>.+?)$", RegexOptions.Singleline)),
 		new(18,
-			AuditEventEntityType.KubernetesHosts,
+			AuditEventEntityType.Resource,
 			new(@"^(?<action>Delete) the Kubernetes hosts those were marked for deletion \[(?<kubernetesHosts>.+?)]$", RegexOptions.Singleline)),
 		new(19,
 			AuditEventEntityType.ResourceGroups,

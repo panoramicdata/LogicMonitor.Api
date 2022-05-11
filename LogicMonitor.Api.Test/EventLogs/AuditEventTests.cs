@@ -362,7 +362,7 @@ public class AuditEventTests : TestWithOutput
 				ResourceIds = new() { 8443 },
 				ResourceNames = new() { "argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876" },
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.KubernetesHosts,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -389,7 +389,7 @@ public class AuditEventTests : TestWithOutput
 					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
 				},
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.KubernetesHosts,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);

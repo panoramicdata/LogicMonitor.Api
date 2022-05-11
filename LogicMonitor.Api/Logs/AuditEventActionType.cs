@@ -34,6 +34,14 @@ public enum AuditEventActionType
 	/// Scheduled health check script
 	/// </summary>
 	ScheduledHealthCheckScript,
+
+	/// <summary>
+	/// A login event
+	/// </summary>
 	Login,
+
+	/// <summary>
+	/// A general API event
+	/// </summary>
 	GeneralApi,
 }

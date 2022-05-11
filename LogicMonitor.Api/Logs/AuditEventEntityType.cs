@@ -53,10 +53,5 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// ResourceGroups
 	/// </summary>
-	ResourceGroups,
-
-	/// <summary>
-	/// K8s hosts
-	/// </summary>
-	KubernetesHosts
+	ResourceGroups
 }
