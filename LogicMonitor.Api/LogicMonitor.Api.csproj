@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Added ability to set just the Alert Note (without acknowledging) with SetAlertNoteAsync()</PackageReleaseNotes>
+		<PackageReleaseNotes>Added improved Audit Log handling</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
