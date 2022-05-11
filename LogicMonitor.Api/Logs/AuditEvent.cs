@@ -162,4 +162,9 @@ public class AuditEvent
 	/// The login name for a login event
 	/// </summary>
 	public string? LoginName { get; internal set; }
+
+	/// <summary>
+	/// The account name for user account events
+	/// </summary>
+	public string? AccountName { get; internal set; }
 }

@@ -485,4 +485,21 @@ public class AuditEventTests : TestWithOutput
 			}
 		);
 	}
+
+	[Fact]
+	public void AddNewAccountAdmin_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Add a new account some.user.admin (administrator)",
+			new()
+			{
+				MatchedRegExId = 25,
+				AccountName = "some.user.admin",
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
 }

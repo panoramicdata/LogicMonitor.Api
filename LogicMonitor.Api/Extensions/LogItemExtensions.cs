@@ -95,6 +95,9 @@ public static class LogItemExtensions
 		new(24,
 			AuditEventEntityType.None,
 			new(@"^(?<loginName>.+?) signs in \(adminId=(?<adminId>.+?)\)\.$", RegexOptions.Singleline)),
+		new(25,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>Add) a new account (?<accountName>.+?) \(administrator\)$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
@@ -182,6 +185,7 @@ public static class LogItemExtensions
 		auditEvent.WildValue = GetGroupValueAsStringOrNull(match, "wildValue");
 
 		auditEvent.LoginName = GetGroupValueAsStringOrNull(match, "loginName");
+		auditEvent.AccountName = GetGroupValueAsStringOrNull(match, "accountName");
 
 		auditEvent.PropertyName = GetGroupValueAsStringOrNull(match, "propertyName");
 		auditEvent.PropertyValue = GetGroupValueAsStringOrNull(match, "propertyValue");

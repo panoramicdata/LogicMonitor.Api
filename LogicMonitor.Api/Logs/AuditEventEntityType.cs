@@ -53,5 +53,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// ResourceGroups
 	/// </summary>
-	ResourceGroups
+	ResourceGroups,
+
+	/// <summary>
+	/// User account
+	/// </summary>
+	Account
 }
