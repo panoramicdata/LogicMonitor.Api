@@ -47,7 +47,7 @@ public class DashboardTests : TestWithOutput
 		var newDashboard = await LogicMonitorClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
 		{
 			Name = "All widgets clone",
-			Description = "I'm a clone and so if my wife.",
+			Description = "I'm a clone and so is my wife.",
 			DashboardGroupId = originalDashboard.DashboardGroupId,
 			WidgetsConfig = originalDashboard.WidgetsConfig,
 			WidgetsOrder = originalDashboard.WidgetsOrder
