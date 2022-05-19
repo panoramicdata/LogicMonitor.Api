@@ -25,6 +25,12 @@ public class DashboardGroupCreationDto : CreationDto<DashboardGroup>
 	public string Description { get; set; }
 
 	/// <summary>
+	///    The tokens
+	/// </summary>
+	[DataMember(Name = "widgetTokens")]
+	public List<Property> Tokens { get; set; }
+
+	/// <summary>
 	///    ToString override
 	/// </summary>
 	/// <returns>Name</returns>
