@@ -7,10 +7,10 @@
 public class DashboardGroupCreationDto : CreationDto<DashboardGroup>
 {
 	/// <summary>
-	///    The Parent Group Id as a string
+	///    The Parent Group Id
 	/// </summary>
 	[DataMember(Name = "parentId")]
-	public string ParentId { get; set; } = string.Empty;
+	public string ParentId { get; set; } = "1";
 
 	/// <summary>
 	///    The name

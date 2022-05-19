@@ -22,6 +22,10 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>Added dashboard group creation DTO widget tokens</PackageReleaseNotes>
+		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,6 +38,9 @@
 		<None Remove="Icon.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Include="LogicMonitor.ico" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
 		<PackageReference Include="Nerdbank.GitVersioning" Version="3.5.104">
 		  <PrivateAssets>all</PrivateAssets>
@@ -42,6 +49,10 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Include="..\README.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 		<None Include="Icon.png" Pack="true" PackagePath="" />
 		<Folder Include="Properties\" />
 	</ItemGroup>

@@ -10,7 +10,7 @@ public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
 	///    The full path
 	/// </summary>
 	[DataMember(Name = "fullPath")]
-	public string FullPath { get; set; }
+	public string FullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The parent dashboard group id
@@ -46,19 +46,19 @@ public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
 	///    The total number of child dashboards, not including those in subgroups
 	/// </summary>
 	[DataMember(Name = "dashboards")]
-	public List<Dashboard> Dashboards { get; set; }
+	public List<Dashboard> Dashboards { get; set; } = new();
 
 	/// <summary>
 	///     The template
 	/// </summary>
 	[DataMember(Name = "template")]
-	public string Template { get; set; }
+	public string? Template { get; set; }
 
 	/// <summary>
 	///    The widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> CustomProperties { get; set; }
+	public List<Property> CustomProperties { get; set; } = new();
 
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/groups";

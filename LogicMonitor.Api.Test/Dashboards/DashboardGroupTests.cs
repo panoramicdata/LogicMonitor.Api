@@ -26,6 +26,7 @@ public class DashboardGroupTests : TestWithOutput
 		dashboardGroup = await LogicMonitorClient
 			.CreateAsync(new DashboardGroupCreationDto
 			{
+				ParentId = "1",
 				Name = DashboardGroupName,
 				Description = "Created by Nuget test",
 				CustomProperties = new()
@@ -51,7 +52,7 @@ public class DashboardGroupTests : TestWithOutput
 			.CustomProperties
 			.Should()
 			.Contain(x => x.Name == "TestToken" && x.Value == "TestValue");
-	
+
 		await LogicMonitorClient
 			.DeleteAsync(dashboardGroup)
 			.ConfigureAwait(false);
