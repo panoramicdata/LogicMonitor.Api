@@ -10,25 +10,25 @@ public class DashboardGroupCreationDto : CreationDto<DashboardGroup>
 	///    The Parent Group Id as a string
 	/// </summary>
 	[DataMember(Name = "parentId")]
-	public string ParentId { get; set; }
+	public string ParentId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> Tokens { get; set; }
+	public List<Property> Tokens { get; set; } = new();
 
 	/// <summary>
 	///    ToString override
