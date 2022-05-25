@@ -204,7 +204,7 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceGroup,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 6686 },
+				ResourceGroupId = 6686,
 				ResourceGroupName = "Path1/Path2/Path3",
 				ApiTokenId = "TOKENID"
 			}
@@ -595,6 +595,23 @@ public class AuditEventTests : TestWithOutput
 				ResourceNames = new() { "somehost name" },
 				OutcomeType = AuditEventOutcomeType.Success,
 				ApiTokenId = "xx123xxx"
+			}
+		);
+	}
+
+	[Fact]
+	public void AddDeviceGroup_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Added device group Integration Testing/Test (6704) ,",
+			new()
+			{
+				MatchedRegExId = 32,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				ResourceGroupName = "Integration Testing/Test",
+				ResourceGroupId = 6704,
+				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
 	}

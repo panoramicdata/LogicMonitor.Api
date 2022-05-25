@@ -34,7 +34,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
 		new(14,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
+			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
 		new(04,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Add)ed device (?<resourceName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$", RegexOptions.Singleline)),
@@ -116,6 +116,9 @@ public static class LogItemExtensions
 		new(31,
 			AuditEventEntityType.ScheduledDownTime,
 			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(32,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
@@ -184,6 +187,7 @@ public static class LogItemExtensions
 		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
 
 		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
+		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
 		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
 		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
