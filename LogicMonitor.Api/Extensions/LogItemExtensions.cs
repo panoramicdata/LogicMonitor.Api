@@ -107,6 +107,12 @@ public static class LogItemExtensions
 		new(28,
 			AuditEventEntityType.DataSourceGraph,
 			new(@"""Action=(?<action>Add)""; ""Type=DataSourceGraph""; ""DataSourceName=(?<dataSourceName>.+?)""; ""Device=NA""; ""Description=Add datasource graph, graph=(?<graphName>.+?)\((?<graphId>.+?)\), ""$", RegexOptions.Singleline)),
+		new(29,
+			AuditEventEntityType.None,
+			new(@"^(?<discardedEventAlert>An event alert was discarded for EventSource Azure Advisor Recommendations because it exceeded the rate limit of 150 events per 60 seconds. Adding filters to your EventSource may help reduce the number of alerts triggered\.)$", RegexOptions.Singleline)),
+		new(30,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^(?<action>.+?) SDT from (?<sdtStart>.+?) to (?<sdtEnd>.+?) from .+ on Host (?<resourceName>.+) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
@@ -306,6 +312,11 @@ public static class LogItemExtensions
 		if (value.Groups["loginName"].Success)
 		{
 			return AuditEventActionType.Login;
+		}
+
+		if (value.Groups["discardedEventAlert"].Success)
+		{
+			return AuditEventActionType.DiscardedEventAlert;
 		}
 
 		return value.Groups["action"].Value.ToUpperInvariant() switch

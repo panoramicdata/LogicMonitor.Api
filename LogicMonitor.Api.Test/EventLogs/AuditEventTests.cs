@@ -550,4 +550,35 @@ public class AuditEventTests : TestWithOutput
 			}
 		);
 	}
+
+	[Fact]
+	public void EventAlertDiscarded_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"An event alert was discarded for EventSource Azure Advisor Recommendations because it exceeded the rate limit of 150 events per 60 seconds. Adding filters to your EventSource may help reduce the number of alerts triggered.",
+			new()
+			{
+				MatchedRegExId = 29,
+				ActionType = AuditEventActionType.DiscardedEventAlert,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
+	[Fact]
+	public void DeleteSdt_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token xx123xxx",
+			new()
+			{
+				MatchedRegExId = 30,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				ResourceNames = new() { "somehost name" },
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "xx123xxx"
+			}
+		);
+	}
 }
