@@ -113,6 +113,9 @@ public static class LogItemExtensions
 		new(30,
 			AuditEventEntityType.ScheduledDownTime,
 			new(@"^(?<action>.+?) SDT from (?<sdtStart>.+?) to (?<sdtEnd>.+?) from .+ on Host (?<resourceName>.+) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(31,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
