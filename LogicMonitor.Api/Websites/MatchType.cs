@@ -27,5 +27,11 @@ public enum MatchType
 	/// Regular
 	/// </summary>
 	[EnumMember(Value = "regular")]
-	Regular = 3
+	Regular = 3,
+
+	/// <summary>
+	/// Regular
+	/// </summary>
+	[EnumMember(Value = "wildcard")]
+	Wildcard = 4
 }
