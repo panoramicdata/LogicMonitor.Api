@@ -615,4 +615,22 @@ public class AuditEventTests : TestWithOutput
 			}
 		);
 	}
+
+	[Fact]
+	public void AddDataSource_Succeeds()
+	{
+		AssertToAuditEventSucceeds(
+			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=nttcms_ALL_ALL_IP_Addresses""; ""DeviceName=127.0.0.1""; ""DeviceId=4808""; ""Description=Addition of datasource to device""; ""DataSourceId=33514257""; ""DeviceDataSourceId=52050""",
+			new()
+			{
+				MatchedRegExId = 33,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSource,
+				ResourceIds = new() { 4808 },
+				DataSourceId = 33514257,
+				DataSourceName = "nttcms_ALL_ALL_IP_Addresses",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
 }
