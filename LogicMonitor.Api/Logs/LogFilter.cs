@@ -46,4 +46,10 @@ public class LogFilter
 	/// The number of records to take
 	/// </summary>
 	public int? Take { get; set; }
+
+	/// <summary>
+	/// The username filter as per LogicMonitor documentation. The filtered values must be Url Encoded, see example below
+	/// Example: to allow both "System:ActiveDiscovery" and "System:AppliesTo" the filter should be "System%3AActiveDiscovery"|"System%3AAppliesTo"
+	/// </summary>
+	public string? UsernameFilter { get; set; }
 }

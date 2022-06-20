@@ -68,12 +68,20 @@ public partial class LogicMonitorClient
 		var allLogItems = new List<LogItem>();
 		do
 		{
+			// Build the filter, always start with the date range requested
+			var filter = $"happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}";
+			if (!string.IsNullOrWhiteSpace(logFilter.UsernameFilter))
+			{
+				// Need to UrlEncode before adding to the filter
+				filter += HttpUtility.UrlEncode($",username:{logFilter.UsernameFilter}");
+			}
+
 			var logItems = (await GetBySubUrlAsync<Page<LogItem>>(
 				"setting/accesslogs" +
 				$"?sort={EnumHelper.ToEnumString(logFilter.LogFilterSortOrder)}" +
 				$"&offset={logFilter.Skip}" +
 				$"&size={logFilter.Take}" +
-				$"&filter=happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}",
+				$"&filter={filter}",
 				cancellationToken
 				).ConfigureAwait(false)).Items;
 			allLogItems.AddRange(logItems.Where(item => !allLogItems.Select(li => li.Id).Contains(item.Id)).ToList());
