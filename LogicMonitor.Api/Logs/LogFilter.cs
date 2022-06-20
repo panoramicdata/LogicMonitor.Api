@@ -49,7 +49,16 @@ public class LogFilter
 
 	/// <summary>
 	/// The username filter as per LogicMonitor documentation. The filtered values must be Url Encoded, see example below
-	/// Example: to allow both "System:ActiveDiscovery" and "System:AppliesTo" the filter should be "System%3AActiveDiscovery"|"System%3AAppliesTo"
+	/// Example: to allow both "\"System:ActiveDiscovery\"" and "\"System:AppliesTo\"" the filter should be "\"System%3AActiveDiscovery\"|\"System%3AAppliesTo\""
 	/// </summary>
 	public string? UsernameFilter { get; set; }
+
+	/// <summary>
+	/// This filter is globbed and applied to the "_all" filter
+	/// Example: 
+	///		"\"*health*\"" will include everything with the text 'health'
+	///		"\"* AND NOT *health*\"" will exclude everything with the text 'health'
+	/// </summary>
+	public string? TextFilter { get; set; }
+
 }
