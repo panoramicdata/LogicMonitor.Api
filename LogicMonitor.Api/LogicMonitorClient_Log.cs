@@ -53,7 +53,14 @@ public partial class LogicMonitorClient
 		var allLogItems = new List<LogItem>();
 		do
 		{
-			var logItems = (await GetBySubUrlAsync<Page<LogItem>>($"setting/accesslogs?sort={EnumHelper.ToEnumString(logFilter.LogFilterSortOrder)}&offset={logFilter.Skip}&size={logFilter.Take}&filter=happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}", cancellationToken).ConfigureAwait(false)).Items;
+			var logItems = (await GetBySubUrlAsync<Page<LogItem>>(
+				"setting/accesslogs" +
+				$"?sort={EnumHelper.ToEnumString(logFilter.LogFilterSortOrder)}" +
+				$"&offset={logFilter.Skip}" +
+				$"&size={logFilter.Take}" +
+				$"&filter=happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}",
+				cancellationToken
+				).ConfigureAwait(false)).Items;
 			allLogItems.AddRange(logItems.Where(item => !allLogItems.Select(li => li.Id).Contains(item.Id)).ToList());
 			if (logItems.Count == 0)
 			{
