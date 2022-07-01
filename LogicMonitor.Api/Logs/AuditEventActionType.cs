@@ -44,4 +44,9 @@ public enum AuditEventActionType
 	/// A general API event
 	/// </summary>
 	GeneralApi,
+
+	/// <summary>
+	/// An event alert was discarded
+	/// </summary>
+	DiscardedEventAlert
 }

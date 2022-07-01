@@ -34,7 +34,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
 		new(14,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
+			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
 		new(04,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Add)ed device (?<resourceName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$", RegexOptions.Singleline)),
@@ -67,7 +67,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+?).Nothing has been changed. via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(15,
 			AuditEventEntityType.DataSource,
-			new(@"""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?) \((?<resourceName>.+?)\)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?) \((?<resourceName>.+?)\)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
 		new(16,
 			AuditEventEntityType.ResourceProperty,
 			new(@"^(?<action>Add) property\(name=(?<propertyName>.+), value=(?<propertyValue>.+)\) to host\((?<resourceName>.+)\) via API token (?<apiTokenId>.+).$", RegexOptions.Singleline)),
@@ -107,6 +107,21 @@ public static class LogItemExtensions
 		new(28,
 			AuditEventEntityType.DataSourceGraph,
 			new(@"""Action=(?<action>Add)""; ""Type=DataSourceGraph""; ""DataSourceName=(?<dataSourceName>.+?)""; ""Device=NA""; ""Description=Add datasource graph, graph=(?<graphName>.+?)\((?<graphId>.+?)\), ""$", RegexOptions.Singleline)),
+		new(29,
+			AuditEventEntityType.None,
+			new(@"^(?<discardedEventAlert>An event alert was discarded for EventSource Azure Advisor Recommendations because it exceeded the rate limit of 150 events per 60 seconds. Adding filters to your EventSource may help reduce the number of alerts triggered\.)$", RegexOptions.Singleline)),
+		new(30,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^(?<action>.+?) SDT from (?<sdtStart>.+?) to (?<sdtEnd>.+?) from .+ on Host (?<resourceName>.+) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(31,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(32,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,$", RegexOptions.Singleline)),
+		new(33,
+			AuditEventEntityType.DataSource,
+			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
 	};
 
 	/// <summary>
@@ -175,6 +190,7 @@ public static class LogItemExtensions
 		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
 
 		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
+		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
 		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
 		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
@@ -306,6 +322,11 @@ public static class LogItemExtensions
 		if (value.Groups["loginName"].Success)
 		{
 			return AuditEventActionType.Login;
+		}
+
+		if (value.Groups["discardedEventAlert"].Success)
+		{
+			return AuditEventActionType.DiscardedEventAlert;
 		}
 
 		return value.Groups["action"].Value.ToUpperInvariant() switch

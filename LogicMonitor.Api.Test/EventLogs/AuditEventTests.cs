@@ -204,7 +204,7 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceGroup,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 6686 },
+				ResourceGroupId = 6686,
 				ResourceGroupName = "Path1/Path2/Path3",
 				ApiTokenId = "TOKENID"
 			}
@@ -546,6 +546,89 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSourceGraph,
 				DataSourceName = "test_NetApp_Cluster_FibreChannel",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
+	[Fact]
+	public void EventAlertDiscarded_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"An event alert was discarded for EventSource Azure Advisor Recommendations because it exceeded the rate limit of 150 events per 60 seconds. Adding filters to your EventSource may help reduce the number of alerts triggered.",
+			new()
+			{
+				MatchedRegExId = 29,
+				ActionType = AuditEventActionType.DiscardedEventAlert,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
+	[Fact]
+	public void DeleteSdt_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token xx123xxx",
+			new()
+			{
+				MatchedRegExId = 30,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				ResourceNames = new() { "somehost name" },
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "xx123xxx"
+			}
+		);
+	}
+
+	[Fact]
+	public void AddSdt_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token xx123xxx",
+			new()
+			{
+				MatchedRegExId = 31,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				ResourceNames = new() { "somehost name" },
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "xx123xxx"
+			}
+		);
+	}
+
+	[Fact]
+	public void AddDeviceGroup_Success()
+	{
+		AssertToAuditEventSucceeds(
+			@"Added device group Integration Testing/Test (6704) ,",
+			new()
+			{
+				MatchedRegExId = 32,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				ResourceGroupName = "Integration Testing/Test",
+				ResourceGroupId = 6704,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+	}
+
+	[Fact]
+	public void AddDataSource_Succeeds()
+	{
+		AssertToAuditEventSucceeds(
+			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=nttcms_ALL_ALL_IP_Addresses""; ""DeviceName=127.0.0.1""; ""DeviceId=4808""; ""Description=Addition of datasource to device""; ""DataSourceId=33514257""; ""DeviceDataSourceId=52050""",
+			new()
+			{
+				MatchedRegExId = 33,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSource,
+				ResourceIds = new() { 4808 },
+				DataSourceId = 33514257,
+				DataSourceName = "nttcms_ALL_ALL_IP_Addresses",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);

@@ -133,6 +133,11 @@ public class AuditEvent
 	public string? ResourceGroupName { get; internal set; }
 
 	/// <summary>
+	/// The ResourceGroup id
+	/// </summary>
+	public int? ResourceGroupId { get; internal set; }
+
+	/// <summary>
 	/// The Property Name
 	/// </summary>
 	public string? PropertyName { get; internal set; }

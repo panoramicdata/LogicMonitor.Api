@@ -58,7 +58,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	public bool UseCache { get; set; }
 
-	private int attemptCount = 1;
+	private int attemptCount = 5;
 
 	private readonly ILogger _logger;
 

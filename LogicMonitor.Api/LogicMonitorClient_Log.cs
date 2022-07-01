@@ -8,12 +8,21 @@ public partial class LogicMonitorClient
 	private const int LogItemsMaxTake = 49;
 
 	/// <summary>
-	///     Gets the LogItems
+	/// Gets LogItems
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public Task<List<LogItem>> GetLogItemsAsync(CancellationToken cancellationToken = default)
+		=> GetLogItemsAsync(null, cancellationToken);
+
+
+	/// <summary>
+	/// Gets LogItems using a filter
 	/// </summary>
 	/// <param name="logFilter"></param>
 	/// <param name="cancellationToken"></param>
 	// public List<LogItem> GetLogItemsAsync(LogFilter logFilter) => Get<LogItemCollection>(ApiMethod.Do, $"onesetting?func=getAccessLog&needTotal=true&orderBy=happenedOn&orderDirection=desc&start={logFilter.Skip}&results={logFilter.Take}").AccessLogItems;
-	public async Task<List<LogItem>> GetLogItemsAsync(LogFilter logFilter = null, CancellationToken cancellationToken = default)
+	public async Task<List<LogItem>> GetLogItemsAsync(LogFilter? logFilter, CancellationToken cancellationToken = default)
 	{
 		// If take is specified, do only that chunk.
 		if (logFilter is null)
@@ -31,29 +40,55 @@ public partial class LogicMonitorClient
 			logFilter.Skip = 0;
 		}
 
+
 		int maxLogItemCount;
-		if (logFilter.Take is not null)
+		// Was a Take provided?
+		if (logFilter.Take is null)
 		{
+			// NO - set the maxLogItemCount to the count requested, set the request page size to LogItemsMaxTake
+			maxLogItemCount = int.MaxValue;
+			logFilter.Take = LogItemsMaxTake;
+		}
+		else
+		{
+			// YES - Are we being asked for more than the max defined request page size?			
 			if (logFilter.Take > LogItemsMaxTake)
 			{
+				// YES - set the maxLogItemCount to our LogItemsMaxTake, restricting the request page size to LogItemsMaxTake
 				maxLogItemCount = (int)logFilter.Take;
 				logFilter.Take = LogItemsMaxTake;
 			}
 			else
 			{
+				// NO - The request page size can stay as desired and the max set to this
 				maxLogItemCount = (int)logFilter.Take;
 			}
-		}
-		else
-		{
-			maxLogItemCount = int.MaxValue;
-			logFilter.Take = LogItemsMaxTake;
 		}
 
 		var allLogItems = new List<LogItem>();
 		do
 		{
-			var logItems = (await GetBySubUrlAsync<Page<LogItem>>($"setting/accesslogs?sort={EnumHelper.ToEnumString(logFilter.LogFilterSortOrder)}&offset={logFilter.Skip}&size={logFilter.Take}&filter=happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}", cancellationToken).ConfigureAwait(false)).Items;
+			// Build the filter, always start with the date range requested
+			var filter = $"happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}";
+			if (!string.IsNullOrWhiteSpace(logFilter.UsernameFilter))
+			{
+				// Need to UrlEncode before adding to the filter
+				filter += HttpUtility.UrlEncode($",username:{logFilter.UsernameFilter}");
+			}
+			if (!string.IsNullOrWhiteSpace(logFilter.TextFilter))
+			{
+				filter += HttpUtility.UrlEncode($",_all~{logFilter.TextFilter}");
+
+			}
+
+			var logItems = (await GetBySubUrlAsync<Page<LogItem>>(
+				"setting/accesslogs" +
+				$"?sort={EnumHelper.ToEnumString(logFilter.LogFilterSortOrder)}" +
+				$"&offset={logFilter.Skip}" +
+				$"&size={logFilter.Take}" +
+				$"&filter={filter}",
+				cancellationToken
+				).ConfigureAwait(false)).Items;
 			allLogItems.AddRange(logItems.Where(item => !allLogItems.Select(li => li.Id).Contains(item.Id)).ToList());
 			if (logItems.Count == 0)
 			{
