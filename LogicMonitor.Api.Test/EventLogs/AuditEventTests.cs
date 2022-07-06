@@ -12,8 +12,7 @@ public class AuditEventTests : TestWithOutput
 
 	[Fact]
 	public void Create_DeviceFailure_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Add""; ""Type=Device""; ""Device=ReportMagic alpha-Scheduler (0)""; ""Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic alpha-Scheduler\n)""",
 			new()
 			{
@@ -25,12 +24,10 @@ public class AuditEventTests : TestWithOutput
 				ResourceNames = new() { "ReportMagic alpha-Scheduler" }
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Disappeared_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceId=NA""; ""Description=Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; """,
 			new()
 			{
@@ -41,12 +38,10 @@ public class AuditEventTests : TestWithOutput
 				ResourceNames = new() { "NA" }
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Changed_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Value(s) changed for: PDL-K8S-TEST (CollectorID=297) [Critical Linux Processes-java from 9947 to 22713]; valueChanges=[deviceId=3271,dataSourceId=94545589,instanceChanges=[instanceId=263219850,oldValue=22713,newValue=9947];];'""",
 			new()
 			{
@@ -61,13 +56,11 @@ public class AuditEventTests : TestWithOutput
 				InstanceName = "NA"
 			}
 		);
-	}
 
 
 	[Fact]
 	public void Update_Device_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			"Update host<4030, docker-registry-deploy-default-PDL-K8S-PROD> (monitored by collector <295, pdl-k8s-prod-0>), ,  via API token xx123",
 			new()
 			{
@@ -82,12 +75,10 @@ public class AuditEventTests : TestWithOutput
 				ApiTokenId = "xx123"
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceDataSourceInstance_New_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: PDL-LM.logicmonitor.com (CollectorID=249) [LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter]; New_InstanceIds=[deviceId=2781,dataSourceId=112813425,dataSourceNewInstanceId(s)=263395102];""",
 			new()
 			{
@@ -104,12 +95,10 @@ public class AuditEventTests : TestWithOutput
 				DataSourceNewInstanceIds = new[] { 263395102 }
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Disappeared2_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Instance(s) disappeared from: PDL-K8S-TEST-03 (CollectorID=249) [Critical Linux Processes-java]; New_InstanceIds=[deviceId=1525,dataSourceId=94545589,dataSourceDeletedInstanceId(s)=263219849];""",
 			new()
 			{
@@ -126,12 +115,10 @@ public class AuditEventTests : TestWithOutput
 				DataSourceDeletedInstanceIds = new[] { 263219849 }
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceDataSourceInstance_NewAndDisappeared_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: PDL-HAPROXY-TEST-02 (CollectorID=249) [HA Proxy Backend-ui_alpha_reportmagic,HA Proxy Backend-pdl_app_jira_test_01]; Instance(s) disappeared from: PDL-HAPROXY-TEST-02 (CollectorID=249) [HA Proxy Backend-uiv3_alpha_reportmagic]; New_InstanceIds=[deviceId=2365,dataSourceId=111613364,dataSourceNewInstanceId(s)=263956258,263956259,dataSourceDeletedInstanceId(s)=256832296];""",
 			new()
 			{
@@ -150,12 +137,10 @@ public class AuditEventTests : TestWithOutput
 				DataSourceDeletedInstanceNames = new[] { "HA Proxy Backend-uiv3_alpha_reportmagic" }
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceDataSourceInstance_NewAndDisappeared2_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: EU-W1:recoveryservices:pambackup (CollectorID=-2) [Microsoft_Azure_BackupJobStatus-xxx,Microsoft_Azure_BackupJobStatus-yyy]; Instance(s) disappeared from: EU-W1:recoveryservices:pambackup (CollectorID=-2) [Microsoft_Azure_BackupJobStatus-aaa,Microsoft_Azure_BackupJobStatus-bbb]; New_InstanceIds=[deviceId=2571,dataSourceId=39016161,dataSourceNewInstanceId(s)=570930097,570930098,dataSourceDeletedInstanceId(s)=569154776,569154777];""",
 			new()
 			{
@@ -174,12 +159,10 @@ public class AuditEventTests : TestWithOutput
 				DataSourceDeletedInstanceNames = new[] { "Microsoft_Azure_BackupJobStatus-aaa", "Microsoft_Azure_BackupJobStatus-bbb" }
 			}
 		);
-	}
 
 	[Fact]
 	public void Update_DeviceGroup_NothingChanged_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			"Update the device group PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-TEST.Nothing has been changed. via API token TOKENID",
 			new()
 			{
@@ -191,12 +174,10 @@ public class AuditEventTests : TestWithOutput
 				ApiTokenId = "TOKENID"
 			}
 		);
-	}
 
 	[Fact]
 	public void Added_DeviceGroup_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			"Added device group Path1/Path2/Path3 (6686)  via API token TOKENID, ",
 			new()
 			{
@@ -209,13 +190,11 @@ public class AuditEventTests : TestWithOutput
 				ApiTokenId = "TOKENID"
 			}
 		);
-	}
 
 
 	[Fact]
 	public void Added_DataSource_Success()
-	{
-		AssertToAuditEventSucceeds(
+		=> AssertToAuditEventSucceeds(
 			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=Whois_TTL_Expiry""; ""DeviceName=UK-S1:appserviceplan:CappedAndHooked (UK-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID)""; ""DeviceId=8555""; ""Description=Addition of datasource to device""; ""DataSourceId=114345723""; ""DeviceDataSourceId=615826""",
 			new()
 			{
@@ -229,7 +208,320 @@ public class AuditEventTests : TestWithOutput
 				DataSourceName = "Whois_TTL_Expiry"
 			}
 		);
-	}
+
+
+	[Fact]
+	public void Added_ResourceProperty_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add property(name=propname, value=propvalue) to host(resourceName) via API token TOKENID.",
+			new()
+			{
+				MatchedRegExId = 16,
+				ResourceNames = new() { "resourceName" },
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceProperty,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "TOKENID",
+				PropertyName = "propname",
+				PropertyValue = "propvalue"
+			}
+		);
+
+	[Fact]
+	public void HostGroups_Success()
+		=> AssertToAuditEventSucceeds(
+			@"host(id= 4581 ,name= LM Push Server (LM-Push-Server))add to groups, list:   group name: Misc ,appliesTo= isMisc()  ,group name: Minimal Monitoring ,appliesTo= system.sysinfo == """" && system.sysoid == """" && isDevice() && !(system.virtualization) && (monitoring != ""basic"")  ,group name: LM Push SG ,appliesTo= servicenow.servicegroup_sys_id == ""xxx"" or getPropValue(""system.aws.tag.xxx_service-group"") == ""xxx"" or getPropValue(""system.azure.tag.xxx_service-group"") == ""xxx"" or getPropValue(""system.gcp.tag.xxx_service-group"") == ""xxx""  ,group name: lmsupport ,appliesTo= cms_service_level != ""cet_8x5"" ,add group number is 4",
+			new()
+			{
+				MatchedRegExId = 17,
+				ResourceIds = new() { 4581 },
+				ResourceNames = new() { "LM Push Server (LM-Push-Server)" },
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceGroups,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void HostGroupsWithUnicodeCloseBracketAfterHostName_Success()
+		=> AssertToAuditEventSucceeds(
+			@"host(id= 4581 ,name= LM Push Server (LM-Push-Server)）add to groups, list:   group name: Misc ,appliesTo= isMisc()  ,group name: Minimal Monitoring ,appliesTo= system.sysinfo == \""\"" && system.sysoid == \""\"" && isDevice() && !(system.virtualization) && (monitoring != \""basic\"")  ,group name: LM Push SG ,appliesTo= servicenow.servicegroup_sys_id == \""xxx\"" or getPropValue(\""system.aws.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.azure.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.gcp.tag.xxx_service-group\"") == \""xxx\""  ,group name: lmsupport ,appliesTo= cms_service_level != \""cet_8x5\"" ,add group number is 4",
+			new()
+			{
+				MatchedRegExId = 17,
+				ResourceIds = new() { 4581 },
+				ResourceNames = new() { "LM Push Server (LM-Push-Server)" },
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceGroups,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void HostGroupsWithDeleteAndAddNumber_Success()
+		=> AssertToAuditEventSucceeds(
+			@" host(id=4582,name =resourceName) add to LM Push SG ,appliesTo=servicenow.servicegroup_sys_id == \""xxx\"" or getPropValue(\""system.aws.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.azure.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.gcp.tag.xxx_service-group\"") == \""xxx\"" ,delete number is 0 ,add number is 1",
+			new()
+			{
+				MatchedRegExId = 19,
+				ResourceIds = new() { 4582 },
+				ResourceNames = new() { "resourceName" },
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceGroups,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void DeleteKubernetesHosts_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the Kubernetes hosts those were marked for deletion [argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876(id=8443)]",
+			new()
+			{
+				MatchedRegExId = 18,
+				ResourceIds = new() { 8443 },
+				ResourceNames = new() { "argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876" },
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void DeleteKubernetesHostsMultiple_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the Kubernetes hosts those were marked for deletion [collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781(id=8595), argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789(id=8603), argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493(id=8581), collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716(id=8438)]",
+			new()
+			{
+				MatchedRegExId = 18,
+				ResourceIds = new() {
+					8595,
+					8603,
+					8581,
+					8438
+				},
+				ResourceNames = new() {
+					"collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781",
+					"argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789",
+					"argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493",
+					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
+				},
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void AddDeviceDataSourceInstance_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Add""; ""Type=Instance""; ""Device=LM Push Server""; ""InstanceName=Google (https://google.com)""; ""Description=DataSourceName: HTTP per Page- """,
+			new()
+			{
+				MatchedRegExId = 20,
+				ResourceNames = new() { "LM Push Server" },
+				DataSourceName = "HTTP per Page-",
+				InstanceName = "Google",
+				WildValue = "https://google.com",
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void SAMLLogin_Success()
+		=> AssertToAuditEventSucceeds(
+			@"some.user123@domain.com signs in via SAML",
+			new()
+			{
+				MatchedRegExId = 21,
+				LoginName = "some.user123@domain.com",
+				ActionType = AuditEventActionType.Login,
+				EntityType = AuditEventEntityType.None,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void FailedApiRequest_Failure()
+		=> AssertToAuditEventSucceeds(
+			@"Failed API request: API token TOKENID attempted to access path '/santaba/rest/device/groups/1613/devices' with Method: GET",
+			new()
+			{
+				MatchedRegExId = 22,
+				ActionType = AuditEventActionType.GeneralApi,
+				OutcomeType = AuditEventOutcomeType.Failure,
+				ApiTokenId = "TOKENID",
+				ApiMethod = "GET",
+				ApiPath = "/santaba/rest/device/groups/1613/devices"
+			}
+		);
+
+	[Fact]
+	public void DeleteAwsHostsMultiple_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the aws hosts [EU-W1:i-0ad560910aee79179(id=4573), EU-W1:i-0070bf1c74503d8ed(id=4574)]",
+			new()
+			{
+				MatchedRegExId = 23,
+				ResourceIds = new() {
+					4573,
+					4574
+				},
+				ResourceNames = new() {
+					"EU-W1:i-0ad560910aee79179",
+					"EU-W1:i-0070bf1c74503d8ed"
+				},
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void Login_Success()
+		=> AssertToAuditEventSucceeds(
+			@"some.user.admin signs in (adminId=123).",
+			new()
+			{
+				MatchedRegExId = 24,
+				LoginName = "some.user.admin",
+				ActionType = AuditEventActionType.Login,
+				EntityType = AuditEventEntityType.None,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void AddNewAccountAdmin_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add a new account some.user.admin (administrator)",
+			new()
+			{
+				MatchedRegExId = 25,
+				AccountName = "some.user.admin",
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void UpdatePassword_Success()
+		=> AssertToAuditEventSucceeds(
+			@"some.user.admin update password change password",
+			new()
+			{
+				MatchedRegExId = 26,
+				AccountName = "some.user.admin",
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void DataSourceImport_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Import DataSource from repository.  Change details : Change datasource : NetApp_Cluster_FibreChannel, dsId=1211 {\nDataSourceContent\n}",
+			new()
+			{
+				MatchedRegExId = 27,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.DataSource,
+				DataSourceId = 1211,
+				DataSourceName = "NetApp_Cluster_FibreChannel",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void AddDataSourceGraph_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Add""; ""Type=DataSourceGraph""; ""DataSourceName=test_NetApp_Cluster_FibreChannel""; ""Device=NA""; ""Description=Add datasource graph, graph=Signal/Sync Loss(8702), """,
+			new()
+			{
+				MatchedRegExId = 28,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSourceGraph,
+				DataSourceName = "test_NetApp_Cluster_FibreChannel",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void EventAlertDiscarded_Success()
+		=> AssertToAuditEventSucceeds(
+			@"An event alert was discarded for EventSource Azure Advisor Recommendations because it exceeded the rate limit of 150 events per 60 seconds. Adding filters to your EventSource may help reduce the number of alerts triggered.",
+			new()
+			{
+				MatchedRegExId = 29,
+				ActionType = AuditEventActionType.DiscardedEventAlert,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void DeleteSdt_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token xx123xxx",
+			new()
+			{
+				MatchedRegExId = 30,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				ResourceNames = new() { "somehost name" },
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "xx123xxx"
+			}
+		);
+
+	[Fact]
+	public void AddSdt_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token xx123xxx",
+			new()
+			{
+				MatchedRegExId = 31,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				ResourceNames = new() { "somehost name" },
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "xx123xxx"
+			}
+		);
+
+	[Fact]
+	public void AddDeviceGroup_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Added device group Integration Testing/Test (6704) ,",
+			new()
+			{
+				MatchedRegExId = 32,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				ResourceGroupName = "Integration Testing/Test",
+				ResourceGroupId = 6704,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void AddDataSource_Succeeds()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=nttcms_ALL_ALL_IP_Addresses""; ""DeviceName=127.0.0.1""; ""DeviceId=4808""; ""Description=Addition of datasource to device""; ""DataSourceId=33514257""; ""DeviceDataSourceId=52050""",
+			new()
+			{
+				MatchedRegExId = 33,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSource,
+				ResourceIds = new() { 4808 },
+				DataSourceId = 33514257,
+				DataSourceName = "nttcms_ALL_ALL_IP_Addresses",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
 
 	private static void AssertToAuditEventSucceeds(
 		string description,
@@ -272,365 +564,5 @@ public class AuditEventTests : TestWithOutput
 					.Excluding(ae => ae.SessionId)
 					.Excluding(ae => ae.UserName)
 			);
-
-		//auditEvent.ActionType.Should().Be(expectedAuditEventActionType);
-		//auditEvent.EntityType.Should().Be(expectedAuditEventEntityType);
-		//auditEvent.Host.Should().Be(ipAddress);
-		//auditEvent.OriginalDescription.Should().Be(description);
-		//auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
-		//auditEvent.OutcomeType.Should().Be(expectedAuditEventOutcomeType);
-	}
-
-	[Fact]
-	public void Added_ResourceProperty_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Add property(name=propname, value=propvalue) to host(resourceName) via API token TOKENID.",
-			new()
-			{
-				MatchedRegExId = 16,
-				ResourceNames = new() { "resourceName" },
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ResourceProperty,
-				OutcomeType = AuditEventOutcomeType.Success,
-				ApiTokenId = "TOKENID",
-				PropertyName = "propname",
-				PropertyValue = "propvalue"
-			}
-		);
-	}
-
-	[Fact]
-	public void HostGroups_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"host(id= 4581 ,name= LM Push Server (LM-Push-Server))add to groups, list:   group name: Misc ,appliesTo= isMisc()  ,group name: Minimal Monitoring ,appliesTo= system.sysinfo == """" && system.sysoid == """" && isDevice() && !(system.virtualization) && (monitoring != ""basic"")  ,group name: LM Push SG ,appliesTo= servicenow.servicegroup_sys_id == ""xxx"" or getPropValue(""system.aws.tag.xxx_service-group"") == ""xxx"" or getPropValue(""system.azure.tag.xxx_service-group"") == ""xxx"" or getPropValue(""system.gcp.tag.xxx_service-group"") == ""xxx""  ,group name: lmsupport ,appliesTo= cms_service_level != ""cet_8x5"" ,add group number is 4",
-			new()
-			{
-				MatchedRegExId = 17,
-				ResourceIds = new() { 4581 },
-				ResourceNames = new() { "LM Push Server (LM-Push-Server)" },
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ResourceGroups,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void HostGroupsWithUnicodeCloseBracketAfterHostName_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"host(id= 4581 ,name= LM Push Server (LM-Push-Server)）add to groups, list:   group name: Misc ,appliesTo= isMisc()  ,group name: Minimal Monitoring ,appliesTo= system.sysinfo == \""\"" && system.sysoid == \""\"" && isDevice() && !(system.virtualization) && (monitoring != \""basic\"")  ,group name: LM Push SG ,appliesTo= servicenow.servicegroup_sys_id == \""xxx\"" or getPropValue(\""system.aws.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.azure.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.gcp.tag.xxx_service-group\"") == \""xxx\""  ,group name: lmsupport ,appliesTo= cms_service_level != \""cet_8x5\"" ,add group number is 4",
-			new()
-			{
-				MatchedRegExId = 17,
-				ResourceIds = new() { 4581 },
-				ResourceNames = new() { "LM Push Server (LM-Push-Server)" },
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ResourceGroups,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void HostGroupsWithDeleteAndAddNumber_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@" host(id=4582,name =resourceName) add to LM Push SG ,appliesTo=servicenow.servicegroup_sys_id == \""xxx\"" or getPropValue(\""system.aws.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.azure.tag.xxx_service-group\"") == \""xxx\"" or getPropValue(\""system.gcp.tag.xxx_service-group\"") == \""xxx\"" ,delete number is 0 ,add number is 1",
-			new()
-			{
-				MatchedRegExId = 19,
-				ResourceIds = new() { 4582 },
-				ResourceNames = new() { "resourceName" },
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ResourceGroups,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void DeleteKubernetesHosts_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Delete the Kubernetes hosts those were marked for deletion [argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876(id=8443)]",
-			new()
-			{
-				MatchedRegExId = 18,
-				ResourceIds = new() { 8443 },
-				ResourceNames = new() { "argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876" },
-				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Resource,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void DeleteKubernetesHostsMultiple_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Delete the Kubernetes hosts those were marked for deletion [collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781(id=8595), argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789(id=8603), argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493(id=8581), collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716(id=8438)]",
-			new()
-			{
-				MatchedRegExId = 18,
-				ResourceIds = new() {
-					8595,
-					8603,
-					8581,
-					8438
-				},
-				ResourceNames = new() {
-					"collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781",
-					"argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789",
-					"argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493",
-					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
-				},
-				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Resource,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void AddDeviceDataSourceInstance_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"""Action=Add""; ""Type=Instance""; ""Device=LM Push Server""; ""InstanceName=Google (https://google.com)""; ""Description=DataSourceName: HTTP per Page- """,
-			new()
-			{
-				MatchedRegExId = 20,
-				ResourceNames = new() { "LM Push Server" },
-				DataSourceName = "HTTP per Page-",
-				InstanceName = "Google",
-				WildValue = "https://google.com",
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void SAMLLogin_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"some.user123@domain.com signs in via SAML",
-			new()
-			{
-				MatchedRegExId = 21,
-				LoginName = "some.user123@domain.com",
-				ActionType = AuditEventActionType.Login,
-				EntityType = AuditEventEntityType.None,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void FailedApiRequest_Failure()
-	{
-		AssertToAuditEventSucceeds(
-			@"Failed API request: API token TOKENID attempted to access path '/santaba/rest/device/groups/1613/devices' with Method: GET",
-			new()
-			{
-				MatchedRegExId = 22,
-				ActionType = AuditEventActionType.GeneralApi,
-				OutcomeType = AuditEventOutcomeType.Failure,
-				ApiTokenId = "TOKENID",
-				ApiMethod = "GET",
-				ApiPath = "/santaba/rest/device/groups/1613/devices"
-			}
-		);
-	}
-
-	[Fact]
-	public void DeleteAwsHostsMultiple_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Delete the aws hosts [EU-W1:i-0ad560910aee79179(id=4573), EU-W1:i-0070bf1c74503d8ed(id=4574)]",
-			new()
-			{
-				MatchedRegExId = 23,
-				ResourceIds = new() {
-					4573,
-					4574
-				},
-				ResourceNames = new() {
-					"EU-W1:i-0ad560910aee79179",
-					"EU-W1:i-0070bf1c74503d8ed"
-				},
-				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Resource,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void Login_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"some.user.admin signs in (adminId=123).",
-			new()
-			{
-				MatchedRegExId = 24,
-				LoginName = "some.user.admin",
-				ActionType = AuditEventActionType.Login,
-				EntityType = AuditEventEntityType.None,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void AddNewAccountAdmin_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Add a new account some.user.admin (administrator)",
-			new()
-			{
-				MatchedRegExId = 25,
-				AccountName = "some.user.admin",
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.Account,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void UpdatePassword_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"some.user.admin update password change password",
-			new()
-			{
-				MatchedRegExId = 26,
-				AccountName = "some.user.admin",
-				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.Account,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void DataSourceImport_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Import DataSource from repository.  Change details : Change datasource : NetApp_Cluster_FibreChannel, dsId=1211 {\nDataSourceContent\n}",
-			new()
-			{
-				MatchedRegExId = 27,
-				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.DataSource,
-				DataSourceId = 1211,
-				DataSourceName = "NetApp_Cluster_FibreChannel",
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void AddDataSourceGraph_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"""Action=Add""; ""Type=DataSourceGraph""; ""DataSourceName=test_NetApp_Cluster_FibreChannel""; ""Device=NA""; ""Description=Add datasource graph, graph=Signal/Sync Loss(8702), """,
-			new()
-			{
-				MatchedRegExId = 28,
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.DataSourceGraph,
-				DataSourceName = "test_NetApp_Cluster_FibreChannel",
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void EventAlertDiscarded_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"An event alert was discarded for EventSource Azure Advisor Recommendations because it exceeded the rate limit of 150 events per 60 seconds. Adding filters to your EventSource may help reduce the number of alerts triggered.",
-			new()
-			{
-				MatchedRegExId = 29,
-				ActionType = AuditEventActionType.DiscardedEventAlert,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void DeleteSdt_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token xx123xxx",
-			new()
-			{
-				MatchedRegExId = 30,
-				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.ScheduledDownTime,
-				ResourceNames = new() { "somehost name" },
-				OutcomeType = AuditEventOutcomeType.Success,
-				ApiTokenId = "xx123xxx"
-			}
-		);
-	}
-
-	[Fact]
-	public void AddSdt_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token xx123xxx",
-			new()
-			{
-				MatchedRegExId = 31,
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ScheduledDownTime,
-				ResourceNames = new() { "somehost name" },
-				OutcomeType = AuditEventOutcomeType.Success,
-				ApiTokenId = "xx123xxx"
-			}
-		);
-	}
-
-	[Fact]
-	public void AddDeviceGroup_Success()
-	{
-		AssertToAuditEventSucceeds(
-			@"Added device group Integration Testing/Test (6704) ,",
-			new()
-			{
-				MatchedRegExId = 32,
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ResourceGroup,
-				ResourceGroupName = "Integration Testing/Test",
-				ResourceGroupId = 6704,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
-	}
-
-	[Fact]
-	public void AddDataSource_Succeeds()
-	{
-		AssertToAuditEventSucceeds(
-			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=nttcms_ALL_ALL_IP_Addresses""; ""DeviceName=127.0.0.1""; ""DeviceId=4808""; ""Description=Addition of datasource to device""; ""DataSourceId=33514257""; ""DeviceDataSourceId=52050""",
-			new()
-			{
-				MatchedRegExId = 33,
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.DataSource,
-				ResourceIds = new() { 4808 },
-				DataSourceId = 33514257,
-				DataSourceName = "nttcms_ALL_ALL_IP_Addresses",
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
 	}
 }
