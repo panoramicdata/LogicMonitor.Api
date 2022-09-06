@@ -964,7 +964,6 @@ public partial class LogicMonitorClient : IDisposable
 
 		// Create a PortalResponse
 		var portalResponse = new PortalResponse<T>(httpResponseMessage);
-		string data = portalResponse.Data.ToString();
 
 		// Check the outer HTTP status code
 		if (!portalResponse.IsSuccessStatusCode)
