@@ -935,6 +935,14 @@ public partial class LogicMonitorClient : IDisposable
 			break;
 		}
 
+		// Log headers into one message
+		var headerText = "HEADERS: ";
+		foreach (var header in httpResponseMessage.Headers)
+		{
+			headerText += $"HEADER-NAME: {header.Key} | HEADER-VALUE: {header.Value} " + "\r\n";
+			_logger.LogDebug("{Headers}", headerText);
+		}
+
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
