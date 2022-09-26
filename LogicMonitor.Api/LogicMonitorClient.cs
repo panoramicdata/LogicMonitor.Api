@@ -1,3 +1,6 @@
+using System.Linq;
+using System.Net.Http;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -665,6 +668,14 @@ public partial class LogicMonitorClient : IDisposable
 			requestMessage.Headers.Add("X-version", "3");
 		}
 
+		var headerText = "REQUEST HEADERS:\r\n";
+		foreach (var headerKvp in requestMessage.Headers)
+		{
+			headerText += $"HEADER-NAME: {headerKvp.Key} | HEADER-VALUE(S): {string.Join(";", headerKvp.Value)} " + "\r\n";
+		}
+
+		_logger.LogDebug("{Headers}", headerText);
+
 		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 	}
 
@@ -936,7 +947,7 @@ public partial class LogicMonitorClient : IDisposable
 		}
 
 		// Log headers into one message
-		var headerText = "HEADERS: ";
+		var headerText = "RESPONSE HEADERS:\r\n";
 		foreach (var headerKvp in httpResponseMessage.Headers)
 		{
 			headerText += $"HEADER-NAME: {headerKvp.Key} | HEADER-VALUE(S): {string.Join(";", headerKvp.Value)} " + "\r\n";
