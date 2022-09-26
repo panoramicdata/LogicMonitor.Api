@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Net.Http;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -668,7 +665,7 @@ public partial class LogicMonitorClient : IDisposable
 			requestMessage.Headers.Add("X-version", "3");
 		}
 
-		_logger.LogDebug("{Headers}", "REQUEST HEADERS:\r\n\r\n" + GetHeadersForLogging(requestMessage.Headers));
+		_logger.LogDebug("{Headers}", "REQUEST HEADERS:\r\n\r\n" + GetHeadersForDebugLogging(requestMessage.Headers));
 
 		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 	}
@@ -677,7 +674,7 @@ public partial class LogicMonitorClient : IDisposable
 		=> GetAsync<Page<T>>(UseCache, $"{subUrl}?{filter}", cancellationToken);
 
 
-	private string GetHeadersForLogging(HttpHeaders headers)
+	private string GetHeadersForDebugLogging(HttpHeaders headers)
 	{
 		try
 		{
@@ -960,7 +957,7 @@ public partial class LogicMonitorClient : IDisposable
 			break;
 		}
 
-		_logger.LogDebug("{Headers}", "RESPONSE HEADERS:\r\n\r\n" + GetHeadersForLogging(httpResponseMessage.Headers));
+		_logger.LogDebug("{Headers}", "RESPONSE HEADERS:\r\n\r\n" + GetHeadersForDebugLogging(httpResponseMessage.Headers));
 
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
