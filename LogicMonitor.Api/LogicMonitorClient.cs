@@ -937,11 +937,12 @@ public partial class LogicMonitorClient : IDisposable
 
 		// Log headers into one message
 		var headerText = "HEADERS: ";
-		foreach (var header in httpResponseMessage.Headers)
+		foreach (var headerKvp in httpResponseMessage.Headers)
 		{
-			headerText += $"HEADER-NAME: {header.Key} | HEADER-VALUE: {header.Value} " + "\r\n";
-			_logger.LogDebug("{Headers}", headerText);
+			headerText += $"HEADER-NAME: {headerKvp.Key} | HEADER-VALUE(S): {string.Join(";", headerKvp.Value)} " + "\r\n";
 		}
+
+		_logger.LogDebug("{Headers}", headerText);
 
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
