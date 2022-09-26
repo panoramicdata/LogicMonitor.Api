@@ -668,19 +668,33 @@ public partial class LogicMonitorClient : IDisposable
 			requestMessage.Headers.Add("X-version", "3");
 		}
 
-		var headerText = "REQUEST HEADERS:\r\n";
-		foreach (var headerKvp in requestMessage.Headers)
-		{
-			headerText += $"HEADER-NAME: {headerKvp.Key} | HEADER-VALUE(S): {string.Join(";", headerKvp.Value)} " + "\r\n";
-		}
-
-		_logger.LogDebug("{Headers}", headerText);
+		_logger.LogDebug("{Headers}", "REQUEST HEADERS:\r\n\r\n" + GetHeadersForLogging(requestMessage.Headers));
 
 		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 	}
 
 	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
 		=> GetAsync<Page<T>>(UseCache, $"{subUrl}?{filter}", cancellationToken);
+
+
+	private string GetHeadersForLogging(HttpHeaders headers)
+	{
+		try
+		{
+			var outputText = string.Empty;
+			foreach (var header in headers.Where(x => x.Key != "Authorization"))
+			{
+				outputText += $"HEADER-NAME: {header.Key} | HEADER-VALUE(S): {string.Join(";", header.Value)} " + "\r\n";
+			}
+
+			return outputText;
+		}
+		catch (Exception e)
+		{
+			_logger.LogError("Unable to get headers for debug logging: {Message}", e.Message);
+			return "ERROR - UNABLE TO FETCH HEADERS";
+		}
+	}
 
 	/// <summary>
 	///     Gets a filtered page of items
@@ -946,14 +960,7 @@ public partial class LogicMonitorClient : IDisposable
 			break;
 		}
 
-		// Log headers into one message
-		var headerText = "RESPONSE HEADERS:\r\n";
-		foreach (var headerKvp in httpResponseMessage.Headers)
-		{
-			headerText += $"HEADER-NAME: {headerKvp.Key} | HEADER-VALUE(S): {string.Join(";", headerKvp.Value)} " + "\r\n";
-		}
-
-		_logger.LogDebug("{Headers}", headerText);
+		_logger.LogDebug("{Headers}", "RESPONSE HEADERS:\r\n\r\n" + GetHeadersForLogging(httpResponseMessage.Headers));
 
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
