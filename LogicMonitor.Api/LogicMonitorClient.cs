@@ -448,7 +448,7 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var httpMethod = HttpMethod.Put;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug("{Prefix} {SubUrl}...", prefix, subUrl);
+		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
 		var jsonString = JsonConvert.SerializeObject(@object);
 		_logger.LogTrace("{Prefix} jsonString:\r\n{JsonString}", prefix, jsonString);
@@ -473,7 +473,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
-						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
 						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
@@ -710,7 +710,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		var httpMethod = HttpMethod.Delete;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug("{Prefix} {SubUrl} ...", prefix, subUrl);
+		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
 		var stopwatch = Stopwatch.StartNew();
 		HttpResponseMessage httpResponseMessage;
@@ -755,7 +755,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
-						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
 						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
@@ -833,7 +833,7 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var httpMethod = HttpMethod.Get;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug("{Prefix} {SubUrl} ...", prefix, subUrl);
+		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
 		// Age the Cache
 		_cache.Age();
@@ -892,7 +892,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
-						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
 						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
@@ -945,7 +945,7 @@ public partial class LogicMonitorClient : IDisposable
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
 			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			_logger.LogTrace("RESPONSE BODY:\r\n\r\n {Content}", content);
+			_logger.LogTrace("RESPONSE:\r\n\r\n {Content}", content);
 			return new XmlResponse { Content = content } as T;
 		}
 		else if (typeof(T) == typeof(List<byte>))
@@ -980,13 +980,13 @@ public partial class LogicMonitorClient : IDisposable
 				prefix,
 				httpResponseMessage.StatusCode,
 				responseBody);
-			_logger.LogTrace("RESPONSE BODY:\r\n\r\n{ResponseBody}", responseBody);
+			_logger.LogTrace("RESPONSE:\r\n\r\n{ResponseBody}", responseBody);
 			throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 		}
 
 		// Return the object
 		T? deserializedObject;
-		_logger.LogTrace("{Data}:\r\n\r\n", portalResponse.Data?.ToString());
+		_logger.LogTrace("RESPONSE:\r\n\r\n{Data}:", portalResponse.Data?.ToString());
 		try
 		{
 			deserializedObject = portalResponse.GetObject(JsonConverters);
@@ -1027,7 +1027,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		var httpMethod = HttpMethod.Post;
 		var prefix = GetPrefix(httpMethod);
-		_logger.LogDebug("{Prefix} {SubUrl} ...", prefix, subUrl);
+		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
 		// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
 		var data = JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
@@ -1056,7 +1056,7 @@ public partial class LogicMonitorClient : IDisposable
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
-						// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
 						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
@@ -1129,7 +1129,7 @@ public partial class LogicMonitorClient : IDisposable
 		var prefix = GetPrefix(PatchHttpMethod);
 		var jsonString = JsonConvert.SerializeObject(fieldsToUpdate);
 
-		_logger.LogDebug("{Prefix} ...", prefix);
+		_logger.LogDebug("{Prefix}", prefix);
 		HttpResponseMessage httpResponseMessage;
 		while (true)
 		{
@@ -1146,7 +1146,7 @@ public partial class LogicMonitorClient : IDisposable
 			{
 				if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 				{
-					// TODO: could also check the reason phrase, and / or the response body (which contains "Service Temporarily Unavailable")
+					// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
 					_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 					await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 					continue;
