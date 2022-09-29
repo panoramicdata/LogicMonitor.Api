@@ -1,9 +1,7 @@
-﻿using System.Linq;
-
-namespace LogicMonitor.Api.Extensions;
+﻿namespace LogicMonitor.Api.Extensions;
 
 /// <summary>
-/// Log a HTTP request or response as a debug mode output for a logger
+/// Log HTTP request or response headers
 /// </summary>
 public static class LoggerExtensions
 {
@@ -11,10 +9,10 @@ public static class LoggerExtensions
 	/// Log the HTTTP request or response details
 	/// </summary>
 	/// <param name="logger">An ILogger</param>
+	/// <param name="isRequest">Whether it's HTTP request headers / HTTP response headers</param>
 	/// <param name="prefix">A GUID prefix</param>
 	/// <param name="headers">HTTP headers</param>
-	/// <param name="body">HTTP body</param>
-	public static void LogHttpDetails(this ILogger logger, bool isRequest, string? prefix, HttpHeaders? headers, string? body)
+	public static void LogHttpHeaders(this ILogger logger, bool isRequest, string? prefix, HttpHeaders? headers)
 	{
 		var guidPrefix = prefix != null ? (prefix + " ") : string.Empty;
 
@@ -36,21 +34,6 @@ public static class LoggerExtensions
 			catch (Exception e)
 			{
 				logger.LogDebug("{Guid}Unable to get headers for debug logging: {Message}", guidPrefix, e.Message);
-			}
-		}
-
-		// Log body
-		if (body != null)
-		{
-			try
-			{
-				var bodyType = (isRequest ? "REQUEST BODY:" : "RESPONSE BODY:") + "\r\n\r\n";
-
-				logger.LogDebug("{Guid}{BodyType}{Body}", guidPrefix, bodyType, body);
-			}
-			catch (Exception e)
-			{
-				logger.LogDebug("{Guid}Unable to get body for debug logging: {Message}", guidPrefix, e.Message);
 			}
 		}
 	}

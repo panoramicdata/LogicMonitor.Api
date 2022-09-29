@@ -667,7 +667,7 @@ public partial class LogicMonitorClient : IDisposable
 			requestMessage.Headers.Add("X-version", "3");
 		}
 
-		_logger.LogHttpDetails(true, null, requestMessage.Headers, null);
+		_logger.LogHttpHeaders(true, null, requestMessage.Headers);
 		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 	}
 
@@ -900,7 +900,7 @@ public partial class LogicMonitorClient : IDisposable
 
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-					_logger.LogHttpDetails(false, prefix, httpResponseMessage.Headers, null);
+					_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
 					_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}",
 						prefix,
 						++failureCount,
@@ -945,7 +945,7 @@ public partial class LogicMonitorClient : IDisposable
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
 			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			_logger.LogTrace("{Content}", content);
+			_logger.LogTrace("RESPONSE BODY:\r\n\r\n {Content}", content);
 			return new XmlResponse { Content = content } as T;
 		}
 		else if (typeof(T) == typeof(List<byte>))
@@ -975,19 +975,18 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			// If a success code was not received, throw an exception
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-			_logger.LogHttpDetails(false, prefix, httpResponseMessage.Headers, null);
+			_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
 			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 				prefix,
 				httpResponseMessage.StatusCode,
 				responseBody);
-			_logger.LogTrace("{ResponseBody}", responseBody);
+			_logger.LogTrace("RESPONSE BODY:\r\n\r\n{ResponseBody}", responseBody);
 			throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 		}
 
 		// Return the object
 		T? deserializedObject;
-		_logger.LogTrace("{Data}", portalResponse.Data?.ToString());
-		_logger.LogHttpDetails(false, prefix, null, portalResponse.Data?.ToString());
+		_logger.LogTrace("{Data}:\r\n\r\n", portalResponse.Data?.ToString());
 		try
 		{
 			deserializedObject = portalResponse.GetObject(JsonConverters);
