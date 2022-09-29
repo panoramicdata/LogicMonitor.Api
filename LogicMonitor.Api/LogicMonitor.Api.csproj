@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Added additional debug logging output (request and response headers).</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated debug logging output to include HTTP request/response body.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
