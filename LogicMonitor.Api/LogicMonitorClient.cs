@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Extensions;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -647,8 +649,8 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		var subUrl2 = subUrl.Contains("?")
-		? subUrl.Substring(0, subUrl.IndexOf("?", StringComparison.Ordinal))
-		: subUrl;
+			? subUrl.Substring(0, subUrl.IndexOf("?", StringComparison.Ordinal))
+			: subUrl;
 		var httpVerb = requestMessage.Method.ToString().ToUpperInvariant();
 		var resourcePath = $"/{subUrl2}";
 
@@ -665,33 +667,13 @@ public partial class LogicMonitorClient : IDisposable
 			requestMessage.Headers.Add("X-version", "3");
 		}
 
-		_logger.LogDebug("{Headers}", "REQUEST HEADERS:\r\n\r\n" + GetHeadersForDebugLogging(requestMessage.Headers));
-
+		_logger.LogHttpDetails(true, null, requestMessage.Headers, null);
 		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 	}
 
 	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
 		=> GetAsync<Page<T>>(UseCache, $"{subUrl}?{filter}", cancellationToken);
 
-
-	private string GetHeadersForDebugLogging(HttpHeaders headers)
-	{
-		try
-		{
-			var outputText = string.Empty;
-			foreach (var header in headers.Where(x => x.Key != "Authorization"))
-			{
-				outputText += $"HEADER-NAME: {header.Key} | HEADER-VALUE(S): {string.Join(";", header.Value)} " + "\r\n";
-			}
-
-			return outputText;
-		}
-		catch (Exception e)
-		{
-			_logger.LogError("Unable to get headers for debug logging: {Message}", e.Message);
-			return "ERROR - UNABLE TO FETCH HEADERS";
-		}
-	}
 
 	/// <summary>
 	///     Gets a filtered page of items
@@ -917,6 +899,8 @@ public partial class LogicMonitorClient : IDisposable
 					}
 
 					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+					_logger.LogHttpDetails(false, prefix, httpResponseMessage.Headers, null);
 					_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}",
 						prefix,
 						++failureCount,
@@ -957,8 +941,6 @@ public partial class LogicMonitorClient : IDisposable
 			break;
 		}
 
-		_logger.LogDebug("{Headers}", "RESPONSE HEADERS:\r\n\r\n" + GetHeadersForDebugLogging(httpResponseMessage.Headers));
-
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
@@ -993,6 +975,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			// If a success code was not received, throw an exception
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			_logger.LogHttpDetails(false, prefix, httpResponseMessage.Headers, null);
 			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 				prefix,
 				httpResponseMessage.StatusCode,
@@ -1004,6 +987,7 @@ public partial class LogicMonitorClient : IDisposable
 		// Return the object
 		T? deserializedObject;
 		_logger.LogTrace("{Data}", portalResponse.Data?.ToString());
+		_logger.LogHttpDetails(false, prefix, null, portalResponse.Data?.ToString());
 		try
 		{
 			deserializedObject = portalResponse.GetObject(JsonConverters);
