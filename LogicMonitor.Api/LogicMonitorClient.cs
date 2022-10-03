@@ -17,10 +17,10 @@ public partial class LogicMonitorClient : IDisposable
 
 	private static readonly JsonConverter[] JsonConverters =
 	{
-			new WidgetConverter(),
-			new ReportConverter(),
-			new FlagsEnumConverter()
-		};
+		new WidgetConverter(),
+		new ReportConverter(),
+		new FlagsEnumConverter()
+	};
 
 	private readonly Cache<string, object> _cache;
 
@@ -846,7 +846,15 @@ public partial class LogicMonitorClient : IDisposable
 			_logger.LogDebug("{Prefix} complete (from cache: {ElapsedMilliseconds:N0}ms)",
 				prefix,
 				stopwatch.ElapsedMilliseconds);
-			return (T)cacheObject;
+
+			if (typeof(T) == cacheObject.GetType())
+			{
+				return (T)cacheObject;
+			}
+
+			// May NOT be the same, i.e. same URL can be used for WidgetData and a GraphData but requested type does not match,
+			// which causes an invalid cast exception when using cached value. In this case, just don't use the cache
+			_logger.LogDebug("Type of object does match requested type. Cache will not be used");
 		}
 
 		HttpResponseMessage httpResponseMessage;
