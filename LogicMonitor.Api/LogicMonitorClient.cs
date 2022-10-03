@@ -841,20 +841,13 @@ public partial class LogicMonitorClient : IDisposable
 		var stopwatch = Stopwatch.StartNew();
 
 		var useCache = permitCacheIfEnabled && UseCache;
-		if (useCache && _cache.TryGetValue(subUrl, out var cacheObject))
+		if (useCache && _cache.TryGetValue<T>(subUrl, out var cacheObject))
 		{
 			_logger.LogDebug("{Prefix} complete (from cache: {ElapsedMilliseconds:N0}ms)",
 				prefix,
 				stopwatch.ElapsedMilliseconds);
 
-			if (typeof(T) == cacheObject.GetType())
-			{
-				return (T)cacheObject;
-			}
-
-			// May NOT be the same, i.e. same URL can be used for WidgetData and a GraphData but requested type does not match,
-			// which causes an invalid cast exception when using cached value. In this case, just don't use the cache
-			_logger.LogDebug("Type of object does match requested type. Cache will not be used");
+			return (T)cacheObject;
 		}
 
 		HttpResponseMessage httpResponseMessage;
