@@ -16,7 +16,7 @@ internal class WidgetDataConverter : JsonCreationConverter<WidgetData>
 			"graph" => new CustomGraphWidgetData(),
 			"noc" => new NOCWidgetData(),
 			"dynamictable" => new WidgetData(),
-			_ => throw new NotSupportedException($"WidgetDataConverter.cs needs updating to include {type} widgets."),
+			_ => new WidgetData(),
 		};
 	}
 
