@@ -13,6 +13,12 @@ public class ConfigCheckScript
 	public string Format { get; set; }
 
 	/// <summary>
+	/// Groovy script
+	/// </summary>
+	[DataMember(Name = "groovy")]
+	public string Groovy { get; set; }
+
+	/// <summary>
 	/// The diff check
 	/// </summary>
 	[DataMember(Name = "diff_check")]

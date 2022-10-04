@@ -771,6 +771,12 @@ public enum DeviceGroupType
 	AzureAppServiceEnvironment = 126,
 
 	/// <summary>
+	///     Saas/OFFICE365
+	/// </summary>
+	[EnumMember(Value = "Saas/OFFICE365")]
+	SaasOffice365 = 127,
+
+	/// <summary>
 	///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
 	///     This entry provides a workaround.
 	/// </summary>

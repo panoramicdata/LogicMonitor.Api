@@ -45,10 +45,11 @@ internal class Cache<TIndex, TValue>
 	/// <param name="index"></param>
 	/// <param name="value"></param>
 	/// <returns>True if successful</returns>
-	internal bool TryGetValue(TIndex index, out TValue value)
+	internal bool TryGetValue<T>(TIndex index, out TValue value)
 	{
 		// If we have an item and it has not expired, return it
-		if (_cache.TryGetValue(index, out var cachedItem) && cachedItem.ExpiryTimeUtc > DateTime.UtcNow)
+		if (_cache.TryGetValue(index, out var cachedItem) && cachedItem.ExpiryTimeUtc > DateTime.UtcNow &&
+			typeof(T) == cachedItem.GetType())
 		{
 			_logger.LogTrace("CACHE HIT");
 			value = cachedItem.Item;
