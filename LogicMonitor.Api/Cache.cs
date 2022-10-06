@@ -48,8 +48,10 @@ internal class Cache<TIndex, TValue>
 	internal bool TryGetValue<T>(TIndex index, out TValue value)
 	{
 		// If we have an item and it has not expired, return it
-		if (_cache.TryGetValue(index, out var cachedItem) && cachedItem.ExpiryTimeUtc > DateTime.UtcNow &&
-			typeof(T) == cachedItem.GetType())
+		if (_cache.TryGetValue(index, out var cachedItem)
+			&& cachedItem.ExpiryTimeUtc > DateTime.UtcNow
+			&& (cachedItem.Item is null
+				|| typeof(T) == cachedItem.Item.GetType()))
 		{
 			_logger.LogTrace("CACHE HIT");
 			value = cachedItem.Item;
