@@ -129,11 +129,14 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetNoExistentAlertAsJObject()
+	public async void GetNonExistentAlertAsJObject()
 	{
-		var result = await LogicMonitorClient
+		var action = async () => await LogicMonitorClient
 					.GetJObjectAsync("alert/alerts/DS_NonExistent", CancellationToken.None)
 					.ConfigureAwait(false);
-		result.Should().BeNull();
+		await action
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>()
+			.ConfigureAwait(false);
 	}
 }
