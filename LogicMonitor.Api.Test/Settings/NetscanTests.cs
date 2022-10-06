@@ -29,7 +29,6 @@ public class NetscanTests : TestWithOutput
 
 		const string name = "LogicMonitor.Api UnitTest CreateNetscan";
 		const string description = "Description 1";
-		const int collectorId = 248;
 		const int credentialsDeviceGroupId = 0;
 		const string netscanScheduleCron = "01 00 * * *";
 		const NetscanMethod netscanMethod = NetscanMethod.Icmp;
@@ -54,7 +53,7 @@ public class NetscanTests : TestWithOutput
 		{
 			Name = name,
 			Description = description,
-			CollectorId = collectorId.ToString(CultureInfo.InvariantCulture),
+			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
 			Credentials = new NetscanCredentials
 			{
 				DeviceGroupId = credentialsDeviceGroupId,
@@ -116,7 +115,7 @@ public class NetscanTests : TestWithOutput
 
 		createdNetscan.Name.Should().Be(name);
 		createdNetscan.Description.Should().Be(description);
-		createdNetscan.CollectorId.Should().Be(collectorId);
+		createdNetscan.CollectorId.Should().Be(CollectorId);
 		createdNetscan.Credentials.Should().NotBeNull();
 		createdNetscan.Credentials.DeviceGroupId.Should().Be(credentialsDeviceGroupId);
 		createdNetscan.Method.Should().Be(netscanMethod);

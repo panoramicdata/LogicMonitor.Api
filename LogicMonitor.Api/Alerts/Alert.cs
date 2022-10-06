@@ -85,6 +85,12 @@ public class Alert : IHasEndpoint
 	public int AlertRuleId { get; set; }
 
 	/// <summary>
+	/// The tenant with which this alert is associated, if any
+	/// </summary>
+	[DataMember(Name = "tenant")]
+	public string Tenant { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The EscalationChain name
 	/// </summary>
 	[DataMember(Name = "chain")]

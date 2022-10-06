@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Updated attemptCount (i.e. max attempts) to 5, from 1.</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed caching bug (when requested type does not match cache returned value). Added missing properties to various classes for de-serialisation.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

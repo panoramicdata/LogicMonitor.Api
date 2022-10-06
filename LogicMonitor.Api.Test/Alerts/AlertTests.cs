@@ -171,8 +171,8 @@ public class AlertTests : TestWithOutput
 		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 		// Alerts have the expected SDT status
-		sdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeTrue());
-		nonSdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeFalse());
+		Assert.All(sdtAlerts, a => Assert.True(a.InScheduledDownTime));
+		Assert.All(nonSdtAlerts, a => Assert.False(a.InScheduledDownTime));
 	}
 
 	[Fact]
@@ -211,7 +211,7 @@ public class AlertTests : TestWithOutput
 			// TODO CheckAlertsAreValid(alerts);
 
 			// Make sure there are no alerts for hosts not mentioned by the hostFilter
-			alerts.Should().AllSatisfy(alert => alert.MonitorObjectName.Should().Be(device.DisplayName));
+			Assert.All(alerts, alert => Assert.Equal(alert.MonitorObjectName, device.DisplayName));
 			Assert.All(alerts, alert => Assert.Contains(alert.AlertType, alertTypes));
 			Assert.All(alerts, alert => Assert.True(alert.StartOnUtc < startUtcIsBefore));
 		}
@@ -249,7 +249,7 @@ public class AlertTests : TestWithOutput
 		// TODO CheckAlertsAreValid(alerts);
 
 		// Make sure there are no alerts for hosts not mentioned by the hostFilter
-		alerts.Should().AllSatisfy(alert => alert.MonitorObjectName.Should().Be(device.DisplayName));
+		Assert.All(alerts, alert => Assert.Equal(alert.MonitorObjectName, device.DisplayName));
 		Assert.True(alerts.All(alert => alert.InstanceName.StartsWith(dataSourceNameFilter, StringComparison.Ordinal)));
 		Assert.True(alerts.All(alert => alert.DataPointName.StartsWith(dataPointNameFilter, StringComparison.Ordinal)));
 	}
@@ -429,12 +429,19 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void NonExistentAlertShouldReturnNull()
+	public async void GetOfNonExistentAlertShouldThrowException()
 	{
-		var alert = await LogicMonitorClient
-			.GetAlertAsync("DS1234")
+		Alert alert;
+		var operation = async () =>
+		{
+			alert = await LogicMonitorClient
+				.GetAlertAsync("DS1234")
+				.ConfigureAwait(false);
+		};
+		await operation
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>()
 			.ConfigureAwait(false);
-		alert.Should().BeNull();
 	}
 
 	[Fact]

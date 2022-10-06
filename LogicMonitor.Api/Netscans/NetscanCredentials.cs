@@ -7,6 +7,18 @@ namespace LogicMonitor.Api.Netscans;
 public class NetscanCredentials
 {
 	/// <summary>
+	/// Device Id
+	/// </summary>
+	[DataMember(Name = "deviceId")]
+	public int DeviceId { get; set; }
+
+	/// <summary>
+	/// Device Name
+	/// </summary>
+	[DataMember(Name = "deviceName")]
+	public string DeviceName { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The device group id
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]

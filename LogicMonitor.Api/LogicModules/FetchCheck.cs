@@ -6,4 +6,9 @@ namespace LogicMonitor.Api.LogicModules;
 [DataContract]
 public class FetchCheck
 {
+	/// <summary>
+	/// Fetch
+	/// </summary>
+	[DataMember(Name = "fetch")]
+	public object? Fetch { get; set; }
 }

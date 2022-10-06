@@ -23,7 +23,7 @@ public class OpsNotesTests : TestWithOutput
 		})
 		.ConfigureAwait(false);
 
-		await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+		await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
 
 		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
@@ -70,7 +70,10 @@ public class OpsNotesTests : TestWithOutput
 		await Task.Delay(2000).ConfigureAwait(false);
 
 		// Make sure that it is gone
-		refetchedOpsNote = await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
-		refetchedOpsNote.Should().BeNull();
+		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id).ConfigureAwait(false);
+		await operation
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>()
+			.ConfigureAwait(false);
 	}
 }
