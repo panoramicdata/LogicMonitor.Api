@@ -14,7 +14,7 @@
 		"AllWidgetsDashboardIdComment": "This should be a dashboard with all available types of LogicMonitor widget on.",
 		"AllWidgetsDashboardId": 74,
 		"AccountHasBillingInformation": true,
-		"AlertRuleName": "Critical and Error catch all",
-		"WebsiteName": "PDL-WEB-RM-PROD-API"
+		"AlertRuleName": "Test Alert Rule Name",
+		"WebsiteName": "Test Website Name"
 	}
 }
