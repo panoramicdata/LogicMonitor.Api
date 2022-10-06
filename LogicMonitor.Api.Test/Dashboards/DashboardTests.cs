@@ -37,7 +37,7 @@ public class DashboardTests : TestWithOutput
 		var widgetData2 = await LogicMonitorClient.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
 		widgetData2.Should().NotBeNull();
 		widgetData2.Availability.Should().NotBe(0);
-		widgetData2.ResultList.Should().BeNull();
+		widgetData2.ResultList.Should().BeEmpty();
 	}
 
 	[Fact]
@@ -83,13 +83,13 @@ public class DashboardTests : TestWithOutput
 		// AlertsList
 		var alertsListWidget = widgets.OfType<AlertWidget>().SingleOrDefault();
 		alertsListWidget.Should().NotBeNull();
-		string.IsNullOrWhiteSpace(alertsListWidget.Theme).Should().BeFalse();
+		string.IsNullOrWhiteSpace(alertsListWidget!.Theme).Should().BeFalse();
 		alertsListWidget.AlertFilter.Should().NotBeNull();
 
 		// Job Monitor
 		var jobMonitorWidget = widgets.OfType<JobMonitorWidget>().SingleOrDefault();
 		jobMonitorWidget.Should().NotBeNull();
-		string.IsNullOrWhiteSpace(jobMonitorWidget.DeviceDisplayName).Should().BeFalse();
+		string.IsNullOrWhiteSpace(jobMonitorWidget!.DeviceDisplayName).Should().BeFalse();
 		string.IsNullOrWhiteSpace(jobMonitorWidget.DeviceGroupDisplayName).Should().BeFalse();
 		string.IsNullOrWhiteSpace(jobMonitorWidget.BatchJobName).Should().BeFalse();
 		string.IsNullOrWhiteSpace(jobMonitorWidget.BatchJobId).Should().BeFalse();
@@ -97,7 +97,7 @@ public class DashboardTests : TestWithOutput
 		// Big Number
 		var bigNumberWidget = widgets.OfType<BigNumberWidget>().FirstOrDefault();
 		bigNumberWidget.Should().NotBeNull();
-		bigNumberWidget.BigNumberInfo.Should().NotBeNull();
+		bigNumberWidget!.BigNumberInfo.Should().NotBeNull();
 		bigNumberWidget.BigNumberInfo.DataPoints.Should().NotBeNull();
 		bigNumberWidget.BigNumberInfo.VirtualDataPoints.Should().NotBeNull();
 		bigNumberWidget.BigNumberInfo.BigNumberItems.Should().NotBeNull();
@@ -105,7 +105,7 @@ public class DashboardTests : TestWithOutput
 		// Big Number
 		var gaugeWidget = widgets.OfType<GaugeWidget>().SingleOrDefault();
 		gaugeWidget.Should().NotBeNull();
-		gaugeWidget.DataPoint.Should().NotBeNull();
+		gaugeWidget!.DataPoint.Should().NotBeNull();
 		gaugeWidget.DataPoint.DeviceGroupFullPath.Should().NotBeNull();
 		gaugeWidget.DataPoint.DeviceDisplayName.Should().NotBeNull();
 		gaugeWidget.DataPoint.DataSourceFullName.Should().NotBeNull();
@@ -120,7 +120,7 @@ public class DashboardTests : TestWithOutput
 		// Custom Graph
 		var customGraphWidget = widgets.OfType<CustomGraphWidget>().SingleOrDefault();
 		customGraphWidget.Should().NotBeNull();
-		customGraphWidget.Theme.Should().NotBeNull();
+		customGraphWidget!.Theme.Should().NotBeNull();
 		customGraphWidget.GraphInfo.Should().NotBeNull();
 		customGraphWidget.GraphInfo.VerticalLabel.Should().NotBeNull();
 		customGraphWidget.GraphInfo.MaxValue.Should().NotBe(0);
@@ -154,7 +154,7 @@ public class DashboardTests : TestWithOutput
 		// Html
 		var htmlWidget = widgets.OfType<HtmlWidget>().SingleOrDefault();
 		htmlWidget.Should().NotBeNull();
-		htmlWidget.HtmlWidgetResources.Should().NotBeNull();
+		htmlWidget!.HtmlWidgetResources.Should().NotBeNull();
 		htmlWidget.HtmlWidgetResources.Should().NotBeNullOrEmpty();
 		htmlWidget.HtmlWidgetResources[0].Type.Should().NotBeNull();
 		htmlWidget.HtmlWidgetResources[0].Url.Should().NotBeNull();
@@ -162,12 +162,12 @@ public class DashboardTests : TestWithOutput
 		// Map
 		var googleMapWidget = widgets.OfType<GoogleMapWidget>().SingleOrDefault();
 		googleMapWidget.Should().NotBeNull();
-		googleMapWidget.MapPoints.Should().NotBeNull();
+		googleMapWidget!.MapPoints.Should().NotBeNull();
 		googleMapWidget.MapPoints.Should().NotBeNullOrEmpty();
 		googleMapWidget.MapPoints[0].Should().BeOfType<DeviceMapPoint>();
 		var deviceMapPoint = googleMapWidget.MapPoints[0] as DeviceMapPoint;
 		deviceMapPoint.Should().NotBeNull();
-		deviceMapPoint.Type.Should().Be("device");
+		deviceMapPoint!.Type.Should().Be("device");
 		deviceMapPoint.DeviceGroupFullPath.Should().NotBeNull();
 		deviceMapPoint.DeviceDisplayName.Should().NotBeNull();
 		deviceMapPoint.HasLocation.Should().BeTrue();
@@ -196,7 +196,7 @@ public class DashboardTests : TestWithOutput
 		// Pie Chart
 		var pieChartWidget = widgets.OfType<PieChartWidget>().SingleOrDefault();
 		pieChartWidget.Should().NotBeNull();
-		pieChartWidget.Info.Should().NotBeNull();
+		pieChartWidget!.Info.Should().NotBeNull();
 		pieChartWidget.Info.Title.Should().NotBeNull();
 		pieChartWidget.Info.ShowLabelsAndLines.Should().BeTrue();
 		pieChartWidget.Info.MaxVisibleSliceCount.Should().NotBe(0);
@@ -224,7 +224,7 @@ public class DashboardTests : TestWithOutput
 
 		var websiteIndividualStatusWidget = widgets.OfType<WebsiteIndividualStatusWidget>().SingleOrDefault();
 		websiteIndividualStatusWidget.Should().NotBeNull();
-		websiteIndividualStatusWidget.WebsiteGroupId.Should().NotBe(0);
+		websiteIndividualStatusWidget!.WebsiteGroupId.Should().NotBe(0);
 		websiteIndividualStatusWidget.WebsiteId.Should().NotBe(0);
 		websiteIndividualStatusWidget.GraphName.Should().NotBeNull();
 		websiteIndividualStatusWidget.WebsiteName.Should().NotBeNull();
@@ -244,7 +244,7 @@ public class DashboardTests : TestWithOutput
 		// Device SLA widget
 		var deviceSlaStatusWidget = widgets.OfType<DeviceSlaWidget>().FirstOrDefault();
 		deviceSlaStatusWidget.Should().NotBeNull();
-		deviceSlaStatusWidget.Metrics.Should().NotBeNull();
+		deviceSlaStatusWidget!.Metrics.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics.Should().NotBeNullOrEmpty();
 		deviceSlaStatusWidget.Metrics[0].DeviceGroupName.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics[0].DeviceName.Should().NotBeNull();
@@ -266,7 +266,7 @@ public class DashboardTests : TestWithOutput
 		// website SLA widget
 		var websiteSlaWidget = widgets.OfType<WebsiteSlaWidget>().SingleOrDefault();
 		websiteSlaWidget.Should().NotBeNull();
-		websiteSlaWidget.Items.Should().NotBeNull();
+		websiteSlaWidget!.Items.Should().NotBeNull();
 		websiteSlaWidget.Items.Should().NotBeNullOrEmpty();
 		websiteSlaWidget.Items[0].WebsiteGroupName.Should().NotBeNull();
 		websiteSlaWidget.Items[0].WebsiteName.Should().NotBeNull();
@@ -275,7 +275,7 @@ public class DashboardTests : TestWithOutput
 
 		var textWidget = widgets.OfType<TextWidget>().SingleOrDefault();
 		textWidget.Should().NotBeNull();
-		textWidget.Html.Should().NotBeNull();
+		textWidget!.Html.Should().NotBeNull();
 	}
 
 	[Fact]
