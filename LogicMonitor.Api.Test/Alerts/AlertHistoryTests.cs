@@ -132,4 +132,29 @@ public class AlertHistoryTests : TestWithOutput
 			.ThrowAsync<ArgumentException>()
 			.ConfigureAwait(false);
 	}
+
+	[Fact]
+	public async Task GetAlertHistory_Custom24HoursWithEndBeforeStart_ThrowsArgumentException()
+	{
+		var start = DateTime.UtcNow.AddDays(-3);
+		var end = start.AddDays(-1);
+
+		var request = new AlertHistoryRequest()
+		{
+			Id = "DS25658424",
+			HistoryPeriod = AlertHistoryPeriod.Custom,
+			StartDateTimeUtc = start,
+			EndDateTimeUtc = end
+		};
+
+		// Set up to attempt retrieval that should throw exception
+		var act = async () => await LogicMonitorClient
+			.GetAlertHistoryAsync(request)
+			.ConfigureAwait(false);
+
+		await act
+			.Should()
+			.ThrowAsync<ArgumentException>()
+			.ConfigureAwait(false);
+	}
 }
