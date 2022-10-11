@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Fixed caching bug (when requested type does not match cache returned value). Added missing properties to various classes for de-serialisation.</PackageReleaseNotes>
+		<PackageReleaseNotes>Custom dashboard widget data retrieval by widget type. Added support for retrieving alert history. Additional caching fixes.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
