@@ -172,4 +172,14 @@ public class AuditEvent
 	/// The account name for user account events
 	/// </summary>
 	public string? AccountName { get; internal set; }
+
+	/// <summary>
+	/// The alert id for alert update events
+	/// </summary>
+	public int? AlertId { get; internal set; }
+
+	/// <summary>
+	/// The alert note for alert update events
+	/// </summary>
+	public string? AlertNote { get; internal set; }
 }

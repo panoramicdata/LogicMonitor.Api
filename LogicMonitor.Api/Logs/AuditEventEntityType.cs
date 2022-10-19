@@ -63,5 +63,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// DataSourceGraph
 	/// </summary>
-	DataSourceGraph
+	DataSourceGraph,
+
+	/// <summary>
+	/// Alert Note
+	/// </summary>
+	AlertNote,
 }

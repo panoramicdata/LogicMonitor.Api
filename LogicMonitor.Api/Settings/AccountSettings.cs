@@ -70,7 +70,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     Company display name
 	/// </summary>
 	[DataMember(Name = "companyDisplayName")]
-	public string CompanyDisplayName { get; set; }
+	public string CompanyDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The current ConfigSource device count
@@ -94,7 +94,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     When to destroy the account
 	/// </summary>
 	[DataMember(Name = "destroyOnLocal")]
-	public string DestroyOnLocal { get; set; }
+	public string DestroyOnLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The current device count
@@ -117,7 +117,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// The account balance in USD
 	/// </summary>
 	[DataMember(Name = "zuoraInvoiceDetails")]
-	public InvoiceDetails InvoiceDetails { get; set; }
+	public InvoiceDetails InvoiceDetails { get; set; } = new();
 
 	/// <summary>
 	///     The Kubernetes device count
@@ -135,31 +135,31 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     The parent billing account
 	/// </summary>
 	[DataMember(Name = "parentBilling")]
-	public string ParentBillingAccount { get; set; }
+	public string ParentBillingAccount { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The account number
 	/// </summary>
 	[DataMember(Name = "zuora")]
-	public PaymentInformation PaymentInformation { get; set; }
+	public PaymentInformation PaymentInformation { get; set; } = new();
 
 	/// <summary>
 	///     Primary contact e-mail address
 	/// </summary>
 	[DataMember(Name = "email")]
-	public string PrimaryContactEmailAddress { get; set; }
+	public string PrimaryContactEmailAddress { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Primary contact name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string PrimaryContactName { get; set; }
+	public string PrimaryContactName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Primary contact phone number
 	/// </summary>
 	[DataMember(Name = "phone")]
-	public string PrimaryContactPhoneNumber { get; set; }
+	public string PrimaryContactPhoneNumber { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether remote sessions are enabled
@@ -225,7 +225,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     Timezone as text
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The web site count
@@ -237,7 +237,13 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     IP Whitelist
 	/// </summary>
 	[DataMember(Name = "whiteList")]
-	public string WhiteList { get; set; }
+	public string WhiteList { get; set; } = string.Empty;
+
+	/// <summary>
+	///     User Suspend Days
+	/// </summary>
+	[DataMember(Name = "userSuspendDays")]
+	public int UserSuspendDays { get; set; }
 
 	/// <summary>
 	///     The endpoint

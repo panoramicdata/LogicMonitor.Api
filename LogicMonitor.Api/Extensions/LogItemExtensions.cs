@@ -8,7 +8,7 @@ public static class LogItemExtensions
 
 	internal static void ValidateRegexs()
 	{
-		// Check that no two Regexs have the same id		
+		// Check that no two Regexs have the same id
 		var regexIds = new HashSet<int>();
 		foreach (var regex in Regexs)
 		{
@@ -122,7 +122,10 @@ public static class LogItemExtensions
 		new(33,
 			AuditEventEntityType.DataSource,
 			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
-	};
+		new(34,
+			AuditEventEntityType.AlertNote,
+			new(@"^Note \((?<alertNote>.+?)\) added to \((?<alertId>.+?)\) by \((?<username>.+?)\).$", RegexOptions.Singleline)),
+		};
 
 	/// <summary>
 	/// Converts a logItem to an AuditItem
@@ -192,6 +195,8 @@ public static class LogItemExtensions
 		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
 		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
+		auditEvent.AlertId = GetGroupValueAsIntOrNull(match, "alertId");
+		auditEvent.AlertNote = GetGroupValueAsStringOrNull(match, "alertNote");
 		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
 		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
 		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
@@ -329,6 +334,11 @@ public static class LogItemExtensions
 			return AuditEventActionType.DiscardedEventAlert;
 		}
 
+		if (value.Groups["alertId"].Success)
+		{
+			return AuditEventActionType.Update;
+		}
+
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
 			"ADD" => AuditEventActionType.Create,
@@ -349,7 +359,9 @@ public static class LogItemExtensions
 		}
 
 		public int Id { get; set; } = default!;
+
 		public AuditEventEntityType EntityType { get; set; } = default!;
+
 		public Regex Regex { get; set; } = default!;
 	}
 

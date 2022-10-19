@@ -13,6 +13,12 @@ public class ViewPermission
 	public bool Alerts { get; set; }
 
 	/// <summary>
+	/// BizService view permission
+	/// </summary>
+	[DataMember(Name = "BizService")]
+	public bool BizService { get; set; }
+
+	/// <summary>
 	/// Dashboards view permission
 	/// </summary>
 	[DataMember(Name = "Dashboards")]

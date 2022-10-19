@@ -30,6 +30,13 @@ public class GetEventLogTests : TestWithOutput
 					var auditEvent = logItem.ToAuditEvent();
 					auditEvent.Should().NotBeNull();
 
+					if (auditEvent.EntityType == AuditEventEntityType.AlertNote)
+					{
+						auditEvent.AlertId.Should().NotBeNull();
+						auditEvent.AlertNote.Should().NotBeNullOrWhiteSpace();
+						auditEvent.UserName.Should().NotBeNull();
+					}
+
 					if (auditEvent.MatchedRegExId == -1)
 					{
 						unhandledLogItems.Add(logItem);
