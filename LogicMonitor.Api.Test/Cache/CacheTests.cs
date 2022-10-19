@@ -11,6 +11,10 @@ public class CacheTests : TestWithOutput
 	{
 		// Enable caching
 		LogicMonitorClient.UseCache = true;
+		LogicMonitorClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
+
+		// Wait for any cache entry to expire (required for consistent operation)
+		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
 
 		var stopwatch = Stopwatch.StartNew();
 		var firstDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -52,7 +56,7 @@ public class CacheTests : TestWithOutput
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 
 		// Wait for the cache timeout duration
-		await Task.Delay(LogicMonitorClient.CacheTimeSpan).ConfigureAwait(false);
+		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
 
 		// Re-fetch a result
 		stopwatch.Restart();

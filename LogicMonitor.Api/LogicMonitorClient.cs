@@ -1,5 +1,3 @@
-using LogicMonitor.Api.Extensions;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -17,10 +15,11 @@ public partial class LogicMonitorClient : IDisposable
 
 	private static readonly JsonConverter[] JsonConverters =
 	{
-			new WidgetConverter(),
-			new ReportConverter(),
-			new FlagsEnumConverter()
-		};
+		new WidgetConverter(),
+		new WidgetDataConverter(),
+		new ReportConverter(),
+		new FlagsEnumConverter()
+	};
 
 	private readonly Cache<string, object> _cache;
 
@@ -841,11 +840,12 @@ public partial class LogicMonitorClient : IDisposable
 		var stopwatch = Stopwatch.StartNew();
 
 		var useCache = permitCacheIfEnabled && UseCache;
-		if (useCache && _cache.TryGetValue(subUrl, out var cacheObject))
+		if (useCache && _cache.TryGetValue<T>(subUrl, out var cacheObject))
 		{
 			_logger.LogDebug("{Prefix} complete (from cache: {ElapsedMilliseconds:N0}ms)",
 				prefix,
 				stopwatch.ElapsedMilliseconds);
+
 			return (T)cacheObject;
 		}
 

@@ -17,7 +17,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
 				}
 		}).ConfigureAwait(false);
-		sdts.Should().AllSatisfy(sdt => sdt.IsEffective.Should().BeFalse());
+		Assert.All(sdts, sdt => Assert.False(sdt.IsEffective));
 	}
 
 	[Fact]

@@ -180,6 +180,18 @@ public partial class LogicMonitorClient
 		 => GetAsync<Alert>(true, $"alert/alerts/{id}?needMessage=true", cancellationToken);
 
 	/// <summary>
+	/// Gets the history of a single alert.
+	/// </summary>
+	/// <param name="request">The parameters for the history request</param>
+	/// <param name="cancellationToken">The token used to manage cancellation</param>
+	/// <remarks>The number and duration of entries in the histogram varies by the duration of the reporting period</remarks>
+	public Task<AlertHistory> GetAlertHistoryAsync(AlertHistoryRequest request, CancellationToken cancellationToken = default)
+	{
+		request.Validate();
+		return GetBySubUrlAsync<AlertHistory>(request.SubUrl, cancellationToken);
+	}
+
+	/// <summary>
 	/// Gets a message template set
 	/// </summary>
 	/// <param name="cancellationToken">The optional cancellation token</param>

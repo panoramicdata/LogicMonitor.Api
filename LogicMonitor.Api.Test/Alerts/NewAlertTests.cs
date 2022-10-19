@@ -52,8 +52,8 @@ public class NewAlertTests : TestWithOutput
 		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 		// Alerts have the expected SDT status
-		sdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeTrue());
-		nonSdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeFalse());
+		Assert.All(sdtAlerts, a => Assert.True(a.InScheduledDownTime));
+		Assert.All(nonSdtAlerts, a => Assert.False(a.InScheduledDownTime));
 	}
 
 	[Fact]
@@ -129,11 +129,14 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetNoExistentAlertAsJObject()
+	public async void GetNonExistentAlertAsJObject()
 	{
-		var result = await LogicMonitorClient
+		var action = async () => await LogicMonitorClient
 					.GetJObjectAsync("alert/alerts/DS_NonExistent", CancellationToken.None)
 					.ConfigureAwait(false);
-		result.Should().BeNull();
+		await action
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>()
+			.ConfigureAwait(false);
 	}
 }

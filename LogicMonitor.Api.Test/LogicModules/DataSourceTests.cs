@@ -73,9 +73,8 @@ public class DataSourceTests : TestWithOutput
 	{
 		var portalClient = LogicMonitorClient;
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		device.Should().NotBeNull();
 		var windowsServices = await portalClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService).ConfigureAwait(false);
-		windowsServices.Should().NotBeNull();
-		windowsServices.Should().NotBeNull();
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 

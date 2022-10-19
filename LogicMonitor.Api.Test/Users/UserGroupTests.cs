@@ -36,6 +36,9 @@ public class UserGroupTests : TestWithOutput
 				.ConfigureAwait(false);
 		}
 
+		await Task.Delay(TimeSpan.FromSeconds(2))
+			.ConfigureAwait(false);
+
 		// Create it
 		var newItem = await LogicMonitorClient
 			.CreateAsync(
@@ -45,6 +48,9 @@ public class UserGroupTests : TestWithOutput
 					Description = "Test Description"
 				}
 			)
+			.ConfigureAwait(false);
+
+		await Task.Delay(TimeSpan.FromSeconds(2))
 			.ConfigureAwait(false);
 
 		// Delete it again
