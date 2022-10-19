@@ -11,18 +11,13 @@ public class ConfigurationBackupSpecification
 	/// <param name="includeAllByDefault"></param>
 	public ConfigurationBackupSpecification(bool includeAllByDefault)
 	{
-		AccountSettings = includeAllByDefault;
-		Alerting = includeAllByDefault;
-		Collectors = includeAllByDefault;
-		Dashboards = includeAllByDefault;
-		Devices = includeAllByDefault;
-		Integrations = includeAllByDefault;
-		Logs = includeAllByDefault;
-		Netscans = includeAllByDefault;
-		OpsNotes = includeAllByDefault;
-		ScheduledDownTimes = includeAllByDefault;
-		Websites = includeAllByDefault;
-		Users = includeAllByDefault;
+		if (includeAllByDefault)
+		{
+			foreach (var propertyInfo in GetType().GetProperties().Where(pi => pi.PropertyType == typeof(bool)))
+			{
+				propertyInfo.SetValue(this, true);
+			}
+		}
 	}
 
 	/// <summary>

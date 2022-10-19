@@ -21,11 +21,13 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Updated debug logging output to include HTTP request/response body.</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed backup when including all by default.  Added symbol package.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -42,7 +44,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
-		<PackageReference Include="Nerdbank.GitVersioning" Version="3.5.107">
+		<PackageReference Include="Nerdbank.GitVersioning" Version="3.5.113">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
