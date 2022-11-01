@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api.Websites;
 
 /// <summary>
-/// The mtachType
+/// The matchType
 /// </summary>
 public enum MatchType
 {
@@ -30,8 +30,14 @@ public enum MatchType
 	Regular = 3,
 
 	/// <summary>
-	/// Regular
+	/// Wildcard
 	/// </summary>
 	[EnumMember(Value = "wildcard")]
-	Wildcard = 4
+	Wildcard = 4,
+
+	/// <summary>
+	/// XPath
+	/// </summary>
+	[EnumMember(Value = "xpath")]
+	Xpath = 5
 }

@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Fixed backup when including all by default.  Added symbol package.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added xpath property to MatchType to fix an issue with fetching websites.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
