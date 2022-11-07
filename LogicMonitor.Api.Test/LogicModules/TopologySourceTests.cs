@@ -7,7 +7,7 @@ public class TopologySourceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void BasicTopologySourceTest()
+	public async Task BasicTopologySourceTest()
 	{
 		var _ = await LogicMonitorClient.GetAllAsync<TopologySource>().ConfigureAwait(false);
 	}

@@ -9,7 +9,7 @@ public class UserGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetUserGroups()
+	public async Task GetUserGroups()
 	{
 		var userGroups = await LogicMonitorClient.GetAllAsync<UserGroup>().ConfigureAwait(false);
 		userGroups.Should().NotBeNull();
@@ -23,7 +23,7 @@ public class UserGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateUpdateDelete()
+	public async Task CreateUpdateDelete()
 	{
 		// Ensure there is no existing UserGroup called "Test"
 		var existingUserGroup = (await LogicMonitorClient

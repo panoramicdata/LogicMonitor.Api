@@ -7,7 +7,7 @@ public class RawDataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetRawData()
+	public async Task GetRawData()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS").ConfigureAwait(false);
@@ -22,7 +22,7 @@ public class RawDataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetRawDataTimeConstrained()
+	public async Task GetRawDataTimeConstrained()
 	{
 		var utcNow = DateTime.UtcNow;
 		var yesterday = utcNow - TimeSpan.FromDays(1);
@@ -46,7 +46,7 @@ public class RawDataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void PollNow()
+	public async Task PollNow()
 	{
 		var portalClient = LogicMonitorClient;
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -65,7 +65,7 @@ public class RawDataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void FetchInstanceData()
+	public async Task FetchInstanceData()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinIf-").ConfigureAwait(false);

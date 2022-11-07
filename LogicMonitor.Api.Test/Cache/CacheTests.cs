@@ -7,7 +7,7 @@ public class CacheTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CacheTestFasterSecondTimeAround()
+	public async Task CacheTestFasterSecondTimeAround()
 	{
 		// Enable caching
 		LogicMonitorClient.UseCache = true;
@@ -39,7 +39,7 @@ public class CacheTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CacheRefetchesAfterTimeout()
+	public async Task CacheRefetchesAfterTimeout()
 	{
 		// Enable caching
 		LogicMonitorClient.UseCache = true;
@@ -73,7 +73,7 @@ public class CacheTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void RateLimitCheckGetDeviceByDisplayNameAsync()
+	public async Task RateLimitCheckGetDeviceByDisplayNameAsync()
 	{
 		var stopwatch = Stopwatch.StartNew();
 		LogicMonitorClient.UseCache = true;

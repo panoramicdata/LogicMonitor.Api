@@ -7,7 +7,7 @@ public class TimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetTimeZoneSetting()
+	public async Task GetTimeZoneSetting()
 	{
 		var timeZoneSetting = await LogicMonitorClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
 

@@ -9,7 +9,7 @@ public class PushMetricTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void PushMetric_Succeeds()
+	public async Task PushMetric_Succeeds()
 	{
 		var response = await LogicMonitorClient
 			.PushMetricAsync(new PushMetric

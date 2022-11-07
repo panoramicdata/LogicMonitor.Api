@@ -7,7 +7,7 @@ public class SingleSignOnTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetSingleSignOnData()
+	public async Task GetSingleSignOnData()
 	{
 		var allOpsNotes = await LogicMonitorClient.GetAsync<SingleSignOn>().ConfigureAwait(false);
 

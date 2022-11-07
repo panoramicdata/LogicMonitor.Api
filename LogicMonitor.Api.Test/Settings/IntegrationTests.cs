@@ -7,7 +7,7 @@ public class IntegrationTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetIntegrations()
+	public async Task GetIntegrations()
 	{
 		var integrations = await LogicMonitorClient.GetAllAsync<Integration>().ConfigureAwait(false);
 

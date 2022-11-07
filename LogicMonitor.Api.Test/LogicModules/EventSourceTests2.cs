@@ -9,7 +9,7 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetXml()
+	public async Task GetXml()
 	{
 		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("DNS A Record Check").ConfigureAwait(false);
 		var xml = await LogicMonitorClient.GetEventSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
@@ -17,7 +17,7 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllEventSources()
+	public async Task GetAllEventSources()
 	{
 		var eventSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<EventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 
@@ -41,7 +41,7 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetEventSourceByName()
+	public async Task GetEventSourceByName()
 	{
 		var stopwatch = Stopwatch.StartNew();
 		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
@@ -54,7 +54,7 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceEventSources()
+	public async Task GetDeviceEventSources()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var deviceEventSources = await LogicMonitorClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
@@ -73,7 +73,7 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredEventSources()
+	public async Task GetFilteredEventSources()
 	{
 		const string groupName = "Integrator";
 		var eventSources = await LogicMonitorClient.GetAllAsync(new Filter<EventSource>

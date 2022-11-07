@@ -7,7 +7,7 @@ public class UnmonitoredDeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetUnmonitoredDevices()
+	public async Task GetUnmonitoredDevices()
 	{
 		var unmonitoredDevices = await LogicMonitorClient.GetAllAsync<UnmonitoredDevice>().ConfigureAwait(false);
 		unmonitoredDevices.Should().NotBeNull();

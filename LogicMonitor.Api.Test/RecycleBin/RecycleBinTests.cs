@@ -7,7 +7,7 @@ public class RecycleBinTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllRecycleBinItems()
+	public async Task GetAllRecycleBinItems()
 	{
 		var recycleBinItems = await LogicMonitorClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
 		recycleBinItems.Should().NotBeNull();

@@ -7,7 +7,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDataSourceMetadata()
+	public async Task GetDataSourceMetadata()
 	{
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
@@ -17,7 +17,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 	}
 
 	//[Fact(Skip = "LogicMonitor is broken - ZenDesk ticket number 112910")]
-	//public async void GetEventSourceMetadata()
+	//public async Task GetEventSourceMetadata()
 	//{
 	//	var eventSource = await DefaultPortalClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
 	//	eventSource.Should().NotBeNull();
@@ -27,7 +27,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 	//}
 
 	//[Fact]
-	//public async void GetConfigSourceMetadata()
+	//public async Task GetConfigSourceMetadata()
 	//{
 	//	var configSource = await PortalClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
 	//	configSource.Should().NotBeNull();
@@ -37,7 +37,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 	//}
 
 	//[Fact]
-	//public async void GetPropertySourceMetadata()
+	//public async Task GetPropertySourceMetadata()
 	//{
 	//	var propertySource = await PortalClient.GetByNameAsync<PropertySource>("Cisco_Product_Info").ConfigureAwait(false);
 	//	propertySource.Should().NotBeNull();

@@ -7,7 +7,7 @@ public class SysOidsTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAll()
+	public async Task GetAll()
 	{
 		var snmpSysOidMaps = await LogicMonitorClient.GetAllAsync<SnmpSysOidMap>().ConfigureAwait(false);
 		snmpSysOidMaps.Should().NotBeNull();

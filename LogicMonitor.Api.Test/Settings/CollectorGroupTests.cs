@@ -11,7 +11,7 @@ public class CollectorGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllCollectorGroups()
+	public async Task GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 		collectorGroups.Should().NotBeNull();
@@ -19,7 +19,7 @@ public class CollectorGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetCollectorGroups()
+	public async Task GetCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
@@ -30,7 +30,7 @@ public class CollectorGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CrudCollectorGroup()
+	public async Task CrudCollectorGroup()
 	{
 		// Try to get this item
 		var collectorGroups = await LogicMonitorClient.GetAllAsync(new Filter<CollectorGroup>

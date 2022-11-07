@@ -7,7 +7,7 @@ public class AppliesToFunctionTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateUpdateAndDelete()
+	public async Task CreateUpdateAndDelete()
 	{
 		const string testAppliesToFunctionName = "XxxUnitTest";
 		const string testAppliesToFunctionDescription = testAppliesToFunctionName + " - Description";
@@ -99,7 +99,7 @@ public class AppliesToFunctionTests : TestWithOutput
 			.Should().Throw<NotSupportedException>();
 
 	[Fact]
-	public async void CustomerCodeWorks()
+	public async Task CustomerCodeWorks()
 	{
 		var matches = await LogicMonitorClient
 			.GetAppliesToAsync("customer.code == \"PDL\"")

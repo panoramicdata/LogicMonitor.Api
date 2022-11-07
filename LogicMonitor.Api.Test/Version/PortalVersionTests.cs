@@ -7,7 +7,7 @@ public class PortalVersionTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetPortalVersion()
+	public async Task GetPortalVersion()
 	{
 		var portalVersion = await LogicMonitorClient.GetVersionAsync().ConfigureAwait(false);
 		portalVersion.Version.Should().NotBeNull();
@@ -20,7 +20,7 @@ public class PortalVersionTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetPortalVersionStatic()
+	public async Task GetPortalVersionStatic()
 	{
 		var portalVersion = await Api.LogicMonitorClient.GetVersionAsync("altius").ConfigureAwait(false);
 		portalVersion.Version.Should().NotBeNull();

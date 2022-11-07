@@ -9,7 +9,7 @@ public class DataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetForecastGraphData()
+	public async Task GetForecastGraphData()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
@@ -32,7 +32,7 @@ public class DataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetOverviewGraphData()
+	public async Task GetOverviewGraphData()
 	{
 		var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
 		device.Should().NotBeNull();
@@ -68,7 +68,7 @@ public class DataTests : TestWithOutput
 	/// Netflow Data
 	/// </summary>
 	[Fact]
-	public async void GetNetflowGraphData()
+	public async Task GetNetflowGraphData()
 	{
 		var utcNow = DateTime.UtcNow;
 		var netflowDevice = await GetNetflowDeviceAsync().ConfigureAwait(false);
@@ -86,7 +86,7 @@ public class DataTests : TestWithOutput
 	/// Netflow Data
 	/// </summary>
 	[Fact]
-	public async void GetNetflowGraphDataForDeviceGroup()
+	public async Task GetNetflowGraphDataForDeviceGroup()
 	{
 		var utcNow = DateTime.UtcNow;
 
@@ -110,7 +110,7 @@ public class DataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetGraphData_X250()
+	public async Task GetGraphData_X250()
 	{
 		LogicMonitorClient.UseCache = true;
 		var utcNow = DateTime.UtcNow;
@@ -220,7 +220,7 @@ public class DataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWinCpuDeviceDataSourceInstancesFromDev()
+	public async Task GetWinCpuDeviceDataSourceInstancesFromDev()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);

@@ -12,7 +12,7 @@ public class OpsNotesTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetOpsNotes()
+	public async Task GetOpsNotes()
 	{
 		// Create an ops note
 		var newOpsNote = await LogicMonitorClient.CreateAsync(new OpsNoteCreationDto
@@ -33,7 +33,7 @@ public class OpsNotesTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void AddRemoveOpsNote()
+	public async Task AddRemoveOpsNote()
 	{
 		var device = await LogicMonitorClient.GetAsync<Device>(WindowsDeviceId).ConfigureAwait(false);
 		var theEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);

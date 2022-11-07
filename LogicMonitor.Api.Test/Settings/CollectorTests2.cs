@@ -9,7 +9,7 @@ public class CollectorTests2
 	}
 
 	[Fact]
-	public async void GetAllCollectorGroups()
+	public async Task GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
@@ -23,7 +23,7 @@ public class CollectorTests2
 	}
 
 	[Fact]
-	public async void GetAllCollectors()
+	public async Task GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 		collectors.Should().NotBeNullOrEmpty();
@@ -37,7 +37,7 @@ public class CollectorTests2
 	}
 
 	[Fact]
-	public async void RunDebugCommand()
+	public async Task RunDebugCommand()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 		var testCollector = collectors.Find(c => !c.IsDown);
@@ -48,7 +48,7 @@ public class CollectorTests2
 	}
 
 	[Fact]
-	public async void CreateCollectorDownloadAndDelete()
+	public async Task CreateCollectorDownloadAndDelete()
 	{
 		// Determine the latest supported version
 		var collectorVersionInts = (await LogicMonitorClient.GetAllCollectorVersionsAsync(

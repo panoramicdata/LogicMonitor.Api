@@ -7,7 +7,7 @@ public class AccountSettingsTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Get()
+	public async Task Get()
 	{
 		var accountSettings = await LogicMonitorClient.GetAsync<AccountSettings>().ConfigureAwait(false);
 		accountSettings.Should().NotBeNull();
@@ -15,7 +15,7 @@ public class AccountSettingsTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetBillingInformation()
+	public async Task GetBillingInformation()
 	{
 		if (!AccountHasBillingInformation)
 		{

@@ -10,7 +10,7 @@ public class CollectorTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void ExecuteDebugCommand()
+	public async Task ExecuteDebugCommand()
 	{
 		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8").ConfigureAwait(false);
 
@@ -20,7 +20,7 @@ public class CollectorTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void ExecuteDebugCommandAndWaitForResult()
+	public async Task ExecuteDebugCommandAndWaitForResult()
 	{
 		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100).ConfigureAwait(false);
 
@@ -31,7 +31,7 @@ public class CollectorTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetCollectors()
+	public async Task GetCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 
@@ -50,7 +50,7 @@ public class CollectorTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetCollector()
+	public async Task GetCollector()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 		collectors.Should().NotBeNull();
@@ -63,7 +63,7 @@ public class CollectorTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Get1Collector()
+	public async Task Get1Collector()
 	{
 		var collector = await LogicMonitorClient
 			.GetAsync<Collector>(CollectorId, default)

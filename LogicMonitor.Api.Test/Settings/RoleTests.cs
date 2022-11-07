@@ -11,7 +11,7 @@ public class RoleTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetRoles()
+	public async Task GetRoles()
 	{
 		var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 		roles.Should().NotBeNull();
@@ -25,7 +25,7 @@ public class RoleTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetForCurrentUser()
+	public async Task GetForCurrentUser()
 	{
 		var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 		roles.Should().NotBeNull();
@@ -33,7 +33,7 @@ public class RoleTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateUpdateDelete()
+	public async Task CreateUpdateDelete()
 	{
 		// Ensure there is no existing role called "Test"
 		var existingRole = (await LogicMonitorClient

@@ -7,13 +7,13 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllDeviceDataSourceInstancesAsync()
+	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
 		var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId).ConfigureAwait(false);
 	}
 
 	[Fact]
-	public async void GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
+	public async Task GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 	{
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("WinIf-")
@@ -28,7 +28,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void OnlyMonitoredInstances()
+	public async Task OnlyMonitoredInstances()
 	{
 		var device = await GetSnmpDeviceAsync()
 			.ConfigureAwait(false);

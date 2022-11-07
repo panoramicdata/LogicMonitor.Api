@@ -7,13 +7,13 @@ public class DeviceDataSourceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllDeviceDataSourcesAsync()
+	public async Task GetAllDeviceDataSourcesAsync()
 	{
 		var _ = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, CancellationToken.None).ConfigureAwait(false);
 	}
 
 	[Fact]
-	public async void DeviceDataSourceTests2()
+	public async Task DeviceDataSourceTests2()
 	{
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU").ConfigureAwait(false);
 

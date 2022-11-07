@@ -7,7 +7,7 @@ public class MessageSettingsTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Get()
+	public async Task Get()
 	{
 		var messageTemplate = await LogicMonitorClient.GetAsync<NewUserMessageTemplate>().ConfigureAwait(false);
 

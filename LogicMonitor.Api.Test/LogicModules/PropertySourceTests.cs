@@ -11,7 +11,7 @@ public class PropertySourceTests : TestWithOutput
 	/// Get a PropertySource definition (which is JSON)
 	/// </summary>
 	[Fact]
-	public async void GetJson()
+	public async Task GetJson()
 	{
 		var propertySource = await LogicMonitorClient.GetByNameAsync<PropertySource>("Test PropertySource").ConfigureAwait(false);
 		var json = await LogicMonitorClient.GetPropertySourceJsonAsync(propertySource.Id).ConfigureAwait(false);

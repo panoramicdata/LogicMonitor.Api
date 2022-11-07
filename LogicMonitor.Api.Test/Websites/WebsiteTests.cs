@@ -11,7 +11,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllWebsites()
+	public async Task GetAllWebsites()
 	{
 		var websites = await LogicMonitorClient.GetAllAsync<Website>().ConfigureAwait(false);
 
@@ -20,7 +20,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteByName_Exists_Succeeds()
+	public async Task GetWebsiteByName_Exists_Succeeds()
 	{
 		var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
@@ -29,7 +29,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteByName_DoesNotExist_ReturnsNull()
+	public async Task GetWebsiteByName_DoesNotExist_ReturnsNull()
 	{
 		var website = await LogicMonitorClient.GetByNameAsync<Website>("DoesNotExist").ConfigureAwait(false);
 		// Null should be returned
@@ -37,7 +37,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteGraphData()
+	public async Task GetWebsiteGraphData()
 	{
 		var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName).ConfigureAwait(false);
 
@@ -62,7 +62,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteAlertsWithFilterAsync()
+	public async Task GetWebsiteAlertsWithFilterAsync()
 	{
 		var alertFilter = new AlertFilter
 		{
@@ -85,7 +85,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SetWebsiteMonitorCheckpoints()
+	public async Task SetWebsiteMonitorCheckpoints()
 	{
 		var websiteMonitorCheckpoints = await LogicMonitorClient.GetAllAsync<WebsiteMonitorCheckpoint>().ConfigureAwait(false);
 
@@ -97,7 +97,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CrudWebsiteGroupsAndWebsites()
+	public async Task CrudWebsiteGroupsAndWebsites()
 	{
 		// Ensure the website doesn't exist
 		var oldWebsites = await LogicMonitorClient.GetAllAsync(new Filter<Website>
@@ -170,7 +170,7 @@ public class WebsiteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SetWebsiteCustomProperty()
+	public async Task SetWebsiteCustomProperty()
 	{
 		var website = await LogicMonitorClient.CreateAsync(GetWebsiteCreationDto(16, nameof(SetWebsiteCustomProperty))).ConfigureAwait(false);
 		try

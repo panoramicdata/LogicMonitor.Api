@@ -7,7 +7,7 @@ public class WebsiteGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SetWebsiteGroupCustomProperty()
+	public async Task SetWebsiteGroupCustomProperty()
 	{
 		// Create a device group for testing purposes
 		const string testWebsiteGroupName = "Property Test Device Group";
@@ -79,7 +79,7 @@ public class WebsiteGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void WebsiteGroupCreationShouldSetProperties()
+	public async Task WebsiteGroupCreationShouldSetProperties()
 	{
 		// Create it
 		var websiteGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
@@ -115,7 +115,7 @@ public class WebsiteGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteGroupByFullPath()
+	public async Task GetWebsiteGroupByFullPath()
 	{
 		var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty).ConfigureAwait(false);
 		websiteGroup0.Should().NotBeNull();
@@ -128,7 +128,7 @@ public class WebsiteGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteGroupById()
+	public async Task GetWebsiteGroupById()
 	{
 		var websiteGroup = await LogicMonitorClient.GetAsync<WebsiteGroup>(1).ConfigureAwait(false);
 

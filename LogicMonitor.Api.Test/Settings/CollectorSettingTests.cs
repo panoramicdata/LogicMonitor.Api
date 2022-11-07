@@ -8,28 +8,28 @@ public class CollectorSettingTests
 	}
 
 	[Fact]
-	public async void GetAllCollectorGroupSettings()
+	public async Task GetAllCollectorGroupSettings()
 	{
 		var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
 		allCollectorGroupSettings.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
-	public async void GetAllCollectors()
+	public async Task GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 		collectors.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async void GetAllCollectorsSettings()
+	public async Task GetAllCollectorsSettings()
 	{
 		var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
 		allCollectorSettings.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
-	public async void GetCollectorGroupSettings()
+	public async Task GetCollectorGroupSettings()
 	{
 		var collectorGroups = await LogicMonitorClient
 			.GetAllAsync<CollectorGroup>()
@@ -41,7 +41,7 @@ public class CollectorSettingTests
 	}
 
 	[Fact]
-	public async void GetCollectorVersions_Unfiltered_Succeeds()
+	public async Task GetCollectorVersions_Unfiltered_Succeeds()
 	{
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync()
@@ -52,7 +52,7 @@ public class CollectorSettingTests
 	}
 
 	[Fact]
-	public async void GetCollectorVersions_FilteredStable_Succeeds()
+	public async Task GetCollectorVersions_FilteredStable_Succeeds()
 	{
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
@@ -69,7 +69,7 @@ public class CollectorSettingTests
 	}
 
 	[Fact]
-	public async void GetCollectorVersions_FilteredMandatory_Succeeds()
+	public async Task GetCollectorVersions_FilteredMandatory_Succeeds()
 	{
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>

@@ -9,7 +9,7 @@ public class RoleGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetRoleGroups()
+	public async Task GetRoleGroups()
 	{
 		var roleGroups = await LogicMonitorClient.GetAllAsync<RoleGroup>().ConfigureAwait(false);
 		roleGroups.Should().NotBeNull();
@@ -23,7 +23,7 @@ public class RoleGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateUpdateDelete()
+	public async Task CreateUpdateDelete()
 	{
 		// Ensure there is no existing RoleGroup called "Test"
 		var existingRoleGroup = (await LogicMonitorClient

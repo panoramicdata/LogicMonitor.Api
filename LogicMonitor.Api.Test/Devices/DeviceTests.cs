@@ -9,7 +9,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicesByDeviceGroupRecursive()
+	public async Task GetDevicesByDeviceGroupRecursive()
 	{
 		var devices = await LogicMonitorClient
 			.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true)
@@ -19,7 +19,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateAndRemoveDeviceAndDeviceGroup()
+	public async Task CreateAndRemoveDeviceAndDeviceGroup()
 	{
 		var logicMonitorClient = LogicMonitorClient;
 
@@ -163,7 +163,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllScheduledDownTimes()
+	public async Task GetAllScheduledDownTimes()
 	{
 		var scheduledDownTimes = await LogicMonitorClient
 			.GetAllAsync<ScheduledDownTime>()
@@ -173,7 +173,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicePage()
+	public async Task GetDevicePage()
 	{
 		const int MaxCount = 50;
 		var devicesPage = await LogicMonitorClient
@@ -185,7 +185,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllDeviceInstances()
+	public async Task GetAllDeviceInstances()
 	{
 		var deviceInstances = await LogicMonitorClient
 			.GetAllDeviceInstances(WindowsDeviceId, new Filter<DeviceDataSourceInstance>
@@ -202,14 +202,14 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceByDeviceId()
+	public async Task GetDeviceByDeviceId()
 	{
 		var device = await LogicMonitorClient.GetAsync<Device>(77).ConfigureAwait(false);
 		device.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async void GetDeviceByDisplayNameAsync()
+	public async Task GetDeviceByDisplayNameAsync()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var device2 = await LogicMonitorClient.GetDeviceByDisplayNameAsync(device.DisplayName).ConfigureAwait(false);
@@ -217,7 +217,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceByHostName()
+	public async Task GetDeviceByHostName()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var devices = await LogicMonitorClient.GetDevicesByHostNameAsync(device.Name, 100).ConfigureAwait(false);
@@ -225,7 +225,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void DateTimeSetCorrectly()
+	public async Task DateTimeSetCorrectly()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var refresh = await LogicMonitorClient.GetAsync<Device>(device.Id).ConfigureAwait(false);
@@ -234,7 +234,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SerialisationIgnoredProperties()
+	public async Task SerialisationIgnoredProperties()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		device.Should().NotBeNull();
@@ -244,7 +244,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicePropertiesContainsExpected()
+	public async Task GetDevicePropertiesContainsExpected()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
@@ -253,7 +253,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicesAndInstancesAssociatedWithDataSourceById()
+	public async Task GetDevicesAndInstancesAssociatedWithDataSourceById()
 	{
 		// Get the dataSourceId
 		var dataSourceId = (await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false))?.Id;
@@ -280,7 +280,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicesByDeviceGroupFullPathv78()
+	public async Task GetDevicesByDeviceGroupFullPathv78()
 	{
 		// Recurse
 		var allDatacenterDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true).ConfigureAwait(false);
@@ -293,14 +293,14 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicesRecurse()
+	public async Task GetDevicesRecurse()
 	{
 		var allStaffDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true).ConfigureAwait(false);
 		allStaffDevices.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
-	public async void GetFewerDevices()
+	public async Task GetFewerDevices()
 	{
 		const int numberToFetch = 10;
 		var devices = await LogicMonitorClient.GetPageAsync(new Filter<Device> { Skip = 0, Take = numberToFetch }).ConfigureAwait(false);
@@ -310,14 +310,14 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFullDeviceTree()
+	public async Task GetFullDeviceTree()
 	{
 		var deviceGroup = await LogicMonitorClient.GetFullDeviceTreeAsync().ConfigureAwait(false);
 		deviceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async void GetFullDeviceTreeForDatacenter()
+	public async Task GetFullDeviceTreeForDatacenter()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 		deviceGroup = await LogicMonitorClient.GetFullDeviceTreeAsync(deviceGroup.Id).ConfigureAwait(false);
@@ -325,7 +325,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void TreeNodeFreeSearch()
+	public async Task TreeNodeFreeSearch()
 	{
 		// Get the result without specifying a type
 		var treeNodeFreeSearch = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100).ConfigureAwait(false);
@@ -347,7 +347,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void UpdateDeviceProperty()
+	public async Task UpdateDeviceProperty()
 	{
 		var portalClient = LogicMonitorClient;
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -393,7 +393,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SetDeviceCustomProperty()
+	public async Task SetDeviceCustomProperty()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		const string propertyName = "blah";
@@ -448,7 +448,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceCustomProperties()
+	public async Task GetDeviceCustomProperties()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
@@ -456,7 +456,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceUsingSubUrl()
+	public async Task GetDeviceUsingSubUrl()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var deviceRefetch = await LogicMonitorClient
@@ -466,7 +466,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDifferentDeviceTypes()
+	public async Task GetDifferentDeviceTypes()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		device.DeviceType.Should().Be(DeviceType.Regular);
@@ -478,7 +478,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeadDevices()
+	public async Task GetDeadDevices()
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Device>
 		{
@@ -492,7 +492,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertDisableDevices_Filtered()
+	public async Task GetAlertDisableDevices_Filtered()
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Device>
 		{
@@ -506,7 +506,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertDisableDevices_RawFilter()
+	public async Task GetAlertDisableDevices_RawFilter()
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Device> { QueryString = "filter=alertDisableStatus!:\"none-none-none\"" }).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
@@ -514,7 +514,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDevicesFromRoot()
+	public async Task GetDevicesFromRoot()
 	{
 		// Fetch in ascending order to get unchanging DeviceGroup first
 		var deviceGroups = await LogicMonitorClient
@@ -531,7 +531,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceAlertsPageAsync()
+	public async Task GetDeviceAlertsPageAsync()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id).ConfigureAwait(false);
@@ -540,7 +540,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceAlertsWithFilterAsync()
+	public async Task GetDeviceAlertsWithFilterAsync()
 	{
 		var alertFilter = new AlertFilter
 		{
@@ -564,7 +564,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void PatchDeviceAsync()
+	public async Task PatchDeviceAsync()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var oldDescription = device.Description;
@@ -576,6 +576,6 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void ScheduleActiveDiscovery()
+	public async Task ScheduleActiveDiscovery()
 		=> await LogicMonitorClient.ScheduleActiveDiscovery(WindowsDeviceId).ConfigureAwait(false);
 }

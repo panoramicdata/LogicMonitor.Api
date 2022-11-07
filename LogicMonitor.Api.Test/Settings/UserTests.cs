@@ -7,7 +7,7 @@ public class UserTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetUsers()
+	public async Task GetUsers()
 	{
 		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }).ConfigureAwait(false);
 		users.Should().NotBeNull();
@@ -23,7 +23,7 @@ public class UserTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateUser()
+	public async Task CreateUser()
 	{
 		// Delete it if it already exists
 		foreach (var existingUser in await LogicMonitorClient.GetAllAsync(new Filter<User>

@@ -7,7 +7,7 @@ public class RecipientGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetRecipientGroupTests()
+	public async Task GetRecipientGroupTests()
 	{
 		var recipientGroups = await LogicMonitorClient.GetAllAsync<RecipientGroup>().ConfigureAwait(false);
 		recipientGroups.Should().NotBeNullOrEmpty();

@@ -11,7 +11,7 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetBigNumberWidgetData_Succeeds()
+	public async Task GetBigNumberWidgetData_Succeeds()
 	{
 		// Multi-number
 		var widgetData = await LogicMonitorClient.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
@@ -23,7 +23,7 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetSlaWidgetData_Succeeds()
+	public async Task GetSlaWidgetData_Succeeds()
 	{
 		var utcNow = DateTimeOffset.UtcNow;
 
@@ -41,7 +41,7 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Clone()
+	public async Task Clone()
 	{
 		// This one has all the different widget types on
 		var originalDashboard = await LogicMonitorClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
@@ -69,7 +69,7 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Get()
+	public async Task Get()
 	{
 		// This one has all the different widget types on
 		var dashboard = await LogicMonitorClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
@@ -279,7 +279,7 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDashboardsNoWidgets()
+	public async Task GetDashboardsNoWidgets()
 	{
 		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
 
@@ -291,7 +291,7 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDashboardsWithWidgets()
+	public async Task GetDashboardsWithWidgets()
 	{
 		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
 

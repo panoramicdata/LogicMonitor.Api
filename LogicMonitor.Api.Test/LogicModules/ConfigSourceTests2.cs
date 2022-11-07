@@ -9,7 +9,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllConfigSources()
+	public async Task GetAllConfigSources()
 	{
 		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
 
@@ -21,7 +21,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetConfigSourceById()
+	public async Task GetConfigSourceById()
 	{
 		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
 		configSources.Should().NotBeNullOrEmpty();
@@ -30,7 +30,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetConfigSourceAndAssociatedDevices()
+	public async Task GetConfigSourceAndAssociatedDevices()
 	{
 		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
 		configSource.Should().NotBeNull();
@@ -46,7 +46,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceConfigSources()
+	public async Task GetDeviceConfigSources()
 	{
 		// NB Limit iterations at each level
 		const int maxIterations = 3;

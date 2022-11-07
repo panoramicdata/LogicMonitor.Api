@@ -7,7 +7,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_ExceptLongRunningOnes()
+	public async Task Backup_ExceptLongRunningOnes()
 	{
 		var configurationBackup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(true)
 		{
@@ -18,7 +18,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_Users()
+	public async Task Backup_Users()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Users = true }).ConfigureAwait(false);
 		backup.Should().NotBeNull();
@@ -44,7 +44,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_Alerting()
+	public async Task Backup_Alerting()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Alerting = true }).ConfigureAwait(false);
 
@@ -54,7 +54,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_Integrations()
+	public async Task Backup_Integrations()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Integrations = true }).ConfigureAwait(false);
 
@@ -62,7 +62,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_Dashboards()
+	public async Task Backup_Dashboards()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Dashboards = true }).ConfigureAwait(false);
 
@@ -71,7 +71,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_AccountSettings()
+	public async Task Backup_AccountSettings()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AccountSettings = true }).ConfigureAwait(false);
 
@@ -79,7 +79,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_AppliesToFunctions()
+	public async Task Backup_AppliesToFunctions()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AppliesToFunctions = true }).ConfigureAwait(false);
 
@@ -87,7 +87,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_ConfigSources()
+	public async Task Backup_ConfigSources()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { ConfigSources = true }).ConfigureAwait(false);
 
@@ -96,7 +96,7 @@ public class BackupTests : TestWithOutput
 
 
 	[Fact]
-	public async void Backup_ScheduledDownTimes()
+	public async Task Backup_ScheduledDownTimes()
 	{
 		var fileInfo = new FileInfo(Path.GetTempFileName());
 		try
@@ -128,7 +128,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	//[Fact(Skip = "Takes too long")]
-	//public async void Backup_DataSources()
+	//public async Task Backup_DataSources()
 	//{
 	//	var backup = await DefaultPortalClient.BackupAsync(new ConfigurationBackupSpecification(false) { DataSources = true }).ConfigureAwait(false);
 
@@ -137,7 +137,7 @@ public class BackupTests : TestWithOutput
 	//}
 
 	[Fact]
-	public async void Backup_EventSources()
+	public async Task Backup_EventSources()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { EventSources = true }).ConfigureAwait(false);
 
@@ -146,7 +146,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_JobMonitors()
+	public async Task Backup_JobMonitors()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { JobMonitors = true }).ConfigureAwait(false);
 
@@ -155,7 +155,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_PropertySources()
+	public async Task Backup_PropertySources()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { PropertySources = true }).ConfigureAwait(false);
 
@@ -165,7 +165,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SdtBackup()
+	public async Task SdtBackup()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false)
 		{
@@ -178,7 +178,7 @@ public class BackupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Backup_SnmpSysOidMaps()
+	public async Task Backup_SnmpSysOidMaps()
 	{
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { SnmpSysOidMaps = true }).ConfigureAwait(false);
 

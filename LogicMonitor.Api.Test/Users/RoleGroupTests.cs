@@ -9,7 +9,7 @@ public class RoleGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAll()
+	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
 			.GetAllAsync<RoleGroup>()
@@ -19,7 +19,7 @@ public class RoleGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Crud()
+	public async Task Crud()
 	{
 		// Delete it if it already exists
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<RoleGroup>

@@ -9,7 +9,7 @@ public class LogItemTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void Get()
+	public async Task Get()
 	{
 		var accessLogItems = await LogicMonitorClient.GetAllAsync(new Filter<LogItem>
 		{
@@ -36,7 +36,7 @@ public class LogItemTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetPdl()
+	public async Task GetPdl()
 	{
 		const int skip = 0;
 		const int take = 1000;

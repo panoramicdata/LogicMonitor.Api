@@ -9,7 +9,7 @@ public class NetscanTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CanGetNetscanById()
+	public async Task CanGetNetscanById()
 	{
 		var netscan = (await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false))[0];
 
@@ -18,7 +18,7 @@ public class NetscanTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreateNetscan()
+	public async Task CreateNetscan()
 	{
 		var portalClient = LogicMonitorClient;
 
@@ -145,7 +145,7 @@ public class NetscanTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void ListAllNetscans()
+	public async Task ListAllNetscans()
 	{
 		var netscans = await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false);
 		netscans.Should().NotBeNull();
@@ -157,7 +157,7 @@ public class NetscanTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void ListFirst5Netscans()
+	public async Task ListFirst5Netscans()
 	{
 		var allNetscans = await LogicMonitorClient.GetAllAsync<Netscan>().ConfigureAwait(false);
 

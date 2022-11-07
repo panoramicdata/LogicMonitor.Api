@@ -7,7 +7,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceScheduledDownTimes()
+	public async Task GetDeviceScheduledDownTimes()
 	{
 		var sdts = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
@@ -21,7 +21,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetWebsiteGroupScheduledDownTimes_UsingSubUrl_Succeeds()
+	public async Task GetWebsiteGroupScheduledDownTimes_UsingSubUrl_Succeeds()
 	{
 		// Ensure that a website group SDT exists with an unusual comment
 		var commentGuid = Guid.NewGuid();
@@ -59,7 +59,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetHistoricDeviceScheduledDownTimes()
+	public async Task GetHistoricDeviceScheduledDownTimes()
 	{
 		// Device
 		var testsdts =
@@ -105,7 +105,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void AddAndDeleteADeviceSdt()
+	public async Task AddAndDeleteADeviceSdt()
 	{
 		// var device = await portalClient.GetDeviceByDisplayNameAsync(portalConfig.WindowsDeviceDisplayName);
 		const string initialComment = "Woo";
@@ -171,7 +171,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void AddAndDeleteADeviceGroupSdt()
+	public async Task AddAndDeleteADeviceGroupSdt()
 	{
 		const string initialComment = "Woo";
 		const int deviceGroupId = 1; // The root
@@ -228,7 +228,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void AddAndDeleteACollectorSdt()
+	public async Task AddAndDeleteACollectorSdt()
 	{
 		var portalClient = LogicMonitorClient;
 		var collector = (await portalClient
@@ -292,7 +292,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetScheduledDownTimesFilteredByDevice()
+	public async Task GetScheduledDownTimesFilteredByDevice()
 	{
 		var portalClient = LogicMonitorClient;
 
@@ -322,7 +322,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreatePingDataSourceSdtOnEmptyDeviceGroup()
+	public async Task CreatePingDataSourceSdtOnEmptyDeviceGroup()
 	{
 		const string deviceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
 
@@ -388,7 +388,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CreatePingDataSourceInstanceSdtOnEmptyDeviceGroup()
+	public async Task CreatePingDataSourceInstanceSdtOnEmptyDeviceGroup()
 	{
 		// Get ping DataSource
 		var dataSource = (await LogicMonitorClient

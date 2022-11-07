@@ -19,7 +19,7 @@ public class AlertRulesTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void DisableAndReEnableClearedAlerts()
+	public async Task DisableAndReEnableClearedAlerts()
 	{
 		var portalClient = LogicMonitorClient;
 		await GetAlertRule(portalClient, AlertRuleName, true).ConfigureAwait(false);
@@ -27,7 +27,7 @@ public class AlertRulesTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertRules()
+	public async Task GetAlertRules()
 	{
 		var alertRules = await LogicMonitorClient.GetAllAsync<AlertRule>().ConfigureAwait(false);
 		alertRules.Should().NotBeNullOrEmpty();

@@ -11,7 +11,7 @@ public class NewAlertTests : TestWithOutput
 	private static readonly int EndDateTimeSeconds = EndDateTime.SecondsSinceTheEpoch();
 
 	[Fact]
-	public async void GetAlerts_SdtsMatchRequest()
+	public async Task GetAlerts_SdtsMatchRequest()
 	{
 		// Arrange
 		var allFilter = new Filter<Alert>
@@ -57,7 +57,7 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsAndCheckUnique()
+	public async Task GetAlertsAndCheckUnique()
 	{
 		var allFilter = new Filter<Alert>
 		{
@@ -83,7 +83,7 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsFilteredByDevice()
+	public async Task GetAlertsFilteredByDevice()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
@@ -110,7 +110,7 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void MultipleLevels()
+	public async Task MultipleLevels()
 	{
 		var severities = new List<int> { 4, 2 };
 		var filter = new Filter<Alert>
@@ -129,7 +129,7 @@ public class NewAlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetNonExistentAlertAsJObject()
+	public async Task GetNonExistentAlertAsJObject()
 	{
 		var action = async () => await LogicMonitorClient
 					.GetJObjectAsync("alert/alerts/DS_NonExistent", CancellationToken.None)

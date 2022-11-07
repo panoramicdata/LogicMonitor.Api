@@ -27,7 +27,7 @@ public class FlowTests : TestWithOutput
 	//}
 
 	[Fact]
-	public async void GetApplications()
+	public async Task GetApplications()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 		var flowApplications = await LogicMonitorClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
@@ -45,7 +45,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetApplicationsForDeviceGroup()
+	public async Task GetApplicationsForDeviceGroup()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
@@ -69,7 +69,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetBandwidthsForDeviceGroup()
+	public async Task GetBandwidthsForDeviceGroup()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
@@ -92,7 +92,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFlowsForDeviceGroup()
+	public async Task GetFlowsForDeviceGroup()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
@@ -115,7 +115,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFlowEndpoints()
+	public async Task GetFlowEndpoints()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 		var flowEndpoints = await LogicMonitorClient.GetFlowEndpointsPageAsync(new FlowEndpointsRequest
@@ -133,7 +133,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFlows()
+	public async Task GetFlows()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 		var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
@@ -151,7 +151,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetPorts()
+	public async Task GetPorts()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 		var flowPorts = await LogicMonitorClient.GetFlowPortsPageAsync(new FlowPortsRequest
@@ -169,7 +169,7 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetZoomTimeFlows()
+	public async Task GetZoomTimeFlows()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 		var flows = await LogicMonitorClient.GetFlows(new FlowsRequest

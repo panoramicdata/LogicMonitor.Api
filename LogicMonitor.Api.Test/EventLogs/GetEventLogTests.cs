@@ -10,7 +10,7 @@ public class GetEventLogTests : TestWithOutput
 		=> LogItemExtensions.ValidateRegexs();
 
 	[Fact]
-	public async void GetEventLog_Succeeds()
+	public async Task GetEventLog_Succeeds()
 	{
 
 		var endDateTimeUtc = DateTime.UtcNow;

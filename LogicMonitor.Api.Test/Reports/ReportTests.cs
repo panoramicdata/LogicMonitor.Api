@@ -7,7 +7,7 @@ public class ReportTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllReportGroups()
+	public async Task GetAllReportGroups()
 	{
 		var reportGroups = await LogicMonitorClient.GetAllAsync<ReportGroup>().ConfigureAwait(false);
 		reportGroups.Should().NotBeNull();
@@ -15,7 +15,7 @@ public class ReportTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAllReports()
+	public async Task GetAllReports()
 	{
 		var reports = await LogicMonitorClient.GetAllAsync<Report>().ConfigureAwait(false);
 		reports.Should().NotBeNull();
@@ -23,7 +23,7 @@ public class ReportTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CrudReportGroups()
+	public async Task CrudReportGroups()
 	{
 		// Delete it if it already exists
 		foreach (var existingReportGroup in await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup>

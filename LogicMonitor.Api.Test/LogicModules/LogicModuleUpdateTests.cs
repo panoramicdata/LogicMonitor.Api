@@ -10,7 +10,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get DataSource updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleDataSourceUpdates()
+	public async Task GetLogicModuleDataSourceUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -28,7 +28,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get EventSource updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleEventSourceUpdates()
+	public async Task GetLogicModuleEventSourceUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -46,7 +46,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get ConfigSource updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleConfigSourceUpdates()
+	public async Task GetLogicModuleConfigSourceUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -64,7 +64,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get PropertySource updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModulePropertySourceUpdates()
+	public async Task GetLogicModulePropertySourceUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -82,7 +82,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get TopologySource updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleTopologySourceUpdates()
+	public async Task GetLogicModuleTopologySourceUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -100,7 +100,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get Job Monitor updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleJobMonitorUpdates()
+	public async Task GetLogicModuleJobMonitorUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -118,7 +118,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get AppliesTo Function updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleAppliesToUpdates()
+	public async Task GetLogicModuleAppliesToUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -136,7 +136,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get SnmpSysOID updates
 	/// </summary>
 	[Fact]
-	public async void GetLogicModuleSnmpSysOidUpdates()
+	public async Task GetLogicModuleSnmpSysOidUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -154,7 +154,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get ALL LogicModule updates
 	/// </summary>
 	[Fact]
-	public async void GetAllLogicModuleUpdates()
+	public async Task GetAllLogicModuleUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -172,7 +172,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited data source update and mark as audited
 	/// </summary>
 	[Fact]
-	public async void AuditDataSource()
+	public async Task AuditDataSource()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -203,7 +203,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited event source update and mark as audited
 	/// </summary>
 	[Fact]
-	public async void AuditEventSource()
+	public async Task AuditEventSource()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -234,7 +234,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited config source update and mark as audited
 	/// </summary>
 	[Fact]
-	public async void AuditConfigSource()
+	public async Task AuditConfigSource()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -265,7 +265,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited property source update and mark as audited
 	/// </summary>
 	[Fact]
-	public async void AuditPropertySource()
+	public async Task AuditPropertySource()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
@@ -296,7 +296,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Data Source and import
 	/// </summary>
 	[Fact]
-	public async void ImportDataSource()
+	public async Task ImportDataSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.DataSource;
 
@@ -332,7 +332,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Event Source and import
 	/// </summary>
 	[Fact]
-	public async void ImportEventSource()
+	public async Task ImportEventSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.EventSource;
 
@@ -368,7 +368,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Config Source and import
 	/// </summary>
 	[Fact]
-	public async void ImportConfigSource()
+	public async Task ImportConfigSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
 
@@ -403,7 +403,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Property Source and import
 	/// </summary>
 	[Fact]
-	public async void ImportPropertySource()
+	public async Task ImportPropertySource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
 
@@ -439,7 +439,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Topology Source and import
 	/// </summary>
 	[Fact]
-	public async void ImportTopologySource()
+	public async Task ImportTopologySource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
 
@@ -475,7 +475,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Job Monitor and import
 	/// </summary>
 	[Fact]
-	public async void ImportJobMonitor()
+	public async Task ImportJobMonitor()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
 
@@ -510,7 +510,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated AppliesToFunction and import
 	/// </summary>
 	[Fact]
-	public async void ImportAppliesToFunction()
+	public async Task ImportAppliesToFunction()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
 
@@ -545,7 +545,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated SNMP SysOID Map and import
 	/// </summary>
 	[Fact]
-	public async void ImportSnmpSysOidMap()
+	public async Task ImportSnmpSysOidMap()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;
 

@@ -28,7 +28,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void ClosedAlerts()
+	public async Task ClosedAlerts()
 	{
 		var closedItemsFilter = new Filter<Alert>
 		{
@@ -51,7 +51,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void AddNoteToAlert()
+	public async Task AddNoteToAlert()
 	{
 		var noNoteItemsFilter = new Filter<Alert>
 		{
@@ -89,7 +89,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void AlertLevelPropertyIsPopulated()
+	public async Task AlertLevelPropertyIsPopulated()
 	{
 		var closedItemsFilter = new Filter<Alert>
 		{
@@ -118,7 +118,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlerts_SdtsMatchRequest()
+	public async Task GetAlerts_SdtsMatchRequest()
 	{
 		// This unit test currently fails horribly due to some inability of the LogicMonitor API to sort the Alerts by Id descending
 
@@ -176,7 +176,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsAndCheckUnique()
+	public async Task GetAlertsAndCheckUnique()
 	{
 		var startEpoch = DateTime.UtcNow.AddDays(-1).SecondsSinceTheEpoch();
 		var alertList = await LogicMonitorClient.GetRestAlertsWithV84Bug(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8)).ConfigureAwait(false);
@@ -194,7 +194,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsFilteredByDevice()
+	public async Task GetAlertsFilteredByDevice()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var startUtcIsBefore = new DateTime(2018, 1, 1);
@@ -218,7 +218,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsFilteredByDeviceRest()
+	public async Task GetAlertsFilteredByDeviceRest()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var deviceGroupFullPathFilter = new List<string> { "Collectors*" };
@@ -255,7 +255,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsIncludeInactiveShouldWork()
+	public async Task GetAlertsIncludeInactiveShouldWork()
 	{
 		// IncludeCleared set false should bring back only active alerts
 		var alertFilterNotIncludingCleared = new AlertFilter
@@ -293,7 +293,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlerts_LevelsMatch()
+	public async Task GetFilteredAlerts_LevelsMatch()
 	{
 		var unfilteredAlerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }).ConfigureAwait(false);
@@ -332,7 +332,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlertsBrokenLmRep1959()
+	public async Task GetFilteredAlertsBrokenLmRep1959()
 	{
 		var alerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 		{
@@ -351,7 +351,7 @@ public class AlertTests : TestWithOutput
 
 	// Time needs to be changed
 	[Fact]
-	public async void GetFilteredAlertsDefaultPeriod()
+	public async Task GetFilteredAlertsDefaultPeriod()
 	{
 		var alerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }).ConfigureAwait(false);
@@ -359,7 +359,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlertsFor2YearsAgoReturnsNoAlerts()
+	public async Task GetFilteredAlertsFor2YearsAgoReturnsNoAlerts()
 	{
 		var alerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
@@ -371,7 +371,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlertsForAlertsStartedThisWeekButNotCleared()
+	public async Task GetFilteredAlertsForAlertsStartedThisWeekButNotCleared()
 	{
 		var startUtcIsAfterOrAt = EndDateTime.AddDays(-1);
 		var alerts =
@@ -386,7 +386,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlertsForAlertsStartedThisWeekAndCleared()
+	public async Task GetFilteredAlertsForAlertsStartedThisWeekAndCleared()
 	{
 		var startUtcIsAfterOrAt = EndDateTime.AddDays(-7);
 		var alerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
@@ -400,7 +400,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlertsForDatacenter()
+	public async Task GetFilteredAlertsForDatacenter()
 	{
 		var alerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
@@ -429,7 +429,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetOfNonExistentAlertShouldThrowException()
+	public async Task GetOfNonExistentAlertShouldThrowException()
 	{
 		Alert alert;
 		var operation = async () =>
@@ -445,7 +445,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlertsForOneDay()
+	public async Task GetFilteredAlertsForOneDay()
 	{
 		var alerts = await LogicMonitorClient.GetAlertsAsync(
 			new AlertFilter
@@ -471,7 +471,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetFilteredAlerts_SpecificLevels()
+	public async Task GetFilteredAlerts_SpecificLevels()
 	{
 		var timespan = TimeSpan.FromDays(1);
 
@@ -507,7 +507,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetAlertsMatchingProblemSignature()
+	public async Task GetAlertsMatchingProblemSignature()
 	{
 		var dateTimeOffset = DateTimeOffset.UtcNow.AddDays(-7);
 
@@ -533,7 +533,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SdtFilter_Works()
+	public async Task SdtFilter_Works()
 	{
 		var nowUtc = DateTimeOffset.UtcNow;
 		var oneDayAgo = nowUtc.AddDays(-1);

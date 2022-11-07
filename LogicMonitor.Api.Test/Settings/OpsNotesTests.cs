@@ -7,7 +7,7 @@ public class OpsNoteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetOpsNotes()
+	public async Task GetOpsNotes()
 	{
 		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>().ConfigureAwait(false);
 
@@ -15,7 +15,7 @@ public class OpsNoteTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetOpsNotesTags()
+	public async Task GetOpsNotesTags()
 	{
 		var allOpsNotesTags = await LogicMonitorClient.GetAllAsync(new Filter<OpsNoteTag>
 		{

@@ -9,14 +9,14 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceGroupByFullPath()
+	public async Task GetDeviceGroupByFullPath()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 		deviceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
-	public async void SetAlertThreshold()
+	public async Task SetAlertThreshold()
 	{
 		var deviceGroup = await LogicMonitorClient
 			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath)
@@ -42,28 +42,28 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceGroupByFullPath_InvalidDeviceGroup_ReturnsNull()
+	public async Task GetDeviceGroupByFullPath_InvalidDeviceGroup_ReturnsNull()
 	{
 		var nonExistentDeviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync("XXXXXX/YYYYYY").ConfigureAwait(false);
 		nonExistentDeviceGroup.Should().BeNull();
 	}
 
 	[Fact]
-	public async void GetDeviceGroupById()
+	public async Task GetDeviceGroupById()
 	{
 		var rootDeviceGroup = await LogicMonitorClient.GetAsync<DeviceGroup>(1).ConfigureAwait(false);
 		rootDeviceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async void GetRootDeviceGroupByFullPath()
+	public async Task GetRootDeviceGroupByFullPath()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync("").ConfigureAwait(false);
 		deviceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
-	public async void GetAllDeviceGroups()
+	public async Task GetAllDeviceGroups()
 	{
 		// For LMREP-4060, to test if there are any missing DeviceGroupTypes
 		var deviceGroups = await LogicMonitorClient.GetAllAsync<DeviceGroup>().ConfigureAwait(false);
@@ -78,7 +78,7 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceGroupProperties()
+	public async Task GetDeviceGroupProperties()
 	{
 		var deviceGroupProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(1).ConfigureAwait(false);
 
@@ -87,7 +87,7 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceGroupsByFullPath()
+	public async Task GetDeviceGroupsByFullPath()
 	{
 		var deviceGroups = (await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false)).SubGroups;
 
@@ -99,7 +99,7 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetOneDeviceGroup_Succeeds()
+	public async Task GetOneDeviceGroup_Succeeds()
 	{
 		var deviceGroup = await LogicMonitorClient
 			.GetAllAsync(new Filter<DeviceGroup> { Take = 1 })
@@ -110,7 +110,7 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void GetDeviceGroupsByParentId()
+	public async Task GetDeviceGroupsByParentId()
 	{
 		var deviceGroup = await LogicMonitorClient.GetAsync<DeviceGroup>(1).ConfigureAwait(false);
 
@@ -125,7 +125,7 @@ public class DeviceGroupTests : TestWithOutput
 	/// Get a Device Group that has a + character in the name (must be escaped)
 	/// </summary>
 	[Fact]
-	public async void GetDeviceGroupByFullPathWithPlusInName()
+	public async Task GetDeviceGroupByFullPathWithPlusInName()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
 
@@ -133,7 +133,7 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void SetDeviceGroupCustomProperty()
+	public async Task SetDeviceGroupCustomProperty()
 	{
 		// Create a device group for testing purposes
 		const string testDeviceGroupName = "Property Test Device Group";

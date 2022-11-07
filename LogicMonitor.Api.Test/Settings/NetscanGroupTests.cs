@@ -7,7 +7,7 @@ public class NetscanGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CanCreateAndDeleteNetscanGroups()
+	public async Task CanCreateAndDeleteNetscanGroups()
 	{
 		const string name = "API Unit Test CanCreateAndDeleteNetscanGroups";
 		const string description = "API Unit Test CanCreateAndDeleteNetscanGroups Description";
@@ -45,7 +45,7 @@ public class NetscanGroupTests : TestWithOutput
 	}
 
 	[Fact]
-	public async void CanGetNetscanGroups()
+	public async Task CanGetNetscanGroups()
 	{
 		var allNetscanGroups = await LogicMonitorClient.GetAllAsync<NetscanGroup>().ConfigureAwait(false);
 		allNetscanGroups.Should().NotBeNull();
