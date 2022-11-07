@@ -72,9 +72,6 @@ public class AlertFilter
 	/// </summary>
 	public int? MonitorObjectId { get; set; }
 
-	//public int? DeviceDataSourceInstanceId { get; set; }
-	//public string DataSourceInstanceName { get; set; }
-
 	/// <summary>
 	///    The Device or Website Group
 	/// </summary>

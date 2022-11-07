@@ -92,7 +92,6 @@ public class WebsiteGroupTests : TestWithOutput
 			ParentId = "1",
 			Properties = new List<Property>
 					{new Property {Name = "name", Value = "value"}},
-			//TestLocation = new TestLocation { All = false, SmgIds = new List<int> { 3, 4 } }
 		}, CancellationToken.None).ConfigureAwait(false);
 
 		try
@@ -104,7 +103,6 @@ public class WebsiteGroupTests : TestWithOutput
 			websiteGroup.StopMonitoring.Should().BeFalse();
 			websiteGroup.FullPath.Should().Be("Test Name");
 			websiteGroup.ParentId.Should().Be(1);
-			//websiteGroup.TestLocation.Should().BeEquivalentTo(new TestLocation { All = false, SmgIds = new List<int> { 3, 4 } });
 			websiteGroup.CustomProperties.Should().BeEquivalentTo(new List<Property> { new Property { Name = "name", Value = "value" } });
 		}
 		finally

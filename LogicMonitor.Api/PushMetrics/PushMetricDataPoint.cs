@@ -26,13 +26,6 @@ public class PushMetricDataPoint
 	[DataMember(Name = "dataPointDescription")]
 	public string Description { get; set; }
 
-	///// <summary>
-	///// Metric type as a number in string format.
-	///// Only considered when creating a new datapoint.
-	///// </summary>
-	//[DataMember(Name = "dataPointType")]
-	//public string Type { get; set; }
-
 	/// <summary>
 	/// Metric type as a number in string format.
 	/// Only considered when creating a new datapoint.

@@ -23,13 +23,13 @@ public static class LoggerExtensions
 			{
 				var headerType = (isRequest ? "REQUEST HEADERS:" : "RESPONSE HEADERS:") + "\r\n\r\n";
 
-				var output = string.Empty;
+				var output = new StringBuilder();
 				foreach (var header in headers.Where(x => x.Key != "Authorization"))
 				{
-					output += $"HEADER-NAME: {header.Key} | HEADER-VALUE(S): {string.Join(";", header.Value)} " + "\r\n";
+					output.Append($"HEADER-NAME: {header.Key} | HEADER-VALUE(S): {string.Join(";", header.Value)} \r\n");
 				}
 
-				logger.LogDebug("{Guid}{HeaderType}{Headers}", guidPrefix, headerType, output);
+				logger.LogDebug("{Guid}{HeaderType}{Headers}", guidPrefix, headerType, output.ToString());
 			}
 			catch (Exception e)
 			{

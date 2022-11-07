@@ -107,7 +107,6 @@ public class ScheduledDownTimeTests : TestWithOutput
 	[Fact]
 	public async Task AddAndDeleteADeviceSdt()
 	{
-		// var device = await portalClient.GetDeviceByDisplayNameAsync(portalConfig.WindowsDeviceDisplayName);
 		const string initialComment = "Woo";
 		var deviceId = WindowsDeviceId;
 		var sdtCreationDto = new DeviceScheduledDownTimeCreationDto(deviceId)

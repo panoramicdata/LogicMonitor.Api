@@ -34,14 +34,6 @@ public class EscalationChainPeriod
 	[DataMember(Name = "endMinutes")]
 	public int EndMinutes { get; set; }
 
-	///// <summary>
-	///// The number of minutes into a day.
-	///// e.g. midnight is 0
-	///// e.g. 1 a.m. is 60
-	///// </summary>
-	//[DataMember(Name = "weekDays")]
-	//public string WeekDays { get; set; }
-
 	/// <summary>
 	/// The time zone
 	/// </summary>

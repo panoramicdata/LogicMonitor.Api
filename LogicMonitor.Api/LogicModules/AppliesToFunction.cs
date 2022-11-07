@@ -65,11 +65,6 @@ public class AppliesToFunction : NamedItem, IHasEndpoint
 			throw new FormatException($"Network: {cidr} is badly formed.  Invalid value after the slash.");
 		}
 
-		// Validate the network part matches the bits
-		var zeroCount = 32 - bitsInteger;
-		var networkMask = 0b11111111111111111111111111111111 >> zeroCount << zeroCount;
-		// TODO - test this is correct
-
 		// Determine the applies function
 		switch (bitsInteger)
 		{
