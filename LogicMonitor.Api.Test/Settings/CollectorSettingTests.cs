@@ -10,21 +10,21 @@ public class CollectorSettingTests
 	[Fact]
 	public async Task GetAllCollectorGroupSettings()
 	{
-		var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+		var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
 		allCollectorGroupSettings.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async Task GetAllCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
 		collectors.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetAllCollectorsSettings()
 	{
-		var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
+		var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
 		allCollectorSettings.Should().NotBeNullOrEmpty();
 	}
 
@@ -32,10 +32,10 @@ public class CollectorSettingTests
 	public async Task GetCollectorGroupSettings()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>()
+			.GetAllAsync<CollectorGroup>(CancellationToken.None)
 			.ConfigureAwait(false);
 		var pulsantCollectorGroupSettings = await LogicMonitorClient
-			.GetAsync<CollectorGroup>(collectorGroups[0].Id)
+			.GetAsync<CollectorGroup>(collectorGroups[0].Id, CancellationToken.None)
 			.ConfigureAwait(false);
 		pulsantCollectorGroupSettings.Should().NotBeNull();
 	}
@@ -44,7 +44,7 @@ public class CollectorSettingTests
 	public async Task GetCollectorVersions_Unfiltered_Succeeds()
 	{
 		var collectorVersions = await LogicMonitorClient
-			.GetAllCollectorVersionsAsync()
+			.GetAllCollectorVersionsAsync(cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
@@ -61,7 +61,7 @@ public class CollectorSettingTests
 				{
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true)
 				}
-			})
+			}, CancellationToken.None)
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
@@ -78,7 +78,7 @@ public class CollectorSettingTests
 				{
 						new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
 				}
-			})
+			}, CancellationToken.None)
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();

@@ -13,14 +13,14 @@ public class BackupTests : TestWithOutput
 		{
 			DataSources = false,
 			Logs = false
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 		configurationBackup.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task Backup_Users()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Users = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Users = true }, CancellationToken.None).ConfigureAwait(false);
 		backup.Should().NotBeNull();
 		backup.RoleGroups.Should().NotBeNull();
 		backup.Roles.Should().NotBeNull();
@@ -46,7 +46,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_Alerting()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Alerting = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Alerting = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.AlertRules.Should().NotBeNullOrEmpty();
 
@@ -56,7 +56,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_Integrations()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Integrations = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Integrations = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.Integrations.Should().NotBeNullOrEmpty();
 	}
@@ -64,7 +64,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_Dashboards()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Dashboards = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { Dashboards = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.Dashboards.Should().NotBeNullOrEmpty();
 		backup.Widgets.Should().NotBeNullOrEmpty();
@@ -73,7 +73,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_AccountSettings()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AccountSettings = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AccountSettings = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.CompanyLogo.Should().NotBeNull();
 	}
@@ -81,7 +81,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_AppliesToFunctions()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AppliesToFunctions = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { AppliesToFunctions = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.AppliesToFunctions.Should().NotBeNullOrEmpty();
 	}
@@ -89,7 +89,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_ConfigSources()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { ConfigSources = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { ConfigSources = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.ConfigSources.Should().NotBeNullOrEmpty();
 	}
@@ -107,14 +107,14 @@ public class BackupTests : TestWithOutput
 				{
 					ScheduledDownTimes = true,
 					GzipFileInfo = fileInfo
-				})
+				}, CancellationToken.None)
 				.ConfigureAwait(false);
 			fileInfo.Exists.Should().BeTrue();
 			backup.ScheduledDownTimes.Should().NotBeNullOrEmpty();
 
 			// Load back from disk
 			var reloadedBackup = await LogicMonitorClient
-				.LoadBackupAsync(fileInfo)
+				.LoadBackupAsync(fileInfo, CancellationToken.None)
 				.ConfigureAwait(false);
 
 			reloadedBackup.Should().NotBeNull();
@@ -139,7 +139,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_EventSources()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { EventSources = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { EventSources = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.EventSources.Should().NotBeNull();
 		backup.EventSources.Should().NotBeNullOrEmpty();
@@ -148,7 +148,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_JobMonitors()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { JobMonitors = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { JobMonitors = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.JobMonitors.Should().NotBeNull();
 		backup.JobMonitors.Should().NotBeNullOrEmpty();
@@ -157,7 +157,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_PropertySources()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { PropertySources = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { PropertySources = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.Should().NotBeNull();
 		backup.PropertySources.Should().NotBeNull();
@@ -170,7 +170,7 @@ public class BackupTests : TestWithOutput
 		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false)
 		{
 			ScheduledDownTimes = true
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		backup.Should().NotBeNull();
 		backup.ScheduledDownTimes.Should().NotBeNull();
@@ -180,7 +180,7 @@ public class BackupTests : TestWithOutput
 	[Fact]
 	public async Task Backup_SnmpSysOidMaps()
 	{
-		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { SnmpSysOidMaps = true }).ConfigureAwait(false);
+		var backup = await LogicMonitorClient.BackupAsync(new ConfigurationBackupSpecification(false) { SnmpSysOidMaps = true }, CancellationToken.None).ConfigureAwait(false);
 
 		backup.SnmpSysOidMaps.Should().NotBeNull();
 		backup.SnmpSysOidMaps.Should().NotBeNullOrEmpty();

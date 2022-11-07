@@ -13,7 +13,7 @@ public class CollectorGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
 		collectorGroups.Should().NotBeNull();
 		collectorGroups.Should().NotBeNullOrEmpty();
 	}
@@ -21,7 +21,7 @@ public class CollectorGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
 		collectorGroups.Should().NotContain(cg => cg.Id == 0);
 		collectorGroups.Should().NotContain(cg => cg.Name == null);
@@ -39,11 +39,11 @@ public class CollectorGroupTests : TestWithOutput
 					{
 						new Eq<CollectorGroup>(nameof(CollectorGroup.Name), TestName)
 					}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		foreach (var priorCollectorGroup in collectorGroups)
 		{
-			await LogicMonitorClient.DeleteAsync(priorCollectorGroup).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(priorCollectorGroup, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		}
 		// There are now none with this name
 
@@ -56,11 +56,11 @@ public class CollectorGroupTests : TestWithOutput
 				{
 					new Property { Name = "a", Value = "b" }
 				}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 		newCollectorGroup.Should().NotBeNull();
 		newCollectorGroup.Id.Should().NotBe(0);
 
-		var newCollectorGroupRefetch = await LogicMonitorClient.GetAsync<CollectorGroup>(newCollectorGroup.Id).ConfigureAwait(false);
+		var newCollectorGroupRefetch = await LogicMonitorClient.GetAsync<CollectorGroup>(newCollectorGroup.Id, CancellationToken.None).ConfigureAwait(false);
 		newCollectorGroupRefetch.Should().NotBeNull();
 		newCollectorGroupRefetch.Name.Should().NotBeNull();
 		newCollectorGroupRefetch.Description.Should().NotBeNull();
@@ -71,9 +71,9 @@ public class CollectorGroupTests : TestWithOutput
 		newCollectorGroupRefetch.CustomProperties[0].Value.Should().Be("b");
 
 		// Put
-		await LogicMonitorClient.PutAsync(newCollectorGroupRefetch).ConfigureAwait(false);
+		await LogicMonitorClient.PutAsync(newCollectorGroupRefetch, CancellationToken.None).ConfigureAwait(false);
 
 		// Delete
-		await LogicMonitorClient.DeleteAsync(newCollectorGroupRefetch).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(newCollectorGroupRefetch, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 	}
 }

@@ -13,13 +13,13 @@ public class RoleTests : TestWithOutput
 	[Fact]
 	public async Task GetRoles()
 	{
-		var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var roles = await LogicMonitorClient.GetPageAsync(new Filter<Role> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 		roles.Should().NotBeNull();
 		roles.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var role in roles.Items)
 		{
-			var refetchedRole = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
+			var refetchedRole = await LogicMonitorClient.GetAsync<Role>(role.Id, CancellationToken.None).ConfigureAwait(false);
 			refetchedRole.Name.Should().Be(role.Name);
 		}
 	}
@@ -27,7 +27,7 @@ public class RoleTests : TestWithOutput
 	[Fact]
 	public async Task GetForCurrentUser()
 	{
-		var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var roles = await LogicMonitorClient.GetRolesForCurrentUserPageAsync(new Filter<Role> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 		roles.Should().NotBeNull();
 		roles.Items.Should().NotBeNullOrEmpty();
 	}
@@ -37,18 +37,18 @@ public class RoleTests : TestWithOutput
 	{
 		// Ensure there is no existing role called "Test"
 		var existingRole = (await LogicMonitorClient
-				.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } })
+				.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } }, CancellationToken.None)
 				.ConfigureAwait(false))
 			.SingleOrDefault();
 		if (existingRole is not null)
 		{
-			await LogicMonitorClient.DeleteAsync(existingRole).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(existingRole, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		}
 
-		var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-		var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-		var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
-		var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }).ConfigureAwait(false)).SingleOrDefault();
+		var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }, CancellationToken.None).ConfigureAwait(false)).SingleOrDefault();
+		var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }, CancellationToken.None).ConfigureAwait(false)).SingleOrDefault();
+		var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }, CancellationToken.None).ConfigureAwait(false)).SingleOrDefault();
+		var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }, CancellationToken.None).ConfigureAwait(false)).SingleOrDefault();
 		var role = await LogicMonitorClient.CreateAsync(new RoleCreationDto
 		{
 			CustomHelpLabel = "",
@@ -107,13 +107,13 @@ public class RoleTests : TestWithOutput
 						Operation = RolePrivilegeOperation.Read
 					},
 				}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		// Refetch
-		var refetch = await LogicMonitorClient.GetAsync<Role>(role.Id).ConfigureAwait(false);
+		var refetch = await LogicMonitorClient.GetAsync<Role>(role.Id, CancellationToken.None).ConfigureAwait(false);
 		refetch.Should().NotBeNull();
 
 		// Delete
-		await LogicMonitorClient.DeleteAsync(role).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(role, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 	}
 }

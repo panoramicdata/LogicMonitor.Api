@@ -158,13 +158,10 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<DataSourceGraph>> GetDataSourceOverviewGraphsPageAsync(
 		int dataSourceId,
-		Filter<DataSourceGraph> filter = null,
-		CancellationToken cancellationToken)
+		Filter<DataSourceGraph>? filter = null,
+		CancellationToken cancellationToken = default)
 	{
-		if (filter is null)
-		{
-			filter = new Filter<DataSourceGraph> { Skip = 0, Take = 300 };
-		}
+		filter ??= new Filter<DataSourceGraph> { Skip = 0, Take = 300 };
 
 		var dataSourceOverviewGraphsPageAsync = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/ographs?{filter}", cancellationToken).ConfigureAwait(false);
 
@@ -294,12 +291,9 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		Filter<DeviceDataSourceInstance>? filter = null,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	{
-		if (filter is null)
-		{
-			filter = new Filter<DeviceDataSourceInstance>();
-		}
+		filter ??= new Filter<DeviceDataSourceInstance>();
 
 		filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 		filter.Skip = 0;
@@ -332,13 +326,10 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
 		int deviceId,
-		Filter<DeviceDataSourceInstance> filter = null,
-		CancellationToken cancellationToken)
+		Filter<DeviceDataSourceInstance>? filter = null,
+		CancellationToken cancellationToken = default)
 	{
-		if (filter is null)
-		{
-			filter = new Filter<DeviceDataSourceInstance>();
-		}
+		filter ??= new Filter<DeviceDataSourceInstance>();
 
 		filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 		filter.Skip = 0;
@@ -375,13 +366,10 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		Filter<InstanceProperty> filter = null,
-		CancellationToken cancellationToken)
+		Filter<InstanceProperty>? filter = null,
+		CancellationToken cancellationToken = default)
 	{
-		if (filter is null)
-		{
-			filter = new Filter<InstanceProperty>();
-		}
+		filter ??= new Filter<InstanceProperty>();
 
 		filter.Take = 50; // LogicMonitor hardcoded value
 		filter.Skip = 0;
@@ -407,10 +395,10 @@ public partial class LogicMonitorClient
 		LogicModuleType logicModuleType,
 		int rootDeviceGroupId,
 		List<int> logicModuleIds,
-		string instanceProperty = null,
-		Regex instancePropertyValueRegex = null,
-		Filter<InstanceProperty> filter = null,
-		CancellationToken cancellationToken)
+		string? instanceProperty = null,
+		Regex? instancePropertyValueRegex = null,
+		Filter<InstanceProperty>? filter = null,
+		CancellationToken cancellationToken = default)
 	{
 		// TODO - Move this inline and support other LogicModule types
 		switch (logicModuleType)
@@ -572,12 +560,12 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceInstanceGroupId"></param>
 	/// <param name="sendNullIfError"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DeviceDataSourceInstanceGroup> GetDeviceDataSourceInstanceGroupAsync(
+	public async Task<DeviceDataSourceInstanceGroup?> GetDeviceDataSourceInstanceGroupAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceGroupId,
 		bool sendNullIfError = false,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	{
 		try
 		{

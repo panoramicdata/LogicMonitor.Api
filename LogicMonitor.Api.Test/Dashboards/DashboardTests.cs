@@ -14,11 +14,15 @@ public class DashboardTests : TestWithOutput
 	public async Task GetBigNumberWidgetData_Succeeds()
 	{
 		// Multi-number
-		var widgetData = await LogicMonitorClient.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
+		var widgetData = await LogicMonitorClient
+			.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow, CancellationToken.None)
+			.ConfigureAwait(false);
 		widgetData.Should().NotBeNull();
 
 		// Single-number
-		var widgetData2 = await LogicMonitorClient.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow).ConfigureAwait(false);
+		var widgetData2 = await LogicMonitorClient
+			.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow, CancellationToken.None)
+			.ConfigureAwait(false);
 		widgetData2.Should().NotBeNull();
 	}
 
@@ -28,13 +32,17 @@ public class DashboardTests : TestWithOutput
 		var utcNow = DateTimeOffset.UtcNow;
 
 		// Multi-number
-		var widgetData = await LogicMonitorClient.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
+		var widgetData = await LogicMonitorClient
+			.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow, CancellationToken.None)
+			.ConfigureAwait(false);
 		widgetData.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNullOrEmpty();
 
 		// Single-number
-		var widgetData2 = await LogicMonitorClient.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow).ConfigureAwait(false);
+		var widgetData2 = await LogicMonitorClient
+			.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow, CancellationToken.None)
+			.ConfigureAwait(false);
 		widgetData2.Should().NotBeNull();
 		widgetData2.Availability.Should().NotBe(0);
 		widgetData2.ResultList.Should().BeEmpty();
@@ -44,7 +52,9 @@ public class DashboardTests : TestWithOutput
 	public async Task Clone()
 	{
 		// This one has all the different widget types on
-		var originalDashboard = await LogicMonitorClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
+		var originalDashboard = await LogicMonitorClient
+			.GetByNameAsync<Dashboard>("All Widgets", CancellationToken.None)
+			.ConfigureAwait(false);
 
 		var newDashboard = await LogicMonitorClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
 		{
@@ -53,10 +63,10 @@ public class DashboardTests : TestWithOutput
 			DashboardGroupId = originalDashboard.DashboardGroupId,
 			WidgetsConfig = originalDashboard.WidgetsConfig,
 			WidgetsOrder = originalDashboard.WidgetsOrder
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		var newDashboardRefetch = await LogicMonitorClient.
-			GetAsync<Dashboard>(newDashboard.Id)
+			GetAsync<Dashboard>(newDashboard.Id, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		// Ensure that it is as expected
@@ -64,7 +74,7 @@ public class DashboardTests : TestWithOutput
 
 		// Delete the clone
 		await LogicMonitorClient
-			.DeleteAsync(newDashboard)
+			.DeleteAsync(newDashboard, cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 	}
 
@@ -72,8 +82,12 @@ public class DashboardTests : TestWithOutput
 	public async Task Get()
 	{
 		// This one has all the different widget types on
-		var dashboard = await LogicMonitorClient.GetByNameAsync<Dashboard>("All Widgets").ConfigureAwait(false);
-		var widgets = await LogicMonitorClient.GetWidgetsByDashboardNameAsync("All Widgets").ConfigureAwait(false);
+		var dashboard = await LogicMonitorClient
+			.GetByNameAsync<Dashboard>("All Widgets", CancellationToken.None)
+			.ConfigureAwait(false);
+		var widgets = await LogicMonitorClient
+			.GetWidgetsByDashboardNameAsync("All Widgets", CancellationToken.None)
+			.ConfigureAwait(false);
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
 		widgets.Should().HaveCount(19); // There are 24 different types of widget
@@ -235,11 +249,6 @@ public class DashboardTests : TestWithOutput
 		// Website overall status widget
 		var websiteOverallStatusWidget = widgets.OfType<WebsiteOverallStatusWidget>().SingleOrDefault();
 		websiteOverallStatusWidget.Should().NotBeNull();
-		//websiteOverallStatusWidget.SelectedWebsites.Should().NotBeNull();
-		//websiteOverallStatusWidget.SelectedWebsites.Should().NotBeNullOrEmpty();
-		//websiteOverallStatusWidget.SelectedWebsites[0].WebsiteGroupId.Should().Be(0);
-		//websiteOverallStatusWidget.SelectedWebsites[0].WebsiteGroupName.Should().NotBeNull();
-		//((websiteOverallStatusWidget.SelectedWebsites[0].AreAllChosen)).Should().BeFalse();
 
 		// Device SLA widget
 		var deviceSlaStatusWidget = widgets.OfType<DeviceSlaWidget>().FirstOrDefault();
@@ -253,14 +262,12 @@ public class DashboardTests : TestWithOutput
 		deviceSlaStatusWidget.Metrics[0].DataSourceInstances.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics[0].Metric.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics[0].Threshold.Should().NotBeNull();
-		// deviceSlaStatusWidget.Metrics[0].UnitLabel.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics[0].BottomLabel.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics[0].ExclusionSdtType.Should().NotBeNull();
 		deviceSlaStatusWidget.DaysInWeek.Should().NotBeNull();
 		deviceSlaStatusWidget.PeriodInOneDay.Should().NotBeNull();
 		deviceSlaStatusWidget.UnmonitoredTimeType.Should().Be(0);
 		deviceSlaStatusWidget.DisplayType.Should().Be(2);
-		// deviceSlaStatusWidget.UnitLabel.Should().NotBeNull();
 		deviceSlaStatusWidget.BottomLabel.Should().NotBeNull();
 
 		// website SLA widget
@@ -281,7 +288,7 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task GetDashboardsNoWidgets()
 	{
-		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
+		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();
@@ -293,7 +300,7 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task GetDashboardsWithWidgets()
 	{
-		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>().ConfigureAwait(false);
+		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();

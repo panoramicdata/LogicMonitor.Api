@@ -102,7 +102,7 @@ public partial class LogicMonitorClient
 	public async Task<DeviceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(int deviceId, int eventSourceId)
 	{
 		// TODO - Make this use a search field
-		var page = await GetDeviceEventSourcesPageAsync(deviceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var page = await GetDeviceEventSourcesPageAsync(deviceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 		return page.Items.SingleOrDefault(deviceEventSource => deviceEventSource.EventSourceId == eventSourceId);
 	}
 }

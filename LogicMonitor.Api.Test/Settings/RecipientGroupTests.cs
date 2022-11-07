@@ -9,12 +9,12 @@ public class RecipientGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetRecipientGroupTests()
 	{
-		var recipientGroups = await LogicMonitorClient.GetAllAsync<RecipientGroup>().ConfigureAwait(false);
+		var recipientGroups = await LogicMonitorClient.GetAllAsync<RecipientGroup>(CancellationToken.None).ConfigureAwait(false);
 		recipientGroups.Should().NotBeNullOrEmpty();
 
 		foreach (var recipientGroup in recipientGroups)
 		{
-			var refetchedRole = await LogicMonitorClient.GetAsync<RecipientGroup>(recipientGroup.Id).ConfigureAwait(false);
+			var refetchedRole = await LogicMonitorClient.GetAsync<RecipientGroup>(recipientGroup.Id, CancellationToken.None).ConfigureAwait(false);
 			refetchedRole.GroupName.Should().Be(recipientGroup.GroupName);
 		}
 	}

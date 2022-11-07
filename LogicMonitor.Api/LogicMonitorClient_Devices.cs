@@ -59,7 +59,7 @@ public partial class LogicMonitorClient
 	/// <param name="skip">The number to skip</param>
 	/// <param name="take">The number to take</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Alert>> GetDeviceAlertsPageAsync(int deviceId, int skip = 0, int take = 100, CancellationToken cancellationToken)
+	public Task<Page<Alert>> GetDeviceAlertsPageAsync(int deviceId, int skip = 0, int take = 100, CancellationToken cancellationToken = default)
 		=> GetBySubUrlAsync<Page<Alert>>($"device/devices/{deviceId}/alerts?size={take}&offset={skip}", cancellationToken);
 
 	/// <summary>
@@ -80,7 +80,7 @@ public partial class LogicMonitorClient
 		string name,
 		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	=>
 		SetCustomPropertyAsync(
 			deviceId,
@@ -109,7 +109,7 @@ public partial class LogicMonitorClient
 		string name,
 		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	=>
 		SetCustomPropertyAsync(
 			deviceGroupId,
@@ -318,7 +318,7 @@ public partial class LogicMonitorClient
 		string searchText,
 		int maxResultCount,
 		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	{
 		if (searchText is null)
 		{
@@ -349,7 +349,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceGroupId">The device group id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DeviceGroup> GetFullDeviceTreeAsync(int deviceGroupId = -1, CancellationToken cancellationToken)
+	public async Task<DeviceGroup> GetFullDeviceTreeAsync(int deviceGroupId = -1, CancellationToken cancellationToken = default)
 	{
 		var allDeviceGroups = await GetAllAsync<DeviceGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 		var requestedRootGroup = allDeviceGroups.SingleOrDefault(g => g.Id == deviceGroupId) ?? new DeviceGroup { Name = "Root", Id = -1 };
@@ -480,7 +480,10 @@ public partial class LogicMonitorClient
 	/// <param name="taskId">The task id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The task results</returns>
-	public async Task<Page<DeviceProcess>> GetProcessServiceTaskResults(int deviceId, int taskId, CancellationToken cancellationToken)
+	public async Task<Page<DeviceProcess>> GetProcessServiceTaskResults(
+		int deviceId,
+		int taskId,
+		CancellationToken cancellationToken)
 	{
 		while (true)
 		{
@@ -682,7 +685,7 @@ public partial class LogicMonitorClient
 		if (limitReached)
 		{
 			// Fall back to the chunked method
-			alerts = await GetDeviceAlertsByIdChunkedAsync(deviceId, filter, TimeSpan.FromHours(24)).ConfigureAwait(false);
+			alerts = await GetDeviceAlertsByIdChunkedAsync(deviceId, filter, TimeSpan.FromHours(24), cancellationToken).ConfigureAwait(false);
 		}
 
 		if (filter?.IsCleared == true)
@@ -704,10 +707,12 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The Device ID</param>
 	/// <param name="filter"></param>
 	/// <param name="chunkSize">The chunk size (TimeSpan)</param>
+	/// <param name="cancellationToken"></param>
 	internal async Task<List<Alert>> GetDeviceAlertsByIdChunkedAsync(
 		int deviceId,
 		AlertFilter filter,
-		TimeSpan chunkSize)
+		TimeSpan chunkSize,
+		CancellationToken cancellationToken)
 	{
 		// Ensure that the filter CANNOT override the device ID set!
 		filter.RemoveMonitorObjectReferences();
@@ -740,7 +745,7 @@ public partial class LogicMonitorClient
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
 			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetDeviceAlertsByIdNormalAsync(deviceId, individualAlertFilter, true).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetDeviceAlertsByIdNormalAsync(deviceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
 			}
@@ -763,7 +768,7 @@ public partial class LogicMonitorClient
 	internal async Task<(List<Alert> alerts, bool limitReached)> GetDeviceAlertsByIdNormalAsync(
 		int deviceId,
 		AlertFilter filter,
-		bool calledFromChunked = false,
+		bool calledFromChunked,
 		CancellationToken cancellationToken)
 	{
 		// Ensure that the filter CANNOT override the device ID set!

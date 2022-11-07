@@ -9,21 +9,21 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
-		var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId).ConfigureAwait(false);
+		var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinIf-")
+			.GetDataSourceByUniqueNameAsync("WinIf-", cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		var _ = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id)
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 	}
 
@@ -33,10 +33,10 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		var device = await GetSnmpDeviceAsync()
 			.ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("snmp64_If-")
+			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 		{
@@ -45,7 +45,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				{
 					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 				}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		deviceDataSourceInstances.Should().AllSatisfy(dsi => dsi.StopMonitoring.Should().BeFalse());
 	}

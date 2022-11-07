@@ -11,13 +11,13 @@ public class CollectorTests2
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>().ConfigureAwait(false);
+		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collectorGroup in collectorGroups)
 		{
-			var refetch = await LogicMonitorClient.GetAsync<CollectorGroup>(collectorGroup.Id).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<CollectorGroup>(collectorGroup.Id, CancellationToken.None).ConfigureAwait(false);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -25,13 +25,13 @@ public class CollectorTests2
 	[Fact]
 	public async Task GetAllCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
 		collectors.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collector in collectors)
 		{
-			var refetch = await LogicMonitorClient.GetAsync<Collector>(collector.Id).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<Collector>(collector.Id, CancellationToken.None).ConfigureAwait(false);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -39,10 +39,12 @@ public class CollectorTests2
 	[Fact]
 	public async Task RunDebugCommand()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>().ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
 		var testCollector = collectors.Find(c => !c.IsDown);
 		testCollector.Should().NotBeNull();
-		var response = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(testCollector.Id, "!ping 8.8.8.8").ConfigureAwait(false);
+		var response = await LogicMonitorClient
+			.ExecuteDebugCommandAndWaitForResultAsync(testCollector.Id, "!ping 8.8.8.8", cancellationToken: CancellationToken.None)
+			.ConfigureAwait(false);
 		response.Should().NotBeNull();
 		Logger.LogInformation("{Output}", response.Output);
 	}
@@ -58,7 +60,7 @@ public class CollectorTests2
 				{
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
 				}
-			}
+			}, CancellationToken.None
 			).ConfigureAwait(false))
 			.Select(cv => (cv.MajorVersion * 1000) + cv.MinorVersion)
 			.OrderByDescending(v => v)
@@ -70,7 +72,7 @@ public class CollectorTests2
 		var collectorVersionInt = collectorVersionInts[0];
 
 		// Create the collector
-		var collector = await LogicMonitorClient.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }).ConfigureAwait(false);
+		var collector = await LogicMonitorClient.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, CancellationToken.None).ConfigureAwait(false);
 
 		var tempFileInfo = new FileInfo(Path.GetTempPath() + Guid.NewGuid().ToString());
 		try
@@ -81,7 +83,7 @@ public class CollectorTests2
 				CollectorPlatformAndArchitecture.Win64,
 				CollectorDownloadType.Bootstrap,
 				CollectorSize.Medium,
-				collectorVersionInt).ConfigureAwait(false);
+				collectorVersionInt, CancellationToken.None).ConfigureAwait(false);
 		}
 		finally
 		{
@@ -90,7 +92,7 @@ public class CollectorTests2
 			tempFileInfo.Delete();
 
 			// Remove the collector from the API
-			await LogicMonitorClient.DeleteAsync(collector).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(collector, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		}
 	}
 }

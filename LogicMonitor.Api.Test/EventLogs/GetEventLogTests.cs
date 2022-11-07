@@ -19,7 +19,7 @@ public class GetEventLogTests : TestWithOutput
 		for (var i = 0; i < 3000; i += 300)
 		{
 			var logItems = await LogicMonitorClient
-				.GetLogItemsAsync(new LogFilter(i, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc))
+				.GetLogItemsAsync(new LogFilter(i, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), CancellationToken.None)
 				.ConfigureAwait(false);
 
 

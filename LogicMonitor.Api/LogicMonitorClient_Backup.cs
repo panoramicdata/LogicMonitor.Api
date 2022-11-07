@@ -8,7 +8,7 @@ public partial class LogicMonitorClient
 	/// <param name="fileInfo"></param>
 	public async Task BackupAllToFileAsync(FileInfo fileInfo)
 	{
-		var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo })
+		var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }, CancellationToken.None)
 			.ConfigureAwait(false);
 	}
 

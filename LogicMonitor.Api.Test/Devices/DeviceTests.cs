@@ -12,7 +12,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDevicesByDeviceGroupRecursive()
 	{
 		var devices = await LogicMonitorClient
-			.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true)
+			.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		devices.Should().NotBeNull();
@@ -44,28 +44,28 @@ public class DeviceTests : TestWithOutput
 		const int deviceGroupParentId = 1;
 
 		// Delete device if it already exists
-		var deviceForDeletion = await LogicMonitorClient.GetDeviceByDisplayNameAsync(deviceDisplayName).ConfigureAwait(false);
+		var deviceForDeletion = await LogicMonitorClient.GetDeviceByDisplayNameAsync(deviceDisplayName, CancellationToken.None).ConfigureAwait(false);
 		if (deviceForDeletion is not null)
 		{
 			await logicMonitorClient
-				.DeleteAsync(deviceForDeletion)
+				.DeleteAsync(deviceForDeletion, cancellationToken: CancellationToken.None)
 				.ConfigureAwait(false);
 		}
 
 		// Delete device group if it already exists
 		var deviceGroupForDeletion = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(deviceGroupName)
+			.GetDeviceGroupByFullPathAsync(deviceGroupName, CancellationToken.None)
 			.ConfigureAwait(false);
 		if (deviceGroupForDeletion is not null)
 		{
 			await logicMonitorClient
-				.DeleteAsync(deviceGroupForDeletion)
+				.DeleteAsync(deviceGroupForDeletion, cancellationToken: CancellationToken.None)
 				.ConfigureAwait(false);
 		}
 
 		// Get an active collector
 		var collectorId = (await logicMonitorClient
-			.GetAllAsync<Collector>()
+			.GetAllAsync<Collector>(CancellationToken.None)
 			.ConfigureAwait(false))
 		.OrderBy(c => c.Id)
 		.FirstOrDefault(c => !c.IsDown)?.Id;
@@ -77,7 +77,7 @@ public class DeviceTests : TestWithOutput
 			Name = deviceGroupName,
 			Description = deviceGroupDescription,
 			ParentId = deviceGroupParentId.ToString(CultureInfo.InvariantCulture)
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		foreach (var finalHardDelete in new bool[] { false, true })
 		{
@@ -97,9 +97,13 @@ public class DeviceTests : TestWithOutput
 				EnableNetflow = deviceEnableNetflow,
 				PreferredCollectorId = collectorId.Value
 			};
-			var deviceFromCreation = await logicMonitorClient.CreateAsync(deviceCreationDto).ConfigureAwait(false);
+			var deviceFromCreation = await logicMonitorClient
+				.CreateAsync(
+					deviceCreationDto,
+					CancellationToken.None)
+				.ConfigureAwait(false);
 
-			foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Device>(deviceFromCreation.Id).ConfigureAwait(false) })
+			foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Device>(deviceFromCreation.Id, CancellationToken.None).ConfigureAwait(false) })
 			{
 				device.Name.Should().Be(deviceName);
 				device.DisplayName.Should().Be(deviceDisplayName);
@@ -114,10 +118,14 @@ public class DeviceTests : TestWithOutput
 			}
 
 			// Soft delete device
-			await logicMonitorClient.DeleteAsync(deviceFromCreation, false).ConfigureAwait(false);
+			await logicMonitorClient
+				.DeleteAsync(deviceFromCreation, false, cancellationToken: CancellationToken.None)
+				.ConfigureAwait(false);
 
 			// Get recycle bin items
-			var recycleBinItems = await logicMonitorClient.GetAllAsync<RecycleBinItem>().ConfigureAwait(false);
+			var recycleBinItems = await logicMonitorClient
+				.GetAllAsync<RecycleBinItem>(CancellationToken.None)
+				.ConfigureAwait(false);
 
 			// Assert that the device is in the recycle bin
 			recycleBinItems.Select(i => i.ResourceId).Should().Contain(deviceFromCreation.Id);
@@ -133,12 +141,12 @@ public class DeviceTests : TestWithOutput
 			{
 				// Restore from recycle bin
 				await logicMonitorClient
-					.RecycleBinRestoreAsync(new List<string> { recycleBinItem.Id })
+					.RecycleBinRestoreAsync(new List<string> { recycleBinItem.Id }, CancellationToken.None)
 					.ConfigureAwait(false);
 
 				// Get the recycle bin item and make sure it was restored correctly
 				recycleBinItems = await logicMonitorClient
-					.GetAllAsync<RecycleBinItem>()
+					.GetAllAsync<RecycleBinItem>(CancellationToken.None)
 					.ConfigureAwait(false);
 				recycleBinItem = recycleBinItems
 					.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
@@ -146,27 +154,29 @@ public class DeviceTests : TestWithOutput
 
 				// Do a regular hard delete
 				await logicMonitorClient
-					.DeleteAsync(deviceFromCreation)
+					.DeleteAsync(deviceFromCreation, cancellationToken: CancellationToken.None)
 					.ConfigureAwait(false);
 			}
 			else
 			{
 				// Remove from the recycle bin
 				await logicMonitorClient
-					.RecycleBinDeleteAsync(new List<string> { recycleBinItem.Id })
+					.RecycleBinDeleteAsync(new List<string> { recycleBinItem.Id }, CancellationToken.None)
 					.ConfigureAwait(false);
 			}
 		}
 
 		// Delete device group
-		await logicMonitorClient.DeleteAsync(deviceGroup).ConfigureAwait(false);
+		await logicMonitorClient
+			.DeleteAsync(deviceGroup, cancellationToken: CancellationToken.None)
+			.ConfigureAwait(false);
 	}
 
 	[Fact]
 	public async Task GetAllScheduledDownTimes()
 	{
 		var scheduledDownTimes = await LogicMonitorClient
-			.GetAllAsync<ScheduledDownTime>()
+			.GetAllAsync<ScheduledDownTime>(CancellationToken.None)
 			.ConfigureAwait(false);
 
 		scheduledDownTimes.Should().NotBeNull();
@@ -177,7 +187,7 @@ public class DeviceTests : TestWithOutput
 	{
 		const int MaxCount = 50;
 		var devicesPage = await LogicMonitorClient
-			.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = MaxCount })
+			.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = MaxCount }, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		devicesPage.Should().NotBeNull();
@@ -204,15 +214,20 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceByDeviceId()
 	{
-		var device = await LogicMonitorClient.GetAsync<Device>(77).ConfigureAwait(false);
+		var device = await LogicMonitorClient
+			.GetAsync<Device>(77, CancellationToken.None)
+			.ConfigureAwait(false);
 		device.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetDeviceByDisplayNameAsync()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var device2 = await LogicMonitorClient.GetDeviceByDisplayNameAsync(device.DisplayName).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync()
+			.ConfigureAwait(false);
+		var device2 = await LogicMonitorClient
+			.GetDeviceByDisplayNameAsync(device.DisplayName, CancellationToken.None)
+			.ConfigureAwait(false);
 		device2.Should().NotBeNull();
 	}
 
@@ -220,7 +235,9 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDeviceByHostName()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var devices = await LogicMonitorClient.GetDevicesByHostNameAsync(device.Name, 100).ConfigureAwait(false);
+		var devices = await LogicMonitorClient
+			.GetDevicesByHostNameAsync(device.Name, 100, CancellationToken.None)
+			.ConfigureAwait(false);
 		devices.Should().ContainSingle();
 	}
 
@@ -228,7 +245,9 @@ public class DeviceTests : TestWithOutput
 	public async Task DateTimeSetCorrectly()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var refresh = await LogicMonitorClient.GetAsync<Device>(device.Id).ConfigureAwait(false);
+		var refresh = await LogicMonitorClient
+			.GetAsync<Device>(device.Id, CancellationToken.None)
+			.ConfigureAwait(false);
 		refresh.CreatedOnSeconds.Should().BePositive();
 		refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
 	}
@@ -247,7 +266,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDevicePropertiesContainsExpected()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		deviceProperties.Should().Contain(dp => dp.Name == "location");
 		deviceProperties.Should().Contain(dp => dp.Type == PropertyType.Auto);
 	}
@@ -256,11 +275,16 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDevicesAndInstancesAssociatedWithDataSourceById()
 	{
 		// Get the dataSourceId
-		var dataSourceId = (await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false))?.Id;
+		var dataSourceId = (await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None).ConfigureAwait(false))?.Id;
 		dataSourceId.Should().NotBeNull();
 
 		// Get the information
-		var info = await LogicMonitorClient.GetDevicesAndInstancesAssociatedWithDataSourceByIdPageAsync((int)dataSourceId, new Filter<DeviceWithDataSourceInstanceInformation> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var info = await LogicMonitorClient
+			.GetDevicesAndInstancesAssociatedWithDataSourceByIdPageAsync(
+				(int)dataSourceId,
+				new Filter<DeviceWithDataSourceInstanceInformation> { Skip = 0, Take = 300 },
+				CancellationToken.None)
+			.ConfigureAwait(false);
 
 		// Check
 		info.Should().NotBeNull();
@@ -270,11 +294,11 @@ public class DeviceTests : TestWithOutput
 	public void GetDevicesByDeviceGroupFullPath_InvalidDeviceGroup_ThrowsException()
 	{
 		LogicMonitorClient
-			.Invoking(async x => await x.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", true).ConfigureAwait(false))
+			.Invoking(async x => await x.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", true, CancellationToken.None).ConfigureAwait(false))
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>();
 		LogicMonitorClient
-			.Invoking(async x => await x.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", false).ConfigureAwait(false))
+			.Invoking(async x => await x.GetDevicesByDeviceGroupFullPathAsync("XXXXXX/YYYYYY", false, CancellationToken.None).ConfigureAwait(false))
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>();
 	}
@@ -283,9 +307,9 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDevicesByDeviceGroupFullPathv78()
 	{
 		// Recurse
-		var allDatacenterDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true).ConfigureAwait(false);
+		var allDatacenterDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken.None).ConfigureAwait(false);
 		// Don't recurse
-		var topFolderDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, false).ConfigureAwait(false);
+		var topFolderDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, false, CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure there are more when recursing
 		allDatacenterDevices.Should().HaveCountGreaterThan(topFolderDevices.Count);
@@ -295,7 +319,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDevicesRecurse()
 	{
-		var allStaffDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true).ConfigureAwait(false);
+		var allStaffDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken.None).ConfigureAwait(false);
 		allStaffDevices.Should().NotBeNullOrEmpty();
 	}
 
@@ -303,7 +327,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetFewerDevices()
 	{
 		const int numberToFetch = 10;
-		var devices = await LogicMonitorClient.GetPageAsync(new Filter<Device> { Skip = 0, Take = numberToFetch }).ConfigureAwait(false);
+		var devices = await LogicMonitorClient.GetPageAsync(new Filter<Device> { Skip = 0, Take = numberToFetch }, CancellationToken.None).ConfigureAwait(false);
 		devices.Items.Count.Should().Be(numberToFetch);
 		devices.TotalCount.Should().NotBe(numberToFetch);
 		devices.TotalCount.Should().NotBe(0);
@@ -312,15 +336,15 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetFullDeviceTree()
 	{
-		var deviceGroup = await LogicMonitorClient.GetFullDeviceTreeAsync().ConfigureAwait(false);
+		var deviceGroup = await LogicMonitorClient.GetFullDeviceTreeAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		deviceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetFullDeviceTreeForDatacenter()
 	{
-		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath).ConfigureAwait(false);
-		deviceGroup = await LogicMonitorClient.GetFullDeviceTreeAsync(deviceGroup.Id).ConfigureAwait(false);
+		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken.None).ConfigureAwait(false);
+		deviceGroup = await LogicMonitorClient.GetFullDeviceTreeAsync(deviceGroup.Id, CancellationToken.None).ConfigureAwait(false);
 		deviceGroup.Should().NotBeNull();
 	}
 
@@ -328,7 +352,7 @@ public class DeviceTests : TestWithOutput
 	public async Task TreeNodeFreeSearch()
 	{
 		// Get the result without specifying a type
-		var treeNodeFreeSearch = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100).ConfigureAwait(false);
+		var treeNodeFreeSearch = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		var totalItemCount = treeNodeFreeSearch.Count;
 
 		// Subtract the count of a search for each individual type
@@ -339,7 +363,7 @@ public class DeviceTests : TestWithOutput
 		var list = new List<TreeNodeFreeSearchResult>();
 		foreach (var treeNodeFreeSearchResultType in treeNodeFreeSearchResultTypes)
 		{
-			var treeNodeFreeSearchResult = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType).ConfigureAwait(false);
+			var treeNodeFreeSearchResult = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType, CancellationToken.None).ConfigureAwait(false);
 			list.AddRange(treeNodeFreeSearchResult);
 		}
 		// Make sure that some are returned
@@ -368,7 +392,7 @@ public class DeviceTests : TestWithOutput
 		});
 
 		// Update the device
-		await portalClient.PutAsync(device).ConfigureAwait(false);
+		await portalClient.PutAsync(device, CancellationToken.None).ConfigureAwait(false);
 
 		// Re-fetch the device
 		device = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -383,7 +407,7 @@ public class DeviceTests : TestWithOutput
 		device.CustomProperties = device.CustomProperties.Where(p => p.Name != testPropertyName).ToList();
 
 		// Update the device
-		await portalClient.PutAsync(device).ConfigureAwait(false);
+		await portalClient.PutAsync(device, CancellationToken.None).ConfigureAwait(false);
 
 		// Re-fetch the properties
 		device = await GetWindowsDeviceAsync().ConfigureAwait(false);
@@ -401,48 +425,56 @@ public class DeviceTests : TestWithOutput
 		const string value2 = "test2";
 
 		// Set it to an expected value
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1).ConfigureAwait(false);
-		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Set it to a different value
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Set it to null (delete it)
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 
 		// This should fail as there is nothing to delete
-		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
+		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient
+				.SetDeviceCustomPropertyAsync(
+					device.Id,
+					propertyName,
+					null,
+					SetPropertyMode.Delete,
+					CancellationToken.None)
+				.ConfigureAwait(false))
+			.ConfigureAwait(false);
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
-		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
+		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Update, CancellationToken.None).ConfigureAwait(false)).ConfigureAwait(false);
 		updateException.Should().BeOfType<InvalidOperationException>();
 
-		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
+		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Create, CancellationToken.None).ConfigureAwait(false)).ConfigureAwait(false);
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, SetPropertyMode.Create, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Update one without checking
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, SetPropertyMode.Update, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Delete one without checking
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Delete, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 	}
@@ -451,7 +483,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDeviceCustomProperties()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id).ConfigureAwait(false);
+		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		deviceProperties.Should().NotBeNullOrEmpty();
 	}
 
@@ -486,7 +518,7 @@ public class DeviceTests : TestWithOutput
 			{
 				new Eq<Device>(nameof(Device.DeviceStatus), "dead")
 			}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -500,7 +532,7 @@ public class DeviceTests : TestWithOutput
 			{
 				new Ne<Device>(nameof(Device.AlertDisableStatus), "none-none-none")
 			}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -508,7 +540,10 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertDisableDevices_RawFilter()
 	{
-		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Device> { QueryString = "filter=alertDisableStatus!:\"none-none-none\"" }).ConfigureAwait(false);
+		var deviceList = await LogicMonitorClient.GetAllAsync(
+			new Filter<Device> { QueryString = "filter=alertDisableStatus!:\"none-none-none\"" },
+			CancellationToken.None)
+			.ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -521,11 +556,11 @@ public class DeviceTests : TestWithOutput
 			.GetAllAsync(new Filter<DeviceGroup>
 			{
 				Order = new Order<DeviceGroup> { Property = nameof(DeviceGroup.Id), Direction = OrderDirection.Asc }
-			})
+			}, CancellationToken.None)
 			.ConfigureAwait(false);
 		var deviceGroup = deviceGroups.Find(dg => dg.SubGroups.Count != 0);
 		deviceGroup.Should().NotBeNull();
-		var deviceList = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(deviceGroup.FullPath, true).ConfigureAwait(false);
+		var deviceList = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(deviceGroup.FullPath, true, CancellationToken.None).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -534,7 +569,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDeviceAlertsPageAsync()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id).ConfigureAwait(false);
+		var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		alertsPage.Should().NotBeNull();
 		alertsPage.Items.Count.Should().Be(alertsPage.TotalCount);
 	}
@@ -569,13 +604,13 @@ public class DeviceTests : TestWithOutput
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		var oldDescription = device.Description;
 		var newDescription = Guid.NewGuid().ToString();
-		await LogicMonitorClient.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }).ConfigureAwait(false);
+		await LogicMonitorClient.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }, CancellationToken.None).ConfigureAwait(false);
 		var updatedDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
 		updatedDevice.Description.Should().Be(newDescription);
-		await LogicMonitorClient.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }).ConfigureAwait(false);
+		await LogicMonitorClient.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }, CancellationToken.None).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public async Task ScheduleActiveDiscovery()
-		=> await LogicMonitorClient.ScheduleActiveDiscovery(WindowsDeviceId).ConfigureAwait(false);
+		=> await LogicMonitorClient.ScheduleActiveDiscovery(WindowsDeviceId, CancellationToken.None).ConfigureAwait(false);
 }

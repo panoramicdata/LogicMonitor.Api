@@ -9,7 +9,9 @@ public class FunctionTests : TestWithOutput
 	[Fact]
 	public async Task GetApplications()
 	{
-		var things = await LogicMonitorClient.GetAppliesToAsync("isCisco()").ConfigureAwait(false);
+		var things = await LogicMonitorClient
+			.GetAppliesToAsync("isCisco()", CancellationToken.None)
+			.ConfigureAwait(false);
 		things.Should().NotBeNull();
 		things.Should().NotBeNullOrEmpty();
 	}

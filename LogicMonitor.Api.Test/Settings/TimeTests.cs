@@ -9,7 +9,9 @@ public class TimeTests : TestWithOutput
 	[Fact]
 	public async Task GetTimeZoneSetting()
 	{
-		var timeZoneSetting = await LogicMonitorClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
+		var timeZoneSetting = await LogicMonitorClient
+			.GetTimeZoneSettingAsync(CancellationToken.None)
+			.ConfigureAwait(false);
 
 		// Text should be set
 		string.IsNullOrWhiteSpace(timeZoneSetting.TimeZone).Should().BeFalse();

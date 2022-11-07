@@ -12,7 +12,7 @@ public class TopologyGroupTests : TestWithOutput
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<TopologyGroup>()
+			.GetAllAsync<TopologyGroup>(CancellationToken.None)
 			.ConfigureAwait(false);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
@@ -28,11 +28,11 @@ public class TopologyGroupTests : TestWithOutput
 				{
 					new Eq<TopologyGroup>(nameof(TopologyGroup.Name), TestName)
 				}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingItem)
+				.DeleteAsync(existingItem, cancellationToken: CancellationToken.None)
 				.ConfigureAwait(false);
 		}
 
@@ -43,13 +43,14 @@ public class TopologyGroupTests : TestWithOutput
 				{
 					Name = TestName,
 					Description = "Test Description"
-				}
+				},
+				CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(newItem)
+			.DeleteAsync(newItem, cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 	}
 }

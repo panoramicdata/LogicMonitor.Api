@@ -30,12 +30,16 @@ public class FlowTests : TestWithOutput
 	public async Task GetApplications()
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
-		var flowApplications = await LogicMonitorClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
-		{
-			TimePeriod = TimePeriod.OneDay,
-			DeviceId = device.Id
-		}
-		).ConfigureAwait(false);
+		var flowApplications = await LogicMonitorClient
+			.GetFlowApplicationsPageAsync(
+				new FlowApplicationsRequest
+				{
+					TimePeriod = TimePeriod.OneDay,
+					DeviceId = device.Id
+				},
+				CancellationToken.None
+			)
+			.ConfigureAwait(false);
 
 		// Make sure that some are returned
 		flowApplications.Items.Should().NotBeNullOrEmpty();
@@ -49,20 +53,23 @@ public class FlowTests : TestWithOutput
 	{
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 
-		var flowApplications = await LogicMonitorClient.GetDeviceGroupFlowApplicationsPageAsync(new DeviceGroupFlowApplicationsRequest
-		{
-			TimePeriod = TimePeriod.Zoom,
-			DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
-			SortDirection = SortDirection.Ascending,
-			SortFlowField = FlowField.Usage,
-			Take = 100,
-			Skip = 0,
-			FlowDirection = FlowDirection.All,
-			QosType = "all",
-			StartDateTime = DateTime.UtcNow.AddDays(-2),
-			EndDateTime = DateTime.UtcNow.AddDays(-1),
-		})
-		.ConfigureAwait(false);
+		var flowApplications = await LogicMonitorClient
+			.GetDeviceGroupFlowApplicationsPageAsync(
+				new DeviceGroupFlowApplicationsRequest
+				{
+					TimePeriod = TimePeriod.Zoom,
+					DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
+					SortDirection = SortDirection.Ascending,
+					SortFlowField = FlowField.Usage,
+					Take = 100,
+					Skip = 0,
+					FlowDirection = FlowDirection.All,
+					QosType = "all",
+					StartDateTime = DateTime.UtcNow.AddDays(-2),
+					EndDateTime = DateTime.UtcNow.AddDays(-1),
+				},
+				CancellationToken.None)
+			.ConfigureAwait(false);
 
 		// Make sure that some are returned
 		flowApplications.Items.Should().NotBeNullOrEmpty();
@@ -84,7 +91,7 @@ public class FlowTests : TestWithOutput
 			FlowDirection = FlowDirection.All,
 			StartDateTime = DateTime.UtcNow.AddDays(-2),
 			EndDateTime = DateTime.UtcNow.AddDays(-1)
-		})
+		}, CancellationToken.None)
 		.ConfigureAwait(false);
 
 		// Make sure that some are returned
@@ -107,7 +114,7 @@ public class FlowTests : TestWithOutput
 			FlowDirection = FlowDirection.All,
 			StartDateTime = DateTime.UtcNow.AddDays(-2),
 			EndDateTime = DateTime.UtcNow.AddDays(-1)
-		})
+		}, CancellationToken.None)
 		.ConfigureAwait(false);
 
 		// Make sure that some are returned
@@ -122,7 +129,7 @@ public class FlowTests : TestWithOutput
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
-		}
+		}, CancellationToken.None
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
@@ -140,7 +147,7 @@ public class FlowTests : TestWithOutput
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
-		}
+		}, CancellationToken.None
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
@@ -158,7 +165,7 @@ public class FlowTests : TestWithOutput
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
-		}
+		}, CancellationToken.None
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned
@@ -178,7 +185,7 @@ public class FlowTests : TestWithOutput
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = _startDateTimeSeconds,
 			EndDateTime = _endDateTimeSeconds
-		}
+		}, CancellationToken.None
 		).ConfigureAwait(false);
 
 		// Make sure that some are returned

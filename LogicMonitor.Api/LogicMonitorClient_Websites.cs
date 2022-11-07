@@ -68,7 +68,7 @@ public partial class LogicMonitorClient
 		string name,
 		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	=>
 		SetWebsiteOrWebsiteGroupPropertyAsync<Website>(websiteId, name, value, mode, cancellationToken);
 
@@ -176,7 +176,7 @@ public partial class LogicMonitorClient
 		string name,
 		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	=>
 		SetWebsiteOrWebsiteGroupPropertyAsync<WebsiteGroup>(websiteGroupId, name, value, mode, cancellationToken);
 
@@ -187,7 +187,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	public async Task<List<Website>> GetWebsitesByWebsiteGroupIdAsync(
 		int websiteGroupId = 1,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 		=> (await GetBySubUrlAsync<Page<Website>>($"website/groups/{websiteGroupId}/websites", cancellationToken).ConfigureAwait(false)).Items;
 
 	/// <summary>
@@ -284,13 +284,13 @@ public partial class LogicMonitorClient
 				var newAlertFilter = filter.Clone();
 				newAlertFilter.ResetSearch();
 				newAlertFilter.StartEpochIsAfter = t.Item1.SecondsSinceTheEpoch() - 1; // Take one off to include anything raised on that exact second
-					newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
+				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
 				return newAlertFilter;
 			});
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
 			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetWebsiteAlertsByIdNormalAsync(websiteId, individualAlertFilter, true).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetWebsiteAlertsByIdNormalAsync(websiteId, individualAlertFilter, true, CancellationToken.None).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
 			}
@@ -314,7 +314,7 @@ public partial class LogicMonitorClient
 		int websiteId,
 		AlertFilter filter,
 		bool calledFromChunked = false,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken = default)
 	{
 		// Ensure that the filter CANNOT override the website ID set!
 		filter.RemoveMonitorObjectReferences();

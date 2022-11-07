@@ -46,7 +46,9 @@ public class CacheTests : TestWithOutput
 		LogicMonitorClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
 
 		// Make a call to force authentication
-		var _ = await LogicMonitorClient.GetTimeZoneSettingAsync().ConfigureAwait(false);
+		var _ = await LogicMonitorClient
+			.GetTimeZoneSettingAsync(CancellationToken.None)
+			.ConfigureAwait(false);
 
 		// Fetch a result
 		var stopwatch = Stopwatch.StartNew();

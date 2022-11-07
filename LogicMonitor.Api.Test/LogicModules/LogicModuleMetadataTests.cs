@@ -9,10 +9,14 @@ public class LogicModuleMetadataTests : TestWithOutput
 	[Fact]
 	public async Task GetDataSourceMetadata()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-").ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None)
+			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		dataSource.Id.Should().NotBe(0);
-		var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id).ConfigureAwait(false);
+		var logicModuleMetadata = await LogicMonitorClient
+			.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id, CancellationToken.None)
+			.ConfigureAwait(false);
 		CheckMetadata(logicModuleMetadata);
 	}
 

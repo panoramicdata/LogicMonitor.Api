@@ -14,10 +14,10 @@ public partial class LogicMonitorClient
 		ForecastDataRequest forecastDataRequest,
 		CancellationToken cancellationToken) => new ForecastGraphData
 		{
-				// graphs/trainingdata?_scope=internal&graphId=3040&dataSourceInstanceId=9053&type=host&selectedDataPointLabel=SIZEGB&maxSamples=249&time=1month&startTime=&endTime=&_=1481203870059
-				TrainingGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.TrainingSubUrl, cancellationToken).ConfigureAwait(false),
-				// device/devicedatasourceinstances/9065/graphs/3043/data/forecasting?_scope=internal&selectedDataPointLabel=CPU&maxSamples=286&end=1487982545&start=1485390545&time=1month&forecastTime=7days&_=1487979440482
-				ForecastedGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.ForecastedSubUrl, cancellationToken).ConfigureAwait(false)
+			// graphs/trainingdata?_scope=internal&graphId=3040&dataSourceInstanceId=9053&type=host&selectedDataPointLabel=SIZEGB&maxSamples=249&time=1month&startTime=&endTime=&_=1481203870059
+			TrainingGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.TrainingSubUrl, cancellationToken).ConfigureAwait(false),
+			// device/devicedatasourceinstances/9065/graphs/3043/data/forecasting?_scope=internal&selectedDataPointLabel=CPU&maxSamples=286&end=1487982545&start=1485390545&time=1month&forecastTime=7days&_=1487979440482
+			ForecastedGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.ForecastedSubUrl, cancellationToken).ConfigureAwait(false)
 		};
 
 	/// <summary>
@@ -86,7 +86,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceInstanceId,
 		DateTime? startDateTimeUtc = default,
 		DateTime? endDateTimeUtc = default,
-		CancellationToken cancellationToken
+		CancellationToken cancellationToken = default
 		)
 	{
 		var timeConstraint = startDateTimeUtc.HasValue && endDateTimeUtc.HasValue ? $"?start={startDateTimeUtc.Value.SecondsSinceTheEpoch()}&end={endDateTimeUtc.Value.SecondsSinceTheEpoch()}" : null;

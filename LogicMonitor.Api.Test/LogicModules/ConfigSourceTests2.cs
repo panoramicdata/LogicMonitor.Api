@@ -11,7 +11,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetAllConfigSources()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		configSources.Should().NotBeNullOrEmpty();
@@ -23,25 +23,25 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetConfigSourceById()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>().ConfigureAwait(false);
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(CancellationToken.None).ConfigureAwait(false);
 		configSources.Should().NotBeNullOrEmpty();
-		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id).ConfigureAwait(false);
+		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id, CancellationToken.None).ConfigureAwait(false);
 		configSource.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetConfigSourceAndAssociatedDevices()
 	{
-		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
+		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS", CancellationToken.None).ConfigureAwait(false);
 		configSource.Should().NotBeNull();
 
 		// Refetch and check
-		var refetch = await LogicMonitorClient.GetAsync<ConfigSource>(configSource.Id).ConfigureAwait(false);
+		var refetch = await LogicMonitorClient.GetAsync<ConfigSource>(configSource.Id, CancellationToken.None).ConfigureAwait(false);
 		refetch.Name.Should().Be("Cisco_IOS");
 		refetch.DisplayName.Should().Be(configSource.DisplayName);
 
 		// Get associated devices
-		var devices = await LogicMonitorClient.GetConfigSourceDevicesPageAsync(configSource.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var devices = await LogicMonitorClient.GetConfigSourceDevicesPageAsync(configSource.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 		devices.Items.Should().NotBeNullOrEmpty();
 	}
 
@@ -55,27 +55,36 @@ public class ConfigSourceTests2 : TestWithOutput
 		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
 		device.Should().NotBeNull();
 
-		var deviceConfigSources = (await portalClient.GetDeviceConfigSourcesPageAsync(device.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = maxIterations }).ConfigureAwait(false)).Items;
+		var deviceConfigSources = (await portalClient.GetDeviceConfigSourcesPageAsync(device.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = maxIterations }, CancellationToken.None).ConfigureAwait(false)).Items;
 		deviceConfigSources.Should().NotBeNullOrEmpty();
 
 		foreach (var deviceConfigSource in deviceConfigSources)
 		{
 			// Get the deviceConfigSource
-			var deviceConfigSourceDetails = await portalClient.GetDeviceConfigSourceAsync(device.Id, deviceConfigSource.Id).ConfigureAwait(false);
+			var deviceConfigSourceDetails = await portalClient.GetDeviceConfigSourceAsync(device.Id, deviceConfigSource.Id, CancellationToken.None).ConfigureAwait(false);
 			deviceConfigSourceDetails.Should().NotBeNull();
 
 			// Get the configSourceInstances
-			var deviceConfigSourceInstances = await portalClient.GetDeviceConfigSourceInstancesPage(device.Id, deviceConfigSource.Id, new Filter<DeviceConfigSourceInstance> { Skip = 0, Take = maxIterations }).ConfigureAwait(false);
+			var deviceConfigSourceInstances = await portalClient
+				.GetDeviceConfigSourceInstancesPage(device.Id, deviceConfigSource.Id, new Filter<DeviceConfigSourceInstance> { Skip = 0, Take = maxIterations }, CancellationToken.None)
+				.ConfigureAwait(false);
 			deviceConfigSourceInstances.Should().NotBeNull();
 			var configSourceInstances = deviceConfigSourceInstances.Items;
 			foreach (var deviceConfigSourceInstance in configSourceInstances)
 			{
 				// Get the configSourceInstance
-				var deviceConfigSourceInstanceDetails = await portalClient.GetDeviceConfigSourceInstanceAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id).ConfigureAwait(false);
+				var deviceConfigSourceInstanceDetails = await portalClient.GetDeviceConfigSourceInstanceAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, CancellationToken.None).ConfigureAwait(false);
 				deviceConfigSourceInstanceDetails.Should().NotBeNull();
 
 				// Get the latest config for this deviceConfigSourceInstance
-				var deviceConfigs = await portalClient.GetDeviceConfigSourceInstanceConfigsPageAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, new Filter<DeviceConfigSourceInstanceConfig> { Skip = 0, Take = maxIterations }).ConfigureAwait(false);
+				var deviceConfigs = await portalClient
+					.GetDeviceConfigSourceInstanceConfigsPageAsync(
+						device.Id,
+						deviceConfigSource.Id,
+						deviceConfigSourceInstance.Id,
+						new Filter<DeviceConfigSourceInstanceConfig> { Skip = 0, Take = maxIterations },
+						CancellationToken.None)
+					.ConfigureAwait(false);
 				deviceConfigs.Should().NotBeNull();
 				var deviceConfigItems = deviceConfigs.Items;
 				// deviceConfigItems.Should().NotBeNullOrEmpty();
@@ -86,7 +95,15 @@ public class ConfigSourceTests2 : TestWithOutput
 						throw new Exception("Unexpected lack of timestamp");
 					}
 
-					var deviceConfigDetail = await portalClient.GetDeviceConfigSourceInstanceConfigByIdAndTimestampAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, deviceConfig.Id, deviceConfig.PollTimestampUtc.Value).ConfigureAwait(false);
+					var deviceConfigDetail = await portalClient
+						.GetDeviceConfigSourceInstanceConfigByIdAndTimestampAsync(
+							device.Id,
+							deviceConfigSource.Id,
+							deviceConfigSourceInstance.Id,
+							deviceConfig.Id,
+							deviceConfig.PollTimestampUtc.Value,
+							CancellationToken.None)
+						.ConfigureAwait(false);
 					deviceConfigDetail.Should().NotBeNull();
 				}
 			}

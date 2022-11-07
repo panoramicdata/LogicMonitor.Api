@@ -9,7 +9,9 @@ public class EscalationChainTests : TestWithOutput
 	[Fact]
 	public async Task GetAll()
 	{
-		var escalationChains = await LogicMonitorClient.GetAllAsync<EscalationChain>().ConfigureAwait(false);
+		var escalationChains = await LogicMonitorClient
+			.GetAllAsync<EscalationChain>(CancellationToken.None)
+			.ConfigureAwait(false);
 		escalationChains.Should().NotBeNullOrEmpty();
 	}
 }

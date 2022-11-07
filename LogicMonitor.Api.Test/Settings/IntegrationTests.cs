@@ -9,7 +9,7 @@ public class IntegrationTests : TestWithOutput
 	[Fact]
 	public async Task GetIntegrations()
 	{
-		var integrations = await LogicMonitorClient.GetAllAsync<Integration>().ConfigureAwait(false);
+		var integrations = await LogicMonitorClient.GetAllAsync<Integration>(CancellationToken.None).ConfigureAwait(false);
 
 		// Text should be set
 		integrations.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());

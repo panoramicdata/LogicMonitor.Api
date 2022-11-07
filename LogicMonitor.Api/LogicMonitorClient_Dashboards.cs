@@ -50,7 +50,7 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(int parentDashboardGroupId, Filter<DashboardGroup> filter = null, CancellationToken cancellationToken)
+	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(int parentDashboardGroupId, Filter<DashboardGroup>? filter = null, CancellationToken cancellationToken = default)
 		=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/groups", cancellationToken);
 
 	/// <summary>
@@ -59,7 +59,7 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard> filter = null, CancellationToken cancellationToken)
+	public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard>? filter = null, CancellationToken cancellationToken = default)
 		=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/dashboards", cancellationToken);
 
 	/// <summary>

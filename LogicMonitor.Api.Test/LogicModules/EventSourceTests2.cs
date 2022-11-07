@@ -11,15 +11,15 @@ public class EventSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetXml()
 	{
-		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("DNS A Record Check").ConfigureAwait(false);
-		var xml = await LogicMonitorClient.GetEventSourceXmlAsync(eventSource.Id).ConfigureAwait(false);
+		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("DNS A Record Check", CancellationToken.None).ConfigureAwait(false);
+		var xml = await LogicMonitorClient.GetEventSourceXmlAsync(eventSource.Id, CancellationToken.None).ConfigureAwait(false);
 		xml.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetAllEventSources()
 	{
-		var eventSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<EventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var eventSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<EventSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		eventSourcePage.Items.Should().NotBeNullOrEmpty();
@@ -44,7 +44,7 @@ public class EventSourceTests2 : TestWithOutput
 	public async Task GetEventSourceByName()
 	{
 		var stopwatch = Stopwatch.StartNew();
-		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
+		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("Windows System Event Log", CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		eventSource.Should().NotBeNull();
@@ -57,7 +57,7 @@ public class EventSourceTests2 : TestWithOutput
 	public async Task GetDeviceEventSources()
 	{
 		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceEventSources = await LogicMonitorClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }).ConfigureAwait(false);
+		var deviceEventSources = await LogicMonitorClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that we have groups and they are not null
 		deviceEventSources.Should().NotBeNull();
@@ -65,7 +65,7 @@ public class EventSourceTests2 : TestWithOutput
 		foreach (var deviceEventSource in deviceEventSources.Items)
 		{
 			// Refetch
-			var deviceDataSourceRefetch = await LogicMonitorClient.GetDeviceEventSourceAsync(device.Id, deviceEventSource.Id).ConfigureAwait(false);
+			var deviceDataSourceRefetch = await LogicMonitorClient.GetDeviceEventSourceAsync(device.Id, deviceEventSource.Id, CancellationToken.None).ConfigureAwait(false);
 
 			// Make sure they are the same
 			deviceDataSourceRefetch.DeviceId.Should().Be(device.Id);
@@ -82,7 +82,7 @@ public class EventSourceTests2 : TestWithOutput
 				{
 					new Eq<EventSource>(nameof(EventSource.Group), groupName)
 				}
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		eventSources.Should().NotBeNull();

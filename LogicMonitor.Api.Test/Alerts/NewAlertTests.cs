@@ -42,9 +42,9 @@ public class NewAlertTests : TestWithOutput
 		};
 
 		// Act
-		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter).ConfigureAwait(false);
-		var sdtAlerts = await LogicMonitorClient.GetAllAsync(sdtFilter).ConfigureAwait(false);
-		var nonSdtAlerts = await LogicMonitorClient.GetAllAsync(nonSdtFilter).ConfigureAwait(false);
+		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter, CancellationToken.None).ConfigureAwait(false);
+		var sdtAlerts = await LogicMonitorClient.GetAllAsync(sdtFilter, CancellationToken.None).ConfigureAwait(false);
+		var nonSdtAlerts = await LogicMonitorClient.GetAllAsync(nonSdtFilter, CancellationToken.None).ConfigureAwait(false);
 
 		// Assert
 
@@ -68,7 +68,7 @@ public class NewAlertTests : TestWithOutput
 				}
 		};
 
-		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter).ConfigureAwait(false);
+		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter, CancellationToken.None).ConfigureAwait(false);
 
 		var unique = true;
 		foreach (var alert in allAlerts)
@@ -99,10 +99,10 @@ public class NewAlertTests : TestWithOutput
 			};
 
 			// Refetch each alert
-			foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter).ConfigureAwait(false))
+			foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter, CancellationToken.None).ConfigureAwait(false))
 			{
 				var a = await LogicMonitorClient
-					.GetAlertAsync(alert.Id)
+					.GetAlertAsync(alert.Id, CancellationToken.None)
 					.ConfigureAwait(false);
 				a.DetailMessage.Should().NotBeNull();
 			}
@@ -124,7 +124,7 @@ public class NewAlertTests : TestWithOutput
 		};
 
 		// Act
-		var alerts = await LogicMonitorClient.GetAllAsync(filter).ConfigureAwait(false);
+		var alerts = await LogicMonitorClient.GetAllAsync(filter, CancellationToken.None).ConfigureAwait(false);
 		alerts.Should().AllSatisfy(alert => severities.Contains(alert.Severity).Should().BeTrue());
 	}
 

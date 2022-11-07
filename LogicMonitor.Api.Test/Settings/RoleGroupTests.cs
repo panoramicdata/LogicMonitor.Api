@@ -11,13 +11,13 @@ public class RoleGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetRoleGroups()
 	{
-		var roleGroups = await LogicMonitorClient.GetAllAsync<RoleGroup>().ConfigureAwait(false);
+		var roleGroups = await LogicMonitorClient.GetAllAsync<RoleGroup>(CancellationToken.None).ConfigureAwait(false);
 		roleGroups.Should().NotBeNull();
 		roleGroups.Should().NotBeNullOrEmpty();
 
 		foreach (var role in roleGroups)
 		{
-			var refetchedRole = await LogicMonitorClient.GetAsync<RoleGroup>(role.Id).ConfigureAwait(false);
+			var refetchedRole = await LogicMonitorClient.GetAsync<RoleGroup>(role.Id, CancellationToken.None).ConfigureAwait(false);
 			refetchedRole.Name.Should().Be(role.Name);
 		}
 	}
@@ -27,25 +27,25 @@ public class RoleGroupTests : TestWithOutput
 	{
 		// Ensure there is no existing RoleGroup called "Test"
 		var existingRoleGroup = (await LogicMonitorClient
-				.GetAllAsync(new Filter<RoleGroup> { FilterItems = new List<FilterItem<RoleGroup>> { new Eq<RoleGroup>(nameof(RoleGroup.Name), Value) } })
+				.GetAllAsync(new Filter<RoleGroup> { FilterItems = new List<FilterItem<RoleGroup>> { new Eq<RoleGroup>(nameof(RoleGroup.Name), Value) } }, CancellationToken.None)
 				.ConfigureAwait(false))
 			.SingleOrDefault();
 		if (existingRoleGroup is not null)
 		{
-			await LogicMonitorClient.DeleteAsync(existingRoleGroup).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(existingRoleGroup, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		}
 
 		var roleGroup = await LogicMonitorClient.CreateAsync(new RoleGroupCreationDto
 		{
 			Name = Value,
 			Description = "Desc",
-		}).ConfigureAwait(false);
+		}, CancellationToken.None).ConfigureAwait(false);
 
 		// Refetch
-		var refetch = await LogicMonitorClient.GetAsync<RoleGroup>(roleGroup.Id).ConfigureAwait(false);
+		var refetch = await LogicMonitorClient.GetAsync<RoleGroup>(roleGroup.Id, CancellationToken.None).ConfigureAwait(false);
 		refetch.Should().NotBeNull();
 
 		// Delete
-		await LogicMonitorClient.DeleteAsync(roleGroup).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(roleGroup, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 	}
 }
