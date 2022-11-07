@@ -12,7 +12,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertFilter">An alert filter</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>a list of alerts that meet the filter</returns>
-	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter = null, CancellationToken cancellationToken = default)
+	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter = null, CancellationToken cancellationToken)
 	{
 		// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
 		//var alerts =
@@ -91,7 +91,7 @@ public partial class LogicMonitorClient
 		return allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue).ToList();
 	}
 
-	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(AlertFilter alertFilter, bool calledFromChunked = false, CancellationToken cancellationToken = default)
+	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(AlertFilter alertFilter, bool calledFromChunked = false, CancellationToken cancellationToken)
 	{
 		var correctedAlertFilter = alertFilter?.Clone() ?? new AlertFilter
 		{
@@ -176,7 +176,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">Alert id</param>
 	/// <param name="cancellationToken"></param>
-	public Task<Alert> GetAlertAsync(string id, CancellationToken cancellationToken = default)
+	public Task<Alert> GetAlertAsync(string id, CancellationToken cancellationToken)
 		 => GetAsync<Alert>(true, $"alert/alerts/{id}?needMessage=true", cancellationToken);
 
 	/// <summary>
@@ -185,7 +185,7 @@ public partial class LogicMonitorClient
 	/// <param name="request">The parameters for the history request</param>
 	/// <param name="cancellationToken">The token used to manage cancellation</param>
 	/// <remarks>The number and duration of entries in the histogram varies by the duration of the reporting period</remarks>
-	public Task<AlertHistory> GetAlertHistoryAsync(AlertHistoryRequest request, CancellationToken cancellationToken = default)
+	public Task<AlertHistory> GetAlertHistoryAsync(AlertHistoryRequest request, CancellationToken cancellationToken)
 	{
 		request.Validate();
 		return GetBySubUrlAsync<AlertHistory>(request.SubUrl, cancellationToken);
@@ -196,7 +196,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <returns>The message template set</returns>
-	public async Task<MessageTemplateSet> GetMessageTemplatesAsync(CancellationToken cancellationToken = default) => new MessageTemplateSet
+	public async Task<MessageTemplateSet> GetMessageTemplatesAsync(CancellationToken cancellationToken) => new MessageTemplateSet
 	{
 		AlertThrottledAlertMessageTemplate = await GetAsync<AlertMessageTemplate>(false, "setting/alert/alertTemplates/alertThrottledAlert", cancellationToken).ConfigureAwait(false),
 		AlertThrottledClearMessageTemplate = await GetAsync<AlertMessageTemplate>(false, "setting/alert/alertTemplates/alertThrottledAlert_clear", cancellationToken).ConfigureAwait(false),
@@ -228,7 +228,7 @@ public partial class LogicMonitorClient
 	public async Task AcknowledgeAlertAsync(
 		string alertId,
 		string acknowledgementComment,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> await PostAsync<AlertAcknowledgement, EmptyResponse>(
 			new AlertAcknowledgement { AcknowledgementComment = acknowledgementComment },
 			$"alert/alerts/{alertId}/ack",
@@ -244,7 +244,7 @@ public partial class LogicMonitorClient
 	public async Task SetAlertNoteAsync(
 		IList<string> alertIds,
 		string note,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> await PostAsync<AlertNote, EmptyResponse>(
 			new AlertNote(alertIds, note),
 			$"alert/alerts/note",

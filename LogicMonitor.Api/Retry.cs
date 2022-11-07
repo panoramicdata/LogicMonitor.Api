@@ -14,7 +14,7 @@ internal static class Retry
 		Func<Task<T>> action,
 		int maxTryCount,
 		TimeSpan retryInterval,
-		CancellationToken cancellationToken = default
+		CancellationToken cancellationToken
 		)
 	{
 		if (retryInterval < TimeSpan.Zero)

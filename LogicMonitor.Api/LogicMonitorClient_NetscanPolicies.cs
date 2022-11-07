@@ -7,6 +7,6 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="netscanPolicyId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<NetscanExecutionResponse>> GetNetscanPolicyExecutionsAsync(int netscanPolicyId, CancellationToken cancellationToken = default)
+	public Task<Page<NetscanExecutionResponse>> GetNetscanPolicyExecutionsAsync(int netscanPolicyId, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<NetscanExecutionResponse>>($"setting/netscans/policies/{netscanPolicyId}/executions/done", cancellationToken);
 }

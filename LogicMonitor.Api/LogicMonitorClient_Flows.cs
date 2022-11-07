@@ -7,7 +7,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Flow>> GetFlows(FlowRequest flowRequest, CancellationToken cancellationToken = default)
+	public Task<Page<Flow>> GetFlows(FlowRequest flowRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -15,7 +15,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowPortsRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowPort>> GetFlowPortsPageAsync(FlowPortsRequest flowPortsRequest, CancellationToken cancellationToken = default)
+	public Task<Page<FlowPort>> GetFlowPortsPageAsync(FlowPortsRequest flowPortsRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowPort>>(flowPortsRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -23,7 +23,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowEndpointsRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowEndpoint>> GetFlowEndpointsPageAsync(FlowEndpointsRequest flowEndpointsRequest, CancellationToken cancellationToken = default)
+	public Task<Page<FlowEndpoint>> GetFlowEndpointsPageAsync(FlowEndpointsRequest flowEndpointsRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowEndpoint>>(flowEndpointsRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -31,7 +31,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowApplicationsRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowApplication>> GetFlowApplicationsPageAsync(FlowApplicationsRequest flowApplicationsRequest, CancellationToken cancellationToken = default)
+	public Task<Page<FlowApplication>> GetFlowApplicationsPageAsync(FlowApplicationsRequest flowApplicationsRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowApplication>>(flowApplicationsRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -40,7 +40,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken = default)
+	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
 
 	#region Device Group flows
@@ -50,7 +50,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(DeviceGroupFlowRequest flowRequest, CancellationToken cancellationToken = default)
+	public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(DeviceGroupFlowRequest flowRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -58,7 +58,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<FlowApplication>> GetDeviceGroupFlowApplicationsPageAsync(DeviceGroupFlowApplicationsRequest flowRequest, CancellationToken cancellationToken = default)
+	public Task<Page<FlowApplication>> GetDeviceGroupFlowApplicationsPageAsync(DeviceGroupFlowApplicationsRequest flowRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowApplication>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -66,7 +66,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<FlowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken = default)
+	public Task<Page<FlowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
 
 	#endregion

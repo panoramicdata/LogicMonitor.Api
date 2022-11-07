@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="recycleBinItemIds">The recycle bin item ids to restore</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>The website</returns>
-	public Task<List<string>> RecycleBinRestoreAsync(List<string> recycleBinItemIds, CancellationToken cancellationToken = default)
+	public Task<List<string>> RecycleBinRestoreAsync(List<string> recycleBinItemIds, CancellationToken cancellationToken)
 	  => PostAsync<List<string>, List<string>>(recycleBinItemIds, "recyclebin/recycles/batchrestore", cancellationToken);
 
 	/// <summary>
@@ -20,6 +20,6 @@ public partial class LogicMonitorClient
 	/// <param name="recycleBinItemIds">The recycle bin item ids to delete</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>The website</returns>
-	public Task<List<string>> RecycleBinDeleteAsync(List<string> recycleBinItemIds, CancellationToken cancellationToken = default)
+	public Task<List<string>> RecycleBinDeleteAsync(List<string> recycleBinItemIds, CancellationToken cancellationToken)
 	  => PostAsync<List<string>, List<string>>(recycleBinItemIds, "recyclebin/recycles/batchdelete", cancellationToken);
 }

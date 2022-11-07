@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="dashboardName"></param>
 	/// <param name="cancellationToken"></param>
 	[Obsolete("Use GetByNameAsync<Dashboard> instead", true)]
-	public Task<Dashboard> GetDashboardByNameAsync(string dashboardName, CancellationToken cancellationToken = default)
+	public Task<Dashboard> GetDashboardByNameAsync(string dashboardName, CancellationToken cancellationToken)
 		=> GetByNameAsync<Dashboard>(dashboardName, cancellationToken);
 
 	/// <summary>
@@ -19,7 +19,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="dashboardName"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<List<Widget>> GetWidgetsByDashboardNameAsync(string dashboardName, CancellationToken cancellationToken = default)
+	public async Task<List<Widget>> GetWidgetsByDashboardNameAsync(string dashboardName, CancellationToken cancellationToken)
 	{
 		var dashboard = await GetByNameAsync<Dashboard>(dashboardName, cancellationToken).ConfigureAwait(false);
 		if (dashboard is null)
@@ -35,7 +35,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="dashboardGroupFullPath">The full path</param>
 	/// <param name="cancellationToken"></param>
-	public async Task<DashboardGroup> GetDashboardGroupByFullPathAsync(string dashboardGroupFullPath, CancellationToken cancellationToken = default)
+	public async Task<DashboardGroup> GetDashboardGroupByFullPathAsync(string dashboardGroupFullPath, CancellationToken cancellationToken)
 		=> (await GetAllAsync(new Filter<DashboardGroup>
 		{
 			FilterItems = new List<FilterItem<DashboardGroup>>
@@ -50,7 +50,7 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(int parentDashboardGroupId, Filter<DashboardGroup> filter = null, CancellationToken cancellationToken = default)
+	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(int parentDashboardGroupId, Filter<DashboardGroup> filter = null, CancellationToken cancellationToken)
 		=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/groups", cancellationToken);
 
 	/// <summary>
@@ -59,7 +59,7 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard> filter = null, CancellationToken cancellationToken = default)
+	public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard> filter = null, CancellationToken cancellationToken)
 		=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/dashboards", cancellationToken);
 
 	/// <summary>
@@ -73,7 +73,7 @@ public partial class LogicMonitorClient
 		int widgetId,
 		DateTimeOffset start,
 		DateTimeOffset end,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		if (start >= end)
 		{
@@ -96,7 +96,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<Widget>> GetWidgetsByDashboardIdAsync(
 		int dashboardId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetAsync(new Filter<Widget>
 		{
 			Take = 100,
@@ -114,7 +114,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task SaveNewWidgetAsync(
 		HtmlWidget widget,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> await PostAsync<HtmlWidget, HtmlWidget>(widget, "dashboard/widgets", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
@@ -122,7 +122,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The dashboard group id</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
-	public async Task DeleteDashboardGroupRecursivelyByIdAsync(int id, CancellationToken cancellationToken = default)
+	public async Task DeleteDashboardGroupRecursivelyByIdAsync(int id, CancellationToken cancellationToken)
 	{
 		var dashboardGroup = await GetAsync<DashboardGroup>(id, cancellationToken).ConfigureAwait(false);
 

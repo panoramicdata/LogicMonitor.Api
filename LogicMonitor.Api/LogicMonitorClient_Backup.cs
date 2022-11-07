@@ -18,7 +18,7 @@ public partial class LogicMonitorClient
 	/// <param name="backupSpecification"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>the configuration backup</returns>
-	public async Task<ConfigurationBackup> BackupAsync(ConfigurationBackupSpecification backupSpecification, CancellationToken cancellationToken = default)
+	public async Task<ConfigurationBackup> BackupAsync(ConfigurationBackupSpecification backupSpecification, CancellationToken cancellationToken)
 	{
 		if (backupSpecification is null)
 		{
@@ -297,7 +297,7 @@ public partial class LogicMonitorClient
 	/// <param name="fileInfo"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns></returns>
-	public Task<ConfigurationBackup> LoadBackupAsync(FileInfo fileInfo, CancellationToken cancellationToken = default)
+	public Task<ConfigurationBackup> LoadBackupAsync(FileInfo fileInfo, CancellationToken cancellationToken)
 		=> LoadAsync<ConfigurationBackup>(fileInfo ?? throw new ArgumentNullException(nameof(fileInfo)), _logger, cancellationToken);
 
 	private static async Task<T> LoadAsync<T>(FileInfo fileInfo, ILogger _logger, CancellationToken cancellationToken)

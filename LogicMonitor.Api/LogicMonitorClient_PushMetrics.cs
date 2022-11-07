@@ -13,6 +13,6 @@ public partial class LogicMonitorClient
 	/// <returns>The response</returns>
 	public Task<PushMetricResponse> PushMetricAsync(
 		PushMetric pushMetric,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> PostAsync<PushMetric, PushMetricResponse>(pushMetric, "metric/ingest", cancellationToken);
 }

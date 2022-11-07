@@ -12,7 +12,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<ForecastGraphData> GetForecastGraphDataAsync(
 		ForecastDataRequest forecastDataRequest,
-		CancellationToken cancellationToken = default) => new ForecastGraphData
+		CancellationToken cancellationToken) => new ForecastGraphData
 		{
 				// graphs/trainingdata?_scope=internal&graphId=3040&dataSourceInstanceId=9053&type=host&selectedDataPointLabel=SIZEGB&maxSamples=249&time=1month&startTime=&endTime=&_=1481203870059
 				TrainingGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.TrainingSubUrl, cancellationToken).ConfigureAwait(false),
@@ -26,7 +26,7 @@ public partial class LogicMonitorClient
 	/// <param name="graphDataRequest">The </param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
 	/// <exception cref="ArgumentNullException"></exception>
-	public Task<GraphData> GetGraphDataAsync(GraphDataRequest graphDataRequest, CancellationToken cancellationToken = default)
+	public Task<GraphData> GetGraphDataAsync(GraphDataRequest graphDataRequest, CancellationToken cancellationToken)
 	{
 		if (graphDataRequest is null)
 		{
@@ -45,7 +45,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId"></param>
 	/// <param name="deviceDataSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DataSourceGraph>> GetDeviceOverviewGraphsAsync(int deviceId, int deviceDataSourceId, CancellationToken cancellationToken = default)
+	public async Task<List<DataSourceGraph>> GetDeviceOverviewGraphsAsync(int deviceId, int deviceDataSourceId, CancellationToken cancellationToken)
 	{
 		// return Get<OverviewGraphCollection>(ApiMethod.Do, $"ograph?func=getGroups&hId={deviceId}&dsId={dataSourceId}&dsigId={dataSourceInstanceGroupId}");
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/575/devicedatasources
@@ -67,7 +67,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The device dataSource Id</param>
 	/// <param name="name">The overview graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDeviceOverviewGraphByNameAsync(int deviceId, int deviceDataSourceId, string name, CancellationToken cancellationToken = default)
+	public async Task<DataSourceGraph> GetDeviceOverviewGraphByNameAsync(int deviceId, int deviceDataSourceId, string name, CancellationToken cancellationToken)
 		=> (await GetDeviceOverviewGraphsAsync(deviceId, deviceDataSourceId, cancellationToken).ConfigureAwait(false))
 			.SingleOrDefault(g => g.Name == name);
 
@@ -86,7 +86,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceInstanceId,
 		DateTime? startDateTimeUtc = default,
 		DateTime? endDateTimeUtc = default,
-		CancellationToken cancellationToken = default
+		CancellationToken cancellationToken
 		)
 	{
 		var timeConstraint = startDateTimeUtc.HasValue && endDateTimeUtc.HasValue ? $"?start={startDateTimeUtc.Value.SecondsSinceTheEpoch()}&end={endDateTimeUtc.Value.SecondsSinceTheEpoch()}" : null;
@@ -101,7 +101,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceInstanceId">The device datasource instance id</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
 	/// <returns>An object with information on what to poll for to get results</returns>
-	public Task<PollNowRequest> GetPollNowRequestAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken = default)
+	public Task<PollNowRequest> GetPollNowRequestAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken)
 		=> PostAsync<EmptyRequest, PollNowRequest>(new EmptyRequest(), $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data/pollnow", cancellationToken);
 
 	/// <summary>
@@ -112,7 +112,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceInstanceId">The device datasource instance id</param>
 	/// <param name="requestId">The request id</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
-	public Task<PollNowResponse> GetPollNowResponseAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, long requestId, CancellationToken cancellationToken = default)
+	public Task<PollNowResponse> GetPollNowResponseAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, long requestId, CancellationToken cancellationToken)
 		=> GetAsync<PollNowResponse>(false, $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data/pollnow/{requestId}", cancellationToken);
 
 	/// <summary>
@@ -122,7 +122,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The device datasource id</param>
 	/// <param name="deviceDataSourceInstanceId">The device datasource instance id</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
-	public async Task<PollNowResponse> PollNowAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken = default)
+	public async Task<PollNowResponse> PollNowAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken)
 	{
 		var pollNowRequest = await GetPollNowRequestAsync(deviceId, deviceDataSourceId, deviceDataSourceInstanceId, cancellationToken).ConfigureAwait(false);
 
@@ -152,7 +152,7 @@ public partial class LogicMonitorClient
 		List<int> deviceDataSourceInstanceIds,
 		DateTimeOffset start,
 		DateTimeOffset end,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		var startDateTimeUtcTimestamp = start.ToUnixTimeSeconds();
 		var endDateTimeUtcTimestamp = end.ToUnixTimeSeconds();

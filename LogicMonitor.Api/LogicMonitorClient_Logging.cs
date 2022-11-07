@@ -13,7 +13,7 @@ public partial class LogicMonitorClient
 	/// <returns>The response</returns>
 	public Task<WriteLogResponse> WriteLogAsync(
 		IEnumerable<WriteLogRequest> writeLogRequests,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> PostAsync<IEnumerable<WriteLogRequest>, WriteLogResponse>(writeLogRequests, "log/ingest", cancellationToken);
 
 	/// <summary>
@@ -24,7 +24,7 @@ public partial class LogicMonitorClient
 	/// <returns>The response</returns>
 	public Task<WriteLogResponse> WriteLogAsync(
 		WriteLogRequest writeLogRequest,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> WriteLogAsync(new[] { writeLogRequest }, cancellationToken);
 
 	/// <summary>
@@ -39,7 +39,7 @@ public partial class LogicMonitorClient
 		WriteLogLevel level,
 		int deviceId,
 		string message,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> WriteLogAsync(new[] { new WriteLogRequest(level, deviceId, message) }, cancellationToken);
 
 	/// <summary>
@@ -52,6 +52,6 @@ public partial class LogicMonitorClient
 	public Task<WriteLogResponse> WriteLogAsync(
 		int deviceId,
 		string message,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> WriteLogAsync(new[] { new WriteLogRequest(deviceId, message) }, cancellationToken);
 }

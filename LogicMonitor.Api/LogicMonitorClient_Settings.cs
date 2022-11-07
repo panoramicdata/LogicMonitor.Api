@@ -10,7 +10,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The time zone setting</returns>
-	public Task<TimeZoneSetting> GetTimeZoneSettingAsync(CancellationToken cancellationToken = default)
+	public Task<TimeZoneSetting> GetTimeZoneSettingAsync(CancellationToken cancellationToken)
 		=> GetAsync<TimeZoneSetting>(false, "setting/timezone", cancellationToken);
 
 	/// <summary>
@@ -18,7 +18,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Role>> GetRolesForCurrentUserPageAsync(Filter<Role> filter, CancellationToken cancellationToken = default)
+	public Task<Page<Role>> GetRolesForCurrentUserPageAsync(Filter<Role> filter, CancellationToken cancellationToken)
 	{
 		if (filter is not null && filter.Order is null)
 		{
@@ -38,7 +38,7 @@ public partial class LogicMonitorClient
 	/// <param name="filter">The escalation chain filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The escalation chains</returns>
-	public Task<Page<EscalationChain>> GetEscalationChainsPageAsync(Filter<EscalationChain> filter, CancellationToken cancellationToken = default)
+	public Task<Page<EscalationChain>> GetEscalationChainsPageAsync(Filter<EscalationChain> filter, CancellationToken cancellationToken)
 	{
 		if (filter is not null && filter.Order is null)
 		{
@@ -57,6 +57,6 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="alertRule">The alert rule</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SaveAlertRuleAsync(AlertRule alertRule, CancellationToken cancellationToken = default)
+	public async Task SaveAlertRuleAsync(AlertRule alertRule, CancellationToken cancellationToken)
 		=> await PutAsync($"setting/alert/rules/{alertRule.Id}?data=%5Bobject+Object%5D", alertRule, cancellationToken).ConfigureAwait(false);
 }

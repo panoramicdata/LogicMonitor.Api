@@ -14,7 +14,7 @@ public partial class LogicMonitorClient
 	public Task<LogicModuleMetadata> GetLogicModuleMetadata(
 		LogicModuleType logicModuleType,
 		int id,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		return GetBySubUrlAsync<LogicModuleMetadata>(
 						$"setting/registry/metadata/{GetText()}/{id}",
@@ -41,7 +41,7 @@ public partial class LogicMonitorClient
 	public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdates(
 		LogicModuleType logicModuleType,
 		int repositoryVersion,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		var typeParameter = string.Empty;
 		switch (logicModuleType)
@@ -87,7 +87,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<DataSource> AuditDataSource(int dataSourceId, long auditVersion, CancellationToken cancellationToken = default)
+	public async Task<DataSource> AuditDataSource(int dataSourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, DataSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -101,7 +101,7 @@ public partial class LogicMonitorClient
 	/// <param name="eventSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<EventSource> AuditEventSource(int eventSourceId, long auditVersion, CancellationToken cancellationToken = default)
+	public async Task<EventSource> AuditEventSource(int eventSourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, EventSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -115,7 +115,7 @@ public partial class LogicMonitorClient
 	/// <param name="configSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<ConfigSource> AuditConfigSource(int configSourceId, long auditVersion, CancellationToken cancellationToken = default)
+	public async Task<ConfigSource> AuditConfigSource(int configSourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, ConfigSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -129,7 +129,7 @@ public partial class LogicMonitorClient
 	/// <param name="propertySourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<PropertySource> AuditPropertySource(int propertySourceId, long auditVersion, CancellationToken cancellationToken = default)
+	public async Task<PropertySource> AuditPropertySource(int propertySourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, PropertySource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -148,7 +148,7 @@ public partial class LogicMonitorClient
 		LogicModuleType logicModuleType,
 		List<string> logicModuleNames,
 		int repositoryVersion,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		var typeEndpoint = logicModuleType switch
 		{
@@ -182,7 +182,7 @@ public partial class LogicMonitorClient
 	public async Task ImportSnmpSysOidMap(
 		List<SnmpSysOidMapImportItem> snmpSysOidMapImportItems,
 		int repositoryVersion,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		await PostAsync<SnmpSysOidMapImportObject, object>
 		(

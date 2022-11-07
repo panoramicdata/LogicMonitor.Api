@@ -8,7 +8,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="imageType"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<byte[]> GetImageByteArrayAsync(ImageType imageType, CancellationToken cancellationToken = default)
+	public async Task<byte[]> GetImageByteArrayAsync(ImageType imageType, CancellationToken cancellationToken)
 		=> imageType switch
 		{
 			ImageType.CompanyLogo => await DownloadImage("setting/logos/company", cancellationToken).ConfigureAwait(false),

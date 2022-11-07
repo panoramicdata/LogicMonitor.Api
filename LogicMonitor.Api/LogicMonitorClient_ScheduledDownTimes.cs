@@ -14,6 +14,6 @@ public partial class LogicMonitorClient
 	[Obsolete("Use GetAsync(Filter<ScheduledDownTime>) instead", true)]
 	public async Task<List<ScheduledDownTime>> GetScheduledDownTimesAsync(
 		ScheduledDownTimeFilter scheduledDownTimeFilter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await FilteredGetAsync("sdt/sdts", scheduledDownTimeFilter.GetFilter(), cancellationToken).ConfigureAwait(false)).Items;
 }

@@ -10,7 +10,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="cancellationToken">The cancellation token</param>
 	[Obsolete("Use GetAllAsync<Collector>() instead")]
-	public Task<List<Collector>> GetAllCollectorsAsync(CancellationToken cancellationToken = default)
+	public Task<List<Collector>> GetAllCollectorsAsync(CancellationToken cancellationToken)
 		=> GetAllAsync<Collector>(cancellationToken);
 	//{
 	//	var allCollectors = new List<Collector>();
@@ -29,7 +29,7 @@ public partial class LogicMonitorClient
 	/// <param name="collectorGroupId">The collector group id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Collector>> GetAllCollectorsByCollectorGroupId(int collectorGroupId, Filter<Collector> filter = null, CancellationToken cancellationToken = default)
+	public Task<List<Collector>> GetAllCollectorsByCollectorGroupId(int collectorGroupId, Filter<Collector> filter = null, CancellationToken cancellationToken)
 		=> GetAllAsync(filter, $"setting/collector/groups/{collectorGroupId}/collectors", cancellationToken);
 
 	/// <summary>
@@ -49,7 +49,7 @@ public partial class LogicMonitorClient
 		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
 		CollectorSize collectorSize = CollectorSize.Small,
 		int? collectorVersion = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		// Get the download token
 		var downloadToken = await GetBySubUrlAsync<DownloadToken>($"setting/collector/collectors/{collectorId}/downloadToken", cancellationToken).ConfigureAwait(false);
@@ -77,7 +77,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="filter">An optional filter</param>
 	/// <param name="cancellationToken">An optional CancellationToken</param>
-	public async Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(Filter<CollectorVersion> filter = null, CancellationToken cancellationToken = default)
+	public async Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(Filter<CollectorVersion> filter = null, CancellationToken cancellationToken)
 		=> (await GetBySubUrlAsync<Page<CollectorVersion>>($"setting/collector/collectors/versions?{filter}", cancellationToken).ConfigureAwait(false))
 		.Items
 		.OrderByDescending(cv => cv.MajorVersion)

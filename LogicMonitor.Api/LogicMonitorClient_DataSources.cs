@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	[Obsolete("Use GetAsync(Filter<DataSource>) instead.", true)]
-	public async Task<List<DataSource>> GetDataSourcesAsync(Filter<DataSource> filter, CancellationToken cancellationToken = default)
+	public async Task<List<DataSource>> GetDataSourcesAsync(Filter<DataSource> filter, CancellationToken cancellationToken)
 		=> (await GetAsync(filter, cancellationToken).ConfigureAwait(false)).Items ?? new List<DataSource>();
 
 	/// <summary>
@@ -21,7 +21,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public async Task<List<DataSourceGraph>> GetDataSourceGraphsAsync(
 		int dataSourceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		var page = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs", cancellationToken).ConfigureAwait(false);
 		if (page.Items is null)
@@ -47,7 +47,7 @@ public partial class LogicMonitorClient
 	public async Task<DataSourceGraph> GetDataSourceGraphByNameAsync(
 		int dataSourceId,
 		string graphName,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetDataSourceGraphsAsync(dataSourceId, cancellationToken).ConfigureAwait(false))
 			.SingleOrDefault(g => g.Name == graphName);
 
@@ -58,7 +58,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<string> GetDataSourceXmlAsync(
 		int dataSourceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/datasources/{dataSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
 
 	/// <summary>
@@ -70,7 +70,7 @@ public partial class LogicMonitorClient
 	public async Task<DataSourceGraph> GetDataSourceOverviewGraphByNameAsync(
 		int dataSourceId,
 		string graphName,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetDataSourceOverviewGraphsPageAsync(dataSourceId, null, cancellationToken).ConfigureAwait(false))
 			.Items
 			.SingleOrDefault(g => g.Name == graphName);
@@ -85,7 +85,7 @@ public partial class LogicMonitorClient
 	[Obsolete("Use GetDataSourceByUniqueNameAsync instead.", true)]
 	public Task<DataSource> GetDataSourceByNameAsync(
 		string dataSourceName,
-		CancellationToken cancellationToken = default) => throw new NotSupportedException();
+		CancellationToken cancellationToken) => throw new NotSupportedException();
 
 	/// <summary>
 	///     Gets a DataSource by Name
@@ -95,7 +95,7 @@ public partial class LogicMonitorClient
 	/// <returns>The DataSource or null if no match</returns>
 	public async Task<DataSource?> GetDataSourceByUniqueNameAsync(
 		string dataSourceName,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		// The following line is very slow UNLESS requesting just the bare minimum of fields.
 		// Workaround strategy: get the bare minimum fields required, then fetch the full details for just that datasource
@@ -137,7 +137,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<DataSourceGraph>> GetDataSourceGraphsPageAsync(int dataSourceId,
 		Filter<DataSourceGraph> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
 
 	/// <summary>
@@ -147,7 +147,7 @@ public partial class LogicMonitorClient
 	/// <param name="graphId">The Graph Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<DataSourceGraph> GetDataSourceGraphAsync(int dataSourceId, int graphId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<DataSourceGraph>($"setting/datasources/{dataSourceId}/graphs/{graphId}", cancellationToken);
 
 	/// <summary>
@@ -159,7 +159,7 @@ public partial class LogicMonitorClient
 	public async Task<Page<DataSourceGraph>> GetDataSourceOverviewGraphsPageAsync(
 		int dataSourceId,
 		Filter<DataSourceGraph> filter = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		if (filter is null)
 		{
@@ -186,7 +186,7 @@ public partial class LogicMonitorClient
 	public Task<DataSourceGraph> GetDataSourceOverviewGraphAsync(
 		int dataSourceId,
 		int overviewGraphId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<DataSourceGraph>($"setting/datasources/{dataSourceId}/ographs/{overviewGraphId}", cancellationToken);
 
 	/// <summary>
@@ -198,7 +198,7 @@ public partial class LogicMonitorClient
 	public Task<Page<DataSourceDataPoint>> GetDataSourceDataPointsPageAsync(
 		int dataSourceId,
 		Filter<DataSourceDataPoint> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DataSourceDataPoint>>($"setting/datasources/{dataSourceId}/datapoints?{filter}", cancellationToken);
 
 	/// <summary>
@@ -211,7 +211,7 @@ public partial class LogicMonitorClient
 	public Task<Page<DeviceDataSource>> GetDeviceDataSourcesPageAsync(
 		int deviceId,
 		Filter<DeviceDataSource> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources?{filter}", cancellationToken);
 
 	/// <summary>
@@ -223,7 +223,7 @@ public partial class LogicMonitorClient
 	public Task<List<DeviceDataSource>> GetAllDeviceDataSourcesAsync(
 		int deviceId,
 		Filter<DeviceDataSource> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetAllAsync(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken);
 
 	/// <summary>
@@ -235,7 +235,7 @@ public partial class LogicMonitorClient
 	public Task<DeviceDataSource> GetDeviceDataSourceAsync(
 		int deviceId,
 		int deviceDataSourceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<DeviceDataSource>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}", cancellationToken);
 
 	/// <summary>
@@ -249,7 +249,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		Filter<DeviceDataSourceGroup> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DeviceDataSourceGroup>>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups?{filter}", cancellationToken);
 
 	/// <summary>
@@ -264,7 +264,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		Filter<DeviceDataSourceInstance> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> FilteredGetAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances", filter, cancellationToken);
 
 	/// <summary>
@@ -280,7 +280,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
 		Filter<InstanceProperty> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> FilteredGetAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/properties", filter, cancellationToken);
 
 	/// <summary>
@@ -294,7 +294,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		Filter<DeviceDataSourceInstance>? filter = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		if (filter is null)
 		{
@@ -333,7 +333,7 @@ public partial class LogicMonitorClient
 	public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
 		int deviceId,
 		Filter<DeviceDataSourceInstance> filter = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		if (filter is null)
 		{
@@ -376,7 +376,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
 		Filter<InstanceProperty> filter = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		if (filter is null)
 		{
@@ -410,7 +410,7 @@ public partial class LogicMonitorClient
 		string instanceProperty = null,
 		Regex instancePropertyValueRegex = null,
 		Filter<InstanceProperty> filter = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		// TODO - Move this inline and support other LogicModule types
 		switch (logicModuleType)
@@ -493,7 +493,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<DeviceDataSourceInstance>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}", cancellationToken);
 
 	/// <summary>
@@ -509,7 +509,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
 		Filter<DeviceDataSourceInstanceProperty> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DeviceDataSourceInstanceProperty>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/properties?{filter}", cancellationToken);
 
@@ -526,7 +526,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
 		string propertyName,
-		CancellationToken cancellationToken = default) =>
+		CancellationToken cancellationToken) =>
 		(await GetDeviceDataSourceInstancePropertiesAsync(deviceId, deviceDataSourceId, deviceDataSourceInstanceId,
 			new Filter<DeviceDataSourceInstanceProperty>
 			{
@@ -546,7 +546,7 @@ public partial class LogicMonitorClient
 	public async Task<List<DeviceDataSourceInstanceGroup>> GetDeviceDataSourceInstanceGroupsAsync(
 		int deviceId,
 		int deviceDataSourceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups", cancellationToken).ConfigureAwait(false)).Items;
 
@@ -561,7 +561,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		string name,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetDeviceDataSourceInstanceGroupsAsync(deviceId, deviceDataSourceId, cancellationToken).ConfigureAwait(false)).SingleOrDefault(ig => ig.Name == name);
 
 	/// <summary>
@@ -577,7 +577,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceGroupId,
 		bool sendNullIfError = false,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		try
 		{
@@ -609,7 +609,7 @@ public partial class LogicMonitorClient
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceGroupId,
 		Filter<DeviceDataSourceInstance> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DeviceDataSourceInstance>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups/{deviceDataSourceInstanceGroupId}/instances?{filter}",
 			cancellationToken);
@@ -623,7 +623,7 @@ public partial class LogicMonitorClient
 	public Task<Page<DataSourceAppliesToCollection>> GetDataSourceAppliesToCollectionsPageAsync(
 		int deviceGroupId,
 		Filter<DataSourceAppliesToCollection> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DataSourceAppliesToCollection>>(
 			$"device/groups/{deviceGroupId}/datasources?{filter}",
 			cancellationToken);
@@ -635,7 +635,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<List<DeviceGroupDataSource>> GetAllDeviceGroupDataSourcesAsync(
 		int deviceGroupId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetAllAsync<DeviceGroupDataSource>($"device/groups/{deviceGroupId}/datasources", cancellationToken);
 
 	/// <summary>
@@ -649,7 +649,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DataPointConfiguration>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			cancellationToken);
@@ -660,7 +660,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId"></param>
 	/// <param name="dataSourceId"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public async Task<DeviceDataSource> GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(int deviceId, int dataSourceId, CancellationToken cancellationToken = default)
+	public async Task<DeviceDataSource> GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(int deviceId, int dataSourceId, CancellationToken cancellationToken)
 	{
 		var deviceDataSources = await GetAllDeviceDataSourcesAsync(deviceId, new Filter<DeviceDataSource>
 		{
@@ -684,7 +684,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		DeviceDataSourceInstanceCreationDto deviceDataSourceInstanceCreationDto,
-		CancellationToken cancellationToken = default) => PostAsync<DeviceDataSourceInstanceCreationDto, DeviceDataSourceInstance>(
+		CancellationToken cancellationToken) => PostAsync<DeviceDataSourceInstanceCreationDto, DeviceDataSourceInstance>(
 			deviceDataSourceInstanceCreationDto,
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances",
 			cancellationToken);

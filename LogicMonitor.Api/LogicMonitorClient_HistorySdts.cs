@@ -10,7 +10,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public async Task<HistorySdtCollection> GetDeviceHistorySdts(
 		int deviceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
@@ -20,7 +20,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdts(
 		int deviceGroupId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/groups/{deviceGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
@@ -32,7 +32,7 @@ public partial class LogicMonitorClient
 	public async Task<HistorySdtCollection> GetDeviceDataSourceHistorySdts(
 		int deviceId,
 		int deviceDataSourceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
@@ -46,7 +46,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
@@ -56,7 +56,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public async Task<HistorySdtCollection> GetWebsiteGroupHistorySdts(
 		int websiteGroupId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"website/groups/{websiteGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
@@ -66,6 +66,6 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public async Task<HistorySdtCollection> GetWebsiteHistorySdts(
 		int websiteId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"website/websites/{websiteId}/historysdts", cancellationToken).ConfigureAwait(false);
 }

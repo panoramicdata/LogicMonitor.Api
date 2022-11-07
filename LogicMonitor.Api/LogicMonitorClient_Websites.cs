@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="websiteGroupId">The parent website group id.  The root website group is 1.</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	[Obsolete("Use GetAsync<WebsiteGroup> instead", true)]
-	public Task<WebsiteGroup> GetWebsiteGroupByIdAsync(int websiteGroupId, CancellationToken cancellationToken = default)
+	public Task<WebsiteGroup> GetWebsiteGroupByIdAsync(int websiteGroupId, CancellationToken cancellationToken)
 		=> GetAsync<WebsiteGroup>(websiteGroupId, cancellationToken);
 
 	/// <summary>
@@ -20,7 +20,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteGroupFullPath">The website group full path.  The root is "/".</param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
-	public async Task<WebsiteGroup> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken = default)
+	public async Task<WebsiteGroup> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken)
 	{
 		if (websiteGroupFullPath is null)
 		{
@@ -68,7 +68,7 @@ public partial class LogicMonitorClient
 		string name,
 		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=>
 		SetWebsiteOrWebsiteGroupPropertyAsync<Website>(websiteId, name, value, mode, cancellationToken);
 
@@ -176,7 +176,7 @@ public partial class LogicMonitorClient
 		string name,
 		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	=>
 		SetWebsiteOrWebsiteGroupPropertyAsync<WebsiteGroup>(websiteGroupId, name, value, mode, cancellationToken);
 
@@ -187,7 +187,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	public async Task<List<Website>> GetWebsitesByWebsiteGroupIdAsync(
 		int websiteGroupId = 1,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetBySubUrlAsync<Page<Website>>($"website/groups/{websiteGroupId}/websites", cancellationToken).ConfigureAwait(false)).Items;
 
 	/// <summary>
@@ -199,7 +199,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteId">The Website Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetWebsitePropertiesAsync(int websiteId, CancellationToken cancellationToken = default)
+	public Task<List<Property>> GetWebsitePropertiesAsync(int websiteId, CancellationToken cancellationToken)
 		=> GetAllAsync<Property>($"website/websites/{websiteId}/properties", cancellationToken);
 
 	/// <summary>
@@ -207,7 +207,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteGroupId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetWebsiteGroupPropertiesAsync(int websiteGroupId, CancellationToken cancellationToken = default)
+	public Task<List<Property>> GetWebsiteGroupPropertiesAsync(int websiteGroupId, CancellationToken cancellationToken)
 		=> GetAllAsync<Property>($"website/groups/{websiteGroupId}/properties", cancellationToken);
 
 	/// <summary>
@@ -220,7 +220,7 @@ public partial class LogicMonitorClient
 	public async Task<List<Alert>> GetWebsiteAlertsByIdAsync(
 		int websiteId,
 		AlertFilter filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		// Ensure that the filter CANNOT override the website ID set!
 		filter.RemoveMonitorObjectReferences();
@@ -314,7 +314,7 @@ public partial class LogicMonitorClient
 		int websiteId,
 		AlertFilter filter,
 		bool calledFromChunked = false,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		// Ensure that the filter CANNOT override the website ID set!
 		filter.RemoveMonitorObjectReferences();

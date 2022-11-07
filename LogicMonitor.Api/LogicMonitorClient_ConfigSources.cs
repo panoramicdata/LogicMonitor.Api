@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="configSourceName"></param>
 	/// <param name="cancellationToken"></param>
 	[Obsolete("Use GetByNameAsync<ConfigSource> instead")]
-	public Task<ConfigSource> GetConfigSourceByNameAsync(string configSourceName, CancellationToken cancellationToken = default)
+	public Task<ConfigSource> GetConfigSourceByNameAsync(string configSourceName, CancellationToken cancellationToken)
 		=> GetByNameAsync<ConfigSource>(configSourceName, cancellationToken);
 
 	/// <summary>
@@ -23,7 +23,7 @@ public partial class LogicMonitorClient
 	public Task<Page<DeviceConfigSource>> GetDeviceConfigSourcesPageAsync(
 		int deviceId,
 		Filter<DeviceConfigSource> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		filter.FilterItems.Add(new Eq<DeviceConfigSource>(nameof(DeviceConfigSource.DataSourceType), "CS"));
 		return GetBySubUrlAsync<Page<DeviceConfigSource>>($"device/devices/{deviceId}/devicedatasources?{filter}", cancellationToken);
@@ -38,7 +38,7 @@ public partial class LogicMonitorClient
 	public Task<Page<Device>> GetConfigSourceDevicesPageAsync(
 		int configSourceId,
 		Filter<DeviceConfigSource> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		// setting/configsources/2228820/devices
 		=> GetBySubUrlAsync<Page<Device>>($"setting/configsources/{configSourceId}/devices?{filter}", cancellationToken);
 
@@ -51,7 +51,7 @@ public partial class LogicMonitorClient
 	public Task<DeviceConfigSource> GetDeviceConfigSourceAsync(
 		int deviceId,
 		int deviceConfigSourceId,
-		CancellationToken cancellationToken = default) =>
+		CancellationToken cancellationToken) =>
 		GetBySubUrlAsync<DeviceConfigSource>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}", cancellationToken);
 
 	/// <summary>
@@ -65,7 +65,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceConfigSourceId,
 		Filter<DeviceConfigSourceInstance> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<DeviceConfigSourceInstance>>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}/instances?{filter}", cancellationToken);
 
 	/// <summary>
@@ -79,7 +79,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceConfigSourceId,
 		int deviceConfigSourceInstanceId,
-		CancellationToken cancellationToken = default) =>
+		CancellationToken cancellationToken) =>
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/88/devicedatasources/36453/instances/29551739
 		GetBySubUrlAsync<DeviceConfigSourceInstance>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}/instances/{deviceConfigSourceInstanceId}", cancellationToken);
 
@@ -96,7 +96,7 @@ public partial class LogicMonitorClient
 		int deviceConfigSourceId,
 		int deviceConfigSourceInstanceId,
 		Filter<DeviceConfigSourceInstanceConfig> filter,
-		CancellationToken cancellationToken = default) =>
+		CancellationToken cancellationToken) =>
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/66/devicedatasources/36464/instances/29615066/config
 		GetBySubUrlAsync<Page<DeviceConfigSourceInstanceConfig>>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}/instances/{deviceConfigSourceInstanceId}/config?{filter}", cancellationToken);
 
@@ -115,7 +115,7 @@ public partial class LogicMonitorClient
 		int deviceConfigSourceInstanceId,
 		string id,
 		long timestamp,
-		CancellationToken cancellationToken = default) =>
+		CancellationToken cancellationToken) =>
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/66/devicedatasources/36464/instances/29615066/config/P6CvUmGjTO61a4El8uHATg?startEpoch=1470270899
 		GetBySubUrlAsync<DeviceConfigSourceInstanceConfig>($"device/devices/{deviceId}/devicedatasources/{deviceConfigSourceId}/instances/{deviceConfigSourceInstanceId}/config/{id}?startEpoch={timestamp}", cancellationToken);
 
@@ -128,7 +128,7 @@ public partial class LogicMonitorClient
 	public async Task<DeviceConfigSource> GetDeviceConfigSourceByDeviceIdAndConfigSourceIdAsync(
 		int deviceId,
 		int configSourceId,
-		CancellationToken cancellationToken = default) =>
+		CancellationToken cancellationToken) =>
 		// TODO - permit more than 300
 		(await GetDeviceConfigSourcesPageAsync(deviceId, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }, cancellationToken).ConfigureAwait(false)).Items.SingleOrDefault(deviceConfigSource => deviceConfigSource.ConfigSourceId == configSourceId);
 
@@ -139,6 +139,6 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<string> GetConfigSourceXmlAsync(
 		int configSourceId,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/configsources/{configSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
 }
