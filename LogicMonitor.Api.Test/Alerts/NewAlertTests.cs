@@ -85,7 +85,7 @@ public class NewAlertTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertsFilteredByDevice()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
 		{
 			var alertFilter = new Filter<Alert>

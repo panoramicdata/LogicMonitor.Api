@@ -11,7 +11,7 @@ public class DataTests : TestWithOutput
 	[Fact]
 	public async Task GetForecastGraphData()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
 		var dataSourceGraphs = await LogicMonitorClient.GetDataSourceGraphsAsync(dataSource.Id, CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
@@ -34,7 +34,7 @@ public class DataTests : TestWithOutput
 	[Fact]
 	public async Task GetOverviewGraphData()
 	{
-		var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
+		var device = await GetSnmpDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("snmp64_If-", CancellationToken.None).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
@@ -71,7 +71,7 @@ public class DataTests : TestWithOutput
 	public async Task GetNetflowGraphData()
 	{
 		var utcNow = DateTime.UtcNow;
-		var netflowDevice = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var netflowDevice = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var _ = await LogicMonitorClient.GetGraphDataAsync(new NetflowGraphDataRequest
 		{
 			DeviceId = netflowDevice.Id,
@@ -91,7 +91,7 @@ public class DataTests : TestWithOutput
 		var utcNow = DateTime.UtcNow;
 
 		// Get the configured Netflow Device
-		var netflowDevice = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var netflowDevice = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		// Create the request
 		var request = new NetflowDeviceGroupGraphDataRequest
@@ -115,7 +115,7 @@ public class DataTests : TestWithOutput
 		LogicMonitorClient.UseCache = true;
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
 		var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage", CancellationToken.None).ConfigureAwait(false);
 		dataSourceGraph.Should().NotBeNull();
@@ -142,7 +142,7 @@ public class DataTests : TestWithOutput
 	{
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
 
 		var dataSource = await LogicMonitorClient
@@ -196,7 +196,7 @@ public class DataTests : TestWithOutput
 	{
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
-		var dashboard = await GetAllWidgetsDashboardAsync().ConfigureAwait(false);
+		var dashboard = await GetAllWidgetsDashboardAsync(CancellationToken.None).ConfigureAwait(false);
 		dashboard.Should().NotBeNull();
 
 		var widgets = await LogicMonitorClient.GetWidgetsByDashboardIdAsync(dashboard.Id, CancellationToken.None).ConfigureAwait(false);
@@ -222,7 +222,7 @@ public class DataTests : TestWithOutput
 	[Fact]
 	public async Task GetWinCpuDeviceDataSourceInstancesFromDev()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient

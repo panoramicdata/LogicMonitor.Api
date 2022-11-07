@@ -223,7 +223,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceByDisplayNameAsync()
 	{
-		var device = await GetWindowsDeviceAsync()
+		var device = await GetWindowsDeviceAsync(CancellationToken.None)
 			.ConfigureAwait(false);
 		var device2 = await LogicMonitorClient
 			.GetDeviceByDisplayNameAsync(device.DisplayName, CancellationToken.None)
@@ -234,7 +234,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceByHostName()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var devices = await LogicMonitorClient
 			.GetDevicesByHostNameAsync(device.Name, 100, CancellationToken.None)
 			.ConfigureAwait(false);
@@ -244,7 +244,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task DateTimeSetCorrectly()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var refresh = await LogicMonitorClient
 			.GetAsync<Device>(device.Id, CancellationToken.None)
 			.ConfigureAwait(false);
@@ -255,7 +255,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task SerialisationIgnoredProperties()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
 		var jObject = JObject.FromObject(device);
 		int.Parse(jObject["id"]!.ToString(), CultureInfo.InvariantCulture).Should().Be(device.Id);
@@ -265,7 +265,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDevicePropertiesContainsExpected()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		deviceProperties.Should().Contain(dp => dp.Name == "location");
 		deviceProperties.Should().Contain(dp => dp.Type == PropertyType.Auto);
@@ -374,7 +374,7 @@ public class DeviceTests : TestWithOutput
 	public async Task UpdateDeviceProperty()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		// Remove any called "test"
 		const string testPropertyName = "test";
@@ -395,7 +395,7 @@ public class DeviceTests : TestWithOutput
 		await portalClient.PutAsync(device, CancellationToken.None).ConfigureAwait(false);
 
 		// Re-fetch the device
-		device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that there is now one called "test"
 		var testProperty = device.CustomProperties.SingleOrDefault(p => p.Name == testPropertyName);
@@ -410,7 +410,7 @@ public class DeviceTests : TestWithOutput
 		await portalClient.PutAsync(device, CancellationToken.None).ConfigureAwait(false);
 
 		// Re-fetch the properties
-		device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		// Make sure that there are none called "test"
 		device.CustomProperties.Should().AllSatisfy(p => p.Name.Should().NotBe(testPropertyName));
@@ -419,7 +419,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task SetDeviceCustomProperty()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		const string propertyName = "blah";
 		const string value1 = "test1";
 		const string value2 = "test2";
@@ -482,7 +482,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceCustomProperties()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, CancellationToken.None).ConfigureAwait(false);
 		deviceProperties.Should().NotBeNullOrEmpty();
 	}
@@ -490,7 +490,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceUsingSubUrl()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var deviceRefetch = await LogicMonitorClient
 					.GetAllAsync<JObject>($"device/devices?filter=id:{device.Id}&fields=inheritedProperties", CancellationToken.None)
 					.ConfigureAwait(false);
@@ -500,10 +500,10 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDifferentDeviceTypes()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.DeviceType.Should().Be(DeviceType.Regular);
 
-		device = await GetServiceDeviceAsync().ConfigureAwait(false);
+		device = await GetServiceDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.DeviceType.Should().Be(DeviceType.Service);
 
 		// TODO - AWS and Azure
@@ -568,7 +568,7 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceAlertsPageAsync()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false);
 		alertsPage.Should().NotBeNull();
 		alertsPage.Items.Count.Should().Be(alertsPage.TotalCount);
@@ -590,7 +590,7 @@ public class DeviceTests : TestWithOutput
 		};
 
 		// Get the Device
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
 
 		// Get the Alerts
@@ -601,11 +601,11 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task PatchDeviceAsync()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var oldDescription = device.Description;
 		var newDescription = Guid.NewGuid().ToString();
 		await LogicMonitorClient.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }, CancellationToken.None).ConfigureAwait(false);
-		var updatedDevice = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var updatedDevice = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		updatedDevice.Description.Should().Be(newDescription);
 		await LogicMonitorClient.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }, CancellationToken.None).ConfigureAwait(false);
 	}

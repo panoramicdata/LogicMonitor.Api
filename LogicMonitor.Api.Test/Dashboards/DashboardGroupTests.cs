@@ -13,7 +13,7 @@ public class DashboardGroupTests : TestWithOutput
 	{
 		// Delete it if it already exists
 		var dashboardGroup = await LogicMonitorClient
-			.GetByNameAsync<DashboardGroup>(DashboardGroupName)
+			.GetByNameAsync<DashboardGroup>(DashboardGroupName, CancellationToken.None)
 			.ConfigureAwait(false);
 		if (dashboardGroup is not null)
 		{
@@ -37,13 +37,14 @@ public class DashboardGroupTests : TestWithOutput
 						Value = "TestValue"
 					}
 				}
-			})
+			},
+			CancellationToken.None)
 			.ConfigureAwait(false);
 
 		dashboardGroup.Should().NotBeNull();
 
 		dashboardGroup = await LogicMonitorClient
-			.GetByNameAsync<DashboardGroup>(DashboardGroupName)
+			.GetByNameAsync<DashboardGroup>(DashboardGroupName, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		dashboardGroup.Should().NotBeNull();

@@ -61,7 +61,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetWinService()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var windowsServices = await portalClient.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None).ConfigureAwait(false);
 		windowsServices.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNull();
@@ -72,7 +72,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetMonitoredWinService()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
 		var windowsServices = await portalClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
@@ -122,7 +122,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataPointThresholdDetailsForDeviceDataSourceInstance()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None)
 			.ConfigureAwait(false);
@@ -168,7 +168,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDeviceDataSourceInstances()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetSnmpDeviceAsync().ConfigureAwait(false);
+		var device = await GetSnmpDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
 
 		var dataSource = await portalClient.GetByNameAsync<DataSource>("snmp64_If-", CancellationToken.None).ConfigureAwait(false);
@@ -341,7 +341,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDeviceDataSourceByName_IsFast()
 	{
 		var stopwatch = Stopwatch.StartNew();
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(
 			device.Id,
 			new Filter<DeviceDataSource>
@@ -372,7 +372,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceDataSources()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -480,7 +480,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task WindowsServerDisks()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
 		deviceDataSource.DeviceId.Should().Be(device.Id);

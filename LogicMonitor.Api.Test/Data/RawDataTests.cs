@@ -9,7 +9,7 @@ public class RawDataTests : TestWithOutput
 	[Fact]
 	public async Task GetRawData()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS", CancellationToken.None).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
@@ -26,7 +26,7 @@ public class RawDataTests : TestWithOutput
 	{
 		var utcNow = DateTime.UtcNow;
 		var yesterday = utcNow - TimeSpan.FromDays(1);
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS", CancellationToken.None).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
@@ -49,7 +49,7 @@ public class RawDataTests : TestWithOutput
 	public async Task PollNow()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await portalClient.GetDataSourceByUniqueNameAsync("WinIf-", CancellationToken.None).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
@@ -67,7 +67,7 @@ public class RawDataTests : TestWithOutput
 	[Fact]
 	public async Task FetchInstanceData()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinIf-", CancellationToken.None).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);

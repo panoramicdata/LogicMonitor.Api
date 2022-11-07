@@ -13,7 +13,7 @@ public class GetFilteredAudiEventTests : TestWithOutput
 		var startDateTimeUtc = DateTime.Parse("2022-06-17 00:00:00 +01:00", CultureInfo.InvariantCulture);
 		var endDateTimeUtc = DateTime.Parse("2022-06-20 09:00:00 +01:00", CultureInfo.InvariantCulture);
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc))
+			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), CancellationToken.None)
 			.ConfigureAwait(false);
 
 		unfilteredLogItems.Should().HaveCount(75);
@@ -25,7 +25,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ UsernameFilter = "\"System%3AActiveDiscovery\"" }
+			{ UsernameFilter = "\"System%3AActiveDiscovery\"" },
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
@@ -38,7 +39,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ UsernameFilter = "\"System%3AAppliesTo\"" }
+			{ UsernameFilter = "\"System%3AAppliesTo\"" },
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
@@ -51,7 +53,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" }
+			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" },
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
@@ -65,7 +68,9 @@ public class GetFilteredAudiEventTests : TestWithOutput
 		var startDateTimeUtc = DateTime.Parse("2022-06-17 00:00:00 +01:00", CultureInfo.InvariantCulture);
 		var endDateTimeUtc = DateTime.Parse("2022-06-20 09:00:00 +01:00", CultureInfo.InvariantCulture);
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc))
+			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
+			CancellationToken.None
+			)
 			.ConfigureAwait(false);
 
 		unfilteredLogItems.Should().HaveCount(75);
@@ -77,7 +82,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"* AND NOT *health*\"" }
+			{ TextFilter = "\"* AND NOT *health*\"" },
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
@@ -90,7 +96,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"*health*\"" }
+			{ TextFilter = "\"*health*\"" },
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
@@ -103,7 +110,9 @@ public class GetFilteredAudiEventTests : TestWithOutput
 		var startDateTimeUtc = DateTime.Parse("2022-06-17 00:00:00 +01:00", CultureInfo.InvariantCulture);
 		var endDateTimeUtc = DateTime.Parse("2022-06-20 09:00:00 +01:00", CultureInfo.InvariantCulture);
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc))
+			.GetLogItemsAsync(
+				new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
+				CancellationToken.None)
 			.ConfigureAwait(false);
 
 		unfilteredLogItems.Should().HaveCount(75);
@@ -115,7 +124,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"*health*\"" }
+			{ TextFilter = "\"*health*\"" },
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 
@@ -131,7 +141,8 @@ public class GetFilteredAudiEventTests : TestWithOutput
 			{
 				UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"",
 				TextFilter = "\"*health*\""
-			}
+			},
+			CancellationToken.None
 			)
 			.ConfigureAwait(false);
 

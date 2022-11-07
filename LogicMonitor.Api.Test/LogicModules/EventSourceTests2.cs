@@ -56,8 +56,14 @@ public class EventSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetDeviceEventSources()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
-		var deviceEventSources = await LogicMonitorClient.GetDeviceEventSourcesPageAsync(device.Id, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None)
+			.ConfigureAwait(false);
+		var deviceEventSources = await LogicMonitorClient
+			.GetDeviceEventSourcesPageAsync(
+				device.Id,
+				new Filter<DeviceEventSource> { Skip = 0, Take = 300 },
+				CancellationToken.None)
+			.ConfigureAwait(false);
 
 		// Make sure that we have groups and they are not null
 		deviceEventSources.Should().NotBeNull();

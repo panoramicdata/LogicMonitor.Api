@@ -52,7 +52,8 @@ public class ConfigSourceTests2 : TestWithOutput
 		const int maxIterations = 3;
 
 		var portalClient = LogicMonitorClient;
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None)
+			.ConfigureAwait(false);
 		device.Should().NotBeNull();
 
 		var deviceConfigSources = (await portalClient.GetDeviceConfigSourcesPageAsync(device.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = maxIterations }, CancellationToken.None).ConfigureAwait(false)).Items;

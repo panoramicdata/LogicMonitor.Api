@@ -14,22 +14,10 @@ public class FlowTests : TestWithOutput
 	private readonly DateTime _startDateTimeSeconds;
 	private readonly DateTime _endDateTimeSeconds;
 
-	//private void CheckExpectedLineCount(GraphData graphData, int expectedLineCount)
-	//{
-	//	// Make sure that data is returned
-	//	graphData.Should().NotBeNull();
-
-	//	// Make sure that data is returned
-	//	graphData.Lines.Should().NotBeNull();
-
-	//	// Make sure that data is returned
-	//	graphData.Lines.Count.Should().Be(expectedLineCount);
-	//}
-
 	[Fact]
 	public async Task GetApplications()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var flowApplications = await LogicMonitorClient
 			.GetFlowApplicationsPageAsync(
 				new FlowApplicationsRequest
@@ -51,7 +39,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetApplicationsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		var flowApplications = await LogicMonitorClient
 			.GetDeviceGroupFlowApplicationsPageAsync(
@@ -78,7 +66,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetBandwidthsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		var flowBandwidths = await LogicMonitorClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
 		{
@@ -101,7 +89,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlowsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 
 		var flows = await LogicMonitorClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
 		{
@@ -124,7 +112,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlowEndpoints()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var flowEndpoints = await LogicMonitorClient.GetFlowEndpointsPageAsync(new FlowEndpointsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
@@ -142,7 +130,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlows()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
@@ -160,7 +148,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetPorts()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var flowPorts = await LogicMonitorClient.GetFlowPortsPageAsync(new FlowPortsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
@@ -178,7 +166,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetZoomTimeFlows()
 	{
-		var device = await GetNetflowDeviceAsync().ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
 		{
 			DeviceId = device.Id,

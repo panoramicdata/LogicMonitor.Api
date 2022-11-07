@@ -66,20 +66,20 @@ public abstract class TestWithOutput
 	protected static long DaysAgoAsUnixSeconds(int days)
 		=> DateTimeOffset.UtcNow.AddDays(-days).ToUnixTimeSeconds();
 
-	internal Task<Device> GetNetflowDeviceAsync()
-		=> LogicMonitorClient.GetAsync<Device>(NetflowDeviceId);
+	internal Task<Device> GetNetflowDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Device>(NetflowDeviceId, cancellationToken);
 
-	protected Task<Device> GetServiceDeviceAsync()
-		=> LogicMonitorClient.GetAsync<Device>(ServiceDeviceId);
+	protected Task<Device> GetServiceDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Device>(ServiceDeviceId, cancellationToken);
 
-	protected Task<Device> GetWindowsDeviceAsync()
-		=> LogicMonitorClient.GetAsync<Device>(WindowsDeviceId);
+	protected Task<Device> GetWindowsDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Device>(WindowsDeviceId, cancellationToken);
 
-	protected Task<Device> GetSnmpDeviceAsync()
-		=> LogicMonitorClient.GetAsync<Device>(SnmpDeviceId);
+	protected Task<Device> GetSnmpDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Device>(SnmpDeviceId, cancellationToken);
 
-	protected Task<Dashboard> GetAllWidgetsDashboardAsync()
-		=> LogicMonitorClient.GetAsync<Dashboard>(AllWidgetsDashboardId);
+	protected Task<Dashboard> GetAllWidgetsDashboardAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Dashboard>(AllWidgetsDashboardId, cancellationToken);
 
 	protected string GetWebsiteGroupFullPath()
 		=> WebsiteGroupFullPath;

@@ -30,7 +30,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task OnlyMonitoredInstances()
 	{
-		var device = await GetSnmpDeviceAsync()
+		var device = await GetSnmpDeviceAsync(CancellationToken.None)
 			.ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: CancellationToken.None)

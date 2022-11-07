@@ -196,7 +196,7 @@ public class AlertTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertsFilteredByDevice()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var startUtcIsBefore = new DateTime(2018, 1, 1);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
 		{
@@ -220,7 +220,7 @@ public class AlertTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertsFilteredByDeviceRest()
 	{
-		var device = await GetWindowsDeviceAsync().ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var deviceGroupFullPathFilter = new List<string> { "Collectors*" };
 		const string dataSourceNameFilter = "Volume Usage-";
 		const string dataSourceInstanceNameFilter = @"WinVolumeUsage-C:\\";

@@ -43,7 +43,6 @@ public class GetEventLogTests : TestWithOutput
 						continue;
 					}
 
-					//auditEvent.MatchedRegExId.Should().NotBe(-1);
 					auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
 					auditEvent.ActionType.Should().NotBe(AuditEventActionType.None);
 

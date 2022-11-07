@@ -9,7 +9,7 @@ public class AlertHistoryTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertHistory_Last24Hours_Returns24Items()
 	{
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Last24Hours
@@ -17,7 +17,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -27,7 +27,7 @@ public class AlertHistoryTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertHistory_Last7Days_Returns8Items()
 	{
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Last7Days
@@ -35,7 +35,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -45,7 +45,7 @@ public class AlertHistoryTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertHistory_Last30Days_Returns31Items()
 	{
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Last30Days
@@ -53,7 +53,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -66,7 +66,7 @@ public class AlertHistoryTests : TestWithOutput
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(1);
 
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
@@ -76,7 +76,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -89,7 +89,7 @@ public class AlertHistoryTests : TestWithOutput
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(1);
 
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
@@ -99,7 +99,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		await act
@@ -114,7 +114,7 @@ public class AlertHistoryTests : TestWithOutput
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(1);
 
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
@@ -124,7 +124,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		await act
@@ -139,7 +139,7 @@ public class AlertHistoryTests : TestWithOutput
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(-1);
 
-		var request = new AlertHistoryRequest()
+		var request = new AlertHistoryRequest
 		{
 			Id = "DS25658424",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
@@ -149,7 +149,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request)
+			.GetAlertHistoryAsync(request, CancellationToken.None)
 			.ConfigureAwait(false);
 
 		await act
