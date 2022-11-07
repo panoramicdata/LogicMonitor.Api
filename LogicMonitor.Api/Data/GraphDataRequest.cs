@@ -69,6 +69,8 @@ public abstract class GraphDataRequest : GraphDataRequestBase
 				}
 
 				break;
+			default:
+				break;
 		}
 	}
 }

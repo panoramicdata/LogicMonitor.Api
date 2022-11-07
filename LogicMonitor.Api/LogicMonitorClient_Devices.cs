@@ -394,7 +394,8 @@ public partial class LogicMonitorClient
 					continue;
 				}
 
-				(deviceGroup.Devices ??= new List<Device>()).Add(device);
+				deviceGroup.Devices ??= new List<Device>();
+				deviceGroup.Devices.Add(device);
 				deviceGroup.DeviceCount = deviceGroup.Devices.Count;
 			}
 		}

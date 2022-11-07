@@ -274,14 +274,14 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task GetDevicesAndInstancesAssociatedWithDataSourceById()
 	{
-		// Get the dataSourceId
-		var dataSourceId = (await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None).ConfigureAwait(false))?.Id;
-		dataSourceId.Should().NotBeNull();
+		// Get the dataSource
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None).ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
 
 		// Get the information
 		var info = await LogicMonitorClient
 			.GetDevicesAndInstancesAssociatedWithDataSourceByIdPageAsync(
-				(int)dataSourceId,
+				dataSource!.Id,
 				new Filter<DeviceWithDataSourceInstanceInformation> { Skip = 0, Take = 300 },
 				CancellationToken.None)
 			.ConfigureAwait(false);
