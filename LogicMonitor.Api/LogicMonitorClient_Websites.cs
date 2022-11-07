@@ -107,6 +107,8 @@ public partial class LogicMonitorClient
 				}
 
 				break;
+			default:
+				break;
 		}
 
 		// NB it is not yet possible to do the following:
@@ -265,15 +267,9 @@ public partial class LogicMonitorClient
 		var originalStartEpochIsAfter = filter.StartEpochIsAfter;
 		var originalStartEpochIsBefore = filter.StartEpochIsBefore;
 		var utcNow = DateTime.UtcNow;
-		if (filter.StartEpochIsAfter is null)
-		{
-			filter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
-		}
+		filter.StartEpochIsAfter ??= utcNow.AddYears(-1).SecondsSinceTheEpoch();
 
-		if (filter.StartEpochIsBefore is null)
-		{
-			filter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
-		}
+		filter.StartEpochIsBefore ??= utcNow.SecondsSinceTheEpoch();
 
 		var allAlerts = new ConcurrentBag<Alert>();
 
@@ -320,10 +316,7 @@ public partial class LogicMonitorClient
 		filter.RemoveMonitorObjectReferences();
 
 		// Ensure skip is set (or 0)
-		if (filter.Skip is null)
-		{
-			filter.Skip = 0;
-		}
+		filter.Skip ??= 0;
 
 		var maxAlertCount = int.MaxValue;
 		if (filter.Take is not null)

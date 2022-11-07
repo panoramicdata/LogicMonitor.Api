@@ -205,10 +205,7 @@ public partial class LogicMonitorClient : IDisposable
 	{
 		var requestedTake = filter?.Take ?? int.MaxValue;
 		// Ensure filter is set up
-		if (filter is null)
-		{
-			filter = new Filter<T>();
-		}
+		filter ??= new Filter<T>();
 
 		filter.Take = Math.Min(300, requestedTake);
 		filter.Skip = 0;

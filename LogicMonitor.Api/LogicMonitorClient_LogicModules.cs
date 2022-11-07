@@ -69,6 +69,8 @@ public partial class LogicMonitorClient
 			case LogicModuleType.TopologySource:
 				typeParameter = $"?type={logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}s";
 				break;
+			default:
+				throw new NotSupportedException($"LogicModule type {logicModuleType} not supported.");
 		}
 
 		return await PostAsync<LogicModuleUpdateCredential, LogicModuleUpdateCollection>(

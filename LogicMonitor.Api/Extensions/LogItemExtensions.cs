@@ -213,6 +213,8 @@ public static class LogItemExtensions
 			case 27:
 				auditEvent.ActionType = AuditEventActionType.Update;
 				break;
+			default:
+				break;
 		}
 
 		auditEvent.DataSourceId = GetGroupValueAsIntOrNull(match, "dataSourceId");

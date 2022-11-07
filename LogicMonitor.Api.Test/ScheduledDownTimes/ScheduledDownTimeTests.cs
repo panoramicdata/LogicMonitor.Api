@@ -293,18 +293,21 @@ public class ScheduledDownTimeTests : TestWithOutput
 	[Fact]
 	public async Task GetScheduledDownTimesFilteredByDevice()
 	{
-		var portalClient = LogicMonitorClient;
 
-		var allScheduledDownTimes = await portalClient.GetAllAsync<ScheduledDownTime>(CancellationToken.None).ConfigureAwait(false);
+		var allScheduledDownTimes = await LogicMonitorClient.GetAllAsync<ScheduledDownTime>(CancellationToken.None)
+			.ConfigureAwait(false);
 
-		var deviceId = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Device)?.DeviceId;
+		var deviceScheduledDownTime = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Device);
+		deviceScheduledDownTime.Should().NotBeNull();
+		var deviceId = deviceScheduledDownTime!.DeviceId;
 		deviceId.Should().NotBeNull();
-		var filteredScheduledDownTimes = await portalClient.GetAllAsync(new Filter<ScheduledDownTime>
+
+		var filteredScheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
 			FilterItems = new List<FilterItem<ScheduledDownTime>>
 				{
 					new Eq<ScheduledDownTime>(nameof(Type), "DeviceSDT"),
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.DeviceId), deviceId)
+					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.DeviceId), deviceId!)
 				}
 		}, CancellationToken.None
 		).ConfigureAwait(false);
@@ -313,7 +316,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		// Get them all individually
 		foreach (var sdt in filteredScheduledDownTimes)
 		{
-			var refetchedSdt = await portalClient.GetAsync<ScheduledDownTime>(sdt.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetchedSdt = await LogicMonitorClient.GetAsync<ScheduledDownTime>(sdt.Id, CancellationToken.None).ConfigureAwait(false);
 			refetchedSdt.Id.Should().Be(sdt.Id);
 			refetchedSdt.DeviceId.Should().Be(deviceId);
 			refetchedSdt.Comment.Should().Be(sdt.Comment);

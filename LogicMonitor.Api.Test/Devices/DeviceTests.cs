@@ -24,7 +24,7 @@ public class DeviceTests : TestWithOutput
 		var logicMonitorClient = LogicMonitorClient;
 
 		// Device properties
-		const string deviceName = "8.8.8.8";
+		const string deviceName = "127.199.199.199";
 		const string deviceDisplayName = "dns.google.com";
 		const string deviceLink = "https://www.google.co.uk/";
 		const string devicePropertyName = "Woo";

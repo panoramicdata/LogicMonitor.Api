@@ -54,15 +54,9 @@ public partial class LogicMonitorClient
 		var originalStartEpochIsAfter = alertFilter.StartEpochIsAfter;
 		var originalStartEpochIsBefore = alertFilter.StartEpochIsBefore;
 		var utcNow = DateTime.UtcNow;
-		if (alertFilter.StartEpochIsAfter is null)
-		{
-			alertFilter.StartEpochIsAfter = utcNow.AddYears(-1).SecondsSinceTheEpoch();
-		}
+		alertFilter.StartEpochIsAfter ??= utcNow.AddYears(-1).SecondsSinceTheEpoch();
 
-		if (alertFilter.StartEpochIsBefore is null)
-		{
-			alertFilter.StartEpochIsBefore = utcNow.SecondsSinceTheEpoch();
-		}
+		alertFilter.StartEpochIsBefore ??= utcNow.SecondsSinceTheEpoch();
 
 		var allAlerts = new ConcurrentBag<Alert>();
 
@@ -114,10 +108,7 @@ public partial class LogicMonitorClient
 
 		// If take is specified, do only that chunk.
 
-		if (correctedAlertFilter.Skip is null)
-		{
-			correctedAlertFilter.Skip = 0;
-		}
+		correctedAlertFilter.Skip ??= 0;
 
 		int maxAlertCount;
 		if (correctedAlertFilter.Take is not null)

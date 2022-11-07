@@ -70,6 +70,7 @@ public class FilterItem<T>
 				else if (Value.GetType().IsEnum)
 				{
 					valueString = LogicMonitorClient.GetSerializationNameFromEnumMember(Value);
+					break;
 				}
 
 				valueString = Value.ToString();
