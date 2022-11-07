@@ -24,12 +24,6 @@ public class DataSourceGraphLine : NamedItem
 	[DataMember(Name = "dataPointName")]
 	public string DataPointName { get; set; }
 
-	///// <summary>
-	///// The DataSource Graph Id
-	///// </summary>
-	//[DataMember(Name = "graphId")]
-	//public int GraphId { get; set; }
-
 	/// <summary>
 	/// Whether this is a virtual datapoint
 	/// </summary>

@@ -32,12 +32,3 @@ public class DeviceGroupMapPoint : MapPoint
 	[DataMember(Name = "hasLocation")]
 	public bool HasLocation { get; set; }
 }
-
-/*
-		{
-			"type":"group",
-			"deviceGroupFullPath":"##defaultDeviceGroup##",
-			"deviceDisplayName":"",
-			"hasLocation":true
-		}
-	 */

@@ -45,7 +45,7 @@ public class CollectorTests : TestWithOutput
 		foreach (var collector in collectors)
 		{
 			var refetchedCollector = await LogicMonitorClient.GetAsync<Collector>(collector.Id, CancellationToken.None).ConfigureAwait(false);
-			// TODO - make sure they match
+			refetchedCollector.Should().NotBeNull();
 		}
 	}
 

@@ -164,30 +164,6 @@ public static class LogItemExtensions
 		// Have we determined the EntityType already?
 		auditEvent.EntityType = entityTypeMatch.LogItemRegex.EntityType;
 		var match = entityTypeMatch.Match;
-		//if (auditEvent.EntityType == AuditEventEntityType.None)
-		//{
-		//	// Is this a DeviceDataSourceInstance entry?
-		//	if (entityTypeMatch.Groups["dataSourceNewInstanceIds"].Success
-		//		|| entityTypeMatch.Groups["dataSourceDeletedInstanceIds"].Success)
-		//	{
-		//		// YES
-		//		auditEvent.EntityType = AuditEventEntityType.DeviceDataSourceInstance;
-		//	}
-		//	else
-		//	{
-		//		// Is this a scheduledHealthCheck
-		//		if (entityTypeMatch.Groups["scheduledHealthCheck"].Success)
-		//		{
-		//			auditEvent.ActionType = AuditEventActionType.ScheduledHealthCheckScript;
-		//			auditEvent.EntityType = AuditEventEntityType.AllCollectors;
-		//			auditEvent.OutcomeType = AuditEventOutcomeType.Unknown;
-		//		}
-		//	}
-
-		//	if (auditEvent.EntityType == AuditEventEntityType.None) { }
-		//	// NO - Don't know the type, can't continue
-		//	return auditEvent;
-		//}
 
 		auditEvent.ActionType = GetAction(match);
 		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
@@ -279,31 +255,6 @@ public static class LogItemExtensions
 		}
 
 		return auditEvent;
-
-		//if ((match = DeviceOtherRegex.Match(logItem.Description)).Success)
-		//{
-		//	// Example: "Action=Add"; "Type=Device"; "Device=ReportMagic beta-API (0)"; "Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic beta-API)"
-		//	// Example: "Action=Add"; "Type=Device"; "Device=ReportMagic alpha-Worker (0)"; "Description=Failed device operation,  adddevice_failed : error  (invalid normal device name: ReportMagic alpha-Worker)"
-		//	auditEvent.ActionType = GetAction(match);
-		//	auditEvent.EntityType = AuditEventEntityType.Resource;
-		//	auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
-		//	auditEvent.ResourceId = int.Parse(match.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
-		//	auditEvent.ResourceName = match.Groups["resourceName"].Value;
-		//	return auditEvent;
-		//}
-
-		//if ((match = ResourceGroupPropertySuccessRegex.Match(logItem.Description)).Success)
-		//{
-		//	// Example: "Update the host group(PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-PROD)'s property(name=kubernetes.version.history) via API token MZkW3Ldwg5S84s5eWUc7."
-		//	auditEvent.ActionType = GetAction(match);
-		//	auditEvent.EntityType = AuditEventEntityType.ResourceGroupProperty;
-		//	auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-
-		//	auditEvent.ResourceGroupName = match.Groups["resourceGroupName"].Value;
-		//	auditEvent.PropertyName = match.Groups["resourceGroupNamepropertyName"].Value;
-		//	auditEvent.ApiTokenId = match.Groups["apiTokenId"].Value;
-		//	return auditEvent;
-		//}
 	}
 
 	private static string? GetGroupValueAsStringOrNull(Match match, string groupName)

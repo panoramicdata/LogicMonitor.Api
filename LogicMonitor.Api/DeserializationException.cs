@@ -11,7 +11,8 @@ public class DeserializationException : LogicMonitorApiException
 	/// </summary>
 	/// <param name="responseBody">The responseBody</param>
 	/// <param name="exception">The inner exception</param>
-	public DeserializationException(string responseBody, Exception exception) : base(responseBody, exception)
+	public DeserializationException(string responseBody, Exception exception)
+		: base(responseBody, exception)
 	{
 	}
 
@@ -22,7 +23,8 @@ public class DeserializationException : LogicMonitorApiException
 	/// <param name="subUrl"></param>
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
-	public DeserializationException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody) : base(method, subUrl, httpStatusCode, responseBody)
+	public DeserializationException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody)
+		: base(method, subUrl, httpStatusCode, responseBody)
 	{
 	}
 
@@ -31,7 +33,8 @@ public class DeserializationException : LogicMonitorApiException
 	/// </summary>
 	/// <param name="info"></param>
 	/// <param name="context"></param>
-	protected DeserializationException(SerializationInfo info, StreamingContext context) : base(info, context)
+	protected DeserializationException(SerializationInfo info, StreamingContext context)
+		: base(info, context)
 	{
 	}
 
@@ -39,7 +42,8 @@ public class DeserializationException : LogicMonitorApiException
 	/// Constructor
 	/// </summary>
 	/// <param name="httpResponseMessage"></param>
-	public DeserializationException(HttpResponseMessage httpResponseMessage) : base(httpResponseMessage)
+	public DeserializationException(HttpResponseMessage httpResponseMessage)
+		: base(httpResponseMessage)
 	{
 	}
 
@@ -58,7 +62,8 @@ public class DeserializationException : LogicMonitorApiException
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
 	/// <param name="message"></param>
-	public DeserializationException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
+	public DeserializationException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string message)
+		: base(method, subUrl, httpStatusCode, responseBody, message)
 	{
 	}
 }
