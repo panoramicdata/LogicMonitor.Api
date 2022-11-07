@@ -39,7 +39,9 @@ public class WebsiteTests : TestWithOutput
 	[Fact]
 	public async Task GetWebsiteGraphData()
 	{
-		var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName, CancellationToken.None).ConfigureAwait(false);
+		var website = await LogicMonitorClient
+			.GetByNameAsync<Website>(WebsiteName, CancellationToken.None)
+			.ConfigureAwait(false);
 
 		var endDateTime = DateTime.UtcNow;
 		var startDateTime = endDateTime.AddMonths(-1);

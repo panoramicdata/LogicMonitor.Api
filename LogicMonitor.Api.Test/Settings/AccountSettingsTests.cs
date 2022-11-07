@@ -26,7 +26,5 @@ public class AccountSettingsTests : TestWithOutput
 		var billingInformation = await LogicMonitorClient.GetAsync<BillingInformation>(CancellationToken.None).ConfigureAwait(false);
 
 		billingInformation.Should().NotBeNull();
-		billingInformation.InvoiceDetails.Should().NotBeNull();
-		billingInformation.PaymentInformation.Should().NotBeNull();
 	}
 }

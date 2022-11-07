@@ -16,7 +16,7 @@ public class BillingInformation : IHasSingletonEndpoint
 	/// The account balance in USD
 	/// </summary>
 	[DataMember(Name = "zuoraInvoiceDetails")]
-	public InvoiceDetails InvoiceDetails { get; set; }
+	public InvoiceDetails? InvoiceDetails { get; set; }
 
 	/// <summary>
 	///     The endpoint
