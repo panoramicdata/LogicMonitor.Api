@@ -21,7 +21,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Added xpath property to MatchType to fix an issue with fetching websites.</PackageReleaseNotes>
+		<PackageReleaseNotes>CancellationTokens now required on most async API calls (full coverage to follow).  Codacity A grade achieved.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
