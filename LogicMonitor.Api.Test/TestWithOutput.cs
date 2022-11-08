@@ -80,7 +80,4 @@ public abstract class TestWithOutput
 
 	protected Task<Dashboard> GetAllWidgetsDashboardAsync(CancellationToken cancellationToken)
 		=> LogicMonitorClient.GetAsync<Dashboard>(AllWidgetsDashboardId, cancellationToken);
-
-	protected string GetWebsiteGroupFullPath()
-		=> WebsiteGroupFullPath;
 }

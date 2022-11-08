@@ -89,12 +89,4 @@ public class NetflowFilter
 	/// </summary>
 	internal string AsUrlEncodedString()
 	=> HttpUtility.UrlEncode(JsonConvert.SerializeObject(this));
-
-	/// <summary>
-	/// Validates the netflow filter
-	/// </summary>
-	public void Validate()
-	{
-
-	}
 }
