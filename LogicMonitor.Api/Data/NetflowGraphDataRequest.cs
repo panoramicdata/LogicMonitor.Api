@@ -30,7 +30,6 @@ public class NetflowGraphDataRequest : GraphDataRequest
 			throw new ArgumentException("NetflowFilter must not be null.");
 		}
 
-		NetflowFilter.Validate();
 		ValidateInternal();
 	}
 }

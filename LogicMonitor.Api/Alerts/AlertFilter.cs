@@ -341,9 +341,11 @@ public class AlertFilter
 		return filter;
 	}
 
-	internal List<AlertType> GetAlertTypes()
+	internal List<AlertType>? GetAlertTypes()
 	{
-		var alertTypes = (AlertTypes ?? new List<AlertType>()).Union(AlertType.HasValue ? new List<AlertType> { AlertType.Value } : new List<AlertType>()).ToList();
+		var alertTypes = (AlertTypes ?? new List<AlertType>()).Union(AlertType.HasValue
+			? new List<AlertType> { AlertType.Value }
+			: new List<AlertType>()).ToList();
 		return alertTypes.Count > 0 ? alertTypes : null;
 	}
 

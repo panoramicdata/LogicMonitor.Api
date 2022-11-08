@@ -300,7 +300,10 @@ public partial class LogicMonitorClient
 	public Task<ConfigurationBackup> LoadBackupAsync(FileInfo fileInfo, CancellationToken cancellationToken)
 		=> LoadAsync<ConfigurationBackup>(fileInfo ?? throw new ArgumentNullException(nameof(fileInfo)), _logger, cancellationToken);
 
-	private static async Task<T> LoadAsync<T>(FileInfo fileInfo, ILogger _logger, CancellationToken cancellationToken)
+	private static async Task<T> LoadAsync<T>(
+		FileInfo fileInfo,
+		ILogger _logger,
+		CancellationToken cancellationToken)
 	{
 		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Loading file into memory");
 		var bytes = File.ReadAllBytes(fileInfo.FullName);
@@ -316,6 +319,6 @@ public partial class LogicMonitorClient
 		var myObject = JsonConvert.DeserializeObject<T>(json);
 
 		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Complete");
-		return myObject;
+		return myObject ?? throw new FormatException("Unable to deserialize file");
 	}
 }

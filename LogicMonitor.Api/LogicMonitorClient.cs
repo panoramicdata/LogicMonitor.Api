@@ -350,7 +350,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	/// <typeparam name="T">The type</typeparam>
 	/// <param name="propertyName">The property</param>
-	public static string GetSerializationName<T>(string propertyName)
+	public static string? GetSerializationName<T>(string propertyName)
 	{
 		var propertyInfos = typeof(T).GetProperties();
 		var property = propertyInfos.SingleOrDefault(p => p.Name == propertyName);
