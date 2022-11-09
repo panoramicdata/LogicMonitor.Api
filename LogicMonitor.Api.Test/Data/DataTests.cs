@@ -11,22 +11,40 @@ public class DataTests : TestWithOutput
 	[Fact]
 	public async Task GetForecastGraphData()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
-		var dataSourceGraphs = await LogicMonitorClient.GetDataSourceGraphsAsync(dataSource.Id, CancellationToken.None).ConfigureAwait(false);
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
-		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None)
+			.ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None)
+			.ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+		var dataSourceGraphs = await LogicMonitorClient
+			.GetDataSourceGraphsAsync(dataSource!.Id, CancellationToken.None)
+			.ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None)
+			.ConfigureAwait(false);
+		var deviceDataSourceInstances = await LogicMonitorClient
+			.GetAllDeviceDataSourceInstancesAsync(
+				device.Id,
+				deviceDataSource.Id,
+				cancellationToken: CancellationToken.None)
+			.ConfigureAwait(false);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataSourceGraph = dataSourceGraphs[0];
 		var virtualDataPoint = dataSourceGraph.DataPoints[0];
-		var forecastGraphData = await LogicMonitorClient.GetForecastGraphDataAsync(new ForecastDataRequest
-		{
-			TrainingTimePeriod = TrainingTimePeriod.SixMonths,
-			ForecastTimePeriod = ForecastTimePeriod.OneMonth,
-			DataSourceInstanceId = deviceDataSourceInstance.Id,
-			GraphId = dataSourceGraph.Id,
-			DataPointLabel = virtualDataPoint.Name
-		}, CancellationToken.None).ConfigureAwait(false);
+		var forecastGraphData = await LogicMonitorClient
+			.GetForecastGraphDataAsync(
+				new ForecastDataRequest
+				{
+					TrainingTimePeriod = TrainingTimePeriod.SixMonths,
+					ForecastTimePeriod = ForecastTimePeriod.OneMonth,
+					DataSourceInstanceId = deviceDataSourceInstance.Id,
+					GraphId = dataSourceGraph.Id,
+					DataPointLabel = virtualDataPoint.Name
+				},
+				CancellationToken.None)
+			.ConfigureAwait(false);
+
 		forecastGraphData.TrainingGraphData.Lines.Should().HaveCount(1);
 		forecastGraphData.ForecastedGraphData.Lines.Count.Should().Be(3);
 	}
@@ -117,8 +135,11 @@ public class DataTests : TestWithOutput
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
-		var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage", CancellationToken.None).ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+
+		var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource!.Id, "CPU Usage", CancellationToken.None).ConfigureAwait(false);
 		dataSourceGraph.Should().NotBeNull();
+
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), CancellationToken.None).ConfigureAwait(false);
 		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
