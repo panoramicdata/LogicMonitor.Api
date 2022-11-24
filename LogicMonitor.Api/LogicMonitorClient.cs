@@ -1118,7 +1118,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <returns></returns>
 	/// <exception cref="ArgumentNullException"></exception>
 	/// <exception cref="LogicMonitorApiException"></exception>
-	public async Task<JObject> PostJObjectAsync(
+	public async Task<JObject?> PostJObjectAsync(
 		JObject jObject,
 		string subUrl,
 		CancellationToken cancellationToken = default)
@@ -1196,7 +1196,7 @@ public partial class LogicMonitorClient : IDisposable
 		// Success - can cache
 
 		// Create a PortalResponse
-		var portalResponse = new PortalResponse<TOut>(httpResponseMessage);
+		var portalResponse = new PortalResponse<JObject>(httpResponseMessage);
 
 		// Check the outer HTTP status code
 		if (!portalResponse.IsSuccessStatusCode)
@@ -1205,11 +1205,8 @@ public partial class LogicMonitorClient : IDisposable
 			throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
 		}
 
-		// Deserialize the JSON
-		var deserializedObject = portalResponse.GetObject();
-
 		// Return
-		return deserializedObject;
+		return portalResponse.GetObject();
 	}
 
 	/// <summary>
