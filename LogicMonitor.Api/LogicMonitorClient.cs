@@ -1046,6 +1046,108 @@ public partial class LogicMonitorClient : IDisposable
 			}
 
 			// Check the outer HTTP status code
+			if (!httpResponseMessage.IsSuccessStatusCode)
+			{
+				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
+				{
+					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+					{
+						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
+						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
+						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+						continue;
+					}
+					// If a success code was not received, throw an exception
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
+						prefix,
+						httpResponseMessage.StatusCode,
+						responseBody);
+					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+				}
+
+				// We have been told to back off
+				// Check that all rate limit headers are present
+				var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
+				var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
+				var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
+
+				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
+				// Wait for the full window
+				var delayMs = 1000 * xRateLimitWindowSeconds;
+
+				// Wait some time and try again
+				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+					prefix,
+					rateLimitInformation,
+					delayMs);
+				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+
+				// Try again
+				continue;
+			}
+
+			// Success - can be cached
+			break;
+		}
+		// Success - can cache
+
+		// Create a PortalResponse
+		var portalResponse = new PortalResponse<TOut>(httpResponseMessage);
+
+		// Check the outer HTTP status code
+		if (!portalResponse.IsSuccessStatusCode)
+		{
+			// If a success code was not received, throw an exception
+			throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
+		}
+
+		// Deserialize the JSON
+		var deserializedObject = portalResponse.GetObject();
+
+		// Return
+		return deserializedObject;
+	}
+
+	/// <summary>
+	/// Post a jObect
+	/// </summary>
+	/// <param name="jObject">The posted jObject</param>
+	/// <param name="subUrl">The endpoint</param>
+	/// <param name="cancellationToken">An optional CancellationToken</param>
+	/// <returns></returns>
+	/// <exception cref="ArgumentNullException"></exception>
+	/// <exception cref="LogicMonitorApiException"></exception>
+	public async Task<JObject> PostJObjectAsync(
+		JObject jObject,
+		string subUrl,
+		CancellationToken cancellationToken = default)
+	{
+		if (subUrl is null)
+		{
+			throw new ArgumentNullException(nameof(subUrl));
+		}
+
+		var httpMethod = HttpMethod.Post;
+		var prefix = GetPrefix(httpMethod);
+		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
+
+		var data = jObject.ToString();
+		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
+		HttpResponseMessage httpResponseMessage;
+		while (true)
+		{
+			using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
+			{
+				using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
+				{
+					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken)
+						.ConfigureAwait(false);
+				}
+
+				_logger.LogDebug("{Prefix} complete", prefix);
+			}
+
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
