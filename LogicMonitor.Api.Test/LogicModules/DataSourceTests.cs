@@ -60,9 +60,11 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetWinService()
 	{
-		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var windowsServices = await portalClient.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(CancellationToken.None)
+			.ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient
+			.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None)
+			.ConfigureAwait(false);
 		windowsServices.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNullOrEmpty();
@@ -71,10 +73,9 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetMonitoredWinService()
 	{
-		var portalClient = LogicMonitorClient;
 		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
 		device.Should().NotBeNull();
-		var windowsServices = await portalClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None).ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
