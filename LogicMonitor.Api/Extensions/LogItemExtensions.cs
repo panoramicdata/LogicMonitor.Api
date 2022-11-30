@@ -125,6 +125,9 @@ public static class LogItemExtensions
 		new(34,
 			AuditEventEntityType.AlertNote,
 			new(@"^Note \((?<alertNote>.+?)\) added to \((?<alertId>.+?)\) by \((?<username>.+?)\).$", RegexOptions.Singleline)),
+		new(35,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)ed device (?<resourceName>.+) \((?<resourceId>.+?)\)  via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		};
 
 	/// <summary>
@@ -296,8 +299,8 @@ public static class LogItemExtensions
 		{
 			"ADD" => AuditEventActionType.Create,
 			"FETCH" => AuditEventActionType.Read,
-			"UPDATE" => AuditEventActionType.Update,
-			"DELETE" => AuditEventActionType.Delete,
+			"UPDAT" or "UPDATE" => AuditEventActionType.Update,
+			"DELET" or "DELETE" => AuditEventActionType.Delete,
 			_ => AuditEventActionType.None
 		};
 	}

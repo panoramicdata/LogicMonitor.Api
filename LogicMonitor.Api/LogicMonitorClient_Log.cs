@@ -45,7 +45,7 @@ public partial class LogicMonitorClient
 		}
 		else
 		{
-			// YES - Are we being asked for more than the max defined request page size?			
+			// YES - Are we being asked for more than the max defined request page size?
 			if (logFilter.Take > LogItemsMaxTake)
 			{
 				// YES - set the maxLogItemCount to our LogItemsMaxTake, restricting the request page size to LogItemsMaxTake
