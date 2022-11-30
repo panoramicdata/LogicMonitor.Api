@@ -10,5 +10,5 @@ public abstract class OpsNoteScopeCreationDto
 	/// The tag name
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = "not set";
 }

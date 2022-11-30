@@ -19,15 +19,15 @@
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/panoramicdata/LogicMonitor.Api/</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-
-		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Updated nuget packages.</PackageReleaseNotes>
 		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+		<!-- Update the following before releasing to nuget -->
+		<PackageReleaseNotes>OpsNote fixes.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
