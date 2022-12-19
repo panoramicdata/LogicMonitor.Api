@@ -211,7 +211,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	public DateTime? LastActionOnUtc => LastActionOnSeconds.ToNullableDateTimeUtc();
 
 	/// <summary>
-	///    The endpoint
+	///    The endpointx
 	/// </summary>
 	public string Endpoint() => "setting/admins";
 
