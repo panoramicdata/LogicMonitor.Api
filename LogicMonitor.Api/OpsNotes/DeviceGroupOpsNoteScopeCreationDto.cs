@@ -11,7 +11,7 @@ public class DeviceGroupOpsNoteScopeCreationDto : OpsNoteScopeCreationDto
 	/// </summary>
 	public DeviceGroupOpsNoteScopeCreationDto()
 	{
-		Type = "devicegroup";
+		Type = "deviceGroup";
 	}
 
 	/// <summary>

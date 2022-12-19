@@ -32,10 +32,21 @@ public class OpsNotesTests : TestWithOutput
 		allOpsNotes.Select(o => o.Id).Should().Contain(newOpsNote.Id);
 	}
 
-	[Fact]
-	public async Task AddRemoveOpsNote()
+	[Theory]
+	[InlineData(typeof(DeviceOpsNoteScopeCreationDto))]
+	[InlineData(typeof(WebsiteOpsNoteScopeCreationDto))]
+	[InlineData(typeof(WebsiteGroupOpsNoteScopeCreationDto))]
+	[InlineData(typeof(DeviceGroupOpsNoteScopeCreationDto))]
+	public async Task AddRemoveOpsNote(Type t)
 	{
-		var device = await LogicMonitorClient.GetAsync<Device>(WindowsDeviceId, CancellationToken.None).ConfigureAwait(false);
+		var device = await LogicMonitorClient
+			.GetAsync<Device>(WindowsDeviceId, CancellationToken.None)
+			.ConfigureAwait(false);
+
+		var website = await LogicMonitorClient
+			.GetByNameAsync<Website>(WebsiteName, CancellationToken.None)
+			.ConfigureAwait(false);
+
 		var theEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 		var utcNow = (int)(DateTime.UtcNow - theEpoch).TotalSeconds;
 		var opsNoteCreationDto = new OpsNoteCreationDto
@@ -44,7 +55,14 @@ public class OpsNotesTests : TestWithOutput
 			DateTimeUtcSeconds = utcNow,
 			Scopes = new List<OpsNoteScopeCreationDto>
 			{
-				new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id}
+				t.Name switch
+				{
+					nameof(DeviceOpsNoteScopeCreationDto) => new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id},
+					nameof(DeviceGroupOpsNoteScopeCreationDto) => new DeviceGroupOpsNoteScopeCreationDto {DeviceGroupId = device.DeviceGroupIdsString.Split(',').Select(int.Parse).First()},
+					nameof(WebsiteOpsNoteScopeCreationDto) => new WebsiteOpsNoteScopeCreationDto {WebsitesId = website.Id},
+					nameof(WebsiteGroupOpsNoteScopeCreationDto) => new WebsiteGroupOpsNoteScopeCreationDto {WebsiteGroupId = website.WebsiteGroupId},
+					_ => throw new NotSupportedException($"Unexpected type {t.Name}")
+				}
 			}
 		};
 		var createdOpsNote = await LogicMonitorClient.CreateAsync(opsNoteCreationDto, CancellationToken.None).ConfigureAwait(false);

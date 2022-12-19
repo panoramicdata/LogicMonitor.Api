@@ -16,5 +16,5 @@ public class WebsiteOpsNoteScope : OpsNoteScope
 	/// The website name
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	public string? WebsiteName { get; set; }
 }
