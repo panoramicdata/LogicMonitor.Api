@@ -29,9 +29,9 @@ public class UserTests : TestWithOutput
 		foreach (var existingUser in await LogicMonitorClient.GetAllAsync(new Filter<User>
 		{
 			FilterItems = new List<FilterItem<User>>
-				{
-					new Eq<User>(nameof(User.UserName), "test")
-				}
+			{
+				new Eq<User>(nameof(User.UserName), "test")
+			}
 		}, CancellationToken.None).ConfigureAwait(false))
 		{
 			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: CancellationToken.None).ConfigureAwait(false);

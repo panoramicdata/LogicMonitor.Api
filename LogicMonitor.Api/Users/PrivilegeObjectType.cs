@@ -90,4 +90,10 @@ public enum PrivilegeObjectType
 	/// </summary>
 	[EnumMember(Value = "tracesManageTab")]
 	TracesManageTab,
+
+	/// <summary>
+	/// ManualMapping
+	/// </summary>
+	[DataMember(Name = "manualMapping")]
+	ManualMapping
 }
