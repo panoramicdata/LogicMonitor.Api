@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>OpsNote fixes.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added ManualMapping enum to PrivilegeObjectType for User.cs to allow varios API calls to work again.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
