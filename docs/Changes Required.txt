@@ -1,0 +1,150 @@
+Change to existing models:
+
+	WebsiteCollectorInfo
+		properties":{"hostname":{"description":"The hostname of the collector"
+		"collectorGroupName":{"description":"The group name of the group the collector is present in"
+		"collectorGroupId":{"format":"int32","description":"The group Id of the group the collector is present in"
+		"description":{"description":"The description of the collector"
+		"id":{"format":"int32","description":"The collector id"
+		"status":{"description":"The status of the collector","readOnly":true,"type":"string"}}},
+		
+		AutoDiscoveryFilter
+			"comment":{"description":"filter comment"
+			"attribute":{"description":"attribute to filter"
+			"operation":{"description":"filter\u0027s operation values can be : Equal|NotEqual|GreaterThan|GreaterEqual|LessThan|LessEqual|Contain|NotContain|NotExist|RegexMatch|RegexNotMatch"
+			"value":{"description":"operation value"
+		
+		Widget
+			"type":{"description":"alert | batchjob | flash | gmap | ngraph | ograph | cgraph | sgraph | netflowgraph | groupNetflowGraph | netflow | groupNetflow | html | bigNumber | gauge | pieChart | table | dynamicTable | deviceSLA | text | statsd | deviceStatus | serviceAlert | noc | websiteOverview | websiteOverallStatus | websiteIndividualStatus | websiteSLA | savedMap"
+			
+		CustomGraph
+			"minValue":{"format":"double","description":"The minimum value that should be displayed on the y-axis","type":"number"}
+			"maxValue":{"format":"double","description":"The maximum value that should be displayed on the y-axis","type":"number"}
+			
+		CollectorBase
+			"sbproxyConf":{"description":"The Proxy\u0027s configuration","readOnly":true,"type":"string"}
+			"agentConfFields":{"description":"This is key value pairs of collector config properties","readOnly":true,"additionalProperties":{"type":"string"},"type":"object"}
+			"syntheticsEnabled":{"description":"Whether the collector can monitor Synthetic devices (Selenium grid property must be defined)","readOnly":true,"type":"boolean"}
+			
+		SDT
+			"sdtType":{"description":"the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek","type":"string","example":"oneTime"}
+			"weekOfMonth":{"description":"The week of the month that the SDT will be active for a monthly SDT","type":"string","example":"1"}
+			"type":{"description":"The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT","type":"string","example":"ResourceGroupSDT"}
+			"weekDay":{"description":"the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY","type":"string","example":"Sunday"}
+			
+		Website
+			"type":{"description":"pingcheck | webcheck\nThe type of the service","type":"string","example":"webcheck"}
+			"rolePrivileges":{"description":"The role privilege operation(s) for this website that are granted to the user who made the API request","readOnly":true,"type":"array","items":{"type":"string"}}
+			
+		WidgetData
+			"type":{"description":"the widget data type. noc|alert|batchjob|gmap|netflow|netflowGroup|bigNumber|serviceNOC|gauge|pieChart|table|deviceNOC|deviceSLA|serviceSLA|dynamicTable|graph|savedMap","readOnly":true,"type":"string"}
+			"title":{"description":"the widget title","type":"string"}
+			
+		WebsiteGroup
+			"testLocation":{"description":"An object that indicates the websites locations.\ne.g. {\u0027all\u0027: false, smgId:[1,2,3], collectorIds:[14,16]}","$ref":"#/definitions/WebsiteLocation"}
+			"hasWebsitesDisabled":{"description":"Indicates if there are websites disabled in this group","readOnly":true,"type":"boolean"}
+			"rolePrivileges":{"description":"The privilege operations of the user\u0027s role that made the API request.  The array can contain the values ack, sdt and/or threshold","readOnly":true,"type":"array","items":{"type":"string"}}
+			"numOfDirectWebsites":{"format":"int32","description":"The number of direct websites in this group","readOnly":true,"type":"integer"}
+			"numOfDirectSubGroups":{"format":"int32","description":"The number of direct website groups in this group (excluding those in subgroups)","readOnly":true,"type":"integer"}
+			"numOfWebsites":{"format":"int32","description":"The number of websites in the service group, including the websites in sub groups","readOnly":true,"type":"integer"}
+			"properties":{"description":"The website folder properties","type":"array","items":{"$ref":"#/definitions/NameAndValue"}}
+			
+		Netscan
+			"required":["duplicate","method","name","schedule"]
+			"creator":{"description":"The user that created the policy","readOnly":true,"type":"string","example":"sarah@logicmonitor.com"}
+			"collectorGroupName":{"description":"The name of the group of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod"}
+			"method":{"description":"The method that should be used to discover devices. Options are nmap (ICMP Ping), nec2 (EC2), enhancedScript and script","type":"string","example":"nmap"}
+			"collectorGroup":{"format":"int32","description":"The ID of the group of the Collector associated with this Netscan","readOnly":true,"type":"integer","example":4.0}
+			"nextStart":{"description":"The date and time of the next start time of the scan - displayed as manual if the scan does not run on a schedule","readOnly":true,"type":"string","example":"2018-09-07 15:12:00 PDT"}
+			"ignoreSystemIPsDuplicates":{"description":"Ignore system.ips when checking for duplicate resources","readOnly":true,"type":"boolean"}
+			"collectorDescription":{"description":"The description of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod CollectorA"}
+			"nextStartEpoch":{"format":"int64","description":"The epoch of the next start time of the scan - displayed as 0 if the scan does not run on a schedule","readOnly":true,"type":"integer","example":1.53635832E9}
+			"id":{"format":"int32","description":"The ID of the Netscan Policy","readOnly":true,"type":"integer","example":208.0}
+			
+		NetFlowRecord
+			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"srcAsnName":{"readOnly":true,"type":"string"}
+			"dstASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"destAsnName":{"readOnly":true,"type":"string"}
+			
+		SDTHistory
+			"approximateEndEpoch":{"format":"int64","description":"The end epoch for the SDT","readOnly":true,"type":"integer","example":1.475902808E12
+			"approximateStartEpoch":{"format":"int64","description":"The start epoch for the SDT","readOnly":true,"type":"integer","example":1.475875446E12}
+			
+		DeviceDataSourceInstanceConfig
+			"instanceName":{"description":"device datasource instance name","readOnly":true,"type":"string"}
+			"deviceDataSourceId":{"format":"int32","description":"device datasource id","readOnly":true,"type":"integer"}
+			"excludeLines":{"description":"advanceDiffChecker","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"configStatus":{"format":"int32","description":"Configuration file collect status","readOnly":true,"type":"integer"}
+			"version":{"format":"int64","description":"config version","readOnly":true,"type":"integer"}
+			"deviceId":{"format":"int32","description":"device id","readOnly":true,"type":"integer"}
+			"deltaConfig":{"description":"Configuration file diff","readOnly":true,"type":"array","items":{"$ref":"#/definitions/DeviceDataSourceInstanceConfigDiff"}}
+			"deviceDisplayName":{"description":"device display name","readOnly":true,"type":"string"}
+			"dataSourceName":{"description":"datasource name","readOnly":true,"type":"string"}
+			"alerts":{"description":"Alerts associated to this configuration file","readOnly":true,"type":"array","items":{"$ref":"#/definitions/DeviceDataSourceInstanceConfigAlert"}}
+			"dataSourceId":{"format":"int32","description":"configsource id","readOnly":true,"type":"integer"}
+			"instanceId":{"format":"int32","description":"device datasource instance id","readOnly":true,"type":"integer"}
+			"configErrMsg":{"description":"Configuration file collect error message","readOnly":true,"type":"string"}
+			"changeStatus":{"description":"Configuration file change status, if the first configuration then it is Added, else Changed, values can be : Add|Change ","readOnly":true,"type":"string"}
+			"id":{"description":"The id of the datasource","readOnly":true,"type":"string"}
+			"pollTimestamp":{"format":"int64","description":"datasource poll timestamp in milliseconds","readOnly":true,"type":"integer"}
+			"config":{"description":"Configuration file content","readOnly":true,"type":"string"}
+			
+		Role
+			"privileges":{"description":"The account privileges associated with the role. Privileges can be added to a role for each area of your account","type":"array","items":{"$ref":"#/definitions/Privilege"}}
+			"userPermission":{"description":"The permission of current role with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
+			"description":{"description":"The description of the role","type":"string","example":"Administrator can do everything, including security-sensitive actions"}
+			"roleGroupId":{"format":"int32","description":"The group Id of the role","type":"integer","example":3.0}
+			
+		ReportRecipient
+			"type":{"description":"Where admin refers to a user in the account and arbitrary refers to an email address not associated with a user account.Acceptable values are: admin, arbitrary, group","type":"string","example":"admin"}
+			
+		CollectorVersion
+			"feature":{"description":"Specifies if this is a feature version","readOnly":true,"type":"boolean"}
+		
+New models:
+	"AzureExpressRouteCircuitPeeringCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]},
+	"AzureRecoveryServicesVaultAgentsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	"AzureReplicationDisasterRecoveryCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	"AzureRecoveryServiceRTOCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	"SaaSZoomStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	"RestAwsRdsPerformanceInsightsEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"num":{"format":"int32","description":"Maximum number of items to return","type":"integer"},"dimension":{"description":"The dimension to query","type":"string"}}}]}
+	
+	"ConfigCheck":{"type":"object","properties":{"ackClearAlert":{"description":"Clear alert after ACKED or not","type":"boolean"},"originId":{"description":"portable id for origin tracking","type":"string"},"name":{"description":"The ConfigCheck name","type":"string"},"alertLevel":{"format":"int32","description":"The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)","type":"integer"},"description":{"description":"The ConfigCheck id","type":"string"},"configSourceId":{"format":"int32","description":"The ConfigSource id","type":"integer"},"id":{"format":"int32","description":"The ConfigCheck id","type":"integer"},"type":{"description":"The ConfigCheck type. fetch|ignore|missing|value|groovy","type":"string"},"alertEffectiveIval":{"format":"int32","description":"Alert effective interval","type":"integer"},"script":{"description":"The ConfigCheck script","$ref":"#/definitions/JSONObject"},"alertTransitionInterval":{"format":"int32","description":"The count that the alert must exist for these many poll cycles before it will be triggered","type":"integer"}}}
+	"AwsMediaConnectOutputDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectoutput"}
+	"SaasZoomPlanUsageCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["planType"],"properties":{"period":{"format":"int32","type":"integer"},"planType":{"type":"string"}}}]}
+	
+	"DeviceProperty":{"type":"object","required":["name","value"],"properties":{"name":{"description":"The resource property name","type":"string"},"value":{"description":"The resource property value","type":"string"}}}
+	
+	"RestHighestPriorityCollectorStatus":{"type":"object","properties":{"inSDT":{"description":"The SDT status of the highest priority sub collector","readOnly":true,"type":"boolean"},"acked":{"description":"The acked status of the highest priority sub collector","readOnly":true,"type":"boolean"},"isDown":{"description":"The down status of the highest priority sub collector","readOnly":true,"type":"boolean"},"status":{"format":"int32","description":"The status of the highest priority sub collector","readOnly":true,"type":"integer"}}}
+	"SaasO365ServiceHealthDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	"AwsWebACLWafV2DiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awswebaclwafv2"}
+	"AzureLogAnalyticsReplicationJobCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureAppServiceEnvironmentMultiRolePoolDiscoverMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"GcpVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureBackupProtectedItemHealthCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"Audit":{"type":"object","properties":{"version":{"format":"int64","description":"value of audit version","type":"integer"}}}
+	
+	"AzureEABillingCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"SaaSWebexLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	"AwsEbsVolumeSnapshotCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureBackupProtectedItemBackupJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"NbarApplicationNames":{"type":"object","properties":{"operator":{"type":"string"},"applicationName":{"type":"string"}}}
+	
+	"AzureCostManagementSubscriptionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AwsCognitoIdentityProvidersDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	"NetflowFilters":{"type":"object","properties":{"nodeB":{"type":"string"},"qosType":{"type":"string"},"deviceInterfaces":{"type":"array","items":{"$ref":"#/definitions/InterfacesFilter"}},"ports":{"type":"string"},"protocol":{"type":"string"},"ipVersion":{"type":"string"},"netflowDevices":{"description":"Netlow filter netflowDevices expression","type":"array","items":{"$ref":"#/definitions/NetflowDeviceInfo"}},"top":{"format":"int32","type":"integer"},"appType":{"type":"string"},"nbarApplicationNames":{"type":"array","items":{"$ref":"#/definitions/NbarApplicationNames"}},"nodeA":{"type":"string"},"conversation":{"type":"array","items":{"$ref":"#/definitions/ConversationFilter"}},"ifNames":{"type":"array","items":{"type":"string"}},"direction":{"type":"string"}}}
+	
+	"AzureWebAppInstanceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"PropertyRule":{"type":"object","required":["name"],"properties":{"scheduleOption":{"description":"property rule schedule option: onAP | onAPpropertyChanges","readOnly":true,"type":"string"},"groovyScript":{"description":"groovy script","type":"string"},"windowsScript":{"description":"external windows script name","type":"string"},"dataType":{"format":"int32","description":"The data type of property source, default is 0\n\n0: property source\n\n1: raw ERI\n\n ","readOnly":true,"type":"integer"},"description":{"description":"property rule description","readOnly":true,"type":"string"},"appliesTo":{"description":"property rule applies to","readOnly":true,"type":"string"},"technology":{"description":"technology notes","readOnly":true,"type":"string"},"linuxCmdline":{"description":"external linux script args","type":"string"},"version":{"format":"int64","description":"the property rule version","readOnly":true,"type":"integer"},"windowsCmdline":{"description":"external windows script args","type":"string"},"lineageId":{"description":"LM module lineageId","readOnly":true,"type":"string"},"tags":{"description":"property rule tags","readOnly":true,"type":"string"},"auditVersion":{"format":"int64","description":"the property rule auditVersion","readOnly":true,"type":"integer"},"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"},"scriptType":{"description":"script type: embed | powershell | external","type":"string"},"name":{"description":"property rule name","readOnly":true,"type":"string"},"checksum":{"description":"LM module checksum","readOnly":true,"type":"string"},"interval":{"format":"int32","description":"The collect interval of raw ERI","readOnly":true,"type":"integer"},"id":{"format":"int32","type":"integer"},"linuxScript":{"description":"external linux script name","type":"string"},"group":{"description":"property rule group name","readOnly":true,"type":"string"}}}
+	"AzureDimensionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["dimensionName","period"],"properties":{"period":{"type":"string"},"metricName":{"type":"string"},"dimensionName":{"type":"string"}}}]}
+	"AzureVirtualDesktopHostPoolsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
