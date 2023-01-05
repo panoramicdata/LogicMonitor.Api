@@ -8,7 +8,7 @@ internal class TestPortalConfig
 		var dirPath = Path.Combine(Path.GetDirectoryName(location), "../../../..");
 		var builder = new ConfigurationBuilder()
 			.SetBasePath(dirPath)
-			.AddJsonFile("appsettings.json");
+			.AddUserSecrets<TestPortalConfig>();
 		Configuration = builder.Build();
 
 		LogicMonitorClient = new LogicMonitorClient(new LogicMonitorClientOptions
