@@ -236,3 +236,31 @@
 	"SaasSalesforceLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	
 	"ConfigSource":{"type":"object","required":["id"],"properties":{"collectorAttribute":{"description":"Collector attribute","$ref":"#/definitions/CollectorAttribute"},"autoDiscoveryConfig":{"description":"Auto discovery configuration","$ref":"#/definitions/AutoDiscoveryConfiguration"},"displayName":{"description":"The ConfigSource display name","type":"string"},"configChecks":{"description":"The List of ConfigChecks","type":"array","items":{"$ref":"#/definitions/ConfigCheck"}},"description":{"description":"The description for the LMModule","type":"string"},"appliesTo":{"description":"The Applies To for the LMModule","type":"string"},"enableAutoDiscovery":{"description":"Enable active discovery if ConfigSource has multiple instances. true|false","type":"boolean"},"technology":{"description":"The Technical Notes for the LMModule","type":"string"},"version":{"format":"int64","description":"The ConfigSource version","type":"integer"},"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"},"tags":{"description":"The Tags for the LMModule","type":"string"},"auditVersion":{"format":"int64","description":"The ConfigSource audit version","type":"integer"},"collectMethod":{"description":"The method to collect data","type":"string"},"hasMultiInstances":{"description":"Whether the ConfigSource has multiple instances. true|false","type":"boolean"},"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"},"collectInterval":{"format":"int32","description":"The ConfigSource data collect interval","type":"integer"},"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"},"name":{"description":"The config source name","type":"string"},"timestampFormat":{"description":"Timestamp format. ex. yyyy-MM-dd hh:mm:ss","type":"string"},"id":{"format":"int32","description":"The ID of the LMModule","readOnly":true,"type":"integer"},"fileFormat":{"description":"Configuration file format. arbitrary|unix|java-properties|JSON|XML","type":"string"},"group":{"description":"The group the LMModule is in","type":"string"}}}
+	
+	"GcpLBBackendServiceDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasZoomJsonCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AwsMediaConnectSourceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectsource"}
+	
+	"RestAzureResourceHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"ConversationFilter":{"type":"object","properties":{"fromOperator":{"type":"string"},"fromEndpoint":{"type":"string"},"toEndpoint":{"type":"string"},"toOperator":{"type":"string"},"includeOrExclude":{"type":"string"}}}
+	
+	"SaasAccountTestResult":{"type":"object","properties":{"nonPermissionApisErrors":{"uniqueItems":true,"type":"array","items":{"type":"string"}},"invalidStatusUrls":{"type":"string"},"noPermissionService":{"type":"string"},"resultCode":{"format":"int32","type":"integer"},"detailLink":{"type":"string"},"noPermissionApis":{"uniqueItems":true,"type":"array","items":{"type":"string"}}}}
+	
+	"OpenMetricCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"headers":{"type":"string"},"followRedirect":{"type":"boolean"},"readTimeout":{"format":"int32","type":"integer"},"connectTimeout":{"format":"int32","type":"integer"},"url":{"type":"string"}}}]}
+	
+	"AzureCostManagementCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"NetflowDeviceInfo":{"type":"object","properties":{"deleted":{"type":"boolean"},"displayName":{"type":"string"},"id":{"type":"string"}}}
+	
+	"AwsRdsServiceLimitsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureEmergingIssueEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"PaaSJsonPathDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["instancePath","resourceUrl","valueAttribute"],"properties":{"valueAttribute":{"type":"string"},"aliasAttribute":{"type":"string"},"descriptionAttribute":{"type":"string"},"resourceUrl":{"type":"string"},"propertyAttributes":{"type":"string"},"value2Attribute":{"type":"string"},"instancePath":{"type":"string"}}}]}
+	
+	"AzureVMBackupStatusLogAnalyticsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaasAirbrakeDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}

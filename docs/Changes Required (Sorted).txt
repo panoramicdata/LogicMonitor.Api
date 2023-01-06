@@ -1,0 +1,615 @@
+Alerts
+		AlertFilters
+			"anomaly":{"type":"string"}
+			"rule":{"description":"Displayed alerts must match a rule that satisfies this filter. Glob is accepted, and * and an empty string both match all rules","type":"string"}
+			"acked":{"description":"Displayed alerts must have an acknowledgement status that satisfies this criteria","type":"string"}
+			"dependencyRoutingState":{"type":"string"}
+			"dependencyRole":{"type":"string"}
+			"host":{"description":"Displayed alerts must be associated with devices that meet this filter criteria. Glob is accepted, and * and an empty string both indicate all devices","type":"string"}
+			
+		AlertReport
+			"anomaly":{"description":"all|yes|no|yes,no|no,yes\nall: return all anomaly, non anomaly and unknown anomaly alerts\nyes: only alerts which has anomaly will be displayed\nno: only alerts which has no anomaly will be displayed\nyes,no:  return all anomaly and non anomaly alerts","type":"string"}
+			"sortedDirection":{"description":"asc | desc","type":"string"}
+			"dependencyRoutingState":{"type":"string"}
+			"dependencyRole":{"type":"string"}
+		AlertRule
+			"required":["escalatingChainId","name","priority","sendAnomalySuppressedAlert"]
+			"resourceProperties":{"description":"The resource property filters list","type":"array","items":{"$ref":"#/definitions/DeviceProperty"}}
+			"sendAnomalySuppressedAlert":{"description":" send anomaly suppressed alert","type":"boolean","example":true}
+		Alert
+			"anomaly":{"description":"Indicates the anomaly alert, value can be true/false/null. If alert value lies within confidence band then false, otherwise true. If confidence band is not available then value will be null.","readOnly":true,"type":"boolean"}
+			"enableAnomalyAlertGeneration":{"description":"Indicates dynamic threshold alert generation setting. expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0","readOnly":true,"type":"string"}
+			"suppressDesc":{"description":"The description for suppressed alert","readOnly":true,"type":"string"}
+			"suppressor":{"description":"The component (Ex SDT, HostClusterAlert) which suppressed the alert","readOnly":true,"type":"string"}
+			"tenant":{"description":"tenant to which this alert belongs to. ","readOnly":true,"type":"string"}
+			"adAlert":{"description":"Whether or not the alert is dynamic threshold based","readOnly":true,"type":"boolean"}
+			"sdted":{"description":"It specifies if the SDT is set for an active alert or not. However, the sdted is set to false for cleared alert as you cannot apply SDT to a cleared alert.","readOnly":true,"type":"boolean"}
+			"enableAnomalyAlertSuppression":{"description":"Indicates anomaly detection alert suppression setting, expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0","readOnly":true,"type":"string"}
+			"receivedList":{"description":"The recipients that have received the alert","readOnly":true,"type":"string"}
+			"dependencyRoutingState":{"description":"The dependency routing state","readOnly":true,"type":"string"}
+			"dependencyRole":{"description":"The dependency role","readOnly":true,"type":"string"}
+			"adAlertDesc":{"description":"The description for dynamic threshold based alert","readOnly":true,"type":"string"}
+			"resourceTemplateName":{"description":"The name of the datasource in alert","readOnly":true,"type":"string"}
+		Period
+			"weekDays":{"description":"the list of week day of this period","type":"array","items":{"format":"int32","type":"integer"}}
+			"timezone":{"description":"the timezone for this period","type":"string"}
+			"startMinutes":{"format":"int32","description":"the start minute of this period","type":"integer"}
+			"endMinutes":{"format":"int32","description":"the end minute of this period","type":"integer"}
+Backup
+Collectors
+		CollectorBase
+			"sbproxyConf":{"description":"The Proxy\u0027s configuration","readOnly":true,"type":"string"}
+			"agentConfFields":{"description":"This is key value pairs of collector config properties","readOnly":true,"additionalProperties":{"type":"string"},"type":"object"}
+			"syntheticsEnabled":{"description":"Whether the collector can monitor Synthetic devices (Selenium grid property must be defined)","readOnly":true,"type":"boolean"}
+			
+		CollectorVersion
+			"feature":{"description":"Specifies if this is a feature version","readOnly":true,"type":"boolean"}
+		CollectorAttribute
+			"name":{"description":"data collector\u0027s name","type":"string"}
+		ScriptCollectorAttribute
+			"groovyScript":{"description":"groovy script","type":"string"}
+			"scriptType":{"description":"script type: embed | file | powershell","type":"string"}
+			"windowsScript":{"description":"windows script","type":"string"}
+			"linuxCmdline":{"description":"linux script command line","type":"string"}
+			"linuxScript":{"description":"linux script","type":"string"}
+			"windowsCmdline":{"description":"windows script command line","type":"string"}
+			"properties":{"description":"property based","type":"string"}
+		Collector
+			"agentConfFields":{"description":"This is key value pairs of collector config properties","readOnly":true,"additionalProperties":{"type":"string"},"type":"object"}
+			"syntheticsEnabled":{"description":"Whether the collector can monitor Synthetic devices (Selenium grid property must be defined)","readOnly":true,"type":"boolean"}
+ConfigSources
+Dashboards
+		Widget
+			"type":{"description":"alert | batchjob | flash | gmap | ngraph | ograph | cgraph | sgraph | netflowgraph | groupNetflowGraph | netflow | groupNetflow | html | bigNumber | gauge | pieChart | table | dynamicTable | deviceSLA | text | statsd | deviceStatus | serviceAlert | noc | websiteOverview | websiteOverallStatus | websiteIndividualStatus | websiteSLA | savedMap"
+			
+		WidgetData
+			"type":{"description":"the widget data type. noc|alert|batchjob|gmap|netflow|netflowGroup|bigNumber|serviceNOC|gauge|pieChart|table|deviceNOC|deviceSLA|serviceSLA|dynamicTable|graph|savedMap","readOnly":true,"type":"string"}
+			"title":{"description":"the widget title","type":"string"}
+		TableWidgetColumn
+			"unitLabel":{"description":"The unit label","type":"string"}
+		CustomGraph
+			"minValue":{"format":"double","description":"The minimum value that should be displayed on the y-axis","type":"number"}
+			"maxValue":{"format":"double","description":"The maximum value that should be displayed on the y-axis","type":"number"}
+			
+		DashboardData
+			"userPermission":{"description":"The permission of the user that made the API call","readOnly":true,"type":"string"}
+			"name":{"description":"The name of the dashboard","readOnly":true,"type":"string"}
+			"sharable":{"description":"Whether or not the dashboard is sharable. This value will always be true unless the dashboard is a private dashboard","readOnly":true,"type":"boolean"}
+			"id":{"format":"int32","description":"The Id of the dashboard","readOnly":true,"type":"integer"}
+		DeviceSLAWidget
+			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
+			"displayPercentageBar":{"description":"Whether a progress bar is displayed in list mode","type":"boolean"}
+		WidgetToken
+			"inheritList":{"description":"The widget token inherit list","type":"array","items":{"$ref":"#/definitions/WidgetTokenInheritance"}}
+			"type":{"description":"owned | inherit\nSpecifies the type of the widget","readOnly":true,"type":"string"}
+			"value":{"description":"This is the name of the child group of devices, if there is one","type":"string","example":"Devices by Type/Network"}
+		WidgetTokenInheritance
+			"fullpath":{"description":"The fullpath for the widget token","readOnly":true,"type":"string"}
+			"value":{"description":"The property value for the group","readOnly":true,"type":"string"}
+		Dashboard
+			"template":{"description":"The template which is used for importing dashboard","type":"object"}
+			"overwriteGroupFields":{"description":"Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.","readOnly":true,"type":"boolean"}
+		DashboardGroup
+			"template":{"description":"The template which is used for importing dashboard group","type":"object"}
+
+
+Data
+		GraphOpsNoteScope
+			"serviceGroupIds":{"description":"The service group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"serviceId":{"format":"int32","description":"The service Id","readOnly":true,"type":"integer"}
+			"type":{"description":"device | service | website\nThe corresponding type","readOnly":true,"type":"string"}
+			"deviceGroupIds":{"description":"The device group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"deviceId":{"format":"int32","description":"The device Id","readOnly":true,"type":"integer"}
+			
+		GraphVirtualDataPoint
+			"rpn":{"description":"the graph virtual data point rpn expression","type":"string"}
+			"name":{"description":"the graph virtual data point name","type":"string"}
+		RawDataValues
+			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
+			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}
+		GraphPlot
+			"missinglines":{"description":"The Missing lines of the graph","readOnly":true,"type":"array","items":{"type":"string"}}
+			"timeScale":{"description":"The specified timescale for the graph","readOnly":true,"type":"string"}
+			"instances":{"uniqueItems":true,"description":"The matched instances of graph","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"timestamps":{"description":"The timestamps of the graph","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"minValue":{"description":"Specifies the minimum value of the graph","readOnly":true,"type":"object"}
+			"startTime":{"format":"int64","description":"Specifies the start-time of the graph","readOnly":true,"type":"integer"}
+			"id":{"format":"int32","description":"The Id of the graph","readOnly":true,"type":"integer"}
+			"rigid":{"description":"true | false\nSpecifies if the graph is rigid or not","readOnly":true,"type":"boolean"}
+			"lines":{"description":"The properties of the graph and graph lines","readOnly":true,"type":"array","items":{"$ref":"#/definitions/GraphPlotLine"}}
+			"height":{"format":"int32","description":"Specifies the height of graph","readOnly":true,"type":"integer"}
+			"endTZOffset":{"format":"int32","description":"Specifies the end TimeZone Offset of the graph","readOnly":true,"type":"integer"}
+			"base1024":{"description":"true | false\nChanges base scale from 1000 to 1024 if value is set to true","readOnly":true,"type":"boolean"}
+			"dsName":{"description":"The name of the DataSource to be used to plot the graph","readOnly":true,"type":"string"}
+			"maxValue":{"description":"Specifies the maximum value of the graph","readOnly":true,"type":"object"}
+			"displayPrio":{"format":"int32","description":"The display priority of the graph in your LogicMonitor portal","readOnly":true,"type":"integer"}
+			"timeZoneId":{"description":"The Id of selected Time Zone","readOnly":true,"type":"string"}
+			"timeZone":{"description":"The selected timezone for the graph","readOnly":true,"type":"string"}
+			"startTZOffset":{"format":"int32","description":"Specifies the start TimeZone Offset of the graph","readOnly":true,"type":"integer"}
+			"xAxisName":{"description":"The label that will be displayed along the X axis","readOnly":true,"type":"string"}
+			"width":{"format":"int32","description":"Specifies the width of graph","readOnly":true,"type":"integer"}
+			"name":{"description":"The Name of the Graph","readOnly":true,"type":"string"}
+			"verticalLabel":{"description":"The label that will be displayed along the y axis (Vertical Label)","readOnly":true,"type":"string"}
+			"step":{"format":"int64","description":"The Step of the graph","readOnly":true,"type":"integer"}
+			"endTime":{"format":"int64","description":"Specifies the end-time of the graph","readOnly":true,"type":"integer"}
+			"scopes":{"description":"Scopes: use this field to find match opsnote","readOnly":true,"type":"array","items":{"$ref":"#/definitions/GraphOpsNoteScope"}}
+			"base":{"format":"int64","description":"The Base of the graph","readOnly":true,"type":"integer"}
+			"exportFileName":{"description":"The export file name","readOnly":true,"type":"string"}
+		OverviewGraphDataPoint
+			"aggregateMethod":{"description":"the graph line data point aggregate method, average|min|max|sum","type":"string"}
+			"dataPointName":{"description":"the graph line data point name","type":"string"}
+			"dataPointId":{"format":"int32","description":"the graph line data point id","type":"integer"}
+			"consolidateFunc":{"format":"int32","description":"the graph line data point consolidate function, 1\u003davg|2\u003dmax|3\u003dmin","type":"integer"}
+			"dataSourceDataPointId":{"format":"int32","type":"integer"}
+		GraphPlotLine
+			"colorName":{"description":"The color name","readOnly":true,"type":"string"}
+			"std":{"description":"The standard deviation value","readOnly":true,"type":"object"}
+			"visible":{"description":"true | false\nSpecifies whether the graph will be visible or not","readOnly":true,"type":"boolean"}
+			"color":{"description":"The color of the graph","readOnly":true,"type":"string"}
+			"data":{"description":"The polled data used to plot the graph","readOnly":true,"type":"array","items":{"type":"object"}}
+			"max":{"description":"The max value of datapoint or instance","readOnly":true,"type":"object"}
+			"legend":{"description":"The legend of the datapoint or instance","readOnly":true,"type":"string"}
+			"description":{"description":"The description for the datapoint or instance","readOnly":true,"type":"string"}
+			"label":{"description":"The label for the datapoint or instance","readOnly":true,"type":"string"}
+			"type":{"description":"line | area | stack | column | statusBar\nSpecifies how the data of the datapoint or instance will be plotted","readOnly":true,"type":"string"}
+			"min":{"description":"The min value of the datapoint or instance","readOnly":true,"type":"object"}
+			"avg":{"description":"The average value of the datapoint or instance","readOnly":true,"type":"object"}
+			"decimal":{"format":"int32","description":"-1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8\nThe decimal value","readOnly":true,"type":"integer"}
+			"useYMax":{"description":"true | false\nSpecifies whether to use YMax or not","readOnly":true,"type":"boolean"}
+DataPoint
+			"alertForNoData":{"format":"int32","description":"The triggered alert level if we cannot collect data for this datapoint, value can be 1-4 (0:unused alert, 1:alert ok, 2:warn alert, 2:error alert, 4:critical alert)","type":"integer"}
+			"postProcessorMethod":{"description":"The post processor method for the data value. Currently support complex expression and groovy.","type":"string"}
+			"postProcessorParam":{"description":"The post processor parameter, e.g. dataPoint1*2","type":"string"}
+			"maxDigits":{"format":"int32","description":"The max digits of the data value","type":"integer"}
+			"rawDataFieldName":{"description":"The name of the raw data field name used to fetch value, e.g. avgrtt, output","type":"string"}
+			"description":{"description":"The datapoint description","type":"string"}
+			"alertClearTransitionInterval":{"format":"int32","description":"The count that the alert must exist for this many poll cycles before the alert will be cleared","type":"integer"}
+			"userParam3":{"description":"The third user parameter will be used to fetch the datapoint value. ","type":"string"}
+			"userParam2":{"description":"The second user parameter will be used to fetch the datapoint value. e.g. jmx attribute name","type":"string"}
+			"type":{"format":"int32","description":"The data metric type, values can be 0-7 (0:unknown, 1:counter, 2:gauge, 3:derive, 5:status, 6:compute, 7:counter32, 8:counter64)","type":"integer"}
+			"dataSourceId":{"format":"int32","description":"The datasource id","readOnly":true,"type":"integer"}
+			"minValue":{"description":"The minimum value of the datapoint value range","type":"string"}
+			"alertBody":{"description":"The customized alert message body define,  empty string mean we will use the define in default template","type":"string"}
+			"originId":{"description":"portable id for origin tracking","type":"string"}
+			"userParam1":{"description":"The first user parameter will be used to fetch the datapoint value. e.g. snmp oid","type":"string"}
+			"alertSubject":{"description":"The customized alert message subject define, empty string mean we will use the define in default template","type":"string"}
+			"id":{"format":"int32","description":"The datapoint id","readOnly":true,"type":"integer"}
+			"alertTransitionInterval":{"format":"int32","description":"The count that the alert must exist for this many poll cycles before it will be triggered","type":"integer"}
+			"enableAnomalyAlertSuppression":{"description":"Expression of anomaly detection setting, split by comma\n0 means off,  1 means on, -1 means invalid\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0","type":"string"}
+			"maxValue":{"description":"The max value of the datapoint value range","type":"string"},"
+			"dataType":{"format":"int32","description":"The data value type, values can be 1-8 (1:boolean, 2:byte, 3:short, 4:int, 5:long, 6:float, 7:double, 8:ulong)","type":"integer"}
+			"criticalAdAdvSetting":{"description":"enable anomaly detection advance setting for CRITICAL severity","type":"string"}
+			"alertExprNote":{"description":"alert expression note","type":"string"}
+			"adAdvSettingEnabled":{"description":"the AD advance setting enable flag","type":"boolean"}
+			"errorAdAdvSetting":{"description":"enable anomaly detection advance setting for ERROR severity","type":"string"}
+			"warnAdAdvSetting":{"description":"enable anomaly detection advance setting for WARN severity","type":"string"}
+			"name":{"description":"The datapoint name","type":"string"}
+			"alertExpr":{"description":"The alert threshold define for the datapoint. e.g. \u0027\u003e 60 80 90\u0027 mean it will: \ntrigger warn alert if value \u003e 60\ntrigger error alert if value \u003e 80\ntrigger critical alert if value \u003e 90","type":"string"}
+
+
+DataSources
+		DataSource
+			"eriDiscoveryConfig":{"description":"Enable ERI Discovery or not","$ref":"#/definitions/ScriptERIDiscoveryAttributeV3"}
+			"displayName":{"description":"The data source display name","type":"string"}
+			"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"}
+			"collectMethod":{"description":"The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen","type":"string"}
+			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
+			"dataPoints":{"description":"The data point list","type":"array","items":{"$ref":"#/definitions/DataPoint"}}
+			"id":{"format":"int32","description":"The ID of the LMModule","readOnly":true,"type":"integer"}
+			"group":{"description":"The group the LMModule is in","type":"string"}
+			"collectorAttribute":{"description":"data collector\u0027s attributes to collector data. e.g. a ping data source has a ping collector attribute. \n PingCollectorAttributeV1 has two fields. the ip to ping, the data size send to ping","$ref":"#/definitions/CollectorAttribute"}
+			"autoDiscoveryConfig":{"description":"Auto discovery configuration","$ref":"#/definitions/AutoDiscoveryConfiguration"}
+			"payloadVersion":{"format":"int32","description":"The dataSource payload Version for custom metrics","readOnly":true,"type":"integer"}
+			"useWildValueAsUUID":{"description":"Use Wildvalue as Unique identifier in case of multiinstance datasource: true|false","readOnly":true,"type":"boolean"}
+			"enableAutoDiscovery":{"description":"Enable Auto Discovery or not when this data source has multi instance: false|true","type":"boolean"}
+			"technology":{"description":"The Technical Notes for the LMModule","type":"string"}
+			"version":{"format":"int64","description":"The data source version","readOnly":true,"type":"integer"}
+			"tags":{"description":"The Tags for the LMModule","type":"string"}
+			"auditVersion":{"format":"int64","description":"The data source audit version","readOnly":true,"type":"integer"}
+			"hasMultiInstances":{"description":"If the DataSource has multi instance: true|false","readOnly":true,"type":"boolean"}
+			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
+			"eriDiscoveryInterval":{"format":"int32","description":"The DataSource data collect interval","type":"integer"}
+			"enableEriDiscovery":{"description":"Enable ERI Discovery or not: false|true","type":"boolean"}
+			"collectInterval":{"format":"int32","description":"The DataSource data collect interval","type":"integer"}
+			"name":{"description":"The data source name","type":"string"}
+		DataSourceOverviewGraph
+			"base1024":{"description":"base1024 graph or not","type":"boolean"}
+			"timeScale":{"description":"the graph time scale, 1hour|2hour|5hour|day|yesterday|week|lastweek|month|3month|year","type":"string"}
+			"maxValue":{"description":"graph max value","type":"object"}
+			"displayPrio":{"format":"int32","description":"the graph display priority","type":"integer"}
+			"aggregated":{"description":"is the overview graph aggregated","readOnly":true,"type":"boolean"}
+			"title":{"description":"the graph title","type":"string"}
+			"virtualDataPoints":{"description":"the virtual data point list","type":"array","items":{"$ref":"#/definitions/GraphVirtualDataPoint"}}
+			"minValue":{"description":"graph min value","type":"object"}
+			"name":{"description":"the graph name","type":"string"}
+			"width":{"format":"int32","description":"the graph width","type":"integer"}
+			"dataPoints":{"description":"the graph data point list","type":"array","items":{"$ref":"#/definitions/OverviewGraphDataPoint"}}
+			"verticalLabel":{"description":"the graph vertical label","type":"string"}
+			"id":{"format":"int32","description":"the graph id","type":"integer"}
+			"rigid":{"description":"the rigid, true|false","type":"boolean"}
+			"lines":{"description":"the graph lines","type":"array","items":{"$ref":"#/definitions/GraphLine"}}
+			"height":{"format":"int32","description":"the graph height","type":"integer"}
+		GraphLine
+			"colorName":{"description":"the graph line color name","type":"string"}
+			"dataPointName":{"description":"the graph line data point name","type":"string"}
+			"dataPointId":{"format":"int32","description":"the graph line data point id","readOnly":true,"type":"integer"}
+			"legend":{"description":"the graph line legend","type":"string"}
+			"isVirtualDataPoint":{"description":"if the graph line\u0027s data point is a virtual data point","type":"boolean"}
+			"type":{"format":"int32","description":"the graph line type, 1\u003dline|2\u003darea|3\u003dstack|4\u003dcolumn","type":"integer"}
+		UpdateReason
+			"timeEpoch":{"format":"int64","description":"update date epoch","readOnly":true,"type":"integer"}
+			"clientIp":{"description":"Client IP from which this update has been made","readOnly":true,"type":"string"}
+			"updateReason":{"description":"update reason","type":"string"}
+			"timeStr":{"description":"update date in form \u0027YYYY-MM-DD HH:MM:SS\u0027","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"ID of update reason","readOnly":true,"type":"integer"}
+			"userName":{"description":"user who made this update","type":"string"}
+
+Devices
+		NetFlowRecord
+			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"srcAsnName":{"readOnly":true,"type":"string"}
+			"dstASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"destAsnName":{"readOnly":true,"type":"string"}
+			
+		DeviceDataSourceInstanceConfig
+			"instanceName":{"description":"device datasource instance name","readOnly":true,"type":"string"}
+			"deviceDataSourceId":{"format":"int32","description":"device datasource id","readOnly":true,"type":"integer"}
+			"excludeLines":{"description":"advanceDiffChecker","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"configStatus":{"format":"int32","description":"Configuration file collect status","readOnly":true,"type":"integer"}
+			"version":{"format":"int64","description":"config version","readOnly":true,"type":"integer"}
+			"deviceId":{"format":"int32","description":"device id","readOnly":true,"type":"integer"}
+			"deltaConfig":{"description":"Configuration file diff","readOnly":true,"type":"array","items":{"$ref":"#/definitions/DeviceDataSourceInstanceConfigDiff"}}
+			"deviceDisplayName":{"description":"device display name","readOnly":true,"type":"string"}
+			"dataSourceName":{"description":"datasource name","readOnly":true,"type":"string"}
+			"alerts":{"description":"Alerts associated to this configuration file","readOnly":true,"type":"array","items":{"$ref":"#/definitions/DeviceDataSourceInstanceConfigAlert"}}
+			"dataSourceId":{"format":"int32","description":"configsource id","readOnly":true,"type":"integer"}
+			"instanceId":{"format":"int32","description":"device datasource instance id","readOnly":true,"type":"integer"}
+			"configErrMsg":{"description":"Configuration file collect error message","readOnly":true,"type":"string"}
+			"changeStatus":{"description":"Configuration file change status, if the first configuration then it is Added, else Changed, values can be : Add|Change ","readOnly":true,"type":"string"}
+			"id":{"description":"The id of the datasource","readOnly":true,"type":"string"}
+			"pollTimestamp":{"format":"int64","description":"datasource poll timestamp in milliseconds","readOnly":true,"type":"integer"}
+			
+			
+		DeviceDataSourceInstanceGroup
+			"deviceDataSourceId":{"format":"int32","description":"the device datasource id","readOnly":true,"type":"integer"}
+			"createOn":{"format":"int64","description":"time when the group was created.","readOnly":true,"type":"integer"}
+			"id":{"format":"int32","description":"the instance group id","readOnly":true,"type":"integer"}
+			"deviceId":{"format":"int32","description":"The id of associated device","readOnly":true,"type":"integer"}
+			"deviceDisplayName":{"description":"The display name of the device","readOnly":true,"type":"string"}
+
+		DeviceDataSourceInstanceData
+			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
+			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}
+			"dataSourceName":{"description":"datasource name","readOnly":true,"type":"string"}
+
+		DeviceDataSourceInstanceConfigDiff
+			"rowNo":{"format":"int32","description":"diff row number","readOnly":true,"type":"integer"}
+			"type":{"description":"diff type, values can be : add|remove","readOnly":true,"type":"string"}
+			"content":{"description":"configuration content","readOnly":true,"type":"string"}
+			
+		DeviceGroupDataSourceDataPointConfig
+			"enableAnomalyAlertSuppression":{"type":"string"}
+			"criticalAdAdvSetting":{"type":"string"}
+			"adAdvSettingEnabled":{"type":"boolean"}
+			"errorAdAdvSetting":{"type":"string"}
+			"globalEnableAnomalyAlertGeneration":{"type":"string"}
+			"enableAnomalyAlertGeneration":{"type":"string"}
+			"warnAdAdvSetting":{"type":"string"}
+			"dataPointName":{"type":"string"}
+			"dataPointId":{"format":"int32","type":"integer"}
+			"globalEnableAnomalyAlertSuppression":{"type":"string"}
+			"collectionInterval":{"format":"int64","description":"Collection Interval","readOnly":true,"type":"integer"}
+			"alertExpr":{"type":"string"}
+			
+		DeviceDataSourceInstanceConfigAlert
+			"alertLevel":{"format":"int32","description":"Alert level, 0 - alert is cleared, 2 - warn alert, 3 - error alert, 4 - critical alert","readOnly":true,"type":"integer"}
+			"id":{"description":"Alert id","readOnly":true,"type":"string"}
+			"alertId":{"description":"Alert internal id","readOnly":true,"type":"string"}
+			"alertSummary":{"description":"Summary of this config source alert","readOnly":true,"type":"string"}
+			"timestamp":{"format":"int64","description":"Timestamp of alert start or clear","readOnly":true,"type":"integer"}
+
+		GroupNetFlowRecord
+			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"srcAsnName":{"readOnly":true,"type":"string"}
+			"dstASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"destAsnName":{"readOnly":true,"type":"string"}
+			
+		NetflowBandwidth
+			"deviceId":{"format":"int32","type":"integer"}
+		DeviceGroupAlertThresholdInfo
+			"enableAnomalyAlertGeneration":{"description":"enable anomaly alert generation","readOnly":true,"type":"string"}
+			"userPermission":{"readOnly":true,"type":"string"}
+			"enableAnomalyAlertSuppression":{"description":"enable anomaly alert suppression","readOnly":true,"type":"string"}
+		DeviceDataSourceAssociated
+			"instance":{"description":"The instance list associated to the datasource","type":"array","items":{"$ref":"#/definitions/DeviceDataSourceAssociatedInstance"}}
+			"hasMore":{"format":"int32","description":"Whether has more instance. 0 no more, 1 has more","readOnly":true,"type":"integer"}
+			"hasActiveInstance":{"description":"Whether has active instance.","readOnly":true,"type":"boolean"}
+		DeviceDataSourceInstance
+			"collectorId":{"format":"int32","description":"The id of the collector the datasource instance is associated with","readOnly":true,"type":"integer"}
+		InheritanceProp
+			"fullpath":{"description":"The fullpath of the property","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"Source id for the property,for example,id for group or property rule","readOnly":true,"type":"integer"}
+			"type":{"description":"The type of the parent property from which are inheriting","readOnly":true,"type":"string"}
+			"value":{"description":"The property value for the group","readOnly":true,"type":"string"}
+		NetflowReport
+			"required":["hostsVal","hostsValType"]
+			"hostsValType":{"description":"The resource type for the report, host or group","type":"string"}
+		DeviceDataSourceAssociatedInstance
+			"name":{"description":"instance name","readOnly":true,"type":"string"}
+			"alias":{"description":"instance alias","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"instance id","readOnly":true,"type":"integer"}
+		EntityProperty
+			"inheritList":{"description":"The inherit list of the property","readOnly":true,"type":"array","items":{"$ref":"#/definitions/InheritanceProp"}}
+			"name":{"description":"The name of the property","readOnly":true,"type":"string"}
+			"type":{"description":"The type of proprety among Inherit|System|Custom","readOnly":true,"type":"string"}
+			"value":{"description":"The value of the property","readOnly":true,"type":"string"}
+		DeviceGroupData
+			"rolePrivileges":{"description":"The role privilege operations for the device group that are granted to the user that made this API request","readOnly":true,"type":"array","items":{"type":"string"}}
+		DeviceGroup
+			"numOfKubernetesDevices":{"format":"int64","description":"The number of kubernetes devices that belong to this device group (includes Kubernetes devices in sub groups)","readOnly":true,"type":"integer"}
+			"rolePrivileges":{"description":"The role privilege operations for the device group that are granted to the user that made this API request","readOnly":true,"type":"array","items":{"type":"string"}}
+			"defaultCollectorGroupDescription":{"description":"The description of the default collector group assigned to the device group","readOnly":true,"type":"string"}
+			"saasTestResultCode":{"format":"int32","description":"The Status code result returned by the transaction that tests the SaaS credentials associated with the SaaS group","readOnly":true,"type":"integer"}
+			"defaultCollectorGroupId":{"format":"int32","description":"The collector group id of the default collector assigned to the device group","readOnly":true,"type":"integer"}
+			"defaultAutoBalancedCollectorGroupId":{"format":"int32","description":"The id of the default Auto Balanced Collector Group assigned to the device group","type":"integer"}
+			"saasTestResult":{"description":"The result returned by the transaction that tests the SaaS credentials associated with the Saas group","readOnly":true,"$ref":"#/definitions/SaasAccountTestResult"}
+		NetflowEndpoint
+			"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"
+			}}}],"x-discriminator-value":"endpoint"
+		Device
+			"azureState":{"format":"int32","description":"The azure instance state (if applicable): 1 indicates that the instance is running, 2 indicates that the instance is stopped and 3 the instance is terminated.","readOnly":true,"type":"integer"}
+			"logCollectorGroupName":{"description":"The name of the Collector Group associated with the device\u0027s.","readOnly":true,"type":"string"}
+			"logCollectorDescription":{"description":"The description/name of the log collector for this device","readOnly":true,"type":"string"}
+			"logCollectorGroupId":{"format":"int32","description":"The id of the Collector Group associated with the device\u0027s log collection","readOnly":true,"type":"integer"}
+			"rolePrivileges":{"description":"The role privilege operation(s) for this device that are granted to the user who made the API request","readOnly":true,"type":"array","items":{"type":"string"}}
+			"isPreferredLogCollectorConfigured":{"description":"Indicates whether Preferred Log Collector is configured  (true) or not (false) for the device","type":"boolean","example":true}
+			"gcpState":{"format":"int32","description":"The gcp instance state (if applicable): 1 indicates that the instance is running, 2 indicates that the instance is stopped and 3 the instance is terminated.","readOnly":true,"type":"integer"}
+			"syntheticsCollectorIds":{"uniqueItems":true,"description":"The list of ids of the collectors currently monitoring the resource and discovering instances","type":"array","items":{"format":"int32","type":"integer"},"example":"1,4"}
+			"resourceIds":{"description":"Any non-system properties (aside from system.categories) defined for this device","type":"array","items":{"$ref":"#/definitions/NameAndValue"}}
+			"currentCollectorId":{"format":"int32","description":"The id of the collector currently monitoring the device and discovering instances","type":"integer","example":1.0}
+			"currentLogCollectorId":{"format":"int32","description":"The id of the Log collector currently collecting logs.","type":"integer","example":1.0}
+			"logCollectorId":{"format":"int32","description":"The Id of the netflow collector associated with the device","type":"integer","example":1.0}
+		DeviceDataSourceInstanceAlertSetting
+			"parentInstanceGroupAlertExpr":{"description":"Instance group alert expression list base on the priority. The first is the highest priority and effected on this instance","readOnly":true,"$ref":"#/definitions/InstanceGroupAlertThresholdInfo"}
+			"globalEnableAnomalyAlertGeneration":{"description":"The global enable anomaly alert generation","readOnly":true,"type":"string"}
+			"enableAnomalyAlertGeneration":{"description":"enable anomaly alert generation","readOnly":true,"type":"string"}
+			"globalEnableAnomalyAlertSuppression":{"description":"The global enable anomaly alert suppression","readOnly":true,"type":"string"}
+			"deviceGroupId":{"format":"int32","description":"The ID of the device group","readOnly":true,"type":"integer"}
+			"id":{"format":"int32","description":"The id of this alert setting","readOnly":true,"type":"integer"}
+			"deviceGroupFullPath":{"description":"The full path of the device group","readOnly":true,"type":"string"}
+			"alertTransitionInterval":{"format":"int32","description":"The interval of alert transition","readOnly":true,"type":"integer"}
+			"enableAnomalyAlertSuppression":{"description":"enable anomaly alert suppression","readOnly":true,"type":"string"}
+			"alertClearInterval":{"format":"int32","description":"The interval of alert clear transition","readOnly":true,"type":"integer"}
+			"criticalAdAdvSetting":{"type":"string"}
+			"alertExprNote":{"description":"The note associated with the current alert threshold settings","type":"string","example":"Router 1 Ping Check"}
+			"adAdvSettingEnabled":{"type":"boolean"}
+			"errorAdAdvSetting":{"type":"string"}
+			"dataSourceInstanceId":{"format":"int32","description":"The id of the DataSource instance alert settings apply to","readOnly":true,"type":"integer"}
+			"warnAdAdvSetting":{"type":"string"}
+			"collectionInterval":{"format":"int64","description":"Collection Interval","readOnly":true,"type":"integer"}
+EventSources
+		LogFile
+			"originId":{"type":"string"}
+			"matches":{"description":"The regex or plain text to look for in the file and trigger alert if found","type":"array","items":{"$ref":"#/definitions/MatchPattern"}}
+		EventSource
+			"suppressDuplicatesES":{"description":"Whether or not duplicate alerts have to be suppressed","type":"boolean"}
+			"alertLevel":{"description":"The default alert level: warn | error | critical | doMapping","type":"string"}
+			"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"}
+			"collector":{"description":"The EventSource collector type: wineventlog | syslog | snmptrap | echo | logfile | scriptevent | awsrss | azurerss | azureadvisor | gcpatom | awsrdspievent | azureresourcehealthevent | azureemergingissue | azureloganalyticsworkspacesevent | awstrustedadvisor | awshealth | ipmievent","type":"string"}
+			"auditVersion":{"format":"int64","description":"The auditVersion of the EventSource","readOnly":true,"type":"integer"}
+			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
+			"alertBodyTemplate":{"description":"The alert message body for the EventSource","type":"string"}
+			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
+		LogFileEventSource
+			"logFiles":{"description":"log files","type":"array","items":{"$ref":"#/definitions/LogFile"}}
+		RestEventSourceFilter
+			"required":["comment","name","operator","value"]
+			"name":{"description":"filter name","type":"string"}
+			"comment":{"description":"filter comment","type":"string"}
+			"id":{"format":"int32","description":"filter id","readOnly":true,"type":"integer"}
+			"value":{"description":"filter value","type":"string"}
+			"operator":{"description":"filter operator","type":"string"}
+Flows
+Functions
+HistorySdts
+		SDT
+			"sdtType":{"description":"the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek","type":"string","example":"oneTime"}
+			"weekOfMonth":{"description":"The week of the month that the SDT will be active for a monthly SDT","type":"string","example":"1"}
+			"type":{"description":"The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT","type":"string","example":"ResourceGroupSDT"}
+			"weekDay":{"description":"the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY","type":"string","example":"Sunday"}
+SDTHistory
+			"approximateEndEpoch":{"format":"int64","description":"The end epoch for the SDT","readOnly":true,"type":"integer","example":1.475902808E12
+			"approximateStartEpoch":{"format":"int64","description":"The start epoch for the SDT","readOnly":true,"type":"integer","example":1.475875446E12}
+Log
+Logging
+LogicModules
+		AutoDiscoveryFilter
+			"comment":{"description":"filter comment"
+			"attribute":{"description":"attribute to filter"
+			"operation":{"description":"filter\u0027s operation values can be : Equal|NotEqual|GreaterThan|GreaterEqual|LessThan|LessEqual|Contain|NotContain|NotExist|RegexMatch|RegexNotMatch"
+			"value":{"description":"operation value"
+
+		AppliesToFunction
+			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
+			"name":{"description":"The name of the AppliesTo Function","type":"string"}
+			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"The ID of the AppliesTo Function","readOnly":true,"type":"integer","minimum":0.0}
+			"lineageId":{"description":"The lineage Id of the LMModule","readOnly":true,"type":"string"}
+
+		CloudWatchAutoDiscoveryMethod
+			"period":{"type":"string"}
+			"metricName":{"type":"string"}
+			"clusterDimensionValue":{"type":"string"}
+		AutoDiscoveryConfiguration
+			"persistentInstance":{"description":"persist discovered instance","type":"boolean"}
+			"scheduleInterval":{"format":"int32","description":"auto discovery schedule interval in minutes, 0 means host or data source changed, values can be 0|15|60|1440","type":"integer"}
+			"deleteInactiveInstance":{"description":"delete inactive instance","type":"boolean"}
+			"method":{"description":"method used to do auto discovery instance","$ref":"#/definitions/AutoDiscoveryMethod"}
+			"instanceAutoGroupMethod":{"description":"auto group method","type":"string"},"
+			"instanceAutoGroupMethodParams":{"description":"auto group method\u0027s parameters","type":"string"}
+			"disableInstance":{"description":"disable discovered instance","type":"boolean"}
+		AutoDiscoveryMethod
+			"name":{"description":"The auto discovery method name values can be : ad_cim|ad_cloudwatch|ad_collector|ad_dummy|ad_ec2|ad_esx|ad_http|ad_ipmi|ad_jdbc|ad_jmx|ad_netapp|ad_pdh|ad_port|ad_script|ad_snmp|ad_wmi|ad_xen|ad_azurerediscache|ad_awsserviceregion|ad_awsec2reservedinstance|ad_awsec2reservedinstancecoverage|ad_awsecsservice|ad_awsec2scheduledevents|ad_azureserviceregion|ad_azuresubscription|ad_azurebackupjob|ad_azuresdk|ad_azurewebjob|ad_awsbillingreport|ad_awselasticache|ad_awsredshift|ad_azurebilling|ad_awslbtargetgroups|ad_gcpappengine|ad_gcpbilling|ad_awsvpntunnel|ad_gcpvpntunnel|ad_awsglobalwebacl|ad_gcplbbackendservice|ad_gcppubsubsubscription|ad_gcppubsubsnapshot|ad_azurereplicationjob|ad_azureexpressroutecircuitpeering|ad_awsapigatewaystage|ad_azureautomationaccountcertificate|ad_azurevngconnection|ad_azurewebappinstance|ad_azureappserviceenvironmentmultirolepool|ad_openmetrics|ad_awsmediaconnectoutput|ad_awsmediaconnectsource|ad_awswebaclwafv2|ad_saaso365sharepointsite|ad_awscognitoidentityproviders|ad_azureeabilling|ad_saaszoomplanusage|ad_saasstatus|ad_azuresynapse|ad_saasairbrake|ad_syntheticsselenium|ad_azurevirtualdesktopsessionhosts|ad_saaso365subscribedsku|ad_azuredimension|ad_azurecostmanagementdimensions|ad_saaso365servicehealth|ad_saaso365mailbox|ad_azurenetappvolumes|ad_azureloganalyticsworkspaces|ad_saaszoomstatus|ad_saassalesforcelicense|ad_saaszoomroom|ad_saaswebexlicenseusage|ad_azureloganalyticsreplicationjob|ad_paasjsonpath","type":"string"}
+
+Logos
+NetscanPolicies
+		Netscan
+			"required":["duplicate","method","name","schedule"]
+			"creator":{"description":"The user that created the policy","readOnly":true,"type":"string","example":"sarah@logicmonitor.com"}
+			"collectorGroupName":{"description":"The name of the group of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod"}
+			"method":{"description":"The method that should be used to discover devices. Options are nmap (ICMP Ping), nec2 (EC2), enhancedScript and script","type":"string","example":"nmap"}
+			"collectorGroup":{"format":"int32","description":"The ID of the group of the Collector associated with this Netscan","readOnly":true,"type":"integer","example":4.0}
+			"nextStart":{"description":"The date and time of the next start time of the scan - displayed as manual if the scan does not run on a schedule","readOnly":true,"type":"string","example":"2018-09-07 15:12:00 PDT"}
+			"ignoreSystemIPsDuplicates":{"description":"Ignore system.ips when checking for duplicate resources","readOnly":true,"type":"boolean"}
+			"collectorDescription":{"description":"The description of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod CollectorA"}
+			"nextStartEpoch":{"format":"int64","description":"The epoch of the next start time of the scan - displayed as 0 if the scan does not run on a schedule","readOnly":true,"type":"integer","example":1.53635832E9}
+			"id":{"format":"int32","description":"The ID of the Netscan Policy","readOnly":true,"type":"integer","example":208.0}
+			
+		ScriptNetscan
+			"defaultGroupFullPath":{"description":"The full path of the default group to add discovered devices to","readOnly":true,"type":"string","example":"lm/prod/servers"}
+		Ec2Netscan
+			"ports":{"$ref":"#/definitions/RestNetscanPorts"}
+		NMapNetscan
+			"required":["includeNetworkAndBroadcast","subnet"]
+			"includeNetworkAndBroadcast":{"description":"Include Network \u0026 Broadcast Address for CIDR based netscan","type":"boolean","example":false}
+			"credentials":{"description":"The credentials to be used for the scan","$ref":"#/definitions/RestNMapNetscanPolicyCredential","example":"2"}
+			"ports":{"description":"The ports that should be used in the Netscan","$ref":"#/definitions/RestNetscanPorts"}
+
+
+PropertySources
+PushMetrics
+RecycleBin
+Reports
+		SLAReport
+			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
+			
+		Recipient
+			"method":{"description":"EMAIL|SMEMAIL|VOICE|SMS, Recipient method for each type\n            group: \"method\" not used\n            arbitrary: the method should be email.\n            admin: the method  Should be email, smsEmail, voice, sms, or defaultMethod;\n","type":"string","example":"EMAIL"}
+			"contact":{"description":"contact details, email address or phone number","type":"string"}
+			"type":{"description":"GROUP|ARBITRARY|ADMIN, where Admin \u003d a user, and Arbitrary \u003d an arbitrary email","type":"string","example":"Admin"}
+			"addr":{"description":"the user name if method \u003d admin, or the email address if method \u003d arbitrary","type":"string","example":"john.doe@logicmonitor.com"}
+		ReportRecipient
+			"type":{"description":"Where admin refers to a user in the account and arbitrary refers to an email address not associated with a user account.Acceptable values are: admin, arbitrary, group","type":"string","example":"admin"}
+		ReportGroup
+			"required":["name"]
+			"matchedReportCount":{"format":"int32","description":"The matched reports count of this group","readOnly":true,"type":"integer","example":2.0}
+			"userPermission":{"description":"The user permission on the report group","readOnly":true,"type":"string","example":"read"}
+			"name":{"description":"The report group name","type":"string","example":"Firewall Reports"}
+			"description":{"description":"The report group description","type":"string","example":"This is daily firewall reports"}
+			"id":{"format":"int32","description":"The report group id","readOnly":true,"type":"integer"}
+			"reportsCount":{"format":"int32","description":"The reports count of this group","readOnly":true,"type":"integer","example":5.0}
+		EscalatingChain
+			"throttlingAlerts":{"format":"int32","description":"max number of alert can send during a throttle period","type":"integer","example":40.0}
+			"enableThrottling":{"description":"if throttle needs to be enabled then true if not then false.","type":"boolean","example":true}
+			"name":{"description":"the chain name","type":"string","example":"NOC Team"}
+			"throttlingPeriod":{"format":"int32","description":"the throttle period","type":"integer","example":30.0}
+		ReportBase
+			"reportLinkExpire":{"description":"The report link Expire. Allowable values are:High Flexibility,High Security","type":"string","example":"High Flexibility"}
+		InterfBandwidthReport
+			"required":["isBase1024","metrics","top10Only"]
+			"isBase1024":{"description":"true | false\nfalse: Scale the number using 1000 \ntrue: Scale the number using 1024","type":"boolean"}
+			"top10Only":{"description":"true | false\nfalse: Metrics will be displayed for all selected devices or groups\ntrue: Metrics will only be displayed for the top ten device or groups","type":"boolean"}
+			"metrics":{"description":"The datapoint or calculation on a datapoint that will be included in the report, where each datapoint/calculation is specified by three fields: dataSourceId, instances (glob is okay)","type":"array","items":{"$ref":"#/definitions/Metric"}}
+ScheduledDownTimes
+Settings
+		Role
+			"privileges":{"description":"The account privileges associated with the role. Privileges can be added to a role for each area of your account","type":"array","items":{"$ref":"#/definitions/Privilege"}}
+			"userPermission":{"description":"The permission of current role with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
+			"description":{"description":"The description of the role","type":"string","example":"Administrator can do everything, including security-sensitive actions"}
+			"roleGroupId":{"format":"int32","description":"The group Id of the role","type":"integer","example":3.0}
+			
+		Admin
+			"viewPermission":{"description":"The account tabs that will be visible to the user","type":"object","example":"{\n\n\"Resources\" : true,\n\"Websites\" : true,\n\"Reports\" : true,\n\"Dashboards\" : true,\n\"Alerts\" : true,\n\"Settings\" : true,\n\"Maps\" : true,\n\"Logs\" : true,\n\"Traces\" : true\n}"}
+			"adminGroupIds":{"description":"The Id(s) of the groups the admin is in, where multiple group ids are comma separated","type":"array","items":{"format":"int32","type":"integer"},"example":"[1,2,3]"}
+			"userPermission":{"description":"The permission of current user with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
+			"tenantId":{"format":"int32","description":"The tenant id of the user","readOnly":true,"type":"integer","example":2.0}
+			
+		APIToken
+			"userPermission":{"description":"The permission of current apiToken with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
+		Authentication
+			"password":{"description":"NTLM authentication password","type":"string"}
+			"type":{"description":"Authentication type","type":"string","example":"basic"}
+			"userName":{"description":"NTLM  authentication userName","type":"string"}
+Users
+		Privilege
+			"objectName":{"description":"The privilege object name","readOnly":true,"type":"string"}
+			"subOperation":{"description":"The highest privilege operation on its children operations","readOnly":true,"type":"string"}
+			"operation":{"description":"The privilege operation","type":"string","example":"write"}
+			"objectId":{"description":"The privilege object identifier","type":"string","example":"123"}
+			"objectType":{"description":"The privilege object type. values can be [dashboard_group|dashboard|host_group|service_group|website_group|report_group|remoteSession|chat|setting|device_dashboard|help|logs|configNeedDeviceManagePermission|map|resourceMapTab|tracesManageTab]","type":"string","example":"dashboard group"}
+Version
+Websites
+		Website
+			"type":{"description":"pingcheck | webcheck\nThe type of the service","type":"string","example":"webcheck"}
+			"rolePrivileges":{"description":"The role privilege operation(s) for this website that are granted to the user who made the API request","readOnly":true,"type":"array","items":{"type":"string"}}
+			
+		WebsiteGroup
+			"testLocation":{"description":"An object that indicates the websites locations.\ne.g. {\u0027all\u0027: false, smgId:[1,2,3], collectorIds:[14,16]}","$ref":"#/definitions/WebsiteLocation"}
+			"hasWebsitesDisabled":{"description":"Indicates if there are websites disabled in this group","readOnly":true,"type":"boolean"}
+			"rolePrivileges":{"description":"The privilege operations of the user\u0027s role that made the API request.  The array can contain the values ack, sdt and/or threshold","readOnly":true,"type":"array","items":{"type":"string"}}
+			"numOfDirectWebsites":{"format":"int32","description":"The number of direct websites in this group","readOnly":true,"type":"integer"}
+			"numOfDirectSubGroups":{"format":"int32","description":"The number of direct website groups in this group (excluding those in subgroups)","readOnly":true,"type":"integer"}
+			"numOfWebsites":{"format":"int32","description":"The number of websites in the service group, including the websites in sub groups","readOnly":true,"type":"integer"}
+			"properties":{"description":"The website folder properties","type":"array","items":{"$ref":"#/definitions/NameAndValue"}}
+			
+		WebsiteCollectorInfo
+			properties":{"hostname":{"description":"The hostname of the collector"
+			"collectorGroupName":{"description":"The group name of the group the collector is present in"
+			"collectorGroupId":{"format":"int32","description":"The group Id of the group the collector is present in"
+			"description":{"description":"The description of the collector"
+			"id":{"format":"int32","description":"The collector id"
+			"status":{"description":"The status of the collector","readOnly":true,"type":"string"}}},
+			
+		WebsiteLocation
+			"all":{"description":"This field only for the SiteMonitor Groups, does not include Internal Service Groups","type":"boolean","example":"true"}
+			"collectorIds":{"description":"The Internal Service Groups Ids","type":"array","items":{"format":"int32","type":"integer"}}
+			"collectors":{"description":"The collector info of the services","type":"array","items":{"$ref":"#/definitions/WebsiteCollectorInfo"}}
+			"smgIds":{"description":"The SiteMonitor Groups Ids","type":"array","items":{"format":"int32","type":"integer"},"example":"[1, 2, 4, 3, 5, 6]"}
+			
+		WebsiteCheckpointRawData
+			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
+			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}}},"
+
+		WebCheckStep
+			"schema":{"description":"HTTP schema","type":"string"}
+			"respType":{"description":"Plain Text/String | Glob expression | JSON | XML | Multi line key value pair\nStep Response Type","type":"string"}
+			"HTTPHeaders":{"description":"HTTP header","type":"string"}
+			"auth":{"description":"Authorization Information","$ref":"#/definitions/Authentication"}
+			"matchType":{"description":"Body match type","type":"string","example":"plain"}
+			"description":{"description":"The description of the Step","type":"string"}
+			"type":{"description":"script | config\nThe type of service step","readOnly":true,"type":"string","example":"config"}
+			"timeout":{"format":"int32","description":"Request timeout measured in seconds","type":"integer"}
+			"useDefaultRoot":{"description":"true | falseCheck if using the default root","type":"boolean","example":"true"}
+			"path":{"description":"Path for JSON, XPATH","type":"string"}
+			"HTTPMethod":{"description":"GET | HEAD | POST\nSpecifies the type of HTTP method","type":"string","example":"GET"}
+			"enable":{"description":"true | false\nSpecifies whether to enable step or not","type":"boolean"}
+			"HTTPVersion":{"description":"1.1 | 1\nSpecifies HTTP version","type":"string","example":"1.1"}
+			"keyword":{"description":"Keyword that matches the body","type":"string"}
+			"respScript":{"description":"The Step Response Script","type":"string"}
+			"label":{"description":"The Label of the Step","type":"string"}
+			"url":{"description":"The URL of service step","type":"string","example":"/"}
+			"invertMatch":{"description":"true | false\nChecks if invert matches or not","type":"boolean","example":false}
+			"reqScript":{"description":"The Request Script","type":"string"}
+			"HTTPBody":{"description":"HTTP Body","type":"string"}
+			"followRedirection":{"description":"true | false\nSpecifies whether to follow redirection or not","type":"boolean","example":"true"}
+			"postDataEditType":{"description":"Raw | Formatted Data\nSpecifies POST data type","type":"string","example":"raw"}
+			"name":{"description":"The name of the Step","type":"string"}
+			"requireAuth":{"description":"true | false\nChecks if authorization required or not","type":"boolean","example":false}
+			"reqType":{"description":"script | config\nStep Request Type","type":"string"}
+			"fullpageLoad":{"description":"true | false\nChecks if full page should be loaded or not","type":"boolean","example":false}
+			"statusCode":{"description":"The expected status code","type":"string"}
+		WebsiteCheckPoint
+			"geoInfo":{"description":"The geographical information (location) of the SiteMonitor Checkpoint","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"The Id of the SiteMonitor Checkpoint","readOnly":true,"type":"integer"}
+			"smgId":{"format":"int32","description":"The sitemonitor group id","readOnly":true,"type":"integer"}
+		SiteMonitorCheckpoint
+			"geoInfo":{"description":"The geographical information (location) of the SiteMonitor Checkpoint","readOnly":true,"type":"string"}
+			"displayPrio":{"format":"int32","description":"The display priority of the SiteMonitor Checkpoint in your LogicMonitor portal","type":"integer"}
+			"name":{"description":"The SiteMonitor checkPoint name","readOnly":true,"type":"string"}
+			"isEnabledInRoot":{"description":"Checks if sitemonitor enabled in root service group","readOnly":true,"type":"boolean"}
+			"description":{"description":"Check point description","type":"string"}
+			"id":{"format":"int32","description":"The Id of the SiteMonitor Checkpoint","readOnly":true,"type":"integer"}
+
