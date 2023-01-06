@@ -181,3 +181,172 @@
 			
 		APIToken
 			"userPermission":{"description":"The permission of current apiToken with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
+			
+		Recipient
+			"method":{"description":"EMAIL|SMEMAIL|VOICE|SMS, Recipient method for each type\n            group: \"method\" not used\n            arbitrary: the method should be email.\n            admin: the method  Should be email, smsEmail, voice, sms, or defaultMethod;\n","type":"string","example":"EMAIL"}
+			"contact":{"description":"contact details, email address or phone number","type":"string"}
+			"type":{"description":"GROUP|ARBITRARY|ADMIN, where Admin \u003d a user, and Arbitrary \u003d an arbitrary email","type":"string","example":"Admin"}
+			"addr":{"description":"the user name if method \u003d admin, or the email address if method \u003d arbitrary","type":"string","example":"john.doe@logicmonitor.com"}
+			
+		DeviceGroupDataSourceDataPointConfig
+			"enableAnomalyAlertSuppression":{"type":"string"}
+			"criticalAdAdvSetting":{"type":"string"}
+			"adAdvSettingEnabled":{"type":"boolean"}
+			"errorAdAdvSetting":{"type":"string"}
+			"globalEnableAnomalyAlertGeneration":{"type":"string"}
+			"enableAnomalyAlertGeneration":{"type":"string"}
+			"warnAdAdvSetting":{"type":"string"}
+			"dataPointName":{"type":"string"}
+			"dataPointId":{"format":"int32","type":"integer"}
+			"globalEnableAnomalyAlertSuppression":{"type":"string"}
+			"collectionInterval":{"format":"int64","description":"Collection Interval","readOnly":true,"type":"integer"}
+			"alertExpr":{"type":"string"}
+			
+		AlertReport
+			"anomaly":{"description":"all|yes|no|yes,no|no,yes\nall: return all anomaly, non anomaly and unknown anomaly alerts\nyes: only alerts which has anomaly will be displayed\nno: only alerts which has no anomaly will be displayed\nyes,no:  return all anomaly and non anomaly alerts","type":"string"}
+			"sortedDirection":{"description":"asc | desc","type":"string"}
+			"dependencyRoutingState":{"type":"string"}
+			"dependencyRole":{"type":"string"}
+			
+		WebCheckStep
+			"schema":{"description":"HTTP schema","type":"string"}
+			"respType":{"description":"Plain Text/String | Glob expression | JSON | XML | Multi line key value pair\nStep Response Type","type":"string"}
+			"HTTPHeaders":{"description":"HTTP header","type":"string"}
+			"auth":{"description":"Authorization Information","$ref":"#/definitions/Authentication"}
+			"matchType":{"description":"Body match type","type":"string","example":"plain"}
+			"description":{"description":"The description of the Step","type":"string"}
+			"type":{"description":"script | config\nThe type of service step","readOnly":true,"type":"string","example":"config"}
+			"timeout":{"format":"int32","description":"Request timeout measured in seconds","type":"integer"}
+			"useDefaultRoot":{"description":"true | falseCheck if using the default root","type":"boolean","example":"true"}
+			"path":{"description":"Path for JSON, XPATH","type":"string"}
+			"HTTPMethod":{"description":"GET | HEAD | POST\nSpecifies the type of HTTP method","type":"string","example":"GET"}
+			"enable":{"description":"true | false\nSpecifies whether to enable step or not","type":"boolean"}
+			"HTTPVersion":{"description":"1.1 | 1\nSpecifies HTTP version","type":"string","example":"1.1"}
+			"keyword":{"description":"Keyword that matches the body","type":"string"}
+			"respScript":{"description":"The Step Response Script","type":"string"}
+			"label":{"description":"The Label of the Step","type":"string"}
+			"url":{"description":"The URL of service step","type":"string","example":"/"}
+			"invertMatch":{"description":"true | false\nChecks if invert matches or not","type":"boolean","example":false}
+			"reqScript":{"description":"The Request Script","type":"string"}
+			"HTTPBody":{"description":"HTTP Body","type":"string"}
+			"followRedirection":{"description":"true | false\nSpecifies whether to follow redirection or not","type":"boolean","example":"true"}
+			"postDataEditType":{"description":"Raw | Formatted Data\nSpecifies POST data type","type":"string","example":"raw"}
+			"name":{"description":"The name of the Step","type":"string"}
+			"requireAuth":{"description":"true | false\nChecks if authorization required or not","type":"boolean","example":false}
+			"reqType":{"description":"script | config\nStep Request Type","type":"string"}
+			"fullpageLoad":{"description":"true | false\nChecks if full page should be loaded or not","type":"boolean","example":false}
+			"statusCode":{"description":"The expected status code","type":"string"}
+			
+		DashboardData
+			"userPermission":{"description":"The permission of the user that made the API call","readOnly":true,"type":"string"}
+			"name":{"description":"The name of the dashboard","readOnly":true,"type":"string"}
+			"sharable":{"description":"Whether or not the dashboard is sharable. This value will always be true unless the dashboard is a private dashboard","readOnly":true,"type":"boolean"}
+			"id":{"format":"int32","description":"The Id of the dashboard","readOnly":true,"type":"integer"}
+			
+		DeviceDataSourceInstanceConfigAlert
+			"alertLevel":{"format":"int32","description":"Alert level, 0 - alert is cleared, 2 - warn alert, 3 - error alert, 4 - critical alert","readOnly":true,"type":"integer"}
+			"id":{"description":"Alert id","readOnly":true,"type":"string"}
+			"alertId":{"description":"Alert internal id","readOnly":true,"type":"string"}
+			"alertSummary":{"description":"Summary of this config source alert","readOnly":true,"type":"string"}
+			"timestamp":{"format":"int64","description":"Timestamp of alert start or clear","readOnly":true,"type":"integer"}
+			
+		DeviceSLAWidget
+			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
+			"displayPercentageBar":{"description":"Whether a progress bar is displayed in list mode","type":"boolean"}
+			
+		GroupNetFlowRecord
+			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"srcAsnName":{"readOnly":true,"type":"string"}
+			"dstASN":{"format":"int64","readOnly":true,"type":"integer"}
+			"destAsnName":{"readOnly":true,"type":"string"}
+			
+		NetflowBandwidth
+			"deviceId":{"format":"int32","type":"integer"}
+			
+		RawDataValues
+			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
+			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}
+			
+		AutoDiscoveryConfiguration
+			"persistentInstance":{"description":"persist discovered instance","type":"boolean"}
+			"scheduleInterval":{"format":"int32","description":"auto discovery schedule interval in minutes, 0 means host or data source changed, values can be 0|15|60|1440","type":"integer"}
+			"deleteInactiveInstance":{"description":"delete inactive instance","type":"boolean"}
+			"method":{"description":"method used to do auto discovery instance","$ref":"#/definitions/AutoDiscoveryMethod"}
+			"instanceAutoGroupMethod":{"description":"auto group method","type":"string"},"
+			"instanceAutoGroupMethodParams":{"description":"auto group method\u0027s parameters","type":"string"}
+			"disableInstance":{"description":"disable discovered instance","type":"boolean"}
+			
+		AlertRule
+			"required":["escalatingChainId","name","priority","sendAnomalySuppressedAlert"]
+			"resourceProperties":{"description":"The resource property filters list","type":"array","items":{"$ref":"#/definitions/DeviceProperty"}}
+			"sendAnomalySuppressedAlert":{"description":" send anomaly suppressed alert","type":"boolean","example":true}
+			
+		DataSource
+			"eriDiscoveryConfig":{"description":"Enable ERI Discovery or not","$ref":"#/definitions/ScriptERIDiscoveryAttributeV3"}
+			"displayName":{"description":"The data source display name","type":"string"}
+			"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"}
+			"collectMethod":{"description":"The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen","type":"string"}
+			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
+			"dataPoints":{"description":"The data point list","type":"array","items":{"$ref":"#/definitions/DataPoint"}}
+			"id":{"format":"int32","description":"The ID of the LMModule","readOnly":true,"type":"integer"}
+			"group":{"description":"The group the LMModule is in","type":"string"}
+			"collectorAttribute":{"description":"data collector\u0027s attributes to collector data. e.g. a ping data source has a ping collector attribute. \n PingCollectorAttributeV1 has two fields. the ip to ping, the data size send to ping","$ref":"#/definitions/CollectorAttribute"}
+			"autoDiscoveryConfig":{"description":"Auto discovery configuration","$ref":"#/definitions/AutoDiscoveryConfiguration"}
+			"payloadVersion":{"format":"int32","description":"The dataSource payload Version for custom metrics","readOnly":true,"type":"integer"}
+			"useWildValueAsUUID":{"description":"Use Wildvalue as Unique identifier in case of multiinstance datasource: true|false","readOnly":true,"type":"boolean"}
+			"enableAutoDiscovery":{"description":"Enable Auto Discovery or not when this data source has multi instance: false|true","type":"boolean"}
+			"technology":{"description":"The Technical Notes for the LMModule","type":"string"}
+			"version":{"format":"int64","description":"The data source version","readOnly":true,"type":"integer"}
+			"tags":{"description":"The Tags for the LMModule","type":"string"}
+			"auditVersion":{"format":"int64","description":"The data source audit version","readOnly":true,"type":"integer"}
+			"hasMultiInstances":{"description":"If the DataSource has multi instance: true|false","readOnly":true,"type":"boolean"}
+			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
+			"eriDiscoveryInterval":{"format":"int32","description":"The DataSource data collect interval","type":"integer"}
+			"enableEriDiscovery":{"description":"Enable ERI Discovery or not: false|true","type":"boolean"}
+			"collectInterval":{"format":"int32","description":"The DataSource data collect interval","type":"integer"}
+			"name":{"description":"The data source name","type":"string"}
+			
+		WidgetToken
+			"inheritList":{"description":"The widget token inherit list","type":"array","items":{"$ref":"#/definitions/WidgetTokenInheritance"}}
+			"type":{"description":"owned | inherit\nSpecifies the type of the widget","readOnly":true,"type":"string"}
+			"value":{"description":"This is the name of the child group of devices, if there is one","type":"string","example":"Devices by Type/Network"}
+			
+		WebsiteCheckPoint
+			"geoInfo":{"description":"The geographical information (location) of the SiteMonitor Checkpoint","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"The Id of the SiteMonitor Checkpoint","readOnly":true,"type":"integer"}
+			"smgId":{"format":"int32","description":"The sitemonitor group id","readOnly":true,"type":"integer"}
+			
+		DeviceGroupAlertThresholdInfo
+			"enableAnomalyAlertGeneration":{"description":"enable anomaly alert generation","readOnly":true,"type":"string"}
+			"userPermission":{"readOnly":true,"type":"string"}
+			"enableAnomalyAlertSuppression":{"description":"enable anomaly alert suppression","readOnly":true,"type":"string"}
+			
+		GraphPlot
+			"missinglines":{"description":"The Missing lines of the graph","readOnly":true,"type":"array","items":{"type":"string"}}
+			"timeScale":{"description":"The specified timescale for the graph","readOnly":true,"type":"string"}
+			"instances":{"uniqueItems":true,"description":"The matched instances of graph","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"timestamps":{"description":"The timestamps of the graph","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"minValue":{"description":"Specifies the minimum value of the graph","readOnly":true,"type":"object"}
+			"startTime":{"format":"int64","description":"Specifies the start-time of the graph","readOnly":true,"type":"integer"}
+			"id":{"format":"int32","description":"The Id of the graph","readOnly":true,"type":"integer"}
+			"rigid":{"description":"true | false\nSpecifies if the graph is rigid or not","readOnly":true,"type":"boolean"}
+			"lines":{"description":"The properties of the graph and graph lines","readOnly":true,"type":"array","items":{"$ref":"#/definitions/GraphPlotLine"}}
+			"height":{"format":"int32","description":"Specifies the height of graph","readOnly":true,"type":"integer"}
+			"endTZOffset":{"format":"int32","description":"Specifies the end TimeZone Offset of the graph","readOnly":true,"type":"integer"}
+			"base1024":{"description":"true | false\nChanges base scale from 1000 to 1024 if value is set to true","readOnly":true,"type":"boolean"}
+			"dsName":{"description":"The name of the DataSource to be used to plot the graph","readOnly":true,"type":"string"}
+			"maxValue":{"description":"Specifies the maximum value of the graph","readOnly":true,"type":"object"}
+			"displayPrio":{"format":"int32","description":"The display priority of the graph in your LogicMonitor portal","readOnly":true,"type":"integer"}
+			"timeZoneId":{"description":"The Id of selected Time Zone","readOnly":true,"type":"string"}
+			"timeZone":{"description":"The selected timezone for the graph","readOnly":true,"type":"string"}
+			"startTZOffset":{"format":"int32","description":"Specifies the start TimeZone Offset of the graph","readOnly":true,"type":"integer"}
+			"xAxisName":{"description":"The label that will be displayed along the X axis","readOnly":true,"type":"string"}
+			"width":{"format":"int32","description":"Specifies the width of graph","readOnly":true,"type":"integer"}
+			"name":{"description":"The Name of the Graph","readOnly":true,"type":"string"}
+			"verticalLabel":{"description":"The label that will be displayed along the y axis (Vertical Label)","readOnly":true,"type":"string"}
+			"step":{"format":"int64","description":"The Step of the graph","readOnly":true,"type":"integer"}
+			"endTime":{"format":"int64","description":"Specifies the end-time of the graph","readOnly":true,"type":"integer"}
+			"scopes":{"description":"Scopes: use this field to find match opsnote","readOnly":true,"type":"array","items":{"$ref":"#/definitions/GraphOpsNoteScope"}}
+			"base":{"format":"int64","description":"The Base of the graph","readOnly":true,"type":"integer"}
+			"exportFileName":{"description":"The export file name","readOnly":true,"type":"string"}
