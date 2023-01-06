@@ -1,5 +1,3 @@
-Change to existing models:
-
 	WebsiteCollectorInfo
 		properties":{"hostname":{"description":"The hostname of the collector"
 		"collectorGroupName":{"description":"The group name of the group the collector is present in"
@@ -101,50 +99,85 @@ Change to existing models:
 			
 		CollectorVersion
 			"feature":{"description":"Specifies if this is a feature version","readOnly":true,"type":"boolean"}
+			
+		Admin
+			"viewPermission":{"description":"The account tabs that will be visible to the user","type":"object","example":"{\n\n\"Resources\" : true,\n\"Websites\" : true,\n\"Reports\" : true,\n\"Dashboards\" : true,\n\"Alerts\" : true,\n\"Settings\" : true,\n\"Maps\" : true,\n\"Logs\" : true,\n\"Traces\" : true\n}"}
+			"adminGroupIds":{"description":"The Id(s) of the groups the admin is in, where multiple group ids are comma separated","type":"array","items":{"format":"int32","type":"integer"},"example":"[1,2,3]"}
+			"userPermission":{"description":"The permission of current user with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
+			"tenantId":{"format":"int32","description":"The tenant id of the user","readOnly":true,"type":"integer","example":2.0}
+			
+		TableWidgetColumn
+			"unitLabel":{"description":"The unit label","type":"string"}
+			
+		AppliesToFunction
+			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
+			"name":{"description":"The name of the AppliesTo Function","type":"string"}
+			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
+			"id":{"format":"int32","description":"The ID of the AppliesTo Function","readOnly":true,"type":"integer","minimum":0.0}
+			"lineageId":{"description":"The lineage Id of the LMModule","readOnly":true,"type":"string"}
 		
-New models:
-	"AzureExpressRouteCircuitPeeringCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]},
-	"AzureRecoveryServicesVaultAgentsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"AzureReplicationDisasterRecoveryCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"AzureRecoveryServiceRTOCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"SaaSZoomStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"RestAwsRdsPerformanceInsightsEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"num":{"format":"int32","description":"Maximum number of items to return","type":"integer"},"dimension":{"description":"The dimension to query","type":"string"}}}]}
-	
-	"ConfigCheck":{"type":"object","properties":{"ackClearAlert":{"description":"Clear alert after ACKED or not","type":"boolean"},"originId":{"description":"portable id for origin tracking","type":"string"},"name":{"description":"The ConfigCheck name","type":"string"},"alertLevel":{"format":"int32","description":"The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)","type":"integer"},"description":{"description":"The ConfigCheck id","type":"string"},"configSourceId":{"format":"int32","description":"The ConfigSource id","type":"integer"},"id":{"format":"int32","description":"The ConfigCheck id","type":"integer"},"type":{"description":"The ConfigCheck type. fetch|ignore|missing|value|groovy","type":"string"},"alertEffectiveIval":{"format":"int32","description":"Alert effective interval","type":"integer"},"script":{"description":"The ConfigCheck script","$ref":"#/definitions/JSONObject"},"alertTransitionInterval":{"format":"int32","description":"The count that the alert must exist for these many poll cycles before it will be triggered","type":"integer"}}}
-	"AwsMediaConnectOutputDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectoutput"}
-	"SaasZoomPlanUsageCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["planType"],"properties":{"period":{"format":"int32","type":"integer"},"planType":{"type":"string"}}}]}
-	
-	"DeviceProperty":{"type":"object","required":["name","value"],"properties":{"name":{"description":"The resource property name","type":"string"},"value":{"description":"The resource property value","type":"string"}}}
-	
-	"RestHighestPriorityCollectorStatus":{"type":"object","properties":{"inSDT":{"description":"The SDT status of the highest priority sub collector","readOnly":true,"type":"boolean"},"acked":{"description":"The acked status of the highest priority sub collector","readOnly":true,"type":"boolean"},"isDown":{"description":"The down status of the highest priority sub collector","readOnly":true,"type":"boolean"},"status":{"format":"int32","description":"The status of the highest priority sub collector","readOnly":true,"type":"integer"}}}
-	"SaasO365ServiceHealthDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AwsWebACLWafV2DiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awswebaclwafv2"}
-	"AzureLogAnalyticsReplicationJobCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"AzureAppServiceEnvironmentMultiRolePoolDiscoverMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
-	"GcpVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
-	"AzureBackupProtectedItemHealthCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	
-	"Audit":{"type":"object","properties":{"version":{"format":"int64","description":"value of audit version","type":"integer"}}}
-	
-	"AzureEABillingCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	
-	"SaaSWebexLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AwsEbsVolumeSnapshotCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"AzureBackupProtectedItemBackupJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
-	"NbarApplicationNames":{"type":"object","properties":{"operator":{"type":"string"},"applicationName":{"type":"string"}}}
-	
-	"AzureCostManagementSubscriptionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
-	"AwsCognitoIdentityProvidersDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"NetflowFilters":{"type":"object","properties":{"nodeB":{"type":"string"},"qosType":{"type":"string"},"deviceInterfaces":{"type":"array","items":{"$ref":"#/definitions/InterfacesFilter"}},"ports":{"type":"string"},"protocol":{"type":"string"},"ipVersion":{"type":"string"},"netflowDevices":{"description":"Netlow filter netflowDevices expression","type":"array","items":{"$ref":"#/definitions/NetflowDeviceInfo"}},"top":{"format":"int32","type":"integer"},"appType":{"type":"string"},"nbarApplicationNames":{"type":"array","items":{"$ref":"#/definitions/NbarApplicationNames"}},"nodeA":{"type":"string"},"conversation":{"type":"array","items":{"$ref":"#/definitions/ConversationFilter"}},"ifNames":{"type":"array","items":{"type":"string"}},"direction":{"type":"string"}}}
-	
-	"AzureWebAppInstanceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
-	"PropertyRule":{"type":"object","required":["name"],"properties":{"scheduleOption":{"description":"property rule schedule option: onAP | onAPpropertyChanges","readOnly":true,"type":"string"},"groovyScript":{"description":"groovy script","type":"string"},"windowsScript":{"description":"external windows script name","type":"string"},"dataType":{"format":"int32","description":"The data type of property source, default is 0\n\n0: property source\n\n1: raw ERI\n\n ","readOnly":true,"type":"integer"},"description":{"description":"property rule description","readOnly":true,"type":"string"},"appliesTo":{"description":"property rule applies to","readOnly":true,"type":"string"},"technology":{"description":"technology notes","readOnly":true,"type":"string"},"linuxCmdline":{"description":"external linux script args","type":"string"},"version":{"format":"int64","description":"the property rule version","readOnly":true,"type":"integer"},"windowsCmdline":{"description":"external windows script args","type":"string"},"lineageId":{"description":"LM module lineageId","readOnly":true,"type":"string"},"tags":{"description":"property rule tags","readOnly":true,"type":"string"},"auditVersion":{"format":"int64","description":"the property rule auditVersion","readOnly":true,"type":"integer"},"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"},"scriptType":{"description":"script type: embed | powershell | external","type":"string"},"name":{"description":"property rule name","readOnly":true,"type":"string"},"checksum":{"description":"LM module checksum","readOnly":true,"type":"string"},"interval":{"format":"int32","description":"The collect interval of raw ERI","readOnly":true,"type":"integer"},"id":{"format":"int32","type":"integer"},"linuxScript":{"description":"external linux script name","type":"string"},"group":{"description":"property rule group name","readOnly":true,"type":"string"}}}
-	"AzureDimensionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["dimensionName","period"],"properties":{"period":{"type":"string"},"metricName":{"type":"string"},"dimensionName":{"type":"string"}}}]}
-	"AzureVirtualDesktopHostPoolsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+		GraphOpsNoteScope
+			"serviceGroupIds":{"description":"The service group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"serviceId":{"format":"int32","description":"The service Id","readOnly":true,"type":"integer"}
+			"type":{"description":"device | service | website\nThe corresponding type","readOnly":true,"type":"string"}
+			"deviceGroupIds":{"description":"The device group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
+			"deviceId":{"format":"int32","description":"The device Id","readOnly":true,"type":"integer"}
+			
+		WebsiteLocation
+			"all":{"description":"This field only for the SiteMonitor Groups, does not include Internal Service Groups","type":"boolean","example":"true"}
+			"collectorIds":{"description":"The Internal Service Groups Ids","type":"array","items":{"format":"int32","type":"integer"}}
+			"collectors":{"description":"The collector info of the services","type":"array","items":{"$ref":"#/definitions/WebsiteCollectorInfo"}}
+			"smgIds":{"description":"The SiteMonitor Groups Ids","type":"array","items":{"format":"int32","type":"integer"},"example":"[1, 2, 4, 3, 5, 6]"}
+			
+		ScriptNetscan
+			"defaultGroupFullPath":{"description":"The full path of the default group to add discovered devices to","readOnly":true,"type":"string","example":"lm/prod/servers"}
+			
+		GraphVirtualDataPoint
+			"rpn":{"description":"the graph virtual data point rpn expression","type":"string"}
+			"name":{"description":"the graph virtual data point name","type":"string"}
+			
+		AlertFilters
+			"anomaly":{"type":"string"}
+			"rule":{"description":"Displayed alerts must match a rule that satisfies this filter. Glob is accepted, and * and an empty string both match all rules","type":"string"}
+			"acked":{"description":"Displayed alerts must have an acknowledgement status that satisfies this criteria","type":"string"}
+			"dependencyRoutingState":{"type":"string"}
+			"dependencyRole":{"type":"string"}
+			"host":{"description":"Displayed alerts must be associated with devices that meet this filter criteria. Glob is accepted, and * and an empty string both indicate all devices","type":"string"}
+			
+		LogFile
+			"originId":{"type":"string"}
+			"matches":{"description":"The regex or plain text to look for in the file and trigger alert if found","type":"array","items":{"$ref":"#/definitions/MatchPattern"}}
+			
+		WebsiteCheckpointRawData
+			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
+			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}}},"
+			
+		DeviceDataSourceInstanceGroup
+			"deviceDataSourceId":{"format":"int32","description":"the device datasource id","readOnly":true,"type":"integer"}
+			"createOn":{"format":"int64","description":"time when the group was created.","readOnly":true,"type":"integer"}
+			"id":{"format":"int32","description":"the instance group id","readOnly":true,"type":"integer"}
+			"deviceId":{"format":"int32","description":"The id of associated device","readOnly":true,"type":"integer"}
+			"deviceDisplayName":{"description":"The display name of the device","readOnly":true,"type":"string"}
+			
+		DeviceDataSourceInstanceData
+			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
+			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
+			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}
+			"dataSourceName":{"description":"datasource name","readOnly":true,"type":"string"}
+			
+		SLAReport
+			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
+			
+		DeviceDataSourceInstanceConfigDiff
+			"rowNo":{"format":"int32","description":"diff row number","readOnly":true,"type":"integer"}
+			"type":{"description":"diff type, values can be : add|remove","readOnly":true,"type":"string"}
+			"content":{"description":"configuration content","readOnly":true,"type":"string"}
+			
+		CloudWatchAutoDiscoveryMethod
+			"period":{"type":"string"}
+			"metricName":{"type":"string"}
+			"clusterDimensionValue":{"type":"string"}
+			
+		APIToken
+			"userPermission":{"description":"The permission of current apiToken with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
