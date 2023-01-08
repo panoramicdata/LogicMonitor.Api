@@ -359,4 +359,10 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "instancePropertyTags")]
 	public string InstancePropertyTags { get; set; }
+
+	/// <summary>
+	/// GCP Billing Period
+	/// </summary>
+	[DataMember(Name = "gcpBillingPeriodType")]
+	public string GcpBillingPeriod { get; set; }
 }

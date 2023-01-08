@@ -127,6 +127,12 @@ public class CollectorAttribute
 	public string Headers { get; set; }
 
 	/// <summary>
+	///     The instance column name
+	/// </summary>
+	[DataMember(Name = "instanceColumnName")]
+	public string InstanceColumnName { get; set; }
+
+	/// <summary>
 	///     The IP address
 	/// </summary>
 	[DataMember(Name = "ip")]
@@ -347,6 +353,12 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "scriptType")]
 	public string ScriptType { get; set; }
+
+	/// <summary>
+	///     The report name
+	/// </summary>
+	[DataMember(Name = "reportName")]
+	public string ReportName { get; set; }
 
 	/// <summary>
 	///     The URL

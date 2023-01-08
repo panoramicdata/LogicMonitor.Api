@@ -151,6 +151,12 @@ public class DataSource : LogicModule, IHasEndpoint
 	public AutoDiscoveryConfiguration AutoDiscoveryConfiguration { get; set; }
 
 	/// <summary>
+	///     The payload version
+	/// </summary>
+	[DataMember(Name = "payloadVersion")]
+	public int PayloadVersion { get; set; }
+
+	/// <summary>
 	///     The polling interval in seconds
 	/// </summary>
 	[DataMember(Name = "collectInterval")]

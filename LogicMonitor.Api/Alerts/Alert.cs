@@ -258,6 +258,18 @@ public class Alert : IHasEndpoint
 	[DataMember(Name = "customColumns")]
 	public object CustomColumns { get; set; }
 
+	/// <summary>
+	///    The suppressor
+	/// </summary>
+	[DataMember(Name = "suppressor")]
+	public string? Suppressor { get; set; }
+
+	/// <summary>
+	///    How to suppress an alert as its state descends
+	/// </summary>
+	[DataMember(Name = "suppressDesc")]
+	public string? SuppressedDescending { get; set; }
+
 	///////////////////
 
 	/// <summary>

@@ -131,4 +131,40 @@ public class DataSourceDataPoint : NamedItem
 	/// </summary>
 	[DataMember(Name = "alertBody")]
 	public string AlertBody { get; set; }
+
+	/// <summary>
+	/// Suppress anomaly alerts
+	/// </summary>
+	[DataMember(Name = "enableAnomalyAlertSuppression")]
+	public string? SuppressAnomalyAlerts { get; set; }
+
+	/// <summary>
+	/// adAdvSettingEnabled
+	/// </summary>
+	[DataMember(Name = "adAdvSettingEnabled")]
+	public bool IsAdAdvSettingEnabled { get; set; }
+
+	/// <summary>
+	/// warnAdAdvSetting
+	/// </summary>
+	[DataMember(Name = "warnAdAdvSetting")]
+	public string WarnAdAdvSetting { get; set; }
+
+	/// <summary>
+	/// errorAdAdvSetting
+	/// </summary>
+	[DataMember(Name = "errorAdAdvSetting")]
+	public string ErrorAdAdvSetting { get; set; }
+
+	/// <summary>
+	/// criticalAdAdvSetting
+	/// </summary>
+	[DataMember(Name = "criticalAdAdvSetting")]
+	public string CriticialAdAdvSetting { get; set; }
+
+	/// <summary>
+	/// Origin id
+	/// </summary>
+	[DataMember(Name = "originId")]
+	public string OriginId { get; set; }
 }
