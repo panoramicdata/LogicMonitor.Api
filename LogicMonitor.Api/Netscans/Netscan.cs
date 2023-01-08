@@ -49,6 +49,12 @@ public class Netscan : NamedItem, IExecutable
 	public int GroupId { get; set; }
 
 	/// <summary>
+	///    Whether to include network and broadcast
+	/// </summary>
+	[DataMember(Name = "includeNetworkAndBroadcast")]
+	public bool IncludeNetworkAndBroadcast { get; set; }
+
+	/// <summary>
 	///    The schedule
 	/// </summary>
 	[DataMember(Name = "schedule")]

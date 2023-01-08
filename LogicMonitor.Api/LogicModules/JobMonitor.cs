@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A JobMonitor
 /// </summary>
 [DataContract]
-public class JobMonitor : NamedItem, IHasEndpoint
+public class JobMonitor : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// Whether it is active monitoring

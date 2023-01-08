@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A ConfigSource
 /// </summary>
 [DataContract]
-public class ConfigSource : NamedItem, IHasEndpoint
+public class ConfigSource : LogicModule, IHasEndpoint
 {
 
 	/// <summary>
@@ -92,18 +92,6 @@ public class ConfigSource : NamedItem, IHasEndpoint
 	public bool HasMultiInstances { get; set; }
 
 	/// <summary>
-	/// The installation metadata
-	/// </summary>
-	[DataMember(Name = "installationMetadata")]
-	public object? InstallationMetadata { get; set; }
-
-	/// <summary>
-	/// The lineage id
-	/// </summary>
-	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; } = string.Empty;
-
-	/// <summary>
 	/// Origin id
 	/// </summary>
 	[DataMember(Name = "originId")]
@@ -138,12 +126,6 @@ public class ConfigSource : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "version")]
 	public int? Version { get; set; }
-
-	/// <summary>
-	/// ToString override
-	/// </summary>
-	/// <returns>'Id : Name - DisplayedAs'</returns>
-	public override string ToString() => $"{Id} : {Name} - {DisplayName}";
 
 	/// <summary>
 	///    The endpoint

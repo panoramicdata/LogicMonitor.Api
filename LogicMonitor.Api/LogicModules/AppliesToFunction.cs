@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// An AppliesTo Function
 /// </summary>
 [DataContract]
-public class AppliesToFunction : NamedItem, IHasEndpoint
+public class AppliesToFunction : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// The parameters

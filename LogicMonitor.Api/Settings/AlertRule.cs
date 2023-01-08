@@ -67,6 +67,18 @@ public class AlertRule : NamedItem, IHasEndpoint
 	public EscalationChain EscalationChain { get; set; }
 
 	/// <summary>
+	/// The resource properties
+	/// </summary>
+	[DataMember(Name = "resourceProperties")]
+	public List<object> ResourceProperties { get; set; }
+
+	/// <summary>
+	/// Whether to send an "anomaly suppressed" alert
+	/// </summary>
+	[DataMember(Name = "sendAnomalySuppressedAlert")]
+	public bool SendAnomalySuppressedAlert { get; set; }
+
+	/// <summary>
 	/// Whether to suppress Alert clears
 	/// </summary>
 	[DataMember(Name = "suppressAlertClear")]

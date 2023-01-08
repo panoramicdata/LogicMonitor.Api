@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// An EventSource
 /// </summary>
 [DataContract]
-public class EventSource : NamedItem, IHasEndpoint
+public class EventSource : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// The alert subject template
@@ -91,12 +91,6 @@ public class EventSource : NamedItem, IHasEndpoint
 	public string Group { get; set; }
 
 	/// <summary>
-	/// The installation metadata
-	/// </summary>
-	[DataMember(Name = "installationMetadata")]
-	public object? InstallationMetadata { get; set; }
-
-	/// <summary>
 	/// The instance count
 	/// </summary>
 	[DataMember(Name = "num")]
@@ -119,12 +113,6 @@ public class EventSource : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "linuxScript")]
 	public string LinuxScript { get; set; }
-
-	/// <summary>
-	/// Linux script
-	/// </summary>
-	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; }
 
 	/// <summary>
 	/// Published

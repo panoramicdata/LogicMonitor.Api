@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 ///     A DataSource base
 /// </summary>
 [DataContract]
-public class DataSource : NamedItem, IHasEndpoint
+public class DataSource : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	///     The AGD Method

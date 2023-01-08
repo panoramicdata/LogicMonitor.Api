@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A TopologySource
 /// </summary>
 [DataContract]
-public class TopologySource : NamedItem, IHasEndpoint
+public class TopologySource : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// What this applies to
@@ -47,18 +47,6 @@ public class TopologySource : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "group")]
 	public string Group { get; set; }
-
-	/// <summary>
-	/// The installation metadata
-	/// </summary>
-	[DataMember(Name = "installationMetadata")]
-	public object InstallationMetadata { get; set; }
-
-	/// <summary>
-	/// The lineage id
-	/// </summary>
-	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; }
 
 	/// <summary>
 	/// Tags

@@ -31,10 +31,16 @@ public class SingleSignOn : IHasSingletonEndpoint
 	public int DefaultRoleId { get; set; }
 
 	/// <summary>
-	///     Enable status
+	///     Enable SSO status
 	/// </summary>
 	[DataMember(Name = "enableSSO")]
 	public bool Enabled { get; set; }
+
+	/// <summary>
+	///     Enable SLO status
+	/// </summary>
+	[DataMember(Name = "enableSLO")]
+	public bool EnableSlo { get; set; }
 
 	/// <summary>
 	///     Restricted status
