@@ -67,6 +67,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int BackupCollectorId { get; set; }
 
 	/// <summary>
+	///     This collector's bearer token
+	/// </summary>
+	[DataMember(Name = "bearerToken")]
+	public string BearerToken { get; set; } = string.Empty;
+
+	/// <summary>
 	///     Netscan version
 	/// </summary>
 	[SantabaReadOnly]
@@ -116,11 +122,38 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public string ConfigurationFields { get; set; }
 
 	/// <summary>
+	///     The copy URL
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "copyUrl")]
+	public string CopyUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The download URL
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "downloadUrl")]
+	public string DownloadUrl { get; set; } = string.Empty;
+
+	/// <summary>
 	///     The collector device id
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorDeviceId")]
 	public int DeviceId { get; set; }
+
+	/// <summary>
+	///     The encoded config data
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "encodedConfigData")]
+	public string EncodedConfigData { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The format
+	/// </summary>
+	[DataMember(Name = "format")]
+	public string? Format { get; set; }
 
 	/// <summary>
 	///     The collector group id
@@ -139,7 +172,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The Agent configuration
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "agentConf")]
+	[DataMember(Name = "config")]
 	public string Configuration { get; set; }
 
 	/// <summary>
@@ -242,6 +275,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool IsDown { get; set; }
 
 	/// <summary>
+	///     Whether the collector is encoded
+	/// </summary>
+	[DataMember(Name = "isEncoded")]
+	public bool IsEncoded { get; set; }
+
+	/// <summary>
 	///     Whether LM Logs is enabled
 	/// </summary>
 	[DataMember(Name = "enableLmLogs")]
@@ -294,6 +333,18 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "onetimeUpgradeInfo")]
 	public OneTimeUpgradeInfo OneTimeUpgradeInfo { get; set; }
+
+	/// <summary>
+	///     The OTEL Id
+	/// </summary>
+	[DataMember(Name = "otelId")]
+	public int? OtelId { get; set; }
+
+	/// <summary>
+	///     The OTEL version
+	/// </summary>
+	[DataMember(Name = "otelVersion")]
+	public string OtelVerison { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Platform
