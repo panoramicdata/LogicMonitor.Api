@@ -13,6 +13,30 @@ public class Alert : IHasEndpoint
 	public string Id { get; set; }
 
 	/// <summary>
+	/// The DependencyRole
+	/// </summary>
+	[DataMember(Name = "dependencyRole")]
+	public string DependencyRole { get; set; }
+
+	/// <summary>
+	/// The dependency routing state
+	/// </summary>
+	[DataMember(Name = "dependencyRoutingState")]
+	public string DependencyRoutingState { get; set; }
+
+	/// <summary>
+	///    Whether this is an active discovery alert
+	/// </summary>
+	[DataMember(Name = "adAlert")]
+	public bool IsActiveDiscoveryAlert { get; set; }
+
+	/// <summary>
+	///    The active discovery alert description
+	/// </summary>
+	[DataMember(Name = "adAlertDesc")]
+	public string ActiveDiscoveryAlertDescription { get; set; }
+
+	/// <summary>
 	///    The Alert type
 	/// </summary>
 	[DataMember(Name = "type")]
