@@ -6,6 +6,25 @@ namespace LogicMonitor.Api.Settings;
 [DataContract]
 public class AccountSettings : IHasSingletonEndpoint
 {
+
+	/// <summary>
+	///     The number of active alerts
+	/// </summary>
+	[DataMember(Name = "numberOfOpenAlerts")]
+	public int ActiveAlertCount { get; set; }
+
+	/// <summary>
+	///     The number of active users
+	/// </summary>
+	[DataMember(Name = "numberOfSessionUsers")]
+
+	public int ActiveUserCount { get; set; }
+	/// <summary>
+	///     The Alert Rule count
+	/// </summary>
+	[DataMember(Name = "numberOfAlertRules")]
+	public int AlertRuleCount { get; set; }
+
 	/// <summary>
 	///     Whether the alertTotal including any in Ack
 	/// </summary>
@@ -17,6 +36,24 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "alertTotalIncludeInSdt")]
 	public bool AlertTotalIncludingAnyInSdt { get; set; }
+
+	/// <summary>
+	///     The API user count
+	/// </summary>
+	[DataMember(Name = "numberOfApiUsers")]
+	public int ApiUserCount { get; set; }
+
+	/// <summary>
+	///     The API user timestamp window in seconds
+	/// </summary>
+	[DataMember(Name = "timestampWindowOfApiUsersInSec")]
+	public int ApiUserTimestampWindowSeconds { get; set; }
+
+	/// <summary>
+	///     The number of alerts from yesterday
+	/// </summary>
+	[DataMember(Name = "numberOfPreviousDayAlerts")]
+	public int PreviousDayAlertCount { get; set; }
 
 	/// <summary>
 	///     The number of committed devices
@@ -35,6 +72,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "numberOfCommittedServices")]
 	public int CommittedServiceCount { get; set; }
+
+	/// <summary>
+	///     The number of committed websites
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedWebsites")]
+	public int CommittedWebsiteCount { get; set; }
 
 	/// <summary>
 	///     The current AWS device count
@@ -79,10 +122,34 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int ConfigSourceDeviceCount { get; set; }
 
 	/// <summary>
+	///     The data point count
+	/// </summary>
+	[DataMember(Name = "numberOfComplexDataPoints")]
+	public int ComplexDataPointCount { get; set; }
+
+	/// <summary>
 	///     Contacts
 	/// </summary>
 	[DataMember(Name = "contacts")]
-	public List<Contact> Contacts { get; set; }
+	public List<Contact> Contacts { get; set; } = new();
+
+	/// <summary>
+	///     The data point count
+	/// </summary>
+	[DataMember(Name = "numberOfDataPoints")]
+	public int DataPointCount { get; set; }
+
+	/// <summary>
+	///     The dashboard count
+	/// </summary>
+	[DataMember(Name = "numberOfDashboards")]
+	public int DashboardCount { get; set; }
+
+	/// <summary>
+	///     The Datasource Instance count
+	/// </summary>
+	[DataMember(Name = "numberOfDatasourceInstances")]
+	public int DataSourceInstanceCount { get; set; }
 
 	/// <summary>
 	///     Whether to destroy the account
@@ -101,6 +168,42 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "numberOfDevices")]
 	public int DeviceCount { get; set; }
+
+	///// <summary>
+	/////     The device group count
+	///// </summary>
+	//[DataMember(Name = "numOfDeviceFolders")]
+	//public int DeviceGroupCount { get; set; }
+
+	/// <summary>
+	///     The device group count that should not be exceeded
+	/// </summary>
+	[DataMember(Name = "hostGroupWarningLimit")]
+	public int DeviceGroupWarningLimit { get; set; }
+
+	/// <summary>
+	///     The device group count that must should not be exceeded
+	/// </summary>
+	[DataMember(Name = "hostGroupErrorLimit")]
+	public int DeviceGroupErrorLimit { get; set; }
+
+	/// <summary>
+	///     The device groups info
+	/// </summary>
+	[DataMember(Name = "hostGroupsInfo")]
+	public DeviceGroupsInfo DeviceGroupsInfo { get; set; }
+
+	/// <summary>
+	///     The dynamic threshold count
+	/// </summary>
+	[DataMember(Name = "numberOfDynamicThresholds")]
+	public int DynamicThresholdCount { get; set; }
+
+	/// <summary>
+	///     The dynamic threshold limit
+	/// </summary>
+	[DataMember(Name = "numberOfAllowedDTConfigs")]
+	public int DynamicThresholdLimit { get; set; }
 
 	/// <summary>
 	///     Whether remote sessions are enabled
@@ -132,6 +235,30 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int LightDeviceCount { get; set; }
 
 	/// <summary>
+	///     monthlyPerDeviceMetrics
+	/// </summary>
+	[DataMember(Name = "monthlyPerDeviceMetrics")]
+	public int MonthlyPerDeviceMetrics { get; set; }
+
+	/// <summary>
+	///     monthlyPerDeviceMetricsQuotaErrorLimit
+	/// </summary>
+	[DataMember(Name = "monthlyPerDeviceMetricsQuotaErrorLimit")]
+	public int MonthlyPerDeviceMetricsQuotaErrorLimit { get; set; }
+
+	/// <summary>
+	///     monthlyPerDeviceMetricsQuotaWarningLimit
+	/// </summary>
+	[DataMember(Name = "monthlyPerDeviceMetricsQuotaWarningLimit")]
+	public int MonthlyPerDeviceMetricsQuotaWarningLimit { get; set; }
+
+	/// <summary>
+	///     The PaaS device count
+	/// </summary>
+	[DataMember(Name = "numOfPaasDevices")]
+	public int PaasDeviceCount { get; set; }
+
+	/// <summary>
 	///     The parent billing account
 	/// </summary>
 	[DataMember(Name = "parentBilling")]
@@ -142,6 +269,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "zuora")]
 	public PaymentInformation PaymentInformation { get; set; } = new();
+
+	/// <summary>
+	///     The per-datasource instance count
+	/// </summary>
+	[DataMember(Name = "numberOfInstancesPerDS")]
+	public Dictionary<string, int> PerDataSourceInstanceCount { get; set; } = new();
 
 	/// <summary>
 	///     Primary contact e-mail address
@@ -162,10 +295,40 @@ public class AccountSettings : IHasSingletonEndpoint
 	public string PrimaryContactPhoneNumber { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The Root Cause Analysis rule count
+	/// </summary>
+	[DataMember(Name = "numberOfRootCauseAnalysisRules")]
+	public bool RootCauseAnalysisRuleCount { get; set; }
+
+	/// <summary>
+	///     The number of reports executed in the last 24 hours
+	/// </summary>
+	[DataMember(Name = "numberOfReportsInLast24Hrs")]
+	public bool ReportsInLast24HoursCount { get; set; }
+
+	/// <summary>
 	///     Whether remote sessions are enabled
 	/// </summary>
 	[DataMember(Name = "requireTwoFA")]
 	public bool RequireTwoFactorAuthentication { get; set; }
+
+	/// <summary>
+	///     The SaaS device count
+	/// </summary>
+	[DataMember(Name = "numOfSaasDevices")]
+	public int SaasDeviceCount { get; set; }
+
+	/// <summary>
+	///     The SaaS lite device count
+	/// </summary>
+	[DataMember(Name = "numOfSaasLiteDevices")]
+	public int SaasLiteDeviceCount { get; set; }
+
+	/// <summary>
+	///     The saved map count
+	/// </summary>
+	[DataMember(Name = "numOfSavedMaps")]
+	public int SavedMapCount { get; set; }
 
 	/// <summary>
 	///     The service count
@@ -204,6 +367,18 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int StoppedGcpDeviceCount { get; set; }
 
 	/// <summary>
+	///     The stopped PaaS device count
+	/// </summary>
+	[DataMember(Name = "numOfStoppedPaasDevices")]
+	public int StoppedPaasDeviceCount { get; set; }
+
+	/// <summary>
+	///     The tenant identifier property name
+	/// </summary>
+	[DataMember(Name = "tenantIdentifierPropertyName")]
+	public string TenantIdentifierPropertyName { get; set; }
+
+	/// <summary>
 	///     Terminated AWS Device count
 	/// </summary>
 	[DataMember(Name = "numOfTerminatedAWSDevices")]
@@ -222,6 +397,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int TerminatedGcpDeviceCount { get; set; }
 
 	/// <summary>
+	///     The terminated PaaS device count
+	/// </summary>
+	[DataMember(Name = "numOfTerminatedPaasDevices")]
+	public int TerminatedPaasDeviceCount { get; set; }
+
+	/// <summary>
 	///     Timezone as text
 	/// </summary>
 	[DataMember(Name = "timezone")]
@@ -234,6 +415,24 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int WebsiteCount { get; set; }
 
 	/// <summary>
+	///     The web site group count
+	/// </summary>
+	[DataMember(Name = "numOfWebsiteFolders")]
+	public int WebsiteGroupCount { get; set; }
+
+	/// <summary>
+	///     The web site group count that should not be exceeded
+	/// </summary>
+	[DataMember(Name = "numOfWebsiteFoldersWarningLimit")]
+	public int WebsiteGroupWarningLimit { get; set; }
+
+	/// <summary>
+	///     The web site group count that must should not be exceeded
+	/// </summary>
+	[DataMember(Name = "numOfWebsiteFoldersErrorLimit")]
+	public int WebsiteGroupErrorLimit { get; set; }
+
+	/// <summary>
 	///     IP Whitelist
 	/// </summary>
 	[DataMember(Name = "whiteList")]
@@ -244,6 +443,18 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "userSuspendDays")]
 	public int UserSuspendDays { get; set; }
+
+	/// <summary>
+	///     User Role count
+	/// </summary>
+	[DataMember(Name = "numberOfUserRoles")]
+	public int UserRoleCount { get; set; }
+
+	/// <summary>
+	///     Widget count
+	/// </summary>
+	[DataMember(Name = "numberOfWidgets")]
+	public int WidgetCount { get; set; }
 
 	/// <summary>
 	///     The endpoint
