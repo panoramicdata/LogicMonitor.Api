@@ -35,4 +35,10 @@ public class InterfacesBandwidthReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "metrics")]
 	public List<Metric> Metrics { get; set; }
+
+	/// <summary>
+	/// Whether the report is top 10 only
+	/// </summary>
+	[DataMember(Name = "top10Only")]
+	public bool IsTop10Only { get; set; }
 }

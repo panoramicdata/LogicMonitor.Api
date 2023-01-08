@@ -6,6 +6,13 @@ namespace LogicMonitor.Api.LogicModules;
 [DataContract]
 public class ConfigSource : NamedItem, IHasEndpoint
 {
+
+	/// <summary>
+	/// The checksum
+	/// </summary>
+	[DataMember(Name = "checksum")]
+	public string Checksum { get; set; }
+
 	/// <summary>
 	/// The publishing information
 	/// </summary>

@@ -73,6 +73,12 @@ public class DataSource : NamedItem, IHasEndpoint
 	public string AutoDiscoveryWindowsScript { get; set; }
 
 	/// <summary>
+	///     The checksum
+	/// </summary>
+	[DataMember(Name = "checksum")]
+	public string Checksum { get; set; }
+
+	/// <summary>
 	///     The DataSourceType
 	/// </summary>
 	[DataMember(Name = "collector")]

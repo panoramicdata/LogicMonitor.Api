@@ -102,6 +102,20 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public string CollectorConfiguration { get; set; }
 
 	/// <summary>
+	///     Collector configuration
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "collectorType")]
+	public CollectorType Type { get; set; }
+
+	/// <summary>
+	///     Configuration fields
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "agentConfFields")]
+	public string ConfigurationFields { get; set; }
+
+	/// <summary>
 	///     The collector device id
 	/// </summary>
 	[SantabaReadOnly]
@@ -228,6 +242,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool IsDown { get; set; }
 
 	/// <summary>
+	///     Whether LM Logs is enabled
+	/// </summary>
+	[DataMember(Name = "enableLmLogs")]
+	public bool IsLmLogsEnabled { get; set; }
+
+	/// <summary>
 	///     Last sent notification on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[DataMember(Name = "lastSentNotificationOnLocal")]
@@ -340,6 +360,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "suppressAlertClear")]
 	public bool SuppressAlertClear { get; set; }
+
+	/// <summary>
+	///     Whether synthetics is enabled
+	/// </summary>
+	[DataMember(Name = "syntheticsEnabled")]
+	public bool IsSyntheticsEnables { get; set; }
 
 	/// <summary>
 	///     Updated on local (human-readable acknowledgement DateTime as a string)

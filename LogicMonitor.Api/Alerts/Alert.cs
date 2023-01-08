@@ -19,6 +19,12 @@ public class Alert : IHasEndpoint
 	public AlertType AlertType { get; set; }
 
 	/// <summary>
+	/// Whether this alert is an anomaly
+	/// </summary>
+	[DataMember(Name = "anomaly")]
+	public bool IsAnomaly { get; set; }
+
+	/// <summary>
 	/// Whether enableAnomalyAlertGeneration is enabled (1,1,1) i.e. warn/error/critical
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
