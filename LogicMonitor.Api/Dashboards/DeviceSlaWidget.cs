@@ -13,6 +13,18 @@ public class DeviceSlaWidget : Widget
 	public string BottomLabel { get; set; }
 
 	/// <summary>
+	/// The bottom label
+	/// </summary>
+	[DataMember(Name = "calculationMethod")]
+	public CalculationMethod CalculationMethod { get; set; }
+
+	/// <summary>
+	/// Whether to display the percentage bar
+	/// </summary>
+	[DataMember(Name = "displayPercentageBar")]
+	public bool DisplayPercentageBar { get; set; }
+
+	/// <summary>
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]

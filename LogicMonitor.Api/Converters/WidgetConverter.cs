@@ -27,6 +27,7 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 			"websitesla" => new WebsiteSlaWidget(),
 			"websiteoverview" => new WebsiteOverviewWidget(),
 			"websiteoverallstatus" => new WebsiteOverallStatusWidget(),
+			"savedmap" => new SavedMapWidget(),
 			"sgraph" => new WebsiteGraphWidget(),
 			"table" => new TableWidget(),
 			"text" => new TextWidget(),

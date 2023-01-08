@@ -71,6 +71,12 @@ public class Dashboard
 	public List<Property> CustomProperties { get; set; }
 
 	/// <summary>
+	/// Whether to overwrite group fields
+	/// </summary>
+	[DataMember(Name = "overwriteGroupFields")]
+	public bool OverwriteGroupFields { get; set; }
+
+	/// <summary>
 	///     The widgets configuration
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]

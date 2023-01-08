@@ -7,6 +7,12 @@ namespace LogicMonitor.Api.Dashboards;
 public class AlertWidgetFilter
 {
 	/// <summary>
+	///     The anomaly
+	/// </summary>
+	[DataMember(Name = "anomaly")]
+	public string Anomaly { get; set; }
+
+	/// <summary>
 	///     The device display name
 	/// </summary>
 	[DataMember(Name = "host")]
@@ -35,6 +41,18 @@ public class AlertWidgetFilter
 	/// </summary>
 	[DataMember(Name = "dataPoint")]
 	public string DataPoint { get; set; }
+
+	/// <summary>
+	/// The DependencyRole
+	/// </summary>
+	[DataMember(Name = "dependencyRole")]
+	public string DependencyRole { get; set; }
+
+	/// <summary>
+	/// The dependency routing state
+	/// </summary>
+	[DataMember(Name = "dependencyRoutingState")]
+	public string DependencyRoutingState { get; set; }
 
 	/// <summary>
 	///     The minimum alert severity

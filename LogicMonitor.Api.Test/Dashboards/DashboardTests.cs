@@ -90,7 +90,7 @@ public class DashboardTests : TestWithOutput
 			.ConfigureAwait(false);
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
-		widgets.Should().HaveCount(19); // There are 24 different types of widget
+		widgets.Should().HaveCount(20); // There are 20 different types of widget
 
 		// Test each type
 

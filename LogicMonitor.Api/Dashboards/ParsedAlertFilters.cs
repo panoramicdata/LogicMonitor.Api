@@ -6,58 +6,16 @@ namespace LogicMonitor.Api.Dashboards;
 public class ParsedAlertFilters
 {
 	/// <summary>
-	///     The group
-	/// </summary>
-	[DataMember(Name = "group")]
-	public string Group { get; set; }
-
-	/// <summary>
-	///     The host
-	/// </summary>
-	[DataMember(Name = "host")]
-	public string Host { get; set; }
-
-	/// <summary>
-	///     The dataSource
-	/// </summary>
-	[DataMember(Name = "dataSource")]
-	public string DataSource { get; set; }
-
-	/// <summary>
-	///     The instance
-	/// </summary>
-	[DataMember(Name = "instance")]
-	public string Instance { get; set; }
-
-	/// <summary>
-	///     The dataPoint
-	/// </summary>
-	[DataMember(Name = "dataPoint")]
-	public string DataPoint { get; set; }
-
-	/// <summary>
-	///     The severity
-	/// </summary>
-	[DataMember(Name = "severity")]
-	public string Severity { get; set; }
-
-	/// <summary>
 	///     The acked
 	/// </summary>
 	[DataMember(Name = "acked")]
 	public string Acked { get; set; }
 
 	/// <summary>
-	///     The sdted
+	///     The anomaly
 	/// </summary>
-	[DataMember(Name = "sdted")]
-	public string Sdted { get; set; }
-
-	/// <summary>
-	///     The rule
-	/// </summary>
-	[DataMember(Name = "rule")]
-	public string Rule { get; set; }
+	[DataMember(Name = "anomaly")]
+	public string Anomaly { get; set; }
 
 	/// <summary>
 	///     The chain
@@ -72,8 +30,68 @@ public class ParsedAlertFilters
 	public string Cleared { get; set; }
 
 	/// <summary>
+	///     The dataPoint
+	/// </summary>
+	[DataMember(Name = "dataPoint")]
+	public string DataPoint { get; set; }
+
+	/// <summary>
+	///     The dataSource
+	/// </summary>
+	[DataMember(Name = "dataSource")]
+	public string DataSource { get; set; }
+
+	/// <summary>
+	/// The DependencyRole
+	/// </summary>
+	[DataMember(Name = "dependencyRole")]
+	public string DependencyRole { get; set; }
+
+	/// <summary>
+	/// The dependency routing state
+	/// </summary>
+	[DataMember(Name = "dependencyRoutingState")]
+	public string DependencyRoutingState { get; set; }
+
+	/// <summary>
+	///     The group
+	/// </summary>
+	[DataMember(Name = "group")]
+	public string Group { get; set; }
+
+	/// <summary>
+	///     The host
+	/// </summary>
+	[DataMember(Name = "host")]
+	public string Host { get; set; }
+
+	/// <summary>
+	///     The instance
+	/// </summary>
+	[DataMember(Name = "instance")]
+	public string Instance { get; set; }
+
+	/// <summary>
 	///     The keyword
 	/// </summary>
 	[DataMember(Name = "keyword")]
 	public string Keyword { get; set; }
+
+	/// <summary>
+	///     The rule
+	/// </summary>
+	[DataMember(Name = "rule")]
+	public string Rule { get; set; }
+
+	/// <summary>
+	///     The sdted
+	/// </summary>
+	[DataMember(Name = "sdted")]
+	public string Sdted { get; set; }
+
+	/// <summary>
+	///     The severity
+	/// </summary>
+	[DataMember(Name = "severity")]
+	public string Severity { get; set; }
 }

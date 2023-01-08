@@ -39,7 +39,7 @@ public class DisplaySettings
 	/// <summary>
 	/// The column to sort by
 	/// </summary>
-	[DataMember(Name = "sortBy")]
+	[DataMember(Name = "sort")]
 	public string SortBy { get; set; }
 
 	/// <summary>
