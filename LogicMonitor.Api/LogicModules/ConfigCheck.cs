@@ -61,6 +61,12 @@ public class ConfigCheck
 	public int ConfigSourceId { get; set; }
 
 	/// <summary>
+	/// Origin id
+	/// </summary>
+	[DataMember(Name = "originId")]
+	public string OriginId { get; set; }
+
+	/// <summary>
 	/// The script
 	/// </summary>
 	[DataMember(Name = "script")]

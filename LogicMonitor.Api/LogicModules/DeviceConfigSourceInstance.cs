@@ -37,6 +37,12 @@ public class DeviceConfigSourceInstance : NamedItem, IHasCustomProperties
 	public List<Property> AutoProperties { get; set; }
 
 	/// <summary>
+	/// The collector id
+	/// </summary>
+	[DataMember(Name = "collectorId")]
+	public int? CollectorId { get; set; }
+
+	/// <summary>
 	/// The custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]

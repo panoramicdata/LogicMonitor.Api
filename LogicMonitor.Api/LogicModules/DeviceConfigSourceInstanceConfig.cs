@@ -79,6 +79,12 @@ public class DeviceConfigSourceInstanceConfig : StringIdentifiedItem
 	public int? DeviceId { get; set; }
 
 	/// <summary>
+	///    The lines to exclude
+	/// </summary>
+	[DataMember(Name = "excludeLines")]
+	public List<object> ExcludeLines { get; set; } = Enumerable.Empty<object>().ToList();
+
+	/// <summary>
 	///    The InstanceId
 	/// </summary>
 	[DataMember(Name = "instanceId")]

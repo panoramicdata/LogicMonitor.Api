@@ -61,6 +61,12 @@ public class EventSource : NamedItem, IHasEndpoint
 	public bool ClearAfterAcknowledgement { get; set; }
 
 	/// <summary>
+	/// Dimension
+	/// </summary>
+	[DataMember(Name = "dimension")]
+	public string Dimension { get; set; }
+
+	/// <summary>
 	/// The collection method
 	/// </summary>
 	[DataMember(Name = "collector")]
@@ -83,6 +89,18 @@ public class EventSource : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "group")]
 	public string Group { get; set; }
+
+	/// <summary>
+	/// The installation metadata
+	/// </summary>
+	[DataMember(Name = "installationMetadata")]
+	public object? InstallationMetadata { get; set; }
+
+	/// <summary>
+	/// The instance count
+	/// </summary>
+	[DataMember(Name = "num")]
+	public int InstanceCount { get; set; }
 
 	/// <summary>
 	/// Linux command line

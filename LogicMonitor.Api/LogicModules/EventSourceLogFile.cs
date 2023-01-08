@@ -25,14 +25,20 @@ public class EventSourceLogFile
 	public string Encoding { get; set; }
 
 	/// <summary>
+	/// Excludes
+	/// </summary>
+	[DataMember(Name = "excludes")]
+	public List<object> Excludes { get; set; }
+
+	/// <summary>
 	/// Matches
 	/// </summary>
 	[DataMember(Name = "matches")]
 	public List<EventSourceMatch> Matches { get; set; }
 
 	/// <summary>
-	/// Excludes
+	/// Origin id
 	/// </summary>
-	[DataMember(Name = "excludes")]
-	public List<object> Excludes { get; set; }
+	[DataMember(Name = "originId")]
+	public int? OriginId { get; set; }
 }

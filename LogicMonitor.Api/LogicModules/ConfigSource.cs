@@ -92,6 +92,24 @@ public class ConfigSource : NamedItem, IHasEndpoint
 	public bool HasMultiInstances { get; set; }
 
 	/// <summary>
+	/// The installation metadata
+	/// </summary>
+	[DataMember(Name = "installationMetadata")]
+	public object? InstallationMetadata { get; set; }
+
+	/// <summary>
+	/// The lineage id
+	/// </summary>
+	[DataMember(Name = "lineageId")]
+	public string LineageId { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Origin id
+	/// </summary>
+	[DataMember(Name = "originId")]
+	public int? OriginId { get; set; }
+
+	/// <summary>
 	/// Retain
 	/// </summary>
 	[DataMember(Name = "retain")]

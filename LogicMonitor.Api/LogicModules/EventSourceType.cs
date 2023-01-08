@@ -72,4 +72,40 @@ public enum EventSourceType : byte
 	/// </summary>
 	[EnumMember(Value = "gcpatom")]
 	GcpAtom = 10,
+
+	/// <summary>
+	///    AWS Health
+	/// </summary>
+	[EnumMember(Value = "awshealth")]
+	AwsHealth = 11,
+
+	/// <summary>
+	///    AWS RDSPI event
+	/// </summary>
+	[EnumMember(Value = "awsrdspievent")]
+	AwsRdspiEvent = 12,
+
+	/// <summary>
+	///    AWS trusted advisor
+	/// </summary>
+	[EnumMember(Value = "awstrustedadvisor")]
+	AwsTrustedAdvisor = 13,
+
+	/// <summary>
+	///    Azure advisor
+	/// </summary>
+	[EnumMember(Value = "azureadvisor")]
+	AzureAdvisor = 14,
+
+	/// <summary>
+	///    Azure emerging issue
+	/// </summary>
+	[EnumMember(Value = "azureemergingissue")]
+	AzureEmergingIssue = 15,
+
+	/// <summary>
+	///    Azure resource health event
+	/// </summary>
+	[EnumMember(Value = "azureresourcehealthevent")]
+	AzureResourceHealthEvent = 16,
 }
