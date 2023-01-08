@@ -176,10 +176,18 @@ public class WebsiteTests : TestWithOutput
 	[Fact]
 	public async Task SetWebsiteCustomProperty()
 	{
-		var website = await LogicMonitorClient.CreateAsync(
-			GetWebsiteCreationDto(16, nameof(SetWebsiteCustomProperty)),
-			CancellationToken.None
-			).ConfigureAwait(false);
+		// Make sure the website does not already exist
+		var website = await LogicMonitorClient
+			.GetByNameAsync<Website>(
+				nameof(SetWebsiteCustomProperty),
+				CancellationToken.None
+			)
+			.ConfigureAwait(false)
+			?? await LogicMonitorClient.CreateAsync(
+				GetWebsiteCreationDto(16, nameof(SetWebsiteCustomProperty)),
+				CancellationToken.None
+				).ConfigureAwait(false);
+
 		try
 		{
 			const string propertyName = "blah";
