@@ -101,4 +101,28 @@ public class AlertsReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "columns")]
 	public List<ReportColumn> Columns { get; set; }
+
+	/// <summary>
+	/// The sort direction
+	/// </summary>
+	[DataMember(Name = "sortedDirection")]
+	public OrderDirection SortDirection { get; set; }
+
+	/// <summary>
+	/// The anomaly
+	/// </summary>
+	[DataMember(Name = "anomaly")]
+	public string Anomaly { get; set; }
+
+	/// <summary>
+	/// The DependencyRole
+	/// </summary>
+	[DataMember(Name = "dependencyRole")]
+	public string DependencyRole { get; set; }
+
+	/// <summary>
+	/// The dependency routing state
+	/// </summary>
+	[DataMember(Name = "dependencyRoutingState")]
+	public string DependencyRoutingState { get; set; }
 }

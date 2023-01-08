@@ -249,6 +249,12 @@ public class Website : NamedItem, IPatchable, IHasCustomProperties
 	public long UpdatedOnSeconds { get; set; }
 
 	/// <summary>
+	///    The role privileges
+	/// </summary>
+	[DataMember(Name = "rolePrivileges")]
+	public List<RolePrivilege> RolePrivileges { get; set; }
+
+	/// <summary>
 	///    createOn
 	/// </summary>
 	[IgnoreDataMember]

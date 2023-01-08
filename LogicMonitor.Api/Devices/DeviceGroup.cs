@@ -290,17 +290,43 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public bool IsAlertingDisabled { get; set; }
 
 	/// <summary>
+	///    Kubernetes device count
+	/// </summary>
+	[DataMember(Name = "numOfKubernetesDevices")]
+	public int KubernetesDeviceCount { get; set; }
+
+	/// <summary>
 	///     The Alerting disabled on
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object? AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    The Parent Group Type
 	/// </summary>
 	[DataMember(Name = "parentId")]
 	public int ParentId { get; set; }
+
+	/// <summary>
+	///    The role privileges
+	/// </summary>
+	[DataMember(Name = "rolePrivileges")]
+	public List<RolePrivilege> RolePrivileges { get; set; }
+
+	/// <summary>
+	///    The SaaS test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "saasTestResult")]
+	public string SaasTestResult { get; set; }
+
+	/// <summary>
+	///    The SaaS test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "saasTestResultCode")]
+	public int SaasTestResultCode { get; set; }
 
 	/// <summary>
 	///    The SDT status

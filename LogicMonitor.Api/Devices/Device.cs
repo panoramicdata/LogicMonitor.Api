@@ -23,7 +23,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object? AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    The alert status
@@ -113,6 +113,13 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	[SantabaReadOnly]
 	[DataMember(Name = "currentCollectorId")]
 	public int CurrentCollectorId { get; set; }
+
+	/// <summary>
+	///    The Current Log Collector's ID
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "currentLogCollectorId")]
+	public int CurrentLogCollectorId { get; set; }
 
 	/// <summary>
 	///    Custom properties
@@ -208,6 +215,13 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public List<DeviceDataSourceInstanceSummary> Instances { get; set; }
 
 	/// <summary>
+	///    Whether the device's preferred log collector is configured
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "isPreferredLogCollectorConfigured")]
+	public bool IsPreferredLogCollectorConfigured { get; set; }
+
+	/// <summary>
 	///    The last time that raw data was received for the device
 	/// </summary>
 	[SantabaReadOnly]
@@ -228,6 +242,33 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public string Link { get; set; }
 
 	/// <summary>
+	///    The Log Collector's description
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "logCollectorDescription")]
+	public string? LogCollectorDescription { get; set; }
+
+	/// <summary>
+	///    The Log Collector's group's id
+	/// </summary>
+	[DataMember(Name = "logCollectorGroupId")]
+	public int LogCollectorGroupId { get; set; }
+
+	/// <summary>
+	///    The Log Collector's group's name
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "logCollectorGroupName")]
+	public string? LogCollectorGroupName { get; set; }
+
+	/// <summary>
+	///    The Log Collector's ID
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "logCollectorId")]
+	public int LogCollectorId { get; set; }
+
+	/// <summary>
 	///    Whether the device has a disabled sub-resource
 	/// </summary>
 	[SantabaReadOnly]
@@ -237,7 +278,6 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	///    The Netflow Collector Id
 	/// </summary>
-	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorId")]
 	public int NetflowCollectorId { get; set; }
 
@@ -260,7 +300,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorGroupName")]
-	public string NetflowCollectorGroupName { get; set; }
+	public string? NetflowCollectorGroupName { get; set; }
 
 	/// <summary>
 	///    The preferred Collector Id
@@ -287,6 +327,69 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[DataMember(Name = "relatedDeviceId")]
 	public int RelatedDeviceId { get; set; }
+
+	/// <summary>
+	///    The AWS test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "awsTestResult")]
+	public string AwsTestResult { get; set; }
+
+	/// <summary>
+	///    The AWS test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "awsTestResultCode")]
+	public int AwsTestResultCode { get; set; }
+
+	/// <summary>
+	///    The Azure test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "azureTestResult")]
+	public string AzureTestResult { get; set; }
+
+	/// <summary>
+	///    The Azure test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "azureTestResultCode")]
+	public int AzureTestResultCode { get; set; }
+
+	/// <summary>
+	///    The GCP test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "gcpTestResult")]
+	public string GcpTestResult { get; set; }
+
+	/// <summary>
+	///    The GCP test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "gcpTestResultCode")]
+	public int GcpTestResultCode { get; set; }
+
+	/// <summary>
+	///    The SaaS test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "saasTestResult")]
+	public string SaasTestResult { get; set; }
+
+	/// <summary>
+	///    The SaaS test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "saasTestResultCode")]
+	public int SaasTestResultCode { get; set; }
+
+	/// <summary>
+	///    The auto visual result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "autoVisualResult")]
+	public string AutoVisualResult { get; set; }
 
 	/// <summary>
 	///    The Scan config ID
@@ -335,6 +438,25 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[DataMember(Name = "loadBalanceCollectorGroupId")]
 	public int LoadBalanceCollectorGroupId { get; set; }
+
+	/// <summary>
+	///    Resource Ids
+	/// </summary>
+	[DataMember(Name = "resourceIds")]
+	public List<int>? ResourceIds { get; set; }
+
+	/// <summary>
+	///    Synthetics collector Ids
+	/// </summary>
+	[DataMember(Name = "syntheticsCollectorIds")]
+	public List<int>? SyntheticsCollectorIds { get; set; }
+
+	/// <summary>
+	///    Role privileges
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "rolePrivileges")]
+	public List<RolePrivilege> RolePrivileges { get; set; }
 
 	/// <summary>
 	///    User Permission

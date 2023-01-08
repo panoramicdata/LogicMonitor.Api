@@ -27,7 +27,7 @@ public class DeviceEventSource : IdentifiedItem
 	///    The time alerting was disabled in seconds since the Epoch
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object? AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    The event source type

@@ -108,6 +108,12 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	[DataMember(Name = "userPermission")]
 	public UserPermission UserPermissionString { get; set; }
 
+	/// <summary>
+	///    The role privileges
+	/// </summary>
+	[DataMember(Name = "rolePrivileges")]
+	public List<RolePrivilege> RolePrivileges { get; set; }
+
 	/// <inheritdoc />
 	public string Endpoint() => "website/groups";
 }

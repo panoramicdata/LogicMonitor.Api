@@ -64,7 +64,7 @@ public class DeviceEventSourceGroup : NamedItem
 	///    AlertingDisabledOn
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object? AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    groupsDisabledThisSource

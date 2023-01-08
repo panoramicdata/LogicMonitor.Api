@@ -39,7 +39,7 @@ public class DeviceDataSource : IdentifiedItem
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object? AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    The collection method
