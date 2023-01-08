@@ -85,6 +85,18 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public int DeviceCount { get; set; }
 
 	/// <summary>
+	///    Whether versions mismatch
+	/// </summary>
+	[DataMember(Name = "mismatchVersion")]
+	public bool MismatchVersion { get; set; }
+
+	/// <summary>
+	///    The highest priority collector status
+	/// </summary>
+	[DataMember(Name = "highestPriorityCollectorStatus")]
+	public CollectorStatus HighestPriorityCollectorStatus { get; set; }
+
+	/// <summary>
 	///    The subUrl for setting by id
 	/// </summary>
 	public string Endpoint() => "setting/collector/groups";
