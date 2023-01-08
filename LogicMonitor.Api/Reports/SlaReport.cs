@@ -7,16 +7,22 @@ namespace LogicMonitor.Api.Reports;
 public class SlaReport : DateRangeReport
 {
 	/// <summary>
-	/// The metrics
+	/// The calculation method
 	/// </summary>
-	[DataMember(Name = "metrics")]
-	public List<SlaReportMetric> Metrics { get; set; }
+	[DataMember(Name = "calculationMethod")]
+	public CalculationMethod CalculationMethod { get; set; }
 
 	/// <summary>
 	/// The dayInOneWeek
 	/// </summary>
 	[DataMember(Name = "dayInOneWeek")]
 	public string DayInOneWeek { get; set; }
+
+	/// <summary>
+	/// The metrics
+	/// </summary>
+	[DataMember(Name = "metrics")]
+	public List<SlaReportMetric> Metrics { get; set; }
 
 	/// <summary>
 	/// The periodInOneDay

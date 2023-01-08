@@ -7,10 +7,16 @@ namespace LogicMonitor.Api.Reports;
 public class NetflowDeviceMetricReport : DateRangeReport
 {
 	/// <summary>
-	/// The hostsVal
+	/// The hosts value
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string HostsVal { get; set; }
+	public string HostsValue { get; set; }
+
+	/// <summary>
+	/// The hosts value type
+	/// </summary>
+	[DataMember(Name = "hostsValType")]
+	public HostsValueType HostsValueType { get; set; }
 
 	/// <summary>
 	/// Whether to include DNS mappings

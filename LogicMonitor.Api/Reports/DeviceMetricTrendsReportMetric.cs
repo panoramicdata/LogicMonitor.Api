@@ -7,6 +7,12 @@ namespace LogicMonitor.Api.Reports;
 public class DeviceMetricTrendsReportMetric
 {
 	/// <summary>
+	/// The consolidation function
+	/// </summary>
+	[DataMember(Name = "consolidationFunc")]
+	public string ConsolidationFunction { get; set; } = string.Empty;
+
+	/// <summary>
 	/// The dataSourceId
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
