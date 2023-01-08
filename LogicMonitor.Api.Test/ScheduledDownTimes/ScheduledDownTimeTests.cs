@@ -170,11 +170,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 	}
 
 	[Fact]
-	public async Task AddAndDeleteADeviceGroupSdt()
+	public async Task AddAndDeleteAResourceGroupSdt()
 	{
 		const string initialComment = "Woo";
-		const int deviceGroupId = 1; // The root
-		var sdtCreationDto = new DeviceGroupScheduledDownTimeCreationDto(deviceGroupId)
+		const int resourceGroupId = 1; // The root
+		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroupId)
 		{
 			Comment = initialComment,
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
@@ -185,12 +185,12 @@ public class ScheduledDownTimeTests : TestWithOutput
 		// Check the created SDT looks right
 		var createdSdt = await LogicMonitorClient.CreateAsync(sdtCreationDto, CancellationToken.None).ConfigureAwait(false);
 		createdSdt.Comment.Should().Be(initialComment);
-		createdSdt.DeviceGroupId.Should().Be(deviceGroupId);
+		createdSdt.DeviceGroupId.Should().Be(resourceGroupId);
 
 		// Check the re-fetched SDT looks right
 		var refetchSdt = await LogicMonitorClient.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken.None).ConfigureAwait(false);
 		refetchSdt.Comment.Should().Be(initialComment);
-		refetchSdt.DeviceGroupId.Should().Be(deviceGroupId);
+		refetchSdt.DeviceGroupId.Should().Be(resourceGroupId);
 
 		// Update
 		const string newComment = "Yay";
@@ -200,7 +200,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		// Check the re-fetched SDT looks right
 		refetchSdt = await LogicMonitorClient.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken.None).ConfigureAwait(false);
 		refetchSdt.Comment.Should().Be(newComment);
-		refetchSdt.DeviceGroupId.Should().Be(deviceGroupId);
+		refetchSdt.DeviceGroupId.Should().Be(resourceGroupId);
 
 		// Get all scheduled downtimes (we have created one, so at least that one should be there)
 		var scheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
@@ -297,7 +297,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var allScheduledDownTimes = await LogicMonitorClient.GetAllAsync<ScheduledDownTime>(CancellationToken.None)
 			.ConfigureAwait(false);
 
-		var deviceScheduledDownTime = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Device);
+		var deviceScheduledDownTime = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Resource);
 		deviceScheduledDownTime.Should().NotBeNull();
 		var deviceId = deviceScheduledDownTime!.DeviceId;
 		deviceId.Should().NotBeNull();
@@ -329,19 +329,19 @@ public class ScheduledDownTimeTests : TestWithOutput
 		const string deviceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
 
 		// Ensure DeviceGroup is NOT present
-		var deviceGroup = await LogicMonitorClient
+		var resourceGroup = await LogicMonitorClient
 			.GetDeviceGroupByFullPathAsync(deviceGroupName, CancellationToken.None)
 			.ConfigureAwait(false);
 
-		if (deviceGroup is not null)
+		if (resourceGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(deviceGroup, cancellationToken: CancellationToken.None)
+				.DeleteAsync(resourceGroup, cancellationToken: CancellationToken.None)
 				.ConfigureAwait(false);
 		}
 
 		// Create DeviceGroup
-		deviceGroup = await LogicMonitorClient
+		resourceGroup = await LogicMonitorClient
 			.CreateAsync(new DeviceGroupCreationDto
 			{
 				ParentId = "1",
@@ -362,7 +362,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			.SingleOrDefault();
 
 		// Create Scheduled Downtime
-		var sdtCreationDto = new DeviceGroupScheduledDownTimeCreationDto(deviceGroup.Id)
+		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroup.Id)
 		{
 			Comment = "Created by Unit Test",
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
@@ -385,7 +385,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 
 		// Remove the device group
 		await LogicMonitorClient
-			.DeleteAsync(deviceGroup, cancellationToken: CancellationToken.None)
+			.DeleteAsync(resourceGroup, cancellationToken: CancellationToken.None)
 			.ConfigureAwait(false);
 	}
 

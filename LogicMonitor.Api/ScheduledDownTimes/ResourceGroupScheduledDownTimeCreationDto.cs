@@ -3,13 +3,13 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <summary>
 ///    DeviceGroup SDT creation DTO
 /// </summary>
-public class DeviceGroupScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+public class ResourceGroupScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 {
 	/// <summary>
 	///    Device
 	/// </summary>
 	/// <param name="deviceGroupId"></param>
-	public DeviceGroupScheduledDownTimeCreationDto(int deviceGroupId) : base(ScheduledDownTimeType.DeviceGroup)
+	public ResourceGroupScheduledDownTimeCreationDto(int deviceGroupId) : base(ScheduledDownTimeType.ResourceGroup)
 	{
 		DeviceGroupId = deviceGroupId;
 	}

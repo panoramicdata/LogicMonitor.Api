@@ -9,7 +9,7 @@ public class DeviceScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 	///    Device
 	/// </summary>
 	/// <param name="deviceId"></param>
-	public DeviceScheduledDownTimeCreationDto(int deviceId) : base(ScheduledDownTimeType.Device)
+	public DeviceScheduledDownTimeCreationDto(int deviceId) : base(ScheduledDownTimeType.Resource)
 	{
 		DeviceId = deviceId;
 	}

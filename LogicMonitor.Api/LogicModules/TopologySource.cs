@@ -19,12 +19,6 @@ public class TopologySource : LogicModule, IHasEndpoint
 	public int? AuditVersion { get; set; }
 
 	/// <summary>
-	/// The checksum
-	/// </summary>
-	[DataMember(Name = "checksum")]
-	public string Checksum { get; set; }
-
-	/// <summary>
 	/// The collection interval in seconds
 	/// </summary>
 	[DataMember(Name = "collectInterval")]

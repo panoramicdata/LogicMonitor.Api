@@ -20,10 +20,10 @@ public enum ScheduledDownTimeType
 	Collector,
 
 	/// <summary>
-	/// Device
+	/// Resource
 	/// </summary>
-	[EnumMember(Value = "DeviceSDT")]
-	Device,
+	[EnumMember(Value = "ResourceSDT")]
+	Resource,
 
 	/// <summary>
 	/// Device Batch Job
@@ -62,10 +62,10 @@ public enum ScheduledDownTimeType
 	DeviceEventSource,
 
 	/// <summary>
-	/// Device Group
+	/// Resource Group
 	/// </summary>
-	[EnumMember(Value = "DeviceGroupSDT")]
-	DeviceGroup,
+	[EnumMember(Value = "ResourceGroupSDT")]
+	ResourceGroup,
 
 	/// <summary>
 	/// Service

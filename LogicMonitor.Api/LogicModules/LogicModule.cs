@@ -6,6 +6,13 @@
 [DataContract]
 public abstract class LogicModule : NamedItem
 {
+
+	/// <summary>
+	/// The checksum
+	/// </summary>
+	[DataMember(Name = "checksum")]
+	public string Checksum { get; set; }
+
 	/// <summary>
 	/// The lineage id
 	/// </summary>

@@ -7,6 +7,12 @@ namespace LogicMonitor.Api.Dashboards;
 public class NetflowFilter
 {
 	/// <summary>
+	/// The appType
+	/// </summary>
+	[DataMember(Name = "appType")]
+	public string AppType { get; set; } = "all";
+
+	/// <summary>
 	/// The qosType
 	/// </summary>
 	[DataMember(Name = "qosType")]
@@ -37,6 +43,12 @@ public class NetflowFilter
 	public int Top { get; set; } = 10;
 
 	/// <summary>
+	/// The interface names
+	/// </summary>
+	[DataMember(Name = "ifNames")]
+	public List<string> InterfaceNames { get; set; } = new();
+
+	/// <summary>
 	/// The IP version
 	/// </summary>
 	[DataMember(Name = "ipVersion")]
@@ -53,6 +65,12 @@ public class NetflowFilter
 	/// </summary>
 	[DataMember(Name = "nbarApplicationNames")]
 	public List<string> NbarApplicationNames { get; set; } = new();
+
+	/// <summary>
+	/// The netflow devices
+	/// </summary>
+	[DataMember(Name = "netflowDevices")]
+	public List<object> NetflowDevices { get; set; } = new();
 
 	/// <summary>
 	/// The conversation

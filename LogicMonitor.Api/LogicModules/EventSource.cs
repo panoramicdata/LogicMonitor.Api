@@ -49,12 +49,6 @@ public class EventSource : LogicModule, IHasEndpoint
 	public int? CheckIntervalSeconds { get; set; }
 
 	/// <summary>
-	/// The checksum
-	/// </summary>
-	[DataMember(Name = "checksum")]
-	public string CheckSum { get; set; }
-
-	/// <summary>
 	/// Whether to clear after acknowledgement
 	/// </summary>
 	[DataMember(Name = "clearAfterAck")]

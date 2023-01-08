@@ -13,12 +13,6 @@ public class SnmpSysOidMap : LogicModule, IHasEndpoint
 	public string Categories { get; set; }
 
 	/// <summary>
-	/// The checksum
-	/// </summary>
-	[DataMember(Name = "checksum")]
-	public string Checksum { get; set; }
-
-	/// <summary>
 	/// The parameters
 	/// </summary>
 	[DataMember(Name = "oid")]

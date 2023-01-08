@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A PropertySource
 /// </summary>
 [DataContract]
-public class PropertySource : NamedItem, IHasEndpoint
+public class PropertySource : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// What this applies to
@@ -19,6 +19,12 @@ public class PropertySource : NamedItem, IHasEndpoint
 	public int? AuditVersion { get; set; }
 
 	/// <summary>
+	/// The audit version
+	/// </summary>
+	[DataMember(Name = "dataType")]
+	public PropertySourceDataType DataType { get; set; }
+
+	/// <summary>
 	/// GroovyScript
 	/// </summary>
 	[DataMember(Name = "groovyScript")]
@@ -29,6 +35,12 @@ public class PropertySource : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "group")]
 	public string Group { get; set; }
+
+	/// <summary>
+	/// The interval
+	/// </summary>
+	[DataMember(Name = "interval")]
+	public int Interval { get; set; }
 
 	/// <summary>
 	/// Linux command line
