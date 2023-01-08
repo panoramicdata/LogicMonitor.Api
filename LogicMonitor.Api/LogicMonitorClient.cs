@@ -32,9 +32,6 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	public string AccountName { get; }
 
-	private static readonly Regex V3HackRegex =
-		new("/alert/alerts/note|/setting/registry/metadata|/setting/admin|setting/role|/setting/logicmodules/listcore|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjob|function|oid)/(\\d/audit)|topology|/setting/(datasources|eventsources|configsources|propertyrules|topologysources|batchjobs|functions|oids)/importcore");
-
 	#endregion Fields
 
 	#region Properties
@@ -128,7 +125,7 @@ public partial class LogicMonitorClient : IDisposable
 		_client.DefaultRequestHeaders.Accept.Clear();
 		_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 		_client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-		_client.DefaultRequestHeaders.Add("X-version", "2");
+		_client.DefaultRequestHeaders.Add("X-version", "3");
 		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
 		_client.Timeout = TimeSpan.FromMinutes(1);
 	}
@@ -653,15 +650,6 @@ public partial class LogicMonitorClient : IDisposable
 		// Auth header
 		var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
 		requestMessage.Headers.Add("Authorization", authHeaderValue);
-
-		// HACK: Modify X-version if appropriate
-		// Change when V3 is officially supportable
-		// There is a bug with Patch such that V2 gives errors related to "custom property name cannot be predef.externalResourceType\ncustom property name cannot be predef.externalResourceID"
-		if (V3HackRegex.IsMatch(resourcePath) || requestMessage.Method == PatchHttpMethod)
-		{
-			requestMessage.Headers.Remove("X-version");
-			requestMessage.Headers.Add("X-version", "3");
-		}
 
 		_logger.LogHttpHeaders(true, null, requestMessage.Headers);
 		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
