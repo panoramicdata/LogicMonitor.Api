@@ -46,6 +46,11 @@ public partial class LogicMonitorClient : IDisposable
 	}
 
 	/// <summary>
+	/// Summary information about API traffic.
+	/// </summary>
+	public Statistics Statistics { get; } = new();
+
+	/// <summary>
 	/// Clear the cache
 	/// </summary>
 	public void ClearCache()
@@ -652,7 +657,59 @@ public partial class LogicMonitorClient : IDisposable
 		requestMessage.Headers.Add("Authorization", authHeaderValue);
 
 		_logger.LogHttpHeaders(true, null, requestMessage.Headers);
-		return await _client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+		var response = await _client
+			.SendAsync(requestMessage, cancellationToken)
+			.ConfigureAwait(false);
+
+		UpdateSummary(requestMessage, response);
+
+		return response;
+	}
+
+	private void UpdateSummary(HttpRequestMessage requestMessage, HttpResponseMessage response)
+	{
+		if (response.IsSuccessStatusCode)
+		{
+			Statistics.ApiCallSuccessCount++;
+		}
+		else
+		{
+			Statistics.ApiCallFailureCount++;
+		}
+
+		switch (requestMessage.Method.ToString())
+		{
+			case "DELETE":
+				Statistics.ApiCallDeleteCount++;
+				break;
+			case "GET":
+				Statistics.ApiCallGetCount++;
+				break;
+			case "POST":
+				Statistics.ApiCallPostCount++;
+				break;
+			case "TRACE":
+				Statistics.ApiCallTraceCount++;
+				break;
+			case "HEAD":
+				Statistics.ApiCallHeadCount++;
+				break;
+			case "PUT":
+				Statistics.ApiCallPutCount++;
+				break;
+			case "OPTIONS":
+				Statistics.ApiCallOptionsCount++;
+				break;
+			case "PATCH":
+				Statistics.ApiCallPatchCount++;
+				break;
+			default:
+				Statistics.ApiCallOtherCount++;
+				break;
+		}
+
+		Statistics.DataTransferUplinkBytes += requestMessage.Content?.Headers.ContentLength ?? 0;
+		Statistics.DataTransferDownlinkBytes += response.Content?.Headers.ContentLength ?? 0;
 	}
 
 	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()

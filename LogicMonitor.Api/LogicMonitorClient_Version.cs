@@ -17,12 +17,14 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="accountName"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public static async Task<PortalVersion> GetVersionAsync(string accountName, CancellationToken cancellationToken)
+	public async Task<PortalVersion> GetVersionAsync(string accountName, CancellationToken cancellationToken)
 	{
 		// The actual Get method
 		using var _httpClient = new HttpClient();
-		using var result = await _httpClient.GetAsync($"https://{accountName}.logicmonitor.com/santaba/rest/version", cancellationToken).ConfigureAwait(false);
-		var portalResponse = new PortalResponse<PortalVersion>(result);
+		using var request = new HttpRequestMessage(HttpMethod.Get, $"https://{accountName}.logicmonitor.com/santaba/rest/version");
+		using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+		UpdateSummary(request, response);
+		var portalResponse = new PortalResponse<PortalVersion>(response);
 		return portalResponse.GetObject();
 	}
 }
