@@ -107,7 +107,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	[Fact]
 	public async Task AddAndDeleteADeviceSdt()
 	{
-		const string initialComment = "Woo";
+		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteADeviceSdt initial comment";
 		var deviceId = WindowsDeviceId;
 		var sdtCreationDto = new DeviceScheduledDownTimeCreationDto(deviceId)
 		{
@@ -132,7 +132,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		refetchSdt.DeviceId.Should().Be(deviceId);
 
 		// Update
-		const string newComment = "Yay";
+		const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteADeviceSdt new comment";
 		createdSdt.Comment = newComment;
 		await LogicMonitorClient
 			.PutStringIdentifiedItemAsync(createdSdt, CancellationToken.None)
@@ -172,7 +172,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	[Fact]
 	public async Task AddAndDeleteAResourceGroupSdt()
 	{
-		const string initialComment = "Woo";
+		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteAResourceGroupSdt initial comment";
 		const int resourceGroupId = 1; // The root
 		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroupId)
 		{
@@ -193,7 +193,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		refetchSdt.DeviceGroupId.Should().Be(resourceGroupId);
 
 		// Update
-		const string newComment = "Yay";
+		const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteAResourceGroupSdt new comment";
 		createdSdt.Comment = newComment;
 		await LogicMonitorClient.PutStringIdentifiedItemAsync(createdSdt, CancellationToken.None).ConfigureAwait(false);
 
@@ -235,7 +235,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			.ConfigureAwait(false))
 			.SingleOrDefault();
 		collector.Should().NotBeNull();
-		const string initialComment = "Woo";
+		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteACollectorSdt initial comment";
 		var collectorId = collector!.Id;
 		var sdtCreationDto = new CollectorScheduledDownTimeCreationDto(collectorId)
 		{
@@ -256,7 +256,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		refetchSdt.CollectorId.Should().Be(collectorId);
 
 		// Update
-		const string newComment = "Yay";
+		const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteACollectorSdt new comment";
 		createdSdt.Comment = newComment;
 		await portalClient.PutStringIdentifiedItemAsync(createdSdt, CancellationToken.None).ConfigureAwait(false);
 
