@@ -31,7 +31,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		{
 			Comment = initialComment,
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
-			EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime
 		};
 
@@ -113,7 +113,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		{
 			Comment = initialComment,
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
-			EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime
 		};
 
@@ -178,7 +178,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		{
 			Comment = initialComment,
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
-			EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime
 		};
 
@@ -236,12 +236,12 @@ public class ScheduledDownTimeTests : TestWithOutput
 			.SingleOrDefault();
 		collector.Should().NotBeNull();
 		const string initialComment = "Woo";
-		var collectorId = collector.Id;
+		var collectorId = collector!.Id;
 		var sdtCreationDto = new CollectorScheduledDownTimeCreationDto(collectorId)
 		{
 			Comment = initialComment,
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
-			EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime
 		};
 
@@ -360,15 +360,16 @@ public class ScheduledDownTimeTests : TestWithOutput
 			}, CancellationToken.None)
 			.ConfigureAwait(false))
 			.SingleOrDefault();
+		dataSource.Should().NotBeNull();
 
 		// Create Scheduled Downtime
 		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroup.Id)
 		{
 			Comment = "Created by Unit Test",
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
-			EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime,
-			DataSourceId = dataSource.Id,
+			DataSourceId = dataSource!.Id,
 			DataSourceName = dataSource.Name
 		};
 
@@ -418,7 +419,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 		{
 			Comment = "Created by Unit Test",
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
-			EndDateTimeEpochMs = DateTime.UtcNow.AddDays(7).MillisecondsSinceTheEpoch(),
+			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime
 		};
 
