@@ -57,6 +57,84 @@ Collectors
 		Collector
 			"agentConfFields":{"description":"This is key value pairs of collector config properties","readOnly":true,"additionalProperties":{"type":"string"},"type":"object"}
 			"syntheticsEnabled":{"description":"Whether the collector can monitor Synthetic devices (Selenium grid property must be defined)","readOnly":true,"type":"boolean"}
+		patchCollectorById
+			add parameters
+			{
+						"default": false,
+						"in": "query",
+						"name": "autoBalanceMonitoredDevices",
+						"type": "boolean",
+						"required": false
+					},
+					{
+						"default": false,
+						"in": "query",
+						"name": "forceUpdateFailedOverDevices",
+						"type": "boolean",
+						"required": false
+					},
+					{
+						"default": "refresh",
+						"in": "query",
+						"name": "opType",
+						"type": "string",
+						"required": false
+					}
+		updateCollectorById
+			add parameters
+			{
+						"default": false,
+						"in": "query",
+						"name": "autoBalanceMonitoredDevices",
+						"type": "boolean",
+						"required": false
+					},
+					{
+						"default": false,
+						"in": "query",
+						"name": "forceUpdateFailedOverDevices",
+						"type": "boolean",
+						"required": false
+					},
+					{
+						"default": "refresh",
+						"in": "query",
+						"name": "opType",
+						"type": "string",
+						"required": false
+					}
+		patchCollectorGroupById
+			add parameters
+			{
+						"default": false,
+						"in": "query",
+						"name": "autoBalanceMonitoredDevices",
+						"type": "boolean",
+						"required": false
+					}
+			{
+						"default": "refresh",
+						"in": "query",
+						"name": "opType",
+						"type": "string",
+						"required": false
+					}
+		updateCollectorGroupById
+			add parameters
+`			{
+						"default": false,
+						"in": "query",
+						"name": "autoBalanceMonitoredDevices",
+						"type": "boolean",
+						"required": false
+					}
+			{
+						"default": "refresh",
+						"in": "query",
+						"name": "opType",
+						"type": "string",
+						"required": false
+					}
 ConfigSources
 Dashboards
 		Widget
@@ -91,8 +169,16 @@ Dashboards
 			"overwriteGroupFields":{"description":"Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.","readOnly":true,"type":"boolean"}
 		DashboardGroup
 			"template":{"description":"The template which is used for importing dashboard group","type":"object"}
+		patchWidgetById
+			change summary to "update widget (Based upon widget type the request and response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
+		getWidgetById
+			change summary to "get widget by id (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
+		getWidgetList
+			change summary to "get widget list (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
 
-
+Debug
+	getDebugCommandResult
+		change summary to "Get the result of a Collector debug command using sessionId"
 Data
 		GraphOpsNoteScope
 			"serviceGroupIds":{"description":"The service group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
@@ -389,6 +475,26 @@ Devices
 			"dataSourceInstanceId":{"format":"int32","description":"The id of the DataSource instance alert settings apply to","readOnly":true,"type":"integer"}
 			"warnAdAdvSetting":{"type":"string"}
 			"collectionInterval":{"format":"int64","description":"Collection Interval","readOnly":true,"type":"integer"}
+
+		getNetworkFlowList
+			change summary to "get netflow flows"
+		getTopTalkersGraph
+			add parameters
+			{
+						"in": "query",
+						"name": "start",
+						"format": "int64",
+						"type": "integer",
+						"required": false
+					},
+					{
+						"in": "query",
+						"name": "end",
+						"format": "int64",
+						"type": "integer",
+						"required": false
+					}
+			
 EventSources
 		LogFile
 			"originId":{"type":"string"}
@@ -419,9 +525,12 @@ HistorySdts
 			"weekOfMonth":{"description":"The week of the month that the SDT will be active for a monthly SDT","type":"string","example":"1"}
 			"type":{"description":"The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT","type":"string","example":"ResourceGroupSDT"}
 			"weekDay":{"description":"the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY","type":"string","example":"Sunday"}
-SDTHistory
+		SDTHistory
 			"approximateEndEpoch":{"format":"int64","description":"The end epoch for the SDT","readOnly":true,"type":"integer","example":1.475902808E12
 			"approximateStartEpoch":{"format":"int64","description":"The start epoch for the SDT","readOnly":true,"type":"integer","example":1.475875446E12}
+
+		patchSDTById
+			change summary to "update SDT (Response may contain extra fields depending upon the type of SDT being updated)"
 Log
 Logging
 LogicModules
@@ -532,6 +641,29 @@ Settings
 			"password":{"description":"NTLM authentication password","type":"string"}
 			"type":{"description":"Authentication type","type":"string","example":"basic"}
 			"userName":{"description":"NTLM  authentication userName","type":"string"}
+
+		getAdminList
+			add parameters
+			{
+						"in": "query",
+						"name": "type",
+						"pattern": "bearer",
+						"type": "string",
+						"required": false
+					},
+					{
+						"in": "query",
+						"name": "permission",
+						"pattern": "traces",
+						"type": "string",
+						"required": false
+					},
+					{
+						"in": "query",
+						"name": "filterGroupString",
+						"type": "string",
+						"required": false
+					}
 Users
 		Privilege
 			"objectName":{"description":"The privilege object name","readOnly":true,"type":"string"}
@@ -613,3 +745,11 @@ Websites
 			"description":{"description":"Check point description","type":"string"}
 			"id":{"format":"int32","description":"The Id of the SiteMonitor Checkpoint","readOnly":true,"type":"integer"}
 
+		getSDTHistoryByWebsiteId
+			change summary to "get SDT history for the website (Response may contain extra fields depending upon the type of SDT)"
+		getAllSDTListByWebsiteGroupId
+			change summary to "get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)"
+		getImmediateWebsiteListByWebsiteGroupId
+			change summary to "get a list of websites for a group (Response may contain extra fields depending upon the type of check { PingCheck | WebCheck} being added)"
+
+Add "name": "IntegrationAuditLogs", "name": "PropertySources" to the tags of securityDefinitions

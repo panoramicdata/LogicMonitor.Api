@@ -75,12 +75,123 @@ Collectors
 
 ConfigSources
 	"ConfigCheck":{"type":"object","properties":{"ackClearAlert":{"description":"Clear alert after ACKED or not","type":"boolean"},"originId":{"description":"portable id for origin tracking","type":"string"},"name":{"description":"The ConfigCheck name","type":"string"},"alertLevel":{"format":"int32","description":"The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)","type":"integer"},"description":{"description":"The ConfigCheck id","type":"string"},"configSourceId":{"format":"int32","description":"The ConfigSource id","type":"integer"},"id":{"format":"int32","description":"The ConfigCheck id","type":"integer"},"type":{"description":"The ConfigCheck type. fetch|ignore|missing|value|groovy","type":"string"},"alertEffectiveIval":{"format":"int32","description":"Alert effective interval","type":"integer"},"script":{"description":"The ConfigCheck script","$ref":"#/definitions/JSONObject"},"alertTransitionInterval":{"format":"int32","description":"The count that the alert must exist for these many poll cycles before it will be triggered","type":"integer"}}}
+	"/setting/configsources/{id}/audit": {
+			"post": {
+				"summary": "add audit version",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"description": "",
+				"operationId": "addConfigsourceAuditVersion",
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/ConfigSource"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"pattern": "\\d+",
+						"format": "int32",
+						"type": "integer",
+						"required": true
+					},
+					{
+						"schema": {
+							"$ref": "#/definitions/Audit"
+						},
+						"in": "body",
+						"name": "body",
+						"required": false
+					}
+				],
+				"tags": [
+					"ConfigSources"
+				],
+				"consumes": [
+					"application/json"
+				]
+			}
+		}
 
 Dashboards
 	"RestSavedMapWidgetV3":{"allOf":[{"$ref":"#/definitions/Widget"},{"type":"object","properties":{"scale":{"format":"double","type":"number"},"savedMapName":{"type":"string"},"savedMapId":{"format":"int32","type":"integer"},"savedMapGroupName":{"type":"string"}}}]}
 
+	getWidgetDataById
+		change summary to "get widget data (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
 Data
 DataSources
+	addDatasourceAuditVersion
+		"/setting/datasources/{id}/audit": {
+			"post": {
+				"summary": "add audit version",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"description": "",
+				"operationId": "addDatasourceAuditVersion",
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/DataSource"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"pattern": "\\d+",
+						"format": "int32",
+						"type": "integer",
+						"required": true
+					},
+					{
+						"schema": {
+							"$ref": "#/definitions/Audit"
+						},
+						"in": "body",
+						"name": "body",
+						"required": false
+					}
+				],
+				"tags": [
+					"Datasources"
+				],
+				"consumes": [
+					"application/json"
+				]
+			}
+		}
 Devices
 	"DeviceProperty":{"type":"object","required":["name","value"],"properties":{"name":{"description":"The resource property name","type":"string"},"value":{"description":"The resource property value","type":"string"}}}
 	"NbarApplicationNames":{"type":"object","properties":{"operator":{"type":"string"},"applicationName":{"type":"string"}}}
@@ -96,6 +207,82 @@ Devices
 	"JSONObject":{"type":"object"}
 	"InterfacesFilter":{"type":"object","properties":{"interfaceTypes":{"type":"array","items":{"$ref":"#/definitions/InterfaceType"}},"deviceId":{"format":"int32","type":"integer"}}}
 	"ConversationFilter":{"type":"object","properties":{"fromOperator":{"type":"string"},"fromEndpoint":{"type":"string"},"toEndpoint":{"type":"string"},"toOperator":{"type":"string"},"includeOrExclude":{"type":"string"}}}
+	
+	collectDeviceConfigSourceConfig
+		"/device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection": {
+			"post": {
+				"summary": "collect a config for a device",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"description": "",
+				"operationId": "collectDeviceConfigSourceConfig",
+				"responses": {
+					"200": {
+						"schema": {
+							"type": "object"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+					{
+						"in": "path",
+						"name": "deviceId",
+						"pattern": "\\d+",
+						"format": "int32",
+						"type": "integer",
+						"required": true
+					},
+					{
+						"in": "path",
+						"name": "hdsId",
+						"pattern": "\\d+",
+					   
+	   
+	  
+					  
+					
+					 
+						"format": "int32",
+						"type": "integer",
+						"required": true
+					},
+					{
+						"in": "path",
+						"name": "instanceId",
+						"pattern": "\\d+",
+						"format": "int32",
+						"type": "integer",
+						"required": true
+	   
+	  
+					
+					   
+					   
+					   
+					}
+				],
+				"tags": [
+					"Datasource Instances"
+				],
+				"consumes": [
+					"application/json"
+				]
+			}
+		}
 
 EventSources
 	"RestAwsRdsPerformanceInsightsEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"num":{"format":"int32","description":"Maximum number of items to return","type":"integer"},"dimension":{"description":"The dimension to query","type":"string"}}}]}
@@ -106,6 +293,120 @@ EventSources
 	"RestAzureResourceLogAnalyticsWorkspacesSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"query":{"description":"Azure Log Analytics Workspaces Query","type":"string"},"columnInstanceName":{"description":"Column Instance Name","type":"string"}}}]}
 	"RestAzureResourceHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
 	"AzureEmergingIssueEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"/setting/eventsources/{id}/audit": {
+			"post": {
+				"summary": "add audit version",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"description": "",
+				"operationId": "addEventsourceAuditVersion",
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/EventSource"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"pattern": "\\d+",
+						"format": "int32",
+						"type": "integer",
+						"required": true
+					},
+					{
+						"schema": {
+							"$ref": "#/definitions/Audit"
+						},
+						"in": "body",
+						"name": "body",
+						"required": false
+					}
+				],
+				"tags": [
+					"EventSources"
+				],
+				"consumes": [
+					"application/json"
+				]
+			}
+		},
+
+	addPropertysourceAuditVersion
+		"/setting/propertyrules/{id}/audit": {
+			"post": {
+				"summary": "add audit version",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+
+				],	   
+									   
+				"description": "",
+				"operationId": "addPropertysourceAuditVersion",
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/PropertyRule"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+					{
+						"in": "path",
+							  
+						"name": "id",
+						"pattern": "\\d+",
+						"format": "int32",
+						"type": "integer",
+						"required": true
+					},
+					{
+						"schema": {
+							"$ref": "#/definitions/Audit"
+						},
+						"in": "body",
+						"name": "body",
+						"required": false
+					}
+				],
+				"tags": [
+					"PropertySources"
+				],
+				"consumes": [
+					"application/json"
+				]
+			}
+		}
 
 Flows
 Functions
@@ -192,6 +493,44 @@ Settings
 	"IntegrationMetadata":{"type":"object","properties":{"targetLastPublishedId":{"description":"Specifies the target last published Id","readOnly":true,"type":"string"},"targetLastPublishedChecksum":{"description":"The metadata checksum for the target last published LMModule content","readOnly":true,"type":"string"},"targetLastPublishedVersion":{"description":"Specifies the target last published version","readOnly":true,"type":"string"},"originChecksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"},"originAuthorNamespace":{"description":"Specifies the origin Author companies namespace","readOnly":true,"type":"string"},"isChangedFromOrigin":{"description":"Specifies if the Applies To function is changed from origin or not","readOnly":true,"type":"boolean"},"auditedRegistryId":{"description":"Specifies the audited registry Id","readOnly":true,"type":"string"},"targetLineageId":{"description":"Specifies the target lineage Id","readOnly":true,"type":"string"},"logicModuleType":{"description":"DataSources | EventSources | PropertySources | ConfigSources | LogSources | TopologySources | Jobmonitors | AppliesTo Functions | SNMP SysOID Maps\nThe type of LogicModule","readOnly":true,"type":"string","enum":["DATASOURCE","EVENTSOURCE","JOBMONITOR","APPLIESTO_FUNCTION","SNMP_SYSOID_MAP","PROPERTYSOURCE","CONFIGSOURCE","TOPOLOGYSOURCE","LOGSOURCE"]},"isChangedFromTargetLastPublished":{"description":"Specifies if the Applies To function is changed from target last published or not","readOnly":true,"type":"boolean"},"originLineageId":{"description":"The origin lineage Id of the LMmodule","readOnly":true,"type":"string"},"originAuthorCompanyUUID":{"description":"Specifies the origin Author companies unique Id","readOnly":true,"type":"string"},"localModuleId":{"format":"int32","description":"The LocalModule Id","readOnly":true,"type":"integer"},"originRegistryId":{"description":"The Registry ID of the Exchange Integration this module is based from","readOnly":true,"type":"string"},"originVersion":{"description":"Specifies the origin version","readOnly":true,"type":"string"},"auditedVersion":{"description":"Specifies the audited registry version","readOnly":true,"type":"string"}}}
 	"IntegrationAuditLogPaginationResponse":{"type":"object","properties":{"items":{"type":"array","items":{"$ref":"#/definitions/IntegrationAuditLog"}}}}
 	"IntegrationAuditLog":{"type":"object","properties":{"headers":{"description":"HTTP request headers used in alert delivery","readOnly":true,"type":"string"},"alertType":{"format":"int32","description":"The type of the alert","readOnly":true,"type":"integer"},"integrationName":{"description":"The name of integration","readOnly":true,"type":"string"},"numRetries":{"format":"int32","description":"The number of times delivery was retried","readOnly":true,"type":"integer"},"integrationAlertStatus":{"description":"The Integration Alert Status used for delivery","readOnly":true,"type":"string"},"errorMessage":{"description":"Error message (if any) from ADC","readOnly":true,"type":"string"},"externalTicketId":{"description":"The parsed External Ticket ID from alert delivery","readOnly":true,"type":"string"},"payloadFormat":{"description":"The outbound payload format","readOnly":true,"type":"string"},"url":{"description":"The URL where the alert was delivered to","readOnly":true,"type":"string"},"happenedOnMs":{"format":"int64","description":"When the delivery result was saved in LMES","readOnly":true,"type":"integer"},"integrationType":{"description":"The type of integration","readOnly":true,"type":"string"},"alertInstanceId":{"description":"The id of the alert instance","readOnly":true,"type":"string"},"payload":{"description":"The HTTP Request payload","readOnly":true,"type":"string"},"httpResponseCode":{"format":"int32","description":"The HTTP Response Code received from 3rd party API","readOnly":true,"type":"integer"},"id":{"description":"The id of audit log record","readOnly":true,"type":"string"},"alertId":{"description":"The id of the alert","readOnly":true,"type":"string"},"httpResponse":{"description":"The HTTP Response Body received after alert delivery","readOnly":true,"type":"string"}}}
+
+"/setting/integrations/auditlogs": {
+			"get": {
+				"summary": "get integration audit logs list",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"description": "",
+				"operationId": "getIntegrationAuditLogs",
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/IntegrationAuditLogPaginationResponse"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+				],
+				"tags": [
+					"IntegrationAuditLogs"
+				]
+			}
+		}
+
+
 
 Version
 Websites

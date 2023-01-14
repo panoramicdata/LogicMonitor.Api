@@ -1,0 +1,68 @@
+Alerts
+	deleteEscalationChainById
+Collectors
+	GcpComputeServiceLimitsCollectorAttributeV2
+	GcpStackDriverCollectorAttributeV2
+	GcpBillingCollectorAttributeV2
+	OpenMetricCollectorAttributeV2
+ConfigSources
+	getDeviceConfigSourceConfigById
+	importConfigSource
+Datasources
+	getDataSourceOverviewGraphById
+	importDataSource
+	addDeviceDatasourceInstanceGroup
+	getDeviceDatasourceInstanceAlertSettingListOfDevice
+	getDeviceDatasourceInstanceAlertSettingById
+	patchDeviceDatasourceInstanceGroupById
+	getDeviceDatasourceInstanceGroupById
+	updateDeviceDatasourceInstanceGroupById
+Devices
+	DeviceClusterAlertConfig
+	DeviceInstanceData
+	DeviceInstanceDataPaginationResponse
+	EndpointPaginationResponse
+	DeviceClusterAlertConfigPaginationResponse
+	DeviceInstances
+	PortPaginationResponse
+	getNetflowEndpointList
+	fetchDeviceInstancesData
+	getDeviceGroupClusterAlertConfList
+	getDeviceGroupClusterAlertConfById
+	deleteDeviceGroupClusterAlertConfById
+	getNetflowPortList
+	patchDeviceGroupClusterAlertConfById
+	updateDeviceGroupClusterAlertConfById
+EventSources
+	RestIPMIEventSource
+	"importEventSource"
+HistorySDTs
+	DeviceGroupSDT
+	ServiceSDT
+	WebsiteGroupSDTHistoryPaginationResponse
+	getSDTHistoryByWebsiteGroupId
+LogicModules
+	GcpBillingDiscoveryMethod
+	ScriptERIDiscoveryAttributeV2
+NetscanPolicies
+	AWSNetscan
+	AzureNetscan
+	GCPNetscan
+	NMapNetscanPolicyCredential
+	patchNetscan
+	deleteNetscanById
+	updateNetscan
+Settings
+	getAuditLogById
+	patchOpsNoteById
+	getOpsNoteById
+	deleteOpsNoteById
+	updateOpsNoteById
+	importBatchJob
+	importDNSMapping
+	patchApiTokenByAdminId
+	deleteApiTokenById
+	updateApiTokenByAdminId
+
+Remove { "name": "BatchJobs" } from securityDefinitions tags
+
