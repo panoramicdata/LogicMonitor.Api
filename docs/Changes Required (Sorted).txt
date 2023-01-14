@@ -135,6 +135,8 @@ Collectors
 						"type": "string",
 						"required": false
 					}
+		getDebugCommandResult
+			change summary to "Get the result of a Collector debug command using sessionId"
 ConfigSources
 Dashboards
 		Widget
@@ -175,10 +177,6 @@ Dashboards
 			change summary to "get widget by id (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
 		getWidgetList
 			change summary to "get widget list (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
-
-Debug
-	getDebugCommandResult
-		change summary to "Get the result of a Collector debug command using sessionId"
 Data
 		GraphOpsNoteScope
 			"serviceGroupIds":{"description":"The service group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
