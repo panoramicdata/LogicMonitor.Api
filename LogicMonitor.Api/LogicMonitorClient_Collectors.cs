@@ -87,14 +87,84 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// update collector
 	/// </summary>
+	/// <param name="id">The collector id</param>
+	/// <param name="body">The body</param>
+	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
+	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
+	/// <param name="opType">Operation type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task PatchCollectorByIdAsync(
 		int id,
 		Collector body,
-		CancellationToken cancellationToken)
-		// setting/configsources/2228820/devices
+		CancellationToken cancellationToken,
+		bool autoBalanceMonitoredDevices = false,
+		bool forceUpdateFailedOverDevices = false,
+		string opType = "refresh")
 		=> await PutAsync(
 			$"setting/collector/collectors/{id}",
+			body,
+			cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// update collector
+	/// </summary>
+	/// <param name="id">The collector id</param>
+	/// <param name="body">The body</param>
+	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
+	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
+	/// <param name="opType">Operation type</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task UpdateCollectorByIdAsync(
+		int id,
+		Collector body,
+		CancellationToken cancellationToken,
+		bool autoBalanceMonitoredDevices = false,
+		bool forceUpdateFailedOverDevices = false,
+		string opType = "refresh")
+		=> await PutAsync(
+			$"setting/collector/collectors/{id}",
+			body,
+			cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// update collector group
+	/// </summary>
+	/// <param name="id">The collector id</param>
+	/// <param name="body">The body</param>
+	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
+	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
+	/// <param name="opType">Operation type</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task PatchCollectorGroupByIdAsync(
+		int id,
+		CollectorGroup body,
+		CancellationToken cancellationToken,
+		bool autoBalanceMonitoredDevices = false,
+		bool forceUpdateFailedOverDevices = false,
+		string opType = "refresh")
+		=> await PutAsync(
+			$"setting/collector/groups/{id}",
+			body,
+			cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// update collector group
+	/// </summary>
+	/// <param name="id">The collector id</param>
+	/// <param name="body">The body</param>
+	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
+	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
+	/// <param name="opType">Operation type</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task UpdateCollectorGroupByIdAsync(
+		int id,
+		CollectorGroup body,
+		CancellationToken cancellationToken,
+		bool autoBalanceMonitoredDevices = false,
+		bool forceUpdateFailedOverDevices = false,
+		string opType = "refresh")
+		=> await PutAsync(
+			$"setting/collector/groups/{id}",
 			body,
 			cancellationToken).ConfigureAwait(false);
 }

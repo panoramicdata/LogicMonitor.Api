@@ -7,16 +7,16 @@ namespace LogicMonitor.Api.Collectors;
 public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 {
 	/// <summary>
-	///     Custom properties
+	/// The custom properties defined for the Collector group
 	/// </summary>
 	[DataMember(Name = "customProperties")]
 	public List<Property> CustomProperties { get; set; }
 
 	/// <summary>
-	///    The collector down acknowledgement comment
+	/// The permission level of the user that made the API request
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public string UserPermission { get; set; }
 
 	/// <summary>
 	///    The number of seconds after 1970-01-01 that the collector group was created.
@@ -25,7 +25,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public long CreatedOnTimeStampSeconds { get; set; }
 
 	/// <summary>
-	///    Number of collectors
+	/// The number of Collectors that belong to the group
 	/// </summary>
 	[DataMember(Name = "numOfCollectors")]
 	public int CollectorCount { get; set; }
@@ -37,7 +37,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public DateTime? CreatedOnUtc => CreatedOnTimeStampSeconds.ToNullableDateTimeUtc();
 
 	/// <summary>
-	///    Autobalance
+	/// if the collector has autoBalance set as true or false
 	/// </summary>
 	[DataMember(Name = "autoBalance")]
 	public bool AutoBalance { get; set; }
@@ -55,7 +55,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public int AutoBalanceDeviceCountThrehsold { get; set; }
 
 	/// <summary>
-	///    Autobalance device count threshold
+	/// threshold for instance count strategy to check if a collector has high load
 	/// </summary>
 	[DataMember(Name = "autoBalanceInstanceCountThreshold")]
 	public int AutoBalanceInstanceCountThrehsold { get; set; }
@@ -67,7 +67,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public bool MismatchVerison { get; set; }
 
 	/// <summary>
-	///    The platform
+	/// the platform limitation
 	/// </summary>
 	[DataMember(Name = "platform")]
 	public string Platform { get; set; }
@@ -79,10 +79,10 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public int InstanceCount { get; set; }
 
 	/// <summary>
-	///    The device count
+	/// The number of hosts that belong to the group
 	/// </summary>
 	[DataMember(Name = "numOfHosts")]
-	public int DeviceCount { get; set; }
+	public long DeviceCount { get; set; }
 
 	/// <summary>
 	///    Whether versions mismatch
@@ -91,10 +91,10 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public bool MismatchVersion { get; set; }
 
 	/// <summary>
-	///    The highest priority collector status
+	/// The status of the highest priority sub collector
 	/// </summary>
 	[DataMember(Name = "highestPriorityCollectorStatus")]
-	public CollectorStatus HighestPriorityCollectorStatus { get; set; }
+	public RestHighestPriorityCollectorStatus HighestPriorityCollectorStatus { get; set; }
 
 	/// <summary>
 	///    The subUrl for setting by id

@@ -1355,7 +1355,7 @@ public partial class LogicMonitorClient : IDisposable
 	=> PostAsync<ExecuteDebugCommandRequest, ExecuteDebugCommandResponse>(new ExecuteDebugCommandRequest { Command = commandText }, $"debug?collectorId={collectorId}", cancellationToken);
 
 	/// <summary>
-	///     Gets the debug command results, if available
+	/// Get the result of a Collector debug command using sessionId
 	/// </summary>
 	/// <param name="collectorId">The ID of the collector on which the command was executed</param>
 	/// <param name="sessionId">The request ID from the ExecuteDebugCommandResponse</param>
