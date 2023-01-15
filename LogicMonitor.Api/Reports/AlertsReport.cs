@@ -103,13 +103,13 @@ public class AlertsReport : DateRangeReport
 	public List<ReportColumn> Columns { get; set; }
 
 	/// <summary>
-	/// The sort direction
+	/// asc | desc
 	/// </summary>
 	[DataMember(Name = "sortedDirection")]
-	public OrderDirection SortDirection { get; set; }
+	public string SortDirection { get; set; }
 
 	/// <summary>
-	/// The anomaly
+	/// all|yes|no|yes,no|no,yes\nall: return all anomaly, non anomaly and unknown anomaly alerts\nyes: only alerts which has anomaly will be displayed\nno: only alerts which has no anomaly will be displayed\nyes,no:  return all anomaly and non anomaly alerts
 	/// </summary>
 	[DataMember(Name = "anomaly")]
 	public string Anomaly { get; set; }

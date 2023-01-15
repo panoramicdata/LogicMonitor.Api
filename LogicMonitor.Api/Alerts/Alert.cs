@@ -13,7 +13,7 @@ public class Alert : IHasEndpoint
 	public string Id { get; set; }
 
 	/// <summary>
-	/// The DependencyRole
+	/// The dependency role
 	/// </summary>
 	[DataMember(Name = "dependencyRole")]
 	public string DependencyRole { get; set; }
@@ -25,13 +25,13 @@ public class Alert : IHasEndpoint
 	public string DependencyRoutingState { get; set; }
 
 	/// <summary>
-	///    Whether this is an active discovery alert
+	/// Whether or not the alert is dynamic threshold based
 	/// </summary>
 	[DataMember(Name = "adAlert")]
 	public bool IsActiveDiscoveryAlert { get; set; }
 
 	/// <summary>
-	///    The active discovery alert description
+	/// The description for dynamic threshold based alert
 	/// </summary>
 	[DataMember(Name = "adAlertDesc")]
 	public string ActiveDiscoveryAlertDescription { get; set; }
@@ -43,19 +43,19 @@ public class Alert : IHasEndpoint
 	public AlertType AlertType { get; set; }
 
 	/// <summary>
-	/// Whether this alert is an anomaly
+	/// Indicates the anomaly alert, value can be true/false/null. If alert value lies within confidence band then false, otherwise true. If confidence band is not available then value will be null.
 	/// </summary>
 	[DataMember(Name = "anomaly")]
 	public bool IsAnomaly { get; set; }
 
 	/// <summary>
-	/// Whether enableAnomalyAlertGeneration is enabled (1,1,1) i.e. warn/error/critical
+	/// Indicates dynamic threshold alert generation setting. expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
 	public string EnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
-	/// Whether enableAnomalyAlertSuppression is enabled (1,1,1) i.e. warn/error/critical
+	/// Indicates anomaly detection alert suppression setting, expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
 	public string EnableAnomalyAlertSuppression { get; set; }
@@ -115,7 +115,7 @@ public class Alert : IHasEndpoint
 	public int AlertRuleId { get; set; }
 
 	/// <summary>
-	/// The tenant with which this alert is associated, if any
+	/// tenant to which this alert belongs to. 
 	/// </summary>
 	[DataMember(Name = "tenant")]
 	public string Tenant { get; set; } = string.Empty;
@@ -145,7 +145,7 @@ public class Alert : IHasEndpoint
 	public int NextRecipient { get; set; }
 
 	/// <summary>
-	///    The alert recipients
+	/// The recipients that have received the alert
 	/// </summary>
 	[DataMember(Name = "receivedList")]
 	public string AlertRecipients { get; set; }
@@ -163,7 +163,7 @@ public class Alert : IHasEndpoint
 	public bool IsCleared { get; set; }
 
 	/// <summary>
-	///    Whether the alert occurred during scheduled down time
+	/// It specifies if the SDT is set for an active alert or not. However, the sdted is set to false for cleared alert as you cannot apply SDT to a cleared alert.
 	/// </summary>
 	[DataMember(Name = "sdted")]
 	public bool InScheduledDownTime { get; set; }
@@ -235,7 +235,7 @@ public class Alert : IHasEndpoint
 	public string ResourceTemplateType { get; set; }
 
 	/// <summary>
-	///    The resource template name
+	/// The name of the datasource in alert
 	/// </summary>
 	[DataMember(Name = "resourceTemplateName")]
 	public string ResourceTemplateName { get; set; }
@@ -283,13 +283,13 @@ public class Alert : IHasEndpoint
 	public object CustomColumns { get; set; }
 
 	/// <summary>
-	///    The suppressor
+	/// The component (Ex SDT, HostClusterAlert) which suppressed the alert
 	/// </summary>
 	[DataMember(Name = "suppressor")]
 	public string? Suppressor { get; set; }
 
 	/// <summary>
-	///    How to suppress an alert as its state descends
+	/// The description for suppressed alert
 	/// </summary>
 	[DataMember(Name = "suppressDesc")]
 	public string? SuppressedDescending { get; set; }

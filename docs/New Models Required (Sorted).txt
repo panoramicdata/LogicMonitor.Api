@@ -1,8 +1,4 @@
-Alerts
-	"AlertRulePaginationResponse":{"type":"object","properties":{"total":{"format":"int32","readOnly":true,"type":"integer"},"searchId":{"readOnly":true,"type":"string"},"items":{"type":"array","items":{"$ref":"#/definitions/AlertRule"}}}}
-	"InstanceGroupAlertThresholdInfo":{"type":"object","properties":{"enableAnomalyAlertGeneration":{"description":"enable anomaly alert generation","readOnly":true,"type":"string"},"enableAnomalyAlertSuppression":{"description":"enable anomaly alert suppression","readOnly":true,"type":"string"},"groupId":{"format":"int32","readOnly":true,"type":"integer"},"alertEnabled":{"readOnly":true,"type":"boolean"},"alertExpr":{"readOnly":true,"type":"string"}}}
 
-Backup
 Collectors
 	"AzureExpressRouteCircuitPeeringCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]},
 	"AzureRecoveryServicesVaultAgentsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}

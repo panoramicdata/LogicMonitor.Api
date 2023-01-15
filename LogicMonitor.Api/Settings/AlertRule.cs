@@ -67,13 +67,13 @@ public class AlertRule : NamedItem, IHasEndpoint
 	public EscalationChain EscalationChain { get; set; }
 
 	/// <summary>
-	/// The resource properties
+	/// The resource property filters list
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public List<object> ResourceProperties { get; set; }
+	public List<DeviceProperty> ResourceProperties { get; set; }
 
 	/// <summary>
-	/// Whether to send an "anomaly suppressed" alert
+	///  send anomaly suppressed alert
 	/// </summary>
 	[DataMember(Name = "sendAnomalySuppressedAlert")]
 	public bool SendAnomalySuppressedAlert { get; set; }

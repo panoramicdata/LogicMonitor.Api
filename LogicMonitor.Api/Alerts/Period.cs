@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Alerts;
 /// An escalation chain period
 /// </summary>
 [DataContract]
-public class EscalationChainPeriod
+public class Period
 {
 	/// <summary>
 	/// The start time
@@ -19,30 +19,26 @@ public class EscalationChainPeriod
 	public int EndMemberMinutes { get; set; }
 
 	/// <summary>
-	/// The number of minutes into a day.
-	/// e.g. midnight is 0
-	/// e.g. 1 a.m. is 60
+	/// the start minute of this period
 	/// </summary>
 	[DataMember(Name = "startMinutes")]
 	public int StartMinutes { get; set; }
 
 	/// <summary>
-	/// The number of minutes into a day.
-	/// e.g. midnight is 0
-	/// e.g. 1 a.m. is 60
+	/// the end minute of this period
 	/// </summary>
 	[DataMember(Name = "endMinutes")]
 	public int EndMinutes { get; set; }
 
 	/// <summary>
-	/// The time zone
+	/// the timezone for this period
 	/// </summary>
 	[DataMember(Name = "timezone")]
 	public string TimeZone { get; set; }
 
 	/// <summary>
-	/// The weekdays.  Sometimes, an integer array, sometimes a string in the form "1|2|3|4|5|6|7"
+	/// the list of week day of this period
 	/// </summary>
 	[DataMember(Name = "weekDays")]
-	public object WeekDays { get; set; }
+	public List<int> WeekDays { get; set; }
 }

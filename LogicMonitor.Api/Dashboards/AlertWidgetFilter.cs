@@ -13,7 +13,7 @@ public class AlertWidgetFilter
 	public string Anomaly { get; set; }
 
 	/// <summary>
-	///     The device display name
+	/// Displayed alerts must be associated with devices that meet this filter criteria. Glob is accepted, and * and an empty string both indicate all devices
 	/// </summary>
 	[DataMember(Name = "host")]
 	public string DeviceDisplayName { get; set; }
@@ -61,7 +61,7 @@ public class AlertWidgetFilter
 	public string AlertLevel { get; set; }
 
 	/// <summary>
-	///     The acknowledgement filter
+	/// Displayed alerts must have an acknowledgement status that satisfies this criteria
 	/// </summary>
 	[DataMember(Name = "acked")]
 	public string Acknowledged { get; set; }
@@ -73,7 +73,7 @@ public class AlertWidgetFilter
 	public string ScheduleDownTime { get; set; }
 
 	/// <summary>
-	///     The rule filter
+	/// Displayed alerts must match a rule that satisfies this filter. Glob is accepted, and * and an empty string both match all rules
 	/// </summary>
 	[DataMember(Name = "rule")]
 	public string Rule { get; set; }

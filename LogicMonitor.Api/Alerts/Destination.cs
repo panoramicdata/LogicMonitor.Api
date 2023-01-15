@@ -34,7 +34,7 @@ public class Destination
 	/// The period
 	/// </summary>
 	[DataMember(Name = "period")]
-	public EscalationChainPeriod Period { get; set; }
+	public Period Period { get; set; }
 
 	/// <summary>
 	/// The stages

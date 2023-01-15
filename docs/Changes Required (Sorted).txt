@@ -1,40 +1,4 @@
 Alerts
-		AlertFilters
-			"anomaly":{"type":"string"}
-			"rule":{"description":"Displayed alerts must match a rule that satisfies this filter. Glob is accepted, and * and an empty string both match all rules","type":"string"}
-			"acked":{"description":"Displayed alerts must have an acknowledgement status that satisfies this criteria","type":"string"}
-			"dependencyRoutingState":{"type":"string"}
-			"dependencyRole":{"type":"string"}
-			"host":{"description":"Displayed alerts must be associated with devices that meet this filter criteria. Glob is accepted, and * and an empty string both indicate all devices","type":"string"}
-			
-		AlertReport
-			"anomaly":{"description":"all|yes|no|yes,no|no,yes\nall: return all anomaly, non anomaly and unknown anomaly alerts\nyes: only alerts which has anomaly will be displayed\nno: only alerts which has no anomaly will be displayed\nyes,no:  return all anomaly and non anomaly alerts","type":"string"}
-			"sortedDirection":{"description":"asc | desc","type":"string"}
-			"dependencyRoutingState":{"type":"string"}
-			"dependencyRole":{"type":"string"}
-		AlertRule
-			"required":["escalatingChainId","name","priority","sendAnomalySuppressedAlert"]
-			"resourceProperties":{"description":"The resource property filters list","type":"array","items":{"$ref":"#/definitions/DeviceProperty"}}
-			"sendAnomalySuppressedAlert":{"description":" send anomaly suppressed alert","type":"boolean","example":true}
-		Alert
-			"anomaly":{"description":"Indicates the anomaly alert, value can be true/false/null. If alert value lies within confidence band then false, otherwise true. If confidence band is not available then value will be null.","readOnly":true,"type":"boolean"}
-			"enableAnomalyAlertGeneration":{"description":"Indicates dynamic threshold alert generation setting. expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0","readOnly":true,"type":"string"}
-			"suppressDesc":{"description":"The description for suppressed alert","readOnly":true,"type":"string"}
-			"suppressor":{"description":"The component (Ex SDT, HostClusterAlert) which suppressed the alert","readOnly":true,"type":"string"}
-			"tenant":{"description":"tenant to which this alert belongs to. ","readOnly":true,"type":"string"}
-			"adAlert":{"description":"Whether or not the alert is dynamic threshold based","readOnly":true,"type":"boolean"}
-			"sdted":{"description":"It specifies if the SDT is set for an active alert or not. However, the sdted is set to false for cleared alert as you cannot apply SDT to a cleared alert.","readOnly":true,"type":"boolean"}
-			"enableAnomalyAlertSuppression":{"description":"Indicates anomaly detection alert suppression setting, expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0","readOnly":true,"type":"string"}
-			"receivedList":{"description":"The recipients that have received the alert","readOnly":true,"type":"string"}
-			"dependencyRoutingState":{"description":"The dependency routing state","readOnly":true,"type":"string"}
-			"dependencyRole":{"description":"The dependency role","readOnly":true,"type":"string"}
-			"adAlertDesc":{"description":"The description for dynamic threshold based alert","readOnly":true,"type":"string"}
-			"resourceTemplateName":{"description":"The name of the datasource in alert","readOnly":true,"type":"string"}
-		Period
-			"weekDays":{"description":"the list of week day of this period","type":"array","items":{"format":"int32","type":"integer"}}
-			"timezone":{"description":"the timezone for this period","type":"string"}
-			"startMinutes":{"format":"int32","description":"the start minute of this period","type":"integer"}
-			"endMinutes":{"format":"int32","description":"the end minute of this period","type":"integer"}
 Backup
 Collectors
 		CollectorBase
