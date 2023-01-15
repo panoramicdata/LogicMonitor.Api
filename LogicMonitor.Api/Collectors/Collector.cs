@@ -115,7 +115,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public CollectorType Type { get; set; }
 
 	/// <summary>
-	///     Configuration fields
+	/// This is key value pairs of collector config properties
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "agentConfFields")]
@@ -365,7 +365,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int PreviousVersion { get; set; }
 
 	/// <summary>
-	///     The sbproxyConf file contents
+	/// The Proxy\u0027s configuration
 	/// </summary>
 	[DataMember(Name = "sbproxyConf")]
 	public string ProxyConfiguration { get; set; }
@@ -413,7 +413,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool SuppressAlertClear { get; set; }
 
 	/// <summary>
-	///     Whether synthetics is enabled
+	/// Whether the collector can monitor Synthetic devices (Selenium grid property must be defined)
 	/// </summary>
 	[DataMember(Name = "syntheticsEnabled")]
 	public bool IsSyntheticsEnables { get; set; }

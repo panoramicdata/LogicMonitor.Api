@@ -1,5 +1,3 @@
-Alerts
-Backup
 Collectors
 		CollectorBase
 			"sbproxyConf":{"description":"The Proxy\u0027s configuration","readOnly":true,"type":"string"}

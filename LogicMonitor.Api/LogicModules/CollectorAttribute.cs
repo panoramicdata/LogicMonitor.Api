@@ -91,7 +91,7 @@ public class CollectorAttribute
 	public List<CollectorAttributeCounter> Counters { get; set; }
 
 	/// <summary>
-	///     The name
+	/// data collector\u0027s name
 	/// </summary>
 	[DataMember(Name = "name")]
 	public string Name { get; set; }

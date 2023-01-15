@@ -83,4 +83,18 @@ public partial class LogicMonitorClient
 		.OrderByDescending(cv => cv.MajorVersion)
 		.ThenByDescending(cv => cv.MinorVersion)
 		.ToList();
+
+	/// <summary>
+	/// update collector
+	/// </summary>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task PatchCollectorByIdAsync(
+		int id,
+		Collector body,
+		CancellationToken cancellationToken)
+		// setting/configsources/2228820/devices
+		=> await PutAsync(
+			$"setting/collector/collectors/{id}",
+			body,
+			cancellationToken).ConfigureAwait(false);
 }
