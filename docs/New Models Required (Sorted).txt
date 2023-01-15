@@ -1,36 +1,4 @@
-
-Collectors			
-	"CollectorGroup":{"type":"object","required":["name"],"properties":
-	{"userPermission":{"description":"The permission level of the user that made the API request","readOnly":true,"type":"string"},
-	"numOfCollectors":{"format":"int32","description":"The number of Collectors that belong to the group","readOnly":true,"type":"integer"},
-	"autoBalanceInstanceCountThreshold":{"format":"int32","description":"threshold for instance count strategy to check if a collector has high load","type":"integer"},
-	"description":{"description":"The description of the Collector Group","type":"string","example":"Group for collectors dedicated to Network Devices"},
-	"highestPriorityCollectorStatus":{"description":"The status of the highest priority sub collector","readOnly":true,"$ref":"#/definitions/RestHighestPriorityCollectorStatus"},
-	"platform":{"description":"the platform limitation","readOnly":true,"type":"string"},
-	"autoBalance":{"description":"if the collector has autoBalance set as true or false","type":"boolean"},
-	"customProperties":{"description":"The custom properties defined for the Collector group","type":"array","items":{"$ref":"#/definitions/NameAndValue
-	numOfHosts":{"format":"int64","description":"The number of hosts that belong to the group","readOnly":true,"type":"integer"},
-	"numOfInstances":{"format":"int64","description":"The number of instances that belong to the group","readOnly":true,"type":"integer"},
-	"name":{"description":"The name of the Collector Group","type":"string","example":"Collector (Network Devices)"},
-	"autoBalanceStrategy":{"description":"the auto balance strategy","type":"string"},
-	"createOn":{"format":"int64","description":"The time at which the group was created, in epoch format","readOnly":true,"type":"integer"}
-	,"id":{"format":"int32","description":"The id of the Collector Group","readOnly":true,"type":"integer"}
-	,"mismatchVersion":{"description":"specifies if the version of all collectors in group is same","readOnly":true,"type":"boolean"}}}
-	
-	"AzureWebJobCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"SaasOffice365HealthCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"GcpComputeServiceLimitsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"AzureRecoveryServiceVaultSRCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"AzureVMBackupStatusCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]},
-	"SaasSalesforceInstanceStatusCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"PaaSMongoDbCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["resourceUrl"],"properties":{"resourceUrl":{"type":"string"}}}]}
-	
-	"SaasSalesforceJsonCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"}}}]}
-	
-	"SaasOffice365CsvReportCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["reportName"],"properties":{"period":{"format":"int32","type":"integer"},"reportName":{"type":"string"},"instanceColumnName":{"type":"string"}}}]}
-	
-	
-	"GcpStackDriverCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+Collectors				
 	"GcpBackendServiceHealthCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
 	
 	"SyntheticsSeleniumCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["checkType","configs","syntheticScript"],"properties":{"checkType":{"type":"string"},"configs":{"type":"string"},"syntheticScript":{"type":"string"}}}]}

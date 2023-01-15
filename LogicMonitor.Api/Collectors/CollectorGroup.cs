@@ -19,7 +19,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public string UserPermission { get; set; }
 
 	/// <summary>
-	///    The number of seconds after 1970-01-01 that the collector group was created.
+	/// The time at which the group was created, in epoch format
 	/// </summary>
 	[DataMember(Name = "createOn")]
 	public long CreatedOnTimeStampSeconds { get; set; }
@@ -43,10 +43,10 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public bool AutoBalance { get; set; }
 
 	/// <summary>
-	///    Autobalance strategy
+	/// the auto balance strategy
 	/// </summary>
 	[DataMember(Name = "autoBalanceStrategy")]
-	public AutoBalanceStrategy AutoBalanceStrategy { get; set; }
+	public string AutoBalanceStrategy { get; set; }
 
 	/// <summary>
 	///    Autobalance device count threshold
@@ -73,10 +73,10 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public string Platform { get; set; }
 
 	/// <summary>
-	///    The instance count
+	/// The number of instances that belong to the group
 	/// </summary>
 	[DataMember(Name = "numOfInstances")]
-	public int InstanceCount { get; set; }
+	public long InstanceCount { get; set; }
 
 	/// <summary>
 	/// The number of hosts that belong to the group
@@ -85,7 +85,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public long DeviceCount { get; set; }
 
 	/// <summary>
-	///    Whether versions mismatch
+	/// specifies if the version of all collectors in group is same
 	/// </summary>
 	[DataMember(Name = "mismatchVersion")]
 	public bool MismatchVersion { get; set; }
