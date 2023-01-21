@@ -15,7 +15,7 @@ public class SaasZoomPlanUsageCollectorAttributeV3 : CollectorAttribute
 	/// Period
 	/// </summary>
 	[DataMember(Name = "period")]
-	public int Period { get; set;  }
+	public int Period { get; set; }
 
 	/// <summary>
 	/// Plan type

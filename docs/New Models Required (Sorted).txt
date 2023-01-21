@@ -1,43 +1,17 @@
-Collectors				
-	"GcpBackendServiceHealthCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"SyntheticsSeleniumCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["checkType","configs","syntheticScript"],"properties":{"checkType":{"type":"string"},"configs":{"type":"string"},"syntheticScript":{"type":"string"}}}]}
-	"AzureVNGConnectionCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	
-	"AzureReplicationJobCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"AzureAppServiceEnvironmentMultiRolePoolCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"AzureAutomationAccountCertificateCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"SaasAirbrakeCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	
-	"AwsRdsPerformanceInsightsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"SaasWebexCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"},"endpointUrlPrefix":{"type":"string"},"instanceColumnName":{"type":"string"}}}]}
-	
-	"AzureVirtualDesktopSessionHostsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"GcpBillingCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"SaasOffice365SkusCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"SaasStatusCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	
-	"PushModulesCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"SaasOffice365SharepointReportCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	
-	"SaasOffice365TeamsCallsQosCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"SaasSalesforceSOQLQueryCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["soqlEntity"],"properties":{"period":{"format":"int32","type":"integer"},"whereClause":{"type":"string"},"groupByClause":{"type":"string"},"soqlEntity":{"type":"string"},"dateColumn":{"type":"string"},"instanceColumnName":{"type":"string"}}}]}
-	"GcpBillingBigQuerySourceCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	"AzureBackupProtectedItemBackupJobCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
-	"SaasZoomJsonCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"}}}]}
-	"OpenMetricCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"headers":{"type":"string"},"followRedirect":{"type":"boolean"},"readTimeout":{"format":"int32","type":"integer"},"connectTimeout":{"format":"int32","type":"integer"},"url":{"type":"string"}}}]}
-	
+Collectors
+	"OpenMetricCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{
+		"headers":{"type":"string"},
+		"followRedirect":{"type":"boolean"},
+		"readTimeout":{"format":"int32","type":"integer"},
+		"connectTimeout":{"format":"int32","type":"integer"},
+		"url":{"type":"string"}}}]}
+
 	"AzureCostManagementCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
-	
+
 	"AwsRdsServiceLimitsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
 	"AzureVMBackupStatusLogAnalyticsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
 	"SaasAccountTestResult":{"type":"object","properties":{"nonPermissionApisErrors":{"uniqueItems":true,"type":"array","items":{"type":"string"}},"invalidStatusUrls":{"type":"string"},"noPermissionService":{"type":"string"},"resultCode":{"format":"int32","type":"integer"},"detailLink":{"type":"string"},"noPermissionApis":{"uniqueItems":true,"type":"array","items":{"type":"string"}}}}
-	
+
 
 ConfigSources
 	"ConfigCheck":{"type":"object","properties":{"ackClearAlert":{"description":"Clear alert after ACKED or not","type":"boolean"},"originId":{"description":"portable id for origin tracking","type":"string"},"name":{"description":"The ConfigCheck name","type":"string"},"alertLevel":{"format":"int32","description":"The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)","type":"integer"},"description":{"description":"The ConfigCheck id","type":"string"},"configSourceId":{"format":"int32","description":"The ConfigSource id","type":"integer"},"id":{"format":"int32","description":"The ConfigCheck id","type":"integer"},"type":{"description":"The ConfigCheck type. fetch|ignore|missing|value|groovy","type":"string"},"alertEffectiveIval":{"format":"int32","description":"Alert effective interval","type":"integer"},"script":{"description":"The ConfigCheck script","$ref":"#/definitions/JSONObject"},"alertTransitionInterval":{"format":"int32","description":"The count that the alert must exist for these many poll cycles before it will be triggered","type":"integer"}}}
@@ -173,7 +147,7 @@ Devices
 	"JSONObject":{"type":"object"}
 	"InterfacesFilter":{"type":"object","properties":{"interfaceTypes":{"type":"array","items":{"$ref":"#/definitions/InterfaceType"}},"deviceId":{"format":"int32","type":"integer"}}}
 	"ConversationFilter":{"type":"object","properties":{"fromOperator":{"type":"string"},"fromEndpoint":{"type":"string"},"toEndpoint":{"type":"string"},"toOperator":{"type":"string"},"includeOrExclude":{"type":"string"}}}
-	
+
 	collectDeviceConfigSourceConfig
 		"/device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection": {
 			"post": {
@@ -216,12 +190,12 @@ Devices
 						"in": "path",
 						"name": "hdsId",
 						"pattern": "\\d+",
-					   
-	   
-	  
-					  
-					
-					 
+
+
+
+
+
+
 						"format": "int32",
 						"type": "integer",
 						"required": true
@@ -233,12 +207,12 @@ Devices
 						"format": "int32",
 						"type": "integer",
 						"required": true
-	   
-	  
-					
-					   
-					   
-					   
+
+
+
+
+
+
 					}
 				],
 				"tags": [
@@ -259,7 +233,7 @@ EventSources
 	"RestAzureResourceLogAnalyticsWorkspacesSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"query":{"description":"Azure Log Analytics Workspaces Query","type":"string"},"columnInstanceName":{"description":"Column Instance Name","type":"string"}}}]}
 	"RestAzureResourceHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
 	"AzureEmergingIssueEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
-	
+
 	"/setting/eventsources/{id}/audit": {
 			"post": {
 				"summary": "add audit version",
@@ -328,8 +302,8 @@ EventSources
 				"produces": [
 					"application/json"
 
-				],	   
-									   
+				],
+
 				"description": "",
 				"operationId": "addPropertysourceAuditVersion",
 				"responses": {
@@ -349,7 +323,7 @@ EventSources
 				"parameters": [
 					{
 						"in": "path",
-							  
+
 						"name": "id",
 						"pattern": "\\d+",
 						"format": "int32",
@@ -405,36 +379,36 @@ LogicModules
 	"AzureSynapseDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureSynapseType"],"properties":{"azureSynapseType":{"type":"string"}}}]}
 	"AzureVirtualDesktopSessionHostsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_azurevirtualdesktopsessionhosts"}
 	"SaasStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
+
 	"SaasO365SkusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
+
 	"AzureWebJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"GcpPubSubSnapshotDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AzureNetAppVolumesDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AzureCostManagementTagsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureTagKeys"],"properties":{"azureTagKeys":{"type":"string"}}}]}
 	"AwsVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
+
 	"AzureLogAnalyticsReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
+
 	"AzureRecoveryServiceRTODiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AzureLogAnalyticsWorkspacesDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["columnInstanceName","query"],"properties":{"query":{"type":"string"},"columnInstanceName":{"type":"string"}}}]}
 	"AwsGlobalWebACLDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AzureCostManagementDimensionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureCostManagementType"],"properties":{"azureCostManagementType":{"type":"string"}}}]}
-	
+
 	"ScriptERIDiscoveryAttributeV3":{"type":"object","required":["name"],"properties":{"winScript":{"description":"windows script","type":"string"},"groovyScript":{"description":"groovy script ","type":"string"},"name":{"description":"ERI detection name","type":"string"},"type":{"description":"script type","type":"string"},"linuxCmdline":{"description":"linux script command line","type":"string"},"linuxScript":{"description":"linux script file","type":"string"},"winCmdline":{"description":"windows script command line","type":"string"}}}
-	
+
 	"SaasZoomRoomDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["zoomRoomIssueType"],"properties":{"zoomRoomIssueType":{"type":"string"}}}]}
-	
+
 	"GcpBillingDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["gcpBillingType"],"properties":{"gcpBillingType":{"type":"string"}}}]}
-	
+
 	"AzureAutomationAccountCertificateDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AzureExpressRouteCircuitPeeringDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AzureVNGConnectionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"SaaSZoomPlanUsageDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["zoomPlanUsageType"],"properties":{"zoomPlanUsageType":{"type":"string"}}}]}
 	"AzureReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
+
 	"SaasO365MailboxDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	
+
 	"SaasSalesforceLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"GcpLBBackendServiceDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"AwsMediaConnectSourceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectsource"}

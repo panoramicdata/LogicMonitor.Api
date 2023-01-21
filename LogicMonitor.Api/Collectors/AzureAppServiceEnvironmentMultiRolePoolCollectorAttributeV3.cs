@@ -5,11 +5,11 @@ using System.Text;
 namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
-/// AzureExpressRouteCircuitPeeringCollectorAttributeV3
+/// AzureAppServiceEnvironmentMultiRolePoolCollectorAttributeV3
 /// </summary>
 
 [DataContract]
-public class AzureExpressRouteCircuitPeeringCollectorAttributeV3 : CollectorAttribute
+public class AzureAppServiceEnvironmentMultiRolePoolCollectorAttributeV3 : CollectorAttribute
 {
 	/// <summary>
 	/// Period

@@ -5,12 +5,18 @@ using System.Text;
 namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
-/// SaasOffice365CsvReportCollectorAttributeV3
+/// SaasWebexCollectorAttribute
 /// </summary>
 
 [DataContract]
-public class SaasOffice365CsvReportCollectorAttributeV3 : CollectorAttribute
+public class SaasWebexCollectorAttribute : CollectorAttribute
 {
+	/// <summary>
+	/// endpointUrlSuffix
+	/// </summary>
+	[DataMember(Name = "endpointUrlSuffix")]
+	public string EndpointUrlSuffix { get; set; }
+
 	/// <summary>
 	/// Period
 	/// </summary>
@@ -18,10 +24,10 @@ public class SaasOffice365CsvReportCollectorAttributeV3 : CollectorAttribute
 	public int Period { get; set; }
 
 	/// <summary>
-	/// Report name
+	/// endpointUrlPrefix
 	/// </summary>
-	[DataMember(Name = "reportName")]
-	public string ReportName { get; set; }
+	[DataMember(Name = "endpointUrlPrefix")]
+	public string EndpointUrlPrefix { get; set; }
 
 	/// <summary>
 	/// instanceColumnName

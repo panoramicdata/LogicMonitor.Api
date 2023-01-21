@@ -15,7 +15,7 @@ public class SyntheticsSeleniumCollectorAttribute : CollectorAttribute
 	/// Checktype
 	/// </summary>
 	[DataMember(Name = "checkType")]
-	public string CheckType { get; set;  }
+	public string CheckType { get; set; }
 
 	/// <summary>
 	/// Configs

@@ -15,5 +15,5 @@ public class AzureLogAnalyticsReplicationJobCollectorAttribute : CollectorAttrib
 	/// Period
 	/// </summary>
 	[DataMember(Name = "period")]
-	public int Period { get; set;  }
+	public int Period { get; set; }
 }

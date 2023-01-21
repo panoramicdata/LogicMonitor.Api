@@ -5,12 +5,18 @@ using System.Text;
 namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
-/// AzureExpressRouteCircuitPeeringCollectorAttributeV3
+/// SaasZoomJsonCollectorAttributeV3
 /// </summary>
 
 [DataContract]
-public class AzureExpressRouteCircuitPeeringCollectorAttributeV3 : CollectorAttribute
+public class SaasZoomJsonCollectorAttributeV3 : CollectorAttribute
 {
+	/// <summary>
+	/// endpointUrlSuffix
+	/// </summary>
+	[DataMember(Name = "endpointUrlSuffix")]
+	public string EndpointUrlSuffix { get; set; }
+
 	/// <summary>
 	/// Period
 	/// </summary>

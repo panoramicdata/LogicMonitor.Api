@@ -5,11 +5,11 @@ using System.Text;
 namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
-/// AzureExpressRouteCircuitPeeringCollectorAttributeV3
+/// AzureBackupProtectedItemBackupJobCollectorAttribute
 /// </summary>
 
 [DataContract]
-public class AzureExpressRouteCircuitPeeringCollectorAttributeV3 : CollectorAttribute
+public class AzureBackupProtectedItemBackupJobCollectorAttribute : CollectorAttribute
 {
 	/// <summary>
 	/// Period

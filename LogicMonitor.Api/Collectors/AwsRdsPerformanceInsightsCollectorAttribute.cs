@@ -5,15 +5,15 @@ using System.Text;
 namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
-/// PaaSMongoDbCollectorAttribute
+/// AwsRdsPerformanceInsightsCollectorAttribute
 /// </summary>
 
 [DataContract]
-public class PaaSMongoDbCollectorAttribute : CollectorAttribute
+public class AwsRdsPerformanceInsightsCollectorAttribute : CollectorAttribute
 {
 	/// <summary>
 	/// Period
 	/// </summary>
-	[DataMember(Name = "resourceUrl")]
-	public string ResourceUrl { get; set; }
+	[DataMember(Name = "period")]
+	public int Period { get; set; }
 }
