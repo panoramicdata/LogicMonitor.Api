@@ -7,67 +7,67 @@ namespace LogicMonitor.Api.LogicModules;
 public class ConfigCheck
 {
 	/// <summary>
-	/// The type
+	/// The count that the alert must exist for these many poll cycles before it will be triggered
 	/// </summary>
 	[DataMember(Name = "alertTransitionInterval")]
-	public string AlertTransitionInterval { get; set; }
+	public int AlertTransitionInterval { get; set; }
 
 	/// <summary>
-	/// The type
+	/// The ConfigCheck type. fetch|ignore|missing|value|groovy
 	/// </summary>
 	[DataMember(Name = "type")]
 	public string Type { get; set; }
 
 	/// <summary>
-	/// The id
+	/// The ConfigCheck id
 	/// </summary>
 	[DataMember(Name = "id")]
 	public int Id { get; set; }
 
 	/// <summary>
-	/// The name
+	/// The ConfigCheck name
 	/// </summary>
 	[DataMember(Name = "name")]
 	public string Name { get; set; }
 
 	/// <summary>
-	/// The description
+	/// The ConfigCheck id
 	/// </summary>
 	[DataMember(Name = "description")]
 	public string Description { get; set; }
 
 	/// <summary>
-	/// The alertLevel
+	/// The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)
 	/// </summary>
 	[DataMember(Name = "alertLevel")]
-	public AlertLevel AlertLevel { get; set; }
+	public int AlertLevel { get; set; }
 
 	/// <summary>
-	/// The ackClearAlert
+	/// Clear alert after ACKED or not
 	/// </summary>
 	[DataMember(Name = "ackClearAlert")]
-	public string AckClearAlert { get; set; }
+	public bool AckClearAlert { get; set; }
 
 	/// <summary>
-	/// The alertEffectiveIval
+	/// Alert effective interval
 	/// </summary>
 	[DataMember(Name = "alertEffectiveIval")]
-	public string AlertEffectiveIval { get; set; }
+	public int AlertEffectiveIval { get; set; }
 
 	/// <summary>
-	/// The configSourceId
+	/// The ConfigSource id
 	/// </summary>
 	[DataMember(Name = "configSourceId")]
 	public int ConfigSourceId { get; set; }
 
 	/// <summary>
-	/// Origin id
+	/// portable id for origin tracking
 	/// </summary>
 	[DataMember(Name = "originId")]
 	public string OriginId { get; set; }
 
 	/// <summary>
-	/// The script
+	/// The ConfigCheck script
 	/// </summary>
 	[DataMember(Name = "script")]
 	public ConfigCheckScript Script { get; set; }

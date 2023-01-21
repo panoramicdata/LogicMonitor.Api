@@ -1,3 +1,7 @@
+using System.Security.AccessControl;
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -141,4 +145,13 @@ public partial class LogicMonitorClient
 		int configSourceId,
 		CancellationToken cancellationToken)
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/configsources/{configSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+
+	/// <summary>
+	///		add audit version
+	/// </summary>
+	public async Task AddConfigsourceAuditVersionAsync(
+		int id,
+		Audit body,
+		CancellationToken cancellationToken
+		) => (await PostAsync<Audit, ConfigSource>(body, $"setting/configsources/{id}/audit", cancellationToken).ConfigureAwait(false));
 }
