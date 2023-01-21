@@ -1,36 +1,4 @@
 Dashboards
-		Widget
-			"type":{"description":"alert | batchjob | flash | gmap | ngraph | ograph | cgraph | sgraph | netflowgraph | groupNetflowGraph | netflow | groupNetflow | html | bigNumber | gauge | pieChart | table | dynamicTable | deviceSLA | text | statsd | deviceStatus | serviceAlert | noc | websiteOverview | websiteOverallStatus | websiteIndividualStatus | websiteSLA | savedMap"
-			
-		WidgetData
-			"type":{"description":"the widget data type. noc|alert|batchjob|gmap|netflow|netflowGroup|bigNumber|serviceNOC|gauge|pieChart|table|deviceNOC|deviceSLA|serviceSLA|dynamicTable|graph|savedMap","readOnly":true,"type":"string"}
-			"title":{"description":"the widget title","type":"string"}
-		TableWidgetColumn
-			"unitLabel":{"description":"The unit label","type":"string"}
-		CustomGraph
-			"minValue":{"format":"double","description":"The minimum value that should be displayed on the y-axis","type":"number"}
-			"maxValue":{"format":"double","description":"The maximum value that should be displayed on the y-axis","type":"number"}
-			
-		DashboardData
-			"userPermission":{"description":"The permission of the user that made the API call","readOnly":true,"type":"string"}
-			"name":{"description":"The name of the dashboard","readOnly":true,"type":"string"}
-			"sharable":{"description":"Whether or not the dashboard is sharable. This value will always be true unless the dashboard is a private dashboard","readOnly":true,"type":"boolean"}
-			"id":{"format":"int32","description":"The Id of the dashboard","readOnly":true,"type":"integer"}
-		DeviceSLAWidget
-			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
-			"displayPercentageBar":{"description":"Whether a progress bar is displayed in list mode","type":"boolean"}
-		WidgetToken
-			"inheritList":{"description":"The widget token inherit list","type":"array","items":{"$ref":"#/definitions/WidgetTokenInheritance"}}
-			"type":{"description":"owned | inherit\nSpecifies the type of the widget","readOnly":true,"type":"string"}
-			"value":{"description":"This is the name of the child group of devices, if there is one","type":"string","example":"Devices by Type/Network"}
-		WidgetTokenInheritance
-			"fullpath":{"description":"The fullpath for the widget token","readOnly":true,"type":"string"}
-			"value":{"description":"The property value for the group","readOnly":true,"type":"string"}
-		Dashboard
-			"template":{"description":"The template which is used for importing dashboard","type":"object"}
-			"overwriteGroupFields":{"description":"Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.","readOnly":true,"type":"boolean"}
-		DashboardGroup
-			"template":{"description":"The template which is used for importing dashboard group","type":"object"}
 		patchWidgetById
 			change summary to "update widget (Based upon widget type the request and response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
 		getWidgetById
@@ -44,7 +12,7 @@ Data
 			"type":{"description":"device | service | website\nThe corresponding type","readOnly":true,"type":"string"}
 			"deviceGroupIds":{"description":"The device group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
 			"deviceId":{"format":"int32","description":"The device Id","readOnly":true,"type":"integer"}
-			
+
 		GraphVirtualDataPoint
 			"rpn":{"description":"the graph virtual data point rpn expression","type":"string"}
 			"name":{"description":"the graph virtual data point name","type":"string"}

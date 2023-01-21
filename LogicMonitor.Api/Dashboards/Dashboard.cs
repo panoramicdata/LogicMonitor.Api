@@ -53,10 +53,10 @@ public class Dashboard
 	public string Owner { get; set; }
 
 	/// <summary>
-	///     The template
+	/// The template which is used for importing dashboard
 	/// </summary>
 	[DataMember(Name = "template")]
-	public string Template { get; set; }
+	public object Template { get; set; }
 
 	/// <summary>
 	///     Whether to use widget tokens
@@ -71,7 +71,7 @@ public class Dashboard
 	public List<Property> CustomProperties { get; set; }
 
 	/// <summary>
-	/// Whether to overwrite group fields
+	/// Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.
 	/// </summary>
 	[DataMember(Name = "overwriteGroupFields")]
 	public bool OverwriteGroupFields { get; set; }

@@ -76,13 +76,13 @@ public class CustomGraphWidgetData : WidgetData
 	public bool Base1024 { get; set; }
 
 	/// <summary>
-	/// The maximum data value for the data in the graph
+	/// The maximum value that should be displayed on the y-axis
 	/// </summary>
 	[DataMember(Name = "maxValue")]
 	public string MaxValue { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The minimum data value for the data in the graph
+	/// The minimum value that should be displayed on the y-axis
 	/// </summary>
 	[DataMember(Name = "minValue")]
 	public string MinValue { get; set; } = string.Empty;

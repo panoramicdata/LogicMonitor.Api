@@ -49,10 +49,10 @@ public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
 	public List<Dashboard> Dashboards { get; set; } = new();
 
 	/// <summary>
-	///     The template
+	/// The template which is used for importing dashboard group
 	/// </summary>
 	[DataMember(Name = "template")]
-	public string? Template { get; set; }
+	public object Template { get; set; }
 
 	/// <summary>
 	///    The widget tokens

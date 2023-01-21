@@ -43,7 +43,7 @@ public class TableWidgetColumn
 	public string Rpn { get; set; }
 
 	/// <summary>
-	///     The unit label
+	/// The unit label
 	/// </summary>
 	[DataMember(Name = "unitLabel")]
 	public string UnitLabel { get; set; }

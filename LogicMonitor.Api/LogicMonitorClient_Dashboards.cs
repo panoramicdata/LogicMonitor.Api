@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using System.Threading;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -149,4 +152,27 @@ public partial class LogicMonitorClient
 		// Delete itself
 		await DeleteAsync(dashboardGroup, cancellationToken: cancellationToken).ConfigureAwait(false);
 	}
+
+	/// <summary>
+	/// update widget (Based upon widget type the request and response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
+	/// </summary>
+	/// <param name="id">The widget id</param>
+	/// <param name="body">The body</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task PatchWidgetByIdAsync(
+		int id,
+		Widget body,
+		CancellationToken cancellationToken)
+		=> await PutAsync(
+			$"dashboard/widgets/{id}",
+			body,
+			cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// get widget by id (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
+	/// </summary>
+	public async Task<Widget> GetWidgetByIdAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetAsync<Widget>(id, cancellationToken).ConfigureAwait(false);
 }

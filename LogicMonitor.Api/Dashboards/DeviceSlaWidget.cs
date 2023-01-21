@@ -13,13 +13,13 @@ public class DeviceSlaWidget : Widget
 	public string BottomLabel { get; set; }
 
 	/// <summary>
-	/// The bottom label
+	/// Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics
 	/// </summary>
 	[DataMember(Name = "calculationMethod")]
-	public CalculationMethod CalculationMethod { get; set; }
+	public int CalculationMethod { get; set; }
 
 	/// <summary>
-	/// Whether to display the percentage bar
+	/// Whether a progress bar is displayed in list mode
 	/// </summary>
 	[DataMember(Name = "displayPercentageBar")]
 	public bool DisplayPercentageBar { get; set; }

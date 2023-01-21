@@ -7,7 +7,7 @@ namespace LogicMonitor.Api.Dashboards;
 public class WidgetData
 {
 	/// <summary>
-	///     Type
+	/// the widget data type. noc|alert|batchjob|gmap|netflow|netflowGroup|bigNumber|serviceNOC|gauge|pieChart|table|deviceNOC|deviceSLA|serviceSLA|dynamicTable|graph|savedMap
 	/// </summary>
 	/// <remarks>
 	/// This is used for discrimination during deserialization
@@ -16,7 +16,7 @@ public class WidgetData
 	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
-	///     Title
+	/// the widget title
 	/// </summary>
 	[DataMember(Name = "title")]
 	public string Title { get; set; } = string.Empty;

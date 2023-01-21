@@ -149,6 +149,9 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///		add audit version
 	/// </summary>
+	/// <param name="id">The ConfigSource id</param>
+	/// <param name="body">The body</param>
+	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task AddConfigsourceAuditVersionAsync(
 		int id,
 		Audit body,

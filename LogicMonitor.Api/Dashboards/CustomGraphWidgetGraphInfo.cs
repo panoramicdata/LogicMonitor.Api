@@ -19,13 +19,13 @@ public class CustomGraphWidgetGraphInfo : IdentifiedItem
 	public bool IsDescending { get; set; }
 
 	/// <summary>
-	/// The max value
+	/// The maximum value that should be displayed on the y-axis
 	/// </summary>
 	[DataMember(Name = "maxValue")]
 	public double MaxValue { get; set; }
 
 	/// <summary>
-	/// The min value
+	/// The minimum value that should be displayed on the y-axis
 	/// </summary>
 	[DataMember(Name = "minValue")]
 	public double MinValue { get; set; }

@@ -9,7 +9,7 @@ namespace LogicMonitor.Api.Dashboards;
 public class Widget : NamedItem, IHasEndpoint
 {
 	/// <summary>
-	///     The widget type
+	/// alert | batchjob | flash | gmap | ngraph | ograph | cgraph | sgraph | netflowgraph | groupNetflowGraph | netflow | groupNetflow | html | bigNumber | gauge | pieChart | table | dynamicTable | deviceSLA | text | statsd | deviceStatus | serviceAlert | noc | websiteOverview | websiteOverallStatus | websiteIndividualStatus | websiteSLA | savedMap
 	/// </summary>
 	[DataMember(Name = "type")]
 	public string Type { get; set; }

@@ -1,13 +1,3 @@
-Alerts
-	deleteEscalationChainById
-Collectors
-	GcpComputeServiceLimitsCollectorAttributeV2
-	GcpStackDriverCollectorAttributeV2
-	GcpBillingCollectorAttributeV2
-	OpenMetricCollectorAttributeV2
-ConfigSources
-	getDeviceConfigSourceConfigById
-	importConfigSource
 Datasources
 	getDataSourceOverviewGraphById
 	importDataSource
