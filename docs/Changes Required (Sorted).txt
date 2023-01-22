@@ -1,18 +1,4 @@
 Data
-		GraphOpsNoteScope
-			"serviceGroupIds":{"description":"The service group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
-			"serviceId":{"format":"int32","description":"The service Id","readOnly":true,"type":"integer"}
-			"type":{"description":"device | service | website\nThe corresponding type","readOnly":true,"type":"string"}
-			"deviceGroupIds":{"description":"The device group Id","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
-			"deviceId":{"format":"int32","description":"The device Id","readOnly":true,"type":"integer"}
-
-		GraphVirtualDataPoint
-			"rpn":{"description":"the graph virtual data point rpn expression","type":"string"}
-			"name":{"description":"the graph virtual data point name","type":"string"}
-		RawDataValues
-			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
-			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
-			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}
 		GraphPlot
 			"missinglines":{"description":"The Missing lines of the graph","readOnly":true,"type":"array","items":{"type":"string"}}
 			"timeScale":{"description":"The specified timescale for the graph","readOnly":true,"type":"string"}
