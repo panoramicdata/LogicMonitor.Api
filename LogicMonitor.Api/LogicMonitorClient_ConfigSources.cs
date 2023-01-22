@@ -156,5 +156,5 @@ public partial class LogicMonitorClient
 		int id,
 		Audit body,
 		CancellationToken cancellationToken
-		) => (await PostAsync<Audit, ConfigSource>(body, $"setting/configsources/{id}/audit", cancellationToken).ConfigureAwait(false));
+		) => await PostAsync<Audit, ConfigSource>(body, $"setting/configsources/{id}/audit", cancellationToken).ConfigureAwait(false);
 }

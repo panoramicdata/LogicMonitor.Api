@@ -21727,6 +21727,7 @@
 				],
 				"produces": [
 					"application/json"
+
 				],
 				"description": "",
 				"operationId": "getWidgetList",

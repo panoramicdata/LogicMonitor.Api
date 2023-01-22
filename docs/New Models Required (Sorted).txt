@@ -1,8 +1,3 @@
-Dashboards
-	"RestSavedMapWidgetV3":{"allOf":[{"$ref":"#/definitions/Widget"},{"type":"object","properties":{"scale":{"format":"double","type":"number"},"savedMapName":{"type":"string"},"savedMapId":{"format":"int32","type":"integer"},"savedMapGroupName":{"type":"string"}}}]}
-
-	getWidgetDataById
-		change summary to "get widget data (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)"
 Data
 DataSources
 	addDatasourceAuditVersion

@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using System.Threading;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -171,8 +168,43 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get widget by id (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
 	/// </summary>
+	/// <param name="id">The Widget ID</param>
+	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<Widget> GetWidgetByIdAsync(
 		int id,
 		CancellationToken cancellationToken)
 		=> await GetAsync<Widget>(id, cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// get widget list (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
+	public async Task<WidgetPaginationResponse> GetWidgetListAsync(
+		CancellationToken cancellationToken,
+		string? fields = null,
+		int? size = 50,
+		int? offset = 0,
+		string? filter = null)
+		=> await GetBySubUrlAsync<WidgetPaginationResponse>($"/dashboard/widgets?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
+
+	/// <summary>
+	/// get widget data (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
+	/// </summary>
+	/// <param name="id">Widget id</param>
+	/// <param name="cancellationToken"></param>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <param name="format"></param>
+	public async Task<WidgetData> GetWidgetDataByIdAsync(
+		int id,
+		CancellationToken cancellationToken,
+		int? start = null,
+		int? end = null,
+		string? format = null
+		)
+		=> await GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{id}/data?start={start}&end={end}&format={format}", cancellationToken);
 }
