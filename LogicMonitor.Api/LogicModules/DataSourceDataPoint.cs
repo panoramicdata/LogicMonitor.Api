@@ -13,7 +13,7 @@ public class DataSourceDataPoint : NamedItem
 	public string? AlertExpressionNote { get; set; }
 
 	/// <summary>
-	/// The datapoint id
+	/// The ID of the LMModule
 	/// </summary>
 	[DataMember(Name = "id")]
 	public int DataPointId { get; set; }

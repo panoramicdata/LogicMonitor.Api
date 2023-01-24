@@ -10,25 +10,25 @@ public class DataSource : LogicModule, IHasEndpoint
 	///     The AGD Method
 	/// </summary>
 	[DataMember(Name = "agdMethod")]
-	public string AgdMethod { get; set; }
+	public string? AgdMethod { get; set; }
 
 	/// <summary>
 	///     The AGD parameters
 	/// </summary>
 	[DataMember(Name = "agdParams")]
-	public string AgdParams { get; set; }
+	public string? AgdParams { get; set; }
 
 	/// <summary>
 	///     What this applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string? AppliesTo { get; set; }
 
 	/// <summary>
-	///     The audit version
+	/// The data source audit version
 	/// </summary>
 	[DataMember(Name = "auditVersion")]
-	public int? AuditVersion { get; set; }
+	public int AuditVersion { get; set; }
 
 	/// <summary>
 	///     Whether to delete inactive DataSourceInstances
@@ -40,7 +40,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	///     The AutoDiscovery Groovyscript
 	/// </summary>
 	[DataMember(Name = "wildcard_groovyscript")]
-	public string AutoDiscoveryGroovyscript { get; set; }
+	public string? AutoDiscoveryGroovyscript { get; set; }
 
 	/// <summary>
 	///     The AutoDiscovery schedule interval in minutes
@@ -52,76 +52,76 @@ public class DataSource : LogicModule, IHasEndpoint
 	///     The AutoDiscovery Linux commnd line
 	/// </summary>
 	[DataMember(Name = "wildcard_linuxcmdline")]
-	public string AutoDiscoveryLinuxCmdLine { get; set; }
+	public string? AutoDiscoveryLinuxCmdLine { get; set; }
 
 	/// <summary>
 	///     Wildcard linux command line
 	/// </summary>
 	[DataMember(Name = "wildcard_linuxscript")]
-	public string AutoDiscoveryLinuxScript { get; set; }
+	public string? AutoDiscoveryLinuxScript { get; set; }
 
 	/// <summary>
 	///     The AutoDiscovery Windows command line
 	/// </summary>
 	[DataMember(Name = "wildcard_wincmdline")]
-	public string AutoDiscoveryWindowsCommandLine { get; set; }
+	public string? AutoDiscoveryWindowsCommandLine { get; set; }
 
 	/// <summary>
 	///     The AutoDiscovery Windows script
 	/// </summary>
 	[DataMember(Name = "wildcard_winscript")]
-	public string AutoDiscoveryWindowsScript { get; set; }
+	public string? AutoDiscoveryWindowsScript { get; set; }
 
 	/// <summary>
 	///     The DataSourceType
 	/// </summary>
 	[DataMember(Name = "collector")]
-	public string Collector { get; set; }
+	public string? Collector { get; set; }
 
 	/// <summary>
-	///     The collection method
+	/// The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen
 	/// </summary>
 	[DataMember(Name = "collectMethod")]
-	public CollectionMethod CollectionMethod { get; set; }
+	public string CollectionMethod { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The CollectorAttribute
+	/// data collector\u0027s attributes to collector data. e.g. a ping data source has a ping collector attribute. \n PingCollectorAttributeV1 has two fields. the ip to ping, the data size send to ping
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public CollectorAttribute CollectorAttribute { get; set; }
+	public CollectorAttribute CollectorAttribute { get; set; } = new();
 
 	/// <summary>
-	///     The display name
+	/// The data source display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string? DisplayName { get; set; }
 
 	/// <summary>
-	///     Whether ERI discovery is enabled
+	/// Enable ERI Discovery or not: false|true
 	/// </summary>
 	[DataMember(Name = "enableEriDiscovery")]
-	public string EnableEriDiscovery { get; set; }
+	public bool EnableEriDiscovery { get; set; }
 
 	/// <summary>
-	///     The ERI discovery interval in (unknown time unit)
+	/// The DataSource data collect interval
 	/// </summary>
 	[DataMember(Name = "eriDiscoveryInterval")]
-	public string EriDiscoveryInterval { get; set; }
+	public string? EriDiscoveryInterval { get; set; }
 
 	/// <summary>
-	///     The ERI discovery config
+	/// Enable ERI Discovery or not
 	/// </summary>
 	[DataMember(Name = "eriDiscoveryConfig")]
-	public object EriDiscoveryConfig { get; set; }
+	public ScriptERIDiscoveryAttributeV3? EriDiscoveryConfig { get; set; }
 
 	/// <summary>
-	///     The Group name
+	/// The group the LMModule is in
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string Group { get; set; }
+	public string? Group { get; set; }
 
 	/// <summary>
-	///     Whether there are multiple DataSourceInstances
+	/// If the DataSource has multi instance: true|false
 	/// </summary>
 	[DataMember(Name = "hasMultiInstances")]
 	public bool HasMultiInstances { get; set; }
@@ -145,22 +145,22 @@ public class DataSource : LogicModule, IHasEndpoint
 	public bool IsAutoDiscoveryEnabled { get; set; }
 
 	/// <summary>
-	///     Whether the AutoDiscovery is persistent
+	/// Auto discovery configuration
 	/// </summary>
 	[DataMember(Name = "autoDiscoveryConfig")]
-	public AutoDiscoveryConfiguration AutoDiscoveryConfiguration { get; set; }
+	public AutoDiscoveryConfiguration? AutoDiscoveryConfiguration { get; set; }
 
 	/// <summary>
-	///     The payload version
+	/// The dataSource payload Version for custom metrics
 	/// </summary>
 	[DataMember(Name = "payloadVersion")]
 	public int PayloadVersion { get; set; }
 
 	/// <summary>
-	///     The polling interval in seconds
+	/// The DataSource data collect interval
 	/// </summary>
 	[DataMember(Name = "collectInterval")]
-	public int? PollingIntervalSeconds { get; set; }
+	public int PollingIntervalSeconds { get; set; }
 
 	/// <summary>
 	///     The publish information
@@ -169,34 +169,34 @@ public class DataSource : LogicModule, IHasEndpoint
 	public int? Published { get; set; }
 
 	/// <summary>
-	///     Tags
+	/// The Tags for the LMModule
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
+	public string? Tags { get; set; }
 
 	/// <summary>
-	///     Technology
+	/// The Technical Notes for the LMModule
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
+	public string? Technology { get; set; }
 
 	/// <summary>
-	///     Whether use use the WildValue as the UUID
+	/// Use Wildvalue as Unique identifier in case of multiinstance datasource: true|false
 	/// </summary>
 	[DataMember(Name = "useWildValueAsUUID")]
 	public bool UseWildValueAsUuid { get; set; }
 
 	/// <summary>
-	///     The version
+	/// The data source version
 	/// </summary>
 	[DataMember(Name = "version")]
-	public int? Version { get; set; }
+	public int Version { get; set; }
 
 	/// <summary>
-	///     The dataPoints
+	/// The data point list
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<DataSourceDataPoint> DataSourceDataPoints { get; set; }
+	public List<DataSourceDataPoint>? DataSourceDataPoints { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/datasources";

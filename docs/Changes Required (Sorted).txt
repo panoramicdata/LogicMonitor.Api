@@ -1,28 +1,4 @@
 DataSources
-		DataSource
-			"eriDiscoveryConfig":{"description":"Enable ERI Discovery or not","$ref":"#/definitions/ScriptERIDiscoveryAttributeV3"}
-			"displayName":{"description":"The data source display name","type":"string"}
-			"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"}
-			"collectMethod":{"description":"The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen","type":"string"}
-			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
-			"dataPoints":{"description":"The data point list","type":"array","items":{"$ref":"#/definitions/DataPoint"}}
-			"id":{"format":"int32","description":"The ID of the LMModule","readOnly":true,"type":"integer"}
-			"group":{"description":"The group the LMModule is in","type":"string"}
-			"collectorAttribute":{"description":"data collector\u0027s attributes to collector data. e.g. a ping data source has a ping collector attribute. \n PingCollectorAttributeV1 has two fields. the ip to ping, the data size send to ping","$ref":"#/definitions/CollectorAttribute"}
-			"autoDiscoveryConfig":{"description":"Auto discovery configuration","$ref":"#/definitions/AutoDiscoveryConfiguration"}
-			"payloadVersion":{"format":"int32","description":"The dataSource payload Version for custom metrics","readOnly":true,"type":"integer"}
-			"useWildValueAsUUID":{"description":"Use Wildvalue as Unique identifier in case of multiinstance datasource: true|false","readOnly":true,"type":"boolean"}
-			"enableAutoDiscovery":{"description":"Enable Auto Discovery or not when this data source has multi instance: false|true","type":"boolean"}
-			"technology":{"description":"The Technical Notes for the LMModule","type":"string"}
-			"version":{"format":"int64","description":"The data source version","readOnly":true,"type":"integer"}
-			"tags":{"description":"The Tags for the LMModule","type":"string"}
-			"auditVersion":{"format":"int64","description":"The data source audit version","readOnly":true,"type":"integer"}
-			"hasMultiInstances":{"description":"If the DataSource has multi instance: true|false","readOnly":true,"type":"boolean"}
-			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
-			"eriDiscoveryInterval":{"format":"int32","description":"The DataSource data collect interval","type":"integer"}
-			"enableEriDiscovery":{"description":"Enable ERI Discovery or not: false|true","type":"boolean"}
-			"collectInterval":{"format":"int32","description":"The DataSource data collect interval","type":"integer"}
-			"name":{"description":"The data source name","type":"string"}
 		DataSourceOverviewGraph
 			"base1024":{"description":"base1024 graph or not","type":"boolean"}
 			"timeScale":{"description":"the graph time scale, 1hour|2hour|5hour|day|yesterday|week|lastweek|month|3month|year","type":"string"}
