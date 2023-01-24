@@ -88,5 +88,6 @@ public class CustomGraphWidgetDataLine
 	/// The data values for this line
 	/// </summary>
 	[DataMember(Name = "data")]
+	[JsonConverter(typeof(DoubleOrNAConverter))]
 	public List<double> Data { get; set; } = new();
 }
