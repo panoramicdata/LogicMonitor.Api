@@ -1,4 +1,3 @@
-Data
 DataSources
 	addDatasourceAuditVersion
 		"/setting/datasources/{id}/audit": {
