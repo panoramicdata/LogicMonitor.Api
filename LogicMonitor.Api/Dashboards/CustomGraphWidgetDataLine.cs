@@ -79,7 +79,7 @@ public class CustomGraphWidgetDataLine
 	public string Label { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The decimal 
+	/// The decimal
 	/// </summary>
 	[DataMember(Name = "decimal")]
 	public int Decimal { get; set; }
@@ -88,6 +88,6 @@ public class CustomGraphWidgetDataLine
 	/// The data values for this line
 	/// </summary>
 	[DataMember(Name = "data")]
-	[JsonConverter(typeof(DoubleOrNAConverter))]
+	[JsonProperty(ItemConverterType = typeof(DoubleOrNAConverter))]
 	public List<double> Data { get; set; } = new();
 }
