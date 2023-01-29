@@ -485,47 +485,6 @@ public partial class LogicMonitorClient
 		=> GetBySubUrlAsync<DeviceDataSourceInstance>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}", cancellationToken);
 
 	/// <summary>
-	///     Gets a list of DataSourceInstanceProperties
-	/// </summary>
-	/// <param name="deviceId">The device Id</param>
-	/// <param name="deviceDataSourceId">The device data source id</param>
-	/// <param name="deviceDataSourceInstanceId"></param>
-	/// <param name="filter">The filter</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DeviceDataSourceInstanceProperty>> GetDeviceDataSourceInstancePropertiesAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
-		Filter<DeviceDataSourceInstanceProperty> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DeviceDataSourceInstanceProperty>>(
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/properties?{filter}", cancellationToken);
-
-	/// <summary>
-	///     Gets a specific DataSourceInstanceProperty
-	/// </summary>
-	/// <param name="deviceId">The device Id</param>
-	/// <param name="deviceDataSourceId">The device data source id</param>
-	/// <param name="deviceDataSourceInstanceId"></param>
-	/// <param name="propertyName">The property name</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DeviceDataSourceInstanceProperty> GetDeviceDataSourceInstancePropertyAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
-		string propertyName,
-		CancellationToken cancellationToken) =>
-		(await GetDeviceDataSourceInstancePropertiesAsync(deviceId, deviceDataSourceId, deviceDataSourceInstanceId,
-			new Filter<DeviceDataSourceInstanceProperty>
-			{
-				Take = 1,
-				FilterItems = new List<FilterItem<DeviceDataSourceInstanceProperty>>
-				{
-						new Eq<DeviceDataSourceInstanceProperty>(nameof(DeviceDataSourceInstanceProperty.Name), propertyName)
-				}
-			}, cancellationToken).ConfigureAwait(false)).Items.SingleOrDefault();
-
-	/// <summary>
 	///     Get DataSource Instance Groups
 	/// </summary>
 	/// <param name="deviceId"></param>
@@ -667,13 +626,25 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId"></param>
 	/// <param name="deviceDataSourceInstanceCreationDto"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	/// <exception cref="NotImplementedException"></exception>
-	public Task<DeviceDataSourceInstance> AddDeviceDataSourceInstance(
+	public Task<DeviceDataSourceInstance> AddDeviceDataSourceInstanceAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		DeviceDataSourceInstanceCreationDto deviceDataSourceInstanceCreationDto,
 		CancellationToken cancellationToken) => PostAsync<DeviceDataSourceInstanceCreationDto, DeviceDataSourceInstance>(
 			deviceDataSourceInstanceCreationDto,
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances",
+			cancellationToken);
+
+	/// <summary>
+	/// add audit version
+	/// </summary>
+	/// <param name="id">The datasource id</param>
+	/// <param name="body">The audit to be added</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<DataSource> AddDatasourceAuditVersionAsync(
+		int id,
+		Audit body,
+		CancellationToken cancellationToken) => PostAsync<Audit, DataSource>(body,
+			$"setting/datasources/{id}/audit",
 			cancellationToken);
 }

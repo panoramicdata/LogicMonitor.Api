@@ -1,36 +1,3 @@
-DataSources
-		DataSourceOverviewGraph
-			"base1024":{"description":"base1024 graph or not","type":"boolean"}
-			"timeScale":{"description":"the graph time scale, 1hour|2hour|5hour|day|yesterday|week|lastweek|month|3month|year","type":"string"}
-			"maxValue":{"description":"graph max value","type":"object"}
-			"displayPrio":{"format":"int32","description":"the graph display priority","type":"integer"}
-			"aggregated":{"description":"is the overview graph aggregated","readOnly":true,"type":"boolean"}
-			"title":{"description":"the graph title","type":"string"}
-			"virtualDataPoints":{"description":"the virtual data point list","type":"array","items":{"$ref":"#/definitions/GraphVirtualDataPoint"}}
-			"minValue":{"description":"graph min value","type":"object"}
-			"name":{"description":"the graph name","type":"string"}
-			"width":{"format":"int32","description":"the graph width","type":"integer"}
-			"dataPoints":{"description":"the graph data point list","type":"array","items":{"$ref":"#/definitions/OverviewGraphDataPoint"}}
-			"verticalLabel":{"description":"the graph vertical label","type":"string"}
-			"id":{"format":"int32","description":"the graph id","type":"integer"}
-			"rigid":{"description":"the rigid, true|false","type":"boolean"}
-			"lines":{"description":"the graph lines","type":"array","items":{"$ref":"#/definitions/GraphLine"}}
-			"height":{"format":"int32","description":"the graph height","type":"integer"}
-		GraphLine
-			"colorName":{"description":"the graph line color name","type":"string"}
-			"dataPointName":{"description":"the graph line data point name","type":"string"}
-			"dataPointId":{"format":"int32","description":"the graph line data point id","readOnly":true,"type":"integer"}
-			"legend":{"description":"the graph line legend","type":"string"}
-			"isVirtualDataPoint":{"description":"if the graph line\u0027s data point is a virtual data point","type":"boolean"}
-			"type":{"format":"int32","description":"the graph line type, 1\u003dline|2\u003darea|3\u003dstack|4\u003dcolumn","type":"integer"}
-		UpdateReason
-			"timeEpoch":{"format":"int64","description":"update date epoch","readOnly":true,"type":"integer"}
-			"clientIp":{"description":"Client IP from which this update has been made","readOnly":true,"type":"string"}
-			"updateReason":{"description":"update reason","type":"string"}
-			"timeStr":{"description":"update date in form \u0027YYYY-MM-DD HH:MM:SS\u0027","readOnly":true,"type":"string"}
-			"id":{"format":"int32","description":"ID of update reason","readOnly":true,"type":"integer"}
-			"userName":{"description":"user who made this update","type":"string"}
-
 Devices
 		NetFlowRecord
 			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}

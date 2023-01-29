@@ -201,40 +201,6 @@ public class DataSourceTests : TestWithOutput
 					CancellationToken.None)
 				.ConfigureAwait(false);
 			deviceDataSourceInstanceRefetch.Should().NotBeNull();
-
-			// Get all instance properties
-			var deviceDataSourceInstanceProperties = await portalClient
-				.GetDeviceDataSourceInstancePropertiesAsync(
-					device.Id,
-					deviceDataSource.Id,
-					deviceDataSourceInstance.Id,
-					new Filter<DeviceDataSourceInstanceProperty>
-					{
-						Skip = 0,
-						Take = 300,
-					},
-					CancellationToken.None)
-				.ConfigureAwait(false);
-			deviceDataSourceInstanceProperties.Should().NotBeNull();
-
-			// Check each
-			foreach (var deviceDataSourceInstanceProperty in deviceDataSourceInstanceProperties.Items)
-			{
-				deviceDataSourceInstanceProperty.Name.Should().NotBeNull();
-				deviceDataSourceInstanceProperty.Value.Should().NotBeNull();
-
-				// Refetch it
-				var deviceDataSourceInstancePropertyRefetch = await portalClient
-					.GetDeviceDataSourceInstancePropertyAsync(
-						device.Id,
-						deviceDataSource.Id,
-						deviceDataSourceInstance.Id,
-						deviceDataSourceInstanceProperty.Name,
-						CancellationToken.None)
-					.ConfigureAwait(false);
-				deviceDataSourceInstancePropertyRefetch.Name.Should().Be(deviceDataSourceInstanceProperty.Name);
-				deviceDataSourceInstancePropertyRefetch.Value.Should().Be(deviceDataSourceInstanceProperty.Value);
-			}
 		}
 
 		var deviceDataSourceInstanceGroups = await portalClient

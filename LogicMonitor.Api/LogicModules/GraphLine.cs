@@ -45,5 +45,5 @@ public class GraphLine
 	/// <summary>
 	/// ToString override
 	/// </summary>
-	public override string ToString() => $"{Legend} ({Id}, {Color})";
+	public override string ToString() => $"{Legend} ({ColorName})";
 }
