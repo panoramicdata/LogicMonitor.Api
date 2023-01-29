@@ -377,4 +377,10 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "gcpBillingPeriodType")]
 	public string GcpBillingPeriod { get; set; }
+
+	/// <summary>
+	/// Zoom plan usage type
+	/// </summary>
+	[DataMember(Name = "zoomPlanUsageType")]
+	public ZoomPlanUsageType ZoomPlanUsageType { get; set; }
 }

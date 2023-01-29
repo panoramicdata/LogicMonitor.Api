@@ -171,6 +171,12 @@ public class DataPointConfiguration : IdentifiedItem
 	[DataMember(Name = "postProcessorParam")]
 	public string? PostProcessorParameter { get; set; }
 
+	/// <summary>
+	///     The global post processor parameter
+	/// </summary>
+	[DataMember(Name = "globalPostProcessorParam")]
+	public string? GlobalPostProcessorParameter { get; set; }
+
 	/// <inheritdoc />
 	public override string ToString()
 		=> $"{DataPointName} : Expression:{AlertExpression} GlobalExpression: {GlobalAlertExpr}{(DisableAlerting ? " (Disabled)" : string.Empty)}";
