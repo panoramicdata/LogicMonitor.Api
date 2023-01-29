@@ -38,113 +38,104 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public List<Property> CustomProperties { get; set; }
 
 	/// <summary>
-	/// System properties
+	/// Any instance level system properties assigned to the instance
 	/// </summary>
-	[DataMember(Name = "systemProperties")]
+	[DataMember(Name = "systemProperties", IsRequired = false)]
 	public List<Property> SystemProperties { get; set; }
 
 	/// <summary>
-	/// System properties
+	/// Any instance level auto properties assigned to the instance
 	/// </summary>
-	[DataMember(Name = "autoProperties")]
+	[DataMember(Name = "autoProperties", IsRequired = false)]
 	public List<Property> AutoProperties { get; set; }
 
 	/// <summary>
-	/// The DataSource Id
+	/// The id of the datasource definition that the instance represents
 	/// </summary>
-	[DataMember(Name = "dataSourceId")]
+	[DataMember(Name = "dataSourceId", IsRequired = false)]
 	public int? DataSourceId { get; set; }
 
 	/// <summary>
 	/// The DataSource Name
 	/// </summary>
-	[DataMember(Name = "dataSourceName")]
+	[DataMember(Name = "dataSourceName", IsRequired = false)]
 	public string DataSourceName { get; set; }
 
 	/// <summary>
-	/// DataSourceType
+	/// The type of LogicModule, e.g. DS (datasource)
 	/// </summary>
-	[DataMember(Name = "dataSourceType")]
+	[DataMember(Name = "dataSourceType", IsRequired = false)]
 	public string DataSourceType { get; set; }
 
 	/// <summary>
-	/// DeviceDisplayName
+	/// The display name of the device the datasource instance is associated with
 	/// </summary>
-	[DataMember(Name = "deviceDisplayName")]
+	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
 	public string DeviceDisplayName { get; set; }
 
 	/// <summary>
-	/// The Device Id
+	/// The id of the device the datasource instance is associated with
 	/// </summary>
-	[DataMember(Name = "deviceId")]
+	[DataMember(Name = "deviceId", IsRequired = false)]
 	public int? DeviceId { get; set; }
 
 	/// <summary>
-	/// Disable Alerting
+	/// Whether or not alerting is disabled for the instance
 	/// </summary>
-	[DataMember(Name = "disableAlerting")]
+	[DataMember(Name = "disableAlerting", IsRequired = false)]
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
 	/// The id of the instance group associated with the datasource instance
 	/// </summary>
-	[DataMember(Name = "groupId")]
+	[DataMember(Name = "groupId", IsRequired = false)]
 	public int GroupId { get; set; }
 
 	/// <summary>
-	/// The Group Name
+	/// The name of the instance group associated with the datasource instance
 	/// </summary>
-	[DataMember(Name = "groupName")]
+	[DataMember(Name = "groupName", IsRequired = false)]
 	public string GroupName { get; set; }
 
 	/// <summary>
 	/// groupsDisabledThisSource
 	/// </summary>
-	[DataMember(Name = "groupsDisabledThisSource")]
+	[DataMember(Name = "groupsDisabledThisSource", IsRequired = false)]
 	public List<DisabledGroup> GroupsDisabledThisSource { get; set; }
-
-
 
 	/// <summary>
 	/// The last collected time in seconds since the Epoch
 	/// </summary>
-	[DataMember(Name = "lastCollectedTime")]
+	[DataMember(Name = "lastCollectedTime", IsRequired = false)]
 	public long LastCollectedTimeSeconds { get; set; }
 
 	/// <summary>
 	/// The last updated time in seconds since the Epoch
 	/// </summary>
-	[DataMember(Name = "lastUpdatedTime")]
+	[DataMember(Name = "lastUpdatedTime", IsRequired = false)]
 	public long LastUpdatedTimeSeconds { get; set; }
 
 	/// <summary>
-	/// The lockDescription
+	/// Whether or not Active Discovery is enabled, and thus whether or not the instance description is editable
 	/// </summary>
-	[DataMember(Name = "lockDescription")]
+	[DataMember(Name = "lockDescription", IsRequired = false)]
 	public bool LockDescription { get; set; }
-
-
-	/// <summary>
-	/// SDT Status
-	/// </summary>
-	[DataMember(Name = "sdtStatus")]
-	public SdtStatus SdtStatus { get; set; }
-
-	/// <summary>
-	/// SDT at
-	/// </summary>
-	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
 
 	/// <summary>
 	/// WildValue
 	/// </summary>
-	[DataMember(Name = "wildValue")]
+	[DataMember(Name = "wildValue", IsRequired = false)]
 	public string WildValue { get; set; }
 
 	/// <summary>
 	/// Only used for two dimensional active discovery. When used, during Active Discovery runs, the token ##WILDVALUE## is replaces with the value of ALIAS and the token ##WILDVALUE2## is replaced with the value of the second part alias. This value must be unique for the device/datasource/WILDVALUE combination
 	/// </summary>
-	[DataMember(Name = "wildValue2")]
+	[DataMember(Name = "wildValue2", IsRequired = false)]
 	public string WildValue2 { get; set; }
+
+	/// <summary>
+	/// The id of the collector the datasource instance is associated with
+	/// </summary>
+	[DataMember(Name = "collectorId", IsRequired = false)]
+	public int CollectorId { get; set; }
 }

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A role report
 /// </summary>
 [DataContract]
-public class RoleReport : Report
+public class RoleReport : ReportBase
 {
 	/// <summary>
 	/// The display format

@@ -20,7 +20,7 @@ public class ReportTests : TestWithOutput
 	public async Task GetAllReports()
 	{
 		var reports = await LogicMonitorClient
-			.GetAllAsync<Report>(CancellationToken.None)
+			.GetAllAsync<ReportBase>(CancellationToken.None)
 			.ConfigureAwait(false);
 		reports.Should().NotBeNull();
 		reports.Should().NotBeNullOrEmpty();

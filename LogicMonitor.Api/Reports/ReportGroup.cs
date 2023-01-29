@@ -16,7 +16,7 @@ public class ReportGroup : NamedItem, IHasEndpoint
 	/// Reports
 	/// </summary>
 	[DataMember(Name = "reports")]
-	public List<Report> Reports { get; set; }
+	public List<ReportBase> Reports { get; set; }
 
 	/// <summary>
 	/// Report count

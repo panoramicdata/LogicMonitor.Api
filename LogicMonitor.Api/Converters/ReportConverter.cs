@@ -3,9 +3,9 @@ namespace LogicMonitor.Api.Converters;
 /// <summary>
 /// A report converter
 /// </summary>
-internal class ReportConverter : JsonCreationConverter<Report>
+internal class ReportConverter : JsonCreationConverter<ReportBase>
 {
-	protected override Report Create(Type objectType, JObject jObject)
+	protected override ReportBase Create(Type objectType, JObject jObject)
 	{
 		var type = jObject["type"].Value<string>().ToLowerInvariant();
 

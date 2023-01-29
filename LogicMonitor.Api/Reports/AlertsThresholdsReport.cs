@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// An alert threshold report
 /// </summary>
 [DataContract]
-public class AlertsThresholdsReport : Report
+public class AlertsThresholdsReport : ReportBase
 {
 	/// <summary>
 	/// The group full path

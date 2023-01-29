@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A host group inventory report
 /// </summary>
 [DataContract]
-public class DeviceGroupInventoryReport : Report
+public class DeviceGroupInventoryReport : ReportBase
 {
 	/// <summary>
 	/// The comma-separated device groups
