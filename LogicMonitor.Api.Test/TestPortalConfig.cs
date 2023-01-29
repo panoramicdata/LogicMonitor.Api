@@ -11,13 +11,14 @@ internal class TestPortalConfig
 			.AddUserSecrets<TestPortalConfig>();
 		Configuration = builder.Build();
 
-		LogicMonitorClient = new LogicMonitorClient(new LogicMonitorClientOptions
-		{
-			Account = Configuration["Config:Account"],
-			AccessId = Configuration["Config:AccessId"],
-			AccessKey = Configuration["Config:AccessKey"],
-			Logger = logger
-		}
+		LogicMonitorClient = new LogicMonitorClient(
+			new LogicMonitorClientOptions
+			{
+				Account = Configuration["Config:Account"],
+				AccessId = Configuration["Config:AccessId"],
+				AccessKey = Configuration["Config:AccessKey"],
+				Logger = logger
+			}
 		)
 		{
 			StrictPagingTotalChecking = true
