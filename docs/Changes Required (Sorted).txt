@@ -1,16 +1,4 @@
 Devices		
-		GroupNetFlowRecord
-			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
-			"srcAsnName":{"readOnly":true,"type":"string"}
-			"dstASN":{"format":"int64","readOnly":true,"type":"integer"}
-			"destAsnName":{"readOnly":true,"type":"string"}
-			
-		NetflowBandwidth
-			"deviceId":{"format":"int32","type":"integer"}
-		DeviceGroupAlertThresholdInfo
-			"enableAnomalyAlertGeneration":{"description":"enable anomaly alert generation","readOnly":true,"type":"string"}
-			"userPermission":{"readOnly":true,"type":"string"}
-			"enableAnomalyAlertSuppression":{"description":"enable anomaly alert suppression","readOnly":true,"type":"string"}
 		DeviceDataSourceAssociated
 			"instance":{"description":"The instance list associated to the datasource","type":"array","items":{"$ref":"#/definitions/DeviceDataSourceAssociatedInstance"}}
 			"hasMore":{"format":"int32","description":"Whether has more instance. 0 no more, 1 has more","readOnly":true,"type":"integer"}

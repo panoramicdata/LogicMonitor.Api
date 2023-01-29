@@ -66,8 +66,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<FlowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
+	public Task<Page<NetflowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<NetflowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
 
 	#endregion
 }

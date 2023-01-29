@@ -4,36 +4,36 @@ namespace LogicMonitor.Api.Flows;
 /// A Flow
 /// </summary>
 [DataContract]
-public class FlowBandwidth
+public class NetflowBandwidth : NetflowDataBase
 {
 	/// <summary>
-	/// The data type
+	/// deviceDisplayName
 	/// </summary>
-	[DataMember(Name = "deviceDisplayName")]
-	public string DisplayName { get; set; }
+	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
+	public string? DisplayName { get; set; }
 
 	/// <summary>
-	/// The data type
+	/// deviceId
 	/// </summary>
-	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	[DataMember(Name = "deviceId", IsRequired = false)]
+	public int DeviceId { get; set; }
 
 	/// <summary>
 	/// Send in MBytes
 	/// </summary>
-	[DataMember(Name = "send")]
+	[DataMember(Name = "send", IsRequired = false)]
 	public long SendMb { get; set; }
 
 	/// <summary>
 	/// Receive in MBytes
 	/// </summary>
-	[DataMember(Name = "receive")]
+	[DataMember(Name = "receive", IsRequired = false)]
 	public long ReceiveMb { get; set; }
 
 	/// <summary>
 	/// Usage in MBytes
 	/// </summary>
-	[DataMember(Name = "usage")]
+	[DataMember(Name = "usage", IsRequired = false)]
 	public long UsageMb { get; set; }
 
 	/// <summary>
