@@ -15,7 +15,7 @@ public class GoogleMapWidgetCreationDto : WidgetCreationDto<GoogleMapWidget>
 	///     The name
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	///     The name

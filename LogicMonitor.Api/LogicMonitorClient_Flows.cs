@@ -21,14 +21,6 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///    Get Flows using a FlowPortRequest
 	/// </summary>
-	/// <param name="flowEndpointsRequest"></param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowEndpoint>> GetFlowEndpointsPageAsync(FlowEndpointsRequest flowEndpointsRequest, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowEndpoint>>(flowEndpointsRequest.GetQueryString(), cancellationToken);
-
-	/// <summary>
-	///    Get Flows using a FlowPortRequest
-	/// </summary>
 	/// <param name="flowApplicationsRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<FlowApplication>> GetFlowApplicationsPageAsync(FlowApplicationsRequest flowApplicationsRequest, CancellationToken cancellationToken)

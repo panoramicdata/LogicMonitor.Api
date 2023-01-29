@@ -4,29 +4,29 @@ namespace LogicMonitor.Api;
 /// A simple property
 /// </summary>
 [DataContract]
-public class Property
+public class EntityProperty
 {
 	/// <summary>
-	///    The property name
+	/// The name of the property
 	/// </summary>
 	[DataMember(Name = "name")]
 	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The property value
+	/// The value of the property
 	/// </summary>
 	[DataMember(Name = "value")]
 	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The property type
+	/// The type of proprety among Inherit|System|Custom
 	/// </summary>
 	[DataMember(Name = "type")]
 	[JsonConverter(typeof(StringEnumConverter))]
 	public PropertyType? Type { get; set; }
 
 	/// <summary>
-	///    The list of inherited items
+	/// The inherit list of the property
 	/// </summary>
 	[DataMember(Name = "inheritList")]
 	public List<InheritedItem> InheritList { get; set; } = new();

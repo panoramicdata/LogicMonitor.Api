@@ -154,7 +154,7 @@ public class WebsiteCreationDto : CreationDto<Website>
 	/// The website properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<Property> WebsiteProperties { get; set; }
+	public List<EntityProperty> WebsiteProperties { get; set; }
 
 	/// <summary>
 	/// The alert expression for SSL expiration alerts

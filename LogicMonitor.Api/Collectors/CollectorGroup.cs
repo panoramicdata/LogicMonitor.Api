@@ -10,7 +10,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	/// The custom properties defined for the Collector group
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	/// The permission level of the user that made the API request

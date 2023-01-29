@@ -1,18 +1,4 @@
 Devices		
-		NetflowReport
-			"required":["hostsVal","hostsValType"]
-			"hostsValType":{"description":"The resource type for the report, host or group","type":"string"}
-		DeviceDataSourceAssociatedInstance
-			"name":{"description":"instance name","readOnly":true,"type":"string"}
-			"alias":{"description":"instance alias","readOnly":true,"type":"string"}
-			"id":{"format":"int32","description":"instance id","readOnly":true,"type":"integer"}
-		EntityProperty
-			"inheritList":{"description":"The inherit list of the property","readOnly":true,"type":"array","items":{"$ref":"#/definitions/InheritanceProp"}}
-			"name":{"description":"The name of the property","readOnly":true,"type":"string"}
-			"type":{"description":"The type of proprety among Inherit|System|Custom","readOnly":true,"type":"string"}
-			"value":{"description":"The value of the property","readOnly":true,"type":"string"}
-		DeviceGroupData
-			"rolePrivileges":{"description":"The role privilege operations for the device group that are granted to the user that made this API request","readOnly":true,"type":"array","items":{"type":"string"}}
 		DeviceGroup
 			"numOfKubernetesDevices":{"format":"int64","description":"The number of kubernetes devices that belong to this device group (includes Kubernetes devices in sub groups)","readOnly":true,"type":"integer"}
 			"rolePrivileges":{"description":"The role privilege operations for the device group that are granted to the user that made this API request","readOnly":true,"type":"array","items":{"type":"string"}}

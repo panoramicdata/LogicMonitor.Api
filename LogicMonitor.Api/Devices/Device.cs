@@ -50,7 +50,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "autoProperties")]
-	public List<Property> AutoProperties { get; set; }
+	public List<EntityProperty> AutoProperties { get; set; }
 
 	/// <summary>
 	///    The time that the auto-properties were assigned in seconds since the Epoch
@@ -125,7 +125,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	///    The device status
@@ -205,7 +205,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "inheritedProperties")]
-	public List<Property> InheritedProperties { get; set; }
+	public List<EntityProperty> InheritedProperties { get; set; }
 
 	/// <summary>
 	///    The instances
@@ -410,7 +410,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "systemProperties")]
-	public List<Property> SystemProperties { get; set; }
+	public List<EntityProperty> SystemProperties { get; set; }
 
 	/// <summary>
 	///    The time in Ms before the device will be deleted

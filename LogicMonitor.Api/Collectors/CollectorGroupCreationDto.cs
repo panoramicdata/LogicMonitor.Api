@@ -22,5 +22,5 @@ public class CollectorGroupCreationDto : CreationDto<CollectorGroup>
 	///     The custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 }

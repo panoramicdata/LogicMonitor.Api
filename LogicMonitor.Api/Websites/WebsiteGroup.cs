@@ -82,7 +82,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// Properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	/// Whether monitoring is stopped

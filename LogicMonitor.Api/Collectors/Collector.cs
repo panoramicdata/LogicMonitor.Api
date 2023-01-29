@@ -212,7 +212,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	///     Number of hosts

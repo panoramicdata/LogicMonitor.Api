@@ -708,8 +708,8 @@ public partial class LogicMonitorClient : IDisposable
 				break;
 		}
 
-		Statistics.DataTransferUplinkBytes += requestMessage?.Content?.Headers.ContentLength ?? 0;
-		Statistics.DataTransferDownlinkBytes += response?.Content?.Headers.ContentLength ?? 0;
+		Statistics.DataTransferUplinkBytes += requestMessage.Content?.Headers.ContentLength ?? 0;
+		Statistics.DataTransferDownlinkBytes += response.Content?.Headers.ContentLength ?? 0;
 	}
 
 	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
@@ -1422,7 +1422,7 @@ public partial class LogicMonitorClient : IDisposable
 				// Determine whether there is an existing property
 				try
 				{
-					var _ = await GetBySubUrlAsync<Property>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
+					var _ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 
 					// No exception thrown? It exists
 					// Are we deleting?
@@ -1444,8 +1444,8 @@ public partial class LogicMonitorClient : IDisposable
 					// so POST a new one (unless it's null, in which case nothing to do)
 					if (value is not null)
 					{
-						var _ = await PostAsync<Property, Property>(
-							new Property { Name = name, Value = value },
+						var _ = await PostAsync<EntityProperty, EntityProperty>(
+							new EntityProperty { Name = name, Value = value },
 							$"{propertiesSubUrl}",
 							cancellationToken).ConfigureAwait(false);
 					}
@@ -1459,7 +1459,7 @@ public partial class LogicMonitorClient : IDisposable
 					throw new InvalidOperationException("Value must not be set to null when creating the property.");
 				}
 
-				await PostAsync<Property, Property>(new Property { Name = name, Value = value }, $"{propertiesSubUrl}", cancellationToken).ConfigureAwait(false);
+				await PostAsync<EntityProperty, EntityProperty>(new EntityProperty { Name = name, Value = value }, $"{propertiesSubUrl}", cancellationToken).ConfigureAwait(false);
 				break;
 
 			case SetPropertyMode.Update:
