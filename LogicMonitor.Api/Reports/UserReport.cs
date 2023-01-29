@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A user report
 /// </summary>
 [DataContract]
-public class UserReport : Report
+public class UserReport : ReportBase
 {
 	/// <summary>
 	/// The user filter

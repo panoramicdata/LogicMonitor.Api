@@ -1,15 +1,4 @@
 Devices		
-		DeviceDataSourceAssociated
-			"instance":{"description":"The instance list associated to the datasource","type":"array","items":{"$ref":"#/definitions/DeviceDataSourceAssociatedInstance"}}
-			"hasMore":{"format":"int32","description":"Whether has more instance. 0 no more, 1 has more","readOnly":true,"type":"integer"}
-			"hasActiveInstance":{"description":"Whether has active instance.","readOnly":true,"type":"boolean"}
-		DeviceDataSourceInstance
-			"collectorId":{"format":"int32","description":"The id of the collector the datasource instance is associated with","readOnly":true,"type":"integer"}
-		InheritanceProp
-			"fullpath":{"description":"The fullpath of the property","readOnly":true,"type":"string"}
-			"id":{"format":"int32","description":"Source id for the property,for example,id for group or property rule","readOnly":true,"type":"integer"}
-			"type":{"description":"The type of the parent property from which are inheriting","readOnly":true,"type":"string"}
-			"value":{"description":"The property value for the group","readOnly":true,"type":"string"}
 		NetflowReport
 			"required":["hostsVal","hostsValType"]
 			"hostsValType":{"description":"The resource type for the report, host or group","type":"string"}

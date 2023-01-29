@@ -6,7 +6,7 @@ namespace LogicMonitor.Api.Reports;
 [DebuggerDisplay("{Type}:{Name}")]
 [JsonConverter(typeof(ReportConverter))]
 [DataContract]
-public class Report : NamedItem, IHasEndpoint
+public class ReportBase : NamedItem, IHasEndpoint
 {
 	/// <summary>
 	/// The report type
