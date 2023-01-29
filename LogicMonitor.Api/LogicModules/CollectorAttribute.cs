@@ -247,6 +247,12 @@ public class CollectorAttribute
 	public string Payload { get; set; }
 
 	/// <summary>
+	/// Plan type
+	/// </summary>
+	[DataMember(Name = "planType")]
+	public string PlanType { get; set; }
+
+	/// <summary>
 	///     The port
 	/// </summary>
 	[DataMember(Name = "port")]

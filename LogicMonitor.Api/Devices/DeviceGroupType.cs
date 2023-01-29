@@ -8,7 +8,7 @@ namespace LogicMonitor.Api.Devices;
 public enum DeviceGroupType
 {
 	/// <summary>
-	///     Unknown)
+	///     Unknown
 	/// </summary>
 	[EnumMember(Value = "0")]
 	Unknown = 0,

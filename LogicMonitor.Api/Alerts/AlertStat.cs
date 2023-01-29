@@ -67,6 +67,18 @@ public class AlertStat : IHasSingletonEndpoint
 	public int AckAlerts { get; set; }
 
 	/// <summary>
+	/// Whether the alert total includes acknowledges alerts
+	/// </summary>
+	[DataMember(Name = "alertTotalIncludeInAck")]
+	public bool AlertTotalIncludeInAck { get; set; }
+
+	/// <summary>
+	/// Whether the alert total includes those in SDT
+	/// </summary>
+	[DataMember(Name = "alertTotalIncludeInSdt")]
+	public bool AlertTotalIncludeInSdt { get; set; }
+
+	/// <summary>
 	///    The endpoint
 	/// </summary>
 	public string Endpoint() => "alert/stat";

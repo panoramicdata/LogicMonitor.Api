@@ -163,10 +163,4 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// </summary>
 	[DataMember(Name = "wildValue2", IsRequired = false)]
 	public string WildValue2 { get; set; }
-
-	/// <summary>
-	/// The id of the collector the datasource instance is associated with
-	/// </summary>
-	[DataMember(Name = "collectorId", IsRequired = false)]
-	public int CollectorId { get; set; }
 }
