@@ -1,25 +1,4 @@
 Devices		
-		DeviceGroupDataSourceDataPointConfig
-			"enableAnomalyAlertSuppression":{"type":"string"}
-			"criticalAdAdvSetting":{"type":"string"}
-			"adAdvSettingEnabled":{"type":"boolean"}
-			"errorAdAdvSetting":{"type":"string"}
-			"globalEnableAnomalyAlertGeneration":{"type":"string"}
-			"enableAnomalyAlertGeneration":{"type":"string"}
-			"warnAdAdvSetting":{"type":"string"}
-			"dataPointName":{"type":"string"}
-			"dataPointId":{"format":"int32","type":"integer"}
-			"globalEnableAnomalyAlertSuppression":{"type":"string"}
-			"collectionInterval":{"format":"int64","description":"Collection Interval","readOnly":true,"type":"integer"}
-			"alertExpr":{"type":"string"}
-			
-		DeviceDataSourceInstanceConfigAlert
-			"alertLevel":{"format":"int32","description":"Alert level, 0 - alert is cleared, 2 - warn alert, 3 - error alert, 4 - critical alert","readOnly":true,"type":"integer"}
-			"id":{"description":"Alert id","readOnly":true,"type":"string"}
-			"alertId":{"description":"Alert internal id","readOnly":true,"type":"string"}
-			"alertSummary":{"description":"Summary of this config source alert","readOnly":true,"type":"string"}
-			"timestamp":{"format":"int64","description":"Timestamp of alert start or clear","readOnly":true,"type":"integer"}
-
 		GroupNetFlowRecord
 			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
 			"srcAsnName":{"readOnly":true,"type":"string"}

@@ -1,4 +1,4 @@
-namespace LogicMonitor.Api;
+namespace LogicMonitor.Api.Devices;
 
 /// <summary>
 /// A device group data source
