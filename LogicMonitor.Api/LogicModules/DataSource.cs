@@ -196,7 +196,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	/// The data point list
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<DataSourceDataPoint>? DataSourceDataPoints { get; set; }
+	public List<DataPoint>? DataSourceDataPoints { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/datasources";

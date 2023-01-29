@@ -25,7 +25,7 @@ public class DeviceGroupTests : TestWithOutput
 			.GetByNameAsync<DataSource>("Ping", CancellationToken.None)
 			.ConfigureAwait(false);
 		var datapoints = (await LogicMonitorClient
-			.GetDataSourceDataPointsPageAsync(dataSource.Id, new Filter<DataSourceDataPoint> { Skip = 0, Take = 10 }, CancellationToken.None)
+			.GetDataSourceDataPointsPageAsync(dataSource.Id, new Filter<DataPoint> { Skip = 0, Take = 10 }, CancellationToken.None)
 			.ConfigureAwait(false)).Items;
 		var datapoint = datapoints.Single(dp => dp.Name == "average");
 		await LogicMonitorClient

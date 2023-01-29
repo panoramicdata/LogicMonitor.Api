@@ -19,14 +19,14 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="dataSourceId"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<List<DataSourceGraph>> GetDataSourceGraphsAsync(
+	public async Task<List<DataSourceOverviewGraph>> GetDataSourceGraphsAsync(
 		int dataSourceId,
 		CancellationToken cancellationToken)
 	{
-		var page = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs", cancellationToken).ConfigureAwait(false);
+		var page = await GetBySubUrlAsync<Page<DataSourceOverviewGraph>>($"setting/datasources/{dataSourceId}/graphs", cancellationToken).ConfigureAwait(false);
 		if (page.Items is null)
 		{
-			return new List<DataSourceGraph>();
+			return new List<DataSourceOverviewGraph>();
 		}
 
 		// DataSourceId is no longer sent, but needed for backups.  Re-add.
@@ -44,7 +44,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The datasource id</param>
 	/// <param name="graphName">The graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDataSourceGraphByNameAsync(
+	public async Task<DataSourceOverviewGraph> GetDataSourceGraphByNameAsync(
 		int dataSourceId,
 		string graphName,
 		CancellationToken cancellationToken)
@@ -67,7 +67,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The datasource id</param>
 	/// <param name="graphName">The graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDataSourceOverviewGraphByNameAsync(
+	public async Task<DataSourceOverviewGraph> GetDataSourceOverviewGraphByNameAsync(
 		int dataSourceId,
 		string graphName,
 		CancellationToken cancellationToken)
@@ -135,10 +135,10 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The datasource Id</param>
 	/// <param name="filter">Filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DataSourceGraph>> GetDataSourceGraphsPageAsync(int dataSourceId,
-		Filter<DataSourceGraph> filter,
+	public Task<Page<DataSourceOverviewGraph>> GetDataSourceGraphsPageAsync(int dataSourceId,
+		Filter<DataSourceOverviewGraph> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
+		=> GetBySubUrlAsync<Page<DataSourceOverviewGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
 
 	/// <summary>
 	///     Gets a DataSource graph given dataSourceId and graphId
@@ -146,9 +146,9 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The DataSource Id</param>
 	/// <param name="graphId">The Graph Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<DataSourceGraph> GetDataSourceGraphAsync(int dataSourceId, int graphId,
+	public Task<DataSourceOverviewGraph> GetDataSourceGraphAsync(int dataSourceId, int graphId,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<DataSourceGraph>($"setting/datasources/{dataSourceId}/graphs/{graphId}", cancellationToken);
+		=> GetBySubUrlAsync<DataSourceOverviewGraph>($"setting/datasources/{dataSourceId}/graphs/{graphId}", cancellationToken);
 
 	/// <summary>
 	///     Gets a list of DataSource graphs given its dataSourceId
@@ -156,14 +156,14 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<DataSourceGraph>> GetDataSourceOverviewGraphsPageAsync(
+	public async Task<Page<DataSourceOverviewGraph>> GetDataSourceOverviewGraphsPageAsync(
 		int dataSourceId,
-		Filter<DataSourceGraph>? filter = null,
+		Filter<DataSourceOverviewGraph>? filter = null,
 		CancellationToken cancellationToken = default)
 	{
-		filter ??= new Filter<DataSourceGraph> { Skip = 0, Take = 300 };
+		filter ??= new Filter<DataSourceOverviewGraph> { Skip = 0, Take = 300 };
 
-		var dataSourceOverviewGraphsPageAsync = await GetBySubUrlAsync<Page<DataSourceGraph>>($"setting/datasources/{dataSourceId}/ographs?{filter}", cancellationToken).ConfigureAwait(false);
+		var dataSourceOverviewGraphsPageAsync = await GetBySubUrlAsync<Page<DataSourceOverviewGraph>>($"setting/datasources/{dataSourceId}/ographs?{filter}", cancellationToken).ConfigureAwait(false);
 
 		// DataSourceId is no longer sent, but needed for backups.  Re-add.
 		foreach (var item in dataSourceOverviewGraphsPageAsync.Items)
@@ -180,11 +180,11 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The DataSource Id</param>
 	/// <param name="overviewGraphId">The overview graph Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<DataSourceGraph> GetDataSourceOverviewGraphAsync(
+	public Task<DataSourceOverviewGraph> GetDataSourceOverviewGraphAsync(
 		int dataSourceId,
 		int overviewGraphId,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<DataSourceGraph>($"setting/datasources/{dataSourceId}/ographs/{overviewGraphId}", cancellationToken);
+		=> GetBySubUrlAsync<DataSourceOverviewGraph>($"setting/datasources/{dataSourceId}/ographs/{overviewGraphId}", cancellationToken);
 
 	/// <summary>
 	///     Gets a DataSource's dataPoints given the DataSourceId
@@ -192,11 +192,11 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DataSourceDataPoint>> GetDataSourceDataPointsPageAsync(
+	public Task<Page<DataPoint>> GetDataSourceDataPointsPageAsync(
 		int dataSourceId,
-		Filter<DataSourceDataPoint> filter,
+		Filter<DataPoint> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DataSourceDataPoint>>($"setting/datasources/{dataSourceId}/datapoints?{filter}", cancellationToken);
+		=> GetBySubUrlAsync<Page<DataPoint>>($"setting/datasources/{dataSourceId}/datapoints?{filter}", cancellationToken);
 
 	/// <summary>
 	/// Gets a page of Device DataSources

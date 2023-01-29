@@ -4,16 +4,16 @@ namespace LogicMonitor.Api.LogicModules;
 /// A DataSource Graph
 /// </summary>
 [DataContract]
-public class DataSourceGraph : UndescribedNamedItem
+public class DataSourceOverviewGraph : UndescribedNamedItem
 {
 	/// <summary>
-	/// Aggregated
+	/// is the overview graph aggregated
 	/// </summary>
 	[DataMember(Name = "aggregated")]
 	public bool Aggregated { get; set; }
 
 	/// <summary>
-	/// The display name
+	/// base1024 graph or not
 	/// </summary>
 	[DataMember(Name = "base1024")]
 	public bool Base1024 { get; set; }
@@ -25,76 +25,76 @@ public class DataSourceGraph : UndescribedNamedItem
 	public int DataSourceId { get; set; }
 
 	/// <summary>
-	/// Display Priority
+	/// the graph display priority
 	/// </summary>
 	[DataMember(Name = "displayPrio")]
 	public int DisplayPriority { get; set; }
 
 	/// <summary>
-	/// Width
+	/// the graph height
 	/// </summary>
 	[DataMember(Name = "height")]
 	public int Height { get; set; }
 
 	/// <summary>
-	/// Width
+	/// the graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<Line> Lines { get; set; }
+	public List<GraphLine> Lines { get; set; }
 
 	/// <summary>
-	/// MaxValue
+	/// graph max value
 	/// </summary>
 	[DataMember(Name = "maxValue")]
 	public string MaxValue { get; set; }
 
 	/// <summary>
-	/// MinValue
+	/// graph min value
 	/// </summary>
 	[DataMember(Name = "minValue")]
 	public string MinValue { get; set; }
 
 	/// <summary>
-	/// MinValue
+	/// the rigid, true|false
 	/// </summary>
 	[DataMember(Name = "rigid")]
 	public bool Rigid { get; set; }
 
 	/// <summary>
-	/// Whether it's base 1024
+	/// the graph time scale, 1hour|2hour|5hour|day|yesterday|week|lastweek|month|3month|year
 	/// </summary>
 	[DataMember(Name = "timeScale")]
 	public string TimeScale { get; set; }
 
 	/// <summary>
-	/// Title
+	/// the graph title
 	/// </summary>
 	[DataMember(Name = "title")]
 	public string Title { get; set; }
 
 	/// <summary>
-	/// Vertical Label
+	/// the graph vertical label
 	/// </summary>
 	[DataMember(Name = "verticalLabel")]
 	public string VerticalLabel { get; set; }
 
 	/// <summary>
-	/// Width
+	/// the graph width
 	/// </summary>
 	[DataMember(Name = "width")]
 	public int Width { get; set; }
 
 	/// <summary>
-	/// The data points
+	/// the graph data point list
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<DataSourceDataPoint> DataPoints { get; set; }
+	public List<OverviewGraphDataPoint> DataPoints { get; set; }
 
 	/// <summary>
-	/// The virtual data points
+	/// the virtual data point list
 	/// </summary>
 	[DataMember(Name = "virtualDataPoints")]
-	public List<VirtualDataPoint> VirtualDataPoints { get; set; }
+	public List<GraphVirtualDataPoint> VirtualDataPoints { get; set; }
 
 	/// <summary>
 	/// ToString override

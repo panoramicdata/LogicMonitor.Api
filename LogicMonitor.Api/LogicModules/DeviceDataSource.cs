@@ -105,7 +105,7 @@ public class DeviceDataSource : IdentifiedItem
 	///    Graph summary info.  Note that not all fields are completed
 	/// </summary>
 	[DataMember(Name = "graphs")]
-	public List<DataSourceGraph> DataSourceGraphs { get; set; }
+	public List<DataSourceOverviewGraph> DataSourceGraphs { get; set; }
 
 	/// <summary>
 	///    The device Id
@@ -171,7 +171,7 @@ public class DeviceDataSource : IdentifiedItem
 	///    Graph summary info.  Note that not all fields are completed
 	/// </summary>
 	[DataMember(Name = "overviewGraphs")]
-	public List<DataSourceGraph> OverviewGraphs { get; set; }
+	public List<DataSourceOverviewGraph> OverviewGraphs { get; set; }
 
 	/// <summary>
 	///    AutoDiscovery is enabled

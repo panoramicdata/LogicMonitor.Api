@@ -4,40 +4,40 @@ namespace LogicMonitor.Api.LogicModules;
 /// A DataSource Graph DataPoint
 /// </summary>
 [DataContract]
-public class DataSourceGraphLine : NamedItem
+public class GraphLine
 {
 	/// <summary>
-	/// Color
+	/// the graph line color name
 	/// </summary>
-	[DataMember(Name = "color")]
-	public string Color { get; set; }
+	[DataMember(Name = "colorName")]
+	public string ColorName { get; set; }
 
 	/// <summary>
-	/// The datapoint id
+	/// the graph line data point id
 	/// </summary>
 	[DataMember(Name = "dataPointId")]
 	public int DataPointId { get; set; }
 
 	/// <summary>
-	/// The DataPoint name
+	/// the graph line data point name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
 	public string DataPointName { get; set; }
 
 	/// <summary>
-	/// Whether this is a virtual datapoint
+	/// if the graph line\u0027s data point is a virtual data point
 	/// </summary>
 	[DataMember(Name = "isVirtualDataPoint")]
 	public bool IsVirtualDataPoint { get; set; }
 
 	/// <summary>
-	/// The DataPoint Legend
+	/// the graph line legend
 	/// </summary>
 	[DataMember(Name = "legend")]
 	public string Legend { get; set; }
 
 	/// <summary>
-	/// The DataPoint Type
+	/// the graph line type, 1\u003dline|2\u003darea|3\u003dstack|4\u003dcolumn
 	/// </summary>
 	[DataMember(Name = "type")]
 	public string Type { get; set; }

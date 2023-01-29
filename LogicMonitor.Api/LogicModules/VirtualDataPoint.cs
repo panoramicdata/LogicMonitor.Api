@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 ///     A virtual data point
 /// </summary>
 [DataContract]
-public class VirtualDataPoint
+public class VirtualDataPoint : UndescribedNamedItem
 {
 	/// <summary>
 	///     The name

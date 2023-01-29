@@ -94,13 +94,13 @@ public class ConfigurationBackup
 	///     DataSource graphs
 	/// </summary>
 	[DataMember]
-	public List<DataSourceGraph> DataSourceGraphs { get; set; }
+	public List<DataSourceOverviewGraph> DataSourceGraphs { get; set; }
 
 	/// <summary>
 	///     DataSource overview graphs
 	/// </summary>
 	[DataMember]
-	public List<DataSourceGraph> DataSourceOverviewGraphs { get; set; }
+	public List<DataSourceOverviewGraph> DataSourceOverviewGraphs { get; set; }
 
 	/// <summary>
 	///     DataSourceDataPoint configurations

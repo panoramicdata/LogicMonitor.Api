@@ -9,7 +9,7 @@ namespace LogicMonitor.Api.Data;
 /// </summary>
 
 [DataContract]
-public class GraphVirtualDataPoint
+public class GraphVirtualDataPoint : UndescribedNamedItem
 {
 	/// <summary>
 	/// the graph virtual data point rpn expression

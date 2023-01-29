@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A DataSource DataPoint
 /// </summary>
 [DataContract]
-public class DataSourceDataPoint : NamedItem
+public class DataPoint : NamedItem
 {
 	/// <summary>
 	/// alert expression note
