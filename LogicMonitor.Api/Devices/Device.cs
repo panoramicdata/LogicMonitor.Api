@@ -7,7 +7,7 @@ namespace LogicMonitor.Api.Devices;
 public class Device : NamedItem, IHasCustomProperties, IPatchable
 {
 	/// <summary>
-	///    The autoBalanced CollectorGroup id
+	/// The Auto Balanced Collector Group id. 0 means not monitored by ABCG
 	/// </summary>
 	[DataMember(Name = "autoBalancedCollectorGroupId")]
 	public int AutoBalancedCollectorGroupId { get; set; }
@@ -74,14 +74,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public AwsState AwsState { get; set; }
 
 	/// <summary>
-	///    The device Azure status
+	/// The azure instance state (if applicable): 1 indicates that the instance is running, 2 indicates that the instance is stopped and 3 the instance is terminated.
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "azureState")]
 	public AzureState AzureState { get; set; }
 
 	/// <summary>
-	///    The device GCP status
+	/// The gcp instance state (if applicable): 1 indicates that the instance is running, 2 indicates that the instance is stopped and 3 the instance is terminated.
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "gcpState")]
@@ -108,14 +108,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public long? CreatedOnSeconds { get; set; }
 
 	/// <summary>
-	///    The Current Collector's ID
+	/// The id of the collector currently monitoring the device and discovering instances
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "currentCollectorId")]
 	public int CurrentCollectorId { get; set; }
 
 	/// <summary>
-	///    The Current Log Collector's ID
+	/// The id of the Log collector currently collecting logs.
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "currentLogCollectorId")]
@@ -148,10 +148,10 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public bool IsAlertingDisabled { get; set; }
 
 	/// <summary>
-	///    The display name
+	/// The display name of the device
 	/// </summary>
-	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	[DataMember(Name = "displayName", IsRequired = true)]
+	public string DisplayName { get; set; } = null!;
 
 	/// <summary>
 	///    Whether alerting is effectively enabled
@@ -215,7 +215,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public List<DeviceDataSourceInstanceSummary> Instances { get; set; }
 
 	/// <summary>
-	///    Whether the device's preferred log collector is configured
+	/// Indicates whether Preferred Log Collector is configured  (true) or not (false) for the device
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "isPreferredLogCollectorConfigured")]
@@ -242,27 +242,27 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public string Link { get; set; }
 
 	/// <summary>
-	///    The Log Collector's description
+	/// The description/name of the log collector for this device
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorDescription")]
 	public string? LogCollectorDescription { get; set; }
 
 	/// <summary>
-	///    The Log Collector's group's id
+	/// The id of the Collector Group associated with the device\u0027s log collection
 	/// </summary>
 	[DataMember(Name = "logCollectorGroupId")]
 	public int LogCollectorGroupId { get; set; }
 
 	/// <summary>
-	///    The Log Collector's group's name
+	/// The name of the Collector Group associated with the device\u0027s.
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorGroupName")]
 	public string? LogCollectorGroupName { get; set; }
 
 	/// <summary>
-	///    The Log Collector's ID
+	/// The Id of the netflow collector associated with the device
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorId")]
@@ -285,14 +285,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    The Netflow Collector description
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "netflowCollectorDescription")]
+	[DataMember(Name = "netflowCollectorDescription", IsRequired = false)]
 	public string NetflowCollectorDescription { get; set; }
 
 	/// <summary>
 	///    The Netflow Collector Group Id
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "netflowCollectorGroupId")]
+	[DataMember(Name = "netflowCollectorGroupId", IsRequired = false)]
 	public int NetflowCollectorGroupId { get; set; }
 
 	/// <summary>
@@ -305,7 +305,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	///    The preferred Collector Id
 	/// </summary>
-	[DataMember(Name = "preferredCollectorId")]
+	[DataMember(Name = "preferredCollectorId", IsRequired = true)]
 	public int PreferredCollectorId { get; set; }
 
 	/// <summary>
@@ -440,19 +440,19 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public int LoadBalanceCollectorGroupId { get; set; }
 
 	/// <summary>
-	///    Resource Ids
+	/// Any non-system properties (aside from system.categories) defined for this device
 	/// </summary>
 	[DataMember(Name = "resourceIds")]
 	public List<int>? ResourceIds { get; set; }
 
 	/// <summary>
-	///    Synthetics collector Ids
+	/// The list of ids of the collectors currently monitoring the resource and discovering instances
 	/// </summary>
 	[DataMember(Name = "syntheticsCollectorIds")]
 	public List<int>? SyntheticsCollectorIds { get; set; }
 
 	/// <summary>
-	///    Role privileges
+	/// The role privilege operation(s) for this device that are granted to the user who made the API request
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "rolePrivileges")]

@@ -35,6 +35,30 @@ public partial class LogicMonitorClient
 	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
 
+	/// <summary>
+	/// get netflow flows
+	/// </summary>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <param name="netflowFilter"></param>
+	/// <param name="id"></param>
+	/// <param name="fields"></param>
+	/// <param name="filter"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<FlowRecordPaginationResponse> GetNetflowFlowListAsync(
+		long start,
+		long end,
+		string? netflowFilter,
+		int id,
+		string? fields,
+		string? filter,
+		int size = 50,
+		int offset = 0,
+		CancellationToken cancellationToken = default
+		) => GetBySubUrlAsync<FlowRecordPaginationResponse>($"device/devices/{id}/flows", cancellationToken);
+
 	#region Device Group flows
 
 	/// <summary>

@@ -665,6 +665,18 @@ public partial class LogicMonitorClient
 		=> GetAllInternalAsync(filter, $"device/devices/{deviceId}/instances", cancellationToken);
 
 	/// <summary>
+	/// get top talkers graph
+	/// </summary>
+	public Task<GraphPlot> GetTopTalkersGraphAsync(
+		long start,
+		long end,
+		string? netflowFilter,
+		int id,
+		string? format,
+		string? keyword,
+		CancellationToken cancellationToken) => GetBySubUrlAsync<GraphPlot>($"device/devices/{id}/topTalkersGraph", cancellationToken);
+
+	/// <summary>
 	/// Get Alerts for a Device by ID
 	/// </summary>
 	/// <param name="deviceId">The Device ID</param>
