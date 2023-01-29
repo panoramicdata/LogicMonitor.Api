@@ -8,6 +8,18 @@ namespace LogicMonitor.Api.LogicModules;
 public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 {
 	/// <summary>
+	/// The alert status
+	/// </summary>
+	[DataMember(Name = "alertStatus")]
+	public AlertStatus AlertStatus { get; set; }
+
+	/// <summary>
+	/// The alert status priority
+	/// </summary>
+	[DataMember(Name = "alertStatusPriority")]
+	public int AlertStatusPriority { get; set; }
+
+	/// <summary>
 	/// Whether or not UNC Monitoring enabled for device
 	/// </summary>
 	[DataMember(Name = "isUNCInstance", IsRequired = false)]

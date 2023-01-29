@@ -37,6 +37,12 @@ public class AutoDiscoveryMethod
 	public string ClusterDimension { get; set; }
 
 	/// <summary>
+	/// The cluster dimension value
+	/// </summary>
+	[DataMember(Name = "clusterDimensionValue")]
+	public string ClusterDimensionValue { get; set; }
+
+	/// <summary>
 	/// The entity
 	/// </summary>
 	[DataMember(Name = "entity")]
@@ -191,6 +197,12 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "path")]
 	public string Path { get; set; }
+
+	/// <summary>
+	/// The period
+	/// </summary>
+	[DataMember(Name = "period")]
+	public string? Period { get; set; }
 
 	/// <summary>
 	/// The property

@@ -165,6 +165,12 @@ public class DataPointConfiguration : IdentifiedItem
 	[DataMember(Name = "collectionInterval")]
 	public int CollectionIntervalSeconds { get; set; }
 
+	/// <summary>
+	///     The post processor parameter
+	/// </summary>
+	[DataMember(Name = "postProcessorParam")]
+	public string? PostProcessorParameter { get; set; }
+
 	/// <inheritdoc />
 	public override string ToString()
 		=> $"{DataPointName} : Expression:{AlertExpression} GlobalExpression: {GlobalAlertExpr}{(DisableAlerting ? " (Disabled)" : string.Empty)}";
