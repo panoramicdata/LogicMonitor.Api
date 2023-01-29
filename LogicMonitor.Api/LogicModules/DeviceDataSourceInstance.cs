@@ -8,30 +8,31 @@ namespace LogicMonitor.Api.LogicModules;
 public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 {
 	/// <summary>
-	///     The Alerting disabled on
+	/// Whether or not UNC Monitoring enabled for device
 	/// </summary>
-	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertingDisabledOn { get; set; }
+	[DataMember(Name = "isUNCInstance", IsRequired = false)]
+	public bool IsUncInstance { get; set; }
 
 	/// <summary>
-	/// AlertDisableStatus
+	/// Whether or not monitoring is disabled for the instance
 	/// </summary>
-	[DataMember(Name = "alertDisableStatus")]
-	public AlertDisableStatus AlertDisableStatus { get; set; }
+	[DataMember(Name = "stopMonitoring", IsRequired = false)]
+	public bool StopMonitoring { get; set; }
 
 	/// <summary>
-	/// Alert Status
+	/// The id of the unique device-datasource the instance is associated with
 	/// </summary>
-	[DataMember(Name = "alertStatus")]
-	public AlertStatus AlertStatus { get; set; }
+	[DataMember(Name = "deviceDataSourceId", IsRequired = false)]
+	public int DeviceDataSourceId { get; set; }
 
 	/// <summary>
-	/// Alert Status Priority
+	/// The instance alias. This is the descriptive name of the instance, and should be unique for the device/datasource combination
 	/// </summary>
-	[DataMember(Name = "alertStatusPriority")]
-	public int AlertStatusPriority { get; set; }
+	[DataMember(Name = "displayName", IsRequired = true)]
+	public string DisplayName { get; set; }
 
 	/// <summary>
+	/// Any instance level properties assigned to the instance
 	/// Collector Id
 	/// </summary>
 	[DataMember(Name = "collectorId")]
@@ -40,7 +41,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// <summary>
 	/// Custom properties
 	/// </summary>
-	[DataMember(Name = "customProperties")]
+	[DataMember(Name = "customProperties", IsRequired = false)]
 	public List<Property> CustomProperties { get; set; }
 
 	/// <summary>
@@ -80,12 +81,6 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public string DeviceDisplayName { get; set; }
 
 	/// <summary>
-	/// The DeviceDataSource Id
-	/// </summary>
-	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
-
-	/// <summary>
 	/// The Device Id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
@@ -98,13 +93,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
-	/// Display Name
-	/// </summary>
-	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
-
-	/// <summary>
-	/// The Group Id
+	/// The id of the instance group associated with the datasource instance
 	/// </summary>
 	[DataMember(Name = "groupId")]
 	public int GroupId { get; set; }
@@ -121,11 +110,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	[DataMember(Name = "groupsDisabledThisSource")]
 	public List<DisabledGroup> GroupsDisabledThisSource { get; set; }
 
-	/// <summary>
-	/// groupsDisabledThisSource
-	/// </summary>
-	[DataMember(Name = "isUNCInstance")]
-	public bool? IsUncInstance { get; set; }
+
 
 	/// <summary>
 	/// The last collected time in seconds since the Epoch
@@ -145,11 +130,6 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	[DataMember(Name = "lockDescription")]
 	public bool LockDescription { get; set; }
 
-	/// <summary>
-	/// The lockDescription
-	/// </summary>
-	[DataMember(Name = "stopMonitoring")]
-	public bool StopMonitoring { get; set; }
 
 	/// <summary>
 	/// SDT Status
@@ -170,7 +150,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public string WildValue { get; set; }
 
 	/// <summary>
-	/// WildValue2
+	/// Only used for two dimensional active discovery. When used, during Active Discovery runs, the token ##WILDVALUE## is replaces with the value of ALIAS and the token ##WILDVALUE2## is replaced with the value of the second part alias. This value must be unique for the device/datasource/WILDVALUE combination
 	/// </summary>
 	[DataMember(Name = "wildValue2")]
 	public string WildValue2 { get; set; }
