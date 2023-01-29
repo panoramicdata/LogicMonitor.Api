@@ -22,7 +22,7 @@ public class DashboardCloneRequest : CloneRequest<Dashboard>
 	/// The widgetTokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> WidgetTokens { get; set; } = new List<Property>();
+	public List<EntityProperty> WidgetTokens { get; set; } = new List<EntityProperty>();
 
 	/// <summary>
 	/// Whether it is shareable

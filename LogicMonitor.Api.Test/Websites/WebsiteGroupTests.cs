@@ -90,8 +90,8 @@ public class WebsiteGroupTests : TestWithOutput
 			IsMonitoringDisabled = false,
 			ParentGroupFullPath = "",
 			ParentId = "1",
-			Properties = new List<Property>
-					{new Property {Name = "name", Value = "value"}},
+			Properties = new List<EntityProperty>
+					{new EntityProperty {Name = "name", Value = "value"}},
 		}, CancellationToken.None).ConfigureAwait(false);
 
 		try
@@ -103,7 +103,7 @@ public class WebsiteGroupTests : TestWithOutput
 			websiteGroup.StopMonitoring.Should().BeFalse();
 			websiteGroup.FullPath.Should().Be("Test Name");
 			websiteGroup.ParentId.Should().Be(1);
-			websiteGroup.CustomProperties.Should().BeEquivalentTo(new List<Property> { new Property { Name = "name", Value = "value" } });
+			websiteGroup.CustomProperties.Should().BeEquivalentTo(new List<EntityProperty> { new EntityProperty { Name = "name", Value = "value" } });
 		}
 		finally
 		{

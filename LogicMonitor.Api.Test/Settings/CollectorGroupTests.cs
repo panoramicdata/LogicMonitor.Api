@@ -52,9 +52,9 @@ public class CollectorGroupTests : TestWithOutput
 		{
 			Name = TestName,
 			Description = TestDescription,
-			CustomProperties = new List<Property>
+			CustomProperties = new List<EntityProperty>
 				{
-					new Property { Name = "a", Value = "b" }
+					new EntityProperty { Name = "a", Value = "b" }
 				}
 		}, CancellationToken.None).ConfigureAwait(false);
 		newCollectorGroup.Should().NotBeNull();

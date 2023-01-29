@@ -4,30 +4,24 @@ namespace LogicMonitor.Api.Flows;
 /// A Flow
 /// </summary>
 [DataContract]
-public class FlowEndpoint
+public class NetflowEndpoint : NetflowDataBase
 {
-	/// <summary>
-	/// The data type
-	/// </summary>
-	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
-
 	/// <summary>
 	/// IP address
 	/// </summary>
-	[DataMember(Name = "IP")]
-	public string Ip { get; set; }
+	[DataMember(Name = "IP", IsRequired = false)]
+	public string? Ip { get; set; }
 
 	/// <summary>
 	/// Source DNS
 	/// </summary>
-	[DataMember(Name = "dns")]
-	public string Dns { get; set; }
+	[DataMember(Name = "dns", IsRequired = false)]
+	public string? Dns { get; set; }
 
 	/// <summary>
 	/// Last seen in seconds since the Epoch
 	/// </summary>
-	[DataMember(Name = "lastSeen")]
+	[DataMember(Name = "lastSeen", IsRequired = false)]
 	public long LastSeenSeconds { get; set; }
 
 	/// <summary>
@@ -39,20 +33,20 @@ public class FlowEndpoint
 	/// <summary>
 	/// Usage in bytes
 	/// </summary>
-	[DataMember(Name = "usage")]
+	[DataMember(Name = "usage", IsRequired = false)]
 	public long UsageBytes { get; set; }
 
 	/// <summary>
 	/// Usage in percent
 	/// </summary>
-	[DataMember(Name = "percentUsage")]
+	[DataMember(Name = "percentUsage", IsRequired = false)]
 	public double PercentUsage { get; set; }
 
 	/// <summary>
 	/// Type
 	/// </summary>
-	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	[DataMember(Name = "type", IsRequired = false)]
+	public string? Type { get; set; }
 
 	/// <summary>
 	/// Returns a string that represents the current object.

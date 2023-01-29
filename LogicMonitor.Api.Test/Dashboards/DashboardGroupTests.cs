@@ -31,7 +31,7 @@ public class DashboardGroupTests : TestWithOutput
 				Description = "Created by Nuget test",
 				CustomProperties = new()
 				{
-					new Property
+					new EntityProperty
 					{
 						Name = "TestToken",
 						Value = "TestValue"

@@ -32,7 +32,7 @@ public class DeviceTests : TestWithOutput
 		const string deviceDescription = "Description";
 		const bool deviceDisableAlerting = true;
 		const bool deviceEnableNetflow = false;
-		var deviceProperty = new Property
+		var deviceProperty = new EntityProperty
 		{
 			Name = devicePropertyName,
 			Value = devicePropertyValue
@@ -88,7 +88,7 @@ public class DeviceTests : TestWithOutput
 				DisplayName = deviceDisplayName,
 				Link = deviceLink,
 				DeviceGroupIds = $"{deviceGroup.Id}",
-				CustomProperties = new List<Property>
+				CustomProperties = new List<EntityProperty>
 					{
 						deviceProperty
 					},
@@ -385,7 +385,7 @@ public class DeviceTests : TestWithOutput
 			device.CustomProperties.Remove(errantProperty);
 		}
 
-		device.CustomProperties.Add(new Property
+		device.CustomProperties.Add(new EntityProperty
 		{
 			Name = testPropertyName,
 			Value = testPropertyValue

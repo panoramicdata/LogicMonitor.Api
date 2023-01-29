@@ -41,8 +41,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The Device Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetDevicePropertiesAsync(int deviceId, CancellationToken cancellationToken)
-		=> GetAllAsync<Property>($"device/devices/{deviceId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetDevicePropertiesAsync(int deviceId, CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"device/devices/{deviceId}/properties", cancellationToken);
 
 	/// <summary>
 	///     Get device properties
@@ -304,8 +304,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceGroupId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetDeviceGroupPropertiesAsync(int deviceGroupId, CancellationToken cancellationToken)
-		=> GetAllAsync<Property>($"device/groups/{deviceGroupId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetDeviceGroupPropertiesAsync(int deviceGroupId, CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"device/groups/{deviceGroupId}/properties", cancellationToken);
 
 	/// <summary>
 	///     Tree node free search
@@ -663,6 +663,18 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<List<DeviceDataSourceInstance>> GetAllDeviceInstances(int deviceId, Filter<DeviceDataSourceInstance> filter, CancellationToken cancellationToken)
 		=> GetAllInternalAsync(filter, $"device/devices/{deviceId}/instances", cancellationToken);
+
+	/// <summary>
+	/// get top talkers graph
+	/// </summary>
+	public Task<GraphPlot> GetTopTalkersGraphAsync(
+		long start,
+		long end,
+		string? netflowFilter,
+		int id,
+		string? format,
+		string? keyword,
+		CancellationToken cancellationToken) => GetBySubUrlAsync<GraphPlot>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>
 	/// Get Alerts for a Device by ID

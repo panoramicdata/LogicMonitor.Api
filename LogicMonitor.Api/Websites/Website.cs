@@ -234,7 +234,7 @@ public class Website : NamedItem, IPatchable, IHasCustomProperties
 	/// The properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	/// The status

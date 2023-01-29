@@ -64,7 +64,7 @@ public class DeviceCreationDto : CreationDto<Device>
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	///    ToString override

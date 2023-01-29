@@ -148,7 +148,7 @@ public partial class LogicMonitorClient
 				case null:
 					break;
 				default:
-					websiteOrGroup.CustomProperties.Add(new Property
+					websiteOrGroup.CustomProperties.Add(new EntityProperty
 					{
 						Name = name,
 						Value = value
@@ -201,16 +201,16 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteId">The Website Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetWebsitePropertiesAsync(int websiteId, CancellationToken cancellationToken)
-		=> GetAllAsync<Property>($"website/websites/{websiteId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetWebsitePropertiesAsync(int websiteId, CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"website/websites/{websiteId}/properties", cancellationToken);
 
 	/// <summary>
 	///     Gets website Group properties
 	/// </summary>
 	/// <param name="websiteGroupId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetWebsiteGroupPropertiesAsync(int websiteGroupId, CancellationToken cancellationToken)
-		=> GetAllAsync<Property>($"website/groups/{websiteGroupId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetWebsiteGroupPropertiesAsync(int websiteGroupId, CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"website/groups/{websiteGroupId}/properties", cancellationToken);
 
 	/// <summary>
 	/// Get Alerts for a Website by ID

@@ -131,9 +131,9 @@ public class WebsiteTests : TestWithOutput
 			IsMonitoringDisabled = false,
 			ParentGroupFullPath = "",
 			ParentId = "1",
-			Properties = new List<Property>
+			Properties = new List<EntityProperty>
 			{
-				new Property {Name = "name", Value = "value"}
+				new EntityProperty {Name = "name", Value = "value"}
 			}
 			//TestLocation = new TestLocation { All = true, SmgIds = new List<int> { 1, 2, 4, 3, 5, 6 } }
 		}, CancellationToken.None).ConfigureAwait(false);
@@ -258,9 +258,9 @@ public class WebsiteTests : TestWithOutput
 		PollingIntervalMinutes = 1.ToString(CultureInfo.InvariantCulture),
 		Type = WebsiteType.WebCheck,
 		HttpSchema = HttpSchema.Https,
-		WebsiteProperties = new List<Property>
+		WebsiteProperties = new List<EntityProperty>
 			{
-						new Property
+						new EntityProperty
 						{
 							Name = "test",
 							Value = "test"

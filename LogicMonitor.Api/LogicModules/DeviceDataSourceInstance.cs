@@ -66,19 +66,19 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties", IsRequired = false)]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; }
 
 	/// <summary>
 	/// Any instance level system properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "systemProperties", IsRequired = false)]
-	public List<Property> SystemProperties { get; set; }
+	public List<EntityProperty> SystemProperties { get; set; }
 
 	/// <summary>
 	/// Any instance level auto properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "autoProperties", IsRequired = false)]
-	public List<Property> AutoProperties { get; set; }
+	public List<EntityProperty> AutoProperties { get; set; }
 
 	/// <summary>
 	/// The id of the datasource definition that the instance represents
