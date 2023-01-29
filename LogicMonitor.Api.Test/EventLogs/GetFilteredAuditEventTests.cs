@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 
 namespace LogicMonitor.Api.Test.EventLogs;
-public class GetFilteredAudiEventTests : TestWithOutput
+public class GetFilteredAuditEventTests : TestWithOutput
 {
-	public GetFilteredAudiEventTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
+	public GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
 	}
 

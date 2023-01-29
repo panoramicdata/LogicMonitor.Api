@@ -14,6 +14,18 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public AlertStatus AlertStatus { get; set; }
 
 	/// <summary>
+	/// The alert disabled status
+	/// </summary>
+	[DataMember(Name = "alertDisableStatus")]
+	public AlertDisableStatus AlertDisableStatus { get; set; }
+
+	/// <summary>
+	/// The alert disabled on
+	/// </summary>
+	[DataMember(Name = "alertingDisabledOn")]
+	public object? AlertDisabledOn { get; set; }
+
+	/// <summary>
 	/// The alert status priority
 	/// </summary>
 	[DataMember(Name = "alertStatusPriority")]
