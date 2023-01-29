@@ -8,6 +8,30 @@ namespace LogicMonitor.Api.LogicModules;
 public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 {
 	/// <summary>
+	/// The alert status
+	/// </summary>
+	[DataMember(Name = "alertStatus")]
+	public AlertStatus AlertStatus { get; set; }
+
+	/// <summary>
+	/// The alert disabled status
+	/// </summary>
+	[DataMember(Name = "alertDisableStatus")]
+	public AlertDisableStatus AlertDisableStatus { get; set; }
+
+	/// <summary>
+	/// The alert disabled on
+	/// </summary>
+	[DataMember(Name = "alertingDisabledOn")]
+	public object? AlertDisabledOn { get; set; }
+
+	/// <summary>
+	/// The alert status priority
+	/// </summary>
+	[DataMember(Name = "alertStatusPriority")]
+	public int AlertStatusPriority { get; set; }
+
+	/// <summary>
 	/// Whether or not UNC Monitoring enabled for device
 	/// </summary>
 	[DataMember(Name = "isUNCInstance", IsRequired = false)]
@@ -33,6 +57,13 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 
 	/// <summary>
 	/// Any instance level properties assigned to the instance
+	/// Collector Id
+	/// </summary>
+	[DataMember(Name = "collectorId")]
+	public int? CollectorId { get; set; }
+
+	/// <summary>
+	/// Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties", IsRequired = false)]
 	public List<Property> CustomProperties { get; set; }

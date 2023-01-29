@@ -25,7 +25,9 @@ public class OpsNotesTests : TestWithOutput
 
 		await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
 
-		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>(CancellationToken.None).ConfigureAwait(false);
+		var allOpsNotes = await LogicMonitorClient
+			.GetAllAsync<OpsNote>(CancellationToken.None)
+			.ConfigureAwait(false);
 
 		// Make sure that some are returned
 		allOpsNotes.Should().NotBeNullOrEmpty();

@@ -777,6 +777,12 @@ public enum DeviceGroupType
 	SaasOffice365 = 127,
 
 	/// <summary>
+	///     LogPipeLineGroup
+	/// </summary>
+	[EnumMember(Value = "LogPipeLineGroup")]
+	LogPipeLineGroup = 128,
+
+	/// <summary>
 	///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
 	///     This entry provides a workaround.
 	/// </summary>

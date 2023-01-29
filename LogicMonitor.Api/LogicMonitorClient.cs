@@ -708,8 +708,8 @@ public partial class LogicMonitorClient : IDisposable
 				break;
 		}
 
-		Statistics.DataTransferUplinkBytes += requestMessage.Content?.Headers.ContentLength ?? 0;
-		Statistics.DataTransferDownlinkBytes += response.Content?.Headers.ContentLength ?? 0;
+		Statistics.DataTransferUplinkBytes += requestMessage?.Content?.Headers.ContentLength ?? 0;
+		Statistics.DataTransferDownlinkBytes += response?.Content?.Headers.ContentLength ?? 0;
 	}
 
 	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
