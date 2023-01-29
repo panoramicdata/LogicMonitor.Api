@@ -1,47 +1,4 @@
-Devices
-		NetFlowRecord
-			"srcASN":{"format":"int64","readOnly":true,"type":"integer"}
-			"srcAsnName":{"readOnly":true,"type":"string"}
-			"dstASN":{"format":"int64","readOnly":true,"type":"integer"}
-			"destAsnName":{"readOnly":true,"type":"string"}
-			
-		DeviceDataSourceInstanceConfig
-			"instanceName":{"description":"device datasource instance name","readOnly":true,"type":"string"}
-			"deviceDataSourceId":{"format":"int32","description":"device datasource id","readOnly":true,"type":"integer"}
-			"excludeLines":{"description":"advanceDiffChecker","readOnly":true,"type":"array","items":{"format":"int32","type":"integer"}}
-			"configStatus":{"format":"int32","description":"Configuration file collect status","readOnly":true,"type":"integer"}
-			"version":{"format":"int64","description":"config version","readOnly":true,"type":"integer"}
-			"deviceId":{"format":"int32","description":"device id","readOnly":true,"type":"integer"}
-			"deltaConfig":{"description":"Configuration file diff","readOnly":true,"type":"array","items":{"$ref":"#/definitions/DeviceDataSourceInstanceConfigDiff"}}
-			"deviceDisplayName":{"description":"device display name","readOnly":true,"type":"string"}
-			"dataSourceName":{"description":"datasource name","readOnly":true,"type":"string"}
-			"alerts":{"description":"Alerts associated to this configuration file","readOnly":true,"type":"array","items":{"$ref":"#/definitions/DeviceDataSourceInstanceConfigAlert"}}
-			"dataSourceId":{"format":"int32","description":"configsource id","readOnly":true,"type":"integer"}
-			"instanceId":{"format":"int32","description":"device datasource instance id","readOnly":true,"type":"integer"}
-			"configErrMsg":{"description":"Configuration file collect error message","readOnly":true,"type":"string"}
-			"changeStatus":{"description":"Configuration file change status, if the first configuration then it is Added, else Changed, values can be : Add|Change ","readOnly":true,"type":"string"}
-			"id":{"description":"The id of the datasource","readOnly":true,"type":"string"}
-			"pollTimestamp":{"format":"int64","description":"datasource poll timestamp in milliseconds","readOnly":true,"type":"integer"}
-			
-			
-		DeviceDataSourceInstanceGroup
-			"deviceDataSourceId":{"format":"int32","description":"the device datasource id","readOnly":true,"type":"integer"}
-			"createOn":{"format":"int64","description":"time when the group was created.","readOnly":true,"type":"integer"}
-			"id":{"format":"int32","description":"the instance group id","readOnly":true,"type":"integer"}
-			"deviceId":{"format":"int32","description":"The id of associated device","readOnly":true,"type":"integer"}
-			"deviceDisplayName":{"description":"The display name of the device","readOnly":true,"type":"string"}
-
-		DeviceDataSourceInstanceData
-			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
-			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}
-			"nextPageParams":{"description":"the next page parameters","readOnly":true,"type":"string"}
-			"dataSourceName":{"description":"datasource name","readOnly":true,"type":"string"}
-
-		DeviceDataSourceInstanceConfigDiff
-			"rowNo":{"format":"int32","description":"diff row number","readOnly":true,"type":"integer"}
-			"type":{"description":"diff type, values can be : add|remove","readOnly":true,"type":"string"}
-			"content":{"description":"configuration content","readOnly":true,"type":"string"}
-			
+Devices		
 		DeviceGroupDataSourceDataPointConfig
 			"enableAnomalyAlertSuppression":{"type":"string"}
 			"criticalAdAdvSetting":{"type":"string"}

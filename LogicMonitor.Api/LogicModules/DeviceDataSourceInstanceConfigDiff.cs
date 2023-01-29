@@ -1,26 +1,26 @@
 namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// A ConfigSource's delta config
+/// DeviceDataSourceInstanceConfigDiff
 /// </summary>
 [DataContract]
-public class ConfigSourceDeltaConfig
+public class DeviceDataSourceInstanceConfigDiff
 {
 	/// <summary>
-	/// The type
+	/// diff type, values can be : add|remove
 	/// </summary>
 	[DataMember(Name = "type")]
 	public string Type { get; set; }
 
 	/// <summary>
-	/// The content
+	/// configuration content
 	/// </summary>
 	[DataMember(Name = "content")]
 	public string Content { get; set; }
 
 	/// <summary>
-	/// The row index
+	/// diff row number
 	/// </summary>
 	[DataMember(Name = "rowNo")]
-	public string RowIndex { get; set; }
+	public int RowNo { get; set; }
 }

@@ -4,34 +4,28 @@ namespace LogicMonitor.Api.Data;
 /// Time series graph data
 /// </summary>
 [DataContract]
-public class DeviceDataSourceInstanceTimeSeriesData
+public class DeviceDataSourceInstanceData
 {
 	/// <summary>
-	/// The DataSource name
+	/// datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
 	public string DataSourceName { get; set; }
 
 	/// <summary>
-	/// The DataPoints
-	/// </summary>
-	[DataMember(Name = "dataPoints")]
-	public List<string> DataPoints { get; set; }
-
-	/// <summary>
-	/// The Values
+	/// datapoint values 2-D list
 	/// </summary>
 	[DataMember(Name = "values")]
 	public List<List<float>> Values { get; set; }
 
 	/// <summary>
-	/// The Time
+	/// timestamp list
 	/// </summary>
 	[DataMember(Name = "time")]
 	public List<long> Time { get; set; }
 
 	/// <summary>
-	/// The NextPageParams
+	/// the next page parameters
 	/// </summary>
 	[DataMember(Name = "nextPageParams")]
 	public string NextPageParams { get; set; }

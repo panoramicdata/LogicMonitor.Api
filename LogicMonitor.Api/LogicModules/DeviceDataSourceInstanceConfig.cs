@@ -4,100 +4,94 @@ namespace LogicMonitor.Api.LogicModules;
 ///    A DeviceDataSourceInstance
 /// </summary>
 [DataContract]
-public class DeviceConfigSourceInstanceConfig : StringIdentifiedItem
+public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 {
 	/// <summary>
-	///    Alert Disable Status
-	/// </summary>
-	[DataMember(Name = "alertDisableStatus")]
-	public AlertDisableStatus AlertDisableStatus { get; set; }
-
-	/// <summary>
-	///    Alert Disable Status
+	/// Alerts associated to this configuration file
 	/// </summary>
 	[DataMember(Name = "alerts")]
-	public List<object> Alerts { get; set; } // TODO - complete
+	public List<DeviceDataSourceInstanceConfigAlert> Alerts { get; set; }
 
 	/// <summary>
-	///    Config
+	/// Configuration file content
 	/// </summary>
 	[DataMember(Name = "config")]
 	public string Config { get; set; }
 
 	/// <summary>
-	///    The change status
+	/// Configuration file change status, if the first configuration then it is Added, else Changed, values can be : Add|Change
 	/// </summary>
 	[DataMember(Name = "changeStatus")]
 	public string ChangeStatus { get; set; }
 
 	/// <summary>
-	///    ConfigStatus
+	/// Configuration file collect status
 	/// </summary>
 	[DataMember(Name = "configStatus")]
 	public int ConfigStatus { get; set; }
 
 	/// <summary>
-	///    Config error message
+	/// Configuration file collect error message
 	/// </summary>
 	[DataMember(Name = "configErrMsg")]
 	public string ConfigErrorMessage { get; set; }
 
 	/// <summary>
-	///    The ConfigSource Id
+	/// configsource id
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
 	public int DataSourceId { get; set; }
 
 	/// <summary>
-	///    The ConfigSource Name
+	/// datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
 	public string DataSourceName { get; set; }
 
 	/// <summary>
-	///    The delta config
+	/// Configuration file diff
 	/// </summary>
 	[DataMember(Name = "deltaConfig")]
-	public List<ConfigSourceDeltaConfig> DeltaConfig { get; set; }
+	public List<DeviceDataSourceInstanceConfigDiff> DeltaConfig { get; set; }
 
 	/// <summary>
-	///    The DeviceConfigSourceId
+	/// device datasource id
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
 	public int DeviceDataSourceId { get; set; }
 
 	/// <summary>
-	///    The device DisplayName
+	/// device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string DeviceDisplayName { get; set; }
 
 	/// <summary>
-	///    The Device Id
+	/// device id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int? DeviceId { get; set; }
 
 	/// <summary>
-	///    The lines to exclude
+	/// advanceDiffChecker
 	/// </summary>
 	[DataMember(Name = "excludeLines")]
-	public List<object> ExcludeLines { get; set; } = Enumerable.Empty<object>().ToList();
+	public List<int> ExcludeLines { get; set; } = Enumerable.Empty<int>().ToList();
 
 	/// <summary>
-	///    The InstanceId
+	/// device datasource instance id
 	/// </summary>
 	[DataMember(Name = "instanceId")]
 	public int InstanceId { get; set; }
 
 	/// <summary>
-	///    The instance name
+	/// device datasource instance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
 	public string InstanceName { get; set; }
 
 	/// <summary>
-	///    Poll timestamp
+	/// datasource poll timestamp in milliseconds
 	/// </summary>
 	[DataMember(Name = "pollTimestamp")]
 	public long? PollTimestampUtc { get; set; }
@@ -109,7 +103,7 @@ public class DeviceConfigSourceInstanceConfig : StringIdentifiedItem
 	public DateTime? PollUtc => PollTimestampUtc?.ToDateTimeUtc();
 
 	/// <summary>
-	///    The version
+	/// config version
 	/// </summary>
 	[DataMember(Name = "version")]
 	public string Version { get; set; }
