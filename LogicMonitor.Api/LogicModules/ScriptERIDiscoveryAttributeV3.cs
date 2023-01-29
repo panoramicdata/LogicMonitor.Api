@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.LogicModules;
+﻿namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
 /// ScriptERIDiscoveryAttributeV3
@@ -44,6 +40,6 @@ public class ScriptERIDiscoveryAttributeV3 : NamedItem
 	/// <summary>
 	/// windows script command line
 	/// </summary>
-	[DataMember(Name = "windowsCmdline")]
+	[DataMember(Name = "winCmdline")]
 	public string? WindowsCmdLine { get; set; }
 }

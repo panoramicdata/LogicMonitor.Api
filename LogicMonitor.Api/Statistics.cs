@@ -64,5 +64,9 @@ public class Statistics : IdentifiedItem
 	/// The number of other calls
 	/// </summary>
 	public int ApiCallOtherCount { get; internal set; }
+
+	/// <summary>
+	/// The number of PATCH calls
+	/// </summary>
 	public int ApiCallPatchCount { get; internal set; }
 }

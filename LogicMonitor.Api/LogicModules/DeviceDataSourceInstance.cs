@@ -32,6 +32,12 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public int AlertStatusPriority { get; set; }
 
 	/// <summary>
+	/// Collector Id
+	/// </summary>
+	[DataMember(Name = "collectorId")]
+	public int? CollectorId { get; set; }
+
+	/// <summary>
 	/// Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
