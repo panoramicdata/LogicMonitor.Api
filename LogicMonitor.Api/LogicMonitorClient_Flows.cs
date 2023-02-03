@@ -7,7 +7,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Flow>> GetFlows(FlowRequest flowRequest, CancellationToken cancellationToken)
+	public Task<Page<Flow>> GetFlowsPageAsync(FlowRequest flowRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>

@@ -131,7 +131,7 @@ public class FlowTests : TestWithOutput
 	public async Task GetFlows()
 	{
 		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
+		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
@@ -167,7 +167,7 @@ public class FlowTests : TestWithOutput
 	public async Task GetZoomTimeFlows()
 	{
 		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var flows = await LogicMonitorClient.GetFlows(new FlowsRequest
+		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
 			DeviceId = device.Id,
 			TimePeriod = TimePeriod.Zoom,
