@@ -1,10 +1,4 @@
 EventSources
-	"RestAwsRdsPerformanceInsightsEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"num":{"format":"int32","description":"Maximum number of items to return","type":"integer"},"dimension":{"description":"The dimension to query","type":"string"}}}]}
-	"RestAwsHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]},
-	"RestAzureAdvisorEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
-	"IPMIEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","required":["checkInterval"],"properties":{"checkInterval":{"format":"int32","description":"impmi check interval","type":"integer"}}}]}
-	"RestAwsTrustedAdvisorEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
-	"RestAzureResourceLogAnalyticsWorkspacesSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"query":{"description":"Azure Log Analytics Workspaces Query","type":"string"},"columnInstanceName":{"description":"Column Instance Name","type":"string"}}}]}
 	"RestAzureResourceHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
 	"AzureEmergingIssueEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
 

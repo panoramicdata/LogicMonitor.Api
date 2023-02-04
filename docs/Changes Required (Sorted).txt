@@ -1,27 +1,3 @@
-EventSources
-		LogFile
-			"originId":{"type":"string"}
-			"matches":{"description":"The regex or plain text to look for in the file and trigger alert if found","type":"array","items":{"$ref":"#/definitions/MatchPattern"}}
-		EventSource
-			"suppressDuplicatesES":{"description":"Whether or not duplicate alerts have to be suppressed","type":"boolean"}
-			"alertLevel":{"description":"The default alert level: warn | error | critical | doMapping","type":"string"}
-			"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"}
-			"collector":{"description":"The EventSource collector type: wineventlog | syslog | snmptrap | echo | logfile | scriptevent | awsrss | azurerss | azureadvisor | gcpatom | awsrdspievent | azureresourcehealthevent | azureemergingissue | azureloganalyticsworkspacesevent | awstrustedadvisor | awshealth | ipmievent","type":"string"}
-			"auditVersion":{"format":"int64","description":"The auditVersion of the EventSource","readOnly":true,"type":"integer"}
-			"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"}
-			"alertBodyTemplate":{"description":"The alert message body for the EventSource","type":"string"}
-			"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"}
-		LogFileEventSource
-			"logFiles":{"description":"log files","type":"array","items":{"$ref":"#/definitions/LogFile"}}
-		RestEventSourceFilter
-			"required":["comment","name","operator","value"]
-			"name":{"description":"filter name","type":"string"}
-			"comment":{"description":"filter comment","type":"string"}
-			"id":{"format":"int32","description":"filter id","readOnly":true,"type":"integer"}
-			"value":{"description":"filter value","type":"string"}
-			"operator":{"description":"filter operator","type":"string"}
-Flows
-Functions
 HistorySdts
 		SDT
 			"sdtType":{"description":"the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek","type":"string","example":"oneTime"}

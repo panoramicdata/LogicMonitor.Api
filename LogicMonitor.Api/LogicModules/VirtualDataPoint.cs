@@ -7,14 +7,8 @@ namespace LogicMonitor.Api.LogicModules;
 public class VirtualDataPoint : UndescribedNamedItem
 {
 	/// <summary>
-	///     The name
-	/// </summary>
-	[DataMember(Name = "name")]
-	public string Name { get; set; }
-
-	/// <summary>
 	///     The calculation
 	/// </summary>
-	[DataMember(Name = "rpn")]
-	public string Rpn { get; set; }
+	[DataMember(Name = "rpn", IsRequired = false)]
+	public string Rpn { get; set; } = string.Empty;
 }

@@ -26,6 +26,6 @@ internal class AlertSdtConverter : JsonCreationConverter<AlertSdt>
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		=> throw new NotSupportedException();
 }
