@@ -1,11 +1,14 @@
 Devices
-	"DeviceProperty":{"type":"object","required":["name","value"],"properties":
-	{"name":{"description":"The resource property name","type":"string"},
-	"value":{"description":"The resource property value","type":"string"}}}
-	"NbarApplicationNames":{"type":"object","properties":{"operator":{"type":"string"},"applicationName":{"type":"string"}}}
-	"NetflowFilters":{"type":"object","properties":{"nodeB":{"type":"string"},"qosType":{"type":"string"},"deviceInterfaces":{"type":"array","items":{"$ref":"#/definitions/InterfacesFilter"}},"ports":{"type":"string"},"protocol":{"type":"string"},"ipVersion":{"type":"string"},"netflowDevices":{"description":"Netlow filter netflowDevices expression","type":"array","items":{"$ref":"#/definitions/NetflowDeviceInfo"}},"top":{"format":"int32","type":"integer"},"appType":{"type":"string"},"nbarApplicationNames":{"type":"array","items":{"$ref":"#/definitions/NbarApplicationNames"}},"nodeA":{"type":"string"},"conversation":{"type":"array","items":{"$ref":"#/definitions/ConversationFilter"}},"ifNames":{"type":"array","items":{"type":"string"}},"direction":{"type":"string"}}}
-	"NetflowBgpTable":{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"type":"object","properties":{"percentUsage":{"format":"double","readOnly":true,"type":"number"},"asNumber":{"format":"int64","readOnly":true,"type":"integer"},"usage":{"format":"double","readOnly":true,"type":"number"},"description":{"readOnly":true,"type":"string"}}}]}
-	"NetflowNbarApplication":{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"type":"object","properties":{"percentUsage":{"format":"double","readOnly":true,"type":"number"},"usage":{"format":"double","readOnly":true,"type":"number"},"name":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"applicationTag":{"format":"int64","readOnly":true,"type":"integer"}}}]}
+	"NetflowNbarApplication":
+	{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},
+	{"type":"object","properties":{
+
+	"percentUsage":{"format":"double","readOnly":true,"type":"number"},
+	"usage":{"format":"double","readOnly":true,"type":"number"},
+	"name":{"readOnly":true,"type":"string"},
+	"type":{"readOnly":true,"type":"string"},
+	"applicationTag":{"format":"int64","readOnly":true,"type":"integer"}}}]}
+
 	"InterfaceType":{"type":"object","properties":{"ifPosition":{"type":"string"},"ifId":{"format":"int64","type":"integer"}}}
 	"NetflowAlertModulesCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"typeOfAlert":{"type":"string"},"thresholdValueUnit":{"type":"string"},"netflowFilters":{"type":"string"},"trafficType":{"type":"string"},"alertEnable":{"type":"boolean"},"topThresholdExpression":{"type":"string"},"dataDuration":{"type":"string"},"enabled":{"type":"boolean"}}}]}
 	"NetflowPort":{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"type":"object","properties":{"percentUsage":{"format":"double","readOnly":true,"type":"number"},"port":{"format":"int32","readOnly":true,"type":"integer"},"usage":{"format":"double","readOnly":true,"type":"number"},"description":{"readOnly":true,"type":"string"}}}],"x-discriminator-value":"port"}
