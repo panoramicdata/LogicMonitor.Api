@@ -78,7 +78,7 @@ NetscanPolicies
 			"collectorDescription":{"description":"The description of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod CollectorA"}
 			"nextStartEpoch":{"format":"int64","description":"The epoch of the next start time of the scan - displayed as 0 if the scan does not run on a schedule","readOnly":true,"type":"integer","example":1.53635832E9}
 			"id":{"format":"int32","description":"The ID of the Netscan Policy","readOnly":true,"type":"integer","example":208.0}
-			
+
 		ScriptNetscan
 			"defaultGroupFullPath":{"description":"The full path of the default group to add discovered devices to","readOnly":true,"type":"string","example":"lm/prod/servers"}
 		Ec2Netscan
@@ -96,7 +96,7 @@ RecycleBin
 Reports
 		SLAReport
 			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
-			
+
 		Recipient
 			"method":{"description":"EMAIL|SMEMAIL|VOICE|SMS, Recipient method for each type\n            group: \"method\" not used\n            arbitrary: the method should be email.\n            admin: the method  Should be email, smsEmail, voice, sms, or defaultMethod;\n","type":"string","example":"EMAIL"}
 			"contact":{"description":"contact details, email address or phone number","type":"string"}
@@ -131,13 +131,13 @@ Settings
 			"userPermission":{"description":"The permission of current role with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
 			"description":{"description":"The description of the role","type":"string","example":"Administrator can do everything, including security-sensitive actions"}
 			"roleGroupId":{"format":"int32","description":"The group Id of the role","type":"integer","example":3.0}
-			
+
 		Admin
 			"viewPermission":{"description":"The account tabs that will be visible to the user","type":"object","example":"{\n\n\"Resources\" : true,\n\"Websites\" : true,\n\"Reports\" : true,\n\"Dashboards\" : true,\n\"Alerts\" : true,\n\"Settings\" : true,\n\"Maps\" : true,\n\"Logs\" : true,\n\"Traces\" : true\n}"}
 			"adminGroupIds":{"description":"The Id(s) of the groups the admin is in, where multiple group ids are comma separated","type":"array","items":{"format":"int32","type":"integer"},"example":"[1,2,3]"}
 			"userPermission":{"description":"The permission of current user with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
 			"tenantId":{"format":"int32","description":"The tenant id of the user","readOnly":true,"type":"integer","example":2.0}
-			
+
 		APIToken
 			"userPermission":{"description":"The permission of current apiToken with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
 		Authentication
@@ -179,7 +179,7 @@ Websites
 		Website
 			"type":{"description":"pingcheck | webcheck\nThe type of the service","type":"string","example":"webcheck"}
 			"rolePrivileges":{"description":"The role privilege operation(s) for this website that are granted to the user who made the API request","readOnly":true,"type":"array","items":{"type":"string"}}
-			
+
 		WebsiteGroup
 			"testLocation":{"description":"An object that indicates the websites locations.\ne.g. {\u0027all\u0027: false, smgId:[1,2,3], collectorIds:[14,16]}","$ref":"#/definitions/WebsiteLocation"}
 			"hasWebsitesDisabled":{"description":"Indicates if there are websites disabled in this group","readOnly":true,"type":"boolean"}
@@ -188,7 +188,7 @@ Websites
 			"numOfDirectSubGroups":{"format":"int32","description":"The number of direct website groups in this group (excluding those in subgroups)","readOnly":true,"type":"integer"}
 			"numOfWebsites":{"format":"int32","description":"The number of websites in the service group, including the websites in sub groups","readOnly":true,"type":"integer"}
 			"properties":{"description":"The website folder properties","type":"array","items":{"$ref":"#/definitions/NameAndValue"}}
-			
+
 		WebsiteCollectorInfo
 			properties":{"hostname":{"description":"The hostname of the collector"
 			"collectorGroupName":{"description":"The group name of the group the collector is present in"
@@ -196,13 +196,13 @@ Websites
 			"description":{"description":"The description of the collector"
 			"id":{"format":"int32","description":"The collector id"
 			"status":{"description":"The status of the collector","readOnly":true,"type":"string"}}},
-			
+
 		WebsiteLocation
 			"all":{"description":"This field only for the SiteMonitor Groups, does not include Internal Service Groups","type":"boolean","example":"true"}
 			"collectorIds":{"description":"The Internal Service Groups Ids","type":"array","items":{"format":"int32","type":"integer"}}
 			"collectors":{"description":"The collector info of the services","type":"array","items":{"$ref":"#/definitions/WebsiteCollectorInfo"}}
 			"smgIds":{"description":"The SiteMonitor Groups Ids","type":"array","items":{"format":"int32","type":"integer"},"example":"[1, 2, 4, 3, 5, 6]"}
-			
+
 		WebsiteCheckpointRawData
 			"values":{"description":"datapoint values 2-D list","readOnly":true,"type":"array","items":{"type":"array","items":{"type":"object"}}}
 			"time":{"description":"timestamp list","readOnly":true,"type":"array","items":{"format":"int64","type":"integer"}}

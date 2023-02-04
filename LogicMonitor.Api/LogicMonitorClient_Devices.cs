@@ -490,7 +490,7 @@ public partial class LogicMonitorClient
 		{
 			var jObject = await GetBySubUrlAsync<JObject>($"device/devices/{deviceId}/fetchProcessServiceTask/{taskId}", cancellationToken).ConfigureAwait(false);
 			var error = jObject.ToObject<ProcessServiceTaskResultError>();
-			if (error.ErrorMessage is null)
+			if (error is not null && error.ErrorMessage is null && jObject is not null)
 			{
 				return jObject.ToObject<Page<DeviceProcess>>();
 			}

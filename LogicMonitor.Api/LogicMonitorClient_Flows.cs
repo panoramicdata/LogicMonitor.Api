@@ -15,8 +15,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowPortsRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowPort>> GetFlowPortsPageAsync(FlowPortsRequest flowPortsRequest, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowPort>>(flowPortsRequest.GetQueryString(), cancellationToken);
+	public Task<Page<NetflowPort>> GetFlowPortsPageAsync(FlowPortsRequest flowPortsRequest, CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<NetflowPort>>(flowPortsRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
 	///    Get Flows using a FlowPortRequest

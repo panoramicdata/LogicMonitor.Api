@@ -59,7 +59,7 @@ public partial class LogicMonitorClient
 	public async Task<string> GetDataSourceXmlAsync(
 		int dataSourceId,
 		CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<XmlResponse>($"setting/datasources/{dataSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+		=> (await GetBySubUrlAsync<XmlResponse>($"setting/datasources/{dataSourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
 	///     Gets a list of all overview graphs for a DataSource.
@@ -395,7 +395,7 @@ public partial class LogicMonitorClient
 		LogicModuleType logicModuleType,
 		int rootDeviceGroupId,
 		List<int> logicModuleIds,
-		string instanceProperty = null,
+		string? instanceProperty = null,
 		Regex? instancePropertyValueRegex = null,
 		Filter<InstanceProperty>? filter = null,
 		CancellationToken cancellationToken = default)
@@ -455,11 +455,13 @@ public partial class LogicMonitorClient
 						foreach (var deviceDataSourceInstance in thisDeviceDataSourceInstances)
 						{
 							var instanceCustomProperties = await GetAllDeviceDataSourceInstanceProperties(deviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
-							if (!instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
+							if (instancePropertyValueRegex is not null)
 							{
-								continue;
+								if (!instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
+								{
+									continue;
+								}
 							}
-
 							deviceDataSourceInstances.Add(deviceDataSourceInstance);
 						}
 					}
@@ -647,4 +649,17 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken) => PostAsync<Audit, DataSource>(body,
 			$"setting/datasources/{id}/audit",
 			cancellationToken);
+
+	/// <summary>
+	/// collect a config for a device
+	/// </summary>
+	/// <param name="deviceId">The deviceId</param>
+	/// <param name="hdsId">The hdsId</param>
+	/// <param name="instanceId">The instanceId</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<object> CollectDeviceConfigSourceConfig(
+		int deviceId,
+		int hdsId,
+		int instanceId,
+		CancellationToken cancellationToken) => PostAsync<object?, object>(null, $"device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection", cancellationToken);
 }

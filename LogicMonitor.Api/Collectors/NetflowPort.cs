@@ -4,36 +4,30 @@ namespace LogicMonitor.Api.Flows;
 /// A flow port
 /// </summary>
 [DataContract]
-public class FlowPort
+public class NetflowPort : NetflowDataBase
 {
 	/// <summary>
-	/// The data type
+	/// Description
 	/// </summary>
-	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	[DataMember(Name = "description", IsRequired = false)]
+	private string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Description
 	/// </summary>
-	[DataMember(Name = "description")]
-	private string Description { get; set; }
-
-	/// <summary>
-	/// Description
-	/// </summary>
-	[DataMember(Name = "port")]
+	[DataMember(Name = "port", IsRequired = false)]
 	private int Port { get; set; }
 
 	/// <summary>
 	/// Percent Usage
 	/// </summary>
-	[DataMember(Name = "percentUsage")]
+	[DataMember(Name = "percentUsage", IsRequired = false)]
 	private double PercentUsage { get; set; }
 
 	/// <summary>
 	/// Usage in bytes
 	/// </summary>
-	[DataMember(Name = "usage")]
+	[DataMember(Name = "usage", IsRequired = false)]
 	private long UsageBytes { get; set; }
 
 	/// <summary>
