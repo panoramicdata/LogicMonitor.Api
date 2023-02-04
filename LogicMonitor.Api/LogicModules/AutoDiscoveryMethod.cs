@@ -202,7 +202,7 @@ public class AutoDiscoveryMethod
 	/// The period
 	/// </summary>
 	[DataMember(Name = "period")]
-	public string? Period { get; set; }
+	public string Period { get; set; }
 
 	/// <summary>
 	/// The property

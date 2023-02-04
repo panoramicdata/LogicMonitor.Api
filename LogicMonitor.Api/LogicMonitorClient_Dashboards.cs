@@ -185,10 +185,10 @@ public partial class LogicMonitorClient
 	/// <param name="filter"></param>
 	public async Task<WidgetPaginationResponse> GetWidgetListAsync(
 		CancellationToken cancellationToken,
-		string? fields = null,
+		string fields = null,
 		int? size = 50,
 		int? offset = 0,
-		string? filter = null)
+		string filter = null)
 		=> await GetBySubUrlAsync<WidgetPaginationResponse>($"/dashboard/widgets?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
 
 	/// <summary>
@@ -204,7 +204,7 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken,
 		int? start = null,
 		int? end = null,
-		string? format = null
+		string format = null
 		)
 		=> await GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{id}/data?start={start}&end={end}&format={format}", cancellationToken);
 }

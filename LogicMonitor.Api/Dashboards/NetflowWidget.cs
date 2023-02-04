@@ -76,7 +76,7 @@ public class NetflowWidget : Widget
 	/// The netflow filter
 	/// </summary>
 	[DataMember(Name = "netflowFilter")]
-	public NetflowFilter NetflowFilter { get; set; }
+	public NetflowFilters NetflowFilter { get; set; }
 
 	/// <summary>
 	///     The display settings

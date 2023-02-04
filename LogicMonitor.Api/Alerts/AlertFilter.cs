@@ -13,7 +13,7 @@ public class AlertFilter
 	/// <summary>
 	///    The AlertRule name
 	/// </summary>
-	public string? AlertRuleName { get; set; }
+	public string AlertRuleName { get; set; }
 
 	/// <summary>
 	///    The AlertRule Id
@@ -35,17 +35,17 @@ public class AlertFilter
 	/// <summary>
 	///    The DataPoint
 	/// </summary>
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; }
 
 	/// <summary>
 	///    The DataPoint Id
 	/// </summary>
-	public string? DataPointId { get; set; }
+	public string DataPointId { get; set; }
 
 	/// <summary>
 	///    The DataSource (etc.)
 	/// </summary>
-	public string? ResourceTemplateName { get; set; }
+	public string ResourceTemplateName { get; set; }
 
 	/// <summary>
 	///    The DataSource (etc.) Id
@@ -55,17 +55,17 @@ public class AlertFilter
 	/// <summary>
 	///    The DataSourceInstance
 	/// </summary>
-	public string? InstanceName { get; set; }
+	public string InstanceName { get; set; }
 
 	/// <summary>
 	///    The DataSourceInstance Id
 	/// </summary>
-	public string? InstanceId { get; set; }
+	public string InstanceId { get; set; }
 
 	/// <summary>
 	///    The Device or Website name
 	/// </summary>
-	public string? MonitorObjectName { get; set; }
+	public string MonitorObjectName { get; set; }
 
 	/// <summary>
 	///    The Device or Website name
@@ -126,22 +126,22 @@ public class AlertFilter
 	/// <summary>
 	///    The Escalation Chain
 	/// </summary>
-	public string? EscalationChainName { get; set; }
+	public string EscalationChainName { get; set; }
 
 	/// <summary>
 	///    The Escalation Chain Id
 	/// </summary>
-	public string? EscalationChainId { get; set; }
+	public string EscalationChainId { get; set; }
 
 	/// <summary>
 	///    The alert Id.  AlertType must not be null.
 	/// </summary>
-	public string? Id { get; set; }
+	public string Id { get; set; }
 
 	/// <summary>
 	///    The alert internal Id
 	/// </summary>
-	public string? InternalId { get; set; }
+	public string InternalId { get; set; }
 
 	/// <summary>
 	///    Whether to include inactive alerts (i.e. cleared alerts)
@@ -200,17 +200,17 @@ public class AlertFilter
 	/// <summary>
 	///    The search id.  If present, all fields except skip and take are ignored when constructing the query string.
 	/// </summary>
-	public string? SearchId { get; set; }
+	public string SearchId { get; set; }
 
 	/// <summary>
 	///    The next recipient
 	/// </summary>
-	public string? NextRecipient { get; set; }
+	public string NextRecipient { get; set; }
 
 	/// <summary>
 	///    The user that acknowledged the alert
 	/// </summary>
-	public string? AckedBy { get; set; }
+	public string AckedBy { get; set; }
 
 	/// <summary>
 	///    The requested alert properties.

@@ -95,7 +95,7 @@ public class DataTests : TestWithOutput
 			DeviceId = netflowDevice.Id,
 			StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
 			EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
-			NetflowFilter = new NetflowFilter(),
+			NetflowFilter = new NetflowFilters(),
 			TimePeriod = TimePeriod.Zoom
 		}, CancellationToken.None).ConfigureAwait(false);
 	}

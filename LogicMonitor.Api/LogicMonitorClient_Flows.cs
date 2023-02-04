@@ -50,10 +50,10 @@ public partial class LogicMonitorClient
 	public Task<FlowRecordPaginationResponse> GetNetflowFlowListAsync(
 		long start,
 		long end,
-		string? netflowFilter,
+		string netflowFilter,
 		int id,
-		string? fields,
-		string? filter,
+		string fields,
+		string filter,
 		int size = 50,
 		int offset = 0,
 		CancellationToken cancellationToken = default

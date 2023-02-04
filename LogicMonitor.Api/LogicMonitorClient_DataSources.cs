@@ -395,7 +395,7 @@ public partial class LogicMonitorClient
 		LogicModuleType logicModuleType,
 		int rootDeviceGroupId,
 		List<int> logicModuleIds,
-		string? instanceProperty = null,
+		string instanceProperty = null,
 		Regex? instancePropertyValueRegex = null,
 		Filter<InstanceProperty>? filter = null,
 		CancellationToken cancellationToken = default)

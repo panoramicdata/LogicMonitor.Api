@@ -15,7 +15,7 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// srcIP
 	/// </summary>
 	[DataMember(Name = "srcIP", IsRequired = false)]
-	public string? SrcIP { get; set; }
+	public string SrcIP { get; set; }
 
 	/// <summary>
 	/// percentUsage
@@ -51,7 +51,7 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// dstDNS
 	/// </summary>
 	[DataMember(Name = "dstDNS", IsRequired = false)]
-	public string? DstDNS { get; set; }
+	public string DstDNS { get; set; }
 
 	/// <summary>
 	/// srcPort
@@ -63,13 +63,13 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
-	public string? DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; }
 
 	/// <summary>
 	/// ifInDisplayName
 	/// </summary>
 	[DataMember(Name = "ifInDisplayName", IsRequired = false)]
-	public string? IfInDisplayName { get; set; }
+	public string IfInDisplayName { get; set; }
 
 	/// <summary>
 	/// firstEpochInSec
@@ -81,7 +81,7 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// protocol
 	/// </summary>
 	[DataMember(Name = "protocol", IsRequired = false)]
-	public string? Protocol { get; set; }
+	public string Protocol { get; set; }
 
 	/// <summary>
 	/// dstPort
@@ -105,13 +105,13 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// srcAsnName
 	/// </summary>
 	[DataMember(Name = "srcAsnName", IsRequired = false)]
-	public string? SrcAsnName { get; set; }
+	public string SrcAsnName { get; set; }
 
 	/// <summary>
 	/// srcDNS
 	/// </summary>
 	[DataMember(Name = "srcDNS", IsRequired = false)]
-	public string? SrcDNS { get; set; }
+	public string SrcDNS { get; set; }
 
 	/// <summary>
 	/// destinationMBytes
@@ -129,17 +129,17 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// dstIP
 	/// </summary>
 	[DataMember(Name = "dstIP", IsRequired = false)]
-	public string? DstIP { get; set; }
+	public string DstIP { get; set; }
 
 	/// <summary>
 	/// ifOutDisplayName
 	/// </summary>
 	[DataMember(Name = "ifOutDisplayName", IsRequired = false)]
-	public string? IfOutDisplayName { get; set; }
+	public string IfOutDisplayName { get; set; }
 
 	/// <summary>
 	/// destAsnName
 	/// </summary>
 	[DataMember(Name = "destAsnName", IsRequired = false)]
-	public string? DestAsnName { get; set; }
+	public string DestAsnName { get; set; }
 }

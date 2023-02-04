@@ -15,17 +15,17 @@ public class InheritanceProp : IdentifiedItem
 	/// The fullpath of the property
 	/// </summary>
 	[DataMember(Name = "fullpath", IsRequired = false)]
-	public string? Fullpath { get; set; }
+	public string Fullpath { get; set; }
 
 	/// <summary>
 	/// The type of the parent property from which are inheriting
 	/// </summary>
 	[DataMember(Name = "type", IsRequired = false)]
-	public string? Type { get; set; }
+	public string Type { get; set; }
 
 	/// <summary>
 	/// The property value for the group
 	/// </summary>
 	[DataMember(Name = "value", IsRequired = false)]
-	public string? Value { get; set; }
+	public string Value { get; set; }
 }

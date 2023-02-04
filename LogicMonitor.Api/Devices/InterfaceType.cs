@@ -5,15 +5,14 @@ using System.Text;
 namespace LogicMonitor.Api.Devices;
 
 /// <summary>
-/// NetflowDataBase
+/// InterfaceType
 /// </summary>
-
 [DataContract]
-public class NetflowDataBase
+public class InterfaceType
 {
 	/// <summary>
-	/// dataType
+	/// ifPosition
 	/// </summary>
-	[DataMember(Name = "dataType", IsRequired = false)]
-	public string DataType { get; set; }
+	[DataMember(Name = "ifPosition", IsRequired = false)]
+	public string IfPosition { get; set; } = string.Empty;
 }

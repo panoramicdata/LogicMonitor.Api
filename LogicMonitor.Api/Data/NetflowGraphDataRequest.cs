@@ -13,7 +13,7 @@ public class NetflowGraphDataRequest : GraphDataRequest
 	/// <summary>
 	/// The Netflow Filter
 	/// </summary>
-	public NetflowFilter NetflowFilter { get; set; } = new NetflowFilter();
+	public NetflowFilters NetflowFilter { get; set; } = new NetflowFilters();
 
 	internal override string SubUrl => $"device/devices/{DeviceId}/topTalkersGraph?netflowFilter={NetflowFilter.AsUrlEncodedString()}&{TimePart}&maxSamples=458";
 

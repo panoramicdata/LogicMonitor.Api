@@ -15,19 +15,19 @@ public class DeviceGroupAlertThresholdInfo
 	/// enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration", IsRequired = false)]
-	public string? EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	/// userPermission
 	/// </summary>
 	[DataMember(Name = "userPermission", IsRequired = false)]
-	public string? UserPermission { get; set; }
+	public string UserPermission { get; set; }
 
 	/// <summary>
 	/// enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression", IsRequired = false)]
-	public string? EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	/// The group id
@@ -45,11 +45,11 @@ public class DeviceGroupAlertThresholdInfo
 	/// groupFullPath
 	/// </summary>
 	[DataMember(Name = "groupFullPath", IsRequired = false)]
-	public string? GroupFullPath { get; set; }
+	public string GroupFullPath { get; set; }
 
 	/// <summary>
 	/// The alert expr
 	/// </summary>
 	[DataMember(Name = "alertExpr", IsRequired = false)]
-	public string? AlertExpr { get; set; }
+	public string AlertExpr { get; set; }
 }

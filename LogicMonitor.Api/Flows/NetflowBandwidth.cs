@@ -10,7 +10,7 @@ public class NetflowBandwidth : NetflowDataBase
 	/// deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; }
 
 	/// <summary>
 	/// deviceId

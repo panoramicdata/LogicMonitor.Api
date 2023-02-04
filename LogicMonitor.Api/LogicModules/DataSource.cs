@@ -10,19 +10,19 @@ public class DataSource : LogicModule, IHasEndpoint
 	///     The AGD Method
 	/// </summary>
 	[DataMember(Name = "agdMethod")]
-	public string? AgdMethod { get; set; }
+	public string AgdMethod { get; set; }
 
 	/// <summary>
 	///     The AGD parameters
 	/// </summary>
 	[DataMember(Name = "agdParams")]
-	public string? AgdParams { get; set; }
+	public string AgdParams { get; set; }
 
 	/// <summary>
 	///     What this applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string? AppliesTo { get; set; }
+	public string AppliesTo { get; set; }
 
 	/// <summary>
 	/// The data source audit version
@@ -40,7 +40,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	///     The AutoDiscovery Groovyscript
 	/// </summary>
 	[DataMember(Name = "wildcard_groovyscript")]
-	public string? AutoDiscoveryGroovyscript { get; set; }
+	public string AutoDiscoveryGroovyscript { get; set; }
 
 	/// <summary>
 	///     The AutoDiscovery schedule interval in minutes
@@ -52,31 +52,31 @@ public class DataSource : LogicModule, IHasEndpoint
 	///     The AutoDiscovery Linux commnd line
 	/// </summary>
 	[DataMember(Name = "wildcard_linuxcmdline")]
-	public string? AutoDiscoveryLinuxCmdLine { get; set; }
+	public string AutoDiscoveryLinuxCmdLine { get; set; }
 
 	/// <summary>
 	///     Wildcard linux command line
 	/// </summary>
 	[DataMember(Name = "wildcard_linuxscript")]
-	public string? AutoDiscoveryLinuxScript { get; set; }
+	public string AutoDiscoveryLinuxScript { get; set; }
 
 	/// <summary>
 	///     The AutoDiscovery Windows command line
 	/// </summary>
 	[DataMember(Name = "wildcard_wincmdline")]
-	public string? AutoDiscoveryWindowsCommandLine { get; set; }
+	public string AutoDiscoveryWindowsCommandLine { get; set; }
 
 	/// <summary>
 	///     The AutoDiscovery Windows script
 	/// </summary>
 	[DataMember(Name = "wildcard_winscript")]
-	public string? AutoDiscoveryWindowsScript { get; set; }
+	public string AutoDiscoveryWindowsScript { get; set; }
 
 	/// <summary>
 	///     The DataSourceType
 	/// </summary>
 	[DataMember(Name = "collector")]
-	public string? Collector { get; set; }
+	public string Collector { get; set; }
 
 	/// <summary>
 	/// The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen
@@ -94,7 +94,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	/// The data source display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; }
 
 	/// <summary>
 	/// Enable ERI Discovery or not: false|true
@@ -106,7 +106,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	/// The DataSource data collect interval
 	/// </summary>
 	[DataMember(Name = "eriDiscoveryInterval")]
-	public string? EriDiscoveryInterval { get; set; }
+	public string EriDiscoveryInterval { get; set; }
 
 	/// <summary>
 	/// Enable ERI Discovery or not
@@ -118,7 +118,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	/// The group the LMModule is in
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string? Group { get; set; }
+	public string Group { get; set; }
 
 	/// <summary>
 	/// If the DataSource has multi instance: true|false
@@ -172,13 +172,13 @@ public class DataSource : LogicModule, IHasEndpoint
 	/// The Tags for the LMModule
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string? Tags { get; set; }
+	public string Tags { get; set; }
 
 	/// <summary>
 	/// The Technical Notes for the LMModule
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string? Technology { get; set; }
+	public string Technology { get; set; }
 
 	/// <summary>
 	/// Use Wildvalue as Unique identifier in case of multiinstance datasource: true|false

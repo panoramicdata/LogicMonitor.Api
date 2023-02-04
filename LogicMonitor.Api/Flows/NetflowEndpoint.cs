@@ -10,13 +10,13 @@ public class NetflowEndpoint : NetflowDataBase
 	/// IP address
 	/// </summary>
 	[DataMember(Name = "IP", IsRequired = false)]
-	public string? Ip { get; set; }
+	public string Ip { get; set; }
 
 	/// <summary>
 	/// Source DNS
 	/// </summary>
 	[DataMember(Name = "dns", IsRequired = false)]
-	public string? Dns { get; set; }
+	public string Dns { get; set; }
 
 	/// <summary>
 	/// Last seen in seconds since the Epoch
@@ -46,7 +46,7 @@ public class NetflowEndpoint : NetflowDataBase
 	/// Type
 	/// </summary>
 	[DataMember(Name = "type", IsRequired = false)]
-	public string? Type { get; set; }
+	public string Type { get; set; }
 
 	/// <summary>
 	/// Returns a string that represents the current object.

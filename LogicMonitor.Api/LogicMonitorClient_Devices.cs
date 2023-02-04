@@ -670,10 +670,10 @@ public partial class LogicMonitorClient
 	public Task<GraphPlot> GetTopTalkersGraphAsync(
 		long start,
 		long end,
-		string? netflowFilter,
+		string netflowFilter,
 		int id,
-		string? format,
-		string? keyword,
+		string format,
+		string keyword,
 		CancellationToken cancellationToken) => GetBySubUrlAsync<GraphPlot>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>

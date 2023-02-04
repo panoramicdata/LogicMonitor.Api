@@ -169,13 +169,13 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The post processor parameter
 	/// </summary>
 	[DataMember(Name = "postProcessorParam")]
-	public string? PostProcessorParameter { get; set; }
+	public string PostProcessorParameter { get; set; }
 
 	/// <summary>
 	///     The global post processor parameter
 	/// </summary>
 	[DataMember(Name = "globalPostProcessorParam")]
-	public string? GlobalPostProcessorParameter { get; set; }
+	public string GlobalPostProcessorParameter { get; set; }
 
 	/// <inheritdoc />
 	public override string ToString()

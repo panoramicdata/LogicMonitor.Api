@@ -66,7 +66,7 @@ public partial class LogicMonitorClient
 	public Task SetWebsiteCustomPropertyAsync(
 		int websiteId,
 		string name,
-		string? value,
+		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
 		CancellationToken cancellationToken = default)
 	=>
@@ -75,7 +75,7 @@ public partial class LogicMonitorClient
 	private async Task SetWebsiteOrWebsiteGroupPropertyAsync<T>(
 		int id,
 		string name,
-		string? value,
+		string value,
 		SetPropertyMode mode,
 		CancellationToken cancellationToken) where T : IdentifiedItem, IHasEndpoint, IHasCustomProperties, new()
 	{
@@ -176,7 +176,7 @@ public partial class LogicMonitorClient
 	public Task SetWebsiteGroupCustomPropertyAsync(
 		int websiteGroupId,
 		string name,
-		string? value,
+		string value,
 		SetPropertyMode mode = SetPropertyMode.Automatic,
 		CancellationToken cancellationToken = default)
 	=>

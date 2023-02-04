@@ -21,7 +21,7 @@ public class DeviceDataSourceAssociated : NamedItem
 	/// displayName
 	/// </summary>
 	[DataMember(Name = "displayName", IsRequired = false)]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; }
 
 	/// <summary>
 	/// Whether has more instance. 0 no more, 1 has more

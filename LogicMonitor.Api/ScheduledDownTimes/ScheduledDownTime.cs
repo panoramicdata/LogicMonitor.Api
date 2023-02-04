@@ -46,7 +46,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The collector description
 	/// </summary>
 	[DataMember(Name = "collectorDescription")]
-	public string? CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; }
 
 	/// <summary>
 	///    The checkpoint id
@@ -58,7 +58,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The checkpoint name
 	/// </summary>
 	[DataMember(Name = "checkpointName")]
-	public string? CheckpointName { get; set; }
+	public string CheckpointName { get; set; }
 
 	/// <summary>
 	///    The datasource Id
@@ -87,25 +87,25 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string? DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; }
 
 	/// <summary>
 	///    DataSource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string? DataSourceName { get; set; }
+	public string DataSourceName { get; set; }
 
 	/// <summary>
 	///    The DataSource instance name
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceName")]
-	public string? DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; }
 
 	/// <summary>
 	///    EventSourceName
 	/// </summary>
 	[DataMember(Name = "eventSourceName")]
-	public string? EventSourceName { get; set; }
+	public string EventSourceName { get; set; }
 
 	/// <summary>
 	///    The Website Id
@@ -117,7 +117,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The website name
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string? WebsiteName { get; set; }
+	public string WebsiteName { get; set; }
 
 	/// <summary>
 	///    Collector Id
@@ -140,7 +140,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The deviceDataSourceInstanceGroup Name
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceInstanceGroupName")]
-	public string? DataSourceInstanceGroupName { get; set; }
+	public string DataSourceInstanceGroupName { get; set; }
 
 	/// <summary>
 	///    The Device Group Id
@@ -152,7 +152,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The DeviceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string? DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; }
 
 	/// <summary>
 	///    The Website Group Id
@@ -164,7 +164,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The Website Group Name
 	/// </summary>
 	[DataMember(Name = "websiteGroupName")]
-	public string? WebsiteGroupName { get; set; }
+	public string WebsiteGroupName { get; set; }
 
 	#endregion
 

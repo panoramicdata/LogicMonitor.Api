@@ -21,7 +21,7 @@ public class AwsAccountTestResult
 	/// detailLink
 	/// </summary>
 	[DataMember(Name = "detailLink", IsRequired = false)]
-	public string? DetailLink { get; set; }
+	public string DetailLink { get; set; }
 
 	/// <summary>
 	/// nonPermissionErrors

@@ -246,7 +246,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorDescription")]
-	public string? LogCollectorDescription { get; set; }
+	public string LogCollectorDescription { get; set; }
 
 	/// <summary>
 	/// The id of the Collector Group associated with the device\u0027s log collection
@@ -259,7 +259,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorGroupName")]
-	public string? LogCollectorGroupName { get; set; }
+	public string LogCollectorGroupName { get; set; }
 
 	/// <summary>
 	/// The Id of the netflow collector associated with the device
@@ -300,7 +300,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorGroupName")]
-	public string? NetflowCollectorGroupName { get; set; }
+	public string NetflowCollectorGroupName { get; set; }
 
 	/// <summary>
 	///    The preferred Collector Id

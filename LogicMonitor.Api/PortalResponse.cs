@@ -69,7 +69,7 @@ internal class PortalResponse<T> where T : new()
 	/// <summary>
 	///    The error message
 	/// </summary>
-	public string? ErrorMessage { get; set; }
+	public string ErrorMessage { get; set; }
 
 	/// <summary>
 	///    Whether the HttpStatusCode is of an error type

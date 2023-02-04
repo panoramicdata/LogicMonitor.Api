@@ -153,7 +153,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The format
 	/// </summary>
 	[DataMember(Name = "format")]
-	public string? Format { get; set; }
+	public string Format { get; set; }
 
 	/// <summary>
 	///     The collector group id

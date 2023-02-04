@@ -100,7 +100,7 @@ public class Alert : IHasEndpoint
 	///    The Acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
-	public string? AckComment { get; set; }
+	public string AckComment { get; set; }
 
 	/// <summary>
 	///    The alert rule name
@@ -286,13 +286,13 @@ public class Alert : IHasEndpoint
 	/// The component (Ex SDT, HostClusterAlert) which suppressed the alert
 	/// </summary>
 	[DataMember(Name = "suppressor")]
-	public string? Suppressor { get; set; }
+	public string Suppressor { get; set; }
 
 	/// <summary>
 	/// The description for suppressed alert
 	/// </summary>
 	[DataMember(Name = "suppressDesc")]
-	public string? SuppressedDescending { get; set; }
+	public string SuppressedDescending { get; set; }
 
 	///////////////////
 

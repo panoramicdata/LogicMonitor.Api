@@ -20,7 +20,7 @@ public class FlowRecordPaginationResponse
 	/// searchId
 	/// </summary>
 	[DataMember(Name = "searchId", IsRequired = false)]
-	public string? SearchId { get; set; }
+	public string SearchId { get; set; }
 
 	/// <summary>
 	/// items

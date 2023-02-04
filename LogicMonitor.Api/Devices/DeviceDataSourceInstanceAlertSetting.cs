@@ -14,7 +14,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The global alert expression for this datapoint
 	/// </summary>
 	[DataMember(Name = "globalAlertExpr", IsRequired = false)]
-	public string? GlobalAlertExpr { get; set; }
+	public string GlobalAlertExpr { get; set; }
 
 	/// <summary>
 	/// Instance group alert expression list base on the priority. The first is the highest priority and effected on this instance
@@ -32,31 +32,31 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The description of the datapoint the alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataPointDescription", IsRequired = false)]
-	public string? DataPointDescription { get; set; }
+	public string DataPointDescription { get; set; }
 
 	/// <summary>
 	/// The global enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration", IsRequired = false)]
-	public string? GlobalEnableAnomalyAlertGeneration { get; set; }
+	public string GlobalEnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	/// enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration", IsRequired = false)]
-	public string? EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	/// The group full path lists who disable alert for this datapoint on devicegroup level
 	/// </summary>
 	[DataMember(Name = "disableDpAlertHostGroups", IsRequired = false)]
-	public string? DisableDpAlertHostGroups { get; set; }
+	public string DisableDpAlertHostGroups { get; set; }
 
 	/// <summary>
 	/// The name of the datapoint the alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataPointName", IsRequired = false)]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; }
 
 	/// <summary>
 	/// The id of the Datapoint alert settings apply to
@@ -68,7 +68,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The global enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression", IsRequired = false)]
-	public string? GlobalEnableAnomalyAlertSuppression { get; set; }
+	public string GlobalEnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	/// The ID of the device group
@@ -80,7 +80,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The full path of the device group
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath", IsRequired = false)]
-	public string? DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; }
 
 	/// <summary>
 	/// The interval of alert transition
@@ -92,7 +92,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression", IsRequired = false)]
-	public string? EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	/// The interval of alert clear transition
@@ -104,13 +104,13 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// criticalAdAdvSetting
 	/// </summary>
 	[DataMember(Name = "criticalAdAdvSetting", IsRequired = false)]
-	public string? CriticalAdAdvSetting { get; set; }
+	public string CriticalAdAdvSetting { get; set; }
 
 	/// <summary>
 	/// The note associated with the current alert threshold settings
 	/// </summary>
 	[DataMember(Name = "alertExprNote", IsRequired = false)]
-	public string? AlertExprNote { get; set; }
+	public string AlertExprNote { get; set; }
 
 	/// <summary>
 	/// adAdvSettingEnabled
@@ -122,7 +122,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// errorAdAdvSetting
 	/// </summary>
 	[DataMember(Name = "errorAdAdvSetting", IsRequired = false)]
-	public string? ErrorAdAdvSetting { get; set; }
+	public string ErrorAdAdvSetting { get; set; }
 
 	/// <summary>
 	/// The id of the DataSource instance alert settings apply to
@@ -134,7 +134,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// warnAdAdvSetting
 	/// </summary>
 	[DataMember(Name = "warnAdAdvSetting", IsRequired = false)]
-	public string? WarnAdAdvSetting { get; set; }
+	public string WarnAdAdvSetting { get; set; }
 
 	/// <summary>
 	/// Device group alert expression list base on the priority. The first is the highest priority and effected on this instance
@@ -146,13 +146,13 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The datapoint is effected alert disabled by which group
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn", IsRequired = false)]
-	public string? AlertingDisabledOn { get; set; }
+	public string AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	/// The alias (name) of the DataSource instance the alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceAlias", IsRequired = false)]
-	public string? DataSourceInstanceAlias { get; set; }
+	public string DataSourceInstanceAlias { get; set; }
 
 	/// <summary>
 	/// Collection Interval
@@ -164,5 +164,5 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The thresholds that should be associated with the datapoint. Note that you need to have a space between the operator and each threshold (e.g. \u003e 1 2 3)
 	/// </summary>
 	[DataMember(Name = "alertExpr", IsRequired = false)]
-	public string? AlertExpr { get; set; }
+	public string AlertExpr { get; set; }
 }

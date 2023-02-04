@@ -10,31 +10,31 @@ public class IntegrationMetadata
 	/// Specifies the target last published Id
 	/// </summary>
 	[DataMember(Name = "targetLastPublishedId")]
-	public string? TargetLastPublishedId { get; set; }
+	public string TargetLastPublishedId { get; set; }
 
 	/// <summary>
 	/// The metadata checksum for the target last published LMModule content
 	/// </summary>
 	[DataMember(Name = "targetLastPublishedChecksum")]
-	public string? TargetLastPublishedChecksum { get; set; }
+	public string TargetLastPublishedChecksum { get; set; }
 
 	/// <summary>
 	/// Specifies the target last published version
 	/// </summary>
 	[DataMember(Name = "targetLastPublishedVersion")]
-	public string? TargetLastPublishedVersion { get; set; }
+	public string TargetLastPublishedVersion { get; set; }
 
 	/// <summary>
 	/// The metadata checksum for the LMModule content
 	/// </summary>
 	[DataMember(Name = "originChecksum")]
-	public string? OriginChecksum { get; set; }
+	public string OriginChecksum { get; set; }
 
 	/// <summary>
 	/// Specifies the origin Author companies namespace
 	/// </summary>
 	[DataMember(Name = "originAuthorNamespace")]
-	public string? OriginAuthorNamespace { get; set; }
+	public string OriginAuthorNamespace { get; set; }
 
 	/// <summary>
 	/// Specifies if the Applies To function is changed from origin or not
@@ -46,19 +46,19 @@ public class IntegrationMetadata
 	/// Specifies the audited registry Id
 	/// </summary>
 	[DataMember(Name = "auditedRegistryId")]
-	public string? AuditedRegistryId { get; set; }
+	public string AuditedRegistryId { get; set; }
 
 	/// <summary>
 	/// Specifies the target lineage Id
 	/// </summary>
 	[DataMember(Name = "targetLineageId")]
-	public string? TargetLineageId { get; set; }
+	public string TargetLineageId { get; set; }
 
 	/// <summary>
 	/// DataSources | EventSources | PropertySources | ConfigSources | LogSources | TopologySources | Jobmonitors | AppliesTo Functions | SNMP SysOID Maps\nThe type of LogicModule
 	/// </summary>
 	[DataMember(Name = "logicModuleType")]
-	public string? LogicModuleType { get; set; }
+	public string LogicModuleType { get; set; }
 
 	/// <summary>
 	/// Specifies if the Applies To function is changed from target last published or not
@@ -70,13 +70,13 @@ public class IntegrationMetadata
 	/// The origin lineage Id of the LMmodule
 	/// </summary>
 	[DataMember(Name = "originLineageId")]
-	public string? OriginLineageId { get; set; }
+	public string OriginLineageId { get; set; }
 
 	/// <summary>
 	/// Specifies the origin Author companies unique Id
 	/// </summary>
 	[DataMember(Name = "originAuthorCompanyUUID")]
-	public string? OriginAuthorCompanyUUID { get; set; }
+	public string OriginAuthorCompanyUUID { get; set; }
 
 	/// <summary>
 	/// The LocalModule Id
@@ -88,17 +88,17 @@ public class IntegrationMetadata
 	/// The Registry ID of the Exchange Integration this module is based from
 	/// </summary>
 	[DataMember(Name = "originRegistryId")]
-	public string? OriginRegistryId { get; set; }
+	public string OriginRegistryId { get; set; }
 
 	/// <summary>
 	/// Specifies the origin version
 	/// </summary>
 	[DataMember(Name = "originVersion")]
-	public string? OriginVersion { get; set; }
+	public string OriginVersion { get; set; }
 
 	/// <summary>
 	/// Specifies the audited registry version
 	/// </summary>
 	[DataMember(Name = "auditedVersion")]
-	public string? AuditedVersion { get;}
+	public string AuditedVersion { get;}
 }

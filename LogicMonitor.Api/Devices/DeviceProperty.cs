@@ -14,12 +14,12 @@ public class DeviceProperty
 	/// <summary>
 	/// The resource property name
 	/// </summary>
-	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	[DataMember(Name = "name", IsRequired = true)]
+	public string Name { get; set; } = null!;
 
 	/// <summary>
 	/// The resource property value
 	/// </summary>
-	[DataMember(Name ="value")]
-	public string Value { get; set; }
+	[DataMember(Name = "value", IsRequired = true)]
+	public string Value { get; set; } = null!;
 }
