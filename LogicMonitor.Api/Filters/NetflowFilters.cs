@@ -93,6 +93,6 @@ public class NetflowFilters
 	/// <summary>
 	/// Converts to a URL encoded string for the query URL
 	/// </summary>
-	internal string AsUrlEncodedString()
+	public string AsUrlEncodedString()
 	=> HttpUtility.UrlEncode(JsonConvert.SerializeObject(this));
 }

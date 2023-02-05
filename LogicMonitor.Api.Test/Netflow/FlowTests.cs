@@ -110,10 +110,10 @@ public class FlowTests : TestWithOutput
 	}
 
 	[Fact]
-	public async Task GetFlowEndpoints()
+	public async Task GetFlowApplications()
 	{
 		var device = await GetNetflowDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var flowEndpoints = await LogicMonitorClient.GetFlowEndpointsPageAsync(new FlowEndpointsRequest
+		var flowEndpoints = await LogicMonitorClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
