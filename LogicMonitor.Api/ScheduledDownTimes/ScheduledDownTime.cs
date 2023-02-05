@@ -9,7 +9,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	#region Basics
 
 	/// <summary>
-	/// The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT
+	/// The type resource that this SDT is for
 	/// </summary>
 	[DataMember(Name = "type", IsRequired = true)]
 	public ScheduledDownTimeType Type { get; set; }
