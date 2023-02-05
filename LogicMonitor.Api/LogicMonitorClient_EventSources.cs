@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using System.Threading;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -105,4 +108,17 @@ public partial class LogicMonitorClient
 		var page = await GetDeviceEventSourcesPageAsync(deviceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
 		return page.Items.SingleOrDefault(deviceEventSource => deviceEventSource.EventSourceId == eventSourceId);
 	}
+
+	/// <summary>
+	/// add audit version
+	/// </summary>
+	/// <param name="id">The id</param>
+	/// <param name="body">The audit to be added</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<EventSource> AddEventsourceAuditVersion(
+		int id,
+		Audit body,
+		CancellationToken cancellationToken) => PostAsync<Audit, EventSource>(body,
+			$"setting/eventsources/{id}/audit",
+			cancellationToken);
 }

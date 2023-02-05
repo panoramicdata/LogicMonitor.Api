@@ -29,7 +29,7 @@ public partial class LogicMonitorClient
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/configsources/{configSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
 
 	/// <summary>
-	///		add audit version
+	///	add audit version
 	/// </summary>
 	/// <param name="id">The ConfigSource id</param>
 	/// <param name="body">The body</param>
