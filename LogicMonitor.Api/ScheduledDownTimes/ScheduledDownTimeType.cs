@@ -62,6 +62,12 @@ public enum ScheduledDownTimeType
 	DeviceEventSource,
 
 	/// <summary>
+	/// Device Log Pipe Line Resource
+	/// </summary>
+	[EnumMember(Value = "DeviceLogPipeLineResourceSDT")]
+	DeviceLogPipeLineResourceSDT,
+
+	/// <summary>
 	/// Resource Group
 	/// </summary>
 	[EnumMember(Value = "ResourceGroupSDT")]

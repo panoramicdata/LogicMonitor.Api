@@ -12,7 +12,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT
 	/// </summary>
 	[DataMember(Name = "type", IsRequired = true)]
-	public string Type { get; set; } = null!;
+	public ScheduledDownTimeType Type { get; set; }
 
 	/// <summary>
 	/// true: the SDT is currently actice\nfalse: the SDT is currently inactive
