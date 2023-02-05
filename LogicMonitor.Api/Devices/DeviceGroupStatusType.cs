@@ -17,5 +17,11 @@ public enum DeviceGroupStatusType
 	/// Dead
 	/// </summary>
 	[EnumMember(Value = "dead")]
-	Dead = 1
+	Dead = 1,
+
+	/// <summary>
+	/// Dead
+	/// </summary>
+	[EnumMember(Value = "dead-collector")]
+	DeadCollector = 1
 }
