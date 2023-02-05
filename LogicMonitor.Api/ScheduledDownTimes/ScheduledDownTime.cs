@@ -9,33 +9,33 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	#region Basics
 
 	/// <summary>
-	///    Type
+	/// The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT
 	/// </summary>
-	[DataMember(Name = "type")]
-	public ScheduledDownTimeType Type { get; set; }
+	[DataMember(Name = "type", IsRequired = true)]
+	public string Type { get; set; } = null!;
 
 	/// <summary>
-	///    Weekday
+	/// true: the SDT is currently actice\nfalse: the SDT is currently inactive
 	/// </summary>
-	[DataMember(Name = "isEffective")]
+	[DataMember(Name = "isEffective", IsRequired = false)]
 	public bool IsEffective { get; set; }
 
 	/// <summary>
-	///    ScheduledDownTime type
+	/// the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek
 	/// </summary>
-	[DataMember(Name = "sdtType")]
-	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }
+	[DataMember(Name = "sdtType", IsRequired = false)]
+	public string RecurrenceType { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Admin
+	/// The name of the user that created the SDT
 	/// </summary>
-	[DataMember(Name = "admin")]
+	[DataMember(Name = "admin", IsRequired = false)]
 	public string Admin { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Comment
+	/// The notes associated with the SDT
 	/// </summary>
-	[DataMember(Name = "comment")]
+	[DataMember(Name = "comment", IsRequired = false)]
 	public string Comment { get; set; } = string.Empty;
 
 	#endregion
@@ -45,180 +45,180 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// <summary>
 	///    The collector description
 	/// </summary>
-	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	[DataMember(Name = "collectorDescription", IsRequired = false)]
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The checkpoint id
 	/// </summary>
-	[DataMember(Name = "checkpointId")]
+	[DataMember(Name = "checkpointId", IsRequired = false)]
 	public int? CheckpointId { get; set; }
 
 	/// <summary>
 	///    The checkpoint name
 	/// </summary>
-	[DataMember(Name = "checkpointName")]
-	public string CheckpointName { get; set; }
+	[DataMember(Name = "checkpointName", IsRequired = false)]
+	public string CheckpointName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The datasource Id
 	/// </summary>
-	[DataMember(Name = "dataSourceId")]
+	[DataMember(Name = "dataSourceId", IsRequired = false)]
 	public int? DataSourceId { get; set; }
 	/// <summary>
 	///    DeviceDataSourceId
 	/// </summary>
-	[DataMember(Name = "deviceDataSourceId")]
+	[DataMember(Name = "deviceDataSourceId", IsRequired = false)]
 	public int? DeviceDataSourceId { get; set; }
 
 	/// <summary>
 	///    DeviceEventSourceId
 	/// </summary>
-	[DataMember(Name = "deviceEventSourceId")]
-	public int? DeviceEventSourceId { get; set; }
+	[DataMember(Name = "deviceEventSourceId", IsRequired = false)]
+	public int DeviceEventSourceId { get; set; }
 
 	/// <summary>
 	///    Device Id
 	/// </summary>
-	[DataMember(Name = "deviceId")]
-	public int? DeviceId { get; set; }
+	[DataMember(Name = "deviceId", IsRequired = false)]
+	public int DeviceId { get; set; }
 
 	/// <summary>
 	///    Device display name
 	/// </summary>
-	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    DataSource name
 	/// </summary>
-	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	[DataMember(Name = "dataSourceName", IsRequired = false)]
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The DataSource instance name
 	/// </summary>
-	[DataMember(Name = "dataSourceInstanceName")]
-	public string DataSourceInstanceName { get; set; }
+	[DataMember(Name = "dataSourceInstanceName", IsRequired = false)]
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    EventSourceName
 	/// </summary>
-	[DataMember(Name = "eventSourceName")]
-	public string EventSourceName { get; set; }
+	[DataMember(Name = "eventSourceName", IsRequired = false)]
+	public string EventSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Website Id
 	/// </summary>
-	[DataMember(Name = "websiteId")]
+	[DataMember(Name = "websiteId", IsRequired = false)]
 	public int? WebsiteId { get; set; }
 
 	/// <summary>
 	///    The website name
 	/// </summary>
-	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	[DataMember(Name = "websiteName", IsRequired = false)]
+	public string WebsiteName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Collector Id
 	/// </summary>
-	[DataMember(Name = "collectorId")]
+	[DataMember(Name = "collectorId", IsRequired = false)]
 	public int? CollectorId { get; set; }
 	/// <summary>
 	///    The dataSourceInstance Id
 	/// </summary>
-	[DataMember(Name = "dataSourceInstanceId")]
+	[DataMember(Name = "dataSourceInstanceId", IsRequired = false)]
 	public int? DataSourceInstanceId { get; set; }
 
 	/// <summary>
 	///    The deviceDataSourceInstanceGroup Id
 	/// </summary>
-	[DataMember(Name = "deviceDataSourceInstanceGroupId")]
+	[DataMember(Name = "deviceDataSourceInstanceGroupId", IsRequired = false)]
 	public int? DataSourceInstanceGroupId { get; set; }
 
 	/// <summary>
 	///    The deviceDataSourceInstanceGroup Name
 	/// </summary>
-	[DataMember(Name = "deviceDataSourceInstanceGroupName")]
-	public string DataSourceInstanceGroupName { get; set; }
+	[DataMember(Name = "deviceDataSourceInstanceGroupName", IsRequired = false)]
+	public string DataSourceInstanceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Device Group Id
 	/// </summary>
-	[DataMember(Name = "deviceGroupId")]
+	[DataMember(Name = "deviceGroupId", IsRequired = false)]
 	public int? DeviceGroupId { get; set; }
 
 	/// <summary>
 	///    The DeviceGroup full path
 	/// </summary>
-	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	[DataMember(Name = "deviceGroupFullPath", IsRequired = false)]
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Website Group Id
 	/// </summary>
-	[DataMember(Name = "websiteGroupId")]
+	[DataMember(Name = "websiteGroupId", IsRequired = false)]
 	public int? WebsiteGroupId { get; set; }
 
 	/// <summary>
 	///    The Website Group Name
 	/// </summary>
-	[DataMember(Name = "websiteGroupName")]
-	public string WebsiteGroupName { get; set; }
+	[DataMember(Name = "websiteGroupName", IsRequired = false)]
+	public string WebsiteGroupName { get; set; } = string.Empty;
 
 	#endregion
 
 	#region Time-related
 	/// <summary>
-	///    Weekday
+	/// the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public WeekDay? WeekDay { get; set; }
+	public string WeekDay { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Month day
+	/// 1 | 2....| 31 The day of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "monthDay")]
 	public int MonthDay { get; set; }
 
 	/// <summary>
-	///    Hour
+	/// 1 | 2....| 24 The hour that the SDT will start for a repeating SDT (daily, weekly, or monthly)
 	/// </summary>
 	[DataMember(Name = "hour")]
 	public int Hour { get; set; }
 
 	/// <summary>
-	///    Minute
+	/// 1 | 2....| 60 The minute of the hour that the SDT should begin for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "minute")]
 	public int Minute { get; set; }
 
 	/// <summary>
-	///    End Hour
+	/// 1 | 2....| 24 The hour that the SDT ends for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "endHour")]
 	public int EndHour { get; set; }
 
 	/// <summary>
-	///    End Minute
+	/// 1 | 2....| 60 The minute of the hour that the SDT ends for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "endMinute")]
 	public int EndMinute { get; set; }
 
 	/// <summary>
-	///    Duration in minutes
+	/// The duration of the SDT in minutes
 	/// </summary>
 	[DataMember(Name = "duration")]
 	public int DurationMinutes { get; set; }
 
 	/// <summary>
-	///    Start date time local
+	/// The date, time and time zone that the SDT will end at
 	/// </summary>
 	[DataMember(Name = "startDateTimeOnLocal")]
 	public string StartDateTimeLocal { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Start date time local
+	/// The epoch time, in milliseconds, that the SDT will start
 	/// </summary>
 	[DataMember(Name = "startDateTime")]
 	public long StartDateTimeMs { get; set; }
@@ -230,15 +230,15 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public DateTime StartDateTimeUtc => StartDateTimeMs.ToDateTimeUtcFromMs();
 
 	/// <summary>
-	///    End date time local
+	/// The date, time and time zone that the SDT will end at
 	/// </summary>
-	[DataMember(Name = "endDateTimeOnLocal")]
+	[DataMember(Name = "endDateTimeOnLocal", IsRequired = false)]
 	public string EndDateTimeLocal { get; set; } = string.Empty;
 
 	/// <summary>
-	///    End date time local
+	/// The epoch time, in milliseconds, that the SDT will end
 	/// </summary>
-	[DataMember(Name = "endDateTime")]
+	[DataMember(Name = "endDateTime", IsRequired = false)]
 	public long EndDateTimeMs { get; set; }
 
 	/// <summary>
@@ -248,16 +248,16 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public DateTime EndDateTimeUtc => EndDateTimeMs.ToDateTimeUtcFromMs();
 
 	/// <summary>
-	/// The time zone
+	/// The specific timezone for SDT
 	/// </summary>
-	[DataMember(Name = "timezone")]
+	[DataMember(Name = "timezone", IsRequired = false)]
 	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Week of Month
+	/// The week of the month that the SDT will be active for a monthly SDT
 	/// </summary>
-	[DataMember(Name = "weekOfMonth")]
-	public WeekOfMonth WeekOfMonth { get; set; } = WeekOfMonth.None;
+	[DataMember(Name = "weekOfMonth", IsRequired = false)]
+	public string WeekOfMonth { get; set; } = string.Empty;
 
 	#endregion
 
