@@ -85,10 +85,70 @@ public class EventSource : LogicModule, IHasEndpoint
 	public int AlertEffectiveIntervalMinutes { get; set; }
 
 	/// <summary>
+	/// The LMModule dimension
+	/// </summary>
+	[DataMember(Name = "dimension", IsRequired = false)]
+	public string? Dimension { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Groovy script
+	/// </summary>
+	[DataMember(Name = "groovyScript", IsRequired = false)]
+	public string? GroovyScript { get; set; } = string.Empty;
+
+	/// <summary>
 	/// The group the LMModule is in
 	/// </summary>
 	[DataMember(Name = "group", IsRequired = false)]
 	public string Group { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Linux command line
+	/// </summary>
+	[DataMember(Name = "linuxCmdLine", IsRequired = false)]
+	public string? LinuxCommandLine { get; set; }
+
+	/// <summary>
+	/// The Linux script
+	/// </summary>
+	[DataMember(Name = "linuxScript", IsRequired = false)]
+	public string? LinuxScript { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Log files
+	/// </summary>
+	[DataMember(Name = "logFiles", IsRequired = false)]
+	public List<LogFile>? LogFiles { get; set; }
+
+	/// <summary>
+	/// The num(???)
+	/// </summary>
+	[DataMember(Name = "num", IsRequired = false)]
+	public int? Number { get; set; }
+
+	/// <summary>
+	/// The EventSource schedule
+	/// </summary>
+	[DataMember(Name = "schedule", IsRequired = false)]
+	public int? ScheduleMinutes { get; set; }
+
+	/// <summary>
+	/// The script type
+	/// </summary>
+	[DataMember(Name = "scriptType", IsRequired = false)]
+	public EventSourceScriptType? ScriptType { get; set; }
+
+	/// <summary>
+	/// The Windows command line
+	/// </summary>
+	[DataMember(Name = "windowsCmdLine", IsRequired = false)]
+	public string? WindowsCommandLine { get; set; }
+
+	/// <summary>
+	/// The Windows script
+	/// </summary>
+	[DataMember(Name = "windowsScript", IsRequired = false)]
+	public string? WindowsScript { get; set; }
 
 	/// <summary>
 	/// ToString override

@@ -16,7 +16,7 @@ public class LogFile
 	/// Origin id
 	/// </summary>
 	[DataMember(Name = "originId", IsRequired = false)]
-	public int OriginId { get; set; }
+	public int? OriginId { get; set; }
 
 	/// <summary>
 	/// The regex or plain text to look for in the file and not trigger alert if found
