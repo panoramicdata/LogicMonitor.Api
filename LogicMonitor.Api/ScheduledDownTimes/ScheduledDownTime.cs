@@ -24,7 +24,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek
 	/// </summary>
 	[DataMember(Name = "sdtType", IsRequired = false)]
-	public string RecurrenceType { get; set; } = string.Empty;
+	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }
 
 	/// <summary>
 	/// The name of the user that created the SDT

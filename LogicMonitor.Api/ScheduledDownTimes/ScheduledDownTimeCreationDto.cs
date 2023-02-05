@@ -19,7 +19,7 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	/// the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek
 	/// </summary>
 	[DataMember(Name = "sdtType", IsRequired = false)]
-	public string RecurrenceType { get; set; } = string.Empty;
+	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }
 
 	/// <summary>
 	/// The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT

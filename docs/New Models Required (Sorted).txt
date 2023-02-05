@@ -1,21 +1,11 @@
-HistorySdts
-	"DeviceLogPipeLineResourceSDT":{"allOf":[{"$ref":"#/definitions/SDT"},{"type":"object","properties":{"deviceLogPipeLineResourceId":{"format":"int32","description":"The id of the device logPipeLineResource that the SDT will be associated with","type":"integer"},"logPipeLineName":{"description":"The name of the pipe line that the SDT will apply to","type":"string"},"deviceId":{"format":"int32","description":"The id of the device associated with the pipe line that the SDT will apply to","type":"integer"},"deviceDisplayName":{"description":"The display name of the device associated with the logPipeLine that the SDT will apply to","type":"string"}}}]}
-
-Log
-Logging
 LogicModules
-	"SaaSZoomStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AwsMediaConnectOutputDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectoutput"}
-	"SaasO365ServiceHealthDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AwsWebACLWafV2DiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awswebaclwafv2"}
-	"AzureAppServiceEnvironmentMultiRolePoolDiscoverMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"GcpVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"SaaSWebexLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureBackupProtectedItemBackupJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureCostManagementSubscriptionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AwsCognitoIdentityProvidersDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureWebAppInstanceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureDimensionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["dimensionName","period"],"properties":{"period":{"type":"string"},"metricName":{"type":"string"},"dimensionName":{"type":"string"}}}]}
+	"AzureDimensionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},
+	{"type":"object","required":["dimensionName","period"],
+
+	"properties":{"period":{"type":"string"},
+	"metricName":{"type":"string"},
+	"dimensionName":{"type":"string"}}}]}
+
 	"SyntheticsSeleniumAutoDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{"isInternal":{"type":"boolean"},"checkpoints":{"type":"string"}}}]}
 	"GcpPubSubSubscriptionDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"SaaSO365SharePointSiteDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}

@@ -1,9 +1,4 @@
 HistorySdts
-		SDT
-			"sdtType":{"description":"the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek","type":"string","example":"oneTime"}
-			"weekOfMonth":{"description":"The week of the month that the SDT will be active for a monthly SDT","type":"string","example":"1"}
-			"type":{"description":"The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT","type":"string","example":"ResourceGroupSDT"}
-			"weekDay":{"description":"the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY","type":"string","example":"Sunday"}
 		SDTHistory
 			"approximateEndEpoch":{"format":"int64","description":"The end epoch for the SDT","readOnly":true,"type":"integer","example":1.475902808E12
 			"approximateStartEpoch":{"format":"int64","description":"The start epoch for the SDT","readOnly":true,"type":"integer","example":1.475875446E12}
