@@ -49,10 +49,10 @@ public class EventSource : LogicModule, IHasEndpoint
 	public long Version { get; set; }
 
 	/// <summary>
-	/// The EventSource collector type: wineventlog | syslog | snmptrap | echo | logfile | scriptevent | awsrss | azurerss | azureadvisor | gcpatom | awsrdspievent | azureresourcehealthevent | azureemergingissue | azureloganalyticsworkspacesevent | awstrustedadvisor | awshealth | ipmievent
+	/// The EventSource collector type
 	/// </summary>
 	[DataMember(Name = "collector", IsRequired = false)]
-	public string Collector { get; set; } = string.Empty;
+	public EventSourceType Type { get; set; }
 
 	/// <summary>
 	/// The Tags for the LMModule
