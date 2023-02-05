@@ -15,20 +15,26 @@ public class ResourceGroupScheduledDownTimeCreationDto : ScheduledDownTimeCreati
 	}
 
 	/// <summary>
-	///    The DeviceGroup id
+	/// The id of the device group that the SDT will be associated with
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
 	public int DeviceGroupId { get; set; }
 
 	/// <summary>
-	///    The DataSource id
+	/// The id of the datasource that this SDT will be associated with, for the specified group. dataSourceId 0 indicates all datasources
 	/// </summary>
-	[DataMember(Name = "dataSourceId")]
-	public int? DataSourceId { get; set; }
+	[DataMember(Name = "dataSourceId", IsRequired = false)]
+	public int DataSourceId { get; set; }
 
 	/// <summary>
-	///    The DataSource name
+	/// The name of the datasource that this SDT will be associated with, for the specified group. dataSourceName \"All\" indicates all datasources
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The full path of the device group that this SDT will be associated with
+	/// </summary>
+	[DataMember(Name = "deviceGroupFullPath")]
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 }

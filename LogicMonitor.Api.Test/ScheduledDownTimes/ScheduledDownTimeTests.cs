@@ -120,7 +120,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	{
 		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteADeviceSdt initial comment";
 		var deviceId = WindowsDeviceId;
-		var sdtCreationDto = new DeviceScheduledDownTimeCreationDto(deviceId)
+		var sdtCreationDto = new ResourceScheduledDownTimeCreationDto(deviceId)
 		{
 			Comment = initialComment,
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
