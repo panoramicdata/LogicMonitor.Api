@@ -267,7 +267,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "extra")]
-	public string Extra { get; set; }
+	public object? Extra { get; set; }
 
 	/// <summary>
 	/// The full path of the device group (i.e. if the group \u0027Dev\u0027 is under a parent group named \u0027Production\u0027, the fullPath would be \u0027Production/Dev\u0027
