@@ -52,7 +52,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// The alert group status
 	/// </summary>
 	[DataMember(Name = "groupStatus")]
-	public AlertStatus GroupStatus { get; set; }
+	public WebsiteGroupStatusType GroupStatus { get; set; }
 
 	/// <summary>
 	/// Whether websites are disabled
