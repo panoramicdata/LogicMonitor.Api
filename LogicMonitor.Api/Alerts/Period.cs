@@ -40,5 +40,5 @@ public class Period
 	/// the list of week day of this period
 	/// </summary>
 	[DataMember(Name = "weekDays")]
-	public List<int> WeekDays { get; set; }
+	public string WeekDays { get; set; }
 }

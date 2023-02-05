@@ -1,5 +1,6 @@
-﻿using LogicMonitor.Api.Test;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+
+namespace LogicMonitor.Api.Test.Converters;
 
 public class DoubleOrNAConverterTests : TestWithOutput
 {
