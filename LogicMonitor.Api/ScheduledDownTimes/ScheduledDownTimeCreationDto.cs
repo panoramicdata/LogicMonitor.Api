@@ -16,7 +16,7 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	}
 
 	/// <summary>
-	/// the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek
+	/// The type of SDT
 	/// </summary>
 	[DataMember(Name = "sdtType", IsRequired = false)]
 	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }

@@ -267,7 +267,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "extra")]
-	public string Extra { get; set; }
+	public object? Extra { get; set; }
 
 	/// <summary>
 	/// The full path of the device group (i.e. if the group \u0027Dev\u0027 is under a parent group named \u0027Production\u0027, the fullPath would be \u0027Production/Dev\u0027
@@ -277,11 +277,11 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public string FullPath { get; set; }
 
 	/// <summary>
-	/// normal | dead \nThe status of this device group, where possible statuses are normal and dead. A group with a status of dead may indicate that one or more devices are dead within the group
+	/// The status of this device group, where possible statuses are normal and dead. A group with a status of dead may indicate that one or more devices are dead within the group
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "groupStatus")]
-	public string GroupStatus { get; set; }
+	public DeviceGroupStatusType GroupStatus { get; set; }
 
 	/// <summary>
 	/// Indicates whether alerting is disabled (true) or enabled (false) for this device group
