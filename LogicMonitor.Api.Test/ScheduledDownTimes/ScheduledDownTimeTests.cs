@@ -341,7 +341,6 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var deviceScheduledDownTime = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Resource);
 		deviceScheduledDownTime.Should().NotBeNull();
 		var deviceId = deviceScheduledDownTime!.DeviceId;
-		deviceId.Should().NotBeNull();
 
 		var filteredScheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{

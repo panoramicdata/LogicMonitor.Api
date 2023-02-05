@@ -58,7 +58,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The checkpoint name
 	/// </summary>
 	[DataMember(Name = "checkpointName", IsRequired = false)]
-	public string CheckpointName { get; set; } = string.Empty;
+	public string? CheckpointName { get; set; }
 
 	/// <summary>
 	///    The datasource Id
@@ -75,37 +75,37 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    DeviceEventSourceId
 	/// </summary>
 	[DataMember(Name = "deviceEventSourceId", IsRequired = false)]
-	public int DeviceEventSourceId { get; set; }
+	public int? DeviceEventSourceId { get; set; }
 
 	/// <summary>
 	///    Device Id
 	/// </summary>
 	[DataMember(Name = "deviceId", IsRequired = false)]
-	public int DeviceId { get; set; }
+	public int? DeviceId { get; set; }
 
 	/// <summary>
 	///    Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string? DeviceDisplayName { get; set; }
 
 	/// <summary>
 	///    DataSource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName", IsRequired = false)]
-	public string DataSourceName { get; set; } = string.Empty;
+	public string? DataSourceName { get; set; }
 
 	/// <summary>
 	///    The DataSource instance name
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceName", IsRequired = false)]
-	public string DataSourceInstanceName { get; set; } = string.Empty;
+	public string? DataSourceInstanceName { get; set; }
 
 	/// <summary>
 	///    EventSourceName
 	/// </summary>
 	[DataMember(Name = "eventSourceName", IsRequired = false)]
-	public string EventSourceName { get; set; } = string.Empty;
+	public string? EventSourceName { get; set; }
 
 	/// <summary>
 	///    The Website Id
@@ -117,13 +117,14 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The website name
 	/// </summary>
 	[DataMember(Name = "websiteName", IsRequired = false)]
-	public string WebsiteName { get; set; } = string.Empty;
+	public string? WebsiteName { get; set; }
 
 	/// <summary>
 	///    Collector Id
 	/// </summary>
 	[DataMember(Name = "collectorId", IsRequired = false)]
 	public int? CollectorId { get; set; }
+
 	/// <summary>
 	///    The dataSourceInstance Id
 	/// </summary>
@@ -140,7 +141,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The deviceDataSourceInstanceGroup Name
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceInstanceGroupName", IsRequired = false)]
-	public string DataSourceInstanceGroupName { get; set; } = string.Empty;
+	public string? DataSourceInstanceGroupName { get; set; }
 
 	/// <summary>
 	///    The Device Group Id
@@ -152,7 +153,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The DeviceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath", IsRequired = false)]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string? DeviceGroupFullPath { get; set; }
 
 	/// <summary>
 	///    The Website Group Id
@@ -164,7 +165,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The Website Group Name
 	/// </summary>
 	[DataMember(Name = "websiteGroupName", IsRequired = false)]
-	public string WebsiteGroupName { get; set; } = string.Empty;
+	public string? WebsiteGroupName { get; set; }
 
 	#endregion
 
