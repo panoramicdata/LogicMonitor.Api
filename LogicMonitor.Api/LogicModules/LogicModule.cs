@@ -10,18 +10,18 @@ public abstract class LogicModule : NamedItem
 	/// <summary>
 	/// The metadata checksum for the LMModule content
 	/// </summary>
-	[DataMember(Name = "checksum")]
-	public string Checksum { get; set; }
+	[DataMember(Name = "checksum", IsRequired = false)]
+	public string? Checksum { get; set; }
 
 	/// <summary>
-	/// The lineageId the LMModule belongs to
+	/// The lineage Id of the LMModule
 	/// </summary>
-	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; }
+	[DataMember(Name = "lineageId", IsRequired = false)]
+	public string? LineageId { get; set; }
 
 	/// <summary>
-	/// The installation metadata
+	/// The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes
 	/// </summary>
-	[DataMember(Name = "installationMetadata")]
+	[DataMember(Name = "installationMetadata", IsRequired =	false)]
 	public IntegrationMetadata? InstallationMetadata { get; set; }
 }

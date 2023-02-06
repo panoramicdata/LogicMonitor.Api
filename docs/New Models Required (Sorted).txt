@@ -1,27 +1,4 @@
 LogicModules
-	"AzureDimensionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},
-	{"type":"object","required":["dimensionName","period"],
-
-	"properties":{"period":{"type":"string"},
-	"metricName":{"type":"string"},
-	"dimensionName":{"type":"string"}}}]}
-
-	"SyntheticsSeleniumAutoDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{"isInternal":{"type":"boolean"},"checkpoints":{"type":"string"}}}]}
-	"GcpPubSubSubscriptionDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"SaaSO365SharePointSiteDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureEABillingDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureEABillingType"],"properties":{"azureEABillingType":{"type":"string"}}}]}
-	"AwsApiGatewayStageDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsapigatewaystage"}
-	"GcpBillingBigQuerySourceDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["gcpBillingPeriodType","gcpBillingType"],"properties":{"gcpBillingPeriodType":{"type":"string"},"gcpBillingType":{"type":"string"}}}]}
-	"AzureSynapseDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureSynapseType"],"properties":{"azureSynapseType":{"type":"string"}}}]}
-	"AzureVirtualDesktopSessionHostsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_azurevirtualdesktopsessionhosts"}
-	"SaasStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-
-	"SaasO365SkusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-
-	"AzureWebJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"GcpPubSubSnapshotDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureNetAppVolumesDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureCostManagementTagsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureTagKeys"],"properties":{"azureTagKeys":{"type":"string"}}}]}
 	"AwsVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 
 	"AzureLogAnalyticsReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}

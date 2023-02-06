@@ -35,7 +35,6 @@ public class CloudWatchAutoDiscoveryMethod : AutoDiscoveryMethod
 	[DataMember(Name = "nodeDimension", IsRequired = true)]
 	public string? NodeDimension { get; set; } = null!;
 
-
 	/// <summary>
 	/// namespace
 	/// </summary>

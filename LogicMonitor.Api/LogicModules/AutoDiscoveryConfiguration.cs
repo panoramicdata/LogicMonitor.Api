@@ -7,56 +7,50 @@ namespace LogicMonitor.Api.LogicModules;
 public class AutoDiscoveryConfiguration
 {
 	/// <summary>
-	/// persistentInstance
+	/// persist discovered instance
 	/// </summary>
-	[DataMember(Name = "persistentInstance")]
+	[DataMember(Name = "persistentInstance", IsRequired = false)]
 	public bool PersistentInstance { get; set; }
 
 	/// <summary>
-	/// disableInstance
+	/// disable discovered instance
 	/// </summary>
-	[DataMember(Name = "disableInstance")]
+	[DataMember(Name = "disableInstance", IsRequired = false)]
 	public bool DisableInstance { get; set; }
 
 	/// <summary>
-	/// deleteInactiveInstance
+	/// delete inactive instance
 	/// </summary>
-	[DataMember(Name = "deleteInactiveInstance")]
+	[DataMember(Name = "deleteInactiveInstance", IsRequired = false)]
 	public bool DeleteInactiveInstance { get; set; }
 
 	/// <summary>
-	/// instanceAutoGroupMethod
+	/// auto group method
 	/// </summary>
-	[DataMember(Name = "instanceAutoGroupMethod")]
-	public string InstanceAutoGroupMethod { get; set; }
+	[DataMember(Name = "instanceAutoGroupMethod", IsRequired = false)]
+	public string? InstanceAutoGroupMethod { get; set; }
 
 	/// <summary>
-	/// instanceAutoGroupMethodParams
+	/// auto group method\u0027s parameters
 	/// </summary>
-	[DataMember(Name = "instanceAutoGroupMethodParams")]
-	public string InstanceAutoGroupMethodParams { get; set; }
+	[DataMember(Name = "instanceAutoGroupMethodParams", IsRequired = false)]
+	public string? InstanceAutoGroupMethodParams { get; set; }
 
 	/// <summary>
-	/// The scheduleInterval
+	/// auto discovery schedule interval in minutes, 0 means host or data source changed, values can be 0|15|60|1440
 	/// </summary>
-	[DataMember(Name = "scheduleInterval")]
+	[DataMember(Name = "scheduleInterval", IsRequired = false)]
 	public int ScheduleIntervalSeconds { get; set; }
 
 	/// <summary>
-	/// The autodiscovery method
+	/// method used to do auto discovery instance
 	/// </summary>
-	[DataMember(Name = "method")]
-	public AutoDiscoveryMethod AutoDiscoveryMethod { get; set; }
+	[DataMember(Name = "method", IsRequired = true)]
+	public AutoDiscoveryMethod AutoDiscoveryMethod { get; set; } = null!;
 
 	/// <summary>
 	/// The version
 	/// </summary>
-	[DataMember(Name = "filters")]
-	public AutoDiscoveryFilter[] AutoDiscoveryFilters { get; set; }
-
-	/// <summary>
-	/// The datasource name
-	/// </summary>
-	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	[DataMember(Name = "filters", IsRequired = false)]
+	public List<AutoDiscoveryFilter>? AutoDiscoveryFilters { get; set; }
 }

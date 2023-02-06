@@ -7,21 +7,15 @@ namespace LogicMonitor.Api.LogicModules;
 public class AppliesToFunction : LogicModule, IHasEndpoint
 {
 	/// <summary>
-	/// The parameters
+	/// The AppliesTo Function code. Note that special characters may need to be escaped.
 	/// </summary>
-	[DataMember(Name = "params")]
-	public string Parameters { get; set; }
-
-	/// <summary>
-	/// The code
-	/// </summary>
-	[DataMember(Name = "code")]
-	public string Code { get; set; }
+	[DataMember(Name = "code", IsRequired = true)]
+	public string Code { get; set; } = null!;
 
 	/// <summary>
 	/// Published
 	/// </summary>
-	[DataMember(Name = "published")]
+	[DataMember(Name = "published", IsRequired = false)]
 	public int Published { get; set; }
 
 	/// <summary>
