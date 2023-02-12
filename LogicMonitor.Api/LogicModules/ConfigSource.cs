@@ -7,118 +7,100 @@ namespace LogicMonitor.Api.LogicModules;
 public class ConfigSource : LogicModule, IHasEndpoint
 {
 	/// <summary>
-	/// The publishing information
-	/// </summary>
-	[DataMember(Name = "configChecks")]
-	public List<ConfigCheck> ConfigChecks { get; set; }
-
-	/// <summary>
-	/// The publishing information
-	/// </summary>
-	[DataMember(Name = "published")]
-	public string Published { get; set; }
-
-	/// <summary>
-	/// What this applies to
-	/// </summary>
-	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
-
-	/// <summary>
-	/// The audit version
-	/// </summary>
-	[DataMember(Name = "auditVersion")]
-	public int? AuditVersion { get; set; }
-
-	/// <summary>
-	/// The autodiscovery config
-	/// </summary>
-	[DataMember(Name = "autoDiscoveryConfig")]
-	public object AutoDiscoveryConfig { get; set; }
-
-	/// <summary>
-	/// The collection interval in seconds
-	/// </summary>
-	[DataMember(Name = "collectInterval")]
-	public int CollectionIntervalSeconds { get; set; }
-
-	/// <summary>
-	/// The collection method
-	/// </summary>
-	[DataMember(Name = "collectMethod")]
-	public CollectionMethod CollectionMethod { get; set; }
-
-	/// <summary>
-	/// The collector attribute
+	/// Collector attribute
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public CollectorAttribute CollectorAttribute { get; set; }
+	public CollectorAttribute? CollectorAttribute { get; set; }
 
 	/// <summary>
-	/// The display name
+	/// Auto discovery configuration
+	/// </summary>
+	[DataMember(Name = "autoDiscoveryConfig")]
+	public AutoDiscoveryConfiguration? AutoDiscoveryConfig { get; set; }
+
+	/// <summary>
+	/// The ConfigSource display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string? DisplayName { get; set; }
 
 	/// <summary>
-	/// Whether autodiscovery is enabled
+	/// The List of ConfigChecks
+	/// </summary>
+	[DataMember(Name = "configChecks")]
+	public List<ConfigCheck>? ConfigChecks { get; set; }
+
+	/// <summary>
+	/// The Applies To for the LMModule
+	/// </summary>
+	[DataMember(Name = "appliesTo")]
+	public string? AppliesTo { get; set; }
+
+	/// <summary>
+	/// Enable active discovery if ConfigSource has multiple instances. true|false
 	/// </summary>
 	[DataMember(Name = "enableAutoDiscovery")]
 	public bool EnableAutoDiscovery { get; set; }
 
 	/// <summary>
-	/// The file format
+	/// The Technical Notes for the LMModule
 	/// </summary>
-	[DataMember(Name = "fileFormat")]
-	public string FileFormat { get; set; }
+	[DataMember(Name = "technology")]
+	public string? Technology { get; set; }
 
 	/// <summary>
-	/// The Group name
+	/// The ConfigSource version
 	/// </summary>
-	[DataMember(Name = "group")]
-	public string Group { get; set; }
+	[DataMember(Name = "version")]
+	public long Version { get; set; }
 
 	/// <summary>
-	/// Whether there are multiple DataSourceInstances
+	/// The Tags for the LMModule
+	/// </summary>
+	[DataMember(Name = "tags")]
+	public string? Tags { get; set; }
+
+	/// <summary>
+	/// The ConfigSource audit version
+	/// </summary>
+	[DataMember(Name = "auditVersion")]
+	public long AuditVersion { get; set; }
+
+	/// <summary>
+	/// The method to collect data
+	/// </summary>
+	[DataMember(Name = "collectMethod")]
+	public CollectionMethod CollectionMethod { get; set; }
+
+	/// <summary>
+	/// Whether the ConfigSource has multiple instances. true|false
 	/// </summary>
 	[DataMember(Name = "hasMultiInstances")]
 	public bool HasMultiInstances { get; set; }
 
 	/// <summary>
-	/// Origin id
+	/// The ConfigSource data collect interval
 	/// </summary>
-	[DataMember(Name = "originId")]
-	public int? OriginId { get; set; }
+	[DataMember(Name = "collectInterval")]
+	public int CollectionIntervalSeconds { get; set; }
 
 	/// <summary>
-	/// Retain
-	/// </summary>
-	[DataMember(Name = "retain")]
-	public string Retention { get; set; }
-
-	/// <summary>
-	/// Tags
-	/// </summary>
-	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
-
-	/// <summary>
-	/// Technology
-	/// </summary>
-	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
-
-	/// <summary>
-	/// TimestampFormat
+	/// Timestamp format. ex. yyyy-MM-dd hh:mm:ss
 	/// </summary>
 	[DataMember(Name = "timestampFormat")]
-	public string TimestampFormat { get; set; }
+	public string? TimestampFormat { get; set; }
 
 	/// <summary>
-	/// The version
+	/// Configuration file format. arbitrary|unix|java-properties|JSON|XML
 	/// </summary>
-	[DataMember(Name = "version")]
-	public int? Version { get; set; }
+	[DataMember(Name = "fileFormat")]
+	public string? FileFormat { get; set; }
+
+	/// <summary>
+	/// The group the LMModule is in
+	/// </summary>
+	[DataMember(Name = "group")]
+	public string? Group { get; set; }
 
 	/// <summary>
 	///    The endpoint

@@ -1,33 +1,4 @@
 LogicModules
-	"AwsVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-
-	"AzureLogAnalyticsReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-
-	"AzureRecoveryServiceRTODiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureLogAnalyticsWorkspacesDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["columnInstanceName","query"],"properties":{"query":{"type":"string"},"columnInstanceName":{"type":"string"}}}]}
-	"AwsGlobalWebACLDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureCostManagementDimensionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureCostManagementType"],"properties":{"azureCostManagementType":{"type":"string"}}}]}
-
-	"ScriptERIDiscoveryAttributeV3":{"type":"object","required":["name"],"properties":{"winScript":{"description":"windows script","type":"string"},"groovyScript":{"description":"groovy script ","type":"string"},"name":{"description":"ERI detection name","type":"string"},"type":{"description":"script type","type":"string"},"linuxCmdline":{"description":"linux script command line","type":"string"},"linuxScript":{"description":"linux script file","type":"string"},"winCmdline":{"description":"windows script command line","type":"string"}}}
-
-	"SaasZoomRoomDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["zoomRoomIssueType"],"properties":{"zoomRoomIssueType":{"type":"string"}}}]}
-
-	"GcpBillingDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["gcpBillingType"],"properties":{"gcpBillingType":{"type":"string"}}}]}
-
-	"AzureAutomationAccountCertificateDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureExpressRouteCircuitPeeringDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureVNGConnectionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"SaaSZoomPlanUsageDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["zoomPlanUsageType"],"properties":{"zoomPlanUsageType":{"type":"string"}}}]}
-	"AzureReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-
-	"SaasO365MailboxDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-
-	"SaasSalesforceLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"GcpLBBackendServiceDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AwsMediaConnectSourceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectsource"}
-	"PaaSJsonPathDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["instancePath","resourceUrl","valueAttribute"],"properties":{"valueAttribute":{"type":"string"},"aliasAttribute":{"type":"string"},"descriptionAttribute":{"type":"string"},"resourceUrl":{"type":"string"},"propertyAttributes":{"type":"string"},"value2Attribute":{"type":"string"},"instancePath":{"type":"string"}}}]}
-	"SaasAirbrakeDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
-	"AzureBackupJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
 	"ConfigSource":{"type":"object","required":["id"],"properties":{"collectorAttribute":{"description":"Collector attribute","$ref":"#/definitions/CollectorAttribute"},"autoDiscoveryConfig":{"description":"Auto discovery configuration","$ref":"#/definitions/AutoDiscoveryConfiguration"},"displayName":{"description":"The ConfigSource display name","type":"string"},"configChecks":{"description":"The List of ConfigChecks","type":"array","items":{"$ref":"#/definitions/ConfigCheck"}},"description":{"description":"The description for the LMModule","type":"string"},"appliesTo":{"description":"The Applies To for the LMModule","type":"string"},"enableAutoDiscovery":{"description":"Enable active discovery if ConfigSource has multiple instances. true|false","type":"boolean"},"technology":{"description":"The Technical Notes for the LMModule","type":"string"},"version":{"format":"int64","description":"The ConfigSource version","type":"integer"},"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"},"tags":{"description":"The Tags for the LMModule","type":"string"},"auditVersion":{"format":"int64","description":"The ConfigSource audit version","type":"integer"},"collectMethod":{"description":"The method to collect data","type":"string"},"hasMultiInstances":{"description":"Whether the ConfigSource has multiple instances. true|false","type":"boolean"},"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"},"collectInterval":{"format":"int32","description":"The ConfigSource data collect interval","type":"integer"},"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"},"name":{"description":"The config source name","type":"string"},"timestampFormat":{"description":"Timestamp format. ex. yyyy-MM-dd hh:mm:ss","type":"string"},"id":{"format":"int32","description":"The ID of the LMModule","readOnly":true,"type":"integer"},"fileFormat":{"description":"Configuration file format. arbitrary|unix|java-properties|JSON|XML","type":"string"},"group":{"description":"The group the LMModule is in","type":"string"}}}
 
 Logos
