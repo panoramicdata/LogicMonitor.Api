@@ -56,13 +56,13 @@ public class NetscanTests : TestWithOutput
 			Name = name,
 			Description = description,
 			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
-			Credentials = new NetscanCredentials
+			Credentials = new EC2NetscanPolicyCredential
 			{
 				DeviceGroupId = credentialsDeviceGroupId,
 				Custom = credentialsCustom
 			},
 			Method = netscanMethod,
-			Schedule = new NetscanSchedule
+			Schedule = new RestSchedule
 			{
 				Type = netscanScheduleType,
 				Cron = netscanScheduleCron,
@@ -75,11 +75,11 @@ public class NetscanTests : TestWithOutput
 			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
 			SubnetScanRange = subnetScanRange,
 			ExcludedIpAddresses = excludedIpAddresses,
-			Ddr = new NetscanDdr
+			Ddr = new Ec2DDR
 			{
-				Assignment = new List<NetscanAssignment>
+				Assignment = new List<Assignment>
 					{
-						new NetscanAssignment
+						new Assignment
 						{
 							DeviceGroupId = assignmentDeviceGroupId,
 							DisableAlerting = assignmentDisableAlerting,
@@ -90,13 +90,13 @@ public class NetscanTests : TestWithOutput
 					},
 				ChangeName = ddrChangeName
 			},
-			DuplicatesStrategy = new NetscanDuplicatesStrategy
+			DuplicatesStrategy = new ExcludeDuplicateIps
 			{
 				Type = duplicatesStrategyType,
 				Groups = duplicatedStrategyGroups,
 				Collectors = duplicatesStrategyCollectors
 			},
-			Ports = new NetscanPorts
+			Ports = new RestNetscanPorts
 			{
 				IsGlobalDefault = false,
 				Value = "21,22,23,25,53,69,80,81,110,123,135,143,389,443,445,631,993,1433,1521,3306,3389,5432,5672,6081,7199,8000,8080,8081,9100,10000,11211,27017"

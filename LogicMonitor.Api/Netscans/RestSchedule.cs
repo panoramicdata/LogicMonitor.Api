@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Netscans;
 ///    A netscan policy schedule
 /// </summary>
 [DataContract(Name = "schedule")]
-public class NetscanSchedule
+public class RestSchedule
 {
 	/// <summary>
 	///    The notify
@@ -34,7 +34,7 @@ public class NetscanSchedule
 	///    The weekday
 	/// </summary>
 	[DataMember(Name = "weekday")]
-	public object? WeekDays { get; set; }
+	public List<string> WeekDays { get; set; }
 
 	/// <summary>
 	///    The nth week

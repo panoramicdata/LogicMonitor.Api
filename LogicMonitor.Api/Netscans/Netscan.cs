@@ -7,205 +7,91 @@ namespace LogicMonitor.Api.Netscans;
 public class Netscan : NamedItem, IExecutable
 {
 	/// <summary>
-	///    The accessibility
+	/// The user that created the policy
 	/// </summary>
-	[DataMember(Name = "accessibility")]
-	public string Accessibility { get; set; }
+	[DataMember(Name = "creator", IsRequired = false)]
+	public string? CreatorName { get; set; }
 
 	/// <summary>
-	///    The operation when a device is dead
+	/// The name of the group of the Collector associated with this Netscan
 	/// </summary>
-	[DataMember(Name = "deadOperation")]
-	public string DeadOperation { get; set; }
+	[DataMember(Name = "collectorGroupName", IsRequired = false)]
+	public string? CollectorGroupName { get; set; }
 
 	/// <summary>
-	///    The method
+	/// The method that should be used to discover devices. Options are nmap (ICMP Ping), nec2 (EC2), enhancedScript and script
 	/// </summary>
-	[DataMember(Name = "method")]
+	[DataMember(Name = "method", IsRequired = true)]
 	public NetscanMethod Method { get; set; }
 
 	/// <summary>
-	///    The default group name
+	/// The ID of the group of the Collector associated with this Netscan
 	/// </summary>
-	[DataMember(Name = "defaultGroup")]
-	public string DefaultGroupName { get; set; }
-
-	/// <summary>
-	///    The default group name
-	/// </summary>
-	[DataMember(Name = "defaultGroupFullPath")]
-	public string DefaultGroupFullPath { get; set; }
-
-	/// <summary>
-	///    The group name
-	/// </summary>
-	[DataMember(Name = "group")]
-	public string GroupName { get; set; }
-
-	/// <summary>
-	///    The netscan group id
-	/// </summary>
-	[DataMember(Name = "nsgId")]
-	public int GroupId { get; set; }
-
-	/// <summary>
-	///    Whether to include network and broadcast
-	/// </summary>
-	[DataMember(Name = "includeNetworkAndBroadcast")]
-	public bool IncludeNetworkAndBroadcast { get; set; }
-
-	/// <summary>
-	///    The schedule
-	/// </summary>
-	[DataMember(Name = "schedule")]
-	public NetscanSchedule Schedule { get; set; }
-
-	/// <summary>
-	///    The creator name
-	/// </summary>
-	[DataMember(Name = "creator")]
-	public string CreatorName { get; set; }
-
-	/// <summary>
-	///    The collector group id
-	/// </summary>
-	[DataMember(Name = "collectorGroup")]
+	[DataMember(Name = "collectorGroup", IsRequired = false)]
 	public int CollectorGroupId { get; set; }
 
 	/// <summary>
-	///    The collector group name
+	/// The date and time of the next start time of the scan - displayed as manual if the scan does not run on a schedule
 	/// </summary>
-	[DataMember(Name = "collectorGroupName")]
-	public object CollectorGroupName { get; set; }
+	[DataMember(Name = "nextStart", IsRequired = false)]
+	public string? NextStart { get; set; }
 
 	/// <summary>
-	///    The collector id
+	/// Information that determines how duplicate discovered devices should be handled
 	/// </summary>
-	[DataMember(Name = "collector")]
+	[DataMember(Name = "duplicate", IsRequired = true)]
+	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = null!;
+
+	/// <summary>
+	/// The Id of the device
+	/// </summary>
+	[DataMember(Name = "version", IsRequired = false)]
+	public int Version { get; set; }
+
+	/// <summary>
+	/// The ID of the Collector associated with this Netscan
+	/// </summary>
+	[DataMember(Name = "collector", IsRequired = false)]
 	public int CollectorId { get; set; }
 
 	/// <summary>
-	///    The collector description
+	/// Ignore system.ips when checking for duplicate resources
 	/// </summary>
-	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	[DataMember(Name = "ignoreSystemIPsDuplicates", IsRequired = false)]
+	public bool IgnoreSystemIpsDuplicates { get; set; }
 
 	/// <summary>
-	///    The next start
+	/// Information related to the recurring execution schedule for the Netscan Policy
 	/// </summary>
-	[DataMember(Name = "nextStart")]
-	public string NextStart { get; set; }
+	[DataMember(Name = "schedule", IsRequired = true)]
+	public RestSchedule Schedule { get; set; } = null!;
 
 	/// <summary>
-	///    The duplicate
+	/// The description of the Collector associated with this Netscan
 	/// </summary>
-	[DataMember(Name = "duplicate")]
-	public NetscanDuplicatesStrategy DuplicatesStrategy { get; set; }
+	[DataMember(Name = "collectorDescription", IsRequired = false)]
+	public string? CollectorDescription { get; set; }
 
 	/// <summary>
-	///    The subnet scan range
+	/// The epoch of the next start time of the scan - displayed as 0 if the scan does not run on a schedule
 	/// </summary>
-	[DataMember(Name = "subnet")]
-	public string SubnetScanRange { get; set; }
-
-	/// <summary>
-	///    The excluded IP addresses
-	/// </summary>
-	[DataMember(Name = "exclude")]
-	public string ExcludedIpAddresses { get; set; }
-
-	/// <summary>
-	///    The credentials
-	/// </summary>
-	[DataMember(Name = "credentials")]
-	public NetscanCredentials Credentials { get; set; }
-
-	/// <summary>
-	///    The Discovered device rules
-	/// </summary>
-	[DataMember(Name = "ddr")]
-	public NetscanDdr Ddr { get; set; }
-
-	/// <summary>
-	///    The Script type (if any)
-	/// </summary>
-	[DataMember(Name = "scriptType")]
-	public NetscanScriptType? ScriptType { get; set; }
-
-	/// <summary>
-	///    The groovy script
-	/// </summary>
-	[DataMember(Name = "groovyScript")]
-	public string GroovyScript { get; set; }
-
-	/// <summary>
-	///    The groovy script parameters
-	/// </summary>
-	[DataMember(Name = "groovyScriptParams")]
-	public string GroovyScriptParameters { get; set; }
-
-	/// <summary>
-	///    The Linux script
-	/// </summary>
-	[DataMember(Name = "linuxScript")]
-	public string LinuxScript { get; set; }
-
-	/// <summary>
-	///    The Linux script parameters
-	/// </summary>
-	[DataMember(Name = "linuxScriptParams")]
-	public string LinuxScriptParameters { get; set; }
-
-	/// <summary>
-	///    The Windows script
-	/// </summary>
-	[DataMember(Name = "windowsScript")]
-	public string WindowsScript { get; set; }
-
-	/// <summary>
-	///    The Windows script parameters
-	/// </summary>
-	[DataMember(Name = "windowsScriptParams")]
-	public string WindowsScriptParameters { get; set; }
-
-	/// <summary>
-	///    The script path
-	/// </summary>
-	[DataMember(Name = "scriptPath")]
-	public string ScriptPath { get; set; }
-
-	/// <summary>
-	///    The script parameters
-	/// </summary>
-	[DataMember(Name = "scriptParams")]
-	public string ScriptParameters { get; set; }
-
-	/// <summary>
-	///    The next start time in seconds since the Epoch
-	/// </summary>
-	[DataMember(Name = "nextStartEpoch")]
+	[DataMember(Name = "nextStartEpoch", IsRequired = false)]
 	public long NextStartUtcSeconds { get; set; }
+
+	/// <summary>
+	/// The ID of the group the policy belongs to
+	/// </summary>
+	[DataMember(Name = "nsgId", IsRequired = false)]
+	public int GroupId { get; set; }
+
+	/// <summary>
+	/// The group the Netscan policy should belong to
+	/// </summary>
+	[DataMember(Name = "group", IsRequired = false)]
+	public string? GroupName { get; set; }
 
 	/// <summary>
 	///    The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/netscans";
-
-	/// <summary>
-	///    The version
-	/// </summary>
-	[DataMember(Name = "version")]
-	public int Version { get; set; }
-
-	/// <summary>
-	/// The ports
-	/// </summary>
-	[DataMember(Name = "ports")]
-	public NetscanPorts Ports { get; set; }
-
-	/// <summary>
-	/// Whether to ignore duplicates of the system.ips property
-	/// /// </summary>
-	[DataMember(Name = "ignoreSystemIPsDuplicates")]
-	public bool IgnoreSystemIpsDuplicates { get; set; }
 }

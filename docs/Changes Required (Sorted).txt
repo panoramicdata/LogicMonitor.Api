@@ -1,4 +1,3 @@
-Logos
 NetscanPolicies
 		Netscan
 			"required":["duplicate","method","name","schedule"]

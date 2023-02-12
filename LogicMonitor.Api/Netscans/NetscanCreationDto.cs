@@ -29,7 +29,7 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    Schedule on which to run this policy
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public NetscanSchedule Schedule { get; set; }
+	public RestSchedule Schedule { get; set; }
 
 	/// <summary>
 	///    The name
@@ -60,7 +60,7 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    Schedule on which to run this policy
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public NetscanCredentials Credentials { get; set; }
+	public EC2NetscanPolicyCredential Credentials { get; set; }
 
 	/// <summary>
 	///    The subnet scan range
@@ -78,13 +78,13 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    DDR
 	/// </summary>
 	[DataMember(Name = "ddr")]
-	public NetscanDdr Ddr { get; set; }
+	public Ec2DDR Ddr { get; set; }
 
 	/// <summary>
 	///    IP addresses to exclude
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public NetscanDuplicatesStrategy DuplicatesStrategy { get; set; }
+	public ExcludeDuplicateIps DuplicatesStrategy { get; set; }
 
 	/// <summary>
 	///    The script path (if required)
@@ -120,5 +120,5 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    The ports
 	/// </summary>
 	[DataMember(Name = "ports")]
-	public NetscanPorts Ports { get; set; }
+	public RestNetscanPorts Ports { get; set; }
 }
