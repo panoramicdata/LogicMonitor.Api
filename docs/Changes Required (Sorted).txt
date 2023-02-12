@@ -1,39 +1,5 @@
-Reports
-		Recipient
-			"method":{"description":"EMAIL|SMEMAIL|VOICE|SMS, Recipient method for each type\n            group: \"method\" not used\n            arbitrary: the method should be email.\n            admin: the method  Should be email, smsEmail, voice, sms, or defaultMethod;\n","type":"string","example":"EMAIL"}
-			"contact":{"description":"contact details, email address or phone number","type":"string"}
-			"type":{"description":"GROUP|ARBITRARY|ADMIN, where Admin \u003d a user, and Arbitrary \u003d an arbitrary email","type":"string","example":"Admin"}
-			"addr":{"description":"the user name if method \u003d admin, or the email address if method \u003d arbitrary","type":"string","example":"john.doe@logicmonitor.com"}
-		ReportRecipient
-			"type":{"description":"Where admin refers to a user in the account and arbitrary refers to an email address not associated with a user account.Acceptable values are: admin, arbitrary, group","type":"string","example":"admin"}
-		ReportGroup
-			"required":["name"]
-			"matchedReportCount":{"format":"int32","description":"The matched reports count of this group","readOnly":true,"type":"integer","example":2.0}
-			"userPermission":{"description":"The user permission on the report group","readOnly":true,"type":"string","example":"read"}
-			"name":{"description":"The report group name","type":"string","example":"Firewall Reports"}
-			"description":{"description":"The report group description","type":"string","example":"This is daily firewall reports"}
-			"id":{"format":"int32","description":"The report group id","readOnly":true,"type":"integer"}
-			"reportsCount":{"format":"int32","description":"The reports count of this group","readOnly":true,"type":"integer","example":5.0}
-		EscalatingChain
-			"throttlingAlerts":{"format":"int32","description":"max number of alert can send during a throttle period","type":"integer","example":40.0}
-			"enableThrottling":{"description":"if throttle needs to be enabled then true if not then false.","type":"boolean","example":true}
-			"name":{"description":"the chain name","type":"string","example":"NOC Team"}
-			"throttlingPeriod":{"format":"int32","description":"the throttle period","type":"integer","example":30.0}
-		ReportBase
-			"reportLinkExpire":{"description":"The report link Expire. Allowable values are:High Flexibility,High Security","type":"string","example":"High Flexibility"}
-		InterfBandwidthReport
-			"required":["isBase1024","metrics","top10Only"]
-			"isBase1024":{"description":"true | false\nfalse: Scale the number using 1000 \ntrue: Scale the number using 1024","type":"boolean"}
-			"top10Only":{"description":"true | false\nfalse: Metrics will be displayed for all selected devices or groups\ntrue: Metrics will only be displayed for the top ten device or groups","type":"boolean"}
-			"metrics":{"description":"The datapoint or calculation on a datapoint that will be included in the report, where each datapoint/calculation is specified by three fields: dataSourceId, instances (glob is okay)","type":"array","items":{"$ref":"#/definitions/Metric"}}
 ScheduledDownTimes
 Settings
-		Role
-			"privileges":{"description":"The account privileges associated with the role. Privileges can be added to a role for each area of your account","type":"array","items":{"$ref":"#/definitions/Privilege"}}
-			"userPermission":{"description":"The permission of current role with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
-			"description":{"description":"The description of the role","type":"string","example":"Administrator can do everything, including security-sensitive actions"}
-			"roleGroupId":{"format":"int32","description":"The group Id of the role","type":"integer","example":3.0}
-
 		Admin
 			"viewPermission":{"description":"The account tabs that will be visible to the user","type":"object","example":"{\n\n\"Resources\" : true,\n\"Websites\" : true,\n\"Reports\" : true,\n\"Dashboards\" : true,\n\"Alerts\" : true,\n\"Settings\" : true,\n\"Maps\" : true,\n\"Logs\" : true,\n\"Traces\" : true\n}"}
 			"adminGroupIds":{"description":"The Id(s) of the groups the admin is in, where multiple group ids are comma separated","type":"array","items":{"format":"int32","type":"integer"},"example":"[1,2,3]"}

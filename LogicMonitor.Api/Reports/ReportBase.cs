@@ -42,7 +42,7 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// If the report is configured to be delivered via email, this object provides the recipients that the report will be delivered to
 	/// </summary>
 	[DataMember(Name = "recipients", IsRequired = false)]
-	public List<Recipient>? Recipients { get; set; }
+	public List<ReportRecipient>? Recipients { get; set; }
 
 	/// <summary>
 	/// A cron schedule that indicates when the report will be delivered via email
