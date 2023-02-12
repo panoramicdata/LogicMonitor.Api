@@ -41,4 +41,16 @@ public class Assignment
 	/// </summary>
 	[DataMember(Name = "group", IsRequired = false)]
 	public int DeviceGroupId { get; set; }
+
+	/// <summary>
+	/// Type
+	/// </summary>
+	[DataMember(Name = "type", IsRequired = false)]
+	public NetscanAssignmentType Type { get; set; }
+
+	/// <summary>
+	/// query
+	/// </summary>
+	[DataMember(Name = "query", IsRequired = false)]
+	public string? Query { get; set; }
 }

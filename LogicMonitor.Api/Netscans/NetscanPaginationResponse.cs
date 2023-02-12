@@ -27,5 +27,11 @@ public class NetscanPaginationResponse
 	/// items
 	/// </summary>
 	[DataMember(Name = "items", IsRequired = false)]
-	public List<Netscan>? Items { get; set; }
+	public List<Netscan> Items { get; set; }
+
+	/// <summary>
+	/// isMin
+	/// </summary>
+	[DataMember(Name = "isMin", IsRequired = false)]
+	public bool IsMin { get; set; }
 }

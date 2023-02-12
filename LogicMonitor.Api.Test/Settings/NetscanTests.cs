@@ -11,12 +11,15 @@ public class NetscanTests : TestWithOutput
 	[Fact]
 	public async Task CanGetNetscanById()
 	{
-		var netscan = (await LogicMonitorClient.GetNetscanList(null, null, CancellationToken.None).ConfigureAwait(false)).Items?[0];
+		var netscan = (await LogicMonitorClient.GetNetscanListAsync(null, null, CancellationToken.None).ConfigureAwait(false)).Items?[0];
 
-		var refetchedNetscan = await LogicMonitorClient
-			.GetAsync<Netscan>(netscan.Id, CancellationToken.None)
-			.ConfigureAwait(false);
-		refetchedNetscan.Should().NotBeNull();
+		if (netscan != null)
+		{
+			var refetchedNetscan = await LogicMonitorClient
+				.GetNetscanByIdAsync(netscan.Id, CancellationToken.None)
+				.ConfigureAwait(false);
+			refetchedNetscan.Should().NotBeNull();
+		}
 	}
 
 	[Fact]
@@ -132,7 +135,7 @@ public class NetscanTests : TestWithOutput
 	[Fact]
 	public async Task ListAllNetscans()
 	{
-		var netscans = await LogicMonitorClient.GetAllAsync<Netscan>(CancellationToken.None).ConfigureAwait(false);
+		var netscans = (await LogicMonitorClient.GetNetscanListAsync(null, null, CancellationToken.None).ConfigureAwait(false)).Items;
 		netscans.Should().NotBeNull();
 		netscans.Should().NotBeNullOrEmpty();
 

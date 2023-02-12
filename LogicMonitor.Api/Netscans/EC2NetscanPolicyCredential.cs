@@ -23,4 +23,16 @@ public class EC2NetscanPolicyCredential
 	/// </summary>
 	[DataMember(Name = "deviceGroupName", IsRequired = false)]
 	public string? DeviceGroupName { get; set; }
+
+	/// <summary>
+	/// The ID of the device that credentials should be inherited from, for this scan
+	/// </summary>
+	[DataMember(Name = "deviceId", IsRequired = false)]
+	public int DeviceId { get; set; }
+
+	/// <summary>
+	/// The name of the device that credentials should be inherited from, for this scan
+	/// </summary>
+	[DataMember(Name = "deviceName", IsRequired = false)]
+	public string? DeviceName { get; set; }
 }
