@@ -7,39 +7,39 @@ namespace LogicMonitor.Api.Settings;
 public class ApiToken : IdentifiedItem
 {
 	/// <summary>
-	/// The access ID
+	/// The access Id associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "accessId")]
-	public string AccessId { get; set; }
+	[DataMember(Name = "accessId", IsRequired = false)]
+	public string? AccessId { get; set; }
 
 	/// <summary>
-	/// The access key
+	/// The secret key associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "accessKey")]
-	public string AccessKey { get; set; }
+	[DataMember(Name = "accessKey", IsRequired = false)]
+	public string? AccessKey { get; set; }
 
 	/// <summary>
-	/// The user id
+	/// The id of the user associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "adminId")]
+	[DataMember(Name = "adminId", IsRequired = false)]
 	public int UserId { get; set; }
 
 	/// <summary>
-	/// The username
+	/// The name of the user associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "adminName")]
-	public string UserName { get; set; }
+	[DataMember(Name = "adminName", IsRequired = false)]
+	public string? UserName { get; set; }
 
 	/// <summary>
-	/// The roles
+	/// The roles assigned to the user that is associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "roles")]
-	public List<string> Roles { get; set; }
+	[DataMember(Name = "roles", IsRequired = false)]
+	public List<string>? Roles { get; set; }
 
 	/// <summary>
-	/// The status
+	/// 1 | 2 - Whether or not the API Tokens are enabled, where 2 \u003d enabled
 	/// </summary>
-	[DataMember(Name = "status")]
+	[DataMember(Name = "status", IsRequired = false)]
 	public ApiTokenStatus Status { get; set; }
 
 	/// <summary>
@@ -49,33 +49,33 @@ public class ApiToken : IdentifiedItem
 	public ApiTokenType? Type { get; set; }
 
 	/// <summary>
-	/// A note
+	/// The note associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "note")]
-	public string Note { get; set; }
+	[DataMember(Name = "note", IsRequired = false)]
+	public string? Note { get; set; }
 
 	/// <summary>
-	/// Who created it
+	/// The user who is the API Tokens created by
 	/// </summary>
-	[DataMember(Name = "createdBy")]
-	public string CreatedBy { get; set; }
+	[DataMember(Name = "createdBy", IsRequired = false)]
+	public string? CreatedBy { get; set; }
 
 	/// <summary>
-	/// The status
+	/// The epoch at which the API Tokens were created
 	/// </summary>
-	[DataMember(Name = "createdOn")]
+	[DataMember(Name = "createdOn", IsRequired = false)]
 	public long CreatedOnSeconds { get; set; }
 
 	/// <summary>
-	/// The number of seconds since the Epoch that it was last sued
+	/// The epoch at which the API Tokens were last used
 	/// </summary>
-	[DataMember(Name = "lastUsedOn")]
+	[DataMember(Name = "lastUsedOn", IsRequired = false)]
 	public long LastUsedOnSeconds { get; set; }
 
 	/// <summary>
-	///    The user permission
+	/// The permission of current apiToken with the admin. values can be write|read|none
 	/// </summary>
-	[DataMember(Name = "userPermission")]
+	[DataMember(Name = "userPermission", IsRequired = false)]
 	public UserPermission? UserPermission { get; set; }
 
 	/// <summary>

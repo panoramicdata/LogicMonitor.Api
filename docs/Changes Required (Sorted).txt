@@ -1,11 +1,5 @@
 ScheduledDownTimes
 Settings
-		Admin
-			"viewPermission":{"description":"The account tabs that will be visible to the user","type":"object","example":"{\n\n\"Resources\" : true,\n\"Websites\" : true,\n\"Reports\" : true,\n\"Dashboards\" : true,\n\"Alerts\" : true,\n\"Settings\" : true,\n\"Maps\" : true,\n\"Logs\" : true,\n\"Traces\" : true\n}"}
-			"adminGroupIds":{"description":"The Id(s) of the groups the admin is in, where multiple group ids are comma separated","type":"array","items":{"format":"int32","type":"integer"},"example":"[1,2,3]"}
-			"userPermission":{"description":"The permission of current user with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
-			"tenantId":{"format":"int32","description":"The tenant id of the user","readOnly":true,"type":"integer","example":2.0}
-
 		APIToken
 			"userPermission":{"description":"The permission of current apiToken with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
 		Authentication
