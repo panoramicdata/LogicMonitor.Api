@@ -1,22 +1,4 @@
-NetscanPolicies
-		ScriptNetscan
-			"defaultGroupFullPath":{"description":"The full path of the default group to add discovered devices to","readOnly":true,"type":"string","example":"lm/prod/servers"}
-		Ec2Netscan
-			"ports":{"$ref":"#/definitions/RestNetscanPorts"}
-		NMapNetscan
-			"required":["includeNetworkAndBroadcast","subnet"]
-			"includeNetworkAndBroadcast":{"description":"Include Network \u0026 Broadcast Address for CIDR based netscan","type":"boolean","example":false}
-			"credentials":{"description":"The credentials to be used for the scan","$ref":"#/definitions/RestNMapNetscanPolicyCredential","example":"2"}
-			"ports":{"description":"The ports that should be used in the Netscan","$ref":"#/definitions/RestNetscanPorts"}
-
-
-PropertySources
-PushMetrics
-RecycleBin
 Reports
-		SLAReport
-			"calculationMethod":{"format":"int32","description":"Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics","type":"integer"}
-
 		Recipient
 			"method":{"description":"EMAIL|SMEMAIL|VOICE|SMS, Recipient method for each type\n            group: \"method\" not used\n            arbitrary: the method should be email.\n            admin: the method  Should be email, smsEmail, voice, sms, or defaultMethod;\n","type":"string","example":"EMAIL"}
 			"contact":{"description":"contact details, email address or phone number","type":"string"}
