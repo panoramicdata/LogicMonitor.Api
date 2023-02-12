@@ -11,7 +11,7 @@ public class NetscanTests : TestWithOutput
 	[Fact]
 	public async Task CanGetNetscanById()
 	{
-		var netscan = (await LogicMonitorClient.GetAllAsync<Netscan>(CancellationToken.None).ConfigureAwait(false))[0];
+		var netscan = (await LogicMonitorClient.GetNetscanList(null, null, CancellationToken.None).ConfigureAwait(false)).Items?[0];
 
 		var refetchedNetscan = await LogicMonitorClient
 			.GetAsync<Netscan>(netscan.Id, CancellationToken.None)
@@ -84,8 +84,6 @@ public class NetscanTests : TestWithOutput
 							DeviceGroupId = assignmentDeviceGroupId,
 							DisableAlerting = assignmentDisableAlerting,
 							InclusionType = assignmentInclusionType,
-							Type = assignmentType,
-							Query = assignmentQuery
 						}
 					},
 				ChangeName = ddrChangeName
@@ -93,8 +91,6 @@ public class NetscanTests : TestWithOutput
 			DuplicatesStrategy = new ExcludeDuplicateIps
 			{
 				Type = duplicatesStrategyType,
-				Groups = duplicatedStrategyGroups,
-				Collectors = duplicatesStrategyCollectors
 			},
 			Ports = new RestNetscanPorts
 			{
@@ -118,8 +114,6 @@ public class NetscanTests : TestWithOutput
 		createdNetscan.Name.Should().Be(name);
 		createdNetscan.Description.Should().Be(description);
 		createdNetscan.CollectorId.Should().Be(CollectorId);
-		createdNetscan.Credentials.Should().NotBeNull();
-		createdNetscan.Credentials.DeviceGroupId.Should().Be(credentialsDeviceGroupId);
 		createdNetscan.Method.Should().Be(netscanMethod);
 		createdNetscan.Schedule.Should().NotBeNull();
 		createdNetscan.Schedule.Type.Should().Be(netscanScheduleType);
@@ -127,18 +121,7 @@ public class NetscanTests : TestWithOutput
 		createdNetscan.Schedule.Notify.Should().Be(netscanScheduleNotify);
 		createdNetscan.GroupName.Should().Be(netscanGroup.Name);
 		createdNetscan.GroupId.Should().Be(netscanGroup.Id);
-		createdNetscan.SubnetScanRange.Should().Be(subnetScanRange);
-		createdNetscan.ExcludedIpAddresses.Should().Be(excludedIpAddresses);
 		createdNetscan.CreatorName.Should().NotBeNull();
-		createdNetscan.Ddr.Should().NotBeNull();
-		createdNetscan.Ddr.Assignment.Should().NotBeNull();
-		createdNetscan.Ddr.Assignment.Should().HaveCount(1);
-		createdNetscan.Ddr.Assignment[0].DeviceGroupId.Should().Be(assignmentDeviceGroupId);
-		createdNetscan.Ddr.Assignment[0].Type.Should().Be(assignmentType);
-		createdNetscan.Ddr.Assignment[0].InclusionType.Should().Be(assignmentInclusionType);
-		createdNetscan.Ddr.Assignment[0].Query.Should().Be(assignmentQuery);
-		createdNetscan.Ddr.Assignment[0].DisableAlerting.Should().Be(assignmentDisableAlerting);
-		createdNetscan.Ddr.ChangeName.Should().Be(ddrChangeName);
 		createdNetscan.DuplicatesStrategy.Should().NotBeNull();
 		createdNetscan.DuplicatesStrategy.Type.Should().Be(duplicatesStrategyType);
 

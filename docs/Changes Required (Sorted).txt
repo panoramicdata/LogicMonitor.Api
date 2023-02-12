@@ -1,16 +1,4 @@
 NetscanPolicies
-		Netscan
-			"required":["duplicate","method","name","schedule"]
-			"creator":{"description":"The user that created the policy","readOnly":true,"type":"string","example":"sarah@logicmonitor.com"}
-			"collectorGroupName":{"description":"The name of the group of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod"}
-			"method":{"description":"The method that should be used to discover devices. Options are nmap (ICMP Ping), nec2 (EC2), enhancedScript and script","type":"string","example":"nmap"}
-			"collectorGroup":{"format":"int32","description":"The ID of the group of the Collector associated with this Netscan","readOnly":true,"type":"integer","example":4.0}
-			"nextStart":{"description":"The date and time of the next start time of the scan - displayed as manual if the scan does not run on a schedule","readOnly":true,"type":"string","example":"2018-09-07 15:12:00 PDT"}
-			"ignoreSystemIPsDuplicates":{"description":"Ignore system.ips when checking for duplicate resources","readOnly":true,"type":"boolean"}
-			"collectorDescription":{"description":"The description of the Collector associated with this Netscan","readOnly":true,"type":"string","example":"Prod CollectorA"}
-			"nextStartEpoch":{"format":"int64","description":"The epoch of the next start time of the scan - displayed as 0 if the scan does not run on a schedule","readOnly":true,"type":"integer","example":1.53635832E9}
-			"id":{"format":"int32","description":"The ID of the Netscan Policy","readOnly":true,"type":"integer","example":208.0}
-
 		ScriptNetscan
 			"defaultGroupFullPath":{"description":"The full path of the default group to add discovered devices to","readOnly":true,"type":"string","example":"lm/prod/servers"}
 		Ec2Netscan
