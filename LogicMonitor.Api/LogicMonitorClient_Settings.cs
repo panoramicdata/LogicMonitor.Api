@@ -59,4 +59,18 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task SaveAlertRuleAsync(AlertRule alertRule, CancellationToken cancellationToken)
 		=> await PutAsync($"setting/alert/rules/{alertRule.Id}?data=%5Bobject+Object%5D", alertRule, cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// get user list
+	/// </summary>
+	public async Task<AdminPaginationResponse> GetAdminListAsync(
+		string? type = null,
+		string? permission = null,
+		string? filterGroupString = null,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		string? filter = null,
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<AdminPaginationResponse>("$setting/admins", cancellationToken);
 }

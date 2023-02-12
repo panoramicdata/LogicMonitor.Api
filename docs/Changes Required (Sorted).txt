@@ -1,34 +1,3 @@
-ScheduledDownTimes
-Settings
-		APIToken
-			"userPermission":{"description":"The permission of current apiToken with the admin. values can be write|read|none","readOnly":true,"type":"string","example":"read"}
-		Authentication
-			"password":{"description":"NTLM authentication password","type":"string"}
-			"type":{"description":"Authentication type","type":"string","example":"basic"}
-			"userName":{"description":"NTLM  authentication userName","type":"string"}
-
-		getAdminList
-			add parameters
-			{
-						"in": "query",
-						"name": "type",
-						"pattern": "bearer",
-						"type": "string",
-						"required": false
-					},
-					{
-						"in": "query",
-						"name": "permission",
-						"pattern": "traces",
-						"type": "string",
-						"required": false
-					},
-					{
-						"in": "query",
-						"name": "filterGroupString",
-						"type": "string",
-						"required": false
-					}
 Users
 		Privilege
 			"objectName":{"description":"The privilege object name","readOnly":true,"type":"string"}
