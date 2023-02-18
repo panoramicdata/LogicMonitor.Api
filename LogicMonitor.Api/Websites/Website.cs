@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Websites;
 /// A Websites
 /// </summary>
 [DataContract]
-public class Website : NamedItem, IPatchable, IHasCustomProperties
+public class Website : NamedItem, IPatchable
 {
 	/// <summary>
 	/// The website template
@@ -52,229 +52,113 @@ public class Website : NamedItem, IPatchable, IHasCustomProperties
 	/// <summary>
 	/// The role privilege operation(s) for this website that are granted to the user who made the API request
 	/// </summary>
-	[DataMember(Name = "rolePrivileges")]
+	[DataMember(Name = "rolePrivileges", IsRequired = false)]
 	public string[]? RolePrivileges { get; set; }
 
 	/// <summary>
-	/// Associated collectors
+	/// The time (in epoch format) that the website was updated
 	/// </summary>
-	[DataMember(Name = "collectors")]
-	public List<WebsiteCollectorInfo> Collectors { get; set; }
+	[DataMember(Name = "lastUpdated", IsRequired = false)]
+	public long UpdatedOnSeconds { get; set; }
 
 	/// <summary>
-	/// The count of packets to send
+	/// true: monitoring is disabled for all services in the website\u0027s folder\nfalse: monitoring is not disabled for all services in website\u0027s folder
 	/// </summary>
-	[DataMember(Name = "count")]
-	public int Count { get; set; }
+	[DataMember(Name = "stopMonitoringByFolder", IsRequired = false)]
+	public bool StopMonitoringByFolder { get; set; }
 
 	/// <summary>
-	/// The domain
+	/// true: monitoring is disabled for the website\nfalse: monitoring is enabled for the website\nIf stopMonitoring\u003dtrue, then alerting will also by default be disabled for the website
 	/// </summary>
-	[DataMember(Name = "domain")]
-	public string Domain { get; set; }
+	[DataMember(Name = "stopMonitoring", IsRequired = false)]
+	public bool StopMonitoring { get; set; }
 
 	/// <summary>
-	/// Authentication credentials
+	/// write | read | ack. The permission level of the user that made the API request
 	/// </summary>
-	[DataMember(Name = "host")]
-	public string HostName { get; set; }
+	[DataMember(Name = "userPermission", IsRequired = false)]
+	[JsonConverter(typeof(StringEnumConverter))]
+	public UserPermission UserPermissionString { get; set; }
 
 	/// <summary>
-	/// Whether alerting is disabled
+	/// true: an alert will be triggered if a check fails from an individual test location\nfalse: an alert will not be triggered if a check fails from an individual test location
 	/// </summary>
-	[DataMember(Name = "alertDisableStatus")]
-	public AlertDisableStatus AlertDisableStatus { get; set; }
-
-	/// <summary>
-	/// The alert expression
-	/// </summary>
-	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
-
-	/// <summary>
-	/// The alert status
-	/// </summary>
-	[DataMember(Name = "alertStatus")]
-	public AlertStatus AlertStatus { get; set; }
-
-	/// <summary>
-	/// The alert status
-	/// </summary>
-	[DataMember(Name = "alertStatusPriority")]
-	public int AlertStatusPriority { get; set; }
-
-	/// <summary>
-	/// Checkpoints
-	/// </summary>
-	[DataMember(Name = "checkpoints")]
-	public List<WebsiteCheckpoint> Checkpoints { get; set; }
-
-
-
-	/// <summary>
-	/// globalSmAlertCond
-	/// </summary>
-	[DataMember(Name = "globalSmAlertCond")]
-	public int GlobalSmAlertCond { get; set; }
-
-	/// <summary>
-	/// Whether Individual SmAlerts are enabled
-	/// </summary>
-	[DataMember(Name = "individualSmAlertEnable")]
+	[DataMember(Name = "individualSmAlertEnable", IsRequired = false)]
 	public bool IndividualSmAlertEnable { get; set; }
 
 	/// <summary>
-	/// The individual alert level
+	/// The checkpoints from the which the website is monitored. This object should reference each location specified in testLocation in addition to an \u0027Overall\u0027 checkpoint
 	/// </summary>
-	[DataMember(Name = "individualAlertLevel")]
+	[DataMember(Name = "checkpoints", IsRequired = false)]
+	public WebsiteCheckpoint[]? Checkpoints { get; set; }
+
+	/// <summary>
+	/// Required for type\u003dwebcheck , An object comprising one or more steps, see the table below for the properties included in each step
+	/// </summary>
+	[DataMember(Name = "steps", IsRequired = false)]
+	public WebsiteStep[]? Steps { get; set; }
+
+	/// <summary>
+	/// 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 30 | 60\nThe number of checks that must fail before an alert is triggered
+	/// </summary>
+	[DataMember(Name = "transition", IsRequired = false)]
+	public int Transition { get; set; }
+
+	/// <summary>
+	/// The number of test locations that checks must fail at to trigger an alert, where the alert triggered will be consistent with the value of overallAlertLevel. Possible values and corresponding number of Site Monitor locations are\n0 : all\n1 : half\n2 : more than one\n3 : any
+	/// </summary>
+	[DataMember(Name = "globalSmAlertCond", IsRequired = false)]
+	public int GlobalSmAlertCond { get; set; }
+
+	/// <summary>
+	/// Whether or not the website is internal
+	/// </summary>
+	[DataMember(Name = "isInternal", IsRequired = false)]
+	public bool IsInternal { get; set; }
+
+	/// <summary>
+	/// The collectors that are monitoring the website, if the website is internal
+	/// </summary>
+	[DataMember(Name = "collectors", IsRequired = false)]
+	public WebsiteCollectorInfo[]? Collectors { get; set; }
+
+	/// <summary>
+	/// Required for type\u003dwebcheck , The domain of the service. This is the base URL of the service
+	/// </summary>
+	[DataMember(Name = "domain", IsRequired = false)]
+	public string? Domain { get; set; }
+
+	/// <summary>
+	/// true: The checkpoint locations configured in the website Default Settings will be used\nfalse: The checkpoint locations specified in the testLocation will be used
+	/// </summary>
+	[DataMember(Name = "useDefaultLocationSetting", IsRequired = false)]
+	public bool UseDefaultLocationSetting { get; set; }
+
+	/// <summary>
+	/// true: The alert settings configured in the website Default Settings will be used\nfalse: Service Default Settings will not be used, and you will need to specify individualSMAlertEnable, individualAlertLevel, globalSmAlertConf, overallAlertLevel and pollingInterval
+	/// </summary>
+	[DataMember(Name = "useDefaultAlertSetting", IsRequired = false)]
+	public bool UseDefaultAlertSetting { get; set; }
+
+	/// <summary>
+	/// warn | error | critical\nThe level of alert to trigger if the website fails a check from an individual test location
+	/// </summary>
+	[DataMember(Name = "individualAlertLevel", IsRequired = false)]
 	[JsonConverter(typeof(StringEnumConverter))]
 	public Level IndividualAlertLevel { get; set; }
 
 	/// <summary>
-	/// Whether to ignore SSL
+	/// The properties associated with the website
 	/// </summary>
-	[DataMember(Name = "ignoreSSL")]
-	public bool IgnoreSsl { get; set; }
+	[DataMember(Name = "properties", IsRequired = false)]
+	public EntityProperty[]? Properties { get; set; }
 
 	/// <summary>
-	/// Whether the check is internal
+	/// Whether is the website dead (the collector is down) or not
 	/// </summary>
-	[DataMember(Name = "isInternal")]
-	public bool IsInternal { get; set; }
-
-	/// <summary>
-	/// The method
-	/// </summary>
-	[DataMember(Name = "method")]
-	public WebsiteMethod WebsiteMethod { get; set; }
-
-
-
-	/// <summary>
-	/// pageLoadAlertTimeInMS
-	/// </summary>
-	[DataMember(Name = "pageLoadAlertTimeInMS")]
-	public int PageLoadAlertTimeInMs { get; set; }
-
-	/// <summary>
-	/// The percentage of packets not received in time before an alert condition will exist.
-	/// </summary>
-	[DataMember(Name = "percentPktsNotReceiveInTime")]
-	public int PercentPacketsNotReceiveInTime { get; set; }
-
-	/// <summary>
-	/// The timeout in ms before packets will be considered not to have been received.
-	/// </summary>
-	[DataMember(Name = "timeoutInMSPktsNotReceive")]
-	public int PacketsNotReceivedTimeoutMs { get; set; }
-
-x
-
-	/// <summary>
-	/// The HTTP schema
-	/// </summary>
-	[DataMember(Name = "schema")]
-	public HttpSchema Schema { get; set; }
-
-	/// <summary>
-	/// The script
-	/// </summary>
-	[DataMember(Name = "script")]
-	public string Script { get; set; }
-
-	/// <summary>
-	/// The SDT status
-	/// </summary>
-	[DataMember(Name = "sdtStatus")]
-	public SdtStatus SdtStatus { get; set; }
-
-
-
-	/// <summary>
-	/// The steps
-	/// </summary>
-	[DataMember(Name = "steps")]
-	public List<WebsiteStep> Steps { get; set; }
-
-	/// <summary>
-	/// Whether to stop Monitoring
-	/// </summary>
-	[DataMember(Name = "stopMonitoring")]
-	public bool StopMonitoring { get; set; }
-
-	/// <summary>
-	/// Whether to stop Monitoring by group
-	/// </summary>
-	[DataMember(Name = "stopMonitoringByFolder")]
-	public bool StopMonitoringByWebsiteGroup { get; set; }
-
-
-
-
-
-	/// <summary>
-	/// Whether to trigger SSL Status Alerts
-	/// </summary>
-	[DataMember(Name = "triggerSSLStatusAlert")]
-	public bool TriggerSslStatusAlerts { get; set; }
-
-	/// <summary>
-	/// Whether to trigger SSL Expiration Alerts
-	/// </summary>
-	[DataMember(Name = "triggerSSLExpirationAlert")]
-	public bool TriggerSslExpirationAlerts { get; set; }
-
-	/// <summary>
-	/// Transition
-	/// </summary>
-	[DataMember(Name = "transition")]
-	public int Transition { get; set; }
-
-
-
-	/// <summary>
-	/// Whether to use the default alert setting
-	/// </summary>
-	[DataMember(Name = "useDefaultAlertSetting")]
-	public bool UseDefaultAlertSetting { get; set; }
-
-	/// <summary>
-	/// Whether to use the default location setting
-	/// </summary>
-	[DataMember(Name = "useDefaultLocationSetting")]
-	public bool UseDefaultLocationSetting { get; set; }
-
-	/// <summary>
-	/// The user permission
-	/// </summary>
-	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermissionString { get; set; }
-
-	/// <summary>
-	/// The properties
-	/// </summary>
-	[DataMember(Name = "properties")]
-	public List<EntityProperty> CustomProperties { get; set; }
-
-	/// <summary>
-	/// The status
-	/// </summary>
-	[DataMember(Name = "status")]
+	[DataMember(Name = "status", IsRequired = false)]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public WebsiteStatus Status { get; set; }
-
-	/// <summary>
-	///    The time it was updated
-	/// </summary>
-	[DataMember(Name = "lastUpdated")]
-	public long UpdatedOnSeconds { get; set; }
-
-
-
-	/// <summary>
-	///    createOn
-	/// </summary>
-	[IgnoreDataMember]
-	public DateTime UpdatedOnDateTimeUtc => UpdatedOnSeconds.ToDateTimeUtc();
 
 	/// <summary>
 	///    The endpoint
