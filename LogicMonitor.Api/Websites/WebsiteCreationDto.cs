@@ -136,7 +136,7 @@ public class WebsiteCreationDto : CreationDto<Website>
 	///    The test location.
 	/// </summary>
 	[DataMember(Name = "testLocation")]
-	public TestLocation TestLocation { get; set; }
+	public WebsiteLocation TestLocation { get; set; }
 
 	/// <summary>
 	/// Whether to trigger SSL Status Alerts

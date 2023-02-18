@@ -73,4 +73,11 @@ public partial class LogicMonitorClient
 		string? filter = null,
 		CancellationToken cancellationToken = default)
 		=> await GetBySubUrlAsync<AdminPaginationResponse>("$setting/admins", cancellationToken);
+
+	/// <summary>
+	/// get integration audit logs list
+	/// </summary>
+	public async Task<IntegrationAuditLogPaginationResponse> GetIntegrationAuditLogsAsync(
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<IntegrationAuditLogPaginationResponse>("$setting/integrations/auditlogs", cancellationToken);
 }

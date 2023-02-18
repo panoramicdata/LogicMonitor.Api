@@ -8,32 +8,32 @@ namespace LogicMonitor.Api.Users;
 public class RolePrivilege
 {
 	/// <summary>
-	/// The object type
+	/// The privilege object type. values can be [dashboard_group|dashboard|host_group|service_group|website_group|report_group|remoteSession|chat|setting|device_dashboard|help|logs|configNeedDeviceManagePermission|map|resourceMapTab|tracesManageTab]
 	/// </summary>
-	[DataMember(Name = "objectType")]
+	[DataMember(Name = "objectType", IsRequired = true)]
 	public PrivilegeObjectType ObjectType { get; set; }
 
 	/// <summary>
-	/// The object id
+	/// The privilege object identifier
 	/// </summary>
-	[DataMember(Name = "objectId")]
-	public string ObjectId { get; set; }
+	[DataMember(Name = "objectId", IsRequired = true)]
+	public string? ObjectId { get; set; }
 
 	/// <summary>
-	/// The object name
+	/// The privilege object name
 	/// </summary>
-	[DataMember(Name = "objectName")]
-	public string ObjectName { get; set; }
+	[DataMember(Name = "objectName", IsRequired = false)]
+	public string? ObjectName { get; set; }
 
 	/// <summary>
-	/// The Operation
+	/// The privilege operation
 	/// </summary>
-	[DataMember(Name = "operation")]
+	[DataMember(Name = "operation", IsRequired = true)]
 	public RolePrivilegeOperation Operation { get; set; }
 
 	/// <summary>
-	/// The Sub-operation
+	/// The highest privilege operation on its children operations
 	/// </summary>
-	[DataMember(Name = "subOperation")]
-	public string SubOperation { get; set; }
+	[DataMember(Name = "subOperation", IsRequired = false)]
+	public string? SubOperation { get; set; }
 }

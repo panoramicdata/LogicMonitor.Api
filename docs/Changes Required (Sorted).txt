@@ -1,13 +1,4 @@
-Users
-		Privilege
-			"objectName":{"description":"The privilege object name","readOnly":true,"type":"string"}
-			"subOperation":{"description":"The highest privilege operation on its children operations","readOnly":true,"type":"string"}
-			"operation":{"description":"The privilege operation","type":"string","example":"write"}
-			"objectId":{"description":"The privilege object identifier","type":"string","example":"123"}
-			"objectType":{"description":"The privilege object type. values can be [dashboard_group|dashboard|host_group|service_group|website_group|report_group|remoteSession|chat|setting|device_dashboard|help|logs|configNeedDeviceManagePermission|map|resourceMapTab|tracesManageTab]","type":"string","example":"dashboard group"}
-Version
-Websites
-		Website
+	Website
 			"type":{"description":"pingcheck | webcheck\nThe type of the service","type":"string","example":"webcheck"}
 			"rolePrivileges":{"description":"The role privilege operation(s) for this website that are granted to the user who made the API request","readOnly":true,"type":"array","items":{"type":"string"}}
 

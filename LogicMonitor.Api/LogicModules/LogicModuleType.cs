@@ -15,48 +15,54 @@ public enum LogicModuleType
 	/// <summary>
 	/// DataSource
 	/// </summary>
-	[EnumMember(Value = "DataSource")]
+	[EnumMember(Value = "DATASOURCE")]
 	DataSource,
 
 	/// <summary>
 	/// EventSource
 	/// </summary>
-	[EnumMember(Value = "EventSource")]
+	[EnumMember(Value = "EVENTSOURCE")]
 	EventSource,
 
 	/// <summary>
 	/// ConfigSource
 	/// </summary>
-	[EnumMember(Value = "ConfigSource")]
+	[EnumMember(Value = "CONFIGSOURCE")]
 	ConfigSource,
 
 	/// <summary>
 	/// PropertySource
 	/// </summary>
-	[EnumMember(Value = "PropertySource")]
+	[EnumMember(Value = "PROPERTYSOURCE")]
 	PropertySource,
 
 	/// <summary>
 	/// JobMonitor
 	/// </summary>
-	[EnumMember(Value = "JobMonitor")]
+	[EnumMember(Value = "JOBMONITOR")]
 	JobMonitor,
 
 	/// <summary>
 	/// AppliesTo
 	/// </summary>
-	[EnumMember(Value = "AppliesToFunction")]
+	[EnumMember(Value = "APPLIESTO_FUNCTION")]
 	AppliesToFunction,
 
 	/// <summary>
 	/// AppliesTo
 	/// </summary>
-	[EnumMember(Value = "SNMP SysOID Map")]
+	[EnumMember(Value = "SNMP_SYSOID_MAP")]
 	SnmpSysOIDMap,
 
 	/// <summary>
 	/// AppliesTo
 	/// </summary>
-	[EnumMember(Value = "TopologySource")]
-	TopologySource
+	[EnumMember(Value = "TOPOLOGYSOURCE")]
+	TopologySource,
+
+	/// <summary>
+	/// LogSource
+	/// </summary>
+	[EnumMember(Value = "LOGSOURCE")]
+	LogSource
 }

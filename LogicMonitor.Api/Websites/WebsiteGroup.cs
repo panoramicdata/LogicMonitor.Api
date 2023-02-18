@@ -100,7 +100,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// The test location - This doesn't seem to be populated with anything useful any more (historical?)
 	/// </summary>
 	[DataMember(Name = "testLocation")]
-	public TestLocation TestLocation { get; set; }
+	public WebsiteLocation TestLocation { get; set; }
 
 	/// <summary>
 	/// User permission
