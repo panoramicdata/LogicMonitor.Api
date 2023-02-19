@@ -4,31 +4,25 @@ namespace LogicMonitor.Api.Websites;
 /// Website monitor checkpoint
 /// </summary>
 [DataContract]
-public class WebsiteMonitorCheckpoint : NamedEntity, IHasEndpoint
+public class WebsiteMonitorCheckpoint : NamedItem, IHasEndpoint
 {
 	/// <summary>
-	/// The id
+	/// The geographical information (location) of the SiteMonitor Checkpoint
 	/// </summary>
-	[DataMember(Name = "id")]
-	public int Id { get; set; }
+	[DataMember(Name = "geoinfo", IsRequired = false)]
+	public string? GeographicInformation { get; set; }
 
 	/// <summary>
-	/// Whether it is enabled in root
+	/// The display priority of the SiteMonitor Checkpoint in your LogicMonitor portal
 	/// </summary>
-	[DataMember(Name = "isEnabledInRoot")]
-	public bool IsEnabledInRoot { get; set; }
-
-	/// <summary>
-	/// The geographic location
-	/// </summary>
-	[DataMember(Name = "geoinfo")]
-	public string GeographicInformation { get; set; }
-
-	/// <summary>
-	/// The geographic location
-	/// </summary>
-	[DataMember(Name = "displayPrio")]
+	[DataMember(Name = "displayPrio", IsRequired = false)]
 	public int DisplayPriority { get; set; }
+
+	/// <summary>
+	/// Checks if sitemonitor enabled in root service group
+	/// </summary>
+	[DataMember(Name = "isEnabledInRoot", IsRequired = false)]
+	public bool IsEnabledInRoot { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "website/smcheckpoints";

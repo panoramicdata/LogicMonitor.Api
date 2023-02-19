@@ -7,26 +7,20 @@ namespace LogicMonitor.Api.Websites;
 public class WebsiteStepAuthentication
 {
 	/// <summary>
-	/// The type
+	/// Authentication type
 	/// </summary>
-	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	[DataMember(Name = "type", IsRequired = true)]
+	public string Type { get; set; } = null!;
 
 	/// <summary>
-	/// The domain
+	/// NTLM  authentication userName
 	/// </summary>
-	[DataMember(Name = "domain")]
-	public string Domain { get; set; }
+	[DataMember(Name = "userName", IsRequired = true)]
+	public string UserName { get; set; } = null!;
 
 	/// <summary>
-	/// The user name
+	/// NTLM authentication password
 	/// </summary>
-	[DataMember(Name = "userName")]
-	public string UserName { get; set; }
-
-	/// <summary>
-	/// The password
-	/// </summary>
-	[DataMember(Name = "password")]
-	public string Password { get; set; }
+	[DataMember(Name = "password", IsRequired = true)]
+	public string Password { get; set; } = null!;
 }

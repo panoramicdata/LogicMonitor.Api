@@ -96,7 +96,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// Required for type\u003dwebcheck , An object comprising one or more steps, see the table below for the properties included in each step
 	/// </summary>
 	[DataMember(Name = "steps", IsRequired = false)]
-	public WebsiteStep[]? Steps { get; set; }
+	public WebCheckStep[]? Steps { get; set; }
 
 	/// <summary>
 	/// 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 30 | 60\nThe number of checks that must fail before an alert is triggered

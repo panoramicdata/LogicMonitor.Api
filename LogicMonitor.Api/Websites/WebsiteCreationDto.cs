@@ -82,7 +82,7 @@ public class WebsiteCreationDto : CreationDto<Website>
 	/// The steps
 	/// </summary>
 	[DataMember(Name = "steps")]
-	public List<WebsiteStep> Steps { get; set; }
+	public List<WebCheckStep> Steps { get; set; }
 
 	/// <summary>
 	///    The attempt count as a string

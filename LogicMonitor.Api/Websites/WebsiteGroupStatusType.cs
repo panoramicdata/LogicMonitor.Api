@@ -23,5 +23,11 @@ public enum WebsiteGroupStatusType
 	/// Dead
 	/// </summary>
 	[EnumMember(Value = "dead-collector")]
-	DeadCollector = 2
+	DeadCollector = 2,
+
+	/// <summary>
+	/// Alive
+	/// </summary>
+	[EnumMember(Value = "alive")]
+	Alive = 3
 }

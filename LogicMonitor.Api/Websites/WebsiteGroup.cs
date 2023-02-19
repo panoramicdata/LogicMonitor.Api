@@ -97,22 +97,11 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	[DataMember(Name = "alertDisableStatus")]
 	public AlertDisableStatus AlertDisableStatus { get; set; }
 
-
-
-
-
-
-
-
 	/// <summary>
 	/// The alert group status
 	/// </summary>
 	[DataMember(Name = "groupStatus")]
 	public WebsiteGroupStatusType GroupStatus { get; set; }
-
-
-
-
 
 	/// <summary>
 	/// The alert Status
@@ -120,23 +109,11 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	[DataMember(Name = "sdtStatus")]
 	public SdtStatus SdtStatus { get; set; }
 
-
-
-
-
-
-
 	/// <summary>
 	/// Child groups
 	/// </summary>
 	[DataMember(Name = "subGroups")]
 	public List<WebsiteGroup> ChildWebsiteGroups { get; set; }
-
-
-
-
-
-
 
 	/// <inheritdoc />
 	public string Endpoint() => "website/groups";

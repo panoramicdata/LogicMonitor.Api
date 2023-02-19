@@ -265,9 +265,9 @@ public class WebsiteTests : TestWithOutput
 						}
 },
 		Domain = "www.google.com",
-		Steps = new List<WebsiteStep>
+		Steps = new List<WebCheckStep>
 			{
-						new WebsiteStep
+						new WebCheckStep
 						{
 							MatchType = Api.Websites.MatchType.Plain,
 							HttpSchema = HttpSchema.Https,

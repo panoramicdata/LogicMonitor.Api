@@ -21,18 +21,12 @@ public class WebsiteLocation
 	/// <summary>
 	/// The collector info of the services
 	/// </summary>
-	[DataMember(Name = "collectors")]
+	[DataMember(Name = "collectors", IsRequired = false)]
 	public WebsiteCollectorInfo[]? Collectors { get; set; }
 
 	/// <summary>
 	/// The SiteMonitor Groups Ids
 	/// </summary>
-	[DataMember(Name = "smgIds")]
+	[DataMember(Name = "smgIds", IsRequired = false)]
 	public int[]? SmgIds { get; set; }
-
-
-
-
-
-
 }
