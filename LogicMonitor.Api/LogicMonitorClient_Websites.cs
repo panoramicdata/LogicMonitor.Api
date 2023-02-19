@@ -183,14 +183,22 @@ public partial class LogicMonitorClient
 		SetWebsiteOrWebsiteGroupPropertyAsync<WebsiteGroup>(websiteGroupId, name, value, mode, cancellationToken);
 
 	/// <summary>
-	///    Set website overviews for the specified website group
+	/// get a list of websites for a group (Response may contain extra fields depending upon the type of check { PingCheck | WebCheck} being added)
 	/// </summary>
-	/// <param name="websiteGroupId">The parent website group id.  If not specified, the root id (1) is used.</param>
+	/// <param name="id">The parent website group id.  If not specified, the root id (1) is used.</param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public async Task<List<Website>> GetWebsitesByWebsiteGroupIdAsync(
-		int websiteGroupId = 1,
+	public async Task<WebsitePaginationResponse> GetWebsitesByWebsiteGroupIdAsync(
+		int id,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		string? filter = null,
 		CancellationToken cancellationToken = default)
-		=> (await GetBySubUrlAsync<Page<Website>>($"website/groups/{websiteGroupId}/websites", cancellationToken).ConfigureAwait(false)).Items;
+		=> (await GetBySubUrlAsync<WebsitePaginationResponse>($"website/groups/{id}/websites?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false));
 
 	/// <summary>
 	///     Get website properties, in the following order:

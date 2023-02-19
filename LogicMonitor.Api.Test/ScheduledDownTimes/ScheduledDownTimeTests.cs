@@ -104,13 +104,13 @@ public class ScheduledDownTimeTests : TestWithOutput
 
 		// Website Group
 		var websiteGroupHistorySdts =
-			await LogicMonitorClient.GetWebsiteGroupHistorySdts(20, default)
+			await LogicMonitorClient.GetAllSDTListByWebsiteGroupIdAsync(20, default)
 			.ConfigureAwait(false);
 		websiteGroupHistorySdts.Should().NotBeNull();
 
 		// Website
 		var websiteHistorySdts =
-			await LogicMonitorClient.GetWebsiteHistorySdts(350, default)
+			await LogicMonitorClient.GetSDTHistoryByWebsiteIdAsync(350, default)
 			.ConfigureAwait(false);
 		websiteHistorySdts.Should().NotBeNull();
 	}
@@ -194,7 +194,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	public async Task AddAndDeleteAResourceGroupSdt()
 	{
 		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteAResourceGroupSdt initial comment";
-		const int resourceGroupId = 1; // The root
+		const int resourceGroupId = 79; // The root
 		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroupId)
 		{
 			Comment = initialComment,

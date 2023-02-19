@@ -50,22 +50,38 @@ public partial class LogicMonitorClient
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	///     Gets history SDTs for a Website Group
+	/// get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)
 	/// </summary>
-	/// <param name="websiteGroupId">The Website Group ID</param>
+	/// <param name="id">The Website Group ID</param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetWebsiteGroupHistorySdts(
-		int websiteGroupId,
-		CancellationToken cancellationToken)
-	=> await GetBySubUrlAsync<HistorySdtCollection>($"website/groups/{websiteGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
+	public async Task<SDTPaginationResponse> GetAllSDTListByWebsiteGroupIdAsync(
+		int id,
+		CancellationToken cancellationToken,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		string? filter = null)
+	=> await GetBySubUrlAsync<SDTPaginationResponse>($"website/groups/{id}/sdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	///     Gets history SDTs for a Website
+	/// get SDT history for the website (Response may contain extra fields depending upon the type of SDT)
 	/// </summary>
-	/// <param name="websiteId">The Website ID</param>
+	/// <param name="id">The Website ID</param>
+	/// <param name="fields">Fields</param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetWebsiteHistorySdts(
-		int websiteId,
-		CancellationToken cancellationToken)
-	=> await GetBySubUrlAsync<HistorySdtCollection>($"website/websites/{websiteId}/historysdts", cancellationToken).ConfigureAwait(false);
+	public async Task<WebsiteSDTHistoryPaginationResponse> GetSDTHistoryByWebsiteIdAsync(
+		int id,
+		CancellationToken cancellationToken,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		string? filter = null)
+	=> await GetBySubUrlAsync<WebsiteSDTHistoryPaginationResponse>($"website/websites/{id}/historysdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
 }

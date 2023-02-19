@@ -1,8 +1,0 @@
-		getSDTHistoryByWebsiteId
-			change summary to "get SDT history for the website (Response may contain extra fields depending upon the type of SDT)"
-		getAllSDTListByWebsiteGroupId
-			change summary to "get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)"
-		getImmediateWebsiteListByWebsiteGroupId
-			change summary to "get a list of websites for a group (Response may contain extra fields depending upon the type of check { PingCheck | WebCheck} being added)"
-
-Add "name": "IntegrationAuditLogs", "name": "PropertySources" to the tags of securityDefinitions
