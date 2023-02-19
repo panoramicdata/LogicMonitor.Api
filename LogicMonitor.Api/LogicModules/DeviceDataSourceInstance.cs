@@ -156,11 +156,23 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// WildValue
 	/// </summary>
 	[DataMember(Name = "wildValue", IsRequired = false)]
-	public string WildValue { get; set; }
+	public string? WildValue { get; set; }
 
 	/// <summary>
 	/// Only used for two dimensional active discovery. When used, during Active Discovery runs, the token ##WILDVALUE## is replaces with the value of ALIAS and the token ##WILDVALUE2## is replaced with the value of the second part alias. This value must be unique for the device/datasource/WILDVALUE combination
 	/// </summary>
 	[DataMember(Name = "wildValue2", IsRequired = false)]
-	public string WildValue2 { get; set; }
+	public string? WildValue2 { get; set; }
+
+	/// <summary>
+	/// SDT status
+	/// </summary>
+	[DataMember(Name = "sdtStatus", IsRequired = false)]
+	public string? SdtStatus { get; set; }
+
+	/// <summary>
+	/// SDT status
+	/// </summary>
+	[DataMember(Name = "sdtAt", IsRequired = false)]
+	public string? SdtAt { get; set; }
 }

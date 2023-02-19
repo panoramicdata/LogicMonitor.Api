@@ -61,6 +61,12 @@ public enum AutoDiscoveryFilterOperation
 	NotContain,
 
 	/// <summary>
+	/// Exist
+	/// </summary>
+	[EnumMember(Value = "Exist")]
+	Exist,
+
+	/// <summary>
 	/// NotExist
 	/// </summary>
 	[EnumMember(Value = "NotExist")]
