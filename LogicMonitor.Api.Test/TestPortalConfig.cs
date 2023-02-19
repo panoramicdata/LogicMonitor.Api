@@ -29,8 +29,10 @@ internal class TestPortalConfig
 		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"]);
 		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"]);
 		CollectorId = int.Parse(Configuration["Config:CollectorId"]);
+		SDTResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"]);
 		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"];
 		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"];
+		ResourceGroupFullPath = Configuration["Config:ResourceGroupFullPath"];
 		AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"]);
 		AccountHasBillingInformation = bool.Parse(Configuration["Config:AccountHasBillingInformation"]);
 		WebsiteName = Configuration["Config:WebsiteName"];
@@ -59,9 +61,13 @@ internal class TestPortalConfig
 
 	public string DeviceGroupFullPath { get; }
 
+	public string ResourceGroupFullPath { get; }
+
 	public string WebsiteName { get; }
 
 	internal int CollectorId { get; }
+
+	public int SDTResourceGroupId { get; }
 
 	public string AlertRuleName { get; }
 }
