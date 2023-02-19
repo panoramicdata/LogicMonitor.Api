@@ -15,10 +15,5 @@ public class GraphVirtualDataPoint : UndescribedNamedItem
 	/// the graph virtual data point rpn expression
 	/// </summary>
 	[DataMember(Name = "rpn")]
-	public string Rpn { get; set; }
-
-	/// <summary>
-	/// the graph virtual data point name
-	/// </summary>
-	public string Name { get; set; }
+	public string? Rpn { get; set; }
 }

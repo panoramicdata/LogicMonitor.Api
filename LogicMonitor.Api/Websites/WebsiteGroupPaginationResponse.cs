@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LogicMonitor.Api.Netscans;
+namespace LogicMonitor.Api.Websites;
 
 /// <summary>
-/// NetscanPaginationResponse
+/// WebsiteGroupPaginationResponse
 /// </summary>
 
 [DataContract]
-public class NetscanPaginationResponse
+public class WebsiteGroupPaginationResponse
 {
 	/// <summary>
 	/// total
@@ -27,11 +27,5 @@ public class NetscanPaginationResponse
 	/// items
 	/// </summary>
 	[DataMember(Name = "items", IsRequired = false)]
-	public Netscan[]? Items { get; set; }
-
-	/// <summary>
-	/// isMin
-	/// </summary>
-	[DataMember(Name = "isMin", IsRequired = false)]
-	public bool IsMin { get; set; }
+	public WebsiteGroup[]? Items { get; set; }
 }

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Websites;
 /// A Websites
 /// </summary>
 [DataContract]
-public class Website : NamedItem, IPatchable
+public class Website : NamedItem, IHasCustomProperties, IPatchable
 {
 	/// <summary>
 	/// The website template
@@ -151,7 +151,7 @@ public class Website : NamedItem, IPatchable
 	/// The properties associated with the website
 	/// </summary>
 	[DataMember(Name = "properties", IsRequired = false)]
-	public EntityProperty[]? Properties { get; set; }
+	public List<EntityProperty>? CustomProperties { get; set; }
 
 	/// <summary>
 	/// Whether is the website dead (the collector is down) or not

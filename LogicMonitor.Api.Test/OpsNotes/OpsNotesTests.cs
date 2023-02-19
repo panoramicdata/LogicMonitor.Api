@@ -62,7 +62,7 @@ public class OpsNotesTests : TestWithOutput
 					nameof(DeviceOpsNoteScopeCreationDto) => new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id},
 					nameof(DeviceGroupOpsNoteScopeCreationDto) => new DeviceGroupOpsNoteScopeCreationDto {DeviceGroupId = device.DeviceGroupIdsString.Split(',').Select(int.Parse).First()},
 					nameof(WebsiteOpsNoteScopeCreationDto) => new WebsiteOpsNoteScopeCreationDto {WebsitesId = website.Id},
-					nameof(WebsiteGroupOpsNoteScopeCreationDto) => new WebsiteGroupOpsNoteScopeCreationDto {WebsiteGroupId = website.WebsiteGroupId},
+					nameof(WebsiteGroupOpsNoteScopeCreationDto) => new WebsiteGroupOpsNoteScopeCreationDto {WebsiteGroupId = website.GroupId},
 					_ => throw new NotSupportedException($"Unexpected type {t.Name}")
 				}
 			}

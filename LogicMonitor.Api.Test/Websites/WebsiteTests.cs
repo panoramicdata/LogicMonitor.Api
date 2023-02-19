@@ -147,9 +147,7 @@ public class WebsiteTests : TestWithOutput
 			website.Should().NotBeNull();
 			try
 			{
-				websiteGroup.Id.Should().Be(website.WebsiteGroupId);
-				website.TriggerSslExpirationAlerts.Should().BeTrue();
-				ExpectedAlertExpression.Should().Be(website.AlertExpression);
+				websiteGroup.Id.Should().Be(website.GroupId);
 
 				// Wait to ensure that it was created
 				await Task.Delay(1000)

@@ -141,7 +141,7 @@ public class NetscanTests : TestWithOutput
 
 		// Ids should all be distinct
 		var ids = netscans.Select(nsp => nsp.Id);
-		ids.Should().HaveCount(netscans.Count);
+		ids.Should().HaveCount(netscans.Length);
 	}
 
 	[Fact]
