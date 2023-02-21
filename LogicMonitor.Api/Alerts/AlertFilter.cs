@@ -299,7 +299,7 @@ public class AlertFilter
 		}
 
 		filter.AppendFilterItemIfNotNull(nameof(Alert.Id), Id);
-		filter.AppendFilterItemIfNotNull(nameof(Alert.AlertType), GetAlertTypes()?.Select(alertType => alertType.ToString().LowerCaseFirst()).ToList());
+		filter.AppendFilterItemIfNotNull(nameof(Alert.AlertType), GetAlertTypes()?.Select(alertType => alertType.GetQueryString()).ToList());
 		filter.AppendFilterItemIfNotNull(nameof(Alert.InternalId), InternalId);
 		filter.AppendFilterItemIfNotNull(nameof(Alert.StartOnSeconds), StartEpochIsAfter, ">");
 		filter.AppendFilterItemIfNotNull(nameof(Alert.StartOnSeconds), StartEpochIsBefore, "<");
