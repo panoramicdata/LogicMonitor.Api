@@ -58,14 +58,14 @@ public partial class LogicMonitorClient
 	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<SDTPaginationResponse> GetAllSDTListByWebsiteGroupIdAsync(
+	public async Task<Page<ScheduledDownTime>> GetAllSDTListByWebsiteGroupIdAsync(
 		int id,
 		CancellationToken cancellationToken,
 		string? fields = null,
 		int size = 50,
 		int offset = 0,
 		string? filter = null)
-	=> await GetBySubUrlAsync<SDTPaginationResponse>($"website/groups/{id}/sdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
+	=> await GetBySubUrlAsync<Page<ScheduledDownTime>>($"website/groups/{id}/sdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	/// get SDT history for the website (Response may contain extra fields depending upon the type of SDT)
@@ -76,12 +76,12 @@ public partial class LogicMonitorClient
 	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<WebsiteSDTHistoryPaginationResponse> GetSDTHistoryByWebsiteIdAsync(
+	public async Task<Page<ScheduledDownTimeHistory>> GetSDTHistoryByWebsiteIdAsync(
 		int id,
 		CancellationToken cancellationToken,
 		string? fields = null,
 		int size = 50,
 		int offset = 0,
 		string? filter = null)
-	=> await GetBySubUrlAsync<WebsiteSDTHistoryPaginationResponse>($"website/websites/{id}/historysdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
+	=> await GetBySubUrlAsync<Page<ScheduledDownTimeHistory>>($"website/websites/{id}/historysdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
 }

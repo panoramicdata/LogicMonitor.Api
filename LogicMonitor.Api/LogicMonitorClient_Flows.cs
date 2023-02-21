@@ -47,7 +47,7 @@ public partial class LogicMonitorClient
 	/// <param name="size"></param>
 	/// <param name="offset"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<FlowRecordPaginationResponse> GetNetflowFlowListAsync(
+	public Task<Page<NetFlowRecord>> GetNetflowFlowPageAsync(
 		long start,
 		long end,
 		string netflowFilter,
@@ -57,7 +57,7 @@ public partial class LogicMonitorClient
 		int size = 50,
 		int offset = 0,
 		CancellationToken cancellationToken = default
-		) => GetBySubUrlAsync<FlowRecordPaginationResponse>($"device/devices/{id}/flows", cancellationToken);
+		) => GetBySubUrlAsync<Page<NetFlowRecord>>($"device/devices/{id}/flows", cancellationToken);
 
 	#region Device Group flows
 

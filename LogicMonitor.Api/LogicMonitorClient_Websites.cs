@@ -191,14 +191,14 @@ public partial class LogicMonitorClient
 	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public async Task<WebsitePaginationResponse> GetWebsitesByWebsiteGroupIdAsync(
+	public async Task<Page<Website>> GetWebsitesByWebsiteGroupIdAsync(
 		int id,
 		string? fields = null,
 		int size = 50,
 		int offset = 0,
 		string? filter = null,
 		CancellationToken cancellationToken = default)
-		=> (await GetBySubUrlAsync<WebsitePaginationResponse>($"website/groups/{id}/websites?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false));
+		=> (await GetBySubUrlAsync<Page<Website>>($"website/groups/{id}/websites?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false));
 
 	/// <summary>
 	///     Get website properties, in the following order:

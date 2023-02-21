@@ -63,7 +63,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get user list
 	/// </summary>
-	public async Task<AdminPaginationResponse> GetAdminListAsync(
+	public async Task<Page<Admin>> GetAdminListAsync(
 		string? type = null,
 		string? permission = null,
 		string? filterGroupString = null,
@@ -72,12 +72,12 @@ public partial class LogicMonitorClient
 		int offset = 0,
 		string? filter = null,
 		CancellationToken cancellationToken = default)
-		=> await GetBySubUrlAsync<AdminPaginationResponse>("$setting/admins", cancellationToken);
+		=> await GetBySubUrlAsync<Page<Admin>>("$setting/admins", cancellationToken);
 
 	/// <summary>
 	/// get integration audit logs list
 	/// </summary>
-	public async Task<IntegrationAuditLogPaginationResponse> GetIntegrationAuditLogsAsync(
+	public async Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync(
 		CancellationToken cancellationToken = default)
-		=> await GetBySubUrlAsync<IntegrationAuditLogPaginationResponse>("$setting/integrations/auditlogs", cancellationToken);
+		=> await GetBySubUrlAsync<Page<IntegrationAuditLog>>("$setting/integrations/auditlogs", cancellationToken);
 }

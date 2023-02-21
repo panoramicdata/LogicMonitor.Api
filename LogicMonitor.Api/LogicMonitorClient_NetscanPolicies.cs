@@ -18,13 +18,13 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	/// <param name="size"></param>
 	/// <param name="offset"></param>
-	public Task<NetscanPaginationResponse> GetNetscanListAsync(
+	public Task<Page<Netscan>> GetNetscanListAsync(
 		string? fields,
 		string? filter,
 		CancellationToken cancellationToken,
 		int size = 50,
 		int offset = 0)
-		=> GetBySubUrlAsync<NetscanPaginationResponse>($"setting/netscans", cancellationToken);
+		=> GetBySubUrlAsync<Page<Netscan>>($"setting/netscans", cancellationToken);
 
 	/// <summary>
 	/// get netscan by id
