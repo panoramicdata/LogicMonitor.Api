@@ -181,5 +181,5 @@ public class AuditEvent
 	/// <summary>
 	/// The alert note for alert update events
 	/// </summary>
-	public string AlertNote { get; internal set; }
+	public string? AlertNote { get; internal set; }
 }
