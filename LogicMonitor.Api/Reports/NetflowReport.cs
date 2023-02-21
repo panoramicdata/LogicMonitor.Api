@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.Reports;
+﻿namespace LogicMonitor.Api.Reports;
 
 /// <summary>
 /// NetflowReport

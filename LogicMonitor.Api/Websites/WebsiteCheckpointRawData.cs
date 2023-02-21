@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.Websites;
+﻿namespace LogicMonitor.Api.Websites;
 
 /// <summary>
 /// WebsiteCheckpointRawData

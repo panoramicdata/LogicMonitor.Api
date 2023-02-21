@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.Data;
+﻿namespace LogicMonitor.Api.Data;
 
 /// <summary>
 /// Graph virtual data point

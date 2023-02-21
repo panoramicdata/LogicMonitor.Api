@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.Collectors;
+﻿namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
 /// SaasAccountTestResult

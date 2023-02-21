@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.ScheduledDownTimes;
+﻿namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <summary>
 /// ScheduledDownTimeHistory
 /// </summary>

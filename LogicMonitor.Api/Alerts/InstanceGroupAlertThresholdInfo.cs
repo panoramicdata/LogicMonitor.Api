@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.Alerts;
+﻿namespace LogicMonitor.Api.Alerts;
 
 /// <summary>
 /// The instance group alert threshold info
