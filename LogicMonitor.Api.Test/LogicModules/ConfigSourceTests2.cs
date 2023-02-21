@@ -11,7 +11,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetAllConfigSources()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(CancellationToken.None).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		configSources.Should().NotBeNullOrEmpty();
@@ -23,9 +23,9 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetConfigSourceById()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(CancellationToken.None).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
 		configSources.Should().NotBeNullOrEmpty();
-		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id, CancellationToken.None).ConfigureAwait(false);
+		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id, default).ConfigureAwait(false);
 		configSource.Should().NotBeNull();
 	}
 

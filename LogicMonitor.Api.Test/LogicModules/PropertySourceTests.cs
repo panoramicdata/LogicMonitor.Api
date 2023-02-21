@@ -14,10 +14,10 @@ public class PropertySourceTests : TestWithOutput
 	public async Task GetJson()
 	{
 		var propertySource = await LogicMonitorClient
-			.GetByNameAsync<PropertySource>("Test PropertySource", CancellationToken.None)
+			.GetByNameAsync<PropertySource>("Test PropertySource", default)
 			.ConfigureAwait(false);
 		var json = await LogicMonitorClient
-			.GetPropertySourceJsonAsync(propertySource.Id, CancellationToken.None)
+			.GetPropertySourceJsonAsync(propertySource.Id, default)
 			.ConfigureAwait(false);
 
 		json.Should().NotBeNull();

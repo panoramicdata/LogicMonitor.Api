@@ -17,7 +17,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -35,7 +35,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -53,7 +53,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -76,7 +76,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -99,7 +99,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		await act
@@ -124,7 +124,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		await act
@@ -149,7 +149,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		await act

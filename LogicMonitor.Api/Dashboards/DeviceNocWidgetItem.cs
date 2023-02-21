@@ -34,7 +34,7 @@ public class DeviceNocWidgetItem
 	/// The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// The group by

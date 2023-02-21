@@ -33,5 +33,5 @@ public class TableWidgetColumnDataPoint
 	///     The dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 }

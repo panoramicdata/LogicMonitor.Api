@@ -12,7 +12,7 @@ public class UserGroupTests : TestWithOutput
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<UserGroup>(CancellationToken.None)
+			.GetAllAsync<UserGroup>(default)
 			.ConfigureAwait(false);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
@@ -28,11 +28,11 @@ public class UserGroupTests : TestWithOutput
 				{
 					new Eq<UserGroup>(nameof(ReportGroup.Name), TestName)
 				}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingItem, cancellationToken: CancellationToken.None)
+				.DeleteAsync(existingItem, cancellationToken: default)
 				.ConfigureAwait(false);
 		}
 
@@ -47,7 +47,7 @@ public class UserGroupTests : TestWithOutput
 					Name = TestName,
 					Description = "Test Description"
 				},
-				CancellationToken.None
+				default
 			)
 			.ConfigureAwait(false);
 
@@ -56,7 +56,7 @@ public class UserGroupTests : TestWithOutput
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(newItem, cancellationToken: CancellationToken.None)
+			.DeleteAsync(newItem, cancellationToken: default)
 			.ConfigureAwait(false);
 	}
 }

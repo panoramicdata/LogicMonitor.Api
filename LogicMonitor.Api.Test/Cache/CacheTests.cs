@@ -17,13 +17,13 @@ public class CacheTests : TestWithOutput
 		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
 
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 		stopwatch.Restart();
 
-		var secondDevice = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -47,12 +47,12 @@ public class CacheTests : TestWithOutput
 
 		// Make a call to force authentication
 		var _ = await LogicMonitorClient
-			.GetTimeZoneSettingAsync(CancellationToken.None)
+			.GetTimeZoneSettingAsync(default)
 			.ConfigureAwait(false);
 
 		// Fetch a result
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		firstDevice.Should().NotBeNull();
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
@@ -62,7 +62,7 @@ public class CacheTests : TestWithOutput
 
 		// Re-fetch a result
 		stopwatch.Restart();
-		var secondDevice = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		secondDevice.Should().NotBeNull();
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -82,7 +82,7 @@ public class CacheTests : TestWithOutput
 		for (var n = 0; n < 1000; n++)
 		{
 			var innerStopwatch = Stopwatch.StartNew();
-			var _ = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+			var _ = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 			Logger.LogInformation("Run {RunIndex}: {Milliseconds}ms", n, innerStopwatch.ElapsedMilliseconds);
 		}
 

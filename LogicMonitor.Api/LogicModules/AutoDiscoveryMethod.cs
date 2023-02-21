@@ -301,6 +301,12 @@ public class AutoDiscoveryMethod
 	public string? Oid { get; set; }
 
 	/// <summary>
+	/// Object
+	/// </summary>
+	[DataMember(Name = "object", IsRequired = false)]
+	public string? Object { get; set; }
+
+	/// <summary>
 	/// The instance level properties
 	/// </summary>
 	[DataMember(Name = "ILP", IsRequired = false)]
@@ -371,4 +377,10 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "enableWmiClassILP", IsRequired = false)]
 	public bool AreWmiClassInstanceLevelPropertiesEnabled { get; set; }
+
+	/// <summary>
+	/// Collector id
+	/// </summary>
+	[DataMember(Name = "collectorId", IsRequired = false)]
+	public string? CollectorId { get; set; }
 }

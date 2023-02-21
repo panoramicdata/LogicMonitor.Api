@@ -8,10 +8,10 @@
 public class SyntheticsSeleniumCollectorAttribute : CollectorAttribute
 {
 	/// <summary>
-	/// Checktype
+	/// Check type
 	/// </summary>
 	[DataMember(Name = "checkType")]
-	public string CheckType { get; set; }
+	public CheckType CheckType { get; set; }
 
 	/// <summary>
 	/// Configs

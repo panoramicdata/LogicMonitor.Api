@@ -53,7 +53,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The instance alias. This is the descriptive name of the instance, and should be unique for the device/datasource combination
 	/// </summary>
 	[DataMember(Name = "displayName", IsRequired = true)]
-	public string DisplayName { get; set; }
+	public string? DisplayName { get; set; }
 
 	/// <summary>
 	/// Any instance level properties assigned to the instance

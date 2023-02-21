@@ -229,7 +229,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The page load alert time in milliseconds
 	/// </summary>
 	[DataMember(Name = "pageLoadAlertTimeInMS")]
-	public bool PageLoadAlertTimeMs { get; set; }
+	public long PageLoadAlertTimeMs { get; set; }
 
 	/// <summary>
 	/// The schema

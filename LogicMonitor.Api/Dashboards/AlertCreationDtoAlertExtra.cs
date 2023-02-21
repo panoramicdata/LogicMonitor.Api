@@ -40,5 +40,5 @@ public class AlertCreationDtoAlertExtra
 	/// The play sound
 	/// </summary>
 	[DataMember(Name = "playSound")]
-	public AlertCreationDtoPlaysound PlaySound { get; set; }
+	public PlaySound PlaySound { get; set; }
 }

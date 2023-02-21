@@ -28,7 +28,7 @@ public class TableWidgetRowDataSourceInstance
 	///     The instanceName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	///     The confidence

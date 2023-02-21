@@ -17,7 +17,7 @@ public class OverviewGraphDataPoint
 	/// the graph line data point name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// the graph line data point id

@@ -12,7 +12,7 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task ExecuteDebugCommand()
 	{
-		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8", CancellationToken.None).ConfigureAwait(false);
+		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8", default).ConfigureAwait(false);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -22,7 +22,7 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task ExecuteDebugCommandAndWaitForResult()
 	{
-		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100, CancellationToken.None).ConfigureAwait(false);
+		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAndWaitForResultAsync(CollectorId, "!ping 8.8.8.8", 20000, 100, default).ConfigureAwait(false);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -33,7 +33,7 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task GetCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		collectors.Should().NotBeNullOrEmpty();
@@ -44,7 +44,7 @@ public class CollectorTests : TestWithOutput
 		// Get each one by id
 		foreach (var collector in collectors)
 		{
-			var refetchedCollector = await LogicMonitorClient.GetAsync<Collector>(collector.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetchedCollector = await LogicMonitorClient.GetAsync<Collector>(collector.Id, default).ConfigureAwait(false);
 			refetchedCollector.Should().NotBeNull();
 		}
 	}
@@ -52,11 +52,11 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task GetCollector()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
 		collectors.Should().NotBeNull();
 		collectors.Should().NotBeNullOrEmpty();
 		var refetchedCollector = await LogicMonitorClient
-			.GetAsync<Collector>(collectors[0].Id, CancellationToken.None)
+			.GetAsync<Collector>(collectors[0].Id, default)
 			.ConfigureAwait(false);
 
 		refetchedCollector.Should().NotBeNull();

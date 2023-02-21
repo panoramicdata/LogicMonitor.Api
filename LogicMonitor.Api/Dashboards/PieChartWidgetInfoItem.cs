@@ -10,7 +10,7 @@ public class PieChartWidgetInfoItem
 	/// The data point name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// The legend

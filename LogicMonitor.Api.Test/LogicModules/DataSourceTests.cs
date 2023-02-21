@@ -11,31 +11,40 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceGroupDataSources()
 	{
-		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken.None).ConfigureAwait(false);
+		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
 		deviceGroup.Should().NotBeNull();
 
-		var deviceGroupDataSources = await LogicMonitorClient.GetAllDeviceGroupDataSourcesAsync(deviceGroup.Id, CancellationToken.None).ConfigureAwait(false);
+		var deviceGroupDataSources = await LogicMonitorClient.GetAllDeviceGroupDataSourcesAsync(deviceGroup.Id, default).ConfigureAwait(false);
 		deviceGroupDataSources.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async Task GetDeviceGroupDeviceDataSourceInstances()
 	{
-		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken.None).ConfigureAwait(false);
+		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
 		deviceGroup.Should().NotBeNull();
 		deviceGroup.Id.Should().NotBe(0);
 		// We have the device group
 
 		// Determine the DataSources
-		var dataSourcesIds = new List<DataSource>
-				{
-					await LogicMonitorClient.GetDataSourceByUniqueNameAsync("Ping", CancellationToken.None).ConfigureAwait(false),
-					await LogicMonitorClient.GetDataSourceByUniqueNameAsync("dns", CancellationToken.None).ConfigureAwait(false)
-				}
-			.ConvertAll(ds => ds.Id);
+		var pingDataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("Ping", default)
+			.ConfigureAwait(false);
+		pingDataSource.Should().NotBeNull();
+
+		var dnsDataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("dns", default)
+			.ConfigureAwait(false);
+		dnsDataSource.Should().NotBeNull();
+
+		var dataSourcesIds = new List<int>
+		{
+			pingDataSource!.Id,
+			dnsDataSource!.Id,
+		};
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetInstancesAsync(LogicModuleType.DataSource, deviceGroup.Id, dataSourcesIds, cancellationToken: CancellationToken.None)
+			.GetInstancesAsync(LogicModuleType.DataSource, deviceGroup.Id, dataSourcesIds, cancellationToken: default)
 			.ConfigureAwait(false);
 
 		deviceDataSourceInstances.Should().NotBeNull();
@@ -45,10 +54,10 @@ public class DataSourceTests : TestWithOutput
 		foreach (var deviceDataSourceInstance in deviceDataSourceInstances)
 		{
 			var device = await LogicMonitorClient
-				.GetAsync<Device>(deviceDataSourceInstance.DeviceId.Value, CancellationToken.None)
+				.GetAsync<Device>(deviceDataSourceInstance.DeviceId.Value, default)
 				.ConfigureAwait(false);
 			var refetchedDeviceDataSourceInstanceCount = (await LogicMonitorClient
-			 .GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceDataSourceInstance.DeviceId.Value, deviceDataSourceInstance.DataSourceId.Value, CancellationToken.None)
+			 .GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceDataSourceInstance.DeviceId.Value, deviceDataSourceInstance.DataSourceId.Value, default)
 			 .ConfigureAwait(false)).InstanceCount;
 			refetchedDeviceDataSourceInstanceCount.Should().NotBe(0);
 			sum += refetchedDeviceDataSourceInstanceCount;
@@ -60,10 +69,10 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetWinService()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None)
+		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(false);
 		var windowsServices = await LogicMonitorClient
-			.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None)
+			.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, default)
 			.ConfigureAwait(false);
 		windowsServices.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNull();
@@ -73,17 +82,17 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetMonitoredWinService()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		device.Should().NotBeNull();
-		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, CancellationToken.None).ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async Task GetXml()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
-		var xml = await LogicMonitorClient.GetDataSourceXmlAsync(dataSource.Id, CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		var xml = await LogicMonitorClient.GetDataSourceXmlAsync(dataSource.Id, default).ConfigureAwait(false);
 
 		xml.Should().NotBeNull();
 	}
@@ -91,7 +100,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataSourcesPage()
 	{
-		var dataSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<DataSource> { Skip = 0, Take = 10 }, CancellationToken.None).ConfigureAwait(false);
+		var dataSourcePage = await LogicMonitorClient.GetPageAsync(new Filter<DataSource> { Skip = 0, Take = 10 }, default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		dataSourcePage.Items.Should().NotBeNullOrEmpty();
@@ -115,7 +124,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDataSources()
 	{
-		var dataSources = await LogicMonitorClient.GetAllAsync<DataSource>(CancellationToken.None).ConfigureAwait(false);
+		var dataSources = await LogicMonitorClient.GetAllAsync<DataSource>(default).ConfigureAwait(false);
 		dataSources.Should().NotBeNull();
 		dataSources.Should().NotBeNullOrEmpty();
 	}
@@ -123,19 +132,19 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataPointThresholdDetailsForDeviceDataSourceInstance()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None)
+			.GetDataSourceByUniqueNameAsync("WinCPU", default)
 			.ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, CancellationToken.None)
+			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, CancellationToken.None)
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
 			.ConfigureAwait(false);
 		var dataPointConfiguration = dataPointDetails.Items[0];
 		dataPointConfiguration.Should().NotBeNull();
@@ -145,7 +154,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataSourceByUniqueName_ValidName_Ok()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 	}
 
@@ -153,7 +162,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDataSourceByUniqueName_ValidNameWithSpaces_Ok()
 	{
 		const string DataSourceName = "IP Addresses";
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync(DataSourceName, CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync(DataSourceName, default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		dataSource.Name.Should().Be(DataSourceName);
 	}
@@ -161,7 +170,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataSourceByUniqueName_BadName_Null()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU-", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU-", default).ConfigureAwait(false);
 		dataSource.Should().BeNull();
 	}
 
@@ -169,13 +178,13 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDeviceDataSourceInstances()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetSnmpDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetSnmpDeviceAsync(default).ConfigureAwait(false);
 		device.Should().NotBeNull();
 
-		var dataSource = await portalClient.GetByNameAsync<DataSource>("snmp64_If-", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await portalClient.GetByNameAsync<DataSource>("snmp64_If-", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 
-		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
+		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await portalClient
@@ -187,7 +196,7 @@ public class DataSourceTests : TestWithOutput
 					Skip = 0,
 					Take = 10,
 					Properties = new List<string> { nameof(DeviceDataSourceInstance.Id) }
-				}, CancellationToken.None)
+				}, default)
 			.ConfigureAwait(false);
 		deviceDataSourceInstances.Should().NotBeNull();
 		foreach (var deviceDataSourceInstance in deviceDataSourceInstances)
@@ -198,7 +207,7 @@ public class DataSourceTests : TestWithOutput
 					device.Id,
 					deviceDataSource.Id,
 					deviceDataSourceInstance.Id,
-					CancellationToken.None)
+					default)
 				.ConfigureAwait(false);
 			deviceDataSourceInstanceRefetch.Should().NotBeNull();
 		}
@@ -207,7 +216,7 @@ public class DataSourceTests : TestWithOutput
 			.GetDeviceDataSourceInstanceGroupsAsync(
 				device.Id,
 				deviceDataSource.Id,
-				CancellationToken.None)
+				default)
 			.ConfigureAwait(false);
 		deviceDataSourceInstanceGroups.Should().NotBeNull();
 
@@ -228,7 +237,7 @@ public class DataSourceTests : TestWithOutput
 						{
 								nameof(DeviceDataSourceInstance.Id)
 						}
-					}, CancellationToken.None)
+					}, default)
 				.ConfigureAwait(false);
 			deviceDataSourceInstanceGroupInstances.Should().NotBeNull();
 			deviceDataSourceInstanceGroupInstances.Items.Should().NotBeNull();
@@ -243,8 +252,8 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task TestDeviceGroupAlertSettings()
 	{
-		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken.None).ConfigureAwait(false);
-		var items = await LogicMonitorClient.GetDeviceGroupDataPointConfigurationAsync(deviceGroup.Id, 3, CancellationToken.None).ConfigureAwait(false);
+		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
+		var items = await LogicMonitorClient.GetDeviceGroupDataPointConfigurationAsync(deviceGroup.Id, 3, default).ConfigureAwait(false);
 		items.Should().NotBeNull();
 	}
 
@@ -308,7 +317,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDeviceDataSourceByName_IsFast()
 	{
 		var stopwatch = Stopwatch.StartNew();
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(
 			device.Id,
 			new Filter<DeviceDataSource>
@@ -327,7 +336,7 @@ public class DataSourceTests : TestWithOutput
 							Value = "WinCPU"
 						}
 				}
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		var durationMs = stopwatch.ElapsedMilliseconds;
 
 		deviceDataSources.Should().NotBeNull();
@@ -339,7 +348,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceDataSources()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -349,7 +358,7 @@ public class DataSourceTests : TestWithOutput
 					nameof(DeviceDataSource.Id),
 					nameof(DeviceDataSource.CreatedOnSeconds),
 				}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 
 		// Make sure that we have groups and they are not null
 		deviceDataSources.Should().NotBeNull();
@@ -361,7 +370,7 @@ public class DataSourceTests : TestWithOutput
 				.GetDeviceDataSourceAsync(
 					device.Id,
 					deviceDataSource.Id,
-					CancellationToken.None)
+					default)
 				.ConfigureAwait(false);
 
 			// Make sure they are the same
@@ -378,7 +387,7 @@ public class DataSourceTests : TestWithOutput
 						Skip = 0,
 						Take = 300,
 						Properties = new List<string> { nameof(DeviceDataSourceInstance.Id) }
-					}, CancellationToken.None)
+					}, default)
 				.ConfigureAwait(false);
 
 			// Get the groups
@@ -390,7 +399,7 @@ public class DataSourceTests : TestWithOutput
 					Skip = 0,
 					Take = 300,
 					Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DeviceId) }
-				}, CancellationToken.None).ConfigureAwait(false);
+				}, default).ConfigureAwait(false);
 
 			// Check any that come back
 			foreach (var deviceDataSourceGroup in deviceDataSourceGroups.Items)
@@ -411,7 +420,7 @@ public class DataSourceTests : TestWithOutput
 				{
 					new Eq<DataSource>(nameof(DataSource.Group), groupName)
 				}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		dataSourcesPage.Should().NotBeNull();
@@ -429,7 +438,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDataSourceGroupsQuickly()
 	{
 		// Get all DataSourceGroups
-		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.Group) } }, CancellationToken.None).ConfigureAwait(false);
+		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.Group) } }, default).ConfigureAwait(false);
 
 		var distinctGroups = dataSources.Select(ds => ds.Group).Distinct().ToList();
 
@@ -440,16 +449,16 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDataSourceCollectionMethodsQuickly()
 	{
 		// Get all DataSource Collection methods
-		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.CollectionMethod) } }, CancellationToken.None).ConfigureAwait(false);
+		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.CollectionMethod) } }, default).ConfigureAwait(false);
 		dataSources.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task WindowsServerDisks()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None).ConfigureAwait(false);
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default).ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 		deviceDataSource.DeviceId.Should().Be(device.Id);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);
 	}

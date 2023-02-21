@@ -51,7 +51,7 @@ public enum LogicModuleType
 	/// <summary>
 	/// AppliesTo
 	/// </summary>
-	[EnumMember(Value = "SNMP_SYSOID_MAP")]
+	[EnumMember(Value = "SNMP SysOID Map")]
 	SnmpSysOIDMap,
 
 	/// <summary>

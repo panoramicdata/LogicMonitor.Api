@@ -15,13 +15,13 @@ public class DashboardTests : TestWithOutput
 	{
 		// Multi-number
 		var widgetData = await LogicMonitorClient
-			.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow, CancellationToken.None)
+			.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow, default)
 			.ConfigureAwait(false);
 		widgetData.Should().NotBeNull();
 
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
-			.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow, CancellationToken.None)
+			.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow, default)
 			.ConfigureAwait(false);
 		widgetData2.Should().NotBeNull();
 	}
@@ -33,7 +33,7 @@ public class DashboardTests : TestWithOutput
 
 		// Multi-number
 		var widgetData = await LogicMonitorClient
-			.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow, CancellationToken.None)
+			.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow, default)
 			.ConfigureAwait(false);
 		widgetData.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNull();
@@ -41,7 +41,7 @@ public class DashboardTests : TestWithOutput
 
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
-			.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow, CancellationToken.None)
+			.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow, default)
 			.ConfigureAwait(false);
 		widgetData2.Should().NotBeNull();
 		widgetData2.Availability.Should().NotBe(0);
@@ -53,7 +53,7 @@ public class DashboardTests : TestWithOutput
 	{
 		// This one has all the different widget types on
 		var originalDashboard = await LogicMonitorClient
-			.GetByNameAsync<Dashboard>("All Widgets", CancellationToken.None)
+			.GetByNameAsync<Dashboard>("All Widgets", default)
 			.ConfigureAwait(false);
 
 		var newDashboard = await LogicMonitorClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
@@ -63,10 +63,10 @@ public class DashboardTests : TestWithOutput
 			DashboardGroupId = originalDashboard.DashboardGroupId,
 			WidgetsConfig = originalDashboard.WidgetsConfig,
 			WidgetsOrder = originalDashboard.WidgetsOrder
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 
 		var newDashboardRefetch = await LogicMonitorClient.
-			GetAsync<Dashboard>(newDashboard.Id, CancellationToken.None)
+			GetAsync<Dashboard>(newDashboard.Id, default)
 			.ConfigureAwait(false);
 
 		// Ensure that it is as expected
@@ -74,7 +74,7 @@ public class DashboardTests : TestWithOutput
 
 		// Delete the clone
 		await LogicMonitorClient
-			.DeleteAsync(newDashboard, cancellationToken: CancellationToken.None)
+			.DeleteAsync(newDashboard, cancellationToken: default)
 			.ConfigureAwait(false);
 	}
 
@@ -83,10 +83,10 @@ public class DashboardTests : TestWithOutput
 	{
 		// This one has all the different widget types on
 		var dashboard = await LogicMonitorClient
-			.GetByNameAsync<Dashboard>("All Widgets", CancellationToken.None)
+			.GetByNameAsync<Dashboard>("All Widgets", default)
 			.ConfigureAwait(false);
 		var widgets = await LogicMonitorClient
-			.GetWidgetsByDashboardNameAsync("All Widgets", CancellationToken.None)
+			.GetWidgetsByDashboardNameAsync("All Widgets", default)
 			.ConfigureAwait(false);
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
@@ -288,7 +288,7 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task GetDashboardsNoWidgets()
 	{
-		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(CancellationToken.None).ConfigureAwait(false);
+		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();
@@ -300,7 +300,7 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task GetDashboardsWithWidgets()
 	{
-		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(CancellationToken.None).ConfigureAwait(false);
+		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();

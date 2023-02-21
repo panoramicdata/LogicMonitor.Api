@@ -150,8 +150,8 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	/// The display name of the device
 	/// </summary>
-	[DataMember(Name = "displayName", IsRequired = true)]
-	public string DisplayName { get; set; } = null!;
+	[DataMember(Name = "displayName")]
+	public string? DisplayName { get; set; }
 
 	/// <summary>
 	///    Whether alerting is effectively enabled

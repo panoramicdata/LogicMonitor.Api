@@ -10,7 +10,7 @@ public class PushMetricTests : TestWithOutput
 	public async Task WriteLogAsync_Succeeds()
 	{
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WindowsDeviceId, "Test log message.", CancellationToken.None)
+			.WriteLogAsync(WindowsDeviceId, "Test log message.", default)
 			.ConfigureAwait(false);
 		response.Should().NotBeNull();
 	}

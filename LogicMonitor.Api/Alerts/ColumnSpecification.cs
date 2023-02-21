@@ -23,4 +23,10 @@ public class ColumnSpecification
 	/// </summary>
 	[DataMember(Name = "columnKey")]
 	public string Key { get; set; }
+
+	/// <summary>
+	/// The column size in pixels
+	/// </summary>
+	[DataMember(Name = "columnSize")]
+	public int ColumnSize { get; set; }
 }

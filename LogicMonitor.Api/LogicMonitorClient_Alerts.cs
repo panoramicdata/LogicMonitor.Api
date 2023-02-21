@@ -73,7 +73,7 @@ public partial class LogicMonitorClient
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
 			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, CancellationToken.None).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
 			}

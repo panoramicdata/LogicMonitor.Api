@@ -9,16 +9,16 @@ public class DeviceDataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
-		var _ = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, CancellationToken.None).ConfigureAwait(false);
+		var _ = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, default).ConfigureAwait(false);
 	}
 
 	[Fact]
 	public async Task DeviceDataSourceTests2()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
 
 		// Get all windows devices in the datacenter
-		var devices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken.None).ConfigureAwait(false);
+		var devices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, default).ConfigureAwait(false);
 		devices.Should().NotBeNullOrEmpty();
 		// We have devices
 
@@ -26,7 +26,7 @@ public class DeviceDataSourceTests : TestWithOutput
 		var deviceDataSources = new List<DeviceDataSource>();
 		foreach (var device in devices)
 		{
-			var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken.None).ConfigureAwait(false);
+			var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 			if (deviceDataSourceByDeviceIdAndDataSourceId is null)
 			{
 				continue;

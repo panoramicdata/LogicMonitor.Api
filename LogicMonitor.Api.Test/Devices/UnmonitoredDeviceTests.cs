@@ -10,7 +10,7 @@ public class UnmonitoredDeviceTests : TestWithOutput
 	public async Task GetUnmonitoredDevices()
 	{
 		var unmonitoredDevices = await LogicMonitorClient
-			.GetAllAsync<UnmonitoredDevice>(CancellationToken.None)
+			.GetAllAsync<UnmonitoredDevice>(default)
 			.ConfigureAwait(false);
 		unmonitoredDevices.Should().NotBeNull();
 	}

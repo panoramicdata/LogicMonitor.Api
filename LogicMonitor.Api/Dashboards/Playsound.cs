@@ -1,10 +1,10 @@
 namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-/// An AlertCreationDtoPlaysound
+/// A PlaySound
 /// </summary>
 [DataContract]
-public class AlertCreationDtoPlaysound
+public class PlaySound
 {
 	/// <summary>
 	/// Whether alerts should play a sound

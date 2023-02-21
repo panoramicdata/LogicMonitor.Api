@@ -155,6 +155,30 @@ public class Flow
 	public long DestinationMb { get; set; }
 
 	/// <summary>
+	/// Source ASN
+	/// </summary>
+	[DataMember(Name = "srcASN")]
+	public int SourceAsn { get; set; }
+
+	/// <summary>
+	/// Source ASN
+	/// </summary>
+	[DataMember(Name = "dstASN")]
+	public int DestinationAsn { get; set; }
+
+	/// <summary>
+	/// Source ASN name
+	/// </summary>
+	[DataMember(Name = "srcAsnName")]
+	public string SourceAsnName { get; set; }
+
+	/// <summary>
+	/// Destination ASN name
+	/// </summary>
+	[DataMember(Name = "destAsnName")]
+	public string DestinationAsnName { get; set; }
+
+	/// <summary>
 	/// Returns a string that represents the current object.
 	/// </summary>
 	public override string ToString() => $"{GetEndPointInfoString(SourceIp, SourceDns, SourcePort, SourceBytes)} <-> {GetEndPointInfoString(DestinationIp, DestinationDns, DestinationPort, DestinationBytes)}";

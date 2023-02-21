@@ -40,7 +40,7 @@ public class PieChartWidgetDataPoint
 	/// The dataPoint Name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// The dataPoint Id

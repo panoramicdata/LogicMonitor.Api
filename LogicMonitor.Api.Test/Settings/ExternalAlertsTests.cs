@@ -10,7 +10,7 @@ public class ExternalAlertsTests : TestWithOutput
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<ExternalAlert>(CancellationToken.None)
+			.GetAllAsync<ExternalAlert>(default)
 			.ConfigureAwait(false);
 		items.Should().NotBeNull();
 	}

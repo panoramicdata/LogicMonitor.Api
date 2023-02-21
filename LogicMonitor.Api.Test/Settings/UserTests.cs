@@ -9,13 +9,13 @@ public class UserTests : TestWithOutput
 	[Fact]
 	public async Task GetUsers()
 	{
-		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
+		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
 		users.Should().NotBeNull();
 		users.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var user in users.Items)
 		{
-			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, default).ConfigureAwait(false);
 			var roles = refetchedUser.Roles;
 			roles.Should().NotBeNullOrEmpty();
 			user.UserGroupIds.Should().NotBeNullOrEmpty();
@@ -32,9 +32,9 @@ public class UserTests : TestWithOutput
 			{
 				new Eq<User>(nameof(User.UserName), "test")
 			}
-		}, CancellationToken.None).ConfigureAwait(false))
+		}, default).ConfigureAwait(false))
 		{
-			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: default).ConfigureAwait(false);
 		}
 
 		var userCreationDto = new UserCreationDto
@@ -71,9 +71,9 @@ public class UserTests : TestWithOutput
 			ApiOnly = false
 		};
 
-		var user = await LogicMonitorClient.CreateAsync(userCreationDto, CancellationToken.None).ConfigureAwait(false);
+		var user = await LogicMonitorClient.CreateAsync(userCreationDto, default).ConfigureAwait(false);
 
 		// Delete again
-		await LogicMonitorClient.DeleteAsync(user, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(user, cancellationToken: default).ConfigureAwait(false);
 	}
 }

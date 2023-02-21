@@ -395,7 +395,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 						configSourceUpdates[0].Name
 				},
 				default,
-				CancellationToken.None)
+				default)
 				.ConfigureAwait(false);
 		}
 	}
@@ -503,7 +503,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 						jobMonitorUpdates[0].Name
 				},
 				default,
-				CancellationToken.None)
+				default)
 				.ConfigureAwait(false);
 		}
 	}
@@ -539,7 +539,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 						appliesToFunctionUpdates[0].Name
 				},
 				default,
-				CancellationToken.None)
+				default)
 				.ConfigureAwait(false);
 		}
 	}

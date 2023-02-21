@@ -52,5 +52,5 @@ public class WebsiteIndividualStatusWidget : Widget
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; }
 }

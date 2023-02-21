@@ -44,7 +44,7 @@ public class AlertTests : TestWithOutput
 			},
 			Take = 300
 		};
-		var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter, CancellationToken.None).ConfigureAwait(false);
+		var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter, default).ConfigureAwait(false);
 		alerts.Should().NotBeNull();
 		alerts.Should().NotBeEmpty();
 		alerts.Should().NotContain(a => a.EndOnSeconds == 0);
@@ -67,7 +67,7 @@ public class AlertTests : TestWithOutput
 			Take = 1
 		};
 		var alerts = await LogicMonitorClient
-			.GetAllAsync(noNoteItemsFilter, CancellationToken.None)
+			.GetAllAsync(noNoteItemsFilter, default)
 			.ConfigureAwait(false);
 		alerts.Should().NotBeNull();
 		alerts.Should().ContainSingle();
@@ -77,11 +77,11 @@ public class AlertTests : TestWithOutput
 
 		// Add a note
 		await LogicMonitorClient
-			.SetAlertNoteAsync(new[] { alert.Id }, TestNoteComment, CancellationToken.None)
+			.SetAlertNoteAsync(new[] { alert.Id }, TestNoteComment, default)
 			.ConfigureAwait(false);
 
 		var refetchedAlert = await LogicMonitorClient
-			.GetAlertAsync(alert.Id, CancellationToken.None)
+			.GetAlertAsync(alert.Id, default)
 			.ConfigureAwait(false);
 
 		refetchedAlert.Should().NotBeNull();
@@ -110,7 +110,7 @@ public class AlertTests : TestWithOutput
 			},
 			Take = 300
 		};
-		var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter, CancellationToken.None).ConfigureAwait(false);
+		var alerts = await LogicMonitorClient.GetAllAsync(closedItemsFilter, default).ConfigureAwait(false);
 		alerts.Should().NotBeNull();
 		alerts.Should().NotBeEmpty();
 		alerts.Should().NotContain(a => a.EndOnSeconds == 0);
@@ -149,9 +149,9 @@ public class AlertTests : TestWithOutput
 		};
 
 		// Act
-		var allAlerts = await LogicMonitorClient.GetAlertsAsync(allFilter, CancellationToken.None).ConfigureAwait(false);
-		var sdtAlerts = await LogicMonitorClient.GetAlertsAsync(sdtFilter, CancellationToken.None).ConfigureAwait(false);
-		var nonSdtAlerts = await LogicMonitorClient.GetAlertsAsync(nonSdtFilter, CancellationToken.None).ConfigureAwait(false);
+		var allAlerts = await LogicMonitorClient.GetAlertsAsync(allFilter, default).ConfigureAwait(false);
+		var sdtAlerts = await LogicMonitorClient.GetAlertsAsync(sdtFilter, default).ConfigureAwait(false);
+		var nonSdtAlerts = await LogicMonitorClient.GetAlertsAsync(nonSdtFilter, default).ConfigureAwait(false);
 
 		// Assert
 
@@ -196,7 +196,7 @@ public class AlertTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertsFilteredByDevice()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var startUtcIsBefore = new DateTime(2018, 1, 1);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
 		{
@@ -207,7 +207,7 @@ public class AlertTests : TestWithOutput
 				MonitorObjectId = device.Id,
 				StartUtcIsBefore = startUtcIsBefore
 			};
-			var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter, CancellationToken.None).ConfigureAwait(false);
+			var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter, default).ConfigureAwait(false);
 			// TODO CheckAlertsAreValid(alerts);
 
 			// Make sure there are no alerts for hosts not mentioned by the hostFilter
@@ -220,7 +220,7 @@ public class AlertTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertsFilteredByDeviceRest()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var deviceGroupFullPathFilter = new List<string> { "Collectors*" };
 		const string dataSourceNameFilter = "Volume Usage-";
 		const string dataSourceInstanceNameFilter = @"WinVolumeUsage-C:\\";
@@ -245,7 +245,7 @@ public class AlertTests : TestWithOutput
 			StartEpochIsAfter = utcNow.AddDays(-1).SecondsSinceTheEpoch(),
 			StartEpochIsBefore = utcNow.SecondsSinceTheEpoch()
 		};
-		var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter, CancellationToken.None).ConfigureAwait(false);
+		var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter, default).ConfigureAwait(false);
 		// TODO CheckAlertsAreValid(alerts);
 
 		// Make sure there are no alerts for hosts not mentioned by the hostFilter
@@ -269,7 +269,7 @@ public class AlertTests : TestWithOutput
 			OrderByProperty = nameof(Alert.StartOnSeconds),
 			OrderDirection = OrderDirection.Desc
 		};
-		var alertsNotIncludingCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterNotIncludingCleared, CancellationToken.None).ConfigureAwait(false);
+		var alertsNotIncludingCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterNotIncludingCleared, default).ConfigureAwait(false);
 		alertsNotIncludingCleared.Should().HaveCountGreaterThan(0);
 		Assert.DoesNotContain(alertsNotIncludingCleared, a => !a.IsActive);
 		Assert.Contains(alertsNotIncludingCleared, a => a.IsActive);
@@ -286,7 +286,7 @@ public class AlertTests : TestWithOutput
 			OrderByProperty = nameof(Alert.StartOnSeconds),
 			OrderDirection = OrderDirection.Desc
 		};
-		var alertsIncludngCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterIncludingCleared, CancellationToken.None).ConfigureAwait(false);
+		var alertsIncludngCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterIncludingCleared, default).ConfigureAwait(false);
 		Assert.True(alertsIncludngCleared.Count > 0);
 		Assert.Contains(alertsIncludngCleared, a => !a.IsActive);
 		Assert.Contains(alertsIncludngCleared, a => a.IsActive);
@@ -297,7 +297,7 @@ public class AlertTests : TestWithOutput
 	{
 		var unfilteredAlerts =
 			await LogicMonitorClient
-				.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }, CancellationToken.None)
+				.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }, default)
 				.ConfigureAwait(false);
 		var criticalAlerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
@@ -305,21 +305,21 @@ public class AlertTests : TestWithOutput
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
 				Levels = new List<AlertLevel> { AlertLevel.Critical }
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		var errorAlerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
 				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		var warningAlerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
 				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 
 		// Ensure that all alerts are at the appropriate level
 		unfilteredAlerts.Should().AllSatisfy(a => (a.AlertLevel >= AlertLevel.Error).Should().BeTrue());
@@ -347,7 +347,7 @@ public class AlertTests : TestWithOutput
 			SdtFilter = SdtFilter.NonSdt,
 			StartEpochIsAfter = StartDateTimeSeconds,
 			Take = 1
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
 	}
 
@@ -356,7 +356,7 @@ public class AlertTests : TestWithOutput
 	public async Task GetFilteredAlertsDefaultPeriod()
 	{
 		var alerts =
-			await LogicMonitorClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }, CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.GetAlertsAsync(new AlertFilter { StartEpochIsAfter = StartDateTimeSeconds, StartEpochIsBefore = EndDateTimeSeconds }, default).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
 	}
 
@@ -368,7 +368,7 @@ public class AlertTests : TestWithOutput
 			{
 				StartEpochIsAfter = EndDateTime.AddYears(-2).SecondsSinceTheEpoch(),
 				StartEpochIsBefore = EndDateTime.AddYears(-2).AddDays(2).SecondsSinceTheEpoch()
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		alerts.Should().BeEmpty();
 	}
 
@@ -382,7 +382,7 @@ public class AlertTests : TestWithOutput
 				StartUtcIsAfter = startUtcIsAfterOrAt,
 				IsCleared = false,
 				IncludeCleared = null
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		Assert.True(alerts.All(a => a.StartOnUtc >= startUtcIsAfterOrAt));
 		Assert.True(alerts.All(a => !a.IsCleared));
 	}
@@ -396,7 +396,7 @@ public class AlertTests : TestWithOutput
 			StartUtcIsAfter = startUtcIsAfterOrAt,
 			IsCleared = true,
 			IncludeCleared = null,
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		Assert.True(alerts.All(a => a.StartOnUtc >= startUtcIsAfterOrAt));
 		Assert.True(alerts.All(a => a.IsCleared));
 	}
@@ -411,14 +411,14 @@ public class AlertTests : TestWithOutput
 				StartEpochIsBefore = EndDateTimeSeconds,
 				MonitorObjectGroupFullPaths = new List<string> { "Datacenter/*" },
 				IncludeCleared = true
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
 
 		// Refetch with GetAlertAsync
 		foreach (var alert in alerts.Take(10))
 		{
 			var refetchedAlert = await LogicMonitorClient
-				.GetAlertAsync(alert.Id, CancellationToken.None)
+				.GetAlertAsync(alert.Id, default)
 				.ConfigureAwait(false);
 			refetchedAlert.Should().NotBeNull();
 			refetchedAlert.DetailMessage.Should().NotBeNull();
@@ -439,7 +439,7 @@ public class AlertTests : TestWithOutput
 		var operation = async () =>
 		{
 			alert = await LogicMonitorClient
-				.GetAlertAsync("DS1234", CancellationToken.None)
+				.GetAlertAsync("DS1234", default)
 				.ConfigureAwait(false);
 		};
 		await operation
@@ -456,7 +456,7 @@ public class AlertTests : TestWithOutput
 			{
 				StartEpochIsAfter = DaysAgoAsUnixSeconds(1),
 				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
-			}, CancellationToken.None).ConfigureAwait(false);
+			}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
 		alerts.Should().NotHaveCount(0);
 
@@ -464,7 +464,7 @@ public class AlertTests : TestWithOutput
 		foreach (var alert in alerts)
 		{
 			var refetchedAlert = await LogicMonitorClient
-				.GetAlertAsync(alert.Id, CancellationToken.None)
+				.GetAlertAsync(alert.Id, default)
 				.ConfigureAwait(false);
 			refetchedAlert.Should().NotBeNull();
 			refetchedAlert.MonitorObjectId.Should().Be(alert.MonitorObjectId);
@@ -483,7 +483,7 @@ public class AlertTests : TestWithOutput
 		{
 			StartUtcIsAfter = DateTime.UtcNow - timespan,
 			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(allAlerts);
 
 		// Make sure that some are returned with a warning level and some with an error level
@@ -500,7 +500,7 @@ public class AlertTests : TestWithOutput
 		{
 			StartUtcIsAfter = DateTime.UtcNow - timespan,
 			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 
 		Logger.LogDebug("{ErrorAndAboveCount}", errorAndAboveAlerts.Count);
 
@@ -523,7 +523,7 @@ public class AlertTests : TestWithOutput
 					new FilterItem<Alert> { Property = nameof(Alert.InternalId), Operation=":", Value="LMS462482416" },
 					new FilterItem<Alert> { Property = nameof(Alert.IsCleared), Operation=":", Value="*" },
 				}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		alerts.Should().NotBeNull();
 	}
 
@@ -547,7 +547,7 @@ public class AlertTests : TestWithOutput
 		{
 			StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
 			StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 
 		// Get all alerts NOT in SDT
 		var nonSdtAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
@@ -555,7 +555,7 @@ public class AlertTests : TestWithOutput
 			StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
 			StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
 			SdtFilter = SdtFilter.NonSdt
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		Assert.All(nonSdtAlerts, alert => Assert.Null(alert.Sdt));
 
 		// Get all alerts in SDT
@@ -564,7 +564,7 @@ public class AlertTests : TestWithOutput
 			StartEpochIsAfter = oneDayAgo.ToUnixTimeSeconds(),
 			StartEpochIsBefore = nowUtc.ToUnixTimeSeconds(),
 			SdtFilter = SdtFilter.Sdt
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		Assert.All(sdtAlerts, alert => alert.Sdt.Should().NotBeNull());
 
 		// Make sure the numbers add up

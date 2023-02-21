@@ -7,6 +7,18 @@ namespace LogicMonitor.Api.Alerts;
 public class DisplaySettings
 {
 	/// <summary>
+	/// What to display as
+	/// </summary>
+	[DataMember(Name = "displayAs")]
+	public string? DisplayAs { get; set; }
+
+	/// <summary>
+	/// The map style
+	/// </summary>
+	[DataMember(Name = "mapStyle")]
+	public string? MapStyle { get; set; }
+
+	/// <summary>
 	/// The Sort direction
 	/// </summary>
 	[DataMember(Name = "sortDirection")]
@@ -28,7 +40,7 @@ public class DisplaySettings
 	/// The play sound
 	/// </summary>
 	[DataMember(Name = "playSound")]
-	public AlertCreationDtoPlaysound PlaySound { get; set; }
+	public PlaySound PlaySound { get; set; }
 
 	/// <summary>
 	/// The font size
@@ -53,4 +65,16 @@ public class DisplaySettings
 	/// </summary>
 	[DataMember(Name = "isShowAll")]
 	public bool IsShowAll { get; set; }
+
+	/// <summary>
+	/// Whether to show the type icon
+	/// </summary>
+	[DataMember(Name = "showTypeIcon")]
+	public bool? ShowTypeIcon { get; set; }
+
+	/// <summary>
+	/// The page size
+	/// </summary>
+	[DataMember(Name = "pageSize")]
+	public int PageSize { get; set; }
 }

@@ -10,12 +10,12 @@ public class LogicModuleMetadataTests : TestWithOutput
 	public async Task GetDataSourceMetadata()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken.None)
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		dataSource.Id.Should().NotBe(0);
 		var logicModuleMetadata = await LogicMonitorClient
-			.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id, CancellationToken.None)
+			.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id, default)
 			.ConfigureAwait(false);
 		CheckMetadata(logicModuleMetadata);
 	}

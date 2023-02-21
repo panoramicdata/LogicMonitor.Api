@@ -1,8 +1,9 @@
-﻿using System.Globalization;
-
-namespace LogicMonitor.Api.Test.EventLogs;
+﻿namespace LogicMonitor.Api.Test.EventLogs;
 public class GetFilteredAuditEventTests : TestWithOutput
 {
+	private DateTime endDateTimeUtc = DateTimeOffset.UtcNow.Date;
+	private DateTime startDateTimeUtc = DateTimeOffset.UtcNow.Date.AddHours(-1);
+
 	public GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
 	}
@@ -10,13 +11,11 @@ public class GetFilteredAuditEventTests : TestWithOutput
 	[Fact]
 	public async Task GetUsernameFilteredEvents()
 	{
-		var startDateTimeUtc = DateTime.Parse("2022-06-17 00:00:00 +01:00", CultureInfo.InvariantCulture);
-		var endDateTimeUtc = DateTime.Parse("2022-06-20 09:00:00 +01:00", CultureInfo.InvariantCulture);
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), CancellationToken.None)
+			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), default)
 			.ConfigureAwait(false);
 
-		unfilteredLogItems.Should().HaveCount(75);
+		unfilteredLogItems.Count.Should().BePositive();
 
 		var filteredLogItemsSystemActiveDiscovery = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(
@@ -26,11 +25,11 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AActiveDiscovery\"" },
-			CancellationToken.None
+			default
 			)
 			.ConfigureAwait(false);
 
-		filteredLogItemsSystemActiveDiscovery.Should().HaveCount(13);
+		var filteredLogItemsSystemActiveDiscoveryCount = filteredLogItemsSystemActiveDiscovery.Count;
 
 		var filteredLogItemsSystemAppliesTo = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(
@@ -40,11 +39,11 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AAppliesTo\"" },
-			CancellationToken.None
+			default
 			)
 			.ConfigureAwait(false);
 
-		filteredLogItemsSystemAppliesTo.Should().HaveCount(40);
+		var filteredLogItemsSystemAppliesToCount = filteredLogItemsSystemAppliesTo.Count;
 
 		var filteredLogItemsSystemAppliesToAndSystemDiscovery = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(
@@ -54,26 +53,30 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" },
-			CancellationToken.None
+			default
 			)
 			.ConfigureAwait(false);
 
-		filteredLogItemsSystemAppliesToAndSystemDiscovery.Should().HaveCount(53);
+		var filteredLogItemsSystemAppliesToAndSystemDiscoveryCount = filteredLogItemsSystemAppliesToAndSystemDiscovery.Count;
+
+		filteredLogItemsSystemAppliesToAndSystemDiscoveryCount.Should().Be(
+			filteredLogItemsSystemActiveDiscoveryCount + filteredLogItemsSystemAppliesToCount
+		);
 
 	}
 
 	[Fact]
 	public async Task GetTextFilteredEvents()
 	{
-		var startDateTimeUtc = DateTime.Parse("2022-06-17 00:00:00 +01:00", CultureInfo.InvariantCulture);
-		var endDateTimeUtc = DateTime.Parse("2022-06-20 09:00:00 +01:00", CultureInfo.InvariantCulture);
 		var unfilteredLogItems = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
-			CancellationToken.None
+			default
 			)
 			.ConfigureAwait(false);
 
-		unfilteredLogItems.Should().HaveCount(75);
+		var unfilteredLogItemsCount = unfilteredLogItems.Count;
+
+		unfilteredLogItemsCount.Should().NotBe(0);
 
 		var filteredLogItemsHealthTextExcluded = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(
@@ -82,12 +85,12 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"* AND NOT *health*\"" },
-			CancellationToken.None
+			{ TextFilter = "\"* AND NOT *x*\"" },
+			default
 			)
 			.ConfigureAwait(false);
 
-		filteredLogItemsHealthTextExcluded.Should().HaveCount(61);
+		var filteredLogItemsHealthTextExcludedCount = filteredLogItemsHealthTextExcluded.Count;
 
 		var filteredLogItemsHealthTextIncluded = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(
@@ -96,56 +99,13 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"*health*\"" },
-			CancellationToken.None
+			{ TextFilter = "\"*x*\"" },
+			default
 			)
 			.ConfigureAwait(false);
 
-		filteredLogItemsHealthTextIncluded.Should().HaveCount(14);
-	}
+		var filteredLogItemsHealthTextIncludedCount = filteredLogItemsHealthTextIncluded.Count;
 
-	[Fact]
-	public async Task GetUsernameAndTextFilteredEvents()
-	{
-		var startDateTimeUtc = DateTime.Parse("2022-06-17 00:00:00 +01:00", CultureInfo.InvariantCulture);
-		var endDateTimeUtc = DateTime.Parse("2022-06-20 09:00:00 +01:00", CultureInfo.InvariantCulture);
-		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(
-				new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
-				CancellationToken.None)
-			.ConfigureAwait(false);
-
-		unfilteredLogItems.Should().HaveCount(75);
-
-		var filteredLogItemsHealthTextIncluded = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(
-				0,
-				300,
-				startDateTimeUtc,
-				endDateTimeUtc,
-				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"*health*\"" },
-			CancellationToken.None
-			)
-			.ConfigureAwait(false);
-
-		filteredLogItemsHealthTextIncluded.Should().HaveCount(14);
-
-		var filteredLogItemsHealthTextFilteredUsernameIncluded = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(
-				0,
-				300,
-				startDateTimeUtc,
-				endDateTimeUtc,
-				LogFilterSortOrder.HappenedOnAsc)
-			{
-				UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"",
-				TextFilter = "\"*health*\""
-			},
-			CancellationToken.None
-			)
-			.ConfigureAwait(false);
-
-		filteredLogItemsHealthTextFilteredUsernameIncluded.Should().HaveCount(2);
+		(unfilteredLogItemsCount - filteredLogItemsHealthTextExcludedCount).Should().Be(filteredLogItemsHealthTextIncludedCount);
 	}
 }

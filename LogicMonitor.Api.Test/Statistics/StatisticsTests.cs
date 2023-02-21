@@ -10,7 +10,7 @@ public class StatisticsTests : TestWithOutput
 	public async Task Statistics_GetVersion_Succeeds()
 	{
 		var _ = await LogicMonitorClient
-			.GetVersionAsync(CancellationToken.None)
+			.GetVersionAsync(default)
 			.ConfigureAwait(false);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
@@ -32,7 +32,7 @@ public class StatisticsTests : TestWithOutput
 	public async Task Statistics_GetCollectors_Succeeds()
 	{
 		var _ = await LogicMonitorClient
-			.GetAllAsync<Collector>(CancellationToken.None)
+			.GetAllAsync<Collector>(default)
 			.ConfigureAwait(false);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);

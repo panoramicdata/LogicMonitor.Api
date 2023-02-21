@@ -103,6 +103,18 @@ public class CollectorAttribute
 	public string Encoding { get; set; }
 
 	/// <summary>
+	///     Check Type
+	/// </summary>
+	[DataMember(Name = "checkType")]
+	public CheckType CheckType { get; set; }
+
+	/// <summary>
+	///     Configs
+	/// </summary>
+	[DataMember(Name = "configs")]
+	public string? Configs { get; set; }
+
+	/// <summary>
 	///     The entity
 	/// </summary>
 	[DataMember(Name = "entity")]
@@ -407,4 +419,10 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "timeout")]
 	public int Timeout { get; set; }
+
+	/// <summary>
+	/// syntheticScript
+	/// </summary>
+	[DataMember(Name = "syntheticScript")]
+	public string? SyntheticScript { get; set; }
 }
