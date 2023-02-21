@@ -13,9 +13,9 @@ public enum Status
 	Unknown = 0,
 
 	/// <summary>
-	/// Normal
+	/// Alive
 	/// </summary>
-	Normal = 1,
+	Alive = 1,
 
 	/// <summary>
 	/// Dead

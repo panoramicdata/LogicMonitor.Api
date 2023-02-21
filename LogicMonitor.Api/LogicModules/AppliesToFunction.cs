@@ -13,6 +13,12 @@ public class AppliesToFunction : LogicModule, IHasEndpoint
 	public string Code { get; set; } = null!;
 
 	/// <summary>
+	/// The AppliesTo Function parameters
+	/// </summary>
+	[DataMember(Name = "params", IsRequired = true)]
+	public string Parameters { get; set; } = null!;
+
+	/// <summary>
 	/// Published
 	/// </summary>
 	[DataMember(Name = "published", IsRequired = false)]

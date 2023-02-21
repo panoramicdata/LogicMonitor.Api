@@ -132,8 +132,7 @@ public class WebCheckStep : NamedItem
 	/// Raw | Formatted Data\nSpecifies POST data type
 	/// </summary>
 	[DataMember(Name = "postDataEditType", IsRequired = false)]
-	[JsonConverter(typeof(StringEnumConverter))]
-	public PostDataEditType PostDataEditType { get; set; }
+	public PostDataEditType? PostDataEditType { get; set; }
 
 	/// <summary>
 	/// true | false\nChecks if authorization required or not

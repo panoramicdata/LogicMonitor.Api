@@ -448,7 +448,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			{
 				FilterItems = new List<FilterItem<DataSource>>
 				{
-						new Eq<DataSource>(nameof(DataSource.Name), "Ping")
+					new Eq<DataSource>(nameof(DataSource.Name), "Ping")
 				}
 			}, CancellationToken.None)
 			.ConfigureAwait(false))

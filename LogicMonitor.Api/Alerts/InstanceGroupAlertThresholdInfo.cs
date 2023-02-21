@@ -32,8 +32,8 @@ public class InstanceGroupAlertThresholdInfo
 	public bool AlertEnabled { get; set; }
 
 	/// <summary>
-	/// The alert expr
+	/// The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpr { get; set; }
+	public string AlertExpression { get; set; }
 }

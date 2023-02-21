@@ -99,5 +99,5 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// alertExpr
 	/// </summary>
 	[DataMember(Name = "alertExpr", IsRequired = true)]
-	public string AlertExpr { get; set; } = null!;
+	public string AlertExpression { get; set; } = null!;
 }

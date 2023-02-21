@@ -21,7 +21,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	/// The id of the group the website is in
 	/// </summary>
-	[DataMember(Name = "groupId", IsRequired =  false)]
+	[DataMember(Name = "groupId", IsRequired = false)]
 	public int GroupId { get; set; }
 
 	/// <summary>
@@ -154,11 +154,94 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	public List<EntityProperty>? CustomProperties { get; set; }
 
 	/// <summary>
-	/// Whether is the website dead (the collector is down) or not
+	/// The SDT Status
 	/// </summary>
-	[DataMember(Name = "status", IsRequired = false)]
-	[JsonConverter(typeof(StringEnumConverter))]
-	public WebsiteStatus Status { get; set; }
+	[DataMember(Name = "sdtStatus")]
+	public SdtStatus SdtStatus { get; set; }
+
+	/// <summary>
+	/// The alert Status
+	/// </summary>
+	[DataMember(Name = "alertDisableStatus")]
+	public AlertDisableStatus AlertDisableStatus { get; set; }
+
+	/// <summary>
+	/// The alert Status
+	/// </summary>
+	[DataMember(Name = "alertStatus")]
+	public AlertStatus AlertStatus { get; set; }
+
+	/// <summary>
+	/// The alert Status
+	/// </summary>
+	[DataMember(Name = "status")]
+	public Status Status { get; set; }
+
+	/// <summary>
+	/// The alert Status priority
+	/// </summary>
+	[DataMember(Name = "alertStatusPriority")]
+	public int AlertStatusPriority { get; set; }
+
+	/// <summary>
+	/// The count
+	/// </summary>
+	[DataMember(Name = "count")]
+	public int Count { get; set; }
+
+	/// <summary>
+	/// The packet loss threshold in percent
+	/// </summary>
+	[DataMember(Name = "percentPktsNotReceiveInTime")]
+	public int PacketsLossThresholdPercent { get; set; }
+
+	/// <summary>
+	/// The packet loss timeout in milliseconds
+	/// </summary>
+	[DataMember(Name = "timeoutInMSPktsNotReceive")]
+	public int PacketsLossTimeoutMs { get; set; }
+
+	/// <summary>
+	/// The host
+	/// </summary>
+	[DataMember(Name = "host")]
+	public string Host { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Whether to ignore SSL
+	/// </summary>
+	[DataMember(Name = "ignoreSSL")]
+	public bool IgnoreSsl { get; set; }
+
+	/// <summary>
+	/// Whether to trigger SSL Status Alerts
+	/// </summary>
+	[DataMember(Name = "triggerSSLStatusAlert")]
+	public bool TriggerSslStatusAlerts { get; set; }
+
+	/// <summary>
+	/// Whether to trigger SSL Expiration Alerts
+	/// </summary>
+	[DataMember(Name = "triggerSSLExpirationAlert")]
+	public bool TriggerSslExpirationAlerts { get; set; }
+
+	/// <summary>
+	/// The page load alert time in milliseconds
+	/// </summary>
+	[DataMember(Name = "pageLoadAlertTimeInMS")]
+	public bool PageLoadAlertTimeMs { get; set; }
+
+	/// <summary>
+	/// The schema
+	/// </summary>
+	[DataMember(Name = "schema")]
+	public HttpSchema HttpSchema { get; set; }
+
+	/// <summary>
+	/// The alert expression
+	/// </summary>
+	[DataMember(Name = "alertExpr")]
+	public string? AlertExpression { get; set; }
 
 	/// <summary>
 	///    The endpoint

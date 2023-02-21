@@ -82,17 +82,19 @@ public class WebsiteGroupTests : TestWithOutput
 	public async Task WebsiteGroupCreationShouldSetProperties()
 	{
 		// Create it
-		var websiteGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
-		{
-			Name = "Test Name",
-			Description = "Test Description",
-			IsAlertingDisabled = false,
-			IsMonitoringDisabled = false,
-			ParentGroupFullPath = "",
-			ParentId = "1",
-			Properties = new List<EntityProperty>
-					{new EntityProperty {Name = "name", Value = "value"}},
-		}, CancellationToken.None).ConfigureAwait(false);
+		var websiteGroup = await LogicMonitorClient
+			.CreateAsync(new WebsiteGroupCreationDto
+			{
+				Name = "Test Name",
+				Description = "Test Description",
+				IsAlertingDisabled = false,
+				IsMonitoringDisabled = false,
+				ParentGroupFullPath = "",
+				ParentId = "1",
+				Properties = new List<EntityProperty>
+						{new EntityProperty {Name = "name", Value = "value"}},
+			}, CancellationToken.None)
+			.ConfigureAwait(false);
 
 		try
 		{

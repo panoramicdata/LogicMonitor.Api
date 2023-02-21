@@ -12,7 +12,7 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	/// <param name="type"></param>
 	protected ScheduledDownTimeCreationDto(ScheduledDownTimeType type)
 	{
-		Type = type.ToString();
+		Type = type;
 	}
 
 	/// <summary>
@@ -22,10 +22,10 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }
 
 	/// <summary>
-	/// The type resource that this SDT is for: CollectorSDT | DeviceDataSourceInstanceSDT | DeviceBatchJobSDT | DeviceClusterAlertDefSDT | DeviceDataSourceInstanceGroupSDT | DeviceDataSourceSDT | DeviceEventSourceSDT | ResourceGroupSDT | ResourceSDT | WebsiteCheckpointSDT | WebsiteGroupSDT | WebsiteSDT | DeviceLogPipeLineResourceSDT
+	/// The type resource that this SDT is for
 	/// </summary>
 	[DataMember(Name = "type", IsRequired = false)]
-	public string Type { get; set; } = string.Empty;
+	public ScheduledDownTimeType Type { get; set; }
 
 	/// <summary>
 	/// The notes associated with the SDT

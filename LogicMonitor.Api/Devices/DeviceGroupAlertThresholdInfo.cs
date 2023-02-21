@@ -44,8 +44,8 @@ public class DeviceGroupAlertThresholdInfo
 	public string GroupFullPath { get; set; }
 
 	/// <summary>
-	/// The alert expr
+	/// The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr", IsRequired = false)]
-	public string AlertExpr { get; set; }
+	public string AlertExpression { get; set; }
 }

@@ -160,5 +160,5 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The thresholds that should be associated with the datapoint. Note that you need to have a space between the operator and each threshold (e.g. \u003e 1 2 3)
 	/// </summary>
 	[DataMember(Name = "alertExpr", IsRequired = false)]
-	public string AlertExpr { get; set; }
+	public string AlertExpression { get; set; }
 }

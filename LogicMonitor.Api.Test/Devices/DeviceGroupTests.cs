@@ -44,14 +44,17 @@ public class DeviceGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceGroupByFullPath_InvalidDeviceGroup_ReturnsNull()
 	{
-		var nonExistentDeviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync("XXXXXX/YYYYYY", CancellationToken.None).ConfigureAwait(false);
+		var nonExistentDeviceGroup = await LogicMonitorClient
+			.GetDeviceGroupByFullPathAsync("XXXXXX/YYYYYY", default).ConfigureAwait(false);
 		nonExistentDeviceGroup.Should().BeNull();
 	}
 
 	[Fact]
 	public async Task GetDeviceGroupById()
 	{
-		var rootDeviceGroup = await LogicMonitorClient.GetAsync<DeviceGroup>(1, CancellationToken.None).ConfigureAwait(false);
+		var rootDeviceGroup = await LogicMonitorClient
+			.GetAsync<DeviceGroup>(1, default)
+			.ConfigureAwait(false);
 		rootDeviceGroup.Should().NotBeNull();
 	}
 
@@ -135,14 +138,25 @@ public class DeviceGroupTests : TestWithOutput
 	[Fact]
 	public async Task SetDeviceGroupCustomProperty()
 	{
-		// Create a device group for testing purposes
+		// Make sure a device group exists for testing purposes
 		const string testDeviceGroupName = "Property Test Device Group";
-		var deviceGroup = await LogicMonitorClient.CreateAsync(
-			new DeviceGroupCreationDto
-			{
-				ParentId = "1",
-				Name = testDeviceGroupName
-			}, CancellationToken.None).ConfigureAwait(false);
+		var deviceGroup = await LogicMonitorClient
+			.GetDeviceGroupByFullPathAsync(
+				testDeviceGroupName,
+				CancellationToken.None)
+				.ConfigureAwait(false);
+
+		if (deviceGroup is null)
+		{
+			deviceGroup = await LogicMonitorClient.CreateAsync(
+					  new DeviceGroupCreationDto
+					  {
+						  ParentId = "1",
+						  Name = testDeviceGroupName
+					  }, CancellationToken.None)
+				.ConfigureAwait(false);
+		}
+
 		try
 		{
 			const string propertyName = "blah";
@@ -198,7 +212,7 @@ public class DeviceGroupTests : TestWithOutput
 		finally
 		{
 			await LogicMonitorClient
-				.DeleteAsync(deviceGroup, cancellationToken: CancellationToken.None)
+				.DeleteAsync(deviceGroup, cancellationToken: default)
 				.ConfigureAwait(false);
 		}
 	}
