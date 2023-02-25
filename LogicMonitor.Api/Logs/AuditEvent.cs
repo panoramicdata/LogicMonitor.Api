@@ -176,7 +176,7 @@ public class AuditEvent
 	/// <summary>
 	/// The alert id for alert update events
 	/// </summary>
-	public int? AlertId { get; internal set; }
+	public string? AlertId { get; internal set; }
 
 	/// <summary>
 	/// The alert note for alert update events

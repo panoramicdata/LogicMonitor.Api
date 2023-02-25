@@ -174,7 +174,7 @@ public static class LogItemExtensions
 		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
 		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
-		auditEvent.AlertId = GetGroupValueAsIntOrNull(match, "id");
+		auditEvent.AlertId = GetGroupValueAsStringOrNull(match, "alertId");
 		auditEvent.AlertNote = GetGroupValueAsStringOrNull(match, "alertNote");
 		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
 		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
