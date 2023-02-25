@@ -1,3 +1,5 @@
+using System.Transactions;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -656,13 +658,28 @@ public partial class LogicMonitorClient
 		=> (await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{deviceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false)).Items;
 
 	/// <summary>
-	/// Gets all device instances matching the provided filter
+	/// get device instance list
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="filter">The optional filter</param>
+	/// <param name="id">The device id</param>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <param name="netflowFilter"></param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<DeviceDataSourceInstance>> GetAllDeviceInstances(int deviceId, Filter<DeviceDataSourceInstance> filter, CancellationToken cancellationToken)
-		=> GetAllInternalAsync(filter, $"device/devices/{deviceId}/instances", cancellationToken);
+	public async Task<Page<DeviceDataSourceInstance>> GetDeviceInstanceListAsync(
+		int id,
+		Filter<DeviceDataSourceInstance>? netflowFilter = null,
+		long? start = null,
+		long? end = null,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		string? filter = null,
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<Page<DeviceDataSourceInstance>>($"device/devices/{id}/instances?start={start}&end={end}&netflowFilter={netflowFilter}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
 
 	/// <summary>
 	/// get top talkers graph

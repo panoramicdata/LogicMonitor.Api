@@ -198,7 +198,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetAllDeviceInstances()
 	{
 		var deviceInstances = await LogicMonitorClient
-			.GetAllDeviceInstances(WindowsDeviceId, new Filter<DeviceDataSourceInstance>
+			.GetDeviceInstanceListAsync(WindowsDeviceId, new Filter<DeviceDataSourceInstance>
 			{
 				Properties = new List<string>
 				{
@@ -208,7 +208,7 @@ public class DeviceTests : TestWithOutput
 				}
 			}, default)
 			.ConfigureAwait(false);
-		(deviceInstances.Count > 10).Should().BeTrue();
+		(deviceInstances.Items.Count > 10).Should().BeTrue();
 	}
 
 	[Fact]

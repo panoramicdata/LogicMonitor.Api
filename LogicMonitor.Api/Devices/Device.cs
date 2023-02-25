@@ -305,7 +305,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	///    The preferred Collector Id
 	/// </summary>
-	[DataMember(Name = "preferredCollectorId", IsRequired = true)]
+	[DataMember(Name = "preferredCollectorId", IsRequired = false)]
 	public int PreferredCollectorId { get; set; }
 
 	/// <summary>

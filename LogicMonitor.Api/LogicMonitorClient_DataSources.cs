@@ -596,12 +596,12 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
 	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DataPointConfiguration>> GetDeviceDataSourceInstanceDataPointConfigurationAsync(
+	public async Task<Page<DataPointConfiguration>> GetDeviceDataSourceInstanceDataPointConfigurationAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DataPointConfiguration>>(
+		=> await GetBySubUrlAsync<Page<DataPointConfiguration>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			cancellationToken);
 
@@ -630,11 +630,11 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId"></param>
 	/// <param name="deviceDataSourceInstanceCreationDto"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<DeviceDataSourceInstance> AddDeviceDataSourceInstanceAsync(
+	public async Task<DeviceDataSourceInstance> AddDeviceDataSourceInstanceAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		DeviceDataSourceInstanceCreationDto deviceDataSourceInstanceCreationDto,
-		CancellationToken cancellationToken) => PostAsync<DeviceDataSourceInstanceCreationDto, DeviceDataSourceInstance>(
+		CancellationToken cancellationToken) => await PostAsync<DeviceDataSourceInstanceCreationDto, DeviceDataSourceInstance>(
 			deviceDataSourceInstanceCreationDto,
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances",
 			cancellationToken);
@@ -645,10 +645,10 @@ public partial class LogicMonitorClient
 	/// <param name="id">The datasource id</param>
 	/// <param name="body">The audit to be added</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<DataSource> AddDatasourceAuditVersionAsync(
+	public async Task<DataSource> AddDatasourceAuditVersionAsync(
 		int id,
 		Audit body,
-		CancellationToken cancellationToken) => PostAsync<Audit, DataSource>(body,
+		CancellationToken cancellationToken) => await PostAsync<Audit, DataSource>(body,
 			$"setting/datasources/{id}/audit",
 			cancellationToken);
 
@@ -674,11 +674,11 @@ public partial class LogicMonitorClient
 	/// <param name="size"></param>
 	/// <param name="offset"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<DataSource>> GetDatasourceListAsync(
+	public async Task<Page<DataSource>> GetDatasourceListAsync(
 		string? format = null,
 		string? fields = null,
 		int size = 50,
 		int offset = 0,
 		CancellationToken cancellationToken = default)
-		=> GetBySubUrlAsync<Page<DataSource>>($"setting/datasources?format={format}&fields={fields}&size={size}&offset={offset}", cancellationToken);
+		=> await GetBySubUrlAsync<Page<DataSource>>($"setting/datasources?format={format}&fields={fields}&size={size}&offset={offset}", cancellationToken);
 }
