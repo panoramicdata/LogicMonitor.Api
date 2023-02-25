@@ -31,10 +31,28 @@ public class AutoDiscoveryMethod
 	public string? AzureBillingType { get; set; }
 
 	/// <summary>
+	/// azureCostManagementType
+	/// </summary>
+	[DataMember(Name = "azureCostManagementType", IsRequired = false)]
+	public string? AzureCostManagementType { get; set; }
+
+	/// <summary>
+	/// azureSynapseType
+	/// </summary>
+	[DataMember(Name = "azureSynapseType", IsRequired = false)]
+	public string? AzureSynapseType { get; set; }
+
+	/// <summary>
 	/// The CIM class
 	/// </summary>
 	[DataMember(Name = "cimClass", IsRequired = false)]
 	public string? CimClass { get; set; }
+
+	/// <summary>
+	/// columnInstanceName
+	/// </summary>
+	[DataMember(Name = "columnInstanceName", IsRequired = false)]
+	public string? ColumnInstanceName { get; set; }
 
 	/// <summary>
 	/// The property
@@ -383,4 +401,10 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "collectorId", IsRequired = false)]
 	public string? CollectorId { get; set; }
+
+	/// <summary>
+	/// zoomRoomIssueType
+	/// </summary>
+	[DataMember(Name = "zoomRoomIssueType", IsRequired = false)]
+	public string? ZoomRoomIssueType { get; set; }
 }

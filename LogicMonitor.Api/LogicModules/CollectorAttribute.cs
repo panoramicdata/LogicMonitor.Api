@@ -425,4 +425,34 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "syntheticScript")]
 	public string? SyntheticScript { get; set; }
+
+	/// <summary>
+	/// dateColumn
+	/// </summary>
+	[DataMember(Name = "dateColumn")]
+	public string DateColumns { get; set; }
+
+	/// <summary>
+	/// dateColumn
+	/// </summary>
+	[DataMember(Name = "soqlEntity")]
+	public string SoqlEntity { get; set; }
+
+	/// <summary>
+	/// whereClause
+	/// </summary>
+	[DataMember(Name = "whereClause")]
+	public string WhereClause { get; set; }
+
+	/// <summary>
+	/// groupByClause
+	/// </summary>
+	[DataMember(Name = "groupByClause")]
+	public string GroupByClause { get; set; }
+
+	/// <summary>
+	/// endpointUrlSuffix
+	/// </summary>
+	[DataMember(Name = "endpointUrlSuffix")]
+	public string EndpointUrlSuffix { get; set; }
 }
