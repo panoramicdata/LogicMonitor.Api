@@ -1,3 +1,5 @@
+using System.Transactions;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -662,4 +664,21 @@ public partial class LogicMonitorClient
 		int hdsId,
 		int instanceId,
 		CancellationToken cancellationToken) => PostAsync<object?, object>(null, $"device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection", cancellationToken);
+
+
+	/// <summary>
+	/// get datasource list
+	/// </summary>
+	/// <param name="format"></param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<DataSource>> GetDatasourceListAsync(
+		string? format = null,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		CancellationToken cancellationToken = default)
+		=> GetBySubUrlAsync<Page<DataSource>>($"setting/datasources?format={format}&fields={fields}&size={size}&offset={offset}", cancellationToken);
 }
