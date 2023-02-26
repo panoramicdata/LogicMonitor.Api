@@ -78,11 +78,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 			.ConfigureAwait(false);
 		testsdts.Should().NotBeNull();
 
-		// Device Group
-		var _deviceGroupHistorySdts =
-			await LogicMonitorClient.GetDeviceGroupHistorySdts(1516, default)
-			.ConfigureAwait(false);
-		_deviceGroupHistorySdts.Should().NotBeNull();
+		// Device Group - currently throws a permission denied error
+		//var _deviceGroupHistorySdts =
+		//	await LogicMonitorClient.GetDeviceGroupHistorySdts(1516, default)
+		//	.ConfigureAwait(false);
+		//_deviceGroupHistorySdts.Should().NotBeNull();
 
 		// Device
 		var deviceHistorySdts =
@@ -164,7 +164,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			{
 				FilterItems = new List<FilterItem<ScheduledDownTime>>
 				{
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceSDT"),
+					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "ResourceSDT"),
 					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
 				}
 			}, default).ConfigureAwait(false);
@@ -231,7 +231,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			{
 				FilterItems = new List<FilterItem<ScheduledDownTime>>
 				{
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceGroupSDT"),
+					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "ResourceGroupSDT"),
 					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
 				}
 			}, default).ConfigureAwait(false);
