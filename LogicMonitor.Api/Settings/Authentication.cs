@@ -10,18 +10,18 @@ public class Authentication
 	/// <summary>
 	/// NTLM authentication password
 	/// </summary>
-	[DataMember(Name = "password", IsRequired = true)]
+	[DataMember(Name = "password")]
 	public string Password { get; set; } = null!;
 
 	/// <summary>
 	/// Authentication type
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = true)]
+	[DataMember(Name = "type")]
 	public string Type { get; set; } = null!;
 
 	/// <summary>
 	/// NTLM  authentication userName
 	/// </summary>
-	[DataMember(Name = "userName", IsRequired = true)]
+	[DataMember(Name = "userName")]
 	public string UserName { get; set; } = null!;
 }

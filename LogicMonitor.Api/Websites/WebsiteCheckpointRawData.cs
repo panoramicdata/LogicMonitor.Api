@@ -10,18 +10,18 @@ public class WebsiteCheckpointRawData
 	/// <summary>
 	/// datapoint values 2-D list
 	/// </summary>
-	[DataMember(Name = "values", IsRequired = false)]
+	[DataMember(Name = "values")]
 	public object[]? Values { get; set; }
 
 	/// <summary>
 	/// timestamp list
 	/// </summary>
-	[DataMember(Name = "time", IsRequired = false)]
+	[DataMember(Name = "time")]
 	public long[]? Time { get; set; }
 
 	/// <summary>
 	/// the next page parameters
 	/// </summary>
-	[DataMember(Name = "nextPageParams", IsRequired = false)]
+	[DataMember(Name = "nextPageParams")]
 	public string? NextPageParams { get; set; }
 }

@@ -10,6 +10,6 @@ public class AzureSynapseDiscoveryMethodV3 : AutoDiscoveryMethod
 	/// <summary>
 	/// azureSynapseType
 	/// </summary>
-	[DataMember(Name = "azureSynapseType", IsRequired = true)]
+	[DataMember(Name = "azureSynapseType")]
 	public string AzureSynapseType { get; set; } = null!;
 }

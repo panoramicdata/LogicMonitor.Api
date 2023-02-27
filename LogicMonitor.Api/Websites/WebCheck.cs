@@ -10,36 +10,36 @@ public class WebCheck : Website
 	/// <summary>
 	/// The scheme or protocol associated with the URL to check. Acceptable values are: http, https
 	/// </summary>
-	[DataMember(Name = "schema", IsRequired = false)]
+	[DataMember(Name = "schema")]
 	public HttpSchema Schema { get; set; }
 
 	/// <summary>
 	/// Whether or not SSL expiration alerts should be triggered
 	/// </summary>
-	[DataMember(Name = "triggerSSLExpirationAlert", IsRequired = false)]
+	[DataMember(Name = "triggerSSLExpirationAlert")]
 	public bool TriggerSslExpirationAlerts { get; set; }
 
 	/// <summary>
 	/// Whether or not SSL status alerts should be triggered
 	/// </summary>
-	[DataMember(Name = "triggerSSLStatusAlert", IsRequired = false)]
+	[DataMember(Name = "triggerSSLStatusAlert")]
 	public bool TriggerSslStatusAlerts { get; set; }
 
 	/// <summary>
 	/// The time in milliseconds that the page must load within for each step to avoid triggering an alert
 	/// </summary>
-	[DataMember(Name = "pageLoadAlertTimeInMS", IsRequired = false)]
+	[DataMember(Name = "pageLoadAlertTimeInMS")]
 	public long PageLoadAlertTimeInMS { get; set; }
 
 	/// <summary>
 	/// Whether or not SSL should be ignored, the default value is true
 	/// </summary>
-	[DataMember(Name = "ignoreSSL", IsRequired = false)]
+	[DataMember(Name = "ignoreSSL")]
 	public bool IgnoreSsl { get; set; }
 
 	/// <summary>
 	/// The threshold (in days) for triggering SSL certification alerts
 	/// </summary>
-	[DataMember(Name = "alertExpr", IsRequired = false)]
+	[DataMember(Name = "alertExpr")]
 	public string? AlertExpression { get; set; }
 }

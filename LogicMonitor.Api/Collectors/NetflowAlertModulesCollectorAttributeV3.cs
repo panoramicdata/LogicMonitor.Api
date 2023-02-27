@@ -9,48 +9,48 @@ public class NetflowAlertModulesCollectorAttributeV3 : CollectorAttribute
 	/// <summary>
 	/// typeOfAlert
 	/// </summary>
-	[DataMember(Name = "typeOfAlert", IsRequired = false)]
+	[DataMember(Name = "typeOfAlert")]
 	public string TypeOfAlert { get; set; } = string.Empty;
 
 	/// <summary>
 	/// thresholdValueUnit
 	/// </summary>
-	[DataMember(Name = "thresholdValueUnit", IsRequired = false)]
+	[DataMember(Name = "thresholdValueUnit")]
 	public string ThresholdValueUnit { get; set; } = string.Empty;
 
 	/// <summary>
 	/// netflowFilters
 	/// </summary>
-	[DataMember(Name = "netflowFilters", IsRequired = false)]
+	[DataMember(Name = "netflowFilters")]
 	public string NetflowFilters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// trafficType
 	/// </summary>
-	[DataMember(Name = "trafficType", IsRequired = false)]
+	[DataMember(Name = "trafficType")]
 	public string TrafficType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// alertEnable
 	/// </summary>
-	[DataMember(Name = "alertEnable", IsRequired = false)]
+	[DataMember(Name = "alertEnable")]
 	public bool AlertEnable { get; set; }
 
 	/// <summary>
 	/// topThresholdExpression
 	/// </summary>
-	[DataMember(Name = "topThresholdExpression", IsRequired = false)]
+	[DataMember(Name = "topThresholdExpression")]
 	public string TopThresholdExpression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// dataDuration
 	/// </summary>
-	[DataMember(Name = "dataDuration", IsRequired = false)]
+	[DataMember(Name = "dataDuration")]
 	public string DataDuration { get; set; } = string.Empty;
 
 	/// <summary>
 	/// enabled
 	/// </summary>
-	[DataMember(Name = "enabled", IsRequired = false)]
+	[DataMember(Name = "enabled")]
 	public bool Enabled { get; set; }
 }

@@ -9,30 +9,30 @@ public class EC2NetscanPolicyCredential
 	/// <summary>
 	/// The ID of the device group that credentials should be inherited from, for this scan
 	/// </summary>
-	[DataMember(Name = "deviceGroupId", IsRequired = false)]
+	[DataMember(Name = "deviceGroupId")]
 	public int DeviceGroupId { get; set; }
 
 	/// <summary>
 	/// Custom credentials that should be used for this scan
 	/// </summary>
-	[DataMember(Name = "custom", IsRequired = false)]
+	[DataMember(Name = "custom")]
 	public object? Custom { get; set; }
 
 	/// <summary>
 	/// The name of the device group that credentials should be inherited from, for this scan
 	/// </summary>
-	[DataMember(Name = "deviceGroupName", IsRequired = false)]
+	[DataMember(Name = "deviceGroupName")]
 	public string? DeviceGroupName { get; set; }
 
 	/// <summary>
 	/// The ID of the device that credentials should be inherited from, for this scan
 	/// </summary>
-	[DataMember(Name = "deviceId", IsRequired = false)]
+	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }
 
 	/// <summary>
 	/// The name of the device that credentials should be inherited from, for this scan
 	/// </summary>
-	[DataMember(Name = "deviceName", IsRequired = false)]
+	[DataMember(Name = "deviceName")]
 	public string? DeviceName { get; set; }
 }

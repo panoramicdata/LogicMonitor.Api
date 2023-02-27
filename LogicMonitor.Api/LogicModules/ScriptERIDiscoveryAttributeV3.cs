@@ -10,36 +10,36 @@ public class ScriptERIDiscoveryAttributeV3 : NamedItem
 	/// <summary>
 	/// windows script
 	/// </summary>
-	[DataMember(Name = "winScript", IsRequired = false)]
+	[DataMember(Name = "winScript")]
 	public string WinScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// groovy script
 	/// </summary>
-	[DataMember(Name = "groovyScript", IsRequired = false)]
+	[DataMember(Name = "groovyScript")]
 	public string GroovyScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// script type
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = false)]
+	[DataMember(Name = "type")]
 	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// linux script command line
 	/// </summary>
-	[DataMember(Name = "linuxCmdline", IsRequired = false)]
+	[DataMember(Name = "linuxCmdline")]
 	public string LinuxCmdLine { get; set; } = string.Empty;
 
 	/// <summary>
 	/// linux script file
 	/// </summary>
-	[DataMember(Name = "linuxScript", IsRequired = false)]
+	[DataMember(Name = "linuxScript")]
 	public string LinuxScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// windows script command line
 	/// </summary>
-	[DataMember(Name = "winCmdline", IsRequired = false)]
+	[DataMember(Name = "winCmdline")]
 	public string WindowsCmdLine { get; set; } = string.Empty;
 }

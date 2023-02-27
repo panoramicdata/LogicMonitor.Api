@@ -9,6 +9,6 @@ public class VirtualDataPoint : UndescribedNamedItem
 	/// <summary>
 	///     The calculation
 	/// </summary>
-	[DataMember(Name = "rpn", IsRequired = false)]
+	[DataMember(Name = "rpn")]
 	public string Rpn { get; set; } = string.Empty;
 }

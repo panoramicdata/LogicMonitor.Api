@@ -9,12 +9,12 @@ public class Ec2DDR
 	/// <summary>
 	/// The assignment
 	/// </summary>
-	[DataMember(Name = "assignment", IsRequired = false)]
+	[DataMember(Name = "assignment")]
 	public List<Assignment>? Assignment { get; set; }
 
 	/// <summary>
 	/// The change name pattern
 	/// </summary>
-	[DataMember(Name = "changeName", IsRequired = false)]
+	[DataMember(Name = "changeName")]
 	public string? ChangeName { get; set; }
 }

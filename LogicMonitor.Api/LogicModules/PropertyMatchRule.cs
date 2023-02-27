@@ -16,6 +16,6 @@ public class PropertyMatchRule
 	/// <summary>
 	/// caseInsensitive
 	/// </summary>
-	[DataMember(Name = "caseInsensitive", IsRequired = false)]
+	[DataMember(Name = "caseInsensitive")]
 	public bool CaseInsensitive { get; set; }
 }

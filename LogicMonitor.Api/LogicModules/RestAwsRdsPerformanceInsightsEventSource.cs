@@ -10,18 +10,18 @@ public class RestAwsRdsPerformanceInsightsEventSource : EventSource
 	/// <summary>
 	/// The polling interval for the EventSource
 	/// </summary>
-	[DataMember(Name = "schedule", IsRequired = false)]
+	[DataMember(Name = "schedule")]
 	public int Schedule { get; set; }
 
 	/// <summary>
 	/// Maximum number of items to return
 	/// </summary>
-	[DataMember(Name = "num", IsRequired = false)]
+	[DataMember(Name = "num")]
 	public int Num { get; set; }
 
 	/// <summary>
 	/// The dimension to query
 	/// </summary>
-	[DataMember(Name = "dimension", IsRequired = false)]
+	[DataMember(Name = "dimension")]
 	public string Dimension { get; set; } = string.Empty;
 }

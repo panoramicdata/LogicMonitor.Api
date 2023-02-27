@@ -10,6 +10,6 @@ public class AzureCostManagementTagsDiscoveryMethod : AutoDiscoveryMethod
 	/// <summary>
 	/// azureTagKeys
 	/// </summary>
-	[DataMember(Name = "azureTagKeys", IsRequired = true)]
+	[DataMember(Name = "azureTagKeys")]
 	public string AzureTagKeys { get; set; } = null!;
 }

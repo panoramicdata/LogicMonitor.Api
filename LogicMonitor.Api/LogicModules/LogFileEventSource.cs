@@ -10,6 +10,6 @@ public class LogFileEventSource : EventSource
 	/// <summary>
 	/// log files
 	/// </summary>
-	[DataMember(Name = "logFiles", IsRequired = false)]
+	[DataMember(Name = "logFiles")]
 	public List<LogFile> LogFiles { get; set; } = new();
 }

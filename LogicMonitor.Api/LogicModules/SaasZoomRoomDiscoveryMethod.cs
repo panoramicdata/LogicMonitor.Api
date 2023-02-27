@@ -9,6 +9,6 @@ public class SaasZoomRoomDiscoveryMethod : AutoDiscoveryMethod
 	/// <summary>
 	/// zoomRoomIssueType
 	/// </summary>
-	[DataMember(Name = "zoomRoomIssueType", IsRequired = true)]
+	[DataMember(Name = "zoomRoomIssueType")]
 	public string ZoomRoomIssueType { get; set; } = null!;
 }

@@ -9,13 +9,13 @@ public class ReportGroup : NamedItem, IHasEndpoint
 	/// <summary>
 	/// The reports count of this group
 	/// </summary>
-	[DataMember(Name = "reportsCount", IsRequired = false)]
+	[DataMember(Name = "reportsCount")]
 	public int ReportCount { get; set; }
 
 	/// <summary>
 	/// The matched reports count of this group
 	/// </summary>
-	[DataMember(Name = "matchedReportCount", IsRequired = false)]
+	[DataMember(Name = "matchedReportCount")]
 	public int MatchedReportCount { get; set; }
 
 	/// <summary>

@@ -57,7 +57,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The automatic upgrade information
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "automaticUpgradeInfo", IsRequired = false)]
+	[DataMember(Name = "automaticUpgradeInfo")]
 	public object AutomaticUpgradeInfo { get; set; } // TODO - use the AutomaticUpgradeInfo class
 
 	/// <summary>

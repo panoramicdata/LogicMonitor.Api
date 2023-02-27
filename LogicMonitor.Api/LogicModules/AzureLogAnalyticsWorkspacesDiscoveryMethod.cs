@@ -10,6 +10,6 @@ public class AzureLogAnalyticsWorkspacesDiscoveryMethod : AutoDiscoveryMethod
 	/// <summary>
 	/// columnInstanceName
 	/// </summary>
-	[DataMember(Name = "columnInstanceName", IsRequired = true)]
+	[DataMember(Name = "columnInstanceName")]
 	public string ColumnInstanceName { get; set; } = null!;
 }

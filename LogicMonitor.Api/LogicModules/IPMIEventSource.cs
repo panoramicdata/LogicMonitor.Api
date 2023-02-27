@@ -10,6 +10,6 @@ public class IPMIEventSource : EventSource
 	/// <summary>
 	/// impmi check interval
 	/// </summary>
-	[DataMember(Name = "checkInterval", IsRequired = true)]
+	[DataMember(Name = "checkInterval")]
 	public int CheckInterval { get; set; }
 }

@@ -9,49 +9,49 @@ public class IntegrationMetadata
 	/// <summary>
 	/// Specifies the target last published Id
 	/// </summary>
-	[DataMember(Name = "targetLastPublishedId", IsRequired = false)]
+	[DataMember(Name = "targetLastPublishedId")]
 	public string? TargetLastPublishedId { get; set; }
 
 	/// <summary>
 	/// The metadata checksum for the target last published LMModule content
 	/// </summary>
-	[DataMember(Name = "targetLastPublishedChecksum", IsRequired = false)]
+	[DataMember(Name = "targetLastPublishedChecksum")]
 	public string? TargetLastPublishedChecksum { get; set; }
 
 	/// <summary>
 	/// Specifies the target last published version
 	/// </summary>
-	[DataMember(Name = "targetLastPublishedVersion", IsRequired = false)]
+	[DataMember(Name = "targetLastPublishedVersion")]
 	public string? TargetLastPublishedVersion { get; set; }
 
 	/// <summary>
 	/// The metadata checksum for the LMModule content
 	/// </summary>
-	[DataMember(Name = "originChecksum", IsRequired = false)]
+	[DataMember(Name = "originChecksum")]
 	public string? OriginChecksum { get; set; }
 
 	/// <summary>
 	/// Specifies the origin Author companies namespace
 	/// </summary>
-	[DataMember(Name = "originAuthorNamespace", IsRequired = false)]
+	[DataMember(Name = "originAuthorNamespace")]
 	public string? OriginAuthorNamespace { get; set; }
 
 	/// <summary>
 	/// Specifies if the Applies To function is changed from origin or not
 	/// </summary>
-	[DataMember(Name = "isChangedFromOrigin", IsRequired = false)]
+	[DataMember(Name = "isChangedFromOrigin")]
 	public bool IsChangedFromOrigin { get; set; }
 
 	/// <summary>
 	/// Specifies the audited registry Id
 	/// </summary>
-	[DataMember(Name = "auditedRegistryId", IsRequired = false)]
+	[DataMember(Name = "auditedRegistryId")]
 	public string? AuditedRegistryId { get; set; }
 
 	/// <summary>
 	/// Specifies the target lineage Id
 	/// </summary>
-	[DataMember(Name = "targetLineageId", IsRequired = false)]
+	[DataMember(Name = "targetLineageId")]
 	public string? TargetLineageId { get; set; }
 
 	/// <summary>
@@ -64,19 +64,19 @@ public class IntegrationMetadata
 	/// <summary>
 	/// Specifies if the Applies To function is changed from target last published or not
 	/// </summary>
-	[DataMember(Name = "isChangedFromTargetLastPublished", IsRequired = false)]
+	[DataMember(Name = "isChangedFromTargetLastPublished")]
 	public bool IsChangedFromTargetLastPublished { get; set; }
 
 	/// <summary>
 	/// The origin lineage Id of the LMmodule
 	/// </summary>
-	[DataMember(Name = "originLineageId", IsRequired = false)]
+	[DataMember(Name = "originLineageId")]
 	public string? OriginLineageId { get; set; }
 
 	/// <summary>
 	/// Specifies the origin Author companies unique Id
 	/// </summary>
-	[DataMember(Name = "originAuthorCompanyUUID", IsRequired = false)]
+	[DataMember(Name = "originAuthorCompanyUUID")]
 	public string? OriginAuthorCompanyUUID { get; set; }
 
 	/// <summary>
@@ -88,18 +88,18 @@ public class IntegrationMetadata
 	/// <summary>
 	/// The Registry ID of the Exchange Integration this module is based from
 	/// </summary>
-	[DataMember(Name = "originRegistryId", IsRequired = false)]
+	[DataMember(Name = "originRegistryId")]
 	public string? OriginRegistryId { get; set; }
 
 	/// <summary>
 	/// Specifies the origin version
 	/// </summary>
-	[DataMember(Name = "originVersion", IsRequired = false)]
+	[DataMember(Name = "originVersion")]
 	public string? OriginVersion { get; set; }
 
 	/// <summary>
 	/// Specifies the audited registry version
 	/// </summary>
-	[DataMember(Name = "auditedVersion", IsRequired = false)]
+	[DataMember(Name = "auditedVersion")]
 	public string? AuditedVersion { get; }
 }

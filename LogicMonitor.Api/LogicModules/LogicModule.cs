@@ -10,13 +10,13 @@ public abstract class LogicModule : NamedItem
 	/// <summary>
 	/// The metadata checksum for the LMModule content
 	/// </summary>
-	[DataMember(Name = "checksum", IsRequired = false)]
+	[DataMember(Name = "checksum")]
 	public string? Checksum { get; set; }
 
 	/// <summary>
 	/// The lineage Id of the LMModule
 	/// </summary>
-	[DataMember(Name = "lineageId", IsRequired = false)]
+	[DataMember(Name = "lineageId")]
 	public string? LineageId { get; set; }
 
 	/// <summary>

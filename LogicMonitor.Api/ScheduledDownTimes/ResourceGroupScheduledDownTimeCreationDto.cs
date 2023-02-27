@@ -23,7 +23,7 @@ public class ResourceGroupScheduledDownTimeCreationDto : ScheduledDownTimeCreati
 	/// <summary>
 	/// The id of the datasource that this SDT will be associated with, for the specified group. dataSourceId 0 indicates all datasources
 	/// </summary>
-	[DataMember(Name = "dataSourceId", IsRequired = false)]
+	[DataMember(Name = "dataSourceId")]
 	public int DataSourceId { get; set; }
 
 	/// <summary>

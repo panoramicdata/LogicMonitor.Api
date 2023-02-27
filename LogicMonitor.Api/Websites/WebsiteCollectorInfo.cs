@@ -9,7 +9,7 @@ public class WebsiteCollectorInfo : DescribedItem
 	/// <summary>
 	/// The hostname of the collector
 	/// </summary>
-	[DataMember(Name = "hostname", IsRequired = false)]
+	[DataMember(Name = "hostname")]
 	public string? HostName { get; set; }
 
 	/// <summary>

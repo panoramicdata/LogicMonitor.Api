@@ -10,12 +10,12 @@ public class DeviceProperty
 	/// <summary>
 	/// The resource property name
 	/// </summary>
-	[DataMember(Name = "name", IsRequired = true)]
+	[DataMember(Name = "name")]
 	public string Name { get; set; } = null!;
 
 	/// <summary>
 	/// The resource property value
 	/// </summary>
-	[DataMember(Name = "value", IsRequired = true)]
+	[DataMember(Name = "value")]
 	public string Value { get; set; } = null!;
 }

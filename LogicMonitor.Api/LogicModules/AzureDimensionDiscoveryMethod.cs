@@ -10,18 +10,18 @@ public class AzureDimensionDiscoveryMethod : AutoDiscoveryMethod
 	/// <summary>
 	/// period
 	/// </summary>
-	[DataMember(Name = "period", IsRequired = true)]
+	[DataMember(Name = "period")]
 	public string Period { get; set; } = null!;
 
 	/// <summary>
 	/// metricName
 	/// </summary>
-	[DataMember(Name = "metricName", IsRequired = false)]
+	[DataMember(Name = "metricName")]
 	public string? MetricName { get; set; }
 
 	/// <summary>
 	/// dimensionName
 	/// </summary>
-	[DataMember(Name = "dimensionName", IsRequired = true)]
+	[DataMember(Name = "dimensionName")]
 	public string DimensionName { get; set; } = null!;
 }

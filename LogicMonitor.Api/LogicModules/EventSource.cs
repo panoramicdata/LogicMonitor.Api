@@ -9,145 +9,145 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// <summary>
 	/// Whether or not duplicate alerts have to be suppressed
 	/// </summary>
-	[DataMember(Name = "suppressDuplicatesES", IsRequired = false)]
+	[DataMember(Name = "suppressDuplicatesES")]
 	public bool SuppressDuplicates { get; set; }
 
 	/// <summary>
 	/// The alert message subject for the EventSource
 	/// </summary>
-	[DataMember(Name = "alertSubjectTemplate", IsRequired = false)]
+	[DataMember(Name = "alertSubjectTemplate")]
 	public string AlertBodyTemplate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The default alert level: warn | error | critical | doMapping
 	/// </summary>
-	[DataMember(Name = "alertLevel", IsRequired = false)]
+	[DataMember(Name = "alertLevel")]
 	public string AlertLevel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Applies To for the LMModule
 	/// </summary>
-	[DataMember(Name = "appliesTo", IsRequired = false)]
+	[DataMember(Name = "appliesTo")]
 	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Technical Notes for the LMModule
 	/// </summary>
-	[DataMember(Name = "technology", IsRequired = false)]
+	[DataMember(Name = "technology")]
 	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The filters for the EventSource
 	/// </summary>
-	[DataMember(Name = "filters", IsRequired = false)]
+	[DataMember(Name = "filters")]
 	public List<RestEventSourceFilter> Filters { get; set; } = new();
 
 	/// <summary>
 	/// The epoch time of the last update to the EventSource
 	/// </summary>
-	[DataMember(Name = "version", IsRequired = false)]
+	[DataMember(Name = "version")]
 	public long Version { get; set; }
 
 	/// <summary>
 	/// The EventSource collector type
 	/// </summary>
-	[DataMember(Name = "collector", IsRequired = false)]
+	[DataMember(Name = "collector")]
 	public EventSourceType Type { get; set; }
 
 	/// <summary>
 	/// The Tags for the LMModule
 	/// </summary>
-	[DataMember(Name = "tags", IsRequired = false)]
+	[DataMember(Name = "tags")]
 	public string Tags { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The auditVersion of the EventSource
 	/// </summary>
-	[DataMember(Name = "auditVersion", IsRequired = false)]
+	[DataMember(Name = "auditVersion")]
 	public long AuditVersion { get; set; }
 
 	/// <summary>
 	/// The alert message body for the EventSource
 	/// </summary>
-	[DataMember(Name = "alertBodyTemplate", IsRequired = false)]
+	[DataMember(Name = "alertBodyTemplate")]
 	public string AlertSubjectTemplate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether or not the alert should clear after acknowledgement
 	/// </summary>
-	[DataMember(Name = "clearAfterAck", IsRequired = false)]
+	[DataMember(Name = "clearAfterAck")]
 	public bool ClearAfterAcknowledgement { get; set; }
 
 	/// <summary>
 	/// The time in minutes after which the alert should clear
 	/// </summary>
-	[DataMember(Name = "alertEffectiveIval", IsRequired = true)]
+	[DataMember(Name = "alertEffectiveIval")]
 	public int AlertEffectiveIntervalMinutes { get; set; }
 
 	/// <summary>
 	/// The LMModule dimension
 	/// </summary>
-	[DataMember(Name = "dimension", IsRequired = false)]
+	[DataMember(Name = "dimension")]
 	public string? Dimension { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Groovy script
 	/// </summary>
-	[DataMember(Name = "groovyScript", IsRequired = false)]
+	[DataMember(Name = "groovyScript")]
 	public string? GroovyScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group the LMModule is in
 	/// </summary>
-	[DataMember(Name = "group", IsRequired = false)]
+	[DataMember(Name = "group")]
 	public string Group { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Linux command line
 	/// </summary>
-	[DataMember(Name = "linuxCmdLine", IsRequired = false)]
+	[DataMember(Name = "linuxCmdLine")]
 	public string? LinuxCommandLine { get; set; }
 
 	/// <summary>
 	/// The Linux script
 	/// </summary>
-	[DataMember(Name = "linuxScript", IsRequired = false)]
+	[DataMember(Name = "linuxScript")]
 	public string? LinuxScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Log files
 	/// </summary>
-	[DataMember(Name = "logFiles", IsRequired = false)]
+	[DataMember(Name = "logFiles")]
 	public List<LogFile>? LogFiles { get; set; }
 
 	/// <summary>
 	/// The num(???)
 	/// </summary>
-	[DataMember(Name = "num", IsRequired = false)]
+	[DataMember(Name = "num")]
 	public int? Number { get; set; }
 
 	/// <summary>
 	/// The EventSource schedule
 	/// </summary>
-	[DataMember(Name = "schedule", IsRequired = false)]
+	[DataMember(Name = "schedule")]
 	public int? ScheduleMinutes { get; set; }
 
 	/// <summary>
 	/// The script type
 	/// </summary>
-	[DataMember(Name = "scriptType", IsRequired = false)]
+	[DataMember(Name = "scriptType")]
 	public EventSourceScriptType? ScriptType { get; set; }
 
 	/// <summary>
 	/// The Windows command line
 	/// </summary>
-	[DataMember(Name = "windowsCmdLine", IsRequired = false)]
+	[DataMember(Name = "windowsCmdLine")]
 	public string? WindowsCommandLine { get; set; }
 
 	/// <summary>
 	/// The Windows script
 	/// </summary>
-	[DataMember(Name = "windowsScript", IsRequired = false)]
+	[DataMember(Name = "windowsScript")]
 	public string? WindowsScript { get; set; }
 
 	/// <summary>

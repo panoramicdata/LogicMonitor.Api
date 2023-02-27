@@ -9,12 +9,12 @@ public class InterfaceType
 	/// <summary>
 	/// ifPosition
 	/// </summary>
-	[DataMember(Name = "ifPosition", IsRequired = false)]
+	[DataMember(Name = "ifPosition")]
 	public string IfPosition { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ifId
 	/// </summary>
-	[DataMember(Name = "ifId", IsRequired = false)]
+	[DataMember(Name = "ifId")]
 	public string IfId { get; set; } = string.Empty;
 }

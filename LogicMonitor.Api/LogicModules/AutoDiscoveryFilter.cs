@@ -9,24 +9,24 @@ public class AutoDiscoveryFilter
 	/// <summary>
 	/// attribute to filter
 	/// </summary>
-	[DataMember(Name = "attribute", IsRequired = true)]
+	[DataMember(Name = "attribute")]
 	public string Attribute { get; set; } = null!;
 
 	/// <summary>
 	/// filter\u0027s operation values can be : Equal|NotEqual|GreaterThan|GreaterEqual|LessThan|LessEqual|Contain|NotContain|NotExist|RegexMatch|RegexNotMatch
 	/// </summary>
-	[DataMember(Name = "operation", IsRequired = true)]
+	[DataMember(Name = "operation")]
 	public AutoDiscoveryFilterOperation Operation { get; set; }
 
 	/// <summary>
 	/// operation value
 	/// </summary>
-	[DataMember(Name = "value", IsRequired = false)]
+	[DataMember(Name = "value")]
 	public string? Value { get; set; }
 
 	/// <summary>
 	/// filter comment
 	/// </summary>
-	[DataMember(Name = "comment", IsRequired = false)]
+	[DataMember(Name = "comment")]
 	public string? Comment { get; set; }
 }

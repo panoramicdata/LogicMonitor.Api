@@ -10,18 +10,18 @@ public class RestAzureResourceLogAnalyticsWorkspacesSource : EventSource
 	/// <summary>
 	/// The polling interval for the EventSource
 	/// </summary>
-	[DataMember(Name = "schedule", IsRequired = false)]
+	[DataMember(Name = "schedule")]
 	public int Schedule { get; set; }
 
 	/// <summary>
 	/// Azure Log Analytics Workspaces Query
 	/// </summary>
-	[DataMember(Name = "query", IsRequired = false)]
+	[DataMember(Name = "query")]
 	public string Query { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Column Instance Name
 	/// </summary>
-	[DataMember(Name = "columnInstanceName", IsRequired = false)]
+	[DataMember(Name = "columnInstanceName")]
 	public string ColumnInstanceName { get; set; } = string.Empty;
 }

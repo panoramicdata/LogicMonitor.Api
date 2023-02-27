@@ -10,6 +10,6 @@ public class AzureEABillingDiscoveryMethodV3 : AutoDiscoveryMethod
 	/// <summary>
 	/// azureEABillingType
 	/// </summary>
-	[DataMember(Name = "azureEABillingType", IsRequired = true)]
+	[DataMember(Name = "azureEABillingType")]
 	public string AzureEABillingType { get; set; } = null!;
 }

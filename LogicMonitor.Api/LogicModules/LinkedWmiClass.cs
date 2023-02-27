@@ -10,30 +10,30 @@ public class LinkedWmiClass
 	/// <summary>
 	/// anchorClassWMIProperty
 	/// </summary>
-	[DataMember(Name = "anchorClassWMIProperty", IsRequired = true)]
+	[DataMember(Name = "anchorClassWMIProperty")]
 	public string AnchorClassWMIProperty { get; set; } = null!;
 
 	/// <summary>
 	/// linkedWmiClass
 	/// </summary>
-	[DataMember(Name = "linkedWmiClass", IsRequired = true)]
+	[DataMember(Name = "linkedWmiClass")]
 	public string LinkedWmi { get; set; } = null!;
 
 	/// <summary>
 	/// match
 	/// </summary>
-	[DataMember(Name = "match", IsRequired = false)]
+	[DataMember(Name = "match")]
 	public PropertyMatchRule? Match { get; set; }
 
 	/// <summary>
 	/// myLinkWMIProperty
 	/// </summary>
-	[DataMember(Name = "myLinkWMIProperty", IsRequired = false)]
+	[DataMember(Name = "myLinkWMIProperty")]
 	public string? MyLinkWMIProperty { get; set; }
 
 	/// <summary>
 	/// ILP
 	/// </summary>
-	[DataMember(Name = "ILP", IsRequired = false)]
+	[DataMember(Name = "ILP")]
 	public InstanceLevelProperty? ILP { get; set; }
 }

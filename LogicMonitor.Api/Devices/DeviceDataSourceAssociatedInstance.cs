@@ -10,6 +10,6 @@ public class DeviceDataSourceAssociatedInstance : NamedItem
 	/// <summary>
 	/// instance alias
 	/// </summary>
-	[DataMember(Name = "alias", IsRequired = false)]
+	[DataMember(Name = "alias")]
 	public string Alias { get; set; }
 }

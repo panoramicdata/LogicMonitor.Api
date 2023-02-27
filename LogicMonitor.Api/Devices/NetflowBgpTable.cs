@@ -10,24 +10,24 @@ public class NetflowBgpTable : NetflowDataBase
 	/// <summary>
 	/// percentUsage
 	/// </summary>
-	[DataMember(Name = "percentUsage", IsRequired = false)]
+	[DataMember(Name = "percentUsage")]
 	public double PercentUsage { get; set; }
 
 	/// <summary>
 	/// asNumber
 	/// </summary>
-	[DataMember(Name = "asNumber", IsRequired = false)]
+	[DataMember(Name = "asNumber")]
 	public long AsNumber { get; set; }
 
 	/// <summary>
 	/// usage
 	/// </summary>
-	[DataMember(Name = "usage", IsRequired = false)]
+	[DataMember(Name = "usage")]
 	public double Usage { get; set; }
 
 	/// <summary>
 	/// description
 	/// </summary>
-	[DataMember(Name = "description", IsRequired = false)]
+	[DataMember(Name = "description")]
 	public string Description { get; set; } = string.Empty;
 }

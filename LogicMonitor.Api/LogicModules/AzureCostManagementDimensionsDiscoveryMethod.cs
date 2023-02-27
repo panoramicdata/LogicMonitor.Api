@@ -9,6 +9,6 @@ public class AzureCostManagementDimensionsDiscoveryMethod : AutoDiscoveryMethod
 	/// <summary>
 	/// azureCostManagementType
 	/// </summary>
-	[DataMember(Name = "azureCostManagementType", IsRequired = true)]
+	[DataMember(Name = "azureCostManagementType")]
 	public string AzureCostManagementType { get; set; } = null!;
 }

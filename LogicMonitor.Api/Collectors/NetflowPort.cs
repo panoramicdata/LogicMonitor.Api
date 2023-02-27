@@ -9,25 +9,25 @@ public class NetflowPort : NetflowDataBase
 	/// <summary>
 	/// Description
 	/// </summary>
-	[DataMember(Name = "description", IsRequired = false)]
+	[DataMember(Name = "description")]
 	private string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Description
 	/// </summary>
-	[DataMember(Name = "port", IsRequired = false)]
+	[DataMember(Name = "port")]
 	private int Port { get; set; }
 
 	/// <summary>
 	/// Percent Usage
 	/// </summary>
-	[DataMember(Name = "percentUsage", IsRequired = false)]
+	[DataMember(Name = "percentUsage")]
 	private double PercentUsage { get; set; }
 
 	/// <summary>
 	/// Usage in bytes
 	/// </summary>
-	[DataMember(Name = "usage", IsRequired = false)]
+	[DataMember(Name = "usage")]
 	private long UsageBytes { get; set; }
 
 	/// <summary>
