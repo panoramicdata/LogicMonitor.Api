@@ -94,7 +94,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// <summary>
 	/// Display Name
 	/// </summary>
-	[DataMember(Name = "displayName")]
+	[DataMember(Name = "displayName", IsRequired = false)]
 	public string DisplayName { get; set; }
 
 	/// <summary>
