@@ -10,7 +10,7 @@ public class UserCreationDto : CreationDto<User>
 	/// The view permission
 	/// </summary>
 	[DataMember(Name = "viewPermission")]
-	public ViewPermission ViewPermission { get; set; }
+	public ViewPermissionUser ViewPermission { get; set; }
 
 	/// <summary>
 	/// The username

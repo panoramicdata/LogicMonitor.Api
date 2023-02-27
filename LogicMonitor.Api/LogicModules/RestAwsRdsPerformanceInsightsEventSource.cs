@@ -18,10 +18,4 @@ public class RestAwsRdsPerformanceInsightsEventSource : EventSource
 	/// </summary>
 	[DataMember(Name = "num")]
 	public int Num { get; set; }
-
-	/// <summary>
-	/// The dimension to query
-	/// </summary>
-	[DataMember(Name = "dimension")]
-	public string Dimension { get; set; } = string.Empty;
 }

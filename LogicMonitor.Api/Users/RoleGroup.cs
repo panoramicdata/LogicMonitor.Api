@@ -28,7 +28,7 @@ public class RoleGroup : NamedItem, IHasEndpoint
 	/// User Permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/role/groups";

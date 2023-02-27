@@ -52,7 +52,6 @@ public class NetscanTests : TestWithOutput
 		const int assignmentDeviceGroupId = 1;
 		const bool assignmentDisableAlerting = false;
 		const NetscanInclusionType assignmentInclusionType = NetscanInclusionType.Include;
-		const NetscanAssignmentType assignmentType = NetscanAssignmentType.All;
 		var assignmentQuery = string.Empty;
 		var netscanCreationDto = new NetscanCreationDto
 		{

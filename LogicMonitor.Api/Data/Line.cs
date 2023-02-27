@@ -95,7 +95,7 @@ public class Line
 	/// The datapoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// The line decimal

@@ -11,7 +11,7 @@ public class PaaSJsonPathDiscoveryMethod : AutoDiscoveryMethod
 	/// valueAttribute
 	/// </summary>
 	[DataMember(Name = "valueAttribute")]
-	public string ValueAttribute { get; set; } = null!;
+	public string ValueAttribute { get; set; } 
 
 	/// <summary>
 	/// aliasAttribute
@@ -29,7 +29,7 @@ public class PaaSJsonPathDiscoveryMethod : AutoDiscoveryMethod
 	/// resourceUrl
 	/// </summary>
 	[DataMember(Name = "resourceUrl")]
-	public string ResourceUrl { get; set; } = null!;
+	public string ResourceUrl { get; set; } 
 
 	/// <summary>
 	/// propertyAttributes
@@ -47,5 +47,5 @@ public class PaaSJsonPathDiscoveryMethod : AutoDiscoveryMethod
 	/// instancePath
 	/// </summary>
 	[DataMember(Name = "instancePath")]
-	public string InstancePath { get; set; } = null!;
+	public string InstancePath { get; set; } 
 }

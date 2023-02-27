@@ -35,7 +35,7 @@ public class Admin : IdentifiedItem
 	/// The roles assigned to the user
 	/// </summary>
 	[DataMember(Name = "roles")]
-	public List<Role> Roles { get; set; } = null!;
+	public List<Role> Roles { get; set; } 
 
 	/// <summary>
 	/// The time that the user last logged in, in epoch format
@@ -77,7 +77,7 @@ public class Admin : IdentifiedItem
 	/// The password associated with the user
 	/// </summary>
 	[DataMember(Name = "password")]
-	public string Password { get; set; } = null!;
+	public string Password { get; set; } 
 
 	/// <summary>
 	/// The last action taken by the user
@@ -101,7 +101,7 @@ public class Admin : IdentifiedItem
 	/// The email address associated with the user
 	/// </summary>
 	[DataMember(Name = "email")]
-	public string Email { get; set; } = null!;
+	public string Email { get; set; } 
 
 	/// <summary>
 	/// email | smsemail
@@ -173,7 +173,7 @@ public class Admin : IdentifiedItem
 	/// The username associated with the user
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string Username { get; set; } = null!;
+	public string Username { get; set; } 
 
 	/// <summary>
 	/// The user\u0027s status. Should be one of active and suspended

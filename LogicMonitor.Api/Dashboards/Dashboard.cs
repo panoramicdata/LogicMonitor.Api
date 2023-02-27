@@ -92,7 +92,7 @@ public class Dashboard
 	///     The user permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/dashboards";

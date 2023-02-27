@@ -118,7 +118,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The view permissions
 	/// </summary>
 	[DataMember(Name = "viewPermission")]
-	public ViewPermission ViewPermission { get; set; }
+	public ViewPermissionUser ViewPermission { get; set; }
 
 	/// <summary>
 	///    The last action performed by this user
@@ -190,7 +190,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The user permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission? UserPermission { get; set; }
+	public UserPermissionValues? UserPermission { get; set; }
 
 	/// <summary>
 	///    The DateTime the user last logged in UTC

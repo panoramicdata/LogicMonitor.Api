@@ -52,7 +52,7 @@ public class Role : NamedItem, IHasEndpoint
 	/// The account privileges associated with the role. Privileges can be added to a role for each area of your account
 	/// </summary>
 	[DataMember(Name = "privileges")]
-	public List<RolePrivilege> Privileges { get; set; } = null!;
+	public List<RolePrivilege> Privileges { get; set; } 
 
 	/// <summary>
 	/// The group Id of the role
@@ -64,7 +64,7 @@ public class Role : NamedItem, IHasEndpoint
 	/// The permission of current role with the admin. values can be write|read|none
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission? UserPermission { get; set; }
+	public UserPermissionValues? UserPermission { get; set; }
 
 	/// <summary>
 	/// Whether this is a SAML role

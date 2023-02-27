@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 ///     A collector attribute
 /// </summary>
 [DataContract]
-public class CollectorAttribute
+public class AttributeCollector
 {
 	/// <summary>
 	///     The AWS range value

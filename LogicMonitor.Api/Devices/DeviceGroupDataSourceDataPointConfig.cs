@@ -75,7 +75,7 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; } = null!;
+	public string? DataPointName { get; set; } 
 
 	/// <summary>
 	/// dataPointId
@@ -99,5 +99,5 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// alertExpr
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; } = null!;
+	public string AlertExpression { get; set; } 
 }

@@ -17,11 +17,11 @@ public class Chain
 	/// stages
 	/// </summary>
 	[DataMember(Name = "stages")]
-	public List<Recipient> Stages { get; set; } = null!;
+	public List<Recipient> Stages { get; set; } 
 
 	/// <summary>
 	/// period
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; } = null!;
+	public string Type { get; set; } 
 }

@@ -14,11 +14,18 @@ public class LogicMonitorApiException : Exception
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
 	/// <param name="message"></param>
-	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string message = null)
+	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string? message = null)
 		: base(message ?? $"Unsuccessful {method} to {subUrl} ({httpStatusCode} - {(int)httpStatusCode}).  Response Body:\n{responseBody}")
 	{
 		HttpStatusCode = httpStatusCode;
-		ErrorMessage = message;
+		if (message != null)
+		{
+			ErrorMessage = message;
+		}
+		else
+		{
+			ErrorMessage = string.Empty;
+		}
 		ResponseBody = responseBody;
 	}
 
@@ -81,7 +88,7 @@ public class LogicMonitorApiException : Exception
 	/// </summary>
 	public string ErrorMessage { get; }
 
-	private bool Equals(LogicMonitorApiException other) => HttpStatusCode == other.HttpStatusCode && string.Equals(ErrorMessage, other.ErrorMessage);
+	private bool Equals(LogicMonitorApiException other) => HttpStatusCode == other.HttpStatusCode && string.Equals(ErrorMessage, other.ErrorMessage, StringComparison.Ordinal);
 
 	/// <inheritdoc />
 	public override bool Equals(object obj)

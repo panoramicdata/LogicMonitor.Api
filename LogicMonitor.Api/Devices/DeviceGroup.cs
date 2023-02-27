@@ -347,7 +347,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <summary>
 	///    The endpoint

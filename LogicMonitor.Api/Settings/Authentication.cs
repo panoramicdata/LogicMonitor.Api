@@ -11,17 +11,17 @@ public class Authentication
 	/// NTLM authentication password
 	/// </summary>
 	[DataMember(Name = "password")]
-	public string Password { get; set; } = null!;
+	public string Password { get; set; } 
 
 	/// <summary>
 	/// Authentication type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; } = null!;
+	public string Type { get; set; } 
 
 	/// <summary>
 	/// NTLM  authentication userName
 	/// </summary>
 	[DataMember(Name = "userName")]
-	public string UserName { get; set; } = null!;
+	public string UserName { get; set; } 
 }

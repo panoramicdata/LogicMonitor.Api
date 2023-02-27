@@ -22,7 +22,7 @@ public class GraphLine
 	/// the graph line data point name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// if the graph line\u0027s data point is a virtual data point

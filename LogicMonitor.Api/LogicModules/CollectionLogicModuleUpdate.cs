@@ -1,10 +1,10 @@
-﻿namespace LogicMonitor.Api.Data;
+namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// A collection of History SDTs
+/// A collection of LogicModule Updates
 /// </summary>
 [DataContract]
-public class HistorySdtCollection
+public class CollectionLogicModuleUpdate
 {
 	/// <summary>
 	/// The total number of items
@@ -13,10 +13,10 @@ public class HistorySdtCollection
 	public int Total { get; set; }
 
 	/// <summary>
-	/// The History SDT items
+	/// The LogicModule Update items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<HistoricScheduledDownTime> Items { get; set; }
+	public List<LogicModuleUpdate> Items { get; set; }
 
 	/// <summary>
 	/// The search ID

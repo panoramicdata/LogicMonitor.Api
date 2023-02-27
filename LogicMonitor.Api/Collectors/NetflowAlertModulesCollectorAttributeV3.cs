@@ -4,7 +4,7 @@
 /// NetflowAlertModulesCollectorAttributeV3
 /// </summary>
 [DataContract]
-public class NetflowAlertModulesCollectorAttributeV3 : CollectorAttribute
+public class NetflowAlertModulesCollectorAttributeV3 : AttributeCollector
 {
 	/// <summary>
 	/// typeOfAlert

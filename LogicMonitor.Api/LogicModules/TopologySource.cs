@@ -28,7 +28,7 @@ public class TopologySource : LogicModule, IHasEndpoint
 	/// The collector attribute
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public CollectorAttribute CollectorAttribute { get; set; }
+	public AttributeCollector CollectorAttribute { get; set; }
 
 	/// <summary>
 	/// The collection method

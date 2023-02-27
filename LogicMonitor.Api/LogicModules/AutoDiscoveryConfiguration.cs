@@ -46,7 +46,7 @@ public class AutoDiscoveryConfiguration
 	/// method used to do auto discovery instance
 	/// </summary>
 	[DataMember(Name = "method")]
-	public AutoDiscoveryMethod AutoDiscoveryMethod { get; set; } = null!;
+	public AutoDiscoveryMethod AutoDiscoveryMethod { get; set; } 
 
 	/// <summary>
 	/// The version

@@ -12,7 +12,7 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The report type. Acceptable values are: Alert,Alert SLA,Alert threshold,Alert trends,Host CPU,Host group inventory,Host inventory,Host metric trends,Interfaces Bandwidth,Netflow device metric,Service Level Agreement,Website Service Overview,Word template,Audit Log,Alert Forecasting,Dashboard,Website SLA,User,Role
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; } = null!;
+	public string Type { get; set; } 
 
 	/// <summary>
 	/// The type alias
@@ -78,7 +78,7 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The permissions associated with the user who made the API call
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <summary>
 	/// The time, in epoch format, that the report was last generated

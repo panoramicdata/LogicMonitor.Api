@@ -11,13 +11,13 @@ public class LinkedWmiClass
 	/// anchorClassWMIProperty
 	/// </summary>
 	[DataMember(Name = "anchorClassWMIProperty")]
-	public string AnchorClassWMIProperty { get; set; } = null!;
+	public string AnchorClassWMIProperty { get; set; } 
 
 	/// <summary>
 	/// linkedWmiClass
 	/// </summary>
 	[DataMember(Name = "linkedWmiClass")]
-	public string LinkedWmi { get; set; } = null!;
+	public string LinkedWmi { get; set; } 
 
 	/// <summary>
 	/// match

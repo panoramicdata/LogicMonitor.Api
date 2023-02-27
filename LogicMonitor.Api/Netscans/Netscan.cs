@@ -40,7 +40,7 @@ public class Netscan : NamedItem, IExecutable
 	/// Information that determines how duplicate discovered devices should be handled
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = null!;
+	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } 
 
 	/// <summary>
 	/// The Id of the device
@@ -64,7 +64,7 @@ public class Netscan : NamedItem, IExecutable
 	/// Information related to the recurring execution schedule for the Netscan Policy
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public RestSchedule Schedule { get; set; } = null!;
+	public RestSchedule Schedule { get; set; } 
 
 	/// <summary>
 	/// The description of the Collector associated with this Netscan
@@ -100,13 +100,13 @@ public class Netscan : NamedItem, IExecutable
 	/// The credentials to be used for the scan
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public EC2NetscanPolicyCredential Credentials { get; set; } = null!;
+	public EC2NetscanPolicyCredential Credentials { get; set; } 
 
 	/// <summary>
 	/// Which IP the EC2 instance should be monitored with for nec2 scans: private or public
 	/// </summary>
 	[DataMember(Name = "accessibility")]
-	public string Accessibility { get; set; } = null!;
+	public string Accessibility { get; set; } 
 
 	/// <summary>
 	/// How dead EC2 instances should be handled for nec2 scans. Must be Manually
@@ -136,7 +136,7 @@ public class Netscan : NamedItem, IExecutable
 	/// The subnet to scan for nmap scans
 	/// </summary>
 	[DataMember(Name = "subnet")]
-	public string SubnetScanRange { get; set; } = null!;
+	public string SubnetScanRange { get; set; } 
 
 	/// <summary>
 	/// The script path for an external script

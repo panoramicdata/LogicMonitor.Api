@@ -1,11 +1,13 @@
+using System.Globalization;
+
 namespace LogicMonitor.Api.Test;
 
-internal class TestPortalConfig
+internal sealed class TestPortalConfig
 {
 	internal TestPortalConfig(ILogger logger)
 	{
 		var location = typeof(TestPortalConfig).GetTypeInfo().Assembly.Location;
-		var dirPath = Path.Combine(Path.GetDirectoryName(location), "../../../..");
+		var dirPath = Path.Combine(Path.GetDirectoryName(location) ?? "", "../../../..");
 		var builder = new ConfigurationBuilder()
 			.SetBasePath(dirPath)
 			.AddUserSecrets<TestPortalConfig>();
@@ -14,32 +16,32 @@ internal class TestPortalConfig
 		LogicMonitorClient = new LogicMonitorClient(
 			new LogicMonitorClientOptions
 			{
-				Account = Configuration["Config:Account"],
-				AccessId = Configuration["Config:AccessId"],
-				AccessKey = Configuration["Config:AccessKey"],
+				Account = Configuration["Config:Account"] ?? "",
+				AccessId = Configuration["Config:AccessId"] ?? "",
+				AccessKey = Configuration["Config:AccessKey"] ?? "",
 				Logger = logger
 			}
 		)
 		{
 			StrictPagingTotalChecking = true
 		};
-		SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"]);
-		NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"]);
-		WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"]);
-		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"]);
-		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"]);
-		CollectorId = int.Parse(Configuration["Config:CollectorId"]);
-		SDTResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"]);
-		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"];
-		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"];
-		ResourceGroupFullPath = Configuration["Config:ResourceGroupFullPath"];
-		AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"]);
-		AccountHasBillingInformation = bool.Parse(Configuration["Config:AccountHasBillingInformation"]);
-		WebsiteName = Configuration["Config:WebsiteName"];
-		AlertRuleName = Configuration["Config:AlertRuleName"];
+		SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"] ?? "", CultureInfo.InvariantCulture);
+		NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"] ?? "", CultureInfo.InvariantCulture);
+		WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"] ?? "", CultureInfo.InvariantCulture);
+		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"] ?? "", CultureInfo.InvariantCulture);
+		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "", CultureInfo.InvariantCulture);
+		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "", CultureInfo.InvariantCulture);
+		SDTResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "", CultureInfo.InvariantCulture);
+		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"] ?? "";
+		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"] ?? "";
+		ResourceGroupFullPath = Configuration["Config:ResourceGroupFullPath"] ?? "";
+		AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"] ?? "", CultureInfo.InvariantCulture);
+		AccountHasBillingInformation = bool.Parse(Configuration["Config:AccountHasBillingInformation"] ?? "false");
+		WebsiteName = Configuration["Config:WebsiteName"] ?? "";
+		AlertRuleName = Configuration["Config:AlertRuleName"] ?? "";
 	}
 
-	public static IConfigurationRoot Configuration { get; set; }
+	public static IConfigurationRoot? Configuration { get; set; }
 
 	public LogicMonitorClient LogicMonitorClient { get; }
 

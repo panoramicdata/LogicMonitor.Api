@@ -20,7 +20,7 @@ public class LogicMonitorServiceUnavailableException : LogicMonitorApiException
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	public LogicMonitorServiceUnavailableException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
+	public LogicMonitorServiceUnavailableException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string? message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
 	{
 	}
 

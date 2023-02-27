@@ -22,7 +22,7 @@ public class SlaReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<SlaReportMetric> Metrics { get; set; } = null!;
+	public List<SlaReportMetric> Metrics { get; set; } 
 
 	/// <summary>
 	/// The hours of each selected day that the SLA report should take into account, where * refers to all hours

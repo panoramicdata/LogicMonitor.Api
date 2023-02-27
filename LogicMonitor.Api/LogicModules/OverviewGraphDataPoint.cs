@@ -16,7 +16,7 @@ public class OverviewGraphDataPoint : NamedItem
 	/// the graph line data point name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// the graph line data point aggregate method, average|min|max|sum

@@ -11,11 +11,11 @@ public class DeviceProperty
 	/// The resource property name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; } = null!;
+	public string Name { get; set; } 
 
 	/// <summary>
 	/// The resource property value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; } = null!;
+	public string Value { get; set; } 
 }

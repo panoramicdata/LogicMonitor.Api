@@ -10,7 +10,7 @@ public class AutoDiscoveryFilter
 	/// attribute to filter
 	/// </summary>
 	[DataMember(Name = "attribute")]
-	public string Attribute { get; set; } = null!;
+	public string Attribute { get; set; } 
 
 	/// <summary>
 	/// filter\u0027s operation values can be : Equal|NotEqual|GreaterThan|GreaterEqual|LessThan|LessEqual|Contain|NotContain|NotExist|RegexMatch|RegexNotMatch

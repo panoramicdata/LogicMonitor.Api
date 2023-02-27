@@ -38,7 +38,7 @@ public partial class LogicMonitorClient
 	/// <param name="repositoryVersion">The LogicMonitor repository version</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>A LogicModuleUpdate collection</returns>
-	public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdates(
+	public async Task<CollectionLogicModuleUpdate> GetLogicModuleUpdates(
 		LogicModuleType logicModuleType,
 		int repositoryVersion,
 		CancellationToken cancellationToken)
@@ -73,7 +73,7 @@ public partial class LogicMonitorClient
 				throw new NotSupportedException($"LogicModule type {logicModuleType} not supported.");
 		}
 
-		return await PostAsync<LogicModuleUpdateCredential, LogicModuleUpdateCollection>(
+		return await PostAsync<LogicModuleUpdateCredential, CollectionLogicModuleUpdate>(
 			new LogicModuleUpdateCredential
 			{
 				CoreServer = GetLogicModuleRepositoryUrl(repositoryVersion)

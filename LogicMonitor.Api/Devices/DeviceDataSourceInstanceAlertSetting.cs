@@ -52,7 +52,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The name of the datapoint the alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// The id of the Datapoint alert settings apply to

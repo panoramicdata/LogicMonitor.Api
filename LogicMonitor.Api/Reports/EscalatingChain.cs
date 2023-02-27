@@ -29,7 +29,7 @@ public class EscalatingChain : NamedStringIdentifiedItem
 	/// destinations
 	/// </summary>
 	[DataMember(Name = "destinations")]
-	public List<Chain> Destinations { get; set; } = null!;
+	public List<Chain> Destinations { get; set; } 
 
 	/// <summary>
 	/// ccDestinations

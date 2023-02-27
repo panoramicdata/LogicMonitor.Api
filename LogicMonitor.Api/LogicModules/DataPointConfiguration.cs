@@ -58,13 +58,13 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	///     The dataSourceInstanceAlias
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceAlias")]
-	public string DataSourceInstanceAlias { get; set; }
+	public string? DataSourceInstanceAlias { get; set; }
 
 	/// <summary>
 	///     The dataSourceInstance Id

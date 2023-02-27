@@ -16,7 +16,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The locations from which the website is monitored. If the website is internal, this field should include Collectors. If Non-Internal, possible test locations are:\n1 : US - LA\n2 : US - DC\n3 : US - SF\n4 : Europe - Dublin\n5 : Asia - Singapore\n6 : Australia - Sydney\ntestLocation:\"{all:true}\" indicates that the service will be monitored from all checkpoint locations\ntestLocation:\"{smgIds:[1,2,3]}\" indicates that the service will be monitored from checkpoint locations 1, 2 and 3\ntestLocation:\"{collectorIds:[85,90]}\" indicates that the service will be monitored by Collectors 85 and 90
 	/// </summary>
 	[DataMember(Name = "testLocation")]
-	public WebsiteLocation TestLocation { get; set; } = null!;
+	public WebsiteLocation TestLocation { get; set; } 
 
 	/// <summary>
 	/// The id of the group the website is in
@@ -78,7 +78,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[DataMember(Name = "userPermission")]
 	[JsonConverter(typeof(StringEnumConverter))]
-	public UserPermission UserPermissionString { get; set; }
+	public UserPermissionValues UserPermissionString { get; set; }
 
 	/// <summary>
 	/// true: an alert will be triggered if a check fails from an individual test location\nfalse: an alert will not be triggered if a check fails from an individual test location
@@ -151,7 +151,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The properties associated with the website
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty>? CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	/// The SDT Status
@@ -205,7 +205,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The host
 	/// </summary>
 	[DataMember(Name = "host")]
-	public string Host { get; set; } = string.Empty;
+	public string? Host { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to ignore SSL

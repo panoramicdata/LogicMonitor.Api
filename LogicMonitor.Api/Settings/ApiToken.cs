@@ -76,7 +76,7 @@ public class ApiToken : IdentifiedItem
 	/// The permission of current apiToken with the admin. values can be write|read|none
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission? UserPermission { get; set; }
+	public UserPermissionValues? UserPermission { get; set; }
 
 	/// <summary>
 	///    The DateTime the user accepted the EULA UTC
