@@ -27,7 +27,7 @@ public partial class LogicMonitorClient
 
 		var configurationBackup = new ConfigurationBackup();
 
-		var progressReporter = ProgressReporter.StartNew(_logger);
+		var progressReporter = ProgressReporter.StartNewProgressReporter(_logger);
 		// AccountSettings
 		if (backupSpecification.AccountSettings)
 		{
@@ -264,14 +264,14 @@ public partial class LogicMonitorClient
 		return configurationBackup;
 	}
 
-	private static byte[] SerializeAndCompress<T>(T objectToWrite, FileInfo fileInfo) where T : class
+	private static byte[]? SerializeAndCompress<T>(T objectToWrite, FileInfo fileInfo) where T : class
 	{
 		if (objectToWrite is null)
 		{
 			return null;
 		}
 
-		byte[] result = null;
+		byte[]? result = null;
 		using (var outputStream = new FileStream(fileInfo.FullName, FileMode.Create))
 		using (var compressionStream = new GZipStream(outputStream, CompressionMode.Compress))
 		using (var sw = new StreamWriter(compressionStream))

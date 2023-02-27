@@ -20,7 +20,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteGroupFullPath">The website group full path.  The root is "/".</param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
-	public async Task<WebsiteGroup> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken)
+	public async Task<WebsiteGroup?> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken)
 	{
 		if (websiteGroupFullPath is null)
 		{

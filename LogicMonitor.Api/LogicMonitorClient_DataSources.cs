@@ -571,11 +571,11 @@ public partial class LogicMonitorClient
 	/// <param name="deviceGroupId">The device group id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DataSourceAppliesToCollection>> GetDataSourceAppliesToCollectionsPageAsync(
+	public Task<Page<CollectionDataSourceAppliesTo>> GetDataSourceAppliesToCollectionsPageAsync(
 		int deviceGroupId,
-		Filter<DataSourceAppliesToCollection> filter,
+		Filter<CollectionDataSourceAppliesTo> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DataSourceAppliesToCollection>>(
+		=> GetBySubUrlAsync<Page<CollectionDataSourceAppliesTo>>(
 			$"device/groups/{deviceGroupId}/datasources?{filter}",
 			cancellationToken);
 

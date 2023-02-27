@@ -117,7 +117,7 @@ public class ProgressReporter
 	/// Start a new progress reporter
 	/// </summary>
 	/// <param name="logger"></param>
-	public static ProgressReporter StartNew(ILogger logger)
+	public static ProgressReporter StartNewProgressReporter(ILogger logger)
 	{
 		var progressReporter = new ProgressReporter(logger);
 		progressReporter.Start();

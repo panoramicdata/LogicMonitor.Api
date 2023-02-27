@@ -483,7 +483,7 @@ public partial class LogicMonitorClient
 	/// <param name="taskId">The task id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The task results</returns>
-	public async Task<Page<DeviceProcess>> GetProcessServiceTaskResults(
+	public async Task<Page<DeviceProcess>?> GetProcessServiceTaskResults(
 		int deviceId,
 		int taskId,
 		CancellationToken cancellationToken)

@@ -101,7 +101,7 @@ public class Line
 	/// The line decimal
 	/// </summary>
 	[DataMember(Name = "decimal")]
-	public int Decimal { get; set; }
+	public int LineDecimal { get; set; }
 
 	/// <summary>
 	/// The line description

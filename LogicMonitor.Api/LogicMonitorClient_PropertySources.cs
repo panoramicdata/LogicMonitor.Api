@@ -13,7 +13,7 @@ public partial class LogicMonitorClient
 	public async Task<string> GetPropertySourceJsonAsync(
 		int propertySourceId,
 		CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<XmlResponse>($"setting/propertyrules/{propertySourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+		=> (await GetBySubUrlAsync<XmlResponse>($"setting/propertyrules/{propertySourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 	// Can probably take off format=xml as this never returns XML anyway!
 
 	/// <summary>

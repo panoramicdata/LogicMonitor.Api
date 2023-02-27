@@ -23,7 +23,7 @@ public abstract class JsonCreationConverter<T> : JsonConverter
 	public override bool CanWrite => false;
 
 	/// <inheritdoc />
-	public override object ReadJson(JsonReader reader,
+	public override object? ReadJson(JsonReader reader,
 		Type objectType,
 		object existingValue,
 		JsonSerializer serializer)
