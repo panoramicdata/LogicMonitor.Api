@@ -21,7 +21,7 @@ public class ScheduledDownTimeHistory
 	/// The end epoch for the SDT
 	/// </summary>
 	[DataMember(Name = "approximateEndEpoch", IsRequired = false)]
-	public int ApproximateEndEpoch { get; set; }
+	public long ApproximateEndEpoch { get; set; }
 
 	/// <summary>
 	/// The user that added the SDT
@@ -42,8 +42,8 @@ public class ScheduledDownTimeHistory
 	public string? Type { get; set; }
 
 	/// <summary>
-	/// The SDT type
+	/// The start epoch for the SDT
 	/// </summary>
 	[DataMember(Name = "approximateStartEpoch", IsRequired = false)]
-	public string? ApproximateStartEpoch { get; set; }
+	public long ApproximateStartEpoch { get; set; }
 }
