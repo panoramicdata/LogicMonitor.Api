@@ -104,13 +104,13 @@ public class ScheduledDownTimeTests : TestWithOutput
 
 		// Website Group
 		var websiteGroupHistorySdts =
-			await LogicMonitorClient.GetAllSDTListByWebsiteGroupIdAsync(20, default)
+			await LogicMonitorClient.GetAllSdtListByWebsiteGroupIdAsync(20, default)
 			.ConfigureAwait(false);
 		websiteGroupHistorySdts.Should().NotBeNull();
 
 		// Website
 		var websiteHistorySdts =
-			await LogicMonitorClient.GetSDTHistoryByWebsiteIdAsync(350, default)
+			await LogicMonitorClient.GetSdtHistoryByWebsiteIdAsync(350, default)
 			.ConfigureAwait(false);
 		websiteHistorySdts.Should().NotBeNull();
 	}

@@ -50,7 +50,7 @@ public partial class LogicMonitorClient
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	/// get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)
+	/// Get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)
 	/// </summary>
 	/// <param name="id">The Website Group ID</param>
 	/// <param name="fields"></param>
@@ -58,7 +58,7 @@ public partial class LogicMonitorClient
 	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<Page<ScheduledDownTime>> GetAllSDTListByWebsiteGroupIdAsync(
+	public async Task<Page<ScheduledDownTime>> GetAllSdtListByWebsiteGroupIdAsync(
 		int id,
 		CancellationToken cancellationToken,
 		string? fields = null,
@@ -68,7 +68,25 @@ public partial class LogicMonitorClient
 	=> await GetBySubUrlAsync<Page<ScheduledDownTime>>($"website/groups/{id}/sdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	/// get SDT history for the website (Response may contain extra fields depending upon the type of SDT)
+	/// Get SDT histories for a website group (Response may contain extra fields depending upon the type of SDT)
+	/// </summary>
+	/// <param name="id">The Website Group ID</param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken">The CancellationToken</param>
+	public async Task<Page<ScheduledDownTimeHistory>> GetSdtHistoryListByWebsiteGroupIdAsync(
+		int id,
+		CancellationToken cancellationToken,
+		string? fields = null,
+		int size = 50,
+		int offset = 0,
+		string? filter = null)
+	=> await GetBySubUrlAsync<Page<ScheduledDownTimeHistory>>($"website/groups/{id}/historysdts?fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// Get SDT history for the website (Response may contain extra fields depending upon the type of SDT)
 	/// </summary>
 	/// <param name="id">The Website ID</param>
 	/// <param name="fields">Fields</param>
@@ -76,7 +94,7 @@ public partial class LogicMonitorClient
 	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<Page<ScheduledDownTimeHistory>> GetSDTHistoryByWebsiteIdAsync(
+	public async Task<Page<ScheduledDownTimeHistory>> GetSdtHistoryByWebsiteIdAsync(
 		int id,
 		CancellationToken cancellationToken,
 		string? fields = null,
