@@ -63,7 +63,7 @@ public class Widget : NamedItem, IHasEndpoint
 	public int RowSpan { get; set; }
 
 	/// <summary>
-	///     The user permission
+	///     The user permission values
 	/// </summary>
 	[DataMember(Name = "userPermission")]
 	public UserPermissionValues UserPermission { get; set; }
