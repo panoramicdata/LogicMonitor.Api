@@ -10,42 +10,42 @@ public class DeviceGroupAlertThresholdInfo
 	/// <summary>
 	/// enable anomaly alert generation
 	/// </summary>
-	[DataMember(Name = "enableAnomalyAlertGeneration", IsRequired = false)]
+	[DataMember(Name = "enableAnomalyAlertGeneration")]
 	public string EnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	/// userPermission
 	/// </summary>
-	[DataMember(Name = "userPermission", IsRequired = false)]
+	[DataMember(Name = "userPermission")]
 	public string UserPermission { get; set; }
 
 	/// <summary>
 	/// enable anomaly alert suppression
 	/// </summary>
-	[DataMember(Name = "enableAnomalyAlertSuppression", IsRequired = false)]
+	[DataMember(Name = "enableAnomalyAlertSuppression")]
 	public string EnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	/// The group id
 	/// </summary>
-	[DataMember(Name = "groupId", IsRequired = false)]
+	[DataMember(Name = "groupId")]
 	public int GroupId { get; set; }
 
 	/// <summary>
 	/// Whether alerts are enabled
 	/// </summary>
-	[DataMember(Name = "alertEnabled", IsRequired = false)]
+	[DataMember(Name = "alertEnabled")]
 	public bool AlertEnabled { get; set; }
 
 	/// <summary>
 	/// groupFullPath
 	/// </summary>
-	[DataMember(Name = "groupFullPath", IsRequired = false)]
+	[DataMember(Name = "groupFullPath")]
 	public string GroupFullPath { get; set; }
 
 	/// <summary>
 	/// The alert expression
 	/// </summary>
-	[DataMember(Name = "alertExpr", IsRequired = false)]
+	[DataMember(Name = "alertExpr")]
 	public string AlertExpression { get; set; }
 }

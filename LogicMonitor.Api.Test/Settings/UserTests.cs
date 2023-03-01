@@ -39,7 +39,7 @@ public class UserTests : TestWithOutput
 
 		var userCreationDto = new UserCreationDto
 		{
-			ViewPermission = new ViewPermission
+			ViewPermission = new ViewPermissionUser
 			{
 				Alerts = true,
 				Dashboards = true,

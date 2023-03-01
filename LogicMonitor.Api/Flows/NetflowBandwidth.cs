@@ -9,31 +9,31 @@ public class NetflowBandwidth : NetflowDataBase
 	/// <summary>
 	/// deviceDisplayName
 	/// </summary>
-	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
+	[DataMember(Name = "deviceDisplayName")]
 	public string DisplayName { get; set; }
 
 	/// <summary>
 	/// deviceId
 	/// </summary>
-	[DataMember(Name = "deviceId", IsRequired = false)]
+	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }
 
 	/// <summary>
 	/// Send in MBytes
 	/// </summary>
-	[DataMember(Name = "send", IsRequired = false)]
+	[DataMember(Name = "send")]
 	public long SendMb { get; set; }
 
 	/// <summary>
 	/// Receive in MBytes
 	/// </summary>
-	[DataMember(Name = "receive", IsRequired = false)]
+	[DataMember(Name = "receive")]
 	public long ReceiveMb { get; set; }
 
 	/// <summary>
 	/// Usage in MBytes
 	/// </summary>
-	[DataMember(Name = "usage", IsRequired = false)]
+	[DataMember(Name = "usage")]
 	public long UsageMb { get; set; }
 
 	/// <summary>

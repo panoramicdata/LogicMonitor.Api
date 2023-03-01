@@ -5,7 +5,7 @@ namespace LogicMonitor.Api;
 /// </summary>
 [DataContract]
 [JsonConverter(typeof(StringEnumConverter))]
-public enum UserPermission
+public enum UserPermissionValues
 {
 	/// <summary>
 	///     Unknown

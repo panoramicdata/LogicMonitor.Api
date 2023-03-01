@@ -10,18 +10,18 @@ public class Chain
 	/// <summary>
 	/// period
 	/// </summary>
-	[DataMember(Name = "period", IsRequired = false)]
+	[DataMember(Name = "period")]
 	public Period? Period { get; set; }
 
 	/// <summary>
 	/// stages
 	/// </summary>
-	[DataMember(Name = "stages", IsRequired = true)]
-	public List<Recipient> Stages { get; set; } = null!;
+	[DataMember(Name = "stages")]
+	public List<Recipient> Stages { get; set; } 
 
 	/// <summary>
 	/// period
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = true)]
-	public string Type { get; set; } = null!;
+	[DataMember(Name = "type")]
+	public string Type { get; set; } 
 }

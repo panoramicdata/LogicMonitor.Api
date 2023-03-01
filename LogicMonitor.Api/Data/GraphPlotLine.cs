@@ -83,7 +83,7 @@ public class GraphPlotLine
 	/// -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8\nThe decimal value
 	/// </summary>
 	[DataMember(Name = "decimal")]
-	public int Decimal { get; set; }
+	public int LineDecimal { get; set; }
 
 	/// <summary>
 	/// true | false\nSpecifies whether to use YMax or not

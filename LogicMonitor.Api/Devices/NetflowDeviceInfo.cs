@@ -10,12 +10,12 @@ public class NetflowDeviceInfo : IdentifiedItem
 	/// <summary>
 	/// deleted
 	/// </summary>
-	[DataMember(Name = "deleted", IsRequired = false)]
+	[DataMember(Name = "deleted")]
 	public bool Deleted { get; set; }
 
 	/// <summary>
 	/// displayName
 	/// </summary>
-	[DataMember(Name = "displayName", IsRequired = false)]
+	[DataMember(Name = "displayName")]
 	public string DisplayName { get; set; } = string.Empty;
 }

@@ -10,18 +10,18 @@ public class AwsAccountTestResult
 	/// <summary>
 	/// noPermissionServices
 	/// </summary>
-	[DataMember(Name = "noPermissionServices", IsRequired = false)]
+	[DataMember(Name = "noPermissionServices")]
 	public List<string>? NoPermissionServices { get; set; }
 
 	/// <summary>
 	/// detailLink
 	/// </summary>
-	[DataMember(Name = "detailLink", IsRequired = false)]
+	[DataMember(Name = "detailLink")]
 	public string DetailLink { get; set; }
 
 	/// <summary>
 	/// nonPermissionErrors
 	/// </summary>
-	[DataMember(Name = "nonPermissionErrors", IsRequired = false)]
+	[DataMember(Name = "nonPermissionErrors")]
 	public List<string>? NonPermissionErrors { get; set; }
 }

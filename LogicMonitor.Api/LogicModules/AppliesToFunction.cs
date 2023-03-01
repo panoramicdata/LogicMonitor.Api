@@ -9,19 +9,19 @@ public class AppliesToFunction : LogicModule, IHasEndpoint
 	/// <summary>
 	/// The AppliesTo Function code. Note that special characters may need to be escaped.
 	/// </summary>
-	[DataMember(Name = "code", IsRequired = true)]
-	public string Code { get; set; } = null!;
+	[DataMember(Name = "code")]
+	public string Code { get; set; } 
 
 	/// <summary>
 	/// The AppliesTo Function parameters
 	/// </summary>
-	[DataMember(Name = "params", IsRequired = true)]
-	public string Parameters { get; set; } = null!;
+	[DataMember(Name = "params")]
+	public string Parameters { get; set; } 
 
 	/// <summary>
 	/// Published
 	/// </summary>
-	[DataMember(Name = "published", IsRequired = false)]
+	[DataMember(Name = "published")]
 	public int Published { get; set; }
 
 	/// <summary>

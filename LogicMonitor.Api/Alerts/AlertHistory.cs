@@ -16,11 +16,11 @@ public class AlertHistory
 	/// The histogram detailing the distribution of the alerts in the period
 	/// </summary>
 	[DataMember(Name = "histogram")]
-	public Histogram Histogram { get; set; } = null!;
+	public Histogram Histogram { get; set; } 
 
 	/// <summary>
 	/// The type of the alert
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; } = null!;
+	public string Type { get; set; } 
 }

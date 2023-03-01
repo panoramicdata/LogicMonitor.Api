@@ -9,18 +9,18 @@ public class WebsiteStepAuthentication
 	/// <summary>
 	/// Authentication type
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = true)]
-	public string Type { get; set; } = null!;
+	[DataMember(Name = "type")]
+	public string Type { get; set; } 
 
 	/// <summary>
 	/// NTLM  authentication userName
 	/// </summary>
-	[DataMember(Name = "userName", IsRequired = true)]
-	public string UserName { get; set; } = null!;
+	[DataMember(Name = "userName")]
+	public string UserName { get; set; } 
 
 	/// <summary>
 	/// NTLM authentication password
 	/// </summary>
-	[DataMember(Name = "password", IsRequired = true)]
-	public string Password { get; set; } = null!;
+	[DataMember(Name = "password")]
+	public string Password { get; set; } 
 }

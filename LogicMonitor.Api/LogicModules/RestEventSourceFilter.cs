@@ -9,18 +9,18 @@ public class RestEventSourceFilter : UndescribedNamedItem
 	/// <summary>
 	/// filter operator
 	/// </summary>
-	[DataMember(Name = "operator", IsRequired = true)]
-	public string Operator { get; set; } = null!;
+	[DataMember(Name = "operator")]
+	public string Operator { get; set; } 
 
 	/// <summary>
 	/// filter value
 	/// </summary>
-	[DataMember(Name = "value", IsRequired = true)]
-	public string Value { get; set; } = null!;
+	[DataMember(Name = "value")]
+	public string Value { get; set; } 
 
 	/// <summary>
 	/// filter comment
 	/// </summary>
-	[DataMember(Name = "comment", IsRequired = true)]
-	public string Comment { get; set; } = null!;
+	[DataMember(Name = "comment")]
+	public string Comment { get; set; } 
 }

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A collection of LogicModule Updates
 /// </summary>
 [DataContract]
-public class LogicModuleUpdateCollection
+public class CollectionLogicModuleUpdate
 {
 	/// <summary>
 	/// The total number of items

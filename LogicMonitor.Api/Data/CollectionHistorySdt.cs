@@ -4,7 +4,7 @@
 /// A collection of History SDTs
 /// </summary>
 [DataContract]
-public class HistorySdtCollection
+public class CollectionHistorySdt
 {
 	/// <summary>
 	/// The total number of items

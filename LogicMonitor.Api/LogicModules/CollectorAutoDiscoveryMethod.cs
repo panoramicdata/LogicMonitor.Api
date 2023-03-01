@@ -10,6 +10,6 @@ public class CollectorAutoDiscoveryMethod
 	/// <summary>
 	/// The collector id
 	/// </summary>
-	[DataMember(Name = "collectorId", IsRequired = true)]
-	public string CollectorId { get; set; } = null!;
+	[DataMember(Name = "collectorId")]
+	public string CollectorId { get; set; } 
 }

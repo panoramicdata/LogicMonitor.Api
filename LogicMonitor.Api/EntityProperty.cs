@@ -23,7 +23,7 @@ public class EntityProperty
 	/// </summary>
 	[DataMember(Name = "type")]
 	[JsonConverter(typeof(StringEnumConverter))]
-	public PropertyType? Type { get; set; }
+	public PropertyType Type { get; set; }
 
 	/// <summary>
 	/// The inherit list of the property

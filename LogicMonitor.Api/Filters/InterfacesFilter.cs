@@ -10,12 +10,12 @@ public class InterfacesFilter
 	/// <summary>
 	/// interfaceTypes
 	/// </summary>
-	[DataMember(Name = "interfaceTypes", IsRequired = false)]
+	[DataMember(Name = "interfaceTypes")]
 	public List<InterfaceType> InterfaceTypes { get; set; } = new();
 
 	/// <summary>
 	/// interfaceTypes
 	/// </summary>
-	[DataMember(Name = "deviceId", IsRequired = false)]
+	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }
 }

@@ -193,7 +193,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <typeparam name="T"></typeparam>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<T>> GetAllAsync<T>(Filter<T> filter = null, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
+	public Task<List<T>> GetAllAsync<T>(Filter<T>? filter = null, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
 		=> GetAllInternalAsync(filter, new T().Endpoint(), cancellationToken);
 
 	/// <summary>
@@ -203,7 +203,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="filter"></param>
 	/// <param name="subUrl"></param>
 	/// <param name="cancellationToken"></param>
-	private async Task<List<T>> GetAllInternalAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
+	private async Task<List<T>> GetAllInternalAsync<T>(Filter<T>? filter, string subUrl, CancellationToken cancellationToken) where T : new()
 	{
 		var requestedTake = filter?.Take ?? int.MaxValue;
 		// Ensure filter is set up
@@ -317,10 +317,10 @@ public partial class LogicMonitorClient : IDisposable
 	///     Executes an item by id
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	/// <param name="object"></param>
+	/// <param name="item"></param>
 	/// <param name="cancellationToken"></param>
-	public virtual Task<T> ExecuteAsync<T>(T @object, CancellationToken cancellationToken) where T : IdentifiedItem, IExecutable, new()
-	=> GetBySubUrlAsync<T>($"{@object.Endpoint()}/{@object.Id}/executenow", cancellationToken);
+	public virtual Task<T> ExecuteAsync<T>(T @item, CancellationToken cancellationToken) where T : IdentifiedItem, IExecutable, new()
+	=> GetBySubUrlAsync<T>($"{@item.Endpoint()}/{@item.Id}/executenow", cancellationToken);
 
 	/// <summary>
 	///     Executes an item by id
@@ -417,38 +417,38 @@ public partial class LogicMonitorClient : IDisposable
 	/// <summary>
 	///     Update an identified item
 	/// </summary>
-	/// <param name="object">The object to update</param>
+	/// <param name="item">The object to update</param>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <exception cref="AggregateException"></exception>
-	public virtual async Task PutAsync<T>(T @object, CancellationToken cancellationToken) where T : IdentifiedItem, IHasEndpoint
+	public virtual async Task PutAsync<T>(T @item, CancellationToken cancellationToken) where T : IdentifiedItem, IHasEndpoint
 	// The ignoreReference permits forcing appliesTo functions and is ignored for other types
-	=> await PutAsync($"{@object.Endpoint()}/{@object.Id}?ignoreReference=true", @object, cancellationToken).ConfigureAwait(false);
+	=> await PutAsync($"{@item.Endpoint()}/{@item.Id}?ignoreReference=true", @item, cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Update a string identified item
 	/// </summary>
-	/// <param name="object">The object to update</param>
+	/// <param name="item">The object to update</param>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <exception cref="AggregateException"></exception>
-	public virtual async Task PutStringIdentifiedItemAsync<T>(T @object, CancellationToken cancellationToken) where T : StringIdentifiedItem, IHasEndpoint
+	public virtual async Task PutStringIdentifiedItemAsync<T>(T @item, CancellationToken cancellationToken) where T : StringIdentifiedItem, IHasEndpoint
 	// The ignoreReference permits forcing appliesTo functions and is ignored for other types
-	=> await PutAsync($"{@object.Endpoint()}/{@object.Id}?ignoreReference=true", @object, cancellationToken).ConfigureAwait(false);
+	=> await PutAsync($"{@item.Endpoint()}/{@item.Id}?ignoreReference=true", @item, cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	/// Update an item
 	/// </summary>
 	/// <param name="subUrl">The subURL</param>
-	/// <param name="object">The updated object</param>
+	/// <param name="item">The updated object</param>
 	/// <param name="cancellationToken">An optional CancellationToken</param>
-	public async Task PutAsync(string subUrl, object @object, CancellationToken cancellationToken)
+	public async Task PutAsync(string subUrl, object @item, CancellationToken cancellationToken)
 	{
 		var httpMethod = HttpMethod.Put;
 		var prefix = GetPrefix(httpMethod);
 		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
-		var jsonString = JsonConvert.SerializeObject(@object);
+		var jsonString = JsonConvert.SerializeObject(@item);
 		_logger.LogTrace("{Prefix} jsonString:\r\n{JsonString}", prefix, jsonString);
 		using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 		HttpResponseMessage httpResponseMessage;
@@ -523,31 +523,31 @@ public partial class LogicMonitorClient : IDisposable
 	/// <summary>
 	///     Deletes an item
 	/// </summary>
-	/// <param name="object">The object to delete</param>
+	/// <param name="item">The object to delete</param>
 	/// <param name="hardDelete">Whether to hard delete.</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <typeparam name="T">The type of the item to delete</typeparam>
 	public virtual async Task DeleteAsync<T>(
-		T @object,
+		T @item,
 		bool hardDelete = true,
 		CancellationToken cancellationToken = default)
 		where T : IdentifiedItem, IHasEndpoint, new()
-	=> await DeleteAsync($"{new T().Endpoint()}/{@object.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
+	=> await DeleteAsync($"{new T().Endpoint()}/{@item.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
 		.ConfigureAwait(false);
 
 	/// <summary>
 	///     Deletes an item
 	/// </summary>
-	/// <param name="object">The object to delete</param>
+	/// <param name="item">The object to delete</param>
 	/// <param name="hardDelete">Whether to hard delete.</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <typeparam name="T">The type of the item to delete</typeparam>
 	public virtual async Task DeleteStringIdentifiedAsync<T>(
-	T @object,
+	T @item,
 	bool hardDelete = true,
 	CancellationToken cancellationToken = default)
 	where T : StringIdentifiedItem, IHasEndpoint, new()
-	=> await DeleteAsync($"{new T().Endpoint()}/{@object.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
+	=> await DeleteAsync($"{new T().Endpoint()}/{@item.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
 	.ConfigureAwait(false);
 
 	/// <summary>
@@ -656,7 +656,7 @@ public partial class LogicMonitorClient : IDisposable
 		var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
 		requestMessage.Headers.Add("Authorization", authHeaderValue);
 
-		_logger.LogHttpHeaders(true, null, requestMessage.Headers);
+		_logger.LogHttpHeaders(true, "", requestMessage.Headers);
 		var response = await _client
 			.SendAsync(requestMessage, cancellationToken)
 			.ConfigureAwait(false);

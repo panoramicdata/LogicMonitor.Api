@@ -9,24 +9,24 @@ public class DeviceFilter
 	/// <summary>
 	/// comment
 	/// </summary>
-	[DataMember(Name = "comment", IsRequired = false)]
+	[DataMember(Name = "comment")]
 	public string Comment { get; set; } = string.Empty;
 
 	/// <summary>
 	/// attribute
 	/// </summary>
-	[DataMember(Name = "attribute", IsRequired = true)]
-	public string Attribute { get; set; } = null!;
+	[DataMember(Name = "attribute")]
+	public string Attribute { get; set; } 
 
 	/// <summary>
 	/// operation
 	/// </summary>
-	[DataMember(Name = "operation", IsRequired = false)]
+	[DataMember(Name = "operation")]
 	public string Operation { get; set; } = string.Empty;
 
 	/// <summary>
 	/// value
 	/// </summary>
-	[DataMember(Name = "value", IsRequired = false)]
+	[DataMember(Name = "value")]
 	public string Value { get; set; } = string.Empty;
 }

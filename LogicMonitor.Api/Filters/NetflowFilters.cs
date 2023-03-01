@@ -9,19 +9,19 @@ public class NetflowFilters
 	/// <summary>
 	/// Node B
 	/// </summary>
-	[DataMember(Name = "nodeB", IsRequired = false)]
+	[DataMember(Name = "nodeB")]
 	public string NodeB { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The qosType
 	/// </summary>
-	[DataMember(Name = "qosType", IsRequired = false)]
+	[DataMember(Name = "qosType")]
 	public string QosType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device interfaces
 	/// </summary>
-	[DataMember(Name = "deviceInterfaces", IsRequired = false)]
+	[DataMember(Name = "deviceInterfaces")]
 	public List<InterfacesFilter> DeviceInterfaces { get; set; } = new();
 
 	/// <summary>
@@ -33,13 +33,13 @@ public class NetflowFilters
 	/// <summary>
 	/// The protocol
 	/// </summary>
-	[DataMember(Name = "protocol", IsRequired = false)]
+	[DataMember(Name = "protocol")]
 	public string Protocol { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The IP version
 	/// </summary>
-	[DataMember(Name = "ipVersion", IsRequired = false)]
+	[DataMember(Name = "ipVersion")]
 	public string IpVersion { get; set; } = string.Empty;
 
 	/// <summary>
@@ -51,13 +51,13 @@ public class NetflowFilters
 	/// <summary>
 	/// The top
 	/// </summary>
-	[DataMember(Name = "top", IsRequired = false)]
+	[DataMember(Name = "top")]
 	public int Top { get; set; }
 
 	/// <summary>
 	/// The appType
 	/// </summary>
-	[DataMember(Name = "appType", IsRequired = false)]
+	[DataMember(Name = "appType")]
 	public string AppType { get; set; } = string.Empty;
 
 	/// <summary>
@@ -69,25 +69,25 @@ public class NetflowFilters
 	/// <summary>
 	/// Node A
 	/// </summary>
-	[DataMember(Name = "nodeA", IsRequired = false)]
+	[DataMember(Name = "nodeA")]
 	public string NodeA { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The conversation
 	/// </summary>
-	[DataMember(Name = "conversation", IsRequired = false)]
+	[DataMember(Name = "conversation")]
 	public List<ConversationFilter> Conversations { get; set; } = new();
 
 	/// <summary>
 	/// The interface names
 	/// </summary>
-	[DataMember(Name = "ifNames", IsRequired = false)]
+	[DataMember(Name = "ifNames")]
 	public List<string> IfNames { get; set; } = new();
 
 	/// <summary>
 	/// The direction
 	/// </summary>
-	[DataMember(Name = "direction", IsRequired = false)]
+	[DataMember(Name = "direction")]
 	public string Direction { get; set; } = "both";
 
 	/// <summary>

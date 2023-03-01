@@ -8,13 +8,13 @@ public class ScheduledDownTimeHistory
 	/// <summary>
 	/// The duration of the SDT, in minutes
 	/// </summary>
-	[DataMember(Name = "duration", IsRequired = false)]
+	[DataMember(Name = "duration")]
 	public int Duration { get; set; }
 
 	/// <summary>
 	/// The ID of the resource in SDT, e.g. the group or device in SDT
 	/// </summary>
-	[DataMember(Name = "itemId", IsRequired = false)]
+	[DataMember(Name = "itemId")]
 	public int ItemId { get; set; }
 
 	/// <summary>
@@ -26,19 +26,19 @@ public class ScheduledDownTimeHistory
 	/// <summary>
 	/// The user that added the SDT
 	/// </summary>
-	[DataMember(Name = "admin", IsRequired = false)]
+	[DataMember(Name = "admin")]
 	public string? Admin { get; set; }
 
 	/// <summary>
 	/// The comment associated with the SDT
 	/// </summary>
-	[DataMember(Name = "comment", IsRequired = false)]
+	[DataMember(Name = "comment")]
 	public string? Comment { get; set; }
 
 	/// <summary>
 	/// The SDT type
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = false)]
+	[DataMember(Name = "type")]
 	public string? Type { get; set; }
 
 	/// <summary>

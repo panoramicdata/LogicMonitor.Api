@@ -9,8 +9,8 @@ public class ReportRecipient
 	/// <summary>
 	/// Where admin refers to a user in the account and arbitrary refers to an email address not associated with a user account.Acceptable values are: admin, arbitrary, group
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = true)]
-	public string Type { get; set; } = null!;
+	[DataMember(Name = "type")]
+	public string Type { get; set; } 
 
 	/// <summary>
 	/// This should always be email
@@ -21,12 +21,12 @@ public class ReportRecipient
 	/// <summary>
 	/// This should be a username if type\u003dadmin, or an email address if type\u003darbitrary
 	/// </summary>
-	[DataMember(Name = "addr", IsRequired = true)]
-	public string Address { get; set; } = null!;
+	[DataMember(Name = "addr")]
+	public string Address { get; set; } 
 
 	/// <summary>
 	/// If the type is admin and the method is email, the field should indicate the actual email address of the admin
 	/// </summary>
-	[DataMember(Name = "additionInfo", IsRequired = false)]
+	[DataMember(Name = "additionInfo")]
 	public string? AdditionInfo { get; set; }
 }

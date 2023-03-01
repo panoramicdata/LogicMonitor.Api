@@ -10,132 +10,132 @@ public class GroupNetFlowRecord : NetflowDataBase
 	/// <summary>
 	/// srcIP
 	/// </summary>
-	[DataMember(Name = "srcIP", IsRequired = false)]
+	[DataMember(Name = "srcIP")]
 	public string SrcIP { get; set; }
 
 	/// <summary>
 	/// percentUsage
 	/// </summary>
-	[DataMember(Name = "percentUsage", IsRequired = false)]
+	[DataMember(Name = "percentUsage")]
 	public double PercentUsage { get; set; }
 
 	/// <summary>
 	/// lastEpochInSec
 	/// </summary>
-	[DataMember(Name = "lastEpochInSec", IsRequired = false)]
+	[DataMember(Name = "lastEpochInSec")]
 	public long lastEpochInSec { get; set; }
 
 	/// <summary>
 	/// ifOut
 	/// </summary>
-	[DataMember(Name = "ifOut", IsRequired = false)]
+	[DataMember(Name = "ifOut")]
 	public long ifOut { get; set; }
 
 	/// <summary>
 	/// usage
 	/// </summary>
-	[DataMember(Name = "usage", IsRequired = false)]
+	[DataMember(Name = "usage")]
 	public double Usage { get; set; }
 
 	/// <summary>
 	/// srcASN
 	/// </summary>
-	[DataMember(Name = "srcASN", IsRequired = false)]
+	[DataMember(Name = "srcASN")]
 	public long SrcASN { get; set; }
 
 	/// <summary>
 	/// dstDNS
 	/// </summary>
-	[DataMember(Name = "dstDNS", IsRequired = false)]
+	[DataMember(Name = "dstDNS")]
 	public string DstDNS { get; set; }
 
 	/// <summary>
 	/// srcPort
 	/// </summary>
-	[DataMember(Name = "srcPort", IsRequired = false)]
+	[DataMember(Name = "srcPort")]
 	public int SrcPort { get; set; }
 
 	/// <summary>
 	/// deviceDisplayName
 	/// </summary>
-	[DataMember(Name = "deviceDisplayName", IsRequired = false)]
+	[DataMember(Name = "deviceDisplayName")]
 	public string DeviceDisplayName { get; set; }
 
 	/// <summary>
 	/// ifInDisplayName
 	/// </summary>
-	[DataMember(Name = "ifInDisplayName", IsRequired = false)]
+	[DataMember(Name = "ifInDisplayName")]
 	public string IfInDisplayName { get; set; }
 
 	/// <summary>
 	/// firstEpochInSec
 	/// </summary>
-	[DataMember(Name = "firstEpochInSec", IsRequired = false)]
+	[DataMember(Name = "firstEpochInSec")]
 	public long FirstEpochInSec { get; set; }
 
 	/// <summary>
 	/// protocol
 	/// </summary>
-	[DataMember(Name = "protocol", IsRequired = false)]
+	[DataMember(Name = "protocol")]
 	public string Protocol { get; set; }
 
 	/// <summary>
 	/// dstPort
 	/// </summary>
-	[DataMember(Name = "dstPort", IsRequired = false)]
+	[DataMember(Name = "dstPort")]
 	public int DstPort { get; set; }
 
 	/// <summary>
 	/// ifIn
 	/// </summary>
-	[DataMember(Name = "ifIn", IsRequired = false)]
+	[DataMember(Name = "ifIn")]
 	public long IfIn { get; set; }
 
 	/// <summary>
 	/// sourceMBytes
 	/// </summary>
-	[DataMember(Name = "sourceMBytes", IsRequired = false)]
+	[DataMember(Name = "sourceMBytes")]
 	public double SourceMBytes { get; set; }
 
 	/// <summary>
 	/// srcAsnName
 	/// </summary>
-	[DataMember(Name = "srcAsnName", IsRequired = false)]
+	[DataMember(Name = "srcAsnName")]
 	public string SrcAsnName { get; set; }
 
 	/// <summary>
 	/// srcDNS
 	/// </summary>
-	[DataMember(Name = "srcDNS", IsRequired = false)]
+	[DataMember(Name = "srcDNS")]
 	public string SrcDNS { get; set; }
 
 	/// <summary>
 	/// destinationMBytes
 	/// </summary>
-	[DataMember(Name = "destinationMBytes", IsRequired = false)]
+	[DataMember(Name = "destinationMBytes")]
 	public double DestinationMBytes { get; set; }
 
 	/// <summary>
 	/// dstASN
 	/// </summary>
-	[DataMember(Name = "dstASN", IsRequired = false)]
+	[DataMember(Name = "dstASN")]
 	public long DstASN { get; set; }
 
 	/// <summary>
 	/// dstIP
 	/// </summary>
-	[DataMember(Name = "dstIP", IsRequired = false)]
+	[DataMember(Name = "dstIP")]
 	public string DstIP { get; set; }
 
 	/// <summary>
 	/// ifOutDisplayName
 	/// </summary>
-	[DataMember(Name = "ifOutDisplayName", IsRequired = false)]
+	[DataMember(Name = "ifOutDisplayName")]
 	public string IfOutDisplayName { get; set; }
 
 	/// <summary>
 	/// destAsnName
 	/// </summary>
-	[DataMember(Name = "destAsnName", IsRequired = false)]
+	[DataMember(Name = "destAsnName")]
 	public string DestAsnName { get; set; }
 }

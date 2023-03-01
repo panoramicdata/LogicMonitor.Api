@@ -23,7 +23,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	///    The alert status
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "alertStatus", IsRequired = false)]
+	[DataMember(Name = "alertStatus")]
 	public AlertStatus AlertStatus { get; set; }
 
 	/// <summary>
@@ -69,13 +69,13 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	/// The Id of the default collector assigned to the device group
 	/// </summary>
-	[DataMember(Name = "defaultCollectorId", IsRequired = false)]
+	[DataMember(Name = "defaultCollectorId")]
 	public int DefaultCollectorId { get; set; }
 
 	/// <summary>
 	///    The default Collector Id (used by MonitorObjectGroups only)
 	/// </summary>
-	[DataMember(Name = "defaultAgentId", IsRequired = false)]
+	[DataMember(Name = "defaultAgentId")]
 	public int DefaultAgentId { get; set; }
 
 	/// <summary>
@@ -347,7 +347,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <summary>
 	///    The endpoint

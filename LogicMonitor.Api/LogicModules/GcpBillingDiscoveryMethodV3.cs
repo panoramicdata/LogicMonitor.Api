@@ -10,6 +10,6 @@ public class GcpBillingDiscoveryMethodV3
 	/// <summary>
 	/// gcpBillingType
 	/// </summary>
-	[DataMember(Name = "gcpBillingType", IsRequired = true)]
-	public string GcpBillingType { get; set; } = null!;
+	[DataMember(Name = "gcpBillingType")]
+	public string GcpBillingType { get; set; } 
 }

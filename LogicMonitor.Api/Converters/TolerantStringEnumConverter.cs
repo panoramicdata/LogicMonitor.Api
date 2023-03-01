@@ -11,7 +11,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 		return type?.IsEnum ?? false;
 	}
 
-	private static string GetEnumMemberAttrValue(Type type, object enumVal)
+	private static string? GetEnumMemberAttrValue(Type type, object enumVal)
 	{
 		var memberInfos = type.GetMember(enumVal.ToString());
 		var memberInfo = memberInfos.SingleOrDefault(m => m.Name == enumVal.ToString());
@@ -22,7 +22,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 			?.Value;
 	}
 
-	public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+	public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 	{
 		var isNullable = IsNullableType(objectType);
 		var enumType = isNullable ? Nullable.GetUnderlyingType(objectType) : objectType;

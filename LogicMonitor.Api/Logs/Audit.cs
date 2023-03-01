@@ -9,6 +9,6 @@ public class Audit
 	/// <summary>
 	/// value of audit version
 	/// </summary>
-	[DataMember(Name = "version", IsRequired = false)]
+	[DataMember(Name = "version")]
 	public long Version { get; set; }
 }

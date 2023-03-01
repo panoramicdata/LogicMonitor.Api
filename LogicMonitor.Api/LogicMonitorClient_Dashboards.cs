@@ -19,7 +19,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="dashboardName"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<List<Widget>> GetWidgetsByDashboardNameAsync(string dashboardName, CancellationToken cancellationToken)
+	public async Task<List<Widget>?> GetWidgetsByDashboardNameAsync(string dashboardName, CancellationToken cancellationToken)
 	{
 		var dashboard = await GetByNameAsync<Dashboard>(dashboardName, cancellationToken).ConfigureAwait(false);
 		if (dashboard is null)

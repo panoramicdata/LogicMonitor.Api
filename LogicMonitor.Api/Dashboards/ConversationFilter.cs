@@ -9,31 +9,31 @@ public class ConversationFilter
 	/// <summary>
 	/// includeOrExclude
 	/// </summary>
-	[DataMember(Name = "includeOrExclude", IsRequired = false)]
+	[DataMember(Name = "includeOrExclude")]
 	public string IncludeOrExclude { get; set; } = string.Empty;
 
 	/// <summary>
 	/// fromOperator
 	/// </summary>
-	[DataMember(Name = "fromOperator", IsRequired = false)]
+	[DataMember(Name = "fromOperator")]
 	public string FromOperator { get; set; } = string.Empty;
 
 	/// <summary>
 	/// fromEndpoint
 	/// </summary>
-	[DataMember(Name = "fromEndpoint", IsRequired = false)]
+	[DataMember(Name = "fromEndpoint")]
 	public string FromEndpoint { get; set; } = string.Empty;
 
 	/// <summary>
 	/// toOperator
 	/// </summary>
-	[DataMember(Name = "toOperator", IsRequired = false)]
+	[DataMember(Name = "toOperator")]
 	public string ToOperator { get; set; } = string.Empty;
 
 	/// <summary>
 	/// toEndpoint
 	/// </summary>
-	[DataMember(Name = "toEndpoint", IsRequired = false)]
+	[DataMember(Name = "toEndpoint")]
 	public string ToEndpoint { get; set; } = string.Empty;
 }
 

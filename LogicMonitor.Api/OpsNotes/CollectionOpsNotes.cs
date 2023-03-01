@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.OpsNotes;
 /// A collection of OpsNotes
 /// </summary>
 [DataContract]
-public class OpsNotesCollection
+public class CollectionOpsNotes
 {
 	/// <summary>
 	/// The number of OpsNotes

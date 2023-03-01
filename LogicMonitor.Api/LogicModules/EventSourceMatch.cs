@@ -8,12 +8,12 @@ public class EventSourceMatch
 	/// <summary>
 	/// The regex or plain text to look for in the file and trigger alert if found
 	/// </summary>
-	[DataMember(Name = "pattern", IsRequired = false)]
+	[DataMember(Name = "pattern")]
 	public string Pattern { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The level of alert to trigger: warn | error | critical
 	/// </summary>
-	[DataMember(Name = "alertLevel", IsRequired = false)]
+	[DataMember(Name = "alertLevel")]
 	public string AlertLevel { get; set; } = string.Empty;
 }

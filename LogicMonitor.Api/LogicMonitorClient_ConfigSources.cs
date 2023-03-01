@@ -22,7 +22,7 @@ public partial class LogicMonitorClient
 	public async Task<string> GetConfigSourceXmlAsync(
 		int configSourceId,
 		CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<XmlResponse>($"setting/configsources/{configSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+		=> (await GetBySubUrlAsync<XmlResponse>($"setting/configsources/{configSourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
 	///	add audit version

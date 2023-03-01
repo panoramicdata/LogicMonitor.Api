@@ -27,7 +27,7 @@ public class Metric
 	/// The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 
 	/// <summary>

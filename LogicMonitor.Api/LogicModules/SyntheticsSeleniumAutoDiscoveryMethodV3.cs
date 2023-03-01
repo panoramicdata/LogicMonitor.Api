@@ -10,12 +10,12 @@ public class SyntheticsSeleniumAutoDiscoveryMethodV3 : AutoDiscoveryMethod
 	/// <summary>
 	/// isInternal
 	/// </summary>
-	[DataMember(Name = "isInternal", IsRequired = false)]
+	[DataMember(Name = "isInternal")]
 	public bool IsInternal { get; set; }
 
 	/// <summary>
 	/// checkpoints
 	/// </summary>
-	[DataMember(Name = "checkpoints", IsRequired = false)]
+	[DataMember(Name = "checkpoints")]
 	public string? Checkpoints { get; set; }
 }

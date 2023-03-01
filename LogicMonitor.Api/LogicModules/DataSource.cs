@@ -88,7 +88,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	/// data collector\u0027s attributes to collector data. e.g. a ping data source has a ping collector attribute. \n PingCollectorAttributeV1 has two fields. the ip to ping, the data size send to ping
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public CollectorAttribute CollectorAttribute { get; set; } = new();
+	public AttributeCollector CollectorAttribute { get; set; } = new();
 
 	/// <summary>
 	/// The data source display name

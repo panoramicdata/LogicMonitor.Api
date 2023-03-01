@@ -285,14 +285,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    The Netflow Collector description
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "netflowCollectorDescription", IsRequired = false)]
+	[DataMember(Name = "netflowCollectorDescription")]
 	public string NetflowCollectorDescription { get; set; }
 
 	/// <summary>
 	///    The Netflow Collector Group Id
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "netflowCollectorGroupId", IsRequired = false)]
+	[DataMember(Name = "netflowCollectorGroupId")]
 	public int NetflowCollectorGroupId { get; set; }
 
 	/// <summary>
@@ -305,7 +305,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// <summary>
 	///    The preferred Collector Id
 	/// </summary>
-	[DataMember(Name = "preferredCollectorId", IsRequired = false)]
+	[DataMember(Name = "preferredCollectorId")]
 	public int PreferredCollectorId { get; set; }
 
 	/// <summary>
@@ -463,7 +463,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <summary>
 	///    The UTC DateTime that the auto-properties were assigned

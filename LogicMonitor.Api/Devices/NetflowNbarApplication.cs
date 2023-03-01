@@ -9,30 +9,30 @@ public class NetflowNbarApplication : NetflowDataBase
 	/// <summary>
 	///	percentUsage
 	/// </summary>
-	[DataMember(Name = "percentUsage", IsRequired = false)]
+	[DataMember(Name = "percentUsage")]
 	public double PercentUsage { get; set; }
 
 	/// <summary>
 	///	usage
 	/// </summary>
-	[DataMember(Name = "usage", IsRequired = false)]
+	[DataMember(Name = "usage")]
 	public double Usage { get; set; }
 
 	/// <summary>
 	///	name
 	/// </summary>
-	[DataMember(Name = "name", IsRequired = false)]
+	[DataMember(Name = "name")]
 	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///	type
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = false)]
+	[DataMember(Name = "type")]
 	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///	applicationTag
 	/// </summary>
-	[DataMember(Name = "applicationTag", IsRequired = false)]
+	[DataMember(Name = "applicationTag")]
 	public long ApplicationTag { get; set; }
 }

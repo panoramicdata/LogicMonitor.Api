@@ -9,19 +9,19 @@ public class NetflowEndpoint : NetflowDataBase
 	/// <summary>
 	/// IP address
 	/// </summary>
-	[DataMember(Name = "IP", IsRequired = false)]
+	[DataMember(Name = "IP")]
 	public string Ip { get; set; }
 
 	/// <summary>
 	/// Source DNS
 	/// </summary>
-	[DataMember(Name = "dns", IsRequired = false)]
+	[DataMember(Name = "dns")]
 	public string Dns { get; set; }
 
 	/// <summary>
 	/// Last seen in seconds since the Epoch
 	/// </summary>
-	[DataMember(Name = "lastSeen", IsRequired = false)]
+	[DataMember(Name = "lastSeen")]
 	public long LastSeenSeconds { get; set; }
 
 	/// <summary>
@@ -33,19 +33,19 @@ public class NetflowEndpoint : NetflowDataBase
 	/// <summary>
 	/// Usage in bytes
 	/// </summary>
-	[DataMember(Name = "usage", IsRequired = false)]
+	[DataMember(Name = "usage")]
 	public long UsageBytes { get; set; }
 
 	/// <summary>
 	/// Usage in percent
 	/// </summary>
-	[DataMember(Name = "percentUsage", IsRequired = false)]
+	[DataMember(Name = "percentUsage")]
 	public double PercentUsage { get; set; }
 
 	/// <summary>
 	/// Type
 	/// </summary>
-	[DataMember(Name = "type", IsRequired = false)]
+	[DataMember(Name = "type")]
 	public string Type { get; set; }
 
 	/// <summary>

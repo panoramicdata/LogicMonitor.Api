@@ -19,7 +19,7 @@ public partial class LogicMonitorClient
 	/// <param name="eventSourceId">The EventSource id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<string> GetEventSourceXmlAsync(int eventSourceId, CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<XmlResponse>($"setting/eventsources/{eventSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+		=> (await GetBySubUrlAsync<XmlResponse>($"setting/eventsources/{eventSourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
 	///     Gets a list of EventSources that apply to a device group
@@ -86,11 +86,11 @@ public partial class LogicMonitorClient
 	/// <param name="deviceGroupId">The device group id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<EventSourceAppliesToCollection>> GetEventSourceAppliesToCollectionsPageAsync(
+	public Task<Page<CollectionEventSourceAppliesTo>> GetEventSourceAppliesToCollectionsPageAsync(
 		int deviceGroupId,
-		Filter<EventSourceAppliesToCollection> filter,
+		Filter<CollectionEventSourceAppliesTo> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<EventSourceAppliesToCollection>>(
+		=> GetBySubUrlAsync<Page<CollectionEventSourceAppliesTo>>(
 			$"device/groups/{deviceGroupId}/eventSources?{filter}",
 			cancellationToken);
 

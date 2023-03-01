@@ -9,37 +9,37 @@ public class ApiToken : IdentifiedItem
 	/// <summary>
 	/// The access Id associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "accessId", IsRequired = false)]
+	[DataMember(Name = "accessId")]
 	public string? AccessId { get; set; }
 
 	/// <summary>
 	/// The secret key associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "accessKey", IsRequired = false)]
+	[DataMember(Name = "accessKey")]
 	public string? AccessKey { get; set; }
 
 	/// <summary>
 	/// The id of the user associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "adminId", IsRequired = false)]
+	[DataMember(Name = "adminId")]
 	public int UserId { get; set; }
 
 	/// <summary>
 	/// The name of the user associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "adminName", IsRequired = false)]
+	[DataMember(Name = "adminName")]
 	public string? UserName { get; set; }
 
 	/// <summary>
 	/// The roles assigned to the user that is associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "roles", IsRequired = false)]
+	[DataMember(Name = "roles")]
 	public List<string>? Roles { get; set; }
 
 	/// <summary>
 	/// 1 | 2 - Whether or not the API Tokens are enabled, where 2 \u003d enabled
 	/// </summary>
-	[DataMember(Name = "status", IsRequired = false)]
+	[DataMember(Name = "status")]
 	public ApiTokenStatus Status { get; set; }
 
 	/// <summary>
@@ -51,32 +51,32 @@ public class ApiToken : IdentifiedItem
 	/// <summary>
 	/// The note associated with the API Tokens
 	/// </summary>
-	[DataMember(Name = "note", IsRequired = false)]
+	[DataMember(Name = "note")]
 	public string? Note { get; set; }
 
 	/// <summary>
 	/// The user who is the API Tokens created by
 	/// </summary>
-	[DataMember(Name = "createdBy", IsRequired = false)]
+	[DataMember(Name = "createdBy")]
 	public string? CreatedBy { get; set; }
 
 	/// <summary>
 	/// The epoch at which the API Tokens were created
 	/// </summary>
-	[DataMember(Name = "createdOn", IsRequired = false)]
+	[DataMember(Name = "createdOn")]
 	public long CreatedOnSeconds { get; set; }
 
 	/// <summary>
 	/// The epoch at which the API Tokens were last used
 	/// </summary>
-	[DataMember(Name = "lastUsedOn", IsRequired = false)]
+	[DataMember(Name = "lastUsedOn")]
 	public long LastUsedOnSeconds { get; set; }
 
 	/// <summary>
 	/// The permission of current apiToken with the admin. values can be write|read|none
 	/// </summary>
-	[DataMember(Name = "userPermission", IsRequired = false)]
-	public UserPermission? UserPermission { get; set; }
+	[DataMember(Name = "userPermission")]
+	public UserPermissionValues? UserPermission { get; set; }
 
 	/// <summary>
 	///    The DateTime the user accepted the EULA UTC

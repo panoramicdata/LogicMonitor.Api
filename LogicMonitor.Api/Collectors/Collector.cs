@@ -57,7 +57,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The automatic upgrade information
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "automaticUpgradeInfo", IsRequired = false)]
+	[DataMember(Name = "automaticUpgradeInfo")]
 	public object AutomaticUpgradeInfo { get; set; } // TODO - use the AutomaticUpgradeInfo class
 
 	/// <summary>
@@ -458,7 +458,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     User permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermission UserPermission { get; set; }
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <summary>
 	///     User visible hosts number
