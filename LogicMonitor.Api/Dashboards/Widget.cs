@@ -65,8 +65,8 @@ public class Widget : NamedItem, IHasEndpoint
 	/// <summary>
 	///     The user permission
 	/// </summary>
-	//[DataMember(Name = "userPermission")]
-	//public UserPermissionEnum UserPermission { get; set; }
+	[DataMember(Name = "userPermission")]
+	public UserPermissionValues UserPermission { get; set; }
 
 	/// <summary>
 	///     The update interval
