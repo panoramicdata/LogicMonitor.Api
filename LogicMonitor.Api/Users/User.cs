@@ -190,7 +190,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The user permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues? UserPermission { get; set; }
+	public UserPermission? UserPermission { get; set; }
 
 	/// <summary>
 	///    The DateTime the user last logged in UTC

@@ -23,7 +23,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// The permission level of the user that made the API request. Acceptable values are: write, read, ack
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermissionString { get; set; }
+	public UserPermission UserPermissionString { get; set; }
 
 	/// <summary>
 	/// An object that indicates the websites locations.\ne.g. {\u0027all\u0027: false, smgId:[1,2,3], collectorIds:[14,16]}

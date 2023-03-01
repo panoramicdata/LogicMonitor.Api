@@ -18,7 +18,7 @@ public class TopologyGroup : NamedItem, IHasEndpoint, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; }
+	public UserPermission UserPermission { get; set; }
 
 	/// <summary>
 	///    The endpoint

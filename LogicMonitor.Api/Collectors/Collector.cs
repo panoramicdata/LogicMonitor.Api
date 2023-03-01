@@ -458,7 +458,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     User permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; }
+	public UserPermission UserPermission { get; set; }
 
 	/// <summary>
 	///     User visible hosts number

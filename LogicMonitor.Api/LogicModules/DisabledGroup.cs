@@ -22,5 +22,5 @@ public class DisabledGroup : IdentifiedItem
 	///    The user permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; }
+	public UserPermission UserPermission { get; set; }
 }

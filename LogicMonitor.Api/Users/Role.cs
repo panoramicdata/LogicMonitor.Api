@@ -64,7 +64,7 @@ public class Role : NamedItem, IHasEndpoint
 	/// The permission of current role with the admin. values can be write|read|none
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues? UserPermission { get; set; }
+	public UserPermission? UserPermission { get; set; }
 
 	/// <summary>
 	/// Whether this is a SAML role

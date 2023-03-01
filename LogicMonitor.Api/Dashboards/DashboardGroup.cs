@@ -22,7 +22,7 @@ public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
 	///    The current user's access permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; }
+	public UserPermission UserPermission { get; set; }
 
 	/// <summary>
 	///    The number of direct child dashboard groups

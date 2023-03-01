@@ -78,7 +78,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[DataMember(Name = "userPermission")]
 	[JsonConverter(typeof(StringEnumConverter))]
-	public UserPermissionValues UserPermissionString { get; set; }
+	public UserPermission UserPermissionString { get; set; }
 
 	/// <summary>
 	/// true: an alert will be triggered if a check fails from an individual test location\nfalse: an alert will not be triggered if a check fails from an individual test location

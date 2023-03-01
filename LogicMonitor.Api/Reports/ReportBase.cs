@@ -78,7 +78,7 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The permissions associated with the user who made the API call
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; }
+	public UserPermission UserPermission { get; set; }
 
 	/// <summary>
 	/// The time, in epoch format, that the report was last generated

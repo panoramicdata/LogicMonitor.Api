@@ -23,7 +23,7 @@ public abstract class WidgetCreationDto<T> : CreationDto<T> where T : Widget
 	///     The widget theme
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; } = UserPermissionValues.Write;
+	public UserPermission UserPermission { get; set; } = UserPermission.Write;
 
 	/// <summary>
 	///     The dashboard Id as a string

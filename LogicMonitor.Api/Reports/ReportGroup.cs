@@ -22,7 +22,7 @@ public class ReportGroup : NamedItem, IHasEndpoint
 	/// The user permission on the report group
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public UserPermissionValues UserPermission { get; set; }
+	public UserPermission UserPermission { get; set; }
 
 	/// <inheritdoc />
 	public string Endpoint() => "report/groups";
