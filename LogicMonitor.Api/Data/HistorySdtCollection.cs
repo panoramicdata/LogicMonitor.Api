@@ -16,7 +16,7 @@ public class HistorySdtCollection
 	/// The History SDT items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<HistoricScheduledDownTime> Items { get; set; }
+	public List<ScheduledDownTimeHistory> Items { get; set; }
 
 	/// <summary>
 	/// The search ID
