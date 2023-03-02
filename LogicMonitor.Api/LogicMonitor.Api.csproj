@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Changed ApproximateStartEpoch and ApproximateEndEpoch to longs.</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed broken SnmpSysOIDMap enum value (is now "SNMP_SYSOID_MAP").</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
