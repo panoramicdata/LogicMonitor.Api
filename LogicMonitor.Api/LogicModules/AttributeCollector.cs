@@ -163,6 +163,12 @@ public class AttributeCollector
 	public string Type { get; set; }
 
 	/// <summary>
+	///     The manual connections
+	/// </summary>
+	[DataMember(Name = "manualConnections")]
+	public string ManualConnections { get; set; }
+
+	/// <summary>
 	///     The method Name
 	/// </summary>
 	[DataMember(Name = "methodName")]

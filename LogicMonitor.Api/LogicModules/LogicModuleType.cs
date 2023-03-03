@@ -49,13 +49,13 @@ public enum LogicModuleType
 	AppliesToFunction,
 
 	/// <summary>
-	/// AppliesTo
+	/// SnmpSysOIDMap
 	/// </summary>
 	[EnumMember(Value = "SNMP_SYSOID_MAP")]
 	SnmpSysOIDMap,
 
 	/// <summary>
-	/// AppliesTo
+	/// TopologySource
 	/// </summary>
 	[EnumMember(Value = "TOPOLOGYSOURCE")]
 	TopologySource,
