@@ -8,7 +8,7 @@ public class AlertHistoryRequest : IValidate
 	/// <summary>
 	/// The Id of the alert for which history is being requested
 	/// </summary>
-	public string Id { get; set; }
+	public string Id { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The start date and time of the history required, in UTC

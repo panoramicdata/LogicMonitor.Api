@@ -16,13 +16,13 @@ public class ColumnSpecification
 	/// The label
 	/// </summary>
 	[DataMember(Name = "columnLabel")]
-	public string Label { get; set; }
+	public string Label { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The key
 	/// </summary>
 	[DataMember(Name = "columnKey")]
-	public string Key { get; set; }
+	public string Key { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The column size in pixels

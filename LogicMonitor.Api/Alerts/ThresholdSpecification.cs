@@ -10,17 +10,17 @@ public class ThresholdSpecification
 	/// The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
+	public string AlertExpression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The alert expression note
 	/// </summary>
 	[DataMember(Name = "alertExprNote")]
-	public string AlertExpressionNote { get; set; }
+	public string AlertExpressionNote { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether alerting is disabled
 	/// </summary>
 	[DataMember(Name = "disableAlerting")]
-	public string DisableAlerting { get; set; }
+	public string DisableAlerting { get; set; } = string.Empty;
 }

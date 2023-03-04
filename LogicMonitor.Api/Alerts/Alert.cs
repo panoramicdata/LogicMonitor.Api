@@ -10,19 +10,19 @@ public class Alert : IHasEndpoint
 	/// The Id
 	/// </summary>
 	[DataMember(Name = "id")]
-	public string Id { get; set; }
+	public string Id { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dependency role
 	/// </summary>
 	[DataMember(Name = "dependencyRole")]
-	public string DependencyRole { get; set; }
+	public string DependencyRole { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dependency routing state
 	/// </summary>
 	[DataMember(Name = "dependencyRoutingState")]
-	public string DependencyRoutingState { get; set; }
+	public string DependencyRoutingState { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether or not the alert is dynamic threshold based
@@ -34,7 +34,7 @@ public class Alert : IHasEndpoint
 	/// The description for dynamic threshold based alert
 	/// </summary>
 	[DataMember(Name = "adAlertDesc")]
-	public string ActiveDiscoveryAlertDescription { get; set; }
+	public string ActiveDiscoveryAlertDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Alert type
@@ -52,19 +52,19 @@ public class Alert : IHasEndpoint
 	/// Indicates dynamic threshold alert generation setting. expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Indicates anomaly detection alert suppression setting, expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The internal Id
 	/// </summary>
 	[DataMember(Name = "internalId")]
-	public string InternalId { get; set; }
+	public string InternalId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The number of seconds since the Epoch when the alert state started
@@ -94,19 +94,19 @@ public class Alert : IHasEndpoint
 	///    The user that acknowledged the Alert (if any)
 	/// </summary>
 	[DataMember(Name = "ackedBy")]
-	public string AckedBy { get; set; }
+	public string AckedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
-	public string AckComment { get; set; }
+	public string AckComment { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The alert rule name
 	/// </summary>
 	[DataMember(Name = "rule")]
-	public string AlertRuleName { get; set; }
+	public string AlertRuleName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The alert rule Id
@@ -115,7 +115,7 @@ public class Alert : IHasEndpoint
 	public int AlertRuleId { get; set; }
 
 	/// <summary>
-	/// tenant to which this alert belongs to. 
+	/// tenant to which this alert belongs to.
 	/// </summary>
 	[DataMember(Name = "tenant")]
 	public string Tenant { get; set; } = string.Empty;
@@ -124,7 +124,7 @@ public class Alert : IHasEndpoint
 	///    The EscalationChain name
 	/// </summary>
 	[DataMember(Name = "chain")]
-	public string AlertEscalationChainName { get; set; }
+	public string AlertEscalationChainName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Id of the escalation chain
@@ -148,7 +148,7 @@ public class Alert : IHasEndpoint
 	/// The recipients that have received the alert
 	/// </summary>
 	[DataMember(Name = "receivedList")]
-	public string AlertRecipients { get; set; }
+	public string AlertRecipients { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The alert severity
@@ -172,25 +172,25 @@ public class Alert : IHasEndpoint
 	///    The specific SDT
 	/// </summary>
 	[DataMember(Name = "SDT")]
-	public AlertSdt Sdt { get; set; }
+	public AlertSdt Sdt { get; set; } = new CollectorAlertSdt();
 
 	/// <summary>
 	///    The value that triggered the Alert
 	/// </summary>
 	[DataMember(Name = "alertValue")]
-	public string Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The threshold levels
 	/// </summary>
 	[DataMember(Name = "threshold")]
-	public string Thresholds { get; set; }
+	public string Thresholds { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The value at which the alert cleared
 	/// </summary>
 	[DataMember(Name = "clearValue")]
-	public string ClearValue { get; set; }
+	public string ClearValue { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The monitor object's name
@@ -202,19 +202,19 @@ public class Alert : IHasEndpoint
 	///    The monitor object's Id
 	/// </summary>
 	[DataMember(Name = "monitorObjectId")]
-	public string MonitorObjectId { get; set; }
+	public string MonitorObjectId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The monitor object's name
 	/// </summary>
 	[DataMember(Name = "monitorObjectName")]
-	public string MonitorObjectName { get; set; }
+	public string MonitorObjectName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The monitor object's groups
 	/// </summary>
 	[DataMember(Name = "monitorObjectGroups")]
-	public List<DeviceGroup> MonitorObjectGroups { get; set; }
+	public List<DeviceGroup> MonitorObjectGroups { get; set; } = new();
 
 	/// <summary>
 	///    The resource id
@@ -232,13 +232,13 @@ public class Alert : IHasEndpoint
 	///    The resource template type
 	/// </summary>
 	[DataMember(Name = "resourceTemplateType")]
-	public string ResourceTemplateType { get; set; }
+	public string ResourceTemplateType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The name of the datasource in alert
 	/// </summary>
 	[DataMember(Name = "resourceTemplateName")]
-	public string ResourceTemplateName { get; set; }
+	public string ResourceTemplateName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The instance id
@@ -250,19 +250,19 @@ public class Alert : IHasEndpoint
 	///    The instance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string InstanceName { get; set; }
+	public string InstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The instance name
 	/// </summary>
 	[DataMember(Name = "instanceDescription")]
-	public string InstanceDescription { get; set; }
+	public string InstanceDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The dataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The dataPoint id
@@ -274,25 +274,25 @@ public class Alert : IHasEndpoint
 	///    The alert detail message
 	/// </summary>
 	[DataMember(Name = "detailMessage")]
-	public AlertDetailMessage DetailMessage { get; set; }
+	public AlertDetailMessage DetailMessage { get; set; } = new();
 
 	/// <summary>
 	///    The custom columns
 	/// </summary>
 	[DataMember(Name = "customColumns")]
-	public object CustomColumns { get; set; }
+	public object CustomColumns { get; set; } = new();
 
 	/// <summary>
 	/// The component (Ex SDT, HostClusterAlert) which suppressed the alert
 	/// </summary>
 	[DataMember(Name = "suppressor")]
-	public string Suppressor { get; set; }
+	public string Suppressor { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description for suppressed alert
 	/// </summary>
 	[DataMember(Name = "suppressDesc")]
-	public string SuppressedDescending { get; set; }
+	public string SuppressedDescending { get; set; } = string.Empty;
 
 	///////////////////
 

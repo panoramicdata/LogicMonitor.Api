@@ -34,11 +34,11 @@ public class Period
 	/// the timezone for this period
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the list of week day of this period
 	/// </summary>
 	[DataMember(Name = "weekDays")]
-	public object? WeekDays { get; set; }
+	public object WeekDays { get; set; } = new();
 }
