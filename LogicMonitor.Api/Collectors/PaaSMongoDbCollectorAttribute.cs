@@ -11,5 +11,5 @@ public class PaaSMongoDbCollectorAttribute : CollectorAttribute
 	/// Period
 	/// </summary>
 	[DataMember(Name = "resourceUrl")]
-	public string ResourceUrl { get; set; }
+	public string ResourceUrl { get; set; } = string.Empty;
 }

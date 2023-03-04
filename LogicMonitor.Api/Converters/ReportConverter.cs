@@ -7,7 +7,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 {
 	protected override ReportBase Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 
 		return type switch
 		{
@@ -34,6 +34,6 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		=> throw new NotSupportedException();
 }

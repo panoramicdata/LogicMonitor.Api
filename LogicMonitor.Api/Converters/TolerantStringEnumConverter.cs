@@ -22,7 +22,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 			?.Value;
 	}
 
-	public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+	public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 	{
 		var isNullable = IsNullableType(objectType);
 		var enumType = isNullable ? Nullable.GetUnderlyingType(objectType) : objectType;
@@ -33,7 +33,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 		switch (reader.TokenType)
 		{
 			case JsonToken.String:
-				var enumText = reader.Value.ToString();
+				var enumText = reader.Value?.ToString();
 
 				if (!string.IsNullOrEmpty(enumText))
 				{
@@ -94,7 +94,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 		}
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => writer.WriteValue(value.ToString());
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) => writer.WriteValue(value.ToString());
 
 	private static bool IsNullableType(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);
 }

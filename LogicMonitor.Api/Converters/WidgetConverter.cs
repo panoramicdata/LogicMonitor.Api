@@ -4,7 +4,7 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 {
 	protected override Widget Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
 			"alert" => new AlertWidget(),
@@ -38,6 +38,6 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		=> throw new NotSupportedException();
 }

@@ -10,25 +10,25 @@ public class OneTimeUpgradeInfo
 	///    The type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Who it was created by
 	/// </summary>
 	[DataMember(Name = "createdBy")]
-	public string CreatedBy { get; set; }
+	public string CreatedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The level
 	/// </summary>
 	[DataMember(Name = "level")]
-	public string Level { get; set; }
+	public string Level { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The major version

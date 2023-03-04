@@ -11,19 +11,19 @@ public class SaasAccountTestResult
 	/// nonPermissionApisErrors
 	/// </summary>
 	[DataMember(Name = "nonPermissionApisErrors")]
-	public string[] NonPermissionApisErrors { get; set; }
+	public string[] NonPermissionApisErrors { get; set; } = Array.Empty<string>();
 
 	/// <summary>
 	/// invalidStatusUrls
 	/// </summary>
 	[DataMember(Name = "invalidStatusUrls")]
-	public string InvalidStatusUrls { get; set; }
+	public string InvalidStatusUrls { get; set; } = string.Empty;
 
 	/// <summary>
 	/// nonPermissionService
 	/// </summary>
 	[DataMember(Name = "nonPermissionService")]
-	public string NonPermissionService { get; set; }
+	public string NonPermissionService { get; set; } = string.Empty;
 
 	/// <summary>
 	/// resultCode
@@ -35,11 +35,11 @@ public class SaasAccountTestResult
 	/// detailLink
 	/// </summary>
 	[DataMember(Name = "detailLink")]
-	public string DetailLink { get; set; }
+	public string DetailLink { get; set; } = string.Empty;
 
 	/// <summary>
 	/// nonPermissionApis
 	/// </summary>
 	[DataMember(Name = "nonPermissionApis")]
-	public string[] NonPermissionApis { get; set; }
+	public string[] NonPermissionApis { get; set; } = Array.Empty<string>();
 }
