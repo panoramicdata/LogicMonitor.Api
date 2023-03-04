@@ -10,7 +10,7 @@ public class AlertCreationDtoAlertExtra
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<AlertCreationDtoColumn> Columns { get; set; }
+	public List<AlertCreationDtoColumn> Columns { get; set; } = new();
 
 	/// <summary>
 	/// Whether to show the filter
@@ -28,17 +28,17 @@ public class AlertCreationDtoAlertExtra
 	/// The column to sort by
 	/// </summary>
 	[DataMember(Name = "sortBy")]
-	public string SortBy { get; set; }
+	public string SortBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The sort direction
 	/// </summary>
 	[DataMember(Name = "sortDirection")]
-	public string SortDirection { get; set; }
+	public string SortDirection { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The play sound
 	/// </summary>
 	[DataMember(Name = "playSound")]
-	public PlaySound PlaySound { get; set; }
+	public PlaySound PlaySound { get; set; } = new();
 }

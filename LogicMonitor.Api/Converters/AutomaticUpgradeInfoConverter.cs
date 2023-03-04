@@ -4,7 +4,7 @@ internal class AutomaticUpgradeInfoConverter : JsonCreationConverter<AutomaticUp
 {
 	protected override AutomaticUpgradeInfo Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
 			"automatic upgrade" => new AutomaticUpgradeAutomaticUpgradeInfo(),

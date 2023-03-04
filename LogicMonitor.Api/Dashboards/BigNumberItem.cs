@@ -16,13 +16,13 @@ public class BigNumberItem
 	/// The rightLabel
 	/// </summary>
 	[DataMember(Name = "rightLabel")]
-	public string RightLabel { get; set; }
+	public string RightLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The bottomLabel
 	/// </summary>
 	[DataMember(Name = "bottomLabel")]
-	public string BottomLabel { get; set; }
+	public string BottomLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataPointName
@@ -34,7 +34,7 @@ public class BigNumberItem
 	/// The rounding
 	/// </summary>
 	[DataMember(Name = "rounding")]
-	public string Rounding { get; set; }
+	public string Rounding { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to use comma separators
@@ -46,5 +46,5 @@ public class BigNumberItem
 	/// The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; }
+	public List<ColorThreshold> ColorThresholds { get; set; } = new();
 }

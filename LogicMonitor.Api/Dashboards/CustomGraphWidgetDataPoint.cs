@@ -10,7 +10,7 @@ public class CustomGraphWidgetDataPoint : IdentifiedItem
 	/// The entity's name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The consolidate function
@@ -40,7 +40,7 @@ public class CustomGraphWidgetDataPoint : IdentifiedItem
 	/// The aggregateFunction
 	/// </summary>
 	[DataMember(Name = "aggregateFunction")]
-	public string AggregateFunction { get; set; }
+	public string AggregateFunction { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSource Id
@@ -52,29 +52,29 @@ public class CustomGraphWidgetDataPoint : IdentifiedItem
 	/// The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The deviceDisplay Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public StringSpecification DeviceDisplayName { get; set; }
+	public StringSpecification DeviceDisplayName { get; set; } = new();
 
 	/// <summary>
 	/// The deviceGroupFullPath
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public StringSpecification DeviceGroupFullPath { get; set; }
+	public StringSpecification DeviceGroupFullPath { get; set; } = new();
 
 	/// <summary>
 	/// The instanceName
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public StringSpecification DataSourceInstanceName { get; set; }
+	public StringSpecification DataSourceInstanceName { get; set; } = new();
 
 	/// <summary>
 	/// The display
 	/// </summary>
 	[DataMember(Name = "display")]
-	public Display Display { get; set; }
+	public Display Display { get; set; } = new();
 }

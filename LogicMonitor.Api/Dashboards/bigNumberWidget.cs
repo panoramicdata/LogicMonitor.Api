@@ -10,11 +10,11 @@ public class BigNumberWidget : Widget
 	///     The alert filter
 	/// </summary>
 	[DataMember(Name = "bigNumberInfo")]
-	public BigNumberInfo BigNumberInfo { get; set; }
+	public BigNumberInfo BigNumberInfo { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

@@ -34,7 +34,7 @@ public class CustomGraphWidgetGraphInfo : IdentifiedItem
 	/// The vertical label
 	/// </summary>
 	[DataMember(Name = "verticalLabel")]
-	public string VerticalLabel { get; set; }
+	public string VerticalLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The top x
@@ -52,17 +52,17 @@ public class CustomGraphWidgetGraphInfo : IdentifiedItem
 	/// The data points
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<CustomGraphWidgetDataPoint> DataPoints { get; set; }
+	public List<CustomGraphWidgetDataPoint> DataPoints { get; set; } = new();
 
 	/// <summary>
 	/// The virtual data points
 	/// </summary>
 	[DataMember(Name = "virtualDataPoints")]
-	public List<object> VirtualDataPoints { get; set; }
+	public List<object> VirtualDataPoints { get; set; } = new();
 
 	/// <summary>
 	/// The global consolidation function
 	/// </summary>
 	[DataMember(Name = "globalConsolidateFunction")]
-	public string GlobalConsolidateFunction { get; set; }
+	public string GlobalConsolidateFunction { get; set; } = string.Empty;
 }
