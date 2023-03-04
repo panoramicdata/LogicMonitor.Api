@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A collection of devices to which the EventSource applies
 /// </summary>
 [DataContract]
-public class CollectionEventSourceAppliesTo : IdentifiedItem
+public class EventSourceAppliesToCollection  : IdentifiedItem
 {
 	/// <summary>
 	/// The EventSource Id

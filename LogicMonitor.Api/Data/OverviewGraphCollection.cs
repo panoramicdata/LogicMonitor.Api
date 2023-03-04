@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Data;
 ///    An overview graph collection
 /// </summary>
 [DataContract]
-public class CollectionOverviewGraph
+public class OverviewGraphCollection
 {
 	/// <summary>
 	///    Displayed As

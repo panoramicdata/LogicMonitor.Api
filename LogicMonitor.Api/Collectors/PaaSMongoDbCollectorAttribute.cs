@@ -5,7 +5,7 @@
 /// </summary>
 
 [DataContract]
-public class PaaSMongoDbCollectorAttribute : AttributeCollector
+public class PaaSMongoDbCollectorAttribute : CollectorAttribute
 {
 	/// <summary>
 	/// Period

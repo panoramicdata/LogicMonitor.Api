@@ -32,3 +32,4 @@
 	Scope = "namespaceanddescendants",
 	Target = "~N:LogicMonitor.Api")
 ]
+[assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "<Pending>", Scope = "type", Target = "~T:LogicMonitor.Api.Users.ViewPermission")]

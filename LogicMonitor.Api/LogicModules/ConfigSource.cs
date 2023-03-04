@@ -10,7 +10,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// Collector attribute
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public AttributeCollector? CollectorAttribute { get; set; }
+	public CollectorAttribute? CollectorAttribute { get; set; }
 
 	/// <summary>
 	/// Auto discovery configuration

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 ///     A collector attribute
 /// </summary>
 [DataContract]
-public class AttributeCollector
+public class CollectorAttribute
 {
 	/// <summary>
 	///     The AWS range value
@@ -418,7 +418,7 @@ public class AttributeCollector
 	///     The xenEntity
 	/// </summary>
 	[DataMember(Name = "xenEntity")]
-	public string XenEntity { get; set; }
+	public string XenEntity { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Timeout

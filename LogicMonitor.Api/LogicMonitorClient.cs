@@ -279,7 +279,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <typeparam name="T"></typeparam>
 	/// <param name="name"></param>
 	/// <param name="cancellationToken"></param>
-	public virtual async Task<T> GetByNameAsync<T>(string name, CancellationToken cancellationToken)
+	public virtual async Task<T?> GetByNameAsync<T>(string name, CancellationToken cancellationToken)
 	where T : NamedItem, IHasEndpoint, new()
 	{
 		if (name is null)
@@ -362,7 +362,7 @@ public partial class LogicMonitorClient : IDisposable
 		}
 
 		// Use reflection to find the DataMember Name
-		return property.GetCustomAttributes(typeof(DataMemberAttribute), true).Cast<DataMemberAttribute>().SingleOrDefault()?.Name;
+		return property.GetCustomAttributes(typeof(DataMemberAttribute), true).Cast<DataMemberAttribute>().SingleOrDefault().Name;
 	}
 
 	/// <summary>
@@ -386,7 +386,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		// Use reflection to find the DataMember Name
 		var list = field.GetCustomAttributes(typeof(EnumMemberAttribute), true).Cast<EnumMemberAttribute>().ToList();
-		return list.SingleOrDefault()?.Value;
+		return list.SingleOrDefault().Value;
 	}
 
 	/// <summary>
@@ -986,7 +986,7 @@ public partial class LogicMonitorClient : IDisposable
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
-			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 			_logger.LogTrace("RESPONSE:\r\n\r\n {Content}", content);
 			return new XmlResponse { Content = content } as T;
 		}

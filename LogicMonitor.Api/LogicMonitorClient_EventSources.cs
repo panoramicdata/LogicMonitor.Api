@@ -86,11 +86,11 @@ public partial class LogicMonitorClient
 	/// <param name="deviceGroupId">The device group id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<CollectionEventSourceAppliesTo>> GetEventSourceAppliesToCollectionsPageAsync(
+	public Task<Page<EventSourceAppliesToCollection>> GetEventSourceAppliesToCollectionsPageAsync(
 		int deviceGroupId,
-		Filter<CollectionEventSourceAppliesTo> filter,
+		Filter<EventSourceAppliesToCollection> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<CollectionEventSourceAppliesTo>>(
+		=> GetBySubUrlAsync<Page<EventSourceAppliesToCollection>>(
 			$"device/groups/{deviceGroupId}/eventSources?{filter}",
 			cancellationToken);
 

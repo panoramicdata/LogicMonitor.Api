@@ -118,7 +118,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The view permissions
 	/// </summary>
 	[DataMember(Name = "viewPermission")]
-	public ViewPermissionUser ViewPermission { get; set; }
+	public ViewPermission ViewPermission { get; set; }
 
 	/// <summary>
 	///    The last action performed by this user

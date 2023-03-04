@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Users;
 /// View permissions
 /// </summary>
 [DataContract]
-public class ViewPermissionUser
+public class ViewPermission
 {
 	/// <summary>
 	/// Alerts view permission
