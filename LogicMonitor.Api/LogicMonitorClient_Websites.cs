@@ -137,10 +137,9 @@ public partial class LogicMonitorClient
 		}
 		else
 		{
-			switch (mode)
+			if (mode == SetPropertyMode.Delete)
 			{
-				case SetPropertyMode.Delete:
-					throw new LogicMonitorApiException("Can't delete a custom property that is not there.");
+				throw new LogicMonitorApiException("Can't delete a custom property that is not there.");
 			}
 
 			switch (value)

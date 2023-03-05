@@ -257,62 +257,6 @@ public class DataSourceTests : TestWithOutput
 		items.Should().NotBeNull();
 	}
 
-	//		private static void TestGraphs(DataSource dataSource)
-	//		{
-	//// Get graphs
-	//			var graphs = await DefaultPortalClient.GetDataSourceGraphList(dataSource.Id);
-	//			foreach (var graph in graphs)
-	//			{
-	//				// Make sure that all have Unique Ids
-	//				((graphs.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
-
-	//				// Get DataPoints
-	//				var graphLines = await DefaultPortalClient.GetDataSourceGraphLines(graph.Id);
-
-	//				// Get datapointNames
-	//				var graphDataPointNames = await DefaultPortalClient.GetDataSourceGraphDataPointNames(dataSource.Id, graph.Id);
-
-	//				// Make sure that all have Unique Ids
-	//				((graphDataPointNames.HasDuplicates())).Should().BeFalse();
-
-	//				// Get DataPoints
-	//				var graphDataPoints = await DefaultPortalClient.GetDataSourceGraphDataPoints(graph.Id);
-
-	//				// Make sure that all have Unique Ids
-	//				((graphDataPoints.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
-
-	//				// Get VirtualDataPoints
-	//				var graphVirtualDataPoints = await DefaultPortalClient.GetDataSourceGraphVirtualDataPoints(graph.Id);
-
-	//				// Make sure that all have Unique Ids
-	//				((graphVirtualDataPoints.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
-	//			}
-	//		}
-
-	//[Fact]
-	//private static void TestOverviewGraphs(DataSource dataSource)
-	//{
-	//	// Get overview graphs
-	//	var overviewGraphs = await DefaultPortalClient.GetDataSourceOverviewGraphList(dataSource.Id);
-	//	foreach (var overviewGraph in overviewGraphs)
-	//	{
-	//		// Make sure that all have Unique Ids
-	//		((overviewGraphs.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
-
-	//		// Get datapointNames
-	//		var graphDataPointNames = await DefaultPortalClient.GetDataSourceGraphDataPointNames(dataSource.Id, overviewGraph.Id);
-
-	//		// Make sure that all have Unique Ids
-	//		((graphDataPointNames.HasDuplicates())).Should().BeFalse();
-
-	//		//// Get DataPoints
-	//		//var graphDataPoints = await DefaultPortalClient.GetDataSourceGraphDataPoints(overviewGraph.Id);
-
-	//		//// Make sure that all have Unique Ids
-	//		//((graphDataPoints.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
-	//	}
-	//}
-
 	[Fact]
 	public async Task GetDeviceDataSourceByName_IsFast()
 	{
@@ -378,7 +322,7 @@ public class DataSourceTests : TestWithOutput
 			deviceDataSourceRefetch.CreatedOnSeconds.Should().Be(deviceDataSource.CreatedOnSeconds);
 
 			// Get the instances
-			var deviceDataSourceInstances = await LogicMonitorClient
+			var _ = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(
 					device.Id,
 					deviceDataSource.Id,

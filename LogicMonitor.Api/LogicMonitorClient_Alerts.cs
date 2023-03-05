@@ -12,7 +12,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertFilter">An alert filter</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>a list of alerts that meet the filter</returns>
-	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter = null, CancellationToken cancellationToken = default)
+	public async Task<List<Alert>> GetAlertsAsync(AlertFilter? alertFilter = null, CancellationToken cancellationToken = default)
 	{
 		// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
 		//var alerts =
@@ -85,7 +85,10 @@ public partial class LogicMonitorClient
 		return allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue).ToList();
 	}
 
-	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(AlertFilter alertFilter, bool calledFromChunked = false, CancellationToken cancellationToken = default)
+	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(
+		AlertFilter? alertFilter,
+		bool calledFromChunked = false,
+		CancellationToken cancellationToken = default)
 	{
 		var correctedAlertFilter = alertFilter?.Clone() ?? new AlertFilter
 		{
@@ -99,7 +102,7 @@ public partial class LogicMonitorClient
 		var alertFilterMonitorObjectId = alertFilter?.MonitorObjectId;
 		if (alertFilterMonitorObjectId.HasValue)
 		{
-			var alertTypesOrNull = alertFilter.GetAlertTypes();
+			var alertTypesOrNull = alertFilter?.GetAlertTypes();
 			var alertTypesAreOnlyWebsite = alertTypesOrNull?.All(alertType => alertType == AlertType.Website) ?? false;
 			correctedAlertFilter.MonitorObjectName = alertTypesAreOnlyWebsite
 				? (await GetAsync<Website>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).Name

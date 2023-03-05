@@ -78,7 +78,7 @@ public class Filter<T>
 		}
 	}
 
-	internal void AppendFilterItemIfNotNull(string property, object value, string operation = ":")
+	internal void AppendFilterItemIfNotNull(string property, object? value, string operation = ":")
 	{
 		if (value is null)
 		{
