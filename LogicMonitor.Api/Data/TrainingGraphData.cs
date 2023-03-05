@@ -34,11 +34,11 @@ public class TrainingGraphData
 	///    The x-axis timestamps in ms since the Epoch
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<long> TimeStamps { get; set; }
+	public List<long> TimeStamps { get; set; } = new();
 
 	/// <summary>
 	///    The graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<Line> Lines { get; set; }
+	public List<Line> Lines { get; set; } = new();
 }

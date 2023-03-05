@@ -10,41 +10,41 @@ public class DeviceNocWidgetItem
 	/// The DeviceGroup Full Path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource display name
 	/// </summary>
 	[DataMember(Name = "dataSourceDisplayName")]
-	public string DataSourceDisplayName { get; set; }
+	public string DataSourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource Instance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group by
 	/// </summary>
 	[DataMember(Name = "groupBy")]
-	public string GroupBy { get; set; }
+	public string GroupBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 }

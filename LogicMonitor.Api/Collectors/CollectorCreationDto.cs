@@ -10,7 +10,7 @@ public class CollectorCreationDto : CreationDto<Collector>
 	///     The Collector's description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Id of the failover Collector configured for this Collector

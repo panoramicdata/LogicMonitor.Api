@@ -10,23 +10,23 @@ public class WebsiteOverallStatusWidget : Widget
 	/// The Website select mode
 	/// </summary>
 	[DataMember(Name = "websiteSelectMode")]
-	public string WebsiteSelectMode { get; set; }
+	public string WebsiteSelectMode { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The selected Websites
 	/// </summary>
 	[DataMember(Name = "selectedWebsites")]
-	public List<WebsiteOverallWidgetWebsite> SelectedWebsites { get; set; }
+	public List<WebsiteOverallWidgetWebsite> SelectedWebsites { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 
 	/// <summary>
 	///     The items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<object> Items { get; set; }
+	public List<object> Items { get; set; } = new();
 }

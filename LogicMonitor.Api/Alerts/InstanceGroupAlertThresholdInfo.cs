@@ -11,13 +11,13 @@ public class InstanceGroupAlertThresholdInfo
 	/// enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
 
 	/// <summary>
 	/// enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group id
@@ -35,5 +35,5 @@ public class InstanceGroupAlertThresholdInfo
 	/// The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
+	public string AlertExpression { get; set; } = string.Empty;
 }

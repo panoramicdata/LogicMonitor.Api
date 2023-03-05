@@ -14,7 +14,7 @@ public class Order<T>
 	/// <summary>
 	///     The class property name
 	/// </summary>
-	public string Property { get; set; }
+	public string Property { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString()

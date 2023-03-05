@@ -4,7 +4,7 @@
 /// A collection of History SDTs
 /// </summary>
 [DataContract]
-public class CollectionHistorySdt
+public class HistorySdtCollection
 {
 	/// <summary>
 	/// The total number of items
@@ -16,13 +16,13 @@ public class CollectionHistorySdt
 	/// The History SDT items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<ScheduledDownTimeHistory> Items { get; set; }
+	public List<ScheduledDownTimeHistory> Items { get; set; } = new();
 
 	/// <summary>
 	/// The search ID
 	/// </summary>
 	[DataMember(Name = "searchId")]
-	public string SearchId { get; set; }
+	public string SearchId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Is Min

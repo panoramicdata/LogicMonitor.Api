@@ -260,7 +260,7 @@ public static class LogItemExtensions
 		return auditEvent;
 	}
 
-	private static string GetGroupValueAsStringOrNull(Match match, string groupName)
+	private static string? GetGroupValueAsStringOrNull(Match match, string groupName)
 		=> match.Groups[groupName].Success ? match.Groups[groupName].Value : null;
 
 	private static int? GetGroupValueAsIntOrNull(Match match, string groupName)

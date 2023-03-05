@@ -10,7 +10,7 @@ public class DeviceDataSourceInstanceGroup : NamedItem
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	/// The alert status
@@ -46,7 +46,7 @@ public class DeviceDataSourceInstanceGroup : NamedItem
 	/// The display name of the device
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device datasource id
@@ -58,7 +58,7 @@ public class DeviceDataSourceInstanceGroup : NamedItem
 	///    groupsDisabledThisSource
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<DisabledGroup>? GroupsDisabledThisSource { get; set; }
+	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = new();
 
 	/// <summary>
 	///    Instance count
@@ -76,7 +76,7 @@ public class DeviceDataSourceInstanceGroup : NamedItem
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
+	public string SdtAt { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The SDT status

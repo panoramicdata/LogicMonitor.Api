@@ -88,13 +88,13 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// The LMModule dimension
 	/// </summary>
 	[DataMember(Name = "dimension")]
-	public string? Dimension { get; set; } = string.Empty;
+	public string Dimension { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Groovy script
 	/// </summary>
 	[DataMember(Name = "groovyScript")]
-	public string? GroovyScript { get; set; } = string.Empty;
+	public string GroovyScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group the LMModule is in
@@ -106,13 +106,13 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// The Linux command line
 	/// </summary>
 	[DataMember(Name = "linuxCmdLine")]
-	public string? LinuxCommandLine { get; set; }
+	public string LinuxCommandLine { get; set; }
 
 	/// <summary>
 	/// The Linux script
 	/// </summary>
 	[DataMember(Name = "linuxScript")]
-	public string? LinuxScript { get; set; } = string.Empty;
+	public string LinuxScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Log files
@@ -142,13 +142,13 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// The Windows command line
 	/// </summary>
 	[DataMember(Name = "windowsCmdLine")]
-	public string? WindowsCommandLine { get; set; }
+	public string WindowsCommandLine { get; set; }
 
 	/// <summary>
 	/// The Windows script
 	/// </summary>
 	[DataMember(Name = "windowsScript")]
-	public string? WindowsScript { get; set; }
+	public string WindowsScript { get; set; }
 
 	/// <summary>
 	/// ToString override

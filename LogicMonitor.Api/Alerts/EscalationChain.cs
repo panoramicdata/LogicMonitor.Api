@@ -33,25 +33,25 @@ public class EscalationChain : NamedItem, IHasEndpoint
 	/// The cc destinations
 	/// </summary>
 	[DataMember(Name = "ccdestination")]
-	public List<Destination> CcDestination { get; set; }
+	public List<Destination> CcDestination { get; set; } = new();
 
 	/// <summary>
 	/// The CC destinations
 	/// </summary>
 	[DataMember(Name = "ccDestinations")]
-	public List<Destination> CcDestinations { get; set; }
+	public List<Destination> CcDestinations { get; set; } = new();
 
 	/// <summary>
 	/// The destinations
 	/// </summary>
 	[DataMember(Name = "destination")]
-	public List<Destination> Destination { get; set; }
+	public List<Destination> Destination { get; set; } = new();
 
 	/// <summary>
 	/// The destinations
 	/// </summary>
 	[DataMember(Name = "destinations")]
-	public List<Destination> Destinations { get; set; }
+	public List<Destination> Destinations { get; set; } = new();
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/alert/chains";

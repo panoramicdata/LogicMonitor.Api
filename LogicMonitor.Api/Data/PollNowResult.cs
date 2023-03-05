@@ -16,7 +16,7 @@ public class PollNowResult
 	///  The message
 	/// </summary>
 	[DataMember(Name = "message")]
-	public string Message { get; set; }
+	public string Message { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The timestamp
@@ -28,23 +28,23 @@ public class PollNowResult
 	/// The date
 	/// </summary>
 	[DataMember(Name = "date")]
-	public string Date { get; set; }
+	public string Date { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The result
 	/// </summary>
 	[DataMember(Name = "result")]
-	public List<PollNowInnerResult> Result { get; set; }
+	public List<PollNowInnerResult> Result { get; set; } = new();
 
 	/// <summary>
 	/// The raw data
 	/// </summary>
 	[DataMember(Name = "rawData")]
-	public List<PollNowItem> RawData { get; set; }
+	public List<PollNowItem> RawData { get; set; } = new();
 
 	/// <summary>
 	/// The diagnosis
 	/// </summary>
 	[DataMember(Name = "diagnose")]
-	public string Diagnose { get; set; }
+	public string Diagnose { get; set; } = string.Empty;
 }

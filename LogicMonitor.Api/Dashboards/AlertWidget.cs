@@ -10,17 +10,17 @@ public class AlertWidget : Widget
 	///     The alert filter
 	/// </summary>
 	[DataMember(Name = "filters")]
-	public AlertWidgetFilter AlertFilter { get; set; }
+	public AlertWidgetFilter AlertFilter { get; set; } = new();
 
 	/// <summary>
 	///     The alert filter
 	/// </summary>
 	[DataMember(Name = "parsedFilters")]
-	public ParsedAlertFilters ParsedAlertFilters { get; set; }
+	public ParsedAlertFilters ParsedAlertFilters { get; set; } = new();
 
 	/// <summary>
 	///     The alert filter
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

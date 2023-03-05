@@ -4,23 +4,23 @@ namespace LogicMonitor.Api.Data;
 ///    An overview graph collection
 /// </summary>
 [DataContract]
-public class CollectionOverviewGraph
+public class OverviewGraphCollection
 {
 	/// <summary>
 	///    Displayed As
 	/// </summary>
 	[DataMember(Name = "displayedAs")]
-	public string DisplayedAs { get; set; }
+	public string DisplayedAs { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The DataSource InstanceGroup name
 	/// </summary>
 	[DataMember(Name = "dsigName")]
-	public string DataSourceInstanceGroupName { get; set; }
+	public string DataSourceInstanceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The overview Graphs
 	/// </summary>
 	[DataMember(Name = "ographs")]
-	public List<DataSourceOverviewGraph> OverviewGraphs { get; set; }
+	public List<DataSourceOverviewGraph> OverviewGraphs { get; set; } = new();
 }

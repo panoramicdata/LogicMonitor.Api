@@ -10,7 +10,7 @@ public class SavedMapWidget : Widget
 	/// The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 
 	/// <summary>
 	/// The interval
@@ -34,11 +34,11 @@ public class SavedMapWidget : Widget
 	/// The saved map's name
 	/// </summary>
 	[DataMember(Name = "savedMapName")]
-	public string SavedMapName { get; set; }
+	public string SavedMapName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The saved map's group's name
 	/// </summary>
 	[DataMember(Name = "savedMapGroupName")]
-	public string SavedMapGroupName { get; set; }
+	public string SavedMapGroupName { get; set; } = string.Empty;
 }

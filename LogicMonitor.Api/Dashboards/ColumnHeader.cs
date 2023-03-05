@@ -9,7 +9,7 @@ public class ColumnHeader
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether a forecast is needed
@@ -21,5 +21,5 @@ public class ColumnHeader
 	/// The display type
 	/// </summary>
 	[DataMember(Name = "displayType")]
-	public string DisplayType { get; set; }
+	public string DisplayType { get; set; } = string.Empty;
 }

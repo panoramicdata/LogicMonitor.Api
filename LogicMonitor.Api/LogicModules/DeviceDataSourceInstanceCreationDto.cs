@@ -10,29 +10,29 @@ public class DeviceDataSourceInstanceCreationDto
 	/// The datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instance display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instance description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instance wild value
 	/// </summary>
 	[DataMember(Name = "wildValue")]
-	public string WildValue { get; set; }
+	public string WildValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The other instance wild value
 	/// </summary>
 	[DataMember(Name = "wildValue2")]
-	public string WildValue2 { get; set; }
+	public string WildValue2 { get; set; } = string.Empty;
 }

@@ -73,7 +73,7 @@ public class AlertTests : TestWithOutput
 		alerts.Should().ContainSingle();
 
 		var alert = alerts[0];
-		alert.AckComment.Should().Be(null);
+		alert.AckComment.Should().Be("");
 
 		// Add a note
 		await LogicMonitorClient
@@ -262,7 +262,7 @@ public class AlertTests : TestWithOutput
 		{
 			IncludeCleared = false,
 			AckFilter = AckFilter.All,
-			AlertRuleName = null,
+			AlertRuleName = "",
 			StartEpochIsBefore = DateTime.UtcNow.AddMinutes(-1).SecondsSinceTheEpoch(),
 			SdtFilter = SdtFilter.All,
 			StartEpochIsAfter = DateTime.UtcNow.AddDays(-7).SecondsSinceTheEpoch(),
@@ -279,7 +279,7 @@ public class AlertTests : TestWithOutput
 		{
 			IncludeCleared = true,
 			AckFilter = AckFilter.All,
-			AlertRuleName = null,
+			AlertRuleName = "",
 			StartEpochIsBefore = DateTime.UtcNow.AddMinutes(-1).SecondsSinceTheEpoch(),
 			SdtFilter = SdtFilter.All,
 			StartEpochIsAfter = DateTime.UtcNow.AddDays(-7).SecondsSinceTheEpoch(),

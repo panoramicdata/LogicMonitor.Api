@@ -10,5 +10,5 @@ public class DeviceDataSourceInstanceSummary : NamedItem
 	/// The alias
 	/// </summary>
 	[DataMember]
-	public string Alias { get; set; }
+	public string Alias { get; set; } = string.Empty;
 }

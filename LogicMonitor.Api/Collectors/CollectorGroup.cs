@@ -10,13 +10,13 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	/// The custom properties defined for the Collector group
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	/// The permission level of the user that made the API request
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public string UserPermission { get; set; }
+	public string UserPermission { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The time at which the group was created, in epoch format
@@ -46,7 +46,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	/// the auto balance strategy
 	/// </summary>
 	[DataMember(Name = "autoBalanceStrategy")]
-	public string AutoBalanceStrategy { get; set; }
+	public string AutoBalanceStrategy { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Autobalance device count threshold
@@ -70,7 +70,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	/// the platform limitation
 	/// </summary>
 	[DataMember(Name = "platform")]
-	public string Platform { get; set; }
+	public string Platform { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The number of instances that belong to the group
@@ -94,7 +94,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	/// The status of the highest priority sub collector
 	/// </summary>
 	[DataMember(Name = "highestPriorityCollectorStatus")]
-	public RestHighestPriorityCollectorStatus HighestPriorityCollectorStatus { get; set; }
+	public RestHighestPriorityCollectorStatus HighestPriorityCollectorStatus { get; set; } = new();
 
 	/// <summary>
 	///    The subUrl for setting by id

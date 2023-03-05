@@ -10,13 +10,13 @@ public class SnmpSysOidMap : LogicModule, IHasEndpoint
 	/// The categories
 	/// </summary>
 	[DataMember(Name = "categories")]
-	public string Categories { get; set; }
+	public string Categories { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The parameters
 	/// </summary>
 	[DataMember(Name = "oid")]
-	public string Oid { get; set; }
+	public string Oid { get; set; } = string.Empty;
 
 
 	/// <summary>

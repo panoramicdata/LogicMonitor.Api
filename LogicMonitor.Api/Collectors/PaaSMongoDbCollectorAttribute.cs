@@ -5,11 +5,11 @@
 /// </summary>
 
 [DataContract]
-public class PaaSMongoDbCollectorAttribute : AttributeCollector
+public class PaaSMongoDbCollectorAttribute : CollectorAttribute
 {
 	/// <summary>
 	/// Period
 	/// </summary>
 	[DataMember(Name = "resourceUrl")]
-	public string ResourceUrl { get; set; }
+	public string ResourceUrl { get; set; } = string.Empty;
 }

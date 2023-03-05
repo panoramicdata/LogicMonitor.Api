@@ -10,7 +10,7 @@ public class DeviceBatchJobAlertSdt : AlertSdt
 	/// The Batch Job name
 	/// </summary>
 	[DataMember(Name = "batchJobName")]
-	public string BatchJobName { get; set; }
+	public string BatchJobName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Device Batch Job ID
@@ -22,7 +22,7 @@ public class DeviceBatchJobAlertSdt : AlertSdt
 	/// The Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Device ID

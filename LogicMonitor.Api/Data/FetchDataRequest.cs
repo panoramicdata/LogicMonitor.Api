@@ -10,5 +10,5 @@ public class FetchDataRequest
 	/// The comma-separated instance ids
 	/// </summary>
 	[DataMember(Name = "instanceIds")]
-	public string InstanceIds { get; set; }
+	public string InstanceIds { get; set; } = string.Empty;
 }

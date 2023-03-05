@@ -10,7 +10,7 @@ public class SnmpSysOidMapImportObject
 	/// The server address
 	/// </summary>
 	[DataMember(Name = "coreServer")]
-	public string CoreServer { get; set; }
+	public string CoreServer { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The username
@@ -28,5 +28,5 @@ public class SnmpSysOidMapImportObject
 	/// The LogicModule names. This is the same for all Module types except SNMP SysOID Maps
 	/// </summary>
 	[DataMember(Name = "importOids")]
-	public List<SnmpSysOidMapImportItem> ImportOids { get; set; }
+	public List<SnmpSysOidMapImportItem> ImportOids { get; set; } = new();
 }

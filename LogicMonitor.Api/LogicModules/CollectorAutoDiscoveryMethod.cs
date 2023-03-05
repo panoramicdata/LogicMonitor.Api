@@ -11,5 +11,5 @@ public class CollectorAutoDiscoveryMethod
 	/// The collector id
 	/// </summary>
 	[DataMember(Name = "collectorId")]
-	public string CollectorId { get; set; } 
+	public string CollectorId { get; set; } = string.Empty;
 }

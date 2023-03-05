@@ -16,13 +16,13 @@ public class CollectionDataSourceAppliesTo : IdentifiedItem
 	/// The dataSourceDisplayName
 	/// </summary>
 	[DataMember(Name = "dataSourceDisplayName")]
-	public string DataSourceDisplayName { get; set; }
+	public string DataSourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSourceGroupName
 	/// </summary>
 	[DataMember(Name = "dataSourceGroupName")]
-	public string DataSourceGroupName { get; set; }
+	public string DataSourceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The deviceGroupId
@@ -46,7 +46,7 @@ public class CollectionDataSourceAppliesTo : IdentifiedItem
 	/// The DataSource Id
 	/// </summary>
 	[DataMember(Name = "dataSourceDeviceList")]
-	public List<DataSourceDevice> DataSourceDevices { get; set; }
+	public List<DataSourceDevice> DataSourceDevices { get; set; } = new();
 
 	/// <summary>
 	/// Returns a string that represents the current object.

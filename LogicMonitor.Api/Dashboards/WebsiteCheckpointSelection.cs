@@ -10,7 +10,7 @@ public class WebsiteCheckpointSelection
 	/// Website authentication credentials
 	/// </summary>
 	[DataMember(Name = "geoInfo")]
-	public string GeographicInformation { get; set; }
+	public string GeographicInformation { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Website MG Id

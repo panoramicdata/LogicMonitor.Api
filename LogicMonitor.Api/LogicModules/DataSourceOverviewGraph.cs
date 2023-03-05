@@ -40,19 +40,19 @@ public class DataSourceOverviewGraph : UndescribedNamedItem
 	/// the graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<GraphLine> Lines { get; set; }
+	public List<GraphLine> Lines { get; set; } = new();
 
 	/// <summary>
 	/// graph max value
 	/// </summary>
 	[DataMember(Name = "maxValue")]
-	public string MaxValue { get; set; }
+	public string MaxValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// graph min value
 	/// </summary>
 	[DataMember(Name = "minValue")]
-	public string MinValue { get; set; }
+	public string MinValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the rigid, true|false
@@ -64,19 +64,19 @@ public class DataSourceOverviewGraph : UndescribedNamedItem
 	/// the graph time scale, 1hour|2hour|5hour|day|yesterday|week|lastweek|month|3month|year
 	/// </summary>
 	[DataMember(Name = "timeScale")]
-	public string TimeScale { get; set; }
+	public string TimeScale { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the graph title
 	/// </summary>
 	[DataMember(Name = "title")]
-	public string Title { get; set; }
+	public string Title { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the graph vertical label
 	/// </summary>
 	[DataMember(Name = "verticalLabel")]
-	public string VerticalLabel { get; set; }
+	public string VerticalLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the graph width
@@ -88,13 +88,13 @@ public class DataSourceOverviewGraph : UndescribedNamedItem
 	/// the graph data point list
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<OverviewGraphDataPoint> DataPoints { get; set; }
+	public List<OverviewGraphDataPoint> DataPoints { get; set; } = new();
 
 	/// <summary>
 	/// the virtual data point list
 	/// </summary>
 	[DataMember(Name = "virtualDataPoints")]
-	public List<GraphVirtualDataPoint> VirtualDataPoints { get; set; }
+	public List<GraphVirtualDataPoint> VirtualDataPoints { get; set; } = new();
 
 	/// <summary>
 	/// ToString override

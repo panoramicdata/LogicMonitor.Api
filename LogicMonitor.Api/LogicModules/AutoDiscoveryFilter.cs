@@ -10,7 +10,7 @@ public class AutoDiscoveryFilter
 	/// attribute to filter
 	/// </summary>
 	[DataMember(Name = "attribute")]
-	public string Attribute { get; set; } 
+	public string Attribute { get; set; } = string.Empty;
 
 	/// <summary>
 	/// filter\u0027s operation values can be : Equal|NotEqual|GreaterThan|GreaterEqual|LessThan|LessEqual|Contain|NotContain|NotExist|RegexMatch|RegexNotMatch
@@ -22,11 +22,11 @@ public class AutoDiscoveryFilter
 	/// operation value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string? Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
 	/// filter comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string? Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 }

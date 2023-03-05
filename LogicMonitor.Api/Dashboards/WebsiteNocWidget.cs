@@ -10,5 +10,5 @@ public class WebsiteNocWidget : Widget
 	/// Items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<WebsiteNocWidgetItem> Items { get; set; }
+	public List<WebsiteNocWidgetItem> Items { get; set; } = new();
 }

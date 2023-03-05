@@ -23,7 +23,7 @@ public abstract class DeviceGroupFlowRequest : TimeBasedRequest
 	/// <summary>
 	/// The QoS type
 	/// </summary>
-	public string QosType { get; set; }
+	public string QosType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The number of items to skip

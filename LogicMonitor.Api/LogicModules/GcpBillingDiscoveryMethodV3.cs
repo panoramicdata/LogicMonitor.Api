@@ -11,5 +11,5 @@ public class GcpBillingDiscoveryMethodV3
 	/// gcpBillingType
 	/// </summary>
 	[DataMember(Name = "gcpBillingType")]
-	public string GcpBillingType { get; set; } 
+	public string GcpBillingType { get; set; } = string.Empty;
 }

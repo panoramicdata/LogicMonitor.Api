@@ -16,5 +16,5 @@ public class WebsiteOverallWidgetWebsiteDetail
 	/// The Website name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 }

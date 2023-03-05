@@ -10,13 +10,13 @@ public class GroupNetflowWidget : Widget
 	///     The data type
 	/// </summary>
 	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	public string DataType { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The QoS type
 	/// </summary>
 	[DataMember(Name = "qosType")]
-	public string QosType { get; set; }
+	public string QosType { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The device group Id
@@ -28,11 +28,11 @@ public class GroupNetflowWidget : Widget
 	///     The device group name
 	/// </summary>
 	[DataMember(Name = "deviceGroupName")]
-	public string DeviceGroupName { get; set; }
+	public string DeviceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The row filters
 	/// </summary>
 	[DataMember(Name = "rowFilters")]
-	public string RowFilters { get; set; }
+	public string RowFilters { get; set; } = string.Empty;
 }

@@ -10,11 +10,11 @@ public class DataPointConfigurationCollection
 	/// The DataSource type
 	/// </summary>
 	[DataMember(Name = "datasourceType")]
-	public string DataSourceType { get; set; }
+	public string DataSourceType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The items
 	/// </summary>
 	[DataMember(Name = "dpConfig")]
-	public List<DataPointConfiguration> Items { get; set; }
+	public List<DataPointConfiguration> Items { get; set; } = new();
 }

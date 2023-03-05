@@ -10,13 +10,13 @@ public class AppliesToFunction : LogicModule, IHasEndpoint
 	/// The AppliesTo Function code. Note that special characters may need to be escaped.
 	/// </summary>
 	[DataMember(Name = "code")]
-	public string Code { get; set; } 
+	public string Code { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The AppliesTo Function parameters
 	/// </summary>
 	[DataMember(Name = "params")]
-	public string Parameters { get; set; } 
+	public string Parameters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Published

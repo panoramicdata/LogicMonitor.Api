@@ -11,7 +11,7 @@ public class NetFlowRecord
 	/// srcIP
 	/// </summary>
 	[DataMember(Name = "srcIP")]
-	public string SrcIP { get; set; }
+	public string SrcIP { get; set; } = string.Empty;
 
 	/// <summary>
 	/// percentUsage
@@ -35,7 +35,7 @@ public class NetFlowRecord
 	/// dataType
 	/// </summary>
 	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	public string DataType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// usage
@@ -53,7 +53,7 @@ public class NetFlowRecord
 	/// dstDNS
 	/// </summary>
 	[DataMember(Name = "dstDNS")]
-	public string DstDNS { get; set; }
+	public string DstDNS { get; set; } = string.Empty;
 
 	/// <summary>
 	/// srcPort
@@ -71,7 +71,7 @@ public class NetFlowRecord
 	/// protocol
 	/// </summary>
 	[DataMember(Name = "protocol")]
-	public string Protocol { get; set; }
+	public string Protocol { get; set; } = string.Empty;
 
 	/// <summary>
 	/// dstPort
@@ -95,13 +95,13 @@ public class NetFlowRecord
 	/// srcAsnName
 	/// </summary>
 	[DataMember(Name = "srcAsnName")]
-	public string SrcAsnName { get; set; }
+	public string SrcAsnName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// srcDNS
 	/// </summary>
 	[DataMember(Name = "srcDNS")]
-	public string SrcDNS { get; set; }
+	public string SrcDNS { get; set; } = string.Empty;
 
 	/// <summary>
 	/// destinationMBytes
@@ -119,11 +119,11 @@ public class NetFlowRecord
 	/// dstIP
 	/// </summary>
 	[DataMember(Name = "dstIP")]
-	public string DstIP { get; set; }
+	public string DstIP { get; set; } = string.Empty;
 
 	/// <summary>
 	/// destAsnName
 	/// </summary>
 	[DataMember(Name = "destAsnName")]
-	public string DestAsnName { get; set; }
+	public string DestAsnName { get; set; } = string.Empty;
 }

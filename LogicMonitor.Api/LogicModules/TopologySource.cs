@@ -10,7 +10,7 @@ public class TopologySource : LogicModule, IHasEndpoint
 	/// What this applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The audit version
@@ -28,7 +28,7 @@ public class TopologySource : LogicModule, IHasEndpoint
 	/// The collector attribute
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public AttributeCollector CollectorAttribute { get; set; }
+	public CollectorAttribute CollectorAttribute { get; set; } = new();
 
 	/// <summary>
 	/// The collection method
@@ -40,19 +40,19 @@ public class TopologySource : LogicModule, IHasEndpoint
 	/// The Group name
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string Group { get; set; }
+	public string Group { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
+	public string Tags { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Technology
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
+	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The version

@@ -10,7 +10,7 @@ public class ParentDeviceGroupAlertExpression
 	///     The ResourceGroup Full Path
 	/// </summary>
 	[DataMember(Name = "groupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Resource Group Id
@@ -22,7 +22,7 @@ public class ParentDeviceGroupAlertExpression
 	///     The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
+	public string AlertExpression { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether alerting is enabled
@@ -34,17 +34,17 @@ public class ParentDeviceGroupAlertExpression
 	///     The user permission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public string UserPermission { get; set; }
+	public string UserPermission { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether Anomaly Alert Generation is enabled
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string IsAnomalyAlertGenerationEnabled { get; set; }
+	public string IsAnomalyAlertGenerationEnabled { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether anomaly alert suppression is enabled
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string IsAnomalyAlertSuppressionEnabled { get; set; }
+	public string IsAnomalyAlertSuppressionEnabled { get; set; } = string.Empty;
 }

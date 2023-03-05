@@ -16,11 +16,11 @@ public class FlashWidget : Widget
 	/// The URL
 	/// </summary>
 	[DataMember(Name = "url")]
-	public string Url { get; set; }
+	public string Url { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

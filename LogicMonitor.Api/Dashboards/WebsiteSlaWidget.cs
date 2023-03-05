@@ -10,29 +10,29 @@ public class WebsiteSlaWidget : Widget
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<WebsiteSlaWidgetMetric> Items { get; set; }
+	public List<WebsiteSlaWidgetMetric> Items { get; set; } = new();
 
 	/// <summary>
 	/// The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; }
+	public List<ColorThreshold> ColorThresholds { get; set; } = new();
 
 	/// <summary>
 	/// The daysInWeek
 	/// </summary>
 	[DataMember(Name = "daysInWeek")]
-	public string DaysInWeek { get; set; }
+	public string DaysInWeek { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The periodInOneDay
 	/// </summary>
 	[DataMember(Name = "periodInOneDay")]
-	public string PeriodInOneDay { get; set; }
+	public string PeriodInOneDay { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

@@ -22,5 +22,5 @@ public class EventSourceDevice
 	/// The deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 }

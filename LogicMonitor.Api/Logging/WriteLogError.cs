@@ -16,11 +16,11 @@ public class WriteLogError
 	/// The error message
 	/// </summary>
 	[DataMember(Name = "error")]
-	public string ErrorMessage { get; set; }
+	public string ErrorMessage { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The originating request
 	/// </summary>
 	[DataMember(Name = "event")]
-	public WriteLogRequest Event { get; set; }
+	public WriteLogRequest Event { get; set; } = new();
 }

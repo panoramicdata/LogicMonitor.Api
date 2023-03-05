@@ -11,19 +11,19 @@ public abstract class AlertSdt
 	/// The underlying type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The SDT type
 	/// </summary>
 	[DataMember(Name = "sdtType")]
-	public string SdtType { get; set; }
+	public string SdtType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The time zone to use
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string Timezone { get; set; }
+	public string Timezone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The start month day
@@ -35,7 +35,7 @@ public abstract class AlertSdt
 	/// The user that set the SDT
 	/// </summary>
 	[DataMember(Name = "admin")]
-	public string Admin { get; set; }
+	public string Admin { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The end date time in seconds since the Epoch
@@ -89,13 +89,13 @@ public abstract class AlertSdt
 	/// The week day
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public string WeekDay { get; set; }
+	public string WeekDay { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The SDT Id
@@ -107,7 +107,7 @@ public abstract class AlertSdt
 	/// The category
 	/// </summary>
 	[DataMember(Name = "category")]
-	public Category Category { get; set; }
+	public Category Category { get; set; } = new();
 
 	/// <summary>
 	/// The end minute

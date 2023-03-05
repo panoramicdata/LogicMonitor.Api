@@ -10,17 +10,17 @@ public class CollectorGroupCreationDto : CreationDto<CollectorGroup>
 	///     The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 }

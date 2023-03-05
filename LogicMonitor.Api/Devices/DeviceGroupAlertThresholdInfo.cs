@@ -11,19 +11,19 @@ public class DeviceGroupAlertThresholdInfo
 	/// enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
 
 	/// <summary>
 	/// userPermission
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public string UserPermission { get; set; }
+	public string UserPermission { get; set; } = string.Empty;
 
 	/// <summary>
 	/// enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group id
@@ -41,11 +41,11 @@ public class DeviceGroupAlertThresholdInfo
 	/// groupFullPath
 	/// </summary>
 	[DataMember(Name = "groupFullPath")]
-	public string GroupFullPath { get; set; }
+	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
+	public string AlertExpression { get; set; } = string.Empty;
 }

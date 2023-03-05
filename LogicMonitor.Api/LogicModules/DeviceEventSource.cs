@@ -27,7 +27,7 @@ public class DeviceEventSource : IdentifiedItem
 	///    The time alerting was disabled in seconds since the Epoch
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	///    The event source type
@@ -39,7 +39,7 @@ public class DeviceEventSource : IdentifiedItem
 	///    Description
 	/// </summary>
 	[DataMember(Name = "eventSourceDescription")]
-	public string EventSourceDescription { get; set; }
+	public string EventSourceDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    DataSource Id
@@ -51,7 +51,7 @@ public class DeviceEventSource : IdentifiedItem
 	///    DataSource Name
 	/// </summary>
 	[DataMember(Name = "eventSourceName")]
-	public string EventSourceName { get; set; }
+	public string EventSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device Id
@@ -63,19 +63,19 @@ public class DeviceEventSource : IdentifiedItem
 	///    The device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The group name
 	/// </summary>
 	[DataMember(Name = "eventSourceGroupName")]
-	public string GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Disabled groups
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<object> DisabledGroups { get; set; }
+	public List<object> DisabledGroups { get; set; } = new();
 
 	/// <summary>
 	///    Is monitoring disabled
@@ -99,7 +99,7 @@ public class DeviceEventSource : IdentifiedItem
 	///    SDT at
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
+	public string SdtAt { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString() => $"{Id}: {EventSourceName} ({EventSourceId}) on device {DeviceDisplayName} ({DeviceId})";

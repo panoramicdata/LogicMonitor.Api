@@ -10,19 +10,19 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// Alerts associated to this configuration file
 	/// </summary>
 	[DataMember(Name = "alerts")]
-	public List<DeviceDataSourceInstanceConfigAlert> Alerts { get; set; }
+	public List<DeviceDataSourceInstanceConfigAlert> Alerts { get; set; } = new();
 
 	/// <summary>
 	/// Configuration file content
 	/// </summary>
 	[DataMember(Name = "config")]
-	public string Config { get; set; }
+	public string Config { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Configuration file change status, if the first configuration then it is Added, else Changed, values can be : Add|Change
 	/// </summary>
 	[DataMember(Name = "changeStatus")]
-	public string ChangeStatus { get; set; }
+	public string ChangeStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Configuration file collect status
@@ -34,7 +34,7 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// Configuration file collect error message
 	/// </summary>
 	[DataMember(Name = "configErrMsg")]
-	public string ConfigErrorMessage { get; set; }
+	public string ConfigErrorMessage { get; set; } = string.Empty;
 
 	/// <summary>
 	/// configsource id
@@ -46,13 +46,13 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Configuration file diff
 	/// </summary>
 	[DataMember(Name = "deltaConfig")]
-	public List<DeviceDataSourceInstanceConfigDiff> DeltaConfig { get; set; }
+	public List<DeviceDataSourceInstanceConfigDiff> DeltaConfig { get; set; } = new();
 
 	/// <summary>
 	/// device datasource id
@@ -64,7 +64,7 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// device id
@@ -88,7 +88,7 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// device datasource instance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string InstanceName { get; set; }
+	public string InstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// datasource poll timestamp in milliseconds
@@ -106,5 +106,5 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// config version
 	/// </summary>
 	[DataMember(Name = "version")]
-	public string Version { get; set; }
+	public string Version { get; set; } = string.Empty;
 }

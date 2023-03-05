@@ -23,7 +23,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The alert disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertDisabledOn { get; set; }
+	public object AlertDisabledOn { get; set; } = new();
 
 	/// <summary>
 	/// The alert status priority
@@ -53,7 +53,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The instance alias. This is the descriptive name of the instance, and should be unique for the device/datasource combination
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Any instance level properties assigned to the instance
@@ -66,19 +66,19 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	/// Any instance level system properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "systemProperties")]
-	public List<EntityProperty> SystemProperties { get; set; }
+	public List<EntityProperty> SystemProperties { get; set; } = new();
 
 	/// <summary>
 	/// Any instance level auto properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "autoProperties")]
-	public List<EntityProperty> AutoProperties { get; set; }
+	public List<EntityProperty> AutoProperties { get; set; } = new();
 
 	/// <summary>
 	/// The id of the datasource definition that the instance represents
@@ -90,19 +90,19 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The DataSource Name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The type of LogicModule, e.g. DS (datasource)
 	/// </summary>
 	[DataMember(Name = "dataSourceType")]
-	public string DataSourceType { get; set; }
+	public string DataSourceType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The display name of the device the datasource instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The id of the device the datasource instance is associated with
@@ -126,13 +126,13 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The name of the instance group associated with the datasource instance
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// groupsDisabledThisSource
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<DisabledGroup> GroupsDisabledThisSource { get; set; }
+	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = new();
 
 	/// <summary>
 	/// The last collected time in seconds since the Epoch
@@ -156,23 +156,23 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// WildValue
 	/// </summary>
 	[DataMember(Name = "wildValue")]
-	public string? WildValue { get; set; }
+	public string WildValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Only used for two dimensional active discovery. When used, during Active Discovery runs, the token ##WILDVALUE## is replaces with the value of ALIAS and the token ##WILDVALUE2## is replaced with the value of the second part alias. This value must be unique for the device/datasource/WILDVALUE combination
 	/// </summary>
 	[DataMember(Name = "wildValue2")]
-	public string? WildValue2 { get; set; }
+	public string WildValue2 { get; set; } = string.Empty;
 
 	/// <summary>
 	/// SDT status
 	/// </summary>
 	[DataMember(Name = "sdtStatus")]
-	public string? SdtStatus { get; set; }
+	public string SdtStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	/// SDT status
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
-	public string? SdtAt { get; set; }
+	public string SdtAt { get; set; } = string.Empty;
 }

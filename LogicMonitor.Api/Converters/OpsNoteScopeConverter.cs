@@ -4,7 +4,7 @@ internal class OpsNoteScopeConverter : JsonCreationConverter<OpsNoteScope>
 {
 	protected override OpsNoteScope Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
 			"device" => new DeviceOpsNoteScope(),
@@ -16,5 +16,5 @@ internal class OpsNoteScopeConverter : JsonCreationConverter<OpsNoteScope>
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotSupportedException();
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) => throw new NotSupportedException();
 }

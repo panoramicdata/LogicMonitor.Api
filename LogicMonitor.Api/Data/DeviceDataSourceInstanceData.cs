@@ -10,23 +10,23 @@ public class DeviceDataSourceInstanceData
 	/// datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// datapoint values 2-D list
 	/// </summary>
 	[DataMember(Name = "values")]
-	public List<List<float>> Values { get; set; }
+	public List<List<float>> Values { get; set; } = new();
 
 	/// <summary>
 	/// timestamp list
 	/// </summary>
 	[DataMember(Name = "time")]
-	public List<long> Time { get; set; }
+	public List<long> Time { get; set; } = new();
 
 	/// <summary>
 	/// the next page parameters
 	/// </summary>
 	[DataMember(Name = "nextPageParams")]
-	public string NextPageParams { get; set; }
+	public string NextPageParams { get; set; } = string.Empty;
 }

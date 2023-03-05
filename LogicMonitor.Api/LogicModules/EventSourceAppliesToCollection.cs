@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A collection of devices to which the EventSource applies
 /// </summary>
 [DataContract]
-public class CollectionEventSourceAppliesTo : IdentifiedItem
+public class EventSourceAppliesToCollection  : IdentifiedItem
 {
 	/// <summary>
 	/// The EventSource Id
@@ -16,13 +16,13 @@ public class CollectionEventSourceAppliesTo : IdentifiedItem
 	/// The EventSourceDisplayName
 	/// </summary>
 	[DataMember(Name = "eventSourceDisplayName")]
-	public string EventSourceDisplayName { get; set; }
+	public string EventSourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The EventSourceGroupName
 	/// </summary>
 	[DataMember(Name = "eventSourceGroupName")]
-	public string EventSourceGroupName { get; set; }
+	public string EventSourceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The deviceGroupId
@@ -46,7 +46,7 @@ public class CollectionEventSourceAppliesTo : IdentifiedItem
 	/// The EventSource Id
 	/// </summary>
 	[DataMember(Name = "EventSourceDeviceList")]
-	public List<EventSourceDevice> EventSourceDevices { get; set; }
+	public List<EventSourceDevice> EventSourceDevices { get; set; } = new();
 
 	/// <summary>
 	/// Returns a string that represents the current object.

@@ -10,13 +10,13 @@ public class DeviceDataSourceInstanceConfigDiff
 	/// diff type, values can be : add|remove
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// configuration content
 	/// </summary>
 	[DataMember(Name = "content")]
-	public string Content { get; set; }
+	public string Content { get; set; } = string.Empty;
 
 	/// <summary>
 	/// diff row number

@@ -10,26 +10,26 @@ public class Flow
 	/// The data type
 	/// </summary>
 	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	public string DataType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Device Display Name. This is only populated when the request is
 	/// for a Device Group's flow, not when for a Device's flow
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Source IP address
 	/// </summary>
 	[DataMember(Name = "srcIP")]
-	public string SourceIp { get; set; }
+	public string SourceIp { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Source DNS
 	/// </summary>
 	[DataMember(Name = "srcDNS")]
-	public string SourceDns { get; set; }
+	public string SourceDns { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Source port
@@ -41,13 +41,13 @@ public class Flow
 	/// Destination IP address
 	/// </summary>
 	[DataMember(Name = "dstIP")]
-	public string DestinationIp { get; set; }
+	public string DestinationIp { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Destination DNS
 	/// </summary>
 	[DataMember(Name = "dstDNS")]
-	public string DestinationDns { get; set; }
+	public string DestinationDns { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Destination port
@@ -83,7 +83,7 @@ public class Flow
 	/// Protocol
 	/// </summary>
 	[DataMember(Name = "protocol")]
-	public string Protocol { get; set; }
+	public string Protocol { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Inbound interface id
@@ -95,7 +95,7 @@ public class Flow
 	/// Inbound interface display name
 	/// </summary>
 	[DataMember(Name = "ifInDisplayName")]
-	public string InboundInterfaceDisplayName { get; set; }
+	public string InboundInterfaceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Outbound interface id
@@ -107,7 +107,7 @@ public class Flow
 	/// Outbound interface display name
 	/// </summary>
 	[DataMember(Name = "ifOutDisplayName")]
-	public string OutboundInterfaceDisplayName { get; set; }
+	public string OutboundInterfaceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Usage bytes
@@ -170,13 +170,13 @@ public class Flow
 	/// Source ASN name
 	/// </summary>
 	[DataMember(Name = "srcAsnName")]
-	public string SourceAsnName { get; set; }
+	public string SourceAsnName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Destination ASN name
 	/// </summary>
 	[DataMember(Name = "destAsnName")]
-	public string DestinationAsnName { get; set; }
+	public string DestinationAsnName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Returns a string that represents the current object.

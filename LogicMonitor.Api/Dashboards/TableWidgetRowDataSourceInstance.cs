@@ -16,7 +16,7 @@ public class TableWidgetRowDataSourceInstance
 	///     The DataSourceInstance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The confidence
@@ -28,7 +28,7 @@ public class TableWidgetRowDataSourceInstance
 	///     The instanceName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The confidence

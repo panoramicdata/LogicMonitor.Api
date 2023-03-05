@@ -10,19 +10,19 @@ public class PieChartWidgetDataPoint
 	/// The deviceGroupFullPath
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The deviceDisplay Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSource Id
@@ -34,13 +34,13 @@ public class PieChartWidgetDataPoint
 	/// The instanceName
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataPoint Name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataPoint Id
@@ -52,7 +52,7 @@ public class PieChartWidgetDataPoint
 	/// The entity's name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether Top 10 is enabled
@@ -70,5 +70,5 @@ public class PieChartWidgetDataPoint
 	/// The aggregateFunction
 	/// </summary>
 	[DataMember(Name = "aggregateFunction")]
-	public string AggregateFunction { get; set; }
+	public string AggregateFunction { get; set; } = string.Empty;
 }

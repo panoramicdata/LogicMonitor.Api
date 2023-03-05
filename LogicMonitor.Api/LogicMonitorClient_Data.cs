@@ -47,7 +47,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<DataSourceOverviewGraph>> GetDeviceOverviewGraphsAsync(int deviceId, int deviceDataSourceId, CancellationToken cancellationToken)
 	{
-		// return Get<CollectionOverviewGraph>(ApiMethod.Do, $"ograph?func=getGroups&hId={deviceId}&dsId={dataSourceId}&dsigId={dataSourceInstanceGroupId}");
+		// return Get<OverviewGraphCollection>(ApiMethod.Do, $"ograph?func=getGroups&hId={deviceId}&dsId={dataSourceId}&dsigId={dataSourceInstanceGroupId}");
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/575/devicedatasources
 		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
 		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId);

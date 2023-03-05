@@ -34,11 +34,11 @@ public class DeviceGroupEventSource
 	/// The DataSource unique name
 	/// </summary>
 	[DataMember(Name = "eventSourceName")]
-	public string EventSourceName { get; set; }
+	public string EventSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSourceGroup Name
 	/// </summary>
 	[DataMember(Name = "eventSourceGroupName")]
-	public string EventSourceGroupName { get; set; }
+	public string EventSourceGroupName { get; set; } = string.Empty;
 }

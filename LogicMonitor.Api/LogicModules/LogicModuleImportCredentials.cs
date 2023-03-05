@@ -10,7 +10,7 @@ public class LogicModuleImportCredentials
 	/// The server address
 	/// </summary>
 	[DataMember(Name = "coreserver")]
-	public string CoreServer { get; set; }
+	public string CoreServer { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The username

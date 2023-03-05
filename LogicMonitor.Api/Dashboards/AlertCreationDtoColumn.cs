@@ -10,13 +10,13 @@ public class AlertCreationDtoColumn
 	/// The column key
 	/// </summary>
 	[DataMember(Name = "columnKey")]
-	public string ColumnKey { get; set; }
+	public string ColumnKey { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The column label
 	/// </summary>
 	[DataMember(Name = "columnLabel")]
-	public string ColumnLabel { get; set; }
+	public string ColumnLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Visibility

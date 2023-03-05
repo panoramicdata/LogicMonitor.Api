@@ -10,25 +10,25 @@ public class RawDataSet
 	///    The data source name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The data point names
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<string> DataPoints { get; set; }
+	public List<string> DataPoints { get; set; } = new();
 
 	/// <summary>
 	///    The timestamps
 	/// </summary>
 	[DataMember(Name = "time")]
-	public List<long> UtcTimeStamps { get; set; }
+	public List<long> UtcTimeStamps { get; set; } = new();
 
 	/// <summary>
 	///    The values as objects (string or double)
 	/// </summary>
 	[DataMember(Name = "values")]
-	public object[][] ValuesAsObjects { get; set; }
+	public object[][] ValuesAsObjects { get; set; } = Array.Empty<object[]>();
 
 	/// <summary>
 	///    The data point values
@@ -55,5 +55,5 @@ public class RawDataSet
 	///    The next page parameters
 	/// </summary>
 	[DataMember(Name = "nextPageParams")]
-	public string NextPageParameters { get; set; }
+	public string NextPageParameters { get; set; } = string.Empty;
 }

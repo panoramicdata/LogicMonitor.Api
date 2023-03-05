@@ -13,7 +13,7 @@ public class GaugeWidget : Widget
 	///     The display unit
 	/// </summary>
 	[DataMember(Name = "displayUnit")]
-	public string DisplayUnit { get; set; }
+	public string DisplayUnit { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether to show the peak
@@ -25,13 +25,13 @@ public class GaugeWidget : Widget
 	///     The peak time range
 	/// </summary>
 	[DataMember(Name = "peakTimeRange")]
-	public string PeakTimeRange { get; set; }
+	public string PeakTimeRange { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The legend
 	/// </summary>
 	[DataMember(Name = "legend")]
-	public string Legend { get; set; }
+	public string Legend { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The max value
@@ -49,17 +49,17 @@ public class GaugeWidget : Widget
 	///     The data point
 	/// </summary>
 	[DataMember(Name = "dataPoint")]
-	public GaugeWidgetDataPoint DataPoint { get; set; }
+	public GaugeWidgetDataPoint DataPoint { get; set; } = new();
 
 	/// <summary>
 	///     The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public object ColorThresholds { get; set; }
+	public object ColorThresholds { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

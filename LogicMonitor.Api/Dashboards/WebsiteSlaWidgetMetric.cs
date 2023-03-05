@@ -16,11 +16,11 @@ public class WebsiteSlaWidgetMetric
 	/// The Website group name
 	/// </summary>
 	[DataMember(Name = "websiteGroup")]
-	public string WebsiteGroupName { get; set; }
+	public string WebsiteGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Website name
 	/// </summary>
 	[DataMember(Name = "website")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 }

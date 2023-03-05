@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A collection of LogicModule Updates
 /// </summary>
 [DataContract]
-public class CollectionLogicModuleUpdate
+public class LogicModuleUpdateCollection
 {
 	/// <summary>
 	/// The total number of items
@@ -16,13 +16,13 @@ public class CollectionLogicModuleUpdate
 	/// The LogicModule Update items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<LogicModuleUpdate> Items { get; set; }
+	public List<LogicModuleUpdate> Items { get; set; } = new();
 
 	/// <summary>
 	/// The search ID
 	/// </summary>
 	[DataMember(Name = "searchId")]
-	public string SearchId { get; set; }
+	public string SearchId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Is Min
