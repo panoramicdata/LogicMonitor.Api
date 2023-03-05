@@ -38,24 +38,10 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get netflow flows
 	/// </summary>
-	/// <param name="start"></param>
-	/// <param name="end"></param>
-	/// <param name="netflowFilter"></param>
 	/// <param name="id"></param>
-	/// <param name="fields"></param>
-	/// <param name="filter"></param>
-	/// <param name="size"></param>
-	/// <param name="offset"></param>
 	/// <param name="cancellationToken"></param>
 	public Task<Page<NetFlowRecord>> GetNetflowFlowPageAsync(
-		long start,
-		long end,
-		string netflowFilter,
 		int id,
-		string fields,
-		string filter,
-		int size = 50,
-		int offset = 0,
 		CancellationToken cancellationToken = default
 		) => GetBySubUrlAsync<Page<NetFlowRecord>>($"device/devices/{id}/flows", cancellationToken);
 

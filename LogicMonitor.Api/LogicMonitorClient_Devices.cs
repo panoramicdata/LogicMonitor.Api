@@ -100,7 +100,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The Device Id</param>
 	/// <param name="name">The property name</param>
-	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.</param>
+	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.
 	/// If you are unsure, use CreateOrUpdate (the default).  As this checks to see if the property is set first, this option is slower.
 	/// If you know that the property is already set and you want to change the value, use Update.
 	/// If you know that the property is already set and you want to delete the value, use Delete (value must also be set to null).
@@ -505,10 +505,10 @@ public partial class LogicMonitorClient
 		public int ErrorCode { get; set; }
 
 		[DataMember(Name = "errorMessage")]
-		public string ErrorMessage { get; set; }
+		public string ErrorMessage { get; set; } = string.Empty;
 
 		[DataMember(Name = "errorDetail")]
-		public object ErrorDetail { get; set; }
+		public object ErrorDetail { get; set; } = new();
 	}
 
 	/// <summary>
@@ -529,7 +529,8 @@ public partial class LogicMonitorClient
 			var error = jObject.ToObject<ProcessServiceTaskResultError>();
 			if (error is not null && error.ErrorMessage is null && jObject is not null)
 			{
-				return jObject.ToObject<Page<DeviceProcess>>();
+				return jObject.ToObject<Page<DeviceProcess>>()
+					?? throw new FormatException($"Could not convert response to a page of device process.");
 			}
 
 			await Task.Delay(500, cancellationToken).ConfigureAwait(false);

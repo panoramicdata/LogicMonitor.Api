@@ -69,6 +69,7 @@ public partial class LogicMonitorClient
 				// Need to UrlEncode before adding to the filter
 				filter += HttpUtility.UrlEncode($",username:{logFilter.UsernameFilter}");
 			}
+
 			if (!string.IsNullOrWhiteSpace(logFilter.TextFilter))
 			{
 				filter += HttpUtility.UrlEncode($",_all~{logFilter.TextFilter}");

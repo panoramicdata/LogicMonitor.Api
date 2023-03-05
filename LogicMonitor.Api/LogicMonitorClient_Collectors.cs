@@ -100,17 +100,11 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
-	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
-	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
-	/// <param name="opType">Operation type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task PatchCollectorByIdAsync(
 		int id,
 		Collector body,
-		CancellationToken cancellationToken,
-		bool autoBalanceMonitoredDevices = false,
-		bool forceUpdateFailedOverDevices = false,
-		string opType = "refresh")
+		CancellationToken cancellationToken)
 		=> await PutAsync(
 			$"setting/collector/collectors/{id}",
 			body,
@@ -121,17 +115,11 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
-	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
-	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
-	/// <param name="opType">Operation type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task UpdateCollectorByIdAsync(
 		int id,
 		Collector body,
-		CancellationToken cancellationToken,
-		bool autoBalanceMonitoredDevices = false,
-		bool forceUpdateFailedOverDevices = false,
-		string opType = "refresh")
+		CancellationToken cancellationToken)
 		=> await PutAsync(
 			$"setting/collector/collectors/{id}",
 			body,
@@ -142,17 +130,11 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
-	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
-	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
-	/// <param name="opType">Operation type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task PatchCollectorGroupByIdAsync(
 		int id,
 		CollectorGroup body,
-		CancellationToken cancellationToken,
-		bool autoBalanceMonitoredDevices = false,
-		bool forceUpdateFailedOverDevices = false,
-		string opType = "refresh")
+		CancellationToken cancellationToken)
 		=> await PutAsync(
 			$"setting/collector/groups/{id}",
 			body,
@@ -163,17 +145,11 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
-	/// <param name="autoBalanceMonitoredDevices">Whether to auto-balance monitored devices</param>
-	/// <param name="forceUpdateFailedOverDevices">Whether to force updated failed devices</param>
-	/// <param name="opType">Operation type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task UpdateCollectorGroupByIdAsync(
 		int id,
 		CollectorGroup body,
-		CancellationToken cancellationToken,
-		bool autoBalanceMonitoredDevices = false,
-		bool forceUpdateFailedOverDevices = false,
-		string opType = "refresh")
+		CancellationToken cancellationToken)
 		=> await PutAsync(
 			$"setting/collector/groups/{id}",
 			body,

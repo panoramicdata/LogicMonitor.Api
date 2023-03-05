@@ -13,17 +13,9 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get netscan list
 	/// </summary>
-	/// <param name="fields"></param>
-	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	/// <param name="size"></param>
-	/// <param name="offset"></param>
 	public Task<Page<Netscan>> GetNetscanListAsync(
-		string? fields,
-		string? filter,
-		CancellationToken cancellationToken,
-		int size = 50,
-		int offset = 0)
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Netscan>>($"setting/netscans", cancellationToken);
 
 	/// <summary>

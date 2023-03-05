@@ -26,6 +26,7 @@ public class LogicMonitorApiException : Exception
 		{
 			ErrorMessage = string.Empty;
 		}
+
 		ResponseBody = responseBody;
 	}
 

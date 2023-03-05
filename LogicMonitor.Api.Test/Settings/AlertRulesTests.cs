@@ -8,12 +8,8 @@ public class AlertRulesTests : TestWithOutput
 
 	private static async Task GetAlertRule(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 	{
-		var alertRule = (await portalClient.GetAllAsync<AlertRule>(default).ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName);
-
-		if (alertRule is null)
-		{
-			throw new ArgumentException($"No alert rule found with name {alertRuleName}");
-		}
+		var alertRule = (await portalClient.GetAllAsync<AlertRule>(default).ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName)
+			?? throw new ArgumentException($"No alert rule found with name {alertRuleName}");
 
 		alertRule.SuppressAlertClear = !enableAlertClear;
 	}
