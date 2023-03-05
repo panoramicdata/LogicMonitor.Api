@@ -16,19 +16,19 @@ public class DataSourceOverview : NamedItem
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "alias")]
-	public string Alias { get; set; }
+	public string Alias { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "info")]
-	public string Info { get; set; }
+	public string Info { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group Id
@@ -46,7 +46,7 @@ public class DataSourceOverview : NamedItem
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "deviceDescription")]
-	public string DeviceDescription { get; set; }
+	public string DeviceDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group Id
@@ -64,13 +64,13 @@ public class DataSourceOverview : NamedItem
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "wildValue")]
-	public string WildValue { get; set; }
+	public string WildValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "wildValue2")]
-	public string WildValue2 { get; set; }
+	public string WildValue2 { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group Id
@@ -112,7 +112,7 @@ public class DataSourceOverview : NamedItem
 	/// The group Id
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
+	public string SdtAt { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ToString override

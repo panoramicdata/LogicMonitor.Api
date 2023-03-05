@@ -22,7 +22,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The ConfigSource display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; }
 
 	/// <summary>
 	/// The List of ConfigChecks
@@ -34,7 +34,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The Applies To for the LMModule
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string? AppliesTo { get; set; }
+	public string AppliesTo { get; set; }
 
 	/// <summary>
 	/// Enable active discovery if ConfigSource has multiple instances. true|false
@@ -46,7 +46,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The Technical Notes for the LMModule
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string? Technology { get; set; }
+	public string Technology { get; set; }
 
 	/// <summary>
 	/// The ConfigSource version
@@ -58,7 +58,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The Tags for the LMModule
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string? Tags { get; set; }
+	public string Tags { get; set; }
 
 	/// <summary>
 	/// The ConfigSource audit version
@@ -88,19 +88,19 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// Timestamp format. ex. yyyy-MM-dd hh:mm:ss
 	/// </summary>
 	[DataMember(Name = "timestampFormat")]
-	public string? TimestampFormat { get; set; }
+	public string TimestampFormat { get; set; }
 
 	/// <summary>
 	/// Configuration file format. arbitrary|unix|java-properties|JSON|XML
 	/// </summary>
 	[DataMember(Name = "fileFormat")]
-	public string? FileFormat { get; set; }
+	public string FileFormat { get; set; }
 
 	/// <summary>
 	/// The group the LMModule is in
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string? Group { get; set; }
+	public string Group { get; set; }
 
 	/// <summary>
 	///    The endpoint

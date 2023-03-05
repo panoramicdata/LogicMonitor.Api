@@ -28,13 +28,13 @@ public class AutoDiscoveryConfiguration
 	/// auto group method
 	/// </summary>
 	[DataMember(Name = "instanceAutoGroupMethod")]
-	public string? InstanceAutoGroupMethod { get; set; }
+	public string InstanceAutoGroupMethod { get; set; } = string.Empty;
 
 	/// <summary>
 	/// auto group method\u0027s parameters
 	/// </summary>
 	[DataMember(Name = "instanceAutoGroupMethodParams")]
-	public string? InstanceAutoGroupMethodParams { get; set; }
+	public string InstanceAutoGroupMethodParams { get; set; } = string.Empty;
 
 	/// <summary>
 	/// auto discovery schedule interval in minutes, 0 means host or data source changed, values can be 0|15|60|1440
@@ -46,11 +46,11 @@ public class AutoDiscoveryConfiguration
 	/// method used to do auto discovery instance
 	/// </summary>
 	[DataMember(Name = "method")]
-	public AutoDiscoveryMethod AutoDiscoveryMethod { get; set; } 
+	public AutoDiscoveryMethod AutoDiscoveryMethod { get; set; } = new();
 
 	/// <summary>
 	/// The version
 	/// </summary>
 	[DataMember(Name = "filters")]
-	public List<AutoDiscoveryFilter>? AutoDiscoveryFilters { get; set; }
+	public List<AutoDiscoveryFilter> AutoDiscoveryFilters { get; set; } = new();
 }

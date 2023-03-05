@@ -16,13 +16,13 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The Alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
+	public string AlertExpression { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Alert expression note
 	/// </summary>
 	[DataMember(Name = "alertExprNote")]
-	public string AlertExpressionNote { get; set; }
+	public string AlertExpressionNote { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Alert transition interval
@@ -34,7 +34,7 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	///     The current Alert Id
@@ -46,7 +46,7 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The dataPoint description
 	/// </summary>
 	[DataMember(Name = "dataPointDescription")]
-	public string DataPointDescription { get; set; }
+	public string DataPointDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataPointId
@@ -58,13 +58,13 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataSourceInstanceAlias
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceAlias")]
-	public string? DataSourceInstanceAlias { get; set; }
+	public string DataSourceInstanceAlias { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataSourceInstance Id
@@ -76,7 +76,7 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The DeviceGroup Full Path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The DeviceGroup Full Path
@@ -94,40 +94,40 @@ public class DataPointConfiguration : IdentifiedItem
 	///     Whether to disable DataPoint Alert HostGroups
 	/// </summary>
 	[DataMember(Name = "disableDpAlertHostGroups")]
-	public object DisableDpAlertHostGroups { get; set; }
+	public object DisableDpAlertHostGroups { get; set; } = new();
 
 	/// <summary>
 	///     Whether to enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public bool? EnableAnomalyAlertGeneration { get; set; }
+	public bool EnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	///     Whether to enable anomaly alert suppression
 	/// </summary>
 	///
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public bool? EnableAnomalyAlertSuppression { get; set; }
+	public bool EnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	///     The Global alert expression
 	/// </summary>
 	[DataMember(Name = "globalAlertExpr")]
-	public string GlobalAlertExpr { get; set; }
+	public string GlobalAlertExpr { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether to enable anomaly alert generation globally
 	/// </summary>
 	///
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration")]
-	public bool? GlobalEnableAnomalyAlertGeneration { get; set; }
+	public bool GlobalEnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	///     Whether to enable anomaly alert suppression globally
 	/// </summary>
 	///
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression")]
-	public bool? GlobalEnableAnomalyAlertSuppression { get; set; }
+	public bool GlobalEnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	///     Whether the active discover advanced setting is enabled
@@ -139,25 +139,25 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The parent DeviceGroup Alert Expression List
 	/// </summary>
 	[DataMember(Name = "parentDeviceGroupAlertExprList")]
-	public List<ParentDeviceGroupAlertExpression> ParentDeviceGroupAlertExprList { get; set; }
+	public List<ParentDeviceGroupAlertExpression> ParentDeviceGroupAlertExprList { get; set; } = new();
 
 	/// <summary>
 	///     The warn active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "warnAdAdvSetting")]
-	public bool? WarnActiveDiscvoeryAdvancedSetting { get; set; }
+	public bool WarnActiveDiscvoeryAdvancedSetting { get; set; }
 
 	/// <summary>
 	///     The error active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "errorAdAdvSetting")]
-	public bool? ErrorActiveDiscvoeryAdvancedSetting { get; set; }
+	public bool ErrorActiveDiscvoeryAdvancedSetting { get; set; }
 
 	/// <summary>
 	///     The critical active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "criticalAdAdvSetting")]
-	public bool? CriticalActiveDiscvoeryAdvancedSetting { get; set; }
+	public bool CriticalActiveDiscvoeryAdvancedSetting { get; set; }
 
 	/// <summary>
 	///     The collection interval in seconds
@@ -169,19 +169,19 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The post processor parameter
 	/// </summary>
 	[DataMember(Name = "postProcessorParam")]
-	public string PostProcessorParameter { get; set; }
+	public string PostProcessorParameter { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The global post processor parameter
 	/// </summary>
 	[DataMember(Name = "globalPostProcessorParam")]
-	public string GlobalPostProcessorParameter { get; set; }
+	public string GlobalPostProcessorParameter { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Parent Instance Group Alert Expression
 	/// </summary>
 	[DataMember(Name = "parentInstanceGroupAlertExpr")]
-	public string ParentInstanceGroupAlertExpression { get; set; }
+	public string ParentInstanceGroupAlertExpression { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString()

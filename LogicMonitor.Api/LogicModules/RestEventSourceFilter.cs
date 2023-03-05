@@ -10,17 +10,17 @@ public class RestEventSourceFilter : UndescribedNamedItem
 	/// filter operator
 	/// </summary>
 	[DataMember(Name = "operator")]
-	public string Operator { get; set; } 
+	public string Operator { get; set; } = string.Empty;
 
 	/// <summary>
 	/// filter value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; } 
+	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
 	/// filter comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; } 
+	public string Comment { get; set; } = string.Empty;
 }

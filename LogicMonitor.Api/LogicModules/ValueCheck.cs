@@ -10,11 +10,11 @@ public class ValueCheck
 	///    The variable
 	/// </summary>
 	[DataMember(Name = "variable")]
-	public string Variable { get; set; }
+	public string Variable { get; set; } = string.Empty;
 
 	/// <summary>
 	/// A value check must
 	/// </summary>
 	[DataMember(Name = "must")]
-	public List<ValueCheckMust> ValueCheckMust { get; set; }
+	public List<ValueCheckMust> ValueCheckMust { get; set; } = new();
 }

@@ -16,5 +16,5 @@ public class SnmpSysOidMapImportItem
 	/// The OID
 	/// </summary>
 	[DataMember(Name = "oid")]
-	public string Oid { get; set; }
+	public string Oid { get; set; } = string.Empty;
 }

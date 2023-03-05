@@ -16,7 +16,7 @@ public class ConfigCheck
 	/// The ConfigCheck type. fetch|ignore|missing|value|groovy
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ConfigCheck id
@@ -28,13 +28,13 @@ public class ConfigCheck
 	/// The ConfigCheck name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ConfigCheck id
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)
@@ -64,11 +64,11 @@ public class ConfigCheck
 	/// portable id for origin tracking
 	/// </summary>
 	[DataMember(Name = "originId")]
-	public string OriginId { get; set; }
+	public string OriginId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ConfigCheck script
 	/// </summary>
 	[DataMember(Name = "script")]
-	public ConfigCheckScript Script { get; set; }
+	public ConfigCheckScript Script { get; set; } = new();
 }
