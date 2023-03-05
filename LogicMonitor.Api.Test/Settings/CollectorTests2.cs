@@ -43,7 +43,12 @@ public class CollectorTests2
 		var testCollector = collectors.Find(c => !c.IsDown);
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
-			.ExecuteDebugCommandAndWaitForResultAsync(testCollector.Id, "!ping 8.8.8.8", cancellationToken: default)
+			.ExecuteDebugCommandAndWaitForResultAsync(
+				testCollector.Id,
+				"!ping 8.8.8.8",
+				10_000,
+				500,
+				default)
 			.ConfigureAwait(false);
 		response.Should().NotBeNull();
 		Logger.LogInformation("{Output}", response.Output);
@@ -92,7 +97,9 @@ public class CollectorTests2
 			tempFileInfo.Delete();
 
 			// Remove the collector from the API
-			await LogicMonitorClient.DeleteAsync(collector, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(
+				collector,
+				default).ConfigureAwait(false);
 		}
 	}
 }

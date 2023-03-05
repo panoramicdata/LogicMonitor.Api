@@ -1,5 +1,3 @@
-using System.Transactions;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -61,7 +59,11 @@ public partial class LogicMonitorClient
 	/// <param name="skip">The number to skip</param>
 	/// <param name="take">The number to take</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Alert>> GetDeviceAlertsPageAsync(int deviceId, int skip = 0, int take = 100, CancellationToken cancellationToken = default)
+	public Task<Page<Alert>> GetDeviceAlertsPageAsync(
+		int deviceId,
+		int skip,
+		int take,
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Alert>>($"device/devices/{deviceId}/alerts?size={take}&offset={skip}", cancellationToken);
 
 	/// <summary>
@@ -81,14 +83,41 @@ public partial class LogicMonitorClient
 		int deviceId,
 		string name,
 		string value,
-		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken = default)
+		SetPropertyMode mode,
+		CancellationToken cancellationToken)
 	=>
 		SetCustomPropertyAsync(
 			deviceId,
 			name,
 			value,
 			mode,
+			"device/devices",
+			cancellationToken
+			);
+
+	/// <summary>
+	///     Set single device property, using automatic mode
+	/// </summary>
+	/// <param name="deviceId">The Device Id</param>
+	/// <param name="name">The property name</param>
+	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.</param>
+	/// If you are unsure, use CreateOrUpdate (the default).  As this checks to see if the property is set first, this option is slower.
+	/// If you know that the property is already set and you want to change the value, use Update.
+	/// If you know that the property is already set and you want to delete the value, use Delete (value must also be set to null).
+	/// If you know that the property is NOT already set and you want to set the value, use Create.
+	/// </param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetDeviceCustomPropertyAsync(
+		int deviceId,
+		string name,
+		string? value,
+		CancellationToken cancellationToken)
+	=>
+		SetCustomPropertyAsync(
+			deviceId,
+			name,
+			value,
+			SetPropertyMode.Automatic,
 			"device/devices",
 			cancellationToken
 			);
@@ -109,9 +138,9 @@ public partial class LogicMonitorClient
 	public Task SetDeviceGroupCustomPropertyAsync(
 		int deviceGroupId,
 		string name,
-		string value,
-		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken = default)
+		string? value,
+		SetPropertyMode mode,
+		CancellationToken cancellationToken)
 	=>
 		SetCustomPropertyAsync(
 			deviceGroupId,
@@ -438,7 +467,13 @@ public partial class LogicMonitorClient
 			return new List<DeviceDataSourceInstance>();
 		}
 
-		return await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSources.Single().Id, cancellationToken: cancellationToken).ConfigureAwait(false);
+		return await GetAllDeviceDataSourceInstancesAsync(
+			deviceId,
+			deviceDataSources.Single().Id,
+			new Filter<DeviceDataSourceInstance>(),
+			cancellationToken
+		)
+		.ConfigureAwait(false);
 	}
 
 	/// <summary>

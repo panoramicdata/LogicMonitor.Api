@@ -164,19 +164,34 @@ public class DeviceGroupTests : TestWithOutput
 			const string value2 = "test2";
 
 			// Set it to an expected value
-			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(
+				deviceGroup.Id,
+				propertyName,
+				value1,
+				SetPropertyMode.Automatic,
+				default).ConfigureAwait(false);
 			var deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
 			var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 			actual.Should().Be(1);
 
 			// Set it to a different value
-			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(
+				deviceGroup.Id,
+				propertyName,
+				value2,
+				SetPropertyMode.Automatic,
+				default).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 			actual.Should().Be(1);
 
 			// Set it to null (delete it)
-			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(
+				deviceGroup.Id,
+				propertyName,
+				null,
+				SetPropertyMode.Automatic,
+				default).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
 			actual.Should().Be(0);
@@ -212,7 +227,7 @@ public class DeviceGroupTests : TestWithOutput
 		finally
 		{
 			await LogicMonitorClient
-				.DeleteAsync(deviceGroup, cancellationToken: default)
+				.DeleteAsync(deviceGroup, true, default)
 				.ConfigureAwait(false);
 		}
 	}

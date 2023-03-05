@@ -29,8 +29,16 @@ public partial class LogicMonitorClient
 	/// <param name="collectorGroupId">The collector group id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Collector>> GetAllCollectorsByCollectorGroupId(int collectorGroupId, Filter<Collector> filter = null, CancellationToken cancellationToken = default)
-		=> GetAllAsync(filter, $"setting/collector/groups/{collectorGroupId}/collectors", cancellationToken);
+	public Task<List<Collector>> GetAllCollectorsByCollectorGroupId(
+		int collectorGroupId,
+		Filter<Collector> filter,
+		CancellationToken cancellationToken
+	)
+		=> GetAllAsync(
+			filter,
+			$"setting/collector/groups/{collectorGroupId}/collectors",
+			cancellationToken
+		);
 
 	/// <summary>
 	///     Download a collector
@@ -77,7 +85,10 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="filter">An optional filter</param>
 	/// <param name="cancellationToken">An optional CancellationToken</param>
-	public async Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(Filter<CollectorVersion> filter = null, CancellationToken cancellationToken = default)
+	public async Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(
+		Filter<CollectorVersion> filter,
+		CancellationToken cancellationToken
+	)
 		=> (await GetBySubUrlAsync<Page<CollectorVersion>>($"setting/collector/collectors/versions?{filter}", cancellationToken).ConfigureAwait(false))
 		.Items
 		.OrderByDescending(cv => cv.MajorVersion)

@@ -44,7 +44,14 @@ public class DataSourceTests : TestWithOutput
 		};
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetInstancesAsync(LogicModuleType.DataSource, deviceGroup.Id, dataSourcesIds, cancellationToken: default)
+			.GetInstancesAsync(
+				LogicModuleType.DataSource,
+				deviceGroup.Id,
+				dataSourcesIds,
+				null,
+				null,
+				new Filter<InstanceProperty>(),
+				cancellationToken: default)
 			.ConfigureAwait(false);
 
 		deviceDataSourceInstances.Should().NotBeNull();

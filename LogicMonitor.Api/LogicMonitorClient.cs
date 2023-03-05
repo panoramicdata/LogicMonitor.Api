@@ -175,7 +175,11 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="filter"></param>
 	/// <param name="subUrl"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<T>> GetAllAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
+	public Task<List<T>> GetAllAsync<T>(
+		Filter<T> filter,
+		string subUrl,
+		CancellationToken cancellationToken
+	) where T : new()
 		=> GetAllInternalAsync(filter, subUrl, cancellationToken);
 
 	/// <summary>
@@ -193,7 +197,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <typeparam name="T"></typeparam>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<T>> GetAllAsync<T>(Filter<T>? filter = null, CancellationToken cancellationToken = default) where T : IHasEndpoint, new()
+	public Task<List<T>> GetAllAsync<T>(Filter<T>? filter, CancellationToken cancellationToken) where T : IHasEndpoint, new()
 		=> GetAllInternalAsync(filter, new T().Endpoint(), cancellationToken);
 
 	/// <summary>
@@ -529,10 +533,23 @@ public partial class LogicMonitorClient : IDisposable
 	/// <typeparam name="T">The type of the item to delete</typeparam>
 	public virtual async Task DeleteAsync<T>(
 		T @item,
-		bool hardDelete = true,
-		CancellationToken cancellationToken = default)
+		bool hardDelete,
+		CancellationToken cancellationToken)
 		where T : IdentifiedItem, IHasEndpoint, new()
 	=> await DeleteAsync($"{new T().Endpoint()}/{@item.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
+		.ConfigureAwait(false);
+
+	/// <summary>
+	///     Hard deletes an item
+	/// </summary>
+	/// <param name="item">The object to delete</param>
+	/// <param name="cancellationToken">The optional cancellation token</param>
+	/// <typeparam name="T">The type of the item to delete</typeparam>
+	public virtual async Task DeleteAsync<T>(
+		T @item,
+		CancellationToken cancellationToken)
+		where T : IdentifiedItem, IHasEndpoint, new()
+	=> await DeleteAsync($"{new T().Endpoint()}/{@item.Id}", cancellationToken)
 		.ConfigureAwait(false);
 
 	/// <summary>
@@ -543,12 +560,31 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <typeparam name="T">The type of the item to delete</typeparam>
 	public virtual async Task DeleteStringIdentifiedAsync<T>(
-	T @item,
-	bool hardDelete = true,
-	CancellationToken cancellationToken = default)
-	where T : StringIdentifiedItem, IHasEndpoint, new()
-	=> await DeleteAsync($"{new T().Endpoint()}/{@item.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
-	.ConfigureAwait(false);
+		T @item,
+		bool hardDelete,
+		CancellationToken cancellationToken
+	) where T : StringIdentifiedItem, IHasEndpoint, new()
+		=> await DeleteAsync(
+			$"{new T().Endpoint()}/{@item.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}",
+			cancellationToken
+		)
+		.ConfigureAwait(false);
+
+	/// <summary>
+	///     Hard deletes an item
+	/// </summary>
+	/// <param name="item">The object to delete</param>
+	/// <param name="cancellationToken">The optional cancellation token</param>
+	/// <typeparam name="T">The type of the item to delete</typeparam>
+	public virtual async Task DeleteStringIdentifiedAsync<T>(
+		T @item,
+		CancellationToken cancellationToken
+	) where T : StringIdentifiedItem, IHasEndpoint, new()
+		=> await DeleteAsync(
+			$"{new T().Endpoint()}/{@item.Id}",
+			cancellationToken
+		)
+		.ConfigureAwait(false);
 
 	/// <summary>
 	///     Deletes an item by id
@@ -558,37 +594,78 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <typeparam name="T">The type of the item to delete</typeparam>
 	public virtual async Task DeleteAsync<T>(
-	int id,
-	bool hardDelete = true,
-	CancellationToken cancellationToken = default
+		int id,
+		bool hardDelete,
+		CancellationToken cancellationToken
 	) where T : IdentifiedItem, IHasEndpoint, new()
 	=> await DeleteAsync($"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken)
 	.ConfigureAwait(false);
 
 	/// <summary>
-	///     Deletes an item by id
+	///     Hard deletes an item by integer id
+	/// </summary>
+	/// <param name="id">The item id</param>
+	/// <param name="cancellationToken">The optional cancellation token</param>
+	/// <typeparam name="T">The type of the item to delete</typeparam>
+	public virtual async Task DeleteAsync<T>(
+		int id,
+		CancellationToken cancellationToken
+	) where T : IdentifiedItem, IHasEndpoint, new()
+	=> await DeleteAsync($"{new T().Endpoint()}/{id}", cancellationToken)
+	.ConfigureAwait(false);
+
+	/// <summary>
+	///     Deletes an item by string id
 	/// </summary>
 	/// <param name="id">The item id</param>
 	/// <param name="hardDelete">Whether to hard delete.</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <typeparam name="T">The type of the item to delete</typeparam>
 	public virtual async Task DeleteAsync<T>(
-	 string id,
-	 bool hardDelete = true,
-	 CancellationToken cancellationToken = default) where T : StringIdentifiedItem, IHasEndpoint, new()
-	 => await DeleteAsync($"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
+		string id,
+		bool hardDelete,
+		CancellationToken cancellationToken
+	) where T : StringIdentifiedItem, IHasEndpoint, new()
+		=> await DeleteAsync(
+			$"{new T().Endpoint()}/{id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}",
+			cancellationToken
+		)
+		.ConfigureAwait(false);
+
 
 	/// <summary>
-	///     Deletes an item by id
+	///     Hard deletes an item by string id
+	/// </summary>
+	/// <param name="id">The item id</param>
+	/// <param name="cancellationToken">The optional cancellation token</param>
+	/// <typeparam name="T">The type of the item to delete</typeparam>
+	public virtual async Task DeleteAsync<T>(
+		 string id,
+		 CancellationToken cancellationToken
+	) where T : StringIdentifiedItem, IHasEndpoint, new()
+		=> await DeleteAsync($"{new T().Endpoint()}/{id}", cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	///     Deletes a DeviceDataSourceInstance
 	/// </summary>
 	/// <param name="deviceDataSourceInstance">The DeviceDataSourceInstance to delete</param>
 	/// <param name="hardDelete">Whether to hard delete.</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	public virtual async Task DeleteAsync(
 		DeviceDataSourceInstance deviceDataSourceInstance,
-		bool hardDelete = true,
-		CancellationToken cancellationToken = default)
+		bool hardDelete,
+		CancellationToken cancellationToken)
 		=> await DeleteAsync($"device/devices/{deviceDataSourceInstance.DeviceId}/devicedatasources/{deviceDataSourceInstance.DeviceDataSourceId}/instances/{deviceDataSourceInstance.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	///     Hard deletes a DeviceDataSourceInstance
+	/// </summary>
+	/// <param name="deviceDataSourceInstance">The DeviceDataSourceInstance to delete</param>
+	/// <param name="cancellationToken">The optional cancellation token</param>
+	public virtual async Task DeleteAsync(
+		DeviceDataSourceInstance deviceDataSourceInstance,
+		CancellationToken cancellationToken)
+		=> await DeleteAsync($"device/devices/{deviceDataSourceInstance.DeviceId}/devicedatasources/{deviceDataSourceInstance.DeviceDataSourceId}/instances/{deviceDataSourceInstance.Id}", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Create an item
@@ -986,15 +1063,17 @@ public partial class LogicMonitorClient : IDisposable
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
-			string content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 			_logger.LogTrace("RESPONSE:\r\n\r\n {Content}", content);
-			return new XmlResponse { Content = content } as T;
+			return new XmlResponse { Content = content } as T
+				?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
 		else if (typeof(T) == typeof(List<byte>))
 		{
 			var content = await httpResponseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 			_logger.LogTrace("Byte Array");
-			return content.ToList() as T;
+			return content.ToList() as T
+				?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
 		else if (typeof(T) == typeof(DownloadFileInfo))
 		{
@@ -1006,7 +1085,8 @@ public partial class LogicMonitorClient : IDisposable
 			return new DownloadFileInfo
 			{
 				FileInfo = tempFileInfo
-			} as T;
+			} as T
+			?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
 
 		// Create a PortalResponse
@@ -1166,7 +1246,7 @@ public partial class LogicMonitorClient : IDisposable
 	public async Task<JObject?> PostJObjectAsync(
 		JObject jObject,
 		string subUrl,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 	{
 		if (subUrl is null)
 		{
@@ -1374,9 +1454,9 @@ public partial class LogicMonitorClient : IDisposable
 	public async Task<ExecuteDebugCommandResponse> ExecuteDebugCommandAndWaitForResultAsync(
 		int collectorId,
 		string commandText,
-		int timeoutMs = 10000,
-		int sleepIntervalMs = 500,
-		CancellationToken cancellationToken = default)
+		int timeoutMs,
+		int sleepIntervalMs,
+		CancellationToken cancellationToken)
 	{
 		var executeDebugCommandResponse = await ExecuteDebugCommandAsync(collectorId, commandText, cancellationToken).ConfigureAwait(false);
 
@@ -1410,7 +1490,7 @@ public partial class LogicMonitorClient : IDisposable
 	private async Task SetCustomPropertyAsync(
 		int id,
 		string name,
-		string value,
+		string? value,
 		SetPropertyMode mode,
 		string subUrl,
 		CancellationToken cancellationToken)

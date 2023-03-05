@@ -50,8 +50,15 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(int parentDashboardGroupId, Filter<DashboardGroup>? filter = null, CancellationToken cancellationToken = default)
-		=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/groups", cancellationToken);
+	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(
+		int parentDashboardGroupId,
+		Filter<DashboardGroup> filter,
+		CancellationToken cancellationToken
+	)
+		=> GetAllAsync(
+			filter,
+			$"dashboard/groups/{parentDashboardGroupId}/groups",
+			cancellationToken);
 
 	/// <summary>
 	///     Gets child dashboards given a dashboard group id
@@ -59,8 +66,16 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<Dashboard>> GetChildDashboardsAsync(int parentDashboardGroupId, Filter<Dashboard>? filter = null, CancellationToken cancellationToken = default)
-		=> GetAllAsync(filter, $"dashboard/groups/{parentDashboardGroupId}/dashboards", cancellationToken);
+	public Task<List<Dashboard>> GetChildDashboardsAsync(
+		int parentDashboardGroupId,
+		Filter<Dashboard> filter,
+		CancellationToken cancellationToken
+	)
+		=> GetAllAsync(
+			filter,
+			$"dashboard/groups/{parentDashboardGroupId}/dashboards",
+			cancellationToken
+		);
 
 	/// <summary>
 	///     Gets widget data
@@ -129,7 +144,7 @@ public partial class LogicMonitorClient
 		// Delete its dashboards
 		foreach (var dashboard in dashboardGroup.Dashboards)
 		{
-			await DeleteAsync(dashboard, cancellationToken: cancellationToken).ConfigureAwait(false);
+			await DeleteAsync(dashboard, true, cancellationToken: cancellationToken).ConfigureAwait(false);
 		}
 
 		// Delete its child dashboard groups
@@ -147,7 +162,7 @@ public partial class LogicMonitorClient
 		}
 
 		// Delete itself
-		await DeleteAsync(dashboardGroup, cancellationToken: cancellationToken).ConfigureAwait(false);
+		await DeleteAsync(dashboardGroup, true, cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>

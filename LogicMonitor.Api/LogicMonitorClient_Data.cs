@@ -50,13 +50,9 @@ public partial class LogicMonitorClient
 		// return Get<OverviewGraphCollection>(ApiMethod.Do, $"ograph?func=getGroups&hId={deviceId}&dsId={dataSourceId}&dsigId={dataSourceInstanceGroupId}");
 		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/575/devicedatasources
 		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
-		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId);
-		if (filteredDeviceDataSource is null)
-		{
-			throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
+		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId)
+			?? throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
 				nameof(deviceDataSourceId));
-		}
-
 		return filteredDeviceDataSource.OverviewGraphs;
 	}
 
@@ -84,9 +80,9 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		DateTime? startDateTimeUtc = default,
-		DateTime? endDateTimeUtc = default,
-		CancellationToken cancellationToken = default
+		DateTime? startDateTimeUtc,
+		DateTime? endDateTimeUtc,
+		CancellationToken cancellationToken
 		)
 	{
 		var timeConstraint = startDateTimeUtc.HasValue && endDateTimeUtc.HasValue ? $"?start={startDateTimeUtc.Value.SecondsSinceTheEpoch()}&end={endDateTimeUtc.Value.SecondsSinceTheEpoch()}" : null;

@@ -1,5 +1,3 @@
-using System.Transactions;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -160,8 +158,8 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<DataSourceOverviewGraph>> GetDataSourceOverviewGraphsPageAsync(
 		int dataSourceId,
-		Filter<DataSourceOverviewGraph>? filter = null,
-		CancellationToken cancellationToken = default)
+		Filter<DataSourceOverviewGraph> filter,
+		CancellationToken cancellationToken)
 	{
 		filter ??= new Filter<DataSourceOverviewGraph> { Skip = 0, Take = 300 };
 
@@ -292,11 +290,9 @@ public partial class LogicMonitorClient
 	public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
 		int deviceId,
 		int deviceDataSourceId,
-		Filter<DeviceDataSourceInstance>? filter = null,
-		CancellationToken cancellationToken = default)
+		Filter<DeviceDataSourceInstance> filter,
+		CancellationToken cancellationToken)
 	{
-		filter ??= new Filter<DeviceDataSourceInstance>();
-
 		filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 		filter.Skip = 0;
 
@@ -328,11 +324,9 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
 		int deviceId,
-		Filter<DeviceDataSourceInstance>? filter = null,
-		CancellationToken cancellationToken = default)
+		Filter<DeviceDataSourceInstance> filter,
+		CancellationToken cancellationToken)
 	{
-		filter ??= new Filter<DeviceDataSourceInstance>();
-
 		filter.Take = 1000; // LogicMonitor limitation as of 2020-02-12
 		filter.Skip = 0;
 
@@ -368,11 +362,9 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		Filter<InstanceProperty>? filter = null,
-		CancellationToken cancellationToken = default)
+		Filter<InstanceProperty> filter,
+		CancellationToken cancellationToken)
 	{
-		filter ??= new Filter<InstanceProperty>();
-
 		filter.Take = 50; // LogicMonitor hardcoded value
 		filter.Skip = 0;
 
@@ -397,10 +389,10 @@ public partial class LogicMonitorClient
 		LogicModuleType logicModuleType,
 		int rootDeviceGroupId,
 		List<int> logicModuleIds,
-		string? instanceProperty = null,
-		Regex? instancePropertyValueRegex = null,
-		Filter<InstanceProperty>? filter = null,
-		CancellationToken cancellationToken = default)
+		string? instanceProperty,
+		Regex? instancePropertyValueRegex,
+		Filter<InstanceProperty> filter,
+		CancellationToken cancellationToken)
 	{
 		// TODO - Move this inline and support other LogicModule types
 		switch (logicModuleType)
@@ -464,6 +456,7 @@ public partial class LogicMonitorClient
 									continue;
 								}
 							}
+
 							deviceDataSourceInstances.Add(deviceDataSourceInstance);
 						}
 					}
@@ -527,8 +520,8 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceGroupId,
-		bool sendNullIfError = false,
-		CancellationToken cancellationToken = default)
+		bool sendNullIfError,
+		CancellationToken cancellationToken)
 	{
 		try
 		{

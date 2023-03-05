@@ -425,13 +425,13 @@ public class DeviceTests : TestWithOutput
 		const string value2 = "test2";
 
 		// Set it to an expected value
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, cancellationToken: default).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, default).ConfigureAwait(false);
 		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, default).ConfigureAwait(false);
 		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Set it to a different value
-		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, cancellationToken: default).ConfigureAwait(false);
+		await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, default).ConfigureAwait(false);
 		deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, default).ConfigureAwait(false);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
@@ -569,7 +569,7 @@ public class DeviceTests : TestWithOutput
 	public async Task GetDeviceAlertsPageAsync()
 	{
 		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
-		var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id, cancellationToken: default).ConfigureAwait(false);
+		var alertsPage = await LogicMonitorClient.GetDeviceAlertsPageAsync(device.Id, 0, 100, default).ConfigureAwait(false);
 		alertsPage.Should().NotBeNull();
 		alertsPage.Items.Count.Should().Be(alertsPage.TotalCount);
 	}

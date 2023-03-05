@@ -12,7 +12,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertFilter">An alert filter</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>a list of alerts that meet the filter</returns>
-	public async Task<List<Alert>> GetAlertsAsync(AlertFilter? alertFilter = null, CancellationToken cancellationToken = default)
+	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter, CancellationToken cancellationToken)
 	{
 		// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
 		//var alerts =
@@ -31,12 +31,12 @@ public partial class LogicMonitorClient
 			alerts = await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false);
 		}
 
-		if (alertFilter?.IsCleared == true)
+		if (alertFilter.IsCleared == true)
 		{
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
 
-		if (alertFilter?.IsCleared == false)
+		if (alertFilter.IsCleared == false)
 		{
 			return alerts.Where(a => !a.IsCleared).ToList();
 		}
@@ -87,8 +87,8 @@ public partial class LogicMonitorClient
 
 	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(
 		AlertFilter? alertFilter,
-		bool calledFromChunked = false,
-		CancellationToken cancellationToken = default)
+		bool calledFromChunked,
+		CancellationToken cancellationToken)
 	{
 		var correctedAlertFilter = alertFilter?.Clone() ?? new AlertFilter
 		{
