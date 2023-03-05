@@ -18,7 +18,7 @@ public class ForecastDataRequest : GraphDataRequestBase
 	/// <summary>
 	///    The selected DataPoint name
 	/// </summary>
-	public string DataPointLabel { get; set; }
+	public string DataPointLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The forecast time period
@@ -63,7 +63,7 @@ public class ForecastDataRequest : GraphDataRequestBase
 		}
 	}
 
-	private DateTime StartTime(TrainingTimePeriod trainingTime)
+	private static DateTime StartTime(TrainingTimePeriod trainingTime)
 		=> trainingTime switch
 		{
 			TrainingTimePeriod.ThreeMonths => DateTime.UtcNow.AddMonths(-3),

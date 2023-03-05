@@ -16,25 +16,25 @@ public class PollNowInnerResult
 	/// The Name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The note
 	/// </summary>
 	[DataMember(Name = "note")]
-	public string Note { get; set; }
+	public string Note { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Error message
 	/// </summary>
 	[DataMember(Name = "errMsg")]
-	public string ErrMsg { get; set; }
+	public string ErrMsg { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString() => $"{Name}: {Value} ({ErrMsg})";

@@ -10,11 +10,11 @@ public class PollNowResponse
 	/// The request status
 	/// </summary>
 	[DataMember(Name = "requestStatus")]
-	public PollNowStatus RequestStatus { get; set; }
+	public PollNowStatus RequestStatus { get; set; } = new();
 
 	/// <summary>
 	/// The result
 	/// </summary>
 	[DataMember(Name = "result")]
-	public PollNowResult Result { get; set; }
+	public PollNowResult Result { get; set; } = new();
 }
