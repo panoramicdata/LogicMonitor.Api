@@ -16,23 +16,23 @@ public class WebsiteGraphWidget : GraphWidget
 	/// The graph name
 	/// </summary>
 	[DataMember(Name = "graph")]
-	public string GraphName { get; set; }
+	public string GraphName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The website name
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The geographic information
 	/// </summary>
 	[DataMember(Name = "geoInfo")]
-	public string GeographicInformation { get; set; }
+	public string GeographicInformation { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

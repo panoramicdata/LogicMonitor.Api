@@ -9,7 +9,7 @@ public class TextWidgetCreationDto : WidgetCreationDto<TextWidget>
 	///     The text HTML content
 	/// </summary>
 	[DataMember(Name = "content")]
-	public string Content { get; set; }
+	public string Content { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string Type { get; } = "text";

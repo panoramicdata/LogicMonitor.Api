@@ -10,19 +10,19 @@ public class GaugeWidgetDataPoint
 	///     The deviceGroupFullPath
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataSource Id
@@ -34,13 +34,13 @@ public class GaugeWidgetDataPoint
 	///     The dataSource instance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataPointId
@@ -52,17 +52,17 @@ public class GaugeWidgetDataPoint
 	///     The aggregateFunction
 	/// </summary>
 	[DataMember(Name = "aggregateFunction")]
-	public string AggregateFunction { get; set; }
+	public string AggregateFunction { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The data series
 	/// </summary>
 	[DataMember(Name = "dataSeries")]
-	public string DataSeries { get; set; }
+	public string DataSeries { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The RPN
 	/// </summary>
 	[DataMember(Name = "rpn")]
-	public string Rpn { get; set; }
+	public string Rpn { get; set; } = string.Empty;
 }

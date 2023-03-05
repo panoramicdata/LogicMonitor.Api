@@ -16,11 +16,11 @@ public class WidgetRow
 	/// Device Display Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Cells
 	/// </summary>
 	[DataMember(Name = "cells")]
-	public List<WidgetCell> Cells { get; set; }
+	public List<WidgetCell> Cells { get; set; } = new();
 }

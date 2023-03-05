@@ -10,13 +10,13 @@ public class Display
 	/// The option
 	/// </summary>
 	[DataMember(Name = "option")]
-	public string Option { get; set; }
+	public string Option { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The legend
 	/// </summary>
 	[DataMember(Name = "legend")]
-	public string Legend { get; set; }
+	public string Legend { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The type
@@ -28,5 +28,5 @@ public class Display
 	/// The color
 	/// </summary>
 	[DataMember(Name = "color")]
-	public string Color { get; set; }
+	public string Color { get; set; } = string.Empty;
 }

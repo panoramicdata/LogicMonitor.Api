@@ -10,7 +10,7 @@ public class DashboardCloneRequest : CloneRequest<Dashboard>
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description
@@ -46,7 +46,7 @@ public class DashboardCloneRequest : CloneRequest<Dashboard>
 	/// The WidgetsConfig
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; }
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
 
 	/// <summary>
 	/// The widgetsOrder

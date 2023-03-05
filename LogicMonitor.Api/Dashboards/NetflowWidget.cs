@@ -10,7 +10,7 @@ public class NetflowWidget : Widget
 	/// The function
 	/// </summary>
 	[DataMember(Name = "function")]
-	public string Function { get; set; }
+	public string Function { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The interface index
@@ -22,7 +22,7 @@ public class NetflowWidget : Widget
 	/// The device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device id
@@ -34,53 +34,53 @@ public class NetflowWidget : Widget
 	/// The data type
 	/// </summary>
 	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	public string DataType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The row filters
 	/// </summary>
 	[DataMember(Name = "rowFilters")]
-	public string RowFilters { get; set; }
+	public string RowFilters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The direction
 	/// </summary>
 	[DataMember(Name = "direction")]
-	public string Direction { get; set; }
+	public string Direction { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The QoS type
 	/// </summary>
 	[DataMember(Name = "qosType")]
-	public string QosType { get; set; }
+	public string QosType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device name
 	/// </summary>
 	[DataMember(Name = "hostName")]
-	public string DeviceName { get; set; }
+	public string DeviceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The interface name
 	/// </summary>
 	[DataMember(Name = "ifName")]
-	public string InterfaceName { get; set; }
+	public string InterfaceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The filter
 	/// </summary>
 	[DataMember(Name = "filter")]
-	public string Filter { get; set; }
+	public string Filter { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The netflow filter
 	/// </summary>
 	[DataMember(Name = "netflowFilter")]
-	public NetflowFilters NetflowFilter { get; set; }
+	public NetflowFilters NetflowFilter { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

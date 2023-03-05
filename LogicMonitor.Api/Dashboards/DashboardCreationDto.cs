@@ -10,19 +10,19 @@ public class DashboardCreationDto : CreationDto<Dashboard>
 	///    The Parent Group Id as a string
 	/// </summary>
 	[DataMember(Name = "groupId")]
-	public string ParentId { get; set; }
+	public string ParentId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether the dashboard group is shareable
@@ -40,7 +40,7 @@ public class DashboardCreationDto : CreationDto<Dashboard>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<EntityProperty> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///    ToString override

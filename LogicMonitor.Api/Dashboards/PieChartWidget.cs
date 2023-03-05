@@ -10,11 +10,11 @@ public class PieChartWidget : Widget
 	/// The pie chart info
 	/// </summary>
 	[DataMember(Name = "pieChartInfo")]
-	public PieChartWidgetInfo Info { get; set; }
+	public PieChartWidgetInfo Info { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

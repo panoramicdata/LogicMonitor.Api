@@ -52,7 +52,7 @@ public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
 	/// The template which is used for importing dashboard group
 	/// </summary>
 	[DataMember(Name = "template")]
-	public object Template { get; set; }
+	public object Template { get; set; } = new();
 
 	/// <summary>
 	///    The widget tokens

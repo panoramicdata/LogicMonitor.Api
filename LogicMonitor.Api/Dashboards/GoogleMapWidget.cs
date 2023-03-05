@@ -10,11 +10,11 @@ public class GoogleMapWidget : Widget
 	/// The map points
 	/// </summary>
 	[DataMember(Name = "mapPoints")]
-	public List<MapPoint> MapPoints { get; set; }
+	public List<MapPoint> MapPoints { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

@@ -53,7 +53,7 @@ public class DeviceNocWidgetCreationDto : WidgetCreationDto<NocWidget>
 	///     The Device NOC widget items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<DeviceNocWidgetItem> Items { get; set; }
+	public List<DeviceNocWidgetItem> Items { get; set; } = new();
 
 	/// <inheritdoc />
 	public override string Type { get; } = "deviceNOC";

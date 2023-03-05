@@ -11,13 +11,13 @@ public class OverviewGraphDataPoint
 	/// the graph line data point aggregate method, average|min|max|sum
 	/// </summary>
 	[DataMember(Name = "aggregateMethod")]
-	public string AggregateMethod { get; set; }
+	public string AggregateMethod { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the graph line data point name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// the graph line data point id
