@@ -11,5 +11,5 @@ public class NetflowDataBase
 	/// dataType
 	/// </summary>
 	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	public string DataType { get; set; } = string.Empty;
 }

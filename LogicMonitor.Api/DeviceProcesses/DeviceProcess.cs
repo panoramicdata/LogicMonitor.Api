@@ -22,7 +22,7 @@ public class DeviceProcess : NamedStringIdentifiedItem
 	///     Comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Flag
@@ -34,5 +34,5 @@ public class DeviceProcess : NamedStringIdentifiedItem
 	///     Param
 	/// </summary>
 	[DataMember(Name = "param")]
-	public string Parameters { get; set; }
+	public string Parameters { get; set; } = string.Empty;
 }

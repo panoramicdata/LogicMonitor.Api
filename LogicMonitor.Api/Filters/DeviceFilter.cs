@@ -16,7 +16,7 @@ public class DeviceFilter
 	/// attribute
 	/// </summary>
 	[DataMember(Name = "attribute")]
-	public string Attribute { get; set; } 
+	public string Attribute { get; set; } = string.Empty;
 
 	/// <summary>
 	/// operation

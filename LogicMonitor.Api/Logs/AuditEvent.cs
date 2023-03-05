@@ -15,22 +15,22 @@ public class AuditEvent
 	/// <summary>
 	/// The user that initiated the event
 	/// </summary>
-	public string UserName { get; internal set; }
+	public string? UserName { get; internal set; }
 
 	/// <summary>
 	/// The host that initiated the event
 	/// </summary>
-	public string Host { get; internal set; }
+	public string? Host { get; internal set; }
 
 	/// <summary>
 	/// The original description from the LogItem
 	/// </summary>
-	public string OriginalDescription { get; internal set; } = string.Empty;
+	public string? OriginalDescription { get; internal set; } = string.Empty;
 
 	/// <summary>
 	/// The event's session Id
 	/// </summary>
-	public string SessionId { get; internal set; }
+	public string? SessionId { get; internal set; }
 
 	/// <summary>
 	/// The originator type
@@ -70,7 +70,7 @@ public class AuditEvent
 	/// <summary>
 	/// The DataSource name
 	/// </summary>
-	public string DataSourceName { get; internal set; }
+	public string? DataSourceName { get; internal set; }
 
 	/// <summary>
 	/// The Instance id
@@ -80,7 +80,7 @@ public class AuditEvent
 	/// <summary>
 	/// The Instance name
 	/// </summary>
-	public string InstanceName { get; internal set; }
+	public string? InstanceName { get; internal set; }
 
 	/// <summary>
 	/// The collector id
@@ -90,22 +90,22 @@ public class AuditEvent
 	/// <summary>
 	/// The collector name
 	/// </summary>
-	public string CollectorName { get; internal set; }
+	public string? CollectorName { get; internal set; }
 
 	/// <summary>
 	/// The API Token Id
 	/// </summary>
-	public string ApiTokenId { get; internal set; }
+	public string? ApiTokenId { get; internal set; }
 
 	/// <summary>
 	/// The API Path
 	/// </summary>
-	public string ApiPath { get; internal set; }
+	public string? ApiPath { get; internal set; }
 
 	/// <summary>
 	/// The API Method
 	/// </summary>
-	public string ApiMethod { get; internal set; }
+	public string? ApiMethod { get; internal set; }
 
 	/// <summary>
 	/// The DataSource new instance ids
@@ -130,7 +130,7 @@ public class AuditEvent
 	/// <summary>
 	/// The ResourceGroup name
 	/// </summary>
-	public string ResourceGroupName { get; internal set; }
+	public string? ResourceGroupName { get; internal set; }
 
 	/// <summary>
 	/// The ResourceGroup id
@@ -140,7 +140,7 @@ public class AuditEvent
 	/// <summary>
 	/// The Property Name
 	/// </summary>
-	public string PropertyName { get; internal set; }
+	public string? PropertyName { get; internal set; }
 
 	/// <summary>
 	/// The DeviceDataSource Id
@@ -156,22 +156,22 @@ public class AuditEvent
 	/// <summary>
 	/// The Property Value
 	/// </summary>
-	public string PropertyValue { get; internal set; }
+	public string? PropertyValue { get; internal set; }
 
 	/// <summary>
 	/// The WildValue - available when a DeviceDataSourceInstance was added without Ids
 	/// </summary>
-	public string WildValue { get; internal set; }
+	public string? WildValue { get; internal set; }
 
 	/// <summary>
 	/// The login name for a login event
 	/// </summary>
-	public string LoginName { get; internal set; }
+	public string? LoginName { get; internal set; }
 
 	/// <summary>
 	/// The account name for user account events
 	/// </summary>
-	public string AccountName { get; internal set; }
+	public string? AccountName { get; internal set; }
 
 	/// <summary>
 	/// The alert id for alert update events

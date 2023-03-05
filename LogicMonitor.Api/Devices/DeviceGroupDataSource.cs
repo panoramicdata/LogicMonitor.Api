@@ -16,19 +16,19 @@ public class DeviceGroupDataSource
 	/// The DataSource Display Name
 	/// </summary>
 	[DataMember(Name = "dataSourceDisplayName")]
-	public string DataSourceDisplayName { get; set; }
+	public string DataSourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource unique name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSourceGroup Name
 	/// </summary>
 	[DataMember(Name = "dataSourceGroupName")]
-	public string DataSourceGroupName { get; set; }
+	public string DataSourceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DeviceGroup Id
@@ -52,5 +52,5 @@ public class DeviceGroupDataSource
 	/// DataSourceType
 	/// </summary>
 	[DataMember(Name = "dataSourceType")]
-	public string DataSourceType { get; set; }
+	public string DataSourceType { get; set; } = string.Empty;
 }

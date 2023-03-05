@@ -22,13 +22,13 @@ public class TreeNodeFreeSearchResult
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The result type
@@ -40,19 +40,19 @@ public class TreeNodeFreeSearchResult
 	/// The location
 	/// </summary>
 	[DataMember(Name = "location")]
-	public string Location { get; set; }
+	public string Location { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The location
 	/// </summary>
 	[DataMember(Name = "extraVal")]
-	public string ExtraValue { get; set; }
+	public string ExtraValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device count
 	/// </summary>
 	[DataMember(Name = "numOfHosts")]
-	public string DeviceCount { get; set; }
+	public string DeviceCount { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ToString override

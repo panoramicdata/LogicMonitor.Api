@@ -9,19 +9,19 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// globalAlertExpr
 	/// </summary>
 	[DataMember(Name = "globalAlertExpr")]
-	public string GlobalAlertExpr { get; set; }
+	public string GlobalAlertExpr { get; set; } = string.Empty;
 
 	/// <summary>
 	/// enableAnomalyAlertSuppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// criticalAdAdvSetting
 	/// </summary>
 	[DataMember(Name = "criticalAdAdvSetting")]
-	public string CriticalAdAdvSetting { get; set; }
+	public string CriticalAdAdvSetting { get; set; } = string.Empty;
 
 	/// <summary>
 	/// disableAlerting
@@ -33,7 +33,7 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// alertExprNote
 	/// </summary>
 	[DataMember(Name = "alertExprNote")]
-	public string AlertExprNote { get; set; }
+	public string AlertExprNote { get; set; } = string.Empty;
 
 	/// <summary>
 	/// adAdvSettingEnabled
@@ -45,37 +45,37 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// errorAdAdvSetting
 	/// </summary>
 	[DataMember(Name = "errorAdAdvSetting")]
-	public string ErrorAdAdvSetting { get; set; }
+	public string ErrorAdAdvSetting { get; set; } = string.Empty;
 
 	/// <summary>
 	/// dataPointDescription
 	/// </summary>
 	[DataMember(Name = "dataPointDescription")]
-	public string DataPointDescription { get; set; }
+	public string DataPointDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// globalEnableAnomalyAlertGeneration
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration")]
-	public string GlobalEnableAnomalyAlertGeneration { get; set; }
+	public string GlobalEnableAnomalyAlertGeneration { get; set; } = string.Empty;
 
 	/// <summary>
 	/// enableAnomalyAlertGeneration
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
 
 	/// <summary>
 	/// warnAdAdvSetting
 	/// </summary>
 	[DataMember(Name = "warnAdAdvSetting")]
-	public string WarnAdAdvSetting { get; set; }
+	public string WarnAdAdvSetting { get; set; } = string.Empty;
 
 	/// <summary>
 	/// dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; } 
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// dataPointId
@@ -87,7 +87,7 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// globalEnableAnomalyAlertSuppression
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression")]
-	public string GlobalEnableAnomalyAlertSuppression { get; set; }
+	public string GlobalEnableAnomalyAlertSuppression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// collectionInterval
@@ -99,5 +99,5 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// alertExpr
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; } 
+	public string AlertExpression { get; set; } = string.Empty;
 }

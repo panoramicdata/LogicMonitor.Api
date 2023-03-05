@@ -30,21 +30,21 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The Applies to custom query for this group (only for dynamic groups)
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The auto visual result
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "autoVisualResult")]
-	public string AutoVisualResult { get; set; }
+	public string AutoVisualResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The clusterAlertStatus
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "clusterAlertStatus")]
-	public string ClusterAlertStatus { get; set; }
+	public string ClusterAlertStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The cluster alert status priority
@@ -64,7 +64,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "defaultCollectorDescription")]
-	public string DefaultCollectorDescription { get; set; }
+	public string DefaultCollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Id of the default collector assigned to the device group
@@ -90,14 +90,14 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "awsRegionsInfo")]
-	public string AwsRegionsInfo { get; set; }
+	public string AwsRegionsInfo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The String result returned by the transaction that tests the AWS credentials associated with the AWS group
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "awsTestResult")]
-	public AwsAccountTestResult? AwsTestResult { get; set; }
+	public AwsAccountTestResult AwsTestResult { get; set; } = new();
 
 	/// <summary>
 	/// The Status code result returned by the transaction that tests the AWS credentials associated with the AWS group
@@ -118,14 +118,14 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "azureRegionsInfo")]
-	public string AzureRegionsInfo { get; set; }
+	public string AzureRegionsInfo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The String result returned by the transaction that tests the Azure credentials associated with the Azure group
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "azureTestResult")]
-	public string AzureTestResult { get; set; }
+	public string AzureTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Status code result returned by the transaction that tests the Azure credentials associated with the Azure group
@@ -146,14 +146,14 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "gcpRegionsInfo")]
-	public string GcpRegionsInfo { get; set; }
+	public string GcpRegionsInfo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The result returned by the transaction that tests the GCP credentials associated with the GCP group
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "gcpTestResult")]
-	public string GcpTestResult { get; set; }
+	public string GcpTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Status code result returned by the transaction that tests the GCP credentials associated with the GCP group
@@ -192,7 +192,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The properties associated with this device group
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	/// The number of total devices, including both AWS and normal devices, that belong to this device group (includes normal devices in sub groups)
@@ -211,7 +211,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The description of the default collector group assigned to the device group
 	/// </summary>
 	[DataMember(Name = "defaultCollectorGroupDescription")]
-	public string DefaultCollectorGroupDescription { get; set; }
+	public string DefaultCollectorGroupDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The default load balance collector group id
@@ -232,7 +232,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(IsRequired = false)]
-	public List<Device> Devices { get; set; }
+	public List<Device> Devices { get; set; } = new();
 
 	/// <summary>
 	/// The number of AWS and normal devices that belong only to this device group (doesn\u0027t include devices in sub-groups)
@@ -274,7 +274,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "fullPath")]
-	public string FullPath { get; set; }
+	public string FullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The status of this device group, where possible statuses are normal and dead. A group with a status of dead may indicate that one or more devices are dead within the group
@@ -300,7 +300,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	/// The id of the parent group for this device group (the root device group has an Id of 1)
@@ -312,14 +312,14 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The role privilege operations for the device group that are granted to the user that made this API request
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]
-	public List<RolePrivilege> RolePrivileges { get; set; }
+	public List<RolePrivilege> RolePrivileges { get; set; } = new();
 
 	/// <summary>
 	/// The result returned by the transaction that tests the SaaS credentials associated with the Saas group
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "saasTestResult")]
-	public string SaasTestResult { get; set; }
+	public string SaasTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Status code result returned by the transaction that tests the SaaS credentials associated with the SaaS group
@@ -340,7 +340,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "subGroups")]
-	public List<DeviceGroup> SubGroups { get; set; }
+	public List<DeviceGroup> SubGroups { get; set; } = new();
 
 	/// <summary>
 	/// The permissions for the device group that are granted to the user that made this API request

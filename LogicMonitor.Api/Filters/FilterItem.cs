@@ -11,13 +11,13 @@ public class FilterItem<T>
 	///     The field
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Property { get; set; }
+	public string Property { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The operation
 	/// </summary>
 	[DataMember(Name = "op")]
-	public string Operation { get; set; }
+	public string Operation { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The operation
@@ -43,7 +43,7 @@ public class FilterItem<T>
 	///     The value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public object Value { get; set; }
+	public object Value { get; set; } = new();
 
 	/// <inheritdoc />
 	public override string ToString()

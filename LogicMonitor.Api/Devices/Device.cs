@@ -23,7 +23,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "alertingDisabledOn")]
-	public object? AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	///    The alert status
@@ -50,7 +50,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "autoProperties")]
-	public List<EntityProperty> AutoProperties { get; set; }
+	public List<EntityProperty> AutoProperties { get; set; } = new();
 
 	/// <summary>
 	///    The time that the auto-properties were assigned in seconds since the Epoch
@@ -98,7 +98,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    When the device was created
@@ -125,7 +125,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///    The device status
@@ -151,7 +151,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// The display name of the device
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string? DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether alerting is effectively enabled
@@ -191,7 +191,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    The device type (usually Host)
 	/// </summary>
 	[DataMember(Name = "hostGroupIds")]
-	public string DeviceGroupIdsString { get; set; }
+	public string DeviceGroupIdsString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device status
@@ -205,14 +205,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "inheritedProperties")]
-	public List<EntityProperty> InheritedProperties { get; set; }
+	public List<EntityProperty> InheritedProperties { get; set; } = new();
 
 	/// <summary>
 	///    The instances
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "instance")]
-	public List<DeviceDataSourceInstanceSummary> Instances { get; set; }
+	public List<DeviceDataSourceInstanceSummary> Instances { get; set; } = new();
 
 	/// <summary>
 	/// Indicates whether Preferred Log Collector is configured  (true) or not (false) for the device
@@ -239,14 +239,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    The device's configured URL
 	/// </summary>
 	[DataMember(Name = "link")]
-	public string Link { get; set; }
+	public string Link { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description/name of the log collector for this device
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorDescription")]
-	public string LogCollectorDescription { get; set; }
+	public string LogCollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The id of the Collector Group associated with the device\u0027s log collection
@@ -259,7 +259,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorGroupName")]
-	public string LogCollectorGroupName { get; set; }
+	public string LogCollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Id of the netflow collector associated with the device
@@ -273,7 +273,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "manualDiscoveryFlags")]
-	public ManualDiscoveryFlags ManualDiscoveryFlags { get; set; }
+	public ManualDiscoveryFlags ManualDiscoveryFlags { get; set; } = new();
 
 	/// <summary>
 	///    The Netflow Collector Id
@@ -286,7 +286,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorDescription")]
-	public string NetflowCollectorDescription { get; set; }
+	public string NetflowCollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Netflow Collector Group Id
@@ -300,7 +300,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorGroupName")]
-	public string NetflowCollectorGroupName { get; set; }
+	public string NetflowCollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The preferred Collector Id
@@ -320,7 +320,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "preferredCollectorGroupName")]
-	public string PreferredCollectorGroupName { get; set; }
+	public string PreferredCollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The ID of the related device
@@ -333,7 +333,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "awsTestResult")]
-	public string AwsTestResult { get; set; }
+	public string AwsTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The AWS test result code
@@ -347,7 +347,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "azureTestResult")]
-	public string AzureTestResult { get; set; }
+	public string AzureTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Azure test result code
@@ -361,7 +361,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "gcpTestResult")]
-	public string GcpTestResult { get; set; }
+	public string GcpTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The GCP test result code
@@ -375,7 +375,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "saasTestResult")]
-	public string SaasTestResult { get; set; }
+	public string SaasTestResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The SaaS test result code
@@ -389,7 +389,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "autoVisualResult")]
-	public string AutoVisualResult { get; set; }
+	public string AutoVisualResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Scan config ID
@@ -410,7 +410,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "systemProperties")]
-	public List<EntityProperty> SystemProperties { get; set; }
+	public List<EntityProperty> SystemProperties { get; set; } = new();
 
 	/// <summary>
 	///    The time in Ms before the device will be deleted
@@ -456,7 +456,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "rolePrivileges")]
-	public List<RolePrivilege> RolePrivileges { get; set; }
+	public List<RolePrivilege> RolePrivileges { get; set; } = new();
 
 	/// <summary>
 	///    User Permission

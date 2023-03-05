@@ -16,13 +16,13 @@ public class DeviceDataSourceInstanceConfigAlert : IdentifiedItem
 	/// Alert internal id
 	/// </summary>
 	[DataMember(Name = "alertId")]
-	public string AlertId { get; set; }
+	public string AlertId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Summary of this config source alert
 	/// </summary>
 	[DataMember(Name = "alertSummary")]
-	public string AlertSummary { get; set; }
+	public string AlertSummary { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Timestamp of alert start or clear

@@ -19,7 +19,7 @@ public class Filter<T>
 	/// <summary>
 	///     The order the results should come back
 	/// </summary>
-	public Order<T> Order { get; set; }
+	public Order<T> Order { get; set; } = new();
 
 	/// <summary>
 	///  The filter type (defaults to "And")
@@ -34,17 +34,17 @@ public class Filter<T>
 	/// <summary>
 	///     Extra filters
 	/// </summary>
-	public List<FilterItem<T>> ExtraFilters { get; set; }
+	public List<FilterItem<T>> ExtraFilters { get; set; } = new();
 
 	/// <summary>
 	///     The properties to complete
 	/// </summary>
-	public List<string> Properties { get; set; }
+	public List<string> Properties { get; set; } = new();
 
 	/// <summary>
 	/// If present will be used as the query string on the request
 	/// </summary>
-	public string QueryString { get; set; }
+	public string QueryString { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString()
