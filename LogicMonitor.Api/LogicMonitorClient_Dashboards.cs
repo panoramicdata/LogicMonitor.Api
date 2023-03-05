@@ -144,7 +144,7 @@ public partial class LogicMonitorClient
 		// Delete its dashboards
 		foreach (var dashboard in dashboardGroup.Dashboards)
 		{
-			await DeleteAsync(dashboard, true, cancellationToken: cancellationToken).ConfigureAwait(false);
+			await DeleteAsync(dashboard, true, cancellationToken).ConfigureAwait(false);
 		}
 
 		// Delete its child dashboard groups

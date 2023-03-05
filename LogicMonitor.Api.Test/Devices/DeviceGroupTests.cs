@@ -146,16 +146,13 @@ public class DeviceGroupTests : TestWithOutput
 				default)
 				.ConfigureAwait(false);
 
-		if (deviceGroup is null)
-		{
-			deviceGroup = await LogicMonitorClient.CreateAsync(
+		deviceGroup ??= await LogicMonitorClient.CreateAsync(
 					  new DeviceGroupCreationDto
 					  {
 						  ParentId = "1",
 						  Name = testDeviceGroupName
 					  }, default)
 				.ConfigureAwait(false);
-		}
 
 		try
 		{

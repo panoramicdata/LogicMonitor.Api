@@ -44,7 +44,7 @@ public class CollectorTests2
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
 			.ExecuteDebugCommandAndWaitForResultAsync(
-				testCollector.Id,
+				testCollector!.Id,
 				"!ping 8.8.8.8",
 				10_000,
 				500,

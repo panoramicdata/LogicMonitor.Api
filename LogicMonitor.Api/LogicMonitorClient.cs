@@ -359,11 +359,8 @@ public partial class LogicMonitorClient : IDisposable
 	public static string GetSerializationName<T>(string propertyName)
 	{
 		var propertyInfos = typeof(T).GetProperties();
-		var property = propertyInfos.SingleOrDefault(p => p.Name == propertyName);
-		if (property is null)
-		{
-			throw new ArgumentOutOfRangeException(nameof(propertyName), $"{propertyName} is not a property of {typeof(T).Name}.");
-		}
+		var property = propertyInfos.SingleOrDefault(p => p.Name == propertyName)
+			?? throw new ArgumentOutOfRangeException(nameof(propertyName), $"{propertyName} is not a property of {typeof(T).Name}.");
 
 		// Use reflection to find the DataMember Name
 		return property.GetCustomAttributes(typeof(DataMemberAttribute), true).Cast<DataMemberAttribute>().SingleOrDefault().Name;
@@ -382,11 +379,8 @@ public partial class LogicMonitorClient : IDisposable
 		}
 
 		var fieldInfos = type.GetFields();
-		var field = fieldInfos.SingleOrDefault(f => f.Name == enumObject.ToString());
-		if (field is null)
-		{
-			throw new ArgumentOutOfRangeException(nameof(enumObject), $"{@enumObject} is not a member of enum {type.Name}.");
-		}
+		var field = fieldInfos.SingleOrDefault(f => f.Name == enumObject.ToString())
+			?? throw new ArgumentOutOfRangeException(nameof(enumObject), $"{@enumObject} is not a member of enum {type.Name}.");
 
 		// Use reflection to find the DataMember Name
 		var list = field.GetCustomAttributes(typeof(EnumMemberAttribute), true).Cast<EnumMemberAttribute>().ToList();
