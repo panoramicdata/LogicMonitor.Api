@@ -285,6 +285,18 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The device Id</param>
 	/// <param name="deviceDataSourceId">The device data source id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		CancellationToken cancellationToken)
+		=> GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSourceId, new(), cancellationToken);
+
+	/// <summary>
+	///     Get all DeviceDataSourceInstances given a Device id and DeviceDataSource id
+	/// </summary>
+	/// <param name="deviceId">The device Id</param>
+	/// <param name="deviceDataSourceId">The device data source id</param>
 	/// <param name="filter">The optional filter to apply</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<DeviceDataSourceInstance>> GetAllDeviceDataSourceInstancesAsync(

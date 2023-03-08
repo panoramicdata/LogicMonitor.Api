@@ -83,6 +83,15 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// Gets the list of available Collector Versions
 	/// </summary>
+	/// <param name="cancellationToken">An optional CancellationToken</param>
+	public Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(
+		CancellationToken cancellationToken
+	)
+		=> GetAllCollectorVersionsAsync(new(), cancellationToken);
+
+	/// <summary>
+	/// Gets the list of available Collector Versions
+	/// </summary>
 	/// <param name="filter">An optional filter</param>
 	/// <param name="cancellationToken">An optional CancellationToken</param>
 	public async Task<List<CollectorVersion>> GetAllCollectorVersionsAsync(
