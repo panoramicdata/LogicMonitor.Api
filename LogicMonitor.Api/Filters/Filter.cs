@@ -19,7 +19,7 @@ public class Filter<T>
 	/// <summary>
 	///     The order the results should come back
 	/// </summary>
-	public Order<T> Order { get; set; } = new();
+	public Order<T>? Order { get; set; }
 
 	/// <summary>
 	///  The filter type (defaults to "And")
@@ -50,7 +50,7 @@ public class Filter<T>
 	public override string ToString()
 	{
 		Validate();
-		return QueryString is not null
+		return !string.IsNullOrWhiteSpace(QueryString)
 				  ? $"offset={Skip}&size={Take}&{QueryString}"
 				  : $"offset={Skip}&size={Take}{(Order is null ? string.Empty : $"&{Order}")}{(FilterItems is null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters is null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties is null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
 	}
