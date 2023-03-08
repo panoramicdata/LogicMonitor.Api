@@ -18,7 +18,7 @@ public class DashboardGroupTests : TestWithOutput
 		if (dashboardGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(dashboardGroup)
+				.DeleteAsync(dashboardGroup, default)
 				.ConfigureAwait(false);
 		}
 
@@ -49,13 +49,13 @@ public class DashboardGroupTests : TestWithOutput
 
 		dashboardGroup.Should().NotBeNull();
 
-		dashboardGroup
+		dashboardGroup!
 			.CustomProperties
 			.Should()
 			.Contain(x => x.Name == "TestToken" && x.Value == "TestValue");
 
 		await LogicMonitorClient
-			.DeleteAsync(dashboardGroup)
+			.DeleteAsync(dashboardGroup, default)
 			.ConfigureAwait(false);
 	}
 }

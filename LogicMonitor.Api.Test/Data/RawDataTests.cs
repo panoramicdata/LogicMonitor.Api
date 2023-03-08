@@ -14,9 +14,9 @@ public class RawDataTests : TestWithOutput
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, default).ConfigureAwait(false);
 		var deviceDataSourceInstance =
-		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: default).ConfigureAwait(false)
+		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false)
 		).Single();
-		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, cancellationToken: default).ConfigureAwait(false);
+		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, null, null, cancellationToken: default).ConfigureAwait(false);
 
 		rawData.Should().NotBeNull();
 	}
@@ -31,7 +31,7 @@ public class RawDataTests : TestWithOutput
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, default).ConfigureAwait(false);
 		var deviceDataSourceInstance =
-		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: default).ConfigureAwait(false)
+		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false)
 		).Single();
 		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow, default).ConfigureAwait(false);
 
@@ -55,7 +55,7 @@ public class RawDataTests : TestWithOutput
 		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstance =
-		(await portalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: default).ConfigureAwait(false)
+		(await portalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false)
 		).FirstOrDefault();
 		deviceDataSourceInstance.Should().NotBeNull();
 
@@ -72,7 +72,7 @@ public class RawDataTests : TestWithOutput
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
-		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: default).ConfigureAwait(false);
+		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false);
 
 		var end = DateTime.UtcNow;
 		var start = end.AddHours(-2);

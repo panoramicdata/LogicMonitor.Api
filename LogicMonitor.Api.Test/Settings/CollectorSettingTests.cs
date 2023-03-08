@@ -44,7 +44,7 @@ public class CollectorSettingTests
 	public async Task GetCollectorVersions_Unfiltered_Succeeds()
 	{
 		var collectorVersions = await LogicMonitorClient
-			.GetAllCollectorVersionsAsync(cancellationToken: default)
+			.GetAllCollectorVersionsAsync(new(), cancellationToken: default)
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();

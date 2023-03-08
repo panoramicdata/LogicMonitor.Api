@@ -9,7 +9,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
-		var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default).ConfigureAwait(false);
+		var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, new(), cancellationToken: default).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -18,12 +18,14 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("WinIf-", cancellationToken: default)
 			.ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource!.Id, default)
 			.ConfigureAwait(false);
 
 		var _ = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, cancellationToken: default)
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
 			.ConfigureAwait(false);
 	}
 
@@ -35,8 +37,10 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: default)
 			.ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, cancellationToken: default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 		{

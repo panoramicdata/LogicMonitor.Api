@@ -25,17 +25,17 @@ internal sealed class TestPortalConfig
 		{
 			StrictPagingTotalChecking = true
 		};
-		SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"] ?? "", CultureInfo.InvariantCulture);
-		NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"] ?? "", CultureInfo.InvariantCulture);
-		WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"] ?? "", CultureInfo.InvariantCulture);
-		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"] ?? "", CultureInfo.InvariantCulture);
-		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "", CultureInfo.InvariantCulture);
-		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "", CultureInfo.InvariantCulture);
-		SDTResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "", CultureInfo.InvariantCulture);
+		SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"] ?? "0", CultureInfo.InvariantCulture);
+		NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"] ?? "0", CultureInfo.InvariantCulture);
+		WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"] ?? "0", CultureInfo.InvariantCulture);
+		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"] ?? "0", CultureInfo.InvariantCulture);
+		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "0", CultureInfo.InvariantCulture);
+		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "0", CultureInfo.InvariantCulture);
+		SDTResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "0", CultureInfo.InvariantCulture);
 		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"] ?? "";
 		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"] ?? "";
 		ResourceGroupFullPath = Configuration["Config:ResourceGroupFullPath"] ?? "";
-		AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"] ?? "", CultureInfo.InvariantCulture);
+		AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"] ?? "0", CultureInfo.InvariantCulture);
 		AccountHasBillingInformation = bool.Parse(Configuration["Config:AccountHasBillingInformation"] ?? "false");
 		WebsiteName = Configuration["Config:WebsiteName"] ?? "";
 		AlertRuleName = Configuration["Config:AlertRuleName"] ?? "";

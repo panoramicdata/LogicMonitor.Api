@@ -27,6 +27,7 @@ public class DataTests : TestWithOutput
 			.GetAllDeviceDataSourceInstancesAsync(
 				device.Id,
 				deviceDataSource.Id,
+				new(),
 				cancellationToken: default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
