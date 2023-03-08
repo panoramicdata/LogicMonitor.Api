@@ -3,6 +3,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// <summary>
 /// A dynamic table widget column
 /// </summary>
+[DataContract]
 public class DynamicTableWidgetColumn
 {
 	/// <summary>
@@ -21,7 +22,6 @@ public class DynamicTableWidgetColumn
 	///     The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	[JsonProperty(Required = Required.AllowNull)]
 	public string? DataPointName { get; set; }
 
 	/// <summary>
