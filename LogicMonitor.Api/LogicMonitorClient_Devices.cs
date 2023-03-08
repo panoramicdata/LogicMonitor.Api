@@ -449,7 +449,7 @@ public partial class LogicMonitorClient
 		{
 			DeviceProcessServiceTaskType.LinuxProcess => "LinuxNewProcesses-",
 			DeviceProcessServiceTaskType.WindowsProcess => "WinProcessStats-",
-			DeviceProcessServiceTaskType.WindowsService => "WinService-",
+			DeviceProcessServiceTaskType.WindowsService => "Microsoft_Windows_Services",
 			_ => throw new ArgumentException($"Only {DeviceProcessServiceTaskType.LinuxProcess}, {DeviceProcessServiceTaskType.WindowsProcess} and {DeviceProcessServiceTaskType.WindowsService} are supported", nameof(deviceProcessServiceTaskType)),
 		};
 		var filter = new Filter<DeviceDataSource>
