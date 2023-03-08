@@ -21,7 +21,8 @@ public class DynamicTableWidgetColumn
 	///     The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; } = string.Empty;
+	[JsonProperty(Required = Required.AllowNull)]
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	///     Whether to enable forecast
