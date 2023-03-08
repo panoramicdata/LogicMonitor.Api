@@ -34,7 +34,8 @@ public class DashboardGroupTests : TestWithOutput
 					new EntityProperty
 					{
 						Name = "TestToken",
-						Value = "TestValue"
+						Value = "TestValue",
+						Type = PropertyType.Custom
 					}
 				}
 			},
