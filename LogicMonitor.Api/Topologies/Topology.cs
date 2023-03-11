@@ -16,19 +16,19 @@ public class Topology : NamedItem, IHasEndpoint
 	///    The owner
 	/// </summary>
 	[DataMember(Name = "owner")]
-	public string Owner { get; set; }
+	public string Owner { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The owner
 	/// </summary>
 	[DataMember(Name = "views")]
-	public List<TopologyView> Views { get; set; }
+	public List<TopologyView> Views { get; set; } = new();
 
 	/// <summary>
 	///    The layout
 	/// </summary>
 	[DataMember(Name = "layout")]
-	public TopologyLayout Layout { get; set; }
+	public TopologyLayout Layout { get; set; } = new();
 
 	/// <summary>
 	/// The REST API endpoint

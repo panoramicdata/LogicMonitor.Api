@@ -10,35 +10,35 @@ public class AlertMessageTemplate
 	/// The type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The emailSubject
 	/// </summary>
 	[DataMember(Name = "emailSubject")]
-	public string EmailSubject { get; set; }
+	public string EmailSubject { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The emailBody
 	/// </summary>
 	[DataMember(Name = "emailBody")]
-	public string EmailBody { get; set; }
+	public string EmailBody { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The smsSubject
 	/// </summary>
 	[DataMember(Name = "smsSubject")]
-	public string SmsSubject { get; set; }
+	public string SmsSubject { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The smsBody
 	/// </summary>
 	[DataMember(Name = "smsBody")]
-	public string SmsBody { get; set; }
+	public string SmsBody { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The voice
 	/// </summary>
 	[DataMember(Name = "voice")]
-	public string Voice { get; set; }
+	public string Voice { get; set; } = string.Empty;
 }

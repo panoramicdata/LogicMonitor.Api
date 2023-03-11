@@ -15,7 +15,7 @@ public class PushMetricDataPoint
 	/// * Should not contain reserved keywords such as COS, SIN, etc.
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Datapoint description.
@@ -24,7 +24,7 @@ public class PushMetricDataPoint
 	/// * 1024-character limit
 	/// </summary>
 	[DataMember(Name = "dataPointDescription")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Metric type as a number in string format.
@@ -60,5 +60,5 @@ public class PushMetricDataPoint
 	/// * Only digits accepted in values
 	/// </summary>
 	[DataMember(Name = "values")]
-	public Dictionary<string, string> Values { get; set; }
+	public Dictionary<string, string> Values { get; set; } = new();
 }

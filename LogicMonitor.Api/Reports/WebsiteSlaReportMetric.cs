@@ -10,13 +10,13 @@ public class WebsiteSlaReportMetric
 	/// The website group name (or * for all)
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Website Name (or * for all)
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to exclude alerts occurring in SDT

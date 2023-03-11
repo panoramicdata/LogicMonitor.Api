@@ -106,7 +106,7 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// The Linux command line
 	/// </summary>
 	[DataMember(Name = "linuxCmdLine")]
-	public string LinuxCommandLine { get; set; }
+	public string LinuxCommandLine { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Linux script
@@ -142,13 +142,13 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// The Windows command line
 	/// </summary>
 	[DataMember(Name = "windowsCmdLine")]
-	public string WindowsCommandLine { get; set; }
+	public string WindowsCommandLine { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Windows script
 	/// </summary>
 	[DataMember(Name = "windowsScript")]
-	public string WindowsScript { get; set; }
+	public string WindowsScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ToString override

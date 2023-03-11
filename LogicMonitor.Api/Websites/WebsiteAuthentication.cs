@@ -9,7 +9,7 @@ public class WebsiteAuthentication
 	/// <summary>
 	/// User name
 	/// </summary>
-	public string UserName { get; set; }
+	public string UserName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Authentication type
@@ -19,5 +19,5 @@ public class WebsiteAuthentication
 	/// <summary>
 	/// Password
 	/// </summary>
-	public string Password { get; set; }
+	public string Password { get; set; } = string.Empty;
 }

@@ -10,19 +10,19 @@ public class WebsiteCreationDto : CreationDto<Website>
 	///    The website group id
 	/// </summary>
 	[DataMember(Name = "groupId")]
-	public string WebsiteGroupId { get; set; }
+	public string WebsiteGroupId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether monitoring is disabled
 	/// </summary>
 	[DataMember(Name = "disableAlerting")]
-	public string IsAlertingDisabled { get; set; }
+	public string IsAlertingDisabled { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The polling interval in minutes
 	/// </summary>
 	[DataMember(Name = "pollingInterval")]
-	public string PollingIntervalMinutes { get; set; }
+	public string PollingIntervalMinutes { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether to use the default location setting
@@ -52,19 +52,19 @@ public class WebsiteCreationDto : CreationDto<Website>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The hostname / IP address
 	/// </summary>
 	[DataMember(Name = "host")]
-	public string HostName { get; set; }
+	public string HostName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The HTTP schema
@@ -76,43 +76,43 @@ public class WebsiteCreationDto : CreationDto<Website>
 	/// The domain
 	/// </summary>
 	[DataMember(Name = "domain")]
-	public string Domain { get; set; }
+	public string Domain { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The steps
 	/// </summary>
 	[DataMember(Name = "steps")]
-	public List<WebCheckStep> Steps { get; set; }
+	public List<WebCheckStep> Steps { get; set; } = new();
 
 	/// <summary>
 	///    The attempt count as a string
 	/// </summary>
 	[DataMember(Name = "count")]
-	public string Count { get; set; }
+	public string Count { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The percentPktsNotReceiveInTime
 	/// </summary>
 	[DataMember(Name = "percentPktsNotReceiveInTime")]
-	public string PercentPktsNotReceiveInTime { get; set; }
+	public string PercentPktsNotReceiveInTime { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The timeoutInMSPktsNotReceive
 	/// </summary>
 	[DataMember(Name = "timeoutInMSPktsNotReceive")]
-	public string TimeoutInMsPktsNotReceive { get; set; }
+	public string TimeoutInMsPktsNotReceive { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The transition
 	/// </summary>
 	[DataMember(Name = "transition")]
-	public string Transition { get; set; }
+	public string Transition { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The globalSmAlertCond
 	/// </summary>
 	[DataMember(Name = "globalSmAlertCond")]
-	public string GlobalSmAlertCond { get; set; }
+	public string GlobalSmAlertCond { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The overallAlertLevel
@@ -136,7 +136,7 @@ public class WebsiteCreationDto : CreationDto<Website>
 	///    The test location.
 	/// </summary>
 	[DataMember(Name = "testLocation")]
-	public WebsiteLocation TestLocation { get; set; }
+	public WebsiteLocation TestLocation { get; set; } = new();
 
 	/// <summary>
 	/// Whether to trigger SSL Status Alerts
@@ -154,13 +154,13 @@ public class WebsiteCreationDto : CreationDto<Website>
 	/// The website properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty> WebsiteProperties { get; set; }
+	public List<EntityProperty> WebsiteProperties { get; set; } = new();
 
 	/// <summary>
 	/// The alert expression for SSL expiration alerts
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
-	public string AlertExpression { get; set; }
+	public string AlertExpression { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to ignore SSL errors

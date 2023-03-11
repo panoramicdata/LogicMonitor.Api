@@ -10,11 +10,11 @@ public class TopologyLayout
 	///    The mode
 	/// </summary>
 	[DataMember(Name = "mode")]
-	public string Mode { get; set; }
+	public string Mode { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The vertices
 	/// </summary>
 	[DataMember(Name = "vertices")]
-	public List<Vertex> Vertices { get; set; }
+	public List<Vertex> Vertices { get; set; } = new();
 }

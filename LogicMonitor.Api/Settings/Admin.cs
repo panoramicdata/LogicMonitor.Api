@@ -173,7 +173,7 @@ public class Admin : IdentifiedItem
 	/// The username associated with the user
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string Username { get; set; } 
+	public string Username { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The user\u0027s status. Should be one of active and suspended

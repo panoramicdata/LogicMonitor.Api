@@ -10,17 +10,17 @@ public class TopologyView
 	///    The vertices
 	/// </summary>
 	[DataMember(Name = "vertices")]
-	public List<string> Vertices { get; set; }
+	public List<string> Vertices { get; set; } = new();
 
 	/// <summary>
 	///    The edge types
 	/// </summary>
 	[DataMember(Name = "edgeTypes")]
-	public List<object> EdgeTypes { get; set; }
+	public List<object> EdgeTypes { get; set; } = new();
 
 	/// <summary>
 	///    The algorithm
 	/// </summary>
 	[DataMember(Name = "algorithm")]
-	public string Algorithm { get; set; }
+	public string Algorithm { get; set; } = string.Empty;
 }

@@ -22,35 +22,35 @@ public class RestSchedule
 	///    The recipients
 	/// </summary>
 	[DataMember(Name = "recipients")]
-	public List<object> Recipients { get; set; }
+	public List<object> Recipients { get; set; } = new();
 
 	/// <summary>
 	///    The cron
 	/// </summary>
 	[DataMember(Name = "cron")]
-	public string Cron { get; set; }
+	public string Cron { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The weekday
 	/// </summary>
 	[DataMember(Name = "weekday")]
-	public List<string> WeekDays { get; set; }
+	public List<string> WeekDays { get; set; } = new();
 
 	/// <summary>
 	///    The nth week
 	/// </summary>
 	[DataMember(Name = "nthweek")]
-	public string NthWeek { get; set; }
+	public string NthWeek { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The monthday
 	/// </summary>
 	[DataMember(Name = "monthday")]
-	public string Monthday { get; set; }
+	public string Monthday { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The time zone
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 }

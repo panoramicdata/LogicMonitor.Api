@@ -16,25 +16,25 @@ public class DashboardReport : DateRangeReport
 	/// The displayName
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dashboardName
 	/// </summary>
 	[DataMember(Name = "dashboardName")]
-	public string DashboardName { get; set; }
+	public string DashboardName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dashboardGroupFullPath
 	/// </summary>
 	[DataMember(Name = "dashboardGroupFullPath")]
-	public string DashboardGroupFullPath { get; set; }
+	public string DashboardGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The widgetExtraData
 	/// </summary>
 	[DataMember(Name = "widgetExtraData")]
-	public string WidgetExtraData { get; set; }
+	public string WidgetExtraData { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The fromSource
