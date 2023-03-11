@@ -10,13 +10,13 @@ public class DeviceMetricTrendsReport : DateRangeReport
 	/// The hostsVal
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string HostsVal { get; set; }
+	public string HostsVal { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The hostsValType
 	/// </summary>
 	[DataMember(Name = "hostsValType")]
-	public string HostsValType { get; set; }
+	public string HostsValType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether this is Base 1024
@@ -28,7 +28,7 @@ public class DeviceMetricTrendsReport : DateRangeReport
 	/// The columns to sort by
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The rowFormat
@@ -46,11 +46,11 @@ public class DeviceMetricTrendsReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<DeviceMetricTrendsReportMetric> Metrics { get; set; }
+	public List<DeviceMetricTrendsReportMetric> Metrics { get; set; } = new();
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

@@ -17,5 +17,5 @@ public class SyntheticsSeleniumAutoDiscoveryMethodV3 : AutoDiscoveryMethod
 	/// checkpoints
 	/// </summary>
 	[DataMember(Name = "checkpoints")]
-	public string Checkpoints { get; set; }
+	public string Checkpoints { get; set; } = string.Empty;
 }

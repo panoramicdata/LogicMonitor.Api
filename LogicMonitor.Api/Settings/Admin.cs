@@ -11,31 +11,31 @@ public class Admin : IdentifiedItem
 	/// The last name associated with the user
 	/// </summary>
 	[DataMember(Name = "lastName")]
-	public string? LastName { get; set; }
+	public string LastName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Any notes assocaited with the user
 	/// </summary>
 	[DataMember(Name = "note")]
-	public string? Note { get; set; }
+	public string Note { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The account tabs that will be visible to the user
 	/// </summary>
 	[DataMember(Name = "viewPermission")]
-	public string? ViewPermission { get; set; }
+	public string ViewPermission { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The timezone of the user
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string? Timezone { get; set; }
+	public string Timezone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The roles assigned to the user
 	/// </summary>
 	[DataMember(Name = "roles")]
-	public List<Role> Roles { get; set; } 
+	public List<Role> Roles { get; set; } = new();
 
 	/// <summary>
 	/// The time that the user last logged in, in epoch format
@@ -47,13 +47,13 @@ public class Admin : IdentifiedItem
 	/// The time, in local format, of the user\u0027s last action
 	/// </summary>
 	[DataMember(Name = "lastActionOnLocal")]
-	public string? LastActionOnLocal { get; set; }
+	public string LastActionOnLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	/// sms | fullText, where sms \u003d 160 characters and fullText\u003d all characters
 	/// </summary>
 	[DataMember(Name = "smsEmailFormat")]
-	public string? SmsEmailFormat { get; set; }
+	public string SmsEmailFormat { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether it is a API only user
@@ -65,31 +65,31 @@ public class Admin : IdentifiedItem
 	/// Any API Tokens associated with the user
 	/// </summary>
 	[DataMember(Name = "apiTokens")]
-	public List<ApiToken>? ApiTokens { get; set; }
+	public List<ApiToken> ApiTokens { get; set; } = new();
 
 	/// <summary>
 	/// The Id(s) of the groups the admin is in, where multiple group ids are comma separated
 	/// </summary>
 	[DataMember(Name = "adminGroupIds")]
-	public List<int>? AdminGroupIds { get; set; }
+	public List<int> AdminGroupIds { get; set; } = new();
 
 	/// <summary>
 	/// The password associated with the user
 	/// </summary>
 	[DataMember(Name = "password")]
-	public string Password { get; set; } 
+	public string Password { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The last action taken by the user
 	/// </summary>
 	[DataMember(Name = "lastAction")]
-	public string? LastAction { get; set; }
+	public string LastAction { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The email address for user\u0027s Training account
 	/// </summary>
 	[DataMember(Name = "trainingEmail")]
-	public string? TrainingEmail { get; set; }
+	public string TrainingEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The time, in epoch format, of the user\u0027s last action
@@ -101,13 +101,13 @@ public class Admin : IdentifiedItem
 	/// The email address associated with the user
 	/// </summary>
 	[DataMember(Name = "email")]
-	public string Email { get; set; } 
+	public string Email { get; set; } = string.Empty;
 
 	/// <summary>
 	/// email | smsemail
 	/// </summary>
 	[DataMember(Name = "contactMethod")]
-	public string? ContactMethod { get; set; }
+	public string ContactMethod { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The time, in epoch format, that the user accepted the EULA (if required to)
@@ -119,13 +119,13 @@ public class Admin : IdentifiedItem
 	/// The permission of current user with the admin. values can be write|read|none
 	/// </summary>
 	[DataMember(Name = "userPermission")]
-	public string? UserPermission { get; set; }
+	public string UserPermission { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The sms email address associated with the user
 	/// </summary>
 	[DataMember(Name = "smsEmail")]
-	public string? SmsEmail { get; set; }
+	public string SmsEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether or not two factor authentication is enabled for the user
@@ -137,25 +137,25 @@ public class Admin : IdentifiedItem
 	/// The first name associated with the user
 	/// </summary>
 	[DataMember(Name = "firstName")]
-	public string? FirstName { get; set; }
+	public string FirstName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The phone number associated with the user
 	/// </summary>
 	[DataMember(Name = "phone")]
-	public string? Phone { get; set; }
+	public string Phone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Who created the user. This may be another user, SAML or LogicMonitor
 	/// </summary>
 	[DataMember(Name = "createdBy")]
-	public string? CreatedBy { get; set; }
+	public string CreatedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether or not the user should be forced to change their password on the next login
 	/// </summary>
 	[DataMember(Name = "forcePasswordChange")]
-	public string? ForcePasswordChange { get; set; }
+	public string ForcePasswordChange { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The tenant id of the user
@@ -179,5 +179,5 @@ public class Admin : IdentifiedItem
 	/// The user\u0027s status. Should be one of active and suspended
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string? Status { get; set; }
+	public string Status { get; set; } = string.Empty;
 }

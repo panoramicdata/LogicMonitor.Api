@@ -10,13 +10,13 @@ public class SingleSignOn : IHasSingletonEndpoint
 	///     IdPMetadata
 	/// </summary>
 	[DataMember(Name = "IdPMetadata")]
-	public string IdPMetadata { get; set; }
+	public string IdPMetadata { get; set; } = string.Empty;
 
 	/// <summary>
 	///     SAML Version
 	/// </summary>
 	[DataMember(Name = "samlVersion")]
-	public string SamlVersion { get; set; }
+	public string SamlVersion { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Cookie expire seconds

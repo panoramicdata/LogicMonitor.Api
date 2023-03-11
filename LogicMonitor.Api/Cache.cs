@@ -53,9 +53,12 @@ internal class Cache<TIndex, TValue>
 			&& (cachedItem.Item is null
 				|| typeof(T) == cachedItem.Item.GetType()))
 		{
-			_logger.LogTrace("CACHE HIT");
-			value = cachedItem.Item;
-			return true;
+			if (cachedItem.Item is not null)
+			{
+				_logger.LogTrace("CACHE HIT");
+				value = cachedItem.Item;
+				return true;
+			}
 		}
 
 		_logger.LogTrace("CACHE MISS");

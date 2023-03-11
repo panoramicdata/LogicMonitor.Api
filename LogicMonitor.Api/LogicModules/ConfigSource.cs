@@ -10,31 +10,31 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// Collector attribute
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public CollectorAttribute? CollectorAttribute { get; set; }
+	public CollectorAttribute CollectorAttribute { get; set; } = new();
 
 	/// <summary>
 	/// Auto discovery configuration
 	/// </summary>
-	[DataMember(Name = "autoDiscoveryConfig")]
-	public AutoDiscoveryConfiguration? AutoDiscoveryConfig { get; set; }
+	[DataMember(Name = "autoDiscoveryConfig")] 
+	public AutoDiscoveryConfiguration AutoDiscoveryConfig { get; set; } = new();
 
 	/// <summary>
 	/// The ConfigSource display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The List of ConfigChecks
 	/// </summary>
 	[DataMember(Name = "configChecks")]
-	public List<ConfigCheck>? ConfigChecks { get; set; }
+	public List<ConfigCheck> ConfigChecks { get; set; } = new();
 
 	/// <summary>
 	/// The Applies To for the LMModule
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Enable active discovery if ConfigSource has multiple instances. true|false
@@ -46,7 +46,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The Technical Notes for the LMModule
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
+	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ConfigSource version
@@ -58,7 +58,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The Tags for the LMModule
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
+	public string Tags { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ConfigSource audit version
@@ -88,19 +88,19 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// Timestamp format. ex. yyyy-MM-dd hh:mm:ss
 	/// </summary>
 	[DataMember(Name = "timestampFormat")]
-	public string TimestampFormat { get; set; }
+	public string TimestampFormat { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Configuration file format. arbitrary|unix|java-properties|JSON|XML
 	/// </summary>
 	[DataMember(Name = "fileFormat")]
-	public string FileFormat { get; set; }
+	public string FileFormat { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group the LMModule is in
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string Group { get; set; }
+	public string Group { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The endpoint

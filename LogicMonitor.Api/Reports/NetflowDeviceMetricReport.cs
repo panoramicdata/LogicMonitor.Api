@@ -10,7 +10,7 @@ public class NetflowDeviceMetricReport : DateRangeReport
 	/// The hosts value
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string HostsValue { get; set; }
+	public string HostsValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The hosts value type

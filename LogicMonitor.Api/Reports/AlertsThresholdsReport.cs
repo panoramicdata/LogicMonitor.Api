@@ -10,31 +10,31 @@ public class AlertsThresholdsReport : ReportBase
 	/// The group full path
 	/// </summary>
 	[DataMember(Name = "groupFullPath")]
-	public string GroupFullPath { get; set; }
+	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSourceInstanceName
 	/// </summary>
 	[DataMember(Name = "dataSourceInstanceName")]
-	public string DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataPoint
 	/// </summary>
 	[DataMember(Name = "dataPoint")]
-	public string DataPoint { get; set; }
+	public string DataPoint { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns to sort by
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to exclude global
@@ -46,5 +46,5 @@ public class AlertsThresholdsReport : ReportBase
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

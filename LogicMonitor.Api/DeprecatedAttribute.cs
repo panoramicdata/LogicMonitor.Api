@@ -9,10 +9,10 @@ public class DeprecatedAttribute : Attribute
 	/// <summary>
 	/// The preferred alternative
 	/// </summary>
-	public string Preferred { get; set; }
+	public string Preferred { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Notes
 	/// </summary>
-	public string Notes { get; set; }
+	public string Notes { get; set; } = string.Empty;
 }

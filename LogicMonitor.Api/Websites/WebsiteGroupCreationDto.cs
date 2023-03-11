@@ -10,7 +10,7 @@ public class WebsiteGroupCreationDto : CreationDto<WebsiteGroup>
 	/// User permission
 	/// </summary>
 	[DataMember(Name = "parentId")]
-	public string ParentId { get; set; }
+	public string ParentId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether monitoring is disabled
@@ -28,23 +28,23 @@ public class WebsiteGroupCreationDto : CreationDto<WebsiteGroup>
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The parent group
 	/// </summary>
 	[DataMember(Name = "parentGroup")]
-	public string ParentGroupFullPath { get; set; }
+	public string ParentGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty> Properties { get; set; }
+	public List<EntityProperty> Properties { get; set; } = new();
 }

@@ -10,19 +10,19 @@ public class RecycleBinItem : IHasEndpoint
 	/// The ID
 	/// </summary>
 	[DataMember(Name = "id")]
-	public string Id { get; set; }
+	public string Id { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Resource Type
 	/// </summary>
 	[DataMember(Name = "resourceType")]
-	public string ResourceType { get; set; }
+	public string ResourceType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The deleted resource's name
 	/// </summary>
 	[DataMember(Name = "resourceName")]
-	public string ResourceName { get; set; }
+	public string ResourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// When it was deleted in milliseconds since the Epoch
@@ -39,7 +39,7 @@ public class RecycleBinItem : IHasEndpoint
 	/// Who deleted it
 	/// </summary>
 	[DataMember(Name = "deletedBy")]
-	public string DeletedBy { get; set; }
+	public string DeletedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Resource ID
@@ -51,7 +51,7 @@ public class RecycleBinItem : IHasEndpoint
 	/// The paths
 	/// </summary>
 	[DataMember(Name = "paths")]
-	public List<string> Paths { get; set; }
+	public List<string> Paths { get; set; } = new();
 
 	/// <summary>
 	/// The endpoint

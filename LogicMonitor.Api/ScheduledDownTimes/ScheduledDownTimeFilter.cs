@@ -24,7 +24,7 @@ public class ScheduledDownTimeFilter
 	/// <summary>
 	/// The sort property
 	/// </summary>
-	public string OrderByProperty { get; set; }
+	public string OrderByProperty { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Number to take

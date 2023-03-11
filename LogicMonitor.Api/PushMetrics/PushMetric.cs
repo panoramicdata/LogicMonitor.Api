@@ -17,7 +17,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * No whitespace allowed
 	/// </summary>
 	[DataMember(Name = "resourceName")]
-	public string ResourceName { get; set; }
+	public string ResourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Resource description. Only considered when creating a new resource.
@@ -25,7 +25,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * 65535-character limit
 	/// </summary>
 	[DataMember(Name = "resourceDescription")]
-	public string ResourceDescription { get; set; }
+	public string ResourceDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// An array of existing resource properties that will be used to identify the resource.
@@ -43,7 +43,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Case insensitive
 	/// </summary>
 	[DataMember(Name = "resourceIds")]
-	public Dictionary<string, string> ResourceIds { get; set; }
+	public Dictionary<string, string> ResourceIds { get; set; } = new();
 
 	/// <summary>
 	/// New properties for resource.
@@ -62,7 +62,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Case insensitive
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public Dictionary<string, string> ResourceProperties { get; set; }
+	public Dictionary<string, string> ResourceProperties { get; set; } = new();
 
 	/// <summary>
 	/// The DataSource id
@@ -73,7 +73,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Only positive whole numbers allowed
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
-	public string DataSourceId { get; set; }
+	public string DataSourceId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// DataSource unique name.
@@ -87,7 +87,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Hyphen allowed only at the end; hyphen must be used with at least one other character
 	/// </summary>
 	[DataMember(Name = "dataSource")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// DataSource display name.
@@ -99,7 +99,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Keys and values should not contain backslashes(\)
 	/// </summary>
 	[DataMember(Name = "dataSourceDisplayName")]
-	public string DataSourceDisplayName { get; set; }
+	public string DataSourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource group
@@ -110,14 +110,14 @@ public class PushMetric : IHasSingletonEndpoint
 	/// Optional. Defaults to "".
 	/// </summary>
 	[DataMember(Name = "dataSourceGroup")]
-	public string DataSourceGroup { get; set; }
+	public string DataSourceGroup { get; set; } = string.Empty;
 
 	/// <summary>
 	/// An array of DataSource instances.
 	/// Required
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<PushMetricInstance> Instances { get; set; }
+	public List<PushMetricInstance> Instances { get; set; } = new();
 
 	/// <inheritdoc />
 	public string Endpoint() => "metric/ingest";

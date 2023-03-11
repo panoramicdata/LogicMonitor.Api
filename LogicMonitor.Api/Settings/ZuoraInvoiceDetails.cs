@@ -10,7 +10,7 @@ public class PaymentInformation
 	/// The AccountPaymentTerm
 	/// </summary>
 	[DataMember(Name = "accountPaymentTerm")]
-	public string AccountPaymentTerm { get; set; }
+	public string AccountPaymentTerm { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CardExpiryMonth
@@ -22,13 +22,13 @@ public class PaymentInformation
 	/// The CardMaskNumber
 	/// </summary>
 	[DataMember(Name = "cardMaskNumber")]
-	public string CardMaskNumber { get; set; }
+	public string CardMaskNumber { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CardHolderName
 	/// </summary>
 	[DataMember(Name = "cardHolderName")]
-	public string CardHolderName { get; set; }
+	public string CardHolderName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The AccountBdc
@@ -40,7 +40,7 @@ public class PaymentInformation
 	/// The CreditCardType
 	/// </summary>
 	[DataMember(Name = "creditCardType")]
-	public string CreditCardType { get; set; }
+	public string CreditCardType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The UpdatedDate
@@ -52,31 +52,31 @@ public class PaymentInformation
 	/// The AccountCrmId
 	/// </summary>
 	[DataMember(Name = "accountCrmId")]
-	public string AccountCrmId { get; set; }
+	public string AccountCrmId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CreditCardCountry
 	/// </summary>
 	[DataMember(Name = "creditCardCountry")]
-	public string CreditCardCountry { get; set; }
+	public string CreditCardCountry { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The PaymentType
 	/// </summary>
 	[DataMember(Name = "paymentType")]
-	public string PaymentType { get; set; }
+	public string PaymentType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The AccountStatus
 	/// </summary>
 	[DataMember(Name = "accountStatus")]
-	public string AccountStatus { get; set; }
+	public string AccountStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The AccountId
 	/// </summary>
 	[DataMember(Name = "accountId")]
-	public string AccountId { get; set; }
+	public string AccountId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CardExpiryYear
@@ -88,43 +88,43 @@ public class PaymentInformation
 	/// The AccountBillingEmail
 	/// </summary>
 	[DataMember(Name = "accountBillingEmail")]
-	public string AccountBillingEmail { get; set; }
+	public string AccountBillingEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CreditCardAddress1
 	/// </summary>
 	[DataMember(Name = "creditCardAddress1")]
-	public string CreditCardAddress1 { get; set; }
+	public string CreditCardAddress1 { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CreditCardAddress2
 	/// </summary>
 	[DataMember(Name = "creditCardAddress2")]
-	public string CreditCardAddress2 { get; set; }
+	public string CreditCardAddress2 { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CreditCardPostalCode
 	/// </summary>
 	[DataMember(Name = "creditCardPostalCode")]
-	public string CreditCardPostalCode { get; set; }
+	public string CreditCardPostalCode { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DefaultPaymentMethodId
 	/// </summary>
 	[DataMember(Name = "defaultPaymentMethodId")]
-	public string DefaultPaymentMethodId { get; set; }
+	public string DefaultPaymentMethodId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The CreditCardCity
 	/// </summary>
 	[DataMember(Name = "creditCardCity")]
-	public string CreditCardCity { get; set; }
+	public string CreditCardCity { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Phone
 	/// </summary>
 	[DataMember(Name = "phone")]
-	public string Phone { get; set; }
+	public string Phone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The AccountBalance
@@ -136,10 +136,10 @@ public class PaymentInformation
 	/// The CreditCardState
 	/// </summary>
 	[DataMember(Name = "creditCardState")]
-	public string CreditCardState { get; set; }
+	public string CreditCardState { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Email		/// </summary>
 	[DataMember(Name = "email")]
-	public string Email { get; set; }
+	public string Email { get; set; } = string.Empty;
 }

@@ -10,7 +10,7 @@ public class HistoricScheduledDownTime : StringIdentifiedItem
 	/// Comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Start date time UTC
@@ -28,7 +28,7 @@ public class HistoricScheduledDownTime : StringIdentifiedItem
 	/// Item Type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string ItemType { get; set; }
+	public string ItemType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Item Type
@@ -40,7 +40,7 @@ public class HistoricScheduledDownTime : StringIdentifiedItem
 	/// The user that configured it
 	/// </summary>
 	[DataMember(Name = "admin")]
-	public string Admin { get; set; }
+	public string Admin { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Duration

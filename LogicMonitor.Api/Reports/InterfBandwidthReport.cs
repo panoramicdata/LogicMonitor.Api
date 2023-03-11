@@ -10,13 +10,13 @@ public class InterfBandwidthReport : DateRangeReport
 	/// The devices OR groups selected for the report, where multiple entities are separated by commas
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string? HostsVal { get; set; }
+	public string HostsVal { get; set; } = string.Empty;
 
 	/// <summary>
 	/// host | group. The type of entities specified in the hostsVal field
 	/// </summary>
 	[DataMember(Name = "hostsValType")]
-	public string? HostsValType { get; set; }
+	public string HostsValType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// 0 | 1\n0: Text only - metrics will be displayed in a tabular format.\n1: One graph per instance - metrics will be displayed in a tabular format and one graph will be displayed per instance
@@ -34,7 +34,7 @@ public class InterfBandwidthReport : DateRangeReport
 	/// The datapoint or calculation on a datapoint that will be included in the report, where each datapoint/calculation is specified by three fields: dataSourceId, instances (glob is okay)
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<Metric> Metrics { get; set; } 
+	public List<Metric> Metrics { get; set; } = new();
 
 	/// <summary>
 	/// true | false\nfalse: Metrics will be displayed for all selected devices or groups\ntrue: Metrics will only be displayed for the top ten device or groups

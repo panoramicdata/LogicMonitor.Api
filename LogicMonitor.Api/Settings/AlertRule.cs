@@ -16,37 +16,37 @@ public class AlertRule : NamedItem, IHasEndpoint
 	/// The level (as a string)
 	/// </summary>
 	[DataMember(Name = "levelStr")]
-	public string LevelString { get; set; }
+	public string LevelString { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device filter
 	/// </summary>
 	[DataMember(Name = "devices")]
-	public List<string> Devices { get; set; }
+	public List<string> Devices { get; set; } = new();
 
 	/// <summary>
 	/// The device group filter
 	/// </summary>
 	[DataMember(Name = "deviceGroups")]
-	public List<string> DeviceGroups { get; set; }
+	public List<string> DeviceGroups { get; set; } = new();
 
 	/// <summary>
 	/// The affected DataSource name filter
 	/// </summary>
 	[DataMember(Name = "datasource")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The data source instance name filter
 	/// </summary>
 	[DataMember(Name = "instance")]
-	public string DataSourceInstanceName { get; set; }
+	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The datapoint filter
 	/// </summary>
 	[DataMember(Name = "datapoint")]
-	public string DataPoint { get; set; }
+	public string DataPoint { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The escalation chain interval in minutes
@@ -64,13 +64,13 @@ public class AlertRule : NamedItem, IHasEndpoint
 	/// The Escalation Chain
 	/// </summary>
 	[DataMember(Name = "escalatingChain")]
-	public EscalationChain EscalationChain { get; set; }
+	public EscalationChain EscalationChain { get; set; } = new();
 
 	/// <summary>
 	/// The resource property filters list
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public List<DeviceProperty> ResourceProperties { get; set; }
+	public List<DeviceProperty> ResourceProperties { get; set; } = new();
 
 	/// <summary>
 	///  send anomaly suppressed alert

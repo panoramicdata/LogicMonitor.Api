@@ -77,7 +77,7 @@ public class LogicMonitorApiException : Exception
 	/// <summary>
 	/// The body of the response sent by LogicMonitor
 	/// </summary>
-	public string ResponseBody { get; protected set; }
+	public string ResponseBody { get; protected set; } = string.Empty;
 
 	/// <summary>
 	/// The HTTP status code
@@ -87,7 +87,7 @@ public class LogicMonitorApiException : Exception
 	/// <summary>
 	/// The error message
 	/// </summary>
-	public string ErrorMessage { get; }
+	public string ErrorMessage { get; } = string.Empty;
 
 	private bool Equals(LogicMonitorApiException other) => HttpStatusCode == other.HttpStatusCode && string.Equals(ErrorMessage, other.ErrorMessage, StringComparison.Ordinal);
 

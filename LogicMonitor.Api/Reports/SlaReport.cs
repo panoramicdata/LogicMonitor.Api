@@ -16,25 +16,25 @@ public class SlaReport : DateRangeReport
 	/// The days of the week that the SLA report should take into account, where multiple values are separated by commas and * refers to all days of the week
 	/// </summary>
 	[DataMember(Name = "dayInOneWeek")]
-	public string? DayInOneWeek { get; set; }
+	public string DayInOneWeek { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<SlaReportMetric> Metrics { get; set; } 
+	public List<SlaReportMetric> Metrics { get; set; } = new();
 
 	/// <summary>
 	/// The hours of each selected day that the SLA report should take into account, where * refers to all hours
 	/// </summary>
 	[DataMember(Name = "periodInOneDay")]
-	public string? PeriodInOneDay { get; set; }
+	public string PeriodInOneDay { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The specific timezone for the report
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string? TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// If true, the SLA summary (total %) will be displayed
@@ -58,5 +58,5 @@ public class SlaReport : DateRangeReport
 	/// The columns displayed in the report
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn>? Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

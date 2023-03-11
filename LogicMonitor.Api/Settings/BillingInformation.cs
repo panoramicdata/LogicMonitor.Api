@@ -10,13 +10,13 @@ public class BillingInformation : IHasSingletonEndpoint
 	/// The account number
 	/// </summary>
 	[DataMember(Name = "zuora")]
-	public PaymentInformation PaymentInformation { get; set; }
+	public PaymentInformation PaymentInformation { get; set; } = new();
 
 	/// <summary>
 	/// The account balance in USD
 	/// </summary>
 	[DataMember(Name = "zuoraInvoiceDetails")]
-	public InvoiceDetails? InvoiceDetails { get; set; }
+	public InvoiceDetails InvoiceDetails { get; set; } = new();
 
 	/// <summary>
 	///     The endpoint

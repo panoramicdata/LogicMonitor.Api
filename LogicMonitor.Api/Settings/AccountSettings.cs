@@ -191,7 +191,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     The device groups info
 	/// </summary>
 	[DataMember(Name = "hostGroupsInfo")]
-	public DeviceGroupsInfo DeviceGroupsInfo { get; set; }
+	public DeviceGroupsInfo DeviceGroupsInfo { get; set; } = new();
 
 	/// <summary>
 	///     The dynamic threshold count
@@ -376,7 +376,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     The tenant identifier property name
 	/// </summary>
 	[DataMember(Name = "tenantIdentifierPropertyName")]
-	public string TenantIdentifierPropertyName { get; set; }
+	public string TenantIdentifierPropertyName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Terminated AWS Device count

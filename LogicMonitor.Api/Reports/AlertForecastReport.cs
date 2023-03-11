@@ -16,25 +16,25 @@ public class AlertForecastReport : DateRangeReport
 	/// The hostsVal
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string DevicesValue { get; set; }
+	public string DevicesValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The hostsValType
 	/// </summary>
 	[DataMember(Name = "hostsValType")]
-	public string DevicesValueType { get; set; }
+	public string DevicesValueType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The algorithm
 	/// </summary>
 	[DataMember(Name = "algorithm")]
-	public string Algorithm { get; set; }
+	public string Algorithm { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns to sort by
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to exclude global
@@ -46,11 +46,11 @@ public class AlertForecastReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<AlertForecastReportMetric> Metrics { get; set; }
+	public List<AlertForecastReportMetric> Metrics { get; set; } = new();
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

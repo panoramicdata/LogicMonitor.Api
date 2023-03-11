@@ -15,19 +15,19 @@ public class Metric
 	/// The DataSource full name
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource instances
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public string Instances { get; set; }
+	public string Instances { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string? DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 
 	/// <summary>

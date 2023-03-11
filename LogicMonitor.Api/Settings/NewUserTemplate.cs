@@ -10,13 +10,13 @@ public class NewUserMessageTemplate : IHasSingletonEndpoint
 	///     messageSubject
 	/// </summary>
 	[DataMember(Name = "messageSubject")]
-	public string Subject { get; set; }
+	public string Subject { get; set; } = string.Empty;
 
 	/// <summary>
 	///     messageBody
 	/// </summary>
 	[DataMember(Name = "messageBody")]
-	public string Body { get; set; }
+	public string Body { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/messagetemplate";

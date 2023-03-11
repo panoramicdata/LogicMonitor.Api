@@ -10,7 +10,7 @@ public class InvoiceDetails
 	/// The account number
 	/// </summary>
 	[DataMember(Name = "accountNumber")]
-	public string AccountNumber { get; set; }
+	public string AccountNumber { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The account balance in USD
@@ -22,17 +22,17 @@ public class InvoiceDetails
 	/// The list of previous invoices
 	/// </summary>
 	[DataMember(Name = "previousInvoices")]
-	public List<Invoice> PreviousInvoices { get; set; }
+	public List<Invoice> PreviousInvoices { get; set; } = new();
 
 	/// <summary>
 	/// The product name
 	/// </summary>
 	[DataMember(Name = "productName")]
-	public string ProductName { get; set; }
+	public string ProductName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The rate plan name
 	/// </summary>
 	[DataMember(Name = "ratePlanName")]
-	public string RatePlanName { get; set; }
+	public string RatePlanName { get; set; } = string.Empty;
 }

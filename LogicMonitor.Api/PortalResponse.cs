@@ -64,12 +64,12 @@ internal class PortalResponse<T> where T : new()
 	/// <summary>
 	///    A JContainer for the Data element
 	/// </summary>
-	public JContainer Data { get; set; }
+	public JContainer? Data { get; set; }
 
 	/// <summary>
 	///    The error message
 	/// </summary>
-	public string ErrorMessage { get; set; }
+	public string ErrorMessage { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether the HttpStatusCode is of an error type

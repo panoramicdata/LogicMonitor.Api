@@ -16,13 +16,13 @@ public class TimeZoneSetting
 	///    Timezone as text
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Timezone as text
 	/// </summary>
 	[DataMember(Name = "timezoneShortName")]
-	public string ShortName { get; set; }
+	public string ShortName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Timezone as text

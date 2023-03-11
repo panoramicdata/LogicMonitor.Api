@@ -10,13 +10,13 @@ public class OpsNote : StringIdentifiedItem, IHasEndpoint
 	///    The OpsNote note
 	/// </summary>
 	[DataMember(Name = "note")]
-	public string Note { get; set; }
+	public string Note { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The creator
 	/// </summary>
 	[DataMember(Name = "createdBy")]
-	public string CreatedBy { get; set; }
+	public string CreatedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The timestamp of the OpsNote
@@ -28,13 +28,13 @@ public class OpsNote : StringIdentifiedItem, IHasEndpoint
 	///    The scopes
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<OpsNoteScope> Scopes { get; set; }
+	public List<OpsNoteScope> Scopes { get; set; } = new();
 
 	/// <summary>
 	///    The tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public List<OpsNoteTag> Tags { get; set; }
+	public List<OpsNoteTag> Tags { get; set; } = new();
 
 	/// <summary>
 	///    The DateTime version of HappenOnTimeStampUtc

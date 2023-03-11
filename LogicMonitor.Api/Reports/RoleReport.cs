@@ -10,11 +10,11 @@ public class RoleReport : ReportBase
 	/// The display format
 	/// </summary>
 	[DataMember(Name = "displayFormat")]
-	public string DisplayFormat { get; set; }
+	public string DisplayFormat { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

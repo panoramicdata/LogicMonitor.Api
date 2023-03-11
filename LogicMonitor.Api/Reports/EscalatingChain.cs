@@ -29,13 +29,13 @@ public class EscalatingChain : NamedStringIdentifiedItem
 	/// destinations
 	/// </summary>
 	[DataMember(Name = "destinations")]
-	public List<Chain> Destinations { get; set; } 
+	public List<Chain> Destinations { get; set; } = new();
 
 	/// <summary>
 	/// ccDestinations
 	/// </summary>
 	[DataMember(Name = "ccDestinations")]
-	public List<Recipient>? CcDestinations { get; set; }
+	public List<Recipient> CcDestinations { get; set; } = new();
 
 	/// <summary>
 	/// throttlingPeriod

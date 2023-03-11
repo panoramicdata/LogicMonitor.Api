@@ -17,7 +17,7 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    The creator
 	/// </summary>
 	[DataMember(Name = "creator")]
-	public string Creator { get; set; }
+	public string Creator { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The method
@@ -29,74 +29,74 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    Schedule on which to run this policy
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public RestSchedule Schedule { get; set; }
+	public RestSchedule Schedule { get; set; } = new();
 
 	/// <summary>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Netscan policy group name
 	/// </summary>
 	[DataMember(Name = "nsgId")]
-	public string GroupId { get; set; }
+	public string GroupId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The collector id as a string
 	/// </summary>
 	/// <example>"18"</example>
 	[DataMember(Name = "collector")]
-	public string CollectorId { get; set; }
+	public string CollectorId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Schedule on which to run this policy
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public EC2NetscanPolicyCredential Credentials { get; set; }
+	public EC2NetscanPolicyCredential Credentials { get; set; } = new();
 
 	/// <summary>
 	///    The subnet scan range
 	/// </summary>
 	[DataMember(Name = "subnet")]
-	public string SubnetScanRange { get; set; }
+	public string SubnetScanRange { get; set; } = string.Empty;
 
 	/// <summary>
 	///    IP addresses to exclude
 	/// </summary>
 	[DataMember(Name = "exclude")]
-	public string ExcludedIpAddresses { get; set; }
+	public string ExcludedIpAddresses { get; set; } = string.Empty;
 
 	/// <summary>
 	///    DDR
 	/// </summary>
 	[DataMember(Name = "ddr")]
-	public Ec2DDR Ddr { get; set; }
+	public Ec2DDR Ddr { get; set; } = new();
 
 	/// <summary>
 	///    IP addresses to exclude
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public ExcludeDuplicateIps DuplicatesStrategy { get; set; }
+	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = new();
 
 	/// <summary>
 	///    The script path (if required)
 	/// </summary>
 	[DataMember(Name = "scriptPath")]
-	public string ScriptPath { get; set; }
+	public string ScriptPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The script parameters
 	/// </summary>
 	[DataMember(Name = "scriptParams")]
-	public string ScriptParameters { get; set; }
+	public string ScriptParameters { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Script type
@@ -108,17 +108,17 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    Groovyscript
 	/// </summary>
 	[DataMember(Name = "groovyScript")]
-	public string GroovyScript { get; set; }
+	public string GroovyScript { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The groovy script parameters
 	/// </summary>
 	[DataMember(Name = "groovyScriptParams")]
-	public string GroovyScriptParameters { get; set; }
+	public string GroovyScriptParameters { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The ports
 	/// </summary>
 	[DataMember(Name = "ports")]
-	public RestNetscanPorts Ports { get; set; }
+	public RestNetscanPorts Ports { get; set; } = new();
 }

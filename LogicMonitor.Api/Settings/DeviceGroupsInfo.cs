@@ -10,11 +10,11 @@ public class DeviceGroupsInfo
 	///     The device groups info details for static device groups
 	/// </summary>
 	[DataMember(Name = "static")]
-	public DeviceGroupInfoDetail Static { get; set; }
+	public DeviceGroupInfoDetail Static { get; set; } = new();
 
 	/// <summary>
 	///     The device groups info details for dynamic device groups
 	/// </summary>
 	[DataMember(Name = "dynamic")]
-	public DeviceGroupInfoDetail Dynamic { get; set; }
+	public DeviceGroupInfoDetail Dynamic { get; set; } = new();
 }

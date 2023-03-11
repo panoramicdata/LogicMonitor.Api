@@ -10,7 +10,7 @@ public class Invoice
 	/// The account id
 	/// </summary>
 	[DataMember(Name = "accountId")]
-	public string AccountId { get; set; }
+	public string AccountId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The amount in USD
@@ -28,37 +28,37 @@ public class Invoice
 	/// The created date
 	/// </summary>
 	[DataMember(Name = "createdDate")]
-	public string CreatedDate { get; set; }
+	public string CreatedDate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The due date
 	/// </summary>
 	[DataMember(Name = "dueDate")]
-	public string DueDate { get; set; }
+	public string DueDate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The invoice date
 	/// </summary>
 	[DataMember(Name = "invoiceDate")]
-	public string InvoiceDate { get; set; }
+	public string InvoiceDate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The invoice number
 	/// </summary>
 	[DataMember(Name = "invoiceId")]
-	public string InvoiceId { get; set; }
+	public string InvoiceId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The invoice status
 	/// </summary>
 	[DataMember(Name = "invoiceStatus")]
-	public string InvoiceStatus { get; set; }
+	public string InvoiceStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The invoice number
 	/// </summary>
 	[DataMember(Name = "invoiceNumber")]
-	public string InvoiceNumber { get; set; }
+	public string InvoiceNumber { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The payment amount
@@ -70,17 +70,17 @@ public class Invoice
 	/// The posted date
 	/// </summary>
 	[DataMember(Name = "postedDate")]
-	public string PostedDate { get; set; }
+	public string PostedDate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The target date
 	/// </summary>
 	[DataMember(Name = "targetDate")]
-	public string TargetDate { get; set; }
+	public string TargetDate { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The updated date
 	/// </summary>
 	[DataMember(Name = "updatedDate")]
-	public string UpdatedDate { get; set; }
+	public string UpdatedDate { get; set; } = string.Empty;
 }

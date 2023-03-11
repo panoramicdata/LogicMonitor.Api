@@ -34,13 +34,13 @@ public class Role : NamedItem, IHasEndpoint
 	/// The label for the custom help URL as it will appear in the Help \u0026 Support dropdown menu
 	/// </summary>
 	[DataMember(Name = "customHelpLabel")]
-	public string? CustomHelpLabel { get; set; }
+	public string CustomHelpLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The URL that should be added to the Help \u0026 Support dropdown menu
 	/// </summary>
 	[DataMember(Name = "customHelpUrl")]
-	public string? CustomHelpUrl { get; set; }
+	public string CustomHelpUrl { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The count of the users which are belongs to the role
@@ -52,7 +52,7 @@ public class Role : NamedItem, IHasEndpoint
 	/// The account privileges associated with the role. Privileges can be added to a role for each area of your account
 	/// </summary>
 	[DataMember(Name = "privileges")]
-	public List<RolePrivilege> Privileges { get; set; } 
+	public List<RolePrivilege> Privileges { get; set; } = new();
 
 	/// <summary>
 	/// The group Id of the role

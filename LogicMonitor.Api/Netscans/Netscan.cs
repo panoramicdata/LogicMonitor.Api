@@ -10,13 +10,13 @@ public class Netscan : NamedItem, IExecutable
 	/// The user that created the policy
 	/// </summary>
 	[DataMember(Name = "creator")]
-	public string? CreatorName { get; set; }
+	public string CreatorName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The name of the group of the Collector associated with this Netscan
 	/// </summary>
 	[DataMember(Name = "collectorGroupName")]
-	public string? CollectorGroupName { get; set; }
+	public string CollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The method that should be used to discover devices. Options are nmap (ICMP Ping), nec2 (EC2), enhancedScript and script
@@ -34,13 +34,13 @@ public class Netscan : NamedItem, IExecutable
 	/// The date and time of the next start time of the scan - displayed as manual if the scan does not run on a schedule
 	/// </summary>
 	[DataMember(Name = "nextStart")]
-	public string? NextStart { get; set; }
+	public string NextStart { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Information that determines how duplicate discovered devices should be handled
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } 
+	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = new(); 
 
 	/// <summary>
 	/// The Id of the device
@@ -64,13 +64,13 @@ public class Netscan : NamedItem, IExecutable
 	/// Information related to the recurring execution schedule for the Netscan Policy
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public RestSchedule Schedule { get; set; } 
+	public RestSchedule Schedule { get; set; } = new();
 
 	/// <summary>
 	/// The description of the Collector associated with this Netscan
 	/// </summary>
 	[DataMember(Name = "collectorDescription")]
-	public string? CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The epoch of the next start time of the scan - displayed as 0 if the scan does not run on a schedule
@@ -88,7 +88,7 @@ public class Netscan : NamedItem, IExecutable
 	/// The group the Netscan policy should belong to
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string? GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Discovered device rules
@@ -100,19 +100,19 @@ public class Netscan : NamedItem, IExecutable
 	/// The credentials to be used for the scan
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public EC2NetscanPolicyCredential Credentials { get; set; } 
+	public EC2NetscanPolicyCredential Credentials { get; set; } = new();
 
 	/// <summary>
 	/// Which IP the EC2 instance should be monitored with for nec2 scans: private or public
 	/// </summary>
 	[DataMember(Name = "accessibility")]
-	public string Accessibility { get; set; } 
+	public string Accessibility { get; set; } = string.Empty;
 
 	/// <summary>
 	/// How dead EC2 instances should be handled for nec2 scans. Must be Manually
 	/// </summary>
 	[DataMember(Name = "deadOperation")]
-	public string? DeadOperation { get; set; }
+	public string DeadOperation { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ports
@@ -124,7 +124,7 @@ public class Netscan : NamedItem, IExecutable
 	/// The subnet to exclude from scanning from nmap scans
 	/// </summary>
 	[DataMember(Name = "exclude")]
-	public string? Exclude { get; set; }
+	public string Exclude { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Include Network \u0026 Broadcast Address for CIDR based netscan
@@ -136,19 +136,19 @@ public class Netscan : NamedItem, IExecutable
 	/// The subnet to scan for nmap scans
 	/// </summary>
 	[DataMember(Name = "subnet")]
-	public string SubnetScanRange { get; set; } 
+	public string SubnetScanRange { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The script path for an external script
 	/// </summary>
 	[DataMember(Name = "scriptPath")]
-	public string? ScriptPath { get; set; }
+	public string ScriptPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The full path of the default group to add discovered devices to
 	/// </summary>
 	[DataMember(Name = "defaultGroupFullPath")]
-	public string? DefaultGroupFullPath { get; set; }
+	public string DefaultGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The ID of the default group to add discovered devices to
@@ -160,13 +160,13 @@ public class Netscan : NamedItem, IExecutable
 	/// For embedded script scans, the groovy script contents
 	/// </summary>
 	[DataMember(Name = "groovyScript")]
-	public string? GroovyScript { get; set; }
+	public string GroovyScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Linux script parameters
 	/// </summary>
 	[DataMember(Name = "linuxScriptParams")]
-	public string? LinuxScriptParameters { get; set; }
+	public string LinuxScriptParameters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// For script scans, the type of script. Options are embeded and external
@@ -178,31 +178,31 @@ public class Netscan : NamedItem, IExecutable
 	/// For embedded script scans, the groovy script parameters
 	/// </summary>
 	[DataMember(Name = "groovyScriptParams")]
-	public string? GroovyScriptParameters { get; set; }
+	public string GroovyScriptParameters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Windows script
 	/// </summary>
 	[DataMember(Name = "windowsScript")]
-	public string? WindowsScript { get; set; }
+	public string WindowsScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Windows script parameters
 	/// </summary>
 	[DataMember(Name = "windowsScriptParams")]
-	public string? WindowsScriptParameters { get; set; }
+	public string WindowsScriptParameters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The parameters for an external script
 	/// </summary>
 	[DataMember(Name = "scriptParams")]
-	public string? ScriptParameters { get; set; }
+	public string ScriptParameters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Linux script
 	/// </summary>
 	[DataMember(Name = "linuxScript")]
-	public string? LinuxScript { get; set; }
+	public string LinuxScript { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The endpoint

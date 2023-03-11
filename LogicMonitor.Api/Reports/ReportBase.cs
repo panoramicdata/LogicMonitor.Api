@@ -12,13 +12,13 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The report type. Acceptable values are: Alert,Alert SLA,Alert threshold,Alert trends,Host CPU,Host group inventory,Host inventory,Host metric trends,Interfaces Bandwidth,Netflow device metric,Service Level Agreement,Website Service Overview,Word template,Audit Log,Alert Forecasting,Dashboard,Website SLA,User,Role
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; } 
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The type alias
 	/// </summary>
 	[DataMember(Name = "typeAlias")]
-	public string? TypeAlias { get; set; }
+	public string TypeAlias { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Id of the group the report is in, where Id\u003d0 is the root report group
@@ -30,31 +30,31 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The format of the report. Allowable values are: HTML, PDF, CSV, WORD
 	/// </summary>
 	[DataMember(Name = "format")]
-	public string? Format { get; set; }
+	public string Format { get; set; } = string.Empty; 
 
 	/// <summary>
 	/// Whether or not the report is configured to be delivered via email. Acceptable values are: none, email
 	/// </summary>
 	[DataMember(Name = "delivery")]
-	public string? Delivery { get; set; }
+	public string Delivery { get; set; } = string.Empty;
 
 	/// <summary>
 	/// If the report is configured to be delivered via email, this object provides the recipients that the report will be delivered to
 	/// </summary>
 	[DataMember(Name = "recipients")]
-	public List<ReportRecipient>? Recipients { get; set; }
+	public List<ReportRecipient> Recipients { get; set; } = new();
 
 	/// <summary>
 	/// A cron schedule that indicates when the report will be delivered via email
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public string? Schedule { get; set; }
+	public string Schedule { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The specific timezone for the scheduled report
 	/// </summary>
 	[DataMember(Name = "scheduleTimezone")]
-	public string? ScheduleTimezone { get; set; }
+	public string ScheduleTimezone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Id of the user that last modified the report
@@ -66,7 +66,7 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The username of the user that last modified the report
 	/// </summary>
 	[DataMember(Name = "lastmodifyUserName")]
-	public string? LastmodifyUserName { get; set; }
+	public string LastmodifyUserName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether or not other users are allowed to view the report as the user who last modified the report
@@ -108,13 +108,13 @@ public class ReportBase : NamedItem, IHasEndpoint
 	/// The name of the custom report template
 	/// </summary>
 	[DataMember(Name = "customReportTypeName")]
-	public string? CustomReportTypeName { get; set; }
+	public string CustomReportTypeName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The report link Expire. Allowable values are:High Flexibility,High Security
 	/// </summary>
 	[DataMember(Name = "reportLinkExpire")]
-	public string? ReportLinkExpire { get; set; }
+	public string ReportLinkExpire { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The number of links associated with the report, where each link corresponds to a generated report

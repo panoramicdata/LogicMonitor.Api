@@ -113,7 +113,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// Child groups
 	/// </summary>
 	[DataMember(Name = "subGroups")]
-	public List<WebsiteGroup> ChildWebsiteGroups { get; set; }
+	public List<WebsiteGroup> ChildWebsiteGroups { get; set; } = new();
 
 	/// <inheritdoc />
 	public string Endpoint() => "website/groups";

@@ -43,5 +43,5 @@ public class DeviceDataSourceScheduledDownTimeCreationDto : ScheduledDownTimeCre
 	///    The datasource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 }

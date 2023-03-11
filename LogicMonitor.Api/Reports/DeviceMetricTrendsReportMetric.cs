@@ -22,17 +22,17 @@ public class DeviceMetricTrendsReportMetric
 	/// The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "DataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instances
 	/// </summary>
 	[DataMember(Name = "Instances")]
-	public string Instances { get; set; }
+	public string Instances { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The metric
 	/// </summary>
 	[DataMember(Name = "Metric")]
-	public string Metric { get; set; }
+	public string Metric { get; set; } = string.Empty;
 }

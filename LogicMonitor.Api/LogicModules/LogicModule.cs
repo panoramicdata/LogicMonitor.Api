@@ -11,13 +11,13 @@ public abstract class LogicModule : NamedItem
 	/// The metadata checksum for the LMModule content
 	/// </summary>
 	[DataMember(Name = "checksum")]
-	public string Checksum { get; set; }
+	public string Checksum { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The lineage Id of the LMModule
 	/// </summary>
 	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; }
+	public string LineageId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes

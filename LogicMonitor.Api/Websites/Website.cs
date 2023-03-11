@@ -16,7 +16,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The locations from which the website is monitored. If the website is internal, this field should include Collectors. If Non-Internal, possible test locations are:\n1 : US - LA\n2 : US - DC\n3 : US - SF\n4 : Europe - Dublin\n5 : Asia - Singapore\n6 : Australia - Sydney\ntestLocation:\"{all:true}\" indicates that the service will be monitored from all checkpoint locations\ntestLocation:\"{smgIds:[1,2,3]}\" indicates that the service will be monitored from checkpoint locations 1, 2 and 3\ntestLocation:\"{collectorIds:[85,90]}\" indicates that the service will be monitored by Collectors 85 and 90
 	/// </summary>
 	[DataMember(Name = "testLocation")]
-	public WebsiteLocation TestLocation { get; set; } 
+	public WebsiteLocation TestLocation { get; set; } = new();
 
 	/// <summary>
 	/// The id of the group the website is in
