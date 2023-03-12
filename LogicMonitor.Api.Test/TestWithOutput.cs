@@ -46,7 +46,8 @@ public abstract class TestWithOutput
 		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
 		DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 		WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
-		SDTResourceGroupId= testPortalConfig.SDTResourceGroupId;
+		ResourceGroupFullPath = testPortalConfig.ResourceGroupFullPath;
+		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
 		WebsiteName = testPortalConfig.WebsiteName;
 		SnmpDeviceId = testPortalConfig.SnmpDeviceId;
 		AllWidgetsDashboardId = testPortalConfig.AllWidgetsDashboardId;

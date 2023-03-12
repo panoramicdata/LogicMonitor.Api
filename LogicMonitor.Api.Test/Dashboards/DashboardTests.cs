@@ -56,6 +56,8 @@ public class DashboardTests : TestWithOutput
 			.GetByNameAsync<Dashboard>("All Widgets", default)
 			.ConfigureAwait(false);
 
+		originalDashboard ??= new();
+
 		var newDashboard = await LogicMonitorClient.CloneAsync(originalDashboard.Id, new DashboardCloneRequest
 		{
 			Name = "All widgets clone",
@@ -91,7 +93,7 @@ public class DashboardTests : TestWithOutput
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
 		widgets.Should().HaveCount(20); // There are 20 different types of widget
-
+		widgets ??= new();
 		// Test each type
 
 		// AlertsList

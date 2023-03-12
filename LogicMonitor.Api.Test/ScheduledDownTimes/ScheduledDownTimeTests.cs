@@ -194,7 +194,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	public async Task AddAndDeleteAResourceGroupSdt()
 	{
 		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteAResourceGroupSdt initial comment";
-		int resourceGroupId = SDTResourceGroupId;
+		var resourceGroupId = SDTResourceGroupId;
 		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroupId)
 		{
 			Comment = initialComment,

@@ -70,6 +70,7 @@ public class DeviceTests : TestWithOutput
 		.OrderBy(c => c.Id)
 		.FirstOrDefault(c => !c.IsDown)?.Id;
 		collectorId.Should().NotBeNull();
+		collectorId ??= new();
 
 		// Create device group
 		var deviceGroup = await logicMonitorClient.CreateAsync(new DeviceGroupCreationDto
@@ -249,7 +250,11 @@ public class DeviceTests : TestWithOutput
 			.GetAsync<Device>(device.Id, default)
 			.ConfigureAwait(false);
 		refresh.CreatedOnSeconds.Should().BePositive();
-		refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
+		refresh.CreatedOnUtc.Should().NotBeNull();
+		if (refresh.CreatedOnUtc is not null)
+		{
+			refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
+		}
 	}
 
 	[Fact]

@@ -176,7 +176,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="subUrl"></param>
 	/// <param name="cancellationToken"></param>
 	public Task<List<T>> GetAllAsync<T>(
-		Filter<T> filter,
+		Filter<T>? filter,
 		string subUrl,
 		CancellationToken cancellationToken
 	) where T : new()
@@ -189,7 +189,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="subUrl"></param>
 	/// <param name="cancellationToken"></param>
 	public Task<List<T>> GetAllAsync<T>(string subUrl, CancellationToken cancellationToken) where T : new()
-		=> GetAllInternalAsync(default(Filter<T>), subUrl, cancellationToken);
+		=> GetAllInternalAsync(default(Filter<T>?), subUrl, cancellationToken);
 
 	/// <summary>
 	/// Get all
@@ -274,7 +274,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <typeparam name="T">The item to get</typeparam>
-	public virtual Task<T> GetAsync<T>(int id, Filter<T> filter, CancellationToken cancellationToken) where T : IdentifiedItem, IHasEndpoint, new()
+	public virtual Task<T> GetAsync<T>(int id, Filter<T>? filter, CancellationToken cancellationToken) where T : IdentifiedItem, IHasEndpoint, new()
 		=> GetBySubUrlAsync<T>($"{new T().Endpoint()}/{id}?{filter}", cancellationToken);
 
 	/// <summary>
@@ -304,7 +304,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			0 => null,
 			1 => items[0],
-			_ => throw new Exception($"An unexpected number of {typeof(T).Name} have name: {name}"),
+			_ => throw new InvalidOperationException($"An unexpected number of {typeof(T).Name} have name: {name}"),
 		};
 	}
 
@@ -722,7 +722,7 @@ public partial class LogicMonitorClient : IDisposable
 			: subUrl;
 		var httpVerb = requestMessage.Method.ToString().ToUpperInvariant();
 		var resourcePath = $"/{subUrl2}";
-		data = data ?? string.Empty;
+		data ??= string.Empty;
 
 		// Auth header
 		var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
@@ -784,7 +784,7 @@ public partial class LogicMonitorClient : IDisposable
 		Statistics.DataTransferDownlinkBytes += response.Content?.Headers.ContentLength ?? 0;
 	}
 
-	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T> filter, CancellationToken cancellationToken) where T : new()
+	private Task<Page<T>> FilteredGetAsync<T>(string subUrl, Filter<T>? filter, CancellationToken cancellationToken) where T : new()
 		=> GetAsync<Page<T>>(UseCache, $"{subUrl}?{filter}", cancellationToken);
 
 
@@ -795,7 +795,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <typeparam name="T">The item type</typeparam>
 	/// <returns>The filtered list</returns>
-	public virtual Task<Page<T>> GetAsync<T>(Filter<T> filter, CancellationToken cancellationToken) where T : IHasEndpoint, new()
+	public virtual Task<Page<T>> GetAsync<T>(Filter<T>? filter, CancellationToken cancellationToken) where T : IHasEndpoint, new()
 		=> GetAsync<Page<T>>(UseCache, $"{new T().Endpoint()}?{filter}", cancellationToken);
 
 	private Task<T> GetBySubUrlAsync<T>(string subUrl, CancellationToken cancellationToken) where T : class, new()
@@ -1130,6 +1130,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			return deserializedObject;
 		}
+
 		return new();
 	}
 
@@ -1236,6 +1237,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			return deserializedObject;
 		}
+
 		return new();
 	}
 
@@ -1399,7 +1401,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="subUrl"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>A list of Collectors</returns>
-	public Task<Page<T>> GetPageAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
+	public Task<Page<T>> GetPageAsync<T>(Filter<T>? filter, string subUrl, CancellationToken cancellationToken) where T : new()
 		=> GetPageInternalAsync(filter, subUrl, cancellationToken);
 
 	/// <summary>
@@ -1420,7 +1422,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="subUrl"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>A list of Collectors</returns>
-	private Task<Page<T>> GetPageInternalAsync<T>(Filter<T> filter, string subUrl, CancellationToken cancellationToken) where T : new()
+	private Task<Page<T>> GetPageInternalAsync<T>(Filter<T>? filter, string subUrl, CancellationToken cancellationToken) where T : new()
 		=> GetBySubUrlAsync<Page<T>>(subUrl.Contains('?')
 			? $"{subUrl}&{filter}"
 			: $"{subUrl}?{filter}"

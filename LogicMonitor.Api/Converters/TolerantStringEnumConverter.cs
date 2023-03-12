@@ -63,7 +63,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 				if (defaultName is not null)
 				{
 #if DEBUG
-						throw new Exception($"{objectType} missing an enum member for {enumText}");
+						throw new NotImplementedException($"{objectType} missing an enum member for {enumText}");
 #else
 					return Enum.Parse(objectType, defaultName);
 #endif

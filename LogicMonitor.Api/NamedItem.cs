@@ -24,6 +24,10 @@ public abstract class NamedItem : DescribedItem
 		}
 
 		var logicMonitorNamedEntity = obj as NamedItem;
+		if (logicMonitorNamedEntity is null)
+		{
+			return false;
+		}
 
 		return base.Equals(logicMonitorNamedEntity)
 				&& logicMonitorNamedEntity is not null

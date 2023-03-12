@@ -125,7 +125,7 @@ public partial class LogicMonitorClient
 		{
 			1 => await GetAsync<DataSource>(dataSources.Single().Id, cancellationToken).ConfigureAwait(false),
 			0 => null,
-			_ => throw new Exception($"Unexpected result count {dataSources.Count}"),
+			_ => throw new InvalidOperationException($"Unexpected result count {dataSources.Count}"),
 		};
 	}
 
