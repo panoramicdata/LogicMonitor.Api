@@ -142,7 +142,7 @@ public class DataPoint : NamedItem
 	/// the AD advance setting enable flag
 	/// </summary>
 	[DataMember(Name = "adAdvSettingEnabled")]
-	public bool IsAdAdvSettingEnabled { get; set; }
+	public bool? IsAdAdvSettingEnabled { get; set; }
 
 	/// <summary>
 	/// enable anomaly detection advance setting for WARN severity

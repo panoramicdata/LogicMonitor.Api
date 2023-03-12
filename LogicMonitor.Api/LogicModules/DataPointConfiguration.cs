@@ -100,14 +100,14 @@ public class DataPointConfiguration : IdentifiedItem
 	///     Whether to enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public bool EnableAnomalyAlertGeneration { get; set; }
+	public bool? EnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	///     Whether to enable anomaly alert suppression
 	/// </summary>
 	///
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public bool EnableAnomalyAlertSuppression { get; set; }
+	public bool? EnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	///     The Global alert expression
@@ -120,20 +120,20 @@ public class DataPointConfiguration : IdentifiedItem
 	/// </summary>
 	///
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration")]
-	public bool GlobalEnableAnomalyAlertGeneration { get; set; }
+	public bool? GlobalEnableAnomalyAlertGeneration { get; set; }
 
 	/// <summary>
 	///     Whether to enable anomaly alert suppression globally
 	/// </summary>
 	///
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression")]
-	public bool GlobalEnableAnomalyAlertSuppression { get; set; }
+	public bool? GlobalEnableAnomalyAlertSuppression { get; set; }
 
 	/// <summary>
 	///     Whether the active discover advanced setting is enabled
 	/// </summary>
 	[DataMember(Name = "adAdvSettingEnabled")]
-	public bool IsActiveDiscoveryAdvancedSettingEnabled { get; set; }
+	public bool? IsActiveDiscoveryAdvancedSettingEnabled { get; set; }
 
 	/// <summary>
 	///     The parent DeviceGroup Alert Expression List
@@ -145,19 +145,19 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The warn active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "warnAdAdvSetting")]
-	public bool WarnActiveDiscvoeryAdvancedSetting { get; set; }
+	public bool? WarnActiveDiscvoeryAdvancedSetting { get; set; }
 
 	/// <summary>
 	///     The error active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "errorAdAdvSetting")]
-	public bool ErrorActiveDiscvoeryAdvancedSetting { get; set; }
+	public bool? ErrorActiveDiscvoeryAdvancedSetting { get; set; }
 
 	/// <summary>
 	///     The critical active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "criticalAdAdvSetting")]
-	public bool CriticalActiveDiscvoeryAdvancedSetting { get; set; }
+	public bool? CriticalActiveDiscvoeryAdvancedSetting { get; set; }
 
 	/// <summary>
 	///     The collection interval in seconds

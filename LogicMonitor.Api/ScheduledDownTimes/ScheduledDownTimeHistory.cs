@@ -46,4 +46,10 @@ public class ScheduledDownTimeHistory
 	/// </summary>
 	[DataMember(Name = "approximateStartEpoch", IsRequired = false)]
 	public long ApproximateStartEpoch { get; set; }
+
+	/// <summary>
+	/// Id
+	/// </summary>
+	[DataMember(Name = "id")]
+	public string Id { get; set; } = string.Empty;
 }
