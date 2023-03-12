@@ -11,7 +11,7 @@ public abstract class IdentifiedItemBase<T>
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "id")]
-	public T? Id { get; set; }
+	public T Id { get; set; } = default!;
 
 	/// <summary>
 	/// Equals override

@@ -57,6 +57,7 @@ public class DataTests : TestWithOutput
 		device.Should().NotBeNull();
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("snmp64_If-", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
+		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstanceGroups = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id, default).ConfigureAwait(false);
@@ -171,6 +172,7 @@ public class DataTests : TestWithOutput
 			.GetDataSourceByUniqueNameAsync("WinCPU", default)
 			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
+		dataSource ??= new();
 
 		var dataSourceGraph = await LogicMonitorClient
 			.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage", default)
@@ -227,7 +229,7 @@ public class DataTests : TestWithOutput
 
 		var firstCustomGraphWidget = widgets.Find(w => w.Type == "cgraph");
 		firstCustomGraphWidget.Should().NotBeNull();
-
+		firstCustomGraphWidget ??= new();
 		var widgetGraphDataRequest = new WidgetGraphDataRequest
 		{
 			WidgetId = firstCustomGraphWidget.Id,
@@ -246,6 +248,8 @@ public class DataTests : TestWithOutput
 	{
 		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(

@@ -51,6 +51,7 @@ public class CollectorTests2
 				default)
 			.ConfigureAwait(false);
 		response.Should().NotBeNull();
+		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
 	}
 

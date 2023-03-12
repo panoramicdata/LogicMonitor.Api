@@ -22,6 +22,6 @@ public abstract class LogicModule : NamedItem
 	/// <summary>
 	/// The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes
 	/// </summary>
-	[DataMember(Name = "installationMetadata", IsRequired =	false)]
-	public IntegrationMetadata? InstallationMetadata { get; set; }
+	[DataMember(Name = "installationMetadata", IsRequired = false)]
+	public IntegrationMetadata InstallationMetadata { get; set; } = new();
 }

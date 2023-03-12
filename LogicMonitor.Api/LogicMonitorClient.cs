@@ -166,7 +166,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <typeparam name="T"></typeparam>
 	/// <param name="cancellationToken"></param>
 	public Task<List<T>> GetAllAsync<T>(CancellationToken cancellationToken) where T : IHasEndpoint, new()
-		=> GetAllInternalAsync((Filter<T>)null, new T().Endpoint(), cancellationToken);
+		=> GetAllInternalAsync((Filter<T>?)null, new T().Endpoint(), cancellationToken);
 
 	/// <summary>
 	/// Get all
@@ -714,7 +714,7 @@ public partial class LogicMonitorClient : IDisposable
 		? $"https://{AccountName}.logicmonitor.com/rest/{subUrl}"
 		: $"https://{AccountName}.logicmonitor.com/santaba/rest/{subUrl}";
 
-	private async Task<HttpResponseMessage> GetHttpResponseMessage(HttpRequestMessage requestMessage, string subUrl, string data, CancellationToken cancellationToken)
+	private async Task<HttpResponseMessage> GetHttpResponseMessage(HttpRequestMessage requestMessage, string subUrl, string? data, CancellationToken cancellationToken)
 	{
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		var subUrl2 = subUrl.Contains("?")
@@ -722,6 +722,7 @@ public partial class LogicMonitorClient : IDisposable
 			: subUrl;
 		var httpVerb = requestMessage.Method.ToString().ToUpperInvariant();
 		var resourcePath = $"/{subUrl2}";
+		data = data ?? string.Empty;
 
 		// Auth header
 		var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
@@ -931,7 +932,7 @@ public partial class LogicMonitorClient : IDisposable
 		}
 	}
 
-	private string GetPrefix(HttpMethod method) => $"{Guid.NewGuid()}: {method}";
+	private static string GetPrefix(HttpMethod method) => $"{Guid.NewGuid()}: {method}";
 
 	/// <summary>
 	///     Async Get method
@@ -958,8 +959,10 @@ public partial class LogicMonitorClient : IDisposable
 			_logger.LogDebug("{Prefix} complete (from cache: {ElapsedMilliseconds:N0}ms)",
 				prefix,
 				stopwatch.ElapsedMilliseconds);
-
-			return (T)cacheObject;
+			if (cacheObject is not null)
+			{
+				return (T)cacheObject;
+			}
 		}
 
 		HttpResponseMessage httpResponseMessage;
@@ -1117,13 +1120,17 @@ public partial class LogicMonitorClient : IDisposable
 		}
 
 		// Cache the result
-		if (useCache)
+		if (useCache && deserializedObject is not null)
 		{
 			_cache.AddOrUpdate(subUrl, deserializedObject);
 		}
 
 		// Return the result
-		return deserializedObject;
+		if (deserializedObject is not null)
+		{
+			return deserializedObject;
+		}
+		return new();
 	}
 
 	/// <summary>
@@ -1225,7 +1232,11 @@ public partial class LogicMonitorClient : IDisposable
 		var deserializedObject = portalResponse.GetObject();
 
 		// Return
-		return deserializedObject;
+		if (deserializedObject != null )
+		{
+			return deserializedObject;
+		}
+		return new();
 	}
 
 	/// <summary>
@@ -1445,7 +1456,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="timeoutMs">The maximum amount of time to wait (default 10000 ms)</param>
 	/// <param name="sleepIntervalMs">The sleep interval between attempts to retrieve the response (default 500ms)</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<ExecuteDebugCommandResponse> ExecuteDebugCommandAndWaitForResultAsync(
+	public async Task<ExecuteDebugCommandResponse?> ExecuteDebugCommandAndWaitForResultAsync(
 		int collectorId,
 		string commandText,
 		int timeoutMs,
@@ -1455,7 +1466,7 @@ public partial class LogicMonitorClient : IDisposable
 		var executeDebugCommandResponse = await ExecuteDebugCommandAsync(collectorId, commandText, cancellationToken).ConfigureAwait(false);
 
 		var stopwatch = Stopwatch.StartNew();
-		ExecuteDebugCommandResponse debugCommandResult = null;
+		ExecuteDebugCommandResponse? debugCommandResult = null;
 		while (stopwatch.ElapsedMilliseconds < timeoutMs)
 		{
 			try

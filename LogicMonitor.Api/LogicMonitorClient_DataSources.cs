@@ -158,7 +158,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<DataSourceOverviewGraph>> GetDataSourceOverviewGraphsPageAsync(
 		int dataSourceId,
-		Filter<DataSourceOverviewGraph> filter,
+		Filter<DataSourceOverviewGraph>? filter,
 		CancellationToken cancellationToken)
 	{
 		filter ??= new Filter<DataSourceOverviewGraph> { Skip = 0, Take = 300 };
