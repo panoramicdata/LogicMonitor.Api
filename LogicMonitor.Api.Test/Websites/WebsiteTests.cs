@@ -42,7 +42,7 @@ public class WebsiteTests : TestWithOutput
 		var website = await LogicMonitorClient
 			.GetByNameAsync<Website>(WebsiteName, default)
 			.ConfigureAwait(false);
-
+		website ??= new();
 		var endDateTime = DateTime.UtcNow;
 		var startDateTime = endDateTime.AddMonths(-1);
 		var graphDataRequest = new WebsiteOverviewGraphDataRequest
@@ -58,6 +58,7 @@ public class WebsiteTests : TestWithOutput
 		graphData.Lines.Should().NotBeNullOrEmpty();
 		var firstLine = graphData.Lines.FirstOrDefault();
 		firstLine.Should().NotBeNull();
+		firstLine ??= new();
 		firstLine.Data.Should().NotBeNull();
 		var firstData = firstLine.Data.FirstOrDefault();
 		firstData.Should().NotBeNull();
@@ -80,6 +81,7 @@ public class WebsiteTests : TestWithOutput
 		// Get the Website
 		var website = await LogicMonitorClient.GetByNameAsync<Website>(WebsiteName, default).ConfigureAwait(false);
 		website.Should().NotBeNull();
+		website ??= new();
 
 		// Get the Alerts
 		var allAlerts = await LogicMonitorClient.GetWebsiteAlertsByIdAsync(website.Id, alertFilter, default).ConfigureAwait(false);

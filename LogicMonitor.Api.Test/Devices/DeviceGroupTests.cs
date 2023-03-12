@@ -24,6 +24,7 @@ public class DeviceGroupTests : TestWithOutput
 		var dataSource = await LogicMonitorClient
 			.GetByNameAsync<DataSource>("Ping", default)
 			.ConfigureAwait(false);
+		dataSource ??= new();
 		var datapoints = (await LogicMonitorClient
 			.GetDataSourceDataPointsPageAsync(dataSource.Id, new Filter<DataPoint> { Skip = 0, Take = 10 }, default)
 			.ConfigureAwait(false)).Items;

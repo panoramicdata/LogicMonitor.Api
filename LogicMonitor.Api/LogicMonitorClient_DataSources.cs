@@ -219,7 +219,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<List<DeviceDataSource>> GetAllDeviceDataSourcesAsync(
 		int deviceId,
-		Filter<DeviceDataSource> filter,
+		Filter<DeviceDataSource>? filter,
 		CancellationToken cancellationToken)
 		=> GetAllAsync(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken);
 

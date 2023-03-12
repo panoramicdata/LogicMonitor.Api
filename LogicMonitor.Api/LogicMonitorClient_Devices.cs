@@ -82,7 +82,7 @@ public partial class LogicMonitorClient
 	public Task SetDeviceCustomPropertyAsync(
 		int deviceId,
 		string name,
-		string value,
+		string? value,
 		SetPropertyMode mode,
 		CancellationToken cancellationToken)
 	=>
@@ -171,7 +171,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceGroupId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<Device>> GetDevicesByDeviceGroupIdAsync(int deviceGroupId, Filter<Device> filter, CancellationToken cancellationToken)
+	public async Task<List<Device>> GetDevicesByDeviceGroupIdAsync(int deviceGroupId, Filter<Device>? filter, CancellationToken cancellationToken)
 		=> await GetAllAsync(filter, $"device/groups/{deviceGroupId}/devices", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>

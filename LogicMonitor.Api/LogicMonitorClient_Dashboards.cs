@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="dashboardName"></param>
 	/// <param name="cancellationToken"></param>
 	[Obsolete("Use GetByNameAsync<Dashboard> instead", true)]
-	public Task<Dashboard> GetDashboardByNameAsync(string dashboardName, CancellationToken cancellationToken)
+	public Task<Dashboard?> GetDashboardByNameAsync(string dashboardName, CancellationToken cancellationToken)
 		=> GetByNameAsync<Dashboard>(dashboardName, cancellationToken);
 
 	/// <summary>

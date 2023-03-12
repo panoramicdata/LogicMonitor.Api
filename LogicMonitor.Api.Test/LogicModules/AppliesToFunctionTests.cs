@@ -31,7 +31,12 @@ public class AppliesToFunctionTests : TestWithOutput
 		// Refetch and check
 		existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default).ConfigureAwait(false);
 		existingAppliesToFunction.Should().NotBeNull();
-		createdAppliesToFunction.Id.Should().Be(existingAppliesToFunction.Id);
+		if (existingAppliesToFunction != null)
+		{
+			createdAppliesToFunction.Id.Should().Be(existingAppliesToFunction.Id);
+		}
+
+		existingAppliesToFunction ??= new();
 
 		// Update
 		const string newDescription = testAppliesToFunctionDescription + "2";
@@ -40,6 +45,8 @@ public class AppliesToFunctionTests : TestWithOutput
 
 		// Refetch and check
 		existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default).ConfigureAwait(false);
+
+		existingAppliesToFunction ??= new();
 		existingAppliesToFunction.Description.Should().Be(newDescription);
 
 		// Delete

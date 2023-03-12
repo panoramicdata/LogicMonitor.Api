@@ -17,7 +17,7 @@ public class PortalClient : LogicMonitorClient
 		string account,
 		string accessId,
 		string accessKey,
-		ILogger iLogger = null) : base(new LogicMonitorClientOptions { Account = account, AccessId = accessId, AccessKey = accessKey, Logger = iLogger })
+		ILogger? iLogger = null) : base(new LogicMonitorClientOptions { Account = account, AccessId = accessId, AccessKey = accessKey, Logger = iLogger })
 	{
 	}
 }

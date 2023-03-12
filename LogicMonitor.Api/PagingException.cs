@@ -56,7 +56,7 @@ public class PagingException : LogicMonitorApiException
 		string subUrl,
 		HttpStatusCode httpStatusCode,
 		string responseBody,
-		string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
+		string? message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
 	{
 	}
 

@@ -13,6 +13,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
+		dataSource ??= new();
 		dataSource.Id.Should().NotBe(0);
 		var logicModuleMetadata = await LogicMonitorClient
 			.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id, default)

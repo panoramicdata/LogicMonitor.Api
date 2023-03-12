@@ -102,6 +102,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetXml()
 	{
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		dataSource ??= new();
 		var xml = await LogicMonitorClient.GetDataSourceXmlAsync(dataSource.Id, default).ConfigureAwait(false);
 
 		xml.Should().NotBeNull();
@@ -146,6 +147,7 @@ public class DataSourceTests : TestWithOutput
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("WinCPU", default)
 			.ConfigureAwait(false);
+		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
 			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
 			.ConfigureAwait(false);
@@ -174,6 +176,7 @@ public class DataSourceTests : TestWithOutput
 		const string DataSourceName = "IP Addresses";
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync(DataSourceName, default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
+		dataSource ??= new();
 		dataSource.Name.Should().Be(DataSourceName);
 	}
 
@@ -193,6 +196,7 @@ public class DataSourceTests : TestWithOutput
 
 		var dataSource = await portalClient.GetByNameAsync<DataSource>("snmp64_If-", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
+		dataSource ??= new();
 
 		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
@@ -412,6 +416,7 @@ public class DataSourceTests : TestWithOutput
 	{
 		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default).ConfigureAwait(false);
+		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 		deviceDataSource.DeviceId.Should().Be(device.Id);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);

@@ -51,6 +51,8 @@ public class OpsNotesTests : TestWithOutput
 			.GetByNameAsync<Website>(WebsiteName, default)
 			.ConfigureAwait(false);
 
+		website ??= new();
+
 		var theEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 		var utcNow = (int)(DateTime.UtcNow - theEpoch).TotalSeconds;
 		var opsNoteCreationDto = new OpsNoteCreationDto

@@ -16,6 +16,7 @@ public class PropertySourceTests : TestWithOutput
 		var propertySource = await LogicMonitorClient
 			.GetByNameAsync<PropertySource>("Test PropertySource", default)
 			.ConfigureAwait(false);
+		propertySource ??= new();
 		var json = await LogicMonitorClient
 			.GetPropertySourceJsonAsync(propertySource.Id, default)
 			.ConfigureAwait(false);

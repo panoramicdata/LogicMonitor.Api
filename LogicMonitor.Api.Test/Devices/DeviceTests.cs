@@ -134,6 +134,7 @@ public class DeviceTests : TestWithOutput
 			// Get the recycle bin item
 			var recycleBinItem = recycleBinItems.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
 			recycleBinItem.Should().NotBeNull();
+			recycleBinItem ??= new();
 			deviceFromCreation.DisplayName.Should().Be(recycleBinItem.ResourceName);
 			recycleBinItem.ResourceType.Should().Be("device");
 
@@ -405,6 +406,7 @@ public class DeviceTests : TestWithOutput
 		// Make sure that there is now one called "test"
 		var testProperty = device.CustomProperties.SingleOrDefault(p => p.Name == testPropertyName);
 		testProperty.Should().NotBeNull();
+		testProperty ??= new();
 		testProperty.Value.Should().Be(testPropertyValue);
 
 		// Clean up afterwards - remove the property
@@ -565,6 +567,7 @@ public class DeviceTests : TestWithOutput
 			.ConfigureAwait(false);
 		var deviceGroup = deviceGroups.Find(dg => dg.SubGroups.Count != 0);
 		deviceGroup.Should().NotBeNull();
+		deviceGroup ??= new();
 		var deviceList = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(deviceGroup.FullPath, true, default).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();

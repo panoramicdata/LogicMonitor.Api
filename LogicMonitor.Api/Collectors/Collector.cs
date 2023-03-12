@@ -338,7 +338,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The OTEL Id
 	/// </summary>
 	[DataMember(Name = "otelId")]
-	public int OtelId { get; set; }
+	public int? OtelId { get; set; }
 
 	/// <summary>
 	///     The OTEL version

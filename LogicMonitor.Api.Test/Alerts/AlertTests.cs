@@ -492,7 +492,7 @@ public class AlertTests : TestWithOutput
 			!(allAlerts.Any(a => a.AlertLevel == AlertLevel.Warning)
 			  && allAlerts.Any(a => a.AlertLevel == AlertLevel.Error || a.AlertLevel == AlertLevel.Critical)))
 		{
-			throw new Exception($"Inconclusive: Test portal does not have some warning and some error or above alerts in the last {timespan.Humanize()}.");
+			throw new InvalidOperationException($"Inconclusive: Test portal does not have some warning and some error or above alerts in the last {timespan.Humanize()}.");
 		}
 
 		// Get filtered alerts, error and above only

@@ -30,6 +30,7 @@ public class NetscanTests : TestWithOutput
 		var netscanGroups = await portalClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
 		var netscanGroup = netscanGroups.SingleOrDefault(npg => npg.Name == "LogicMonitor API Unit Tests");
 		netscanGroup.Should().NotBeNull();
+		netscanGroup ??= new();
 		// We have the Unit test netscan  group
 
 		const string name = "LogicMonitor.Api UnitTest CreateNetscan";

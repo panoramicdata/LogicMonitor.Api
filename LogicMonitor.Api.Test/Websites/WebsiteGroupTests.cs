@@ -119,11 +119,13 @@ public class WebsiteGroupTests : TestWithOutput
 	{
 		var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty, default).ConfigureAwait(false);
 		websiteGroup0.Should().NotBeNull();
+		websiteGroup0 ??= new();
 		websiteGroup0.FullPath.Should().Be(string.Empty);
 		var websiteGroup1 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath, default).ConfigureAwait(false);
 		websiteGroup1.Should().NotBeNull();
 		var websiteGroup2 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath, default).ConfigureAwait(false);
 		websiteGroup2.Should().NotBeNull();
+		websiteGroup2 ??= new();
 		websiteGroup0.Id.Should().NotBe(websiteGroup2.Id);
 	}
 

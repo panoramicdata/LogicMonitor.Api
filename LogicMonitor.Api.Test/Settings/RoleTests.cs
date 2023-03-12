@@ -46,9 +46,13 @@ public class RoleTests : TestWithOutput
 		}
 
 		var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }, default).ConfigureAwait(false)).SingleOrDefault();
+		dashboardGroup ??= new();
 		var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }, default).ConfigureAwait(false)).SingleOrDefault();
+		deviceGroup ??= new();
 		var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }, default).ConfigureAwait(false)).SingleOrDefault();
+		websiteGroup ??= new();
 		var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }, default).ConfigureAwait(false)).SingleOrDefault();
+		reportGroup ??= new();
 		var role = await LogicMonitorClient.CreateAsync(new RoleCreationDto
 		{
 			CustomHelpLabel = "",

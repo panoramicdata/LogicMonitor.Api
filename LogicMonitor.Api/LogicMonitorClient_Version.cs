@@ -9,7 +9,7 @@ public partial class LogicMonitorClient
 	///    Gets the current portal's version.
 	/// </summary>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public Task<PortalVersion?> GetVersionAsync(CancellationToken cancellationToken)
+	public Task<PortalVersion> GetVersionAsync(CancellationToken cancellationToken)
 		=> GetVersionAsync(AccountName, cancellationToken);
 
 	/// <summary>
@@ -17,7 +17,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="accountName"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public async Task<PortalVersion?> GetVersionAsync(string accountName, CancellationToken cancellationToken)
+	public async Task<PortalVersion> GetVersionAsync(string accountName, CancellationToken cancellationToken)
 	{
 		// The actual Get method
 		using var _httpClient = new HttpClient();
@@ -25,6 +25,10 @@ public partial class LogicMonitorClient
 		using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 		UpdateSummary(request, response);
 		var portalResponse = new PortalResponse<PortalVersion>(response);
-		return portalResponse.GetObject();
+
+		var portalResponseObject = portalResponse.GetObject();
+		portalResponseObject ??= new();
+
+		return portalResponseObject;
 	}
 }

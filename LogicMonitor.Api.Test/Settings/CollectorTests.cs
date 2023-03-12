@@ -26,6 +26,7 @@ public class CollectorTests : TestWithOutput
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
+		debugCommandResponse ??= new();
 		debugCommandResponse.Output.Should().NotBeNullOrEmpty();
 		Logger.LogInformation("{Message}", debugCommandResponse.Output);
 	}

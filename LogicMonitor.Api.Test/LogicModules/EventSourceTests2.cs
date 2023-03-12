@@ -12,6 +12,7 @@ public class EventSourceTests2 : TestWithOutput
 	public async Task GetXml()
 	{
 		var eventSource = await LogicMonitorClient.GetByNameAsync<EventSource>("DNS A Record Check", default).ConfigureAwait(false);
+		eventSource ??= new();
 		var xml = await LogicMonitorClient.GetEventSourceXmlAsync(eventSource.Id, default).ConfigureAwait(false);
 		xml.Should().NotBeNull();
 	}
@@ -48,6 +49,7 @@ public class EventSourceTests2 : TestWithOutput
 
 		// Make sure that some are returned
 		eventSource.Should().NotBeNull();
+		eventSource ??= new();
 		string.IsNullOrWhiteSpace(eventSource.AppliesTo).Should().BeFalse();
 		// The whole thing should take less than 10 seconds
 		stopwatch.ElapsedMilliseconds.Should().BeLessThan(20000);
