@@ -88,7 +88,7 @@ public static class LogItemExtensions
 			new(@"^(?<loginName>.+?) signs in via SAML$", RegexOptions.Singleline)),
 		new(22,
 			AuditEventEntityType.None,
-			new(@"^Failed API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
+			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
 		new(23,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Delete) the aws hosts \[(?<multipleHosts>.+?)\]$", RegexOptions.Singleline)),
@@ -118,7 +118,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(32,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,.+$", RegexOptions.Singleline)),
 		new(33,
 			AuditEventEntityType.DataSource,
 			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
@@ -128,6 +128,9 @@ public static class LogItemExtensions
 		new(35,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>.+?)ed device (?<resourceName>.+) \((?<resourceId>.+?)\)  via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(36,
+			AuditEventEntityType.None,
+			new(@"^regular device total monthly metrics -> (?<monthlyMetrics>.+?)$"))
 		};
 
 	/// <summary>
@@ -181,6 +184,7 @@ public static class LogItemExtensions
 		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
 		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
 		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
+		auditEvent.MonthlyMetrics = GetGroupValueAsIntOrNull(match, "monthlyMetrics");
 
 		// Add metadata that can't be extracted from the description using the regex
 		switch (auditEvent.MatchedRegExId)
@@ -191,6 +195,9 @@ public static class LogItemExtensions
 				break;
 			case 27:
 				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
+			case 36:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				break;
 			default:
 				break;

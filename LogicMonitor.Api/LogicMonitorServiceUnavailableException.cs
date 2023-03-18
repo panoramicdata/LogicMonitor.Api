@@ -53,4 +53,11 @@ public class LogicMonitorServiceUnavailableException : LogicMonitorApiException
 	protected LogicMonitorServiceUnavailableException(string responseBody, Exception exception) : base(responseBody, exception)
 	{
 	}
+
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	protected LogicMonitorServiceUnavailableException(SerializationInfo serializationInfo, StreamingContext streamingContext)
+	{
+	}
 }

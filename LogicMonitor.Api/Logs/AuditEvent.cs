@@ -182,4 +182,9 @@ public class AuditEvent
 	/// The alert note for alert update events
 	/// </summary>
 	public string? AlertNote { get; internal set; }
+
+	/// <summary>
+	/// The regular device monthly metrics
+	/// </summary>
+	public int? MonthlyMetrics { get; internal set; }
 }
