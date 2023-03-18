@@ -394,7 +394,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				{
 						configSourceUpdates[0].Name
 				},
-				default,
+				version.Version.Major,
 				default)
 				.ConfigureAwait(false);
 		}
