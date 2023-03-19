@@ -9,6 +9,16 @@ public class DataSourceTests : TestWithOutput
 	}
 
 	[Fact]
+	public async Task GetDataSourceByName()
+	{
+		var dataSource = await LogicMonitorClient
+			.GetByNameAsync<DataSource>("Ping", default)
+			.ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+		dataSource!.Id.Should().NotBe(0);
+	}
+
+	[Fact]
 	public async Task GetDeviceGroupDataSources()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
@@ -60,7 +70,7 @@ public class DataSourceTests : TestWithOutput
 		var sum = 0;
 		foreach (var deviceDataSourceInstance in deviceDataSourceInstances)
 		{
-			if (deviceDataSourceInstance.DeviceId is not null && deviceDataSourceInstance.DataSourceId is not null) 
+			if (deviceDataSourceInstance.DeviceId is not null && deviceDataSourceInstance.DataSourceId is not null)
 			{
 				var device = await LogicMonitorClient
 				.GetAsync<Device>(deviceDataSourceInstance.DeviceId.Value, default)
