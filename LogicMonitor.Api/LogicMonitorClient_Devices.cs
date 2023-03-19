@@ -697,36 +697,19 @@ public partial class LogicMonitorClient
 	/// get device instance list
 	/// </summary>
 	/// <param name="id">The device id</param>
-	/// <param name="start"></param>
-	/// <param name="end"></param>
-	/// <param name="netflowFilter"></param>
-	/// <param name="fields"></param>
-	/// <param name="size"></param>
-	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<Page<DeviceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
-		Filter<DeviceDataSourceInstance>? netflowFilter = null,
-		long? start = null,
-		long? end = null,
-		string? fields = null,
-		int size = 50,
-		int offset = 0,
-		string? filter = null,
+		Filter<DeviceDataSourceInstance>? filter,
 		CancellationToken cancellationToken = default)
-		=> await GetBySubUrlAsync<Page<DeviceDataSourceInstance>>($"device/devices/{id}/instances?start={start}&end={end}&netflowFilter={netflowFilter}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
+		=> await FilteredGetAsync<DeviceDataSourceInstance>($"device/devices/{id}/instances", filter, cancellationToken);
 
 	/// <summary>
 	/// get top talkers graph
 	/// </summary>
 	public Task<GraphPlot> GetTopTalkersGraphAsync(
-		long start,
-		long end,
-		string netflowFilter,
 		int id,
-		string format,
-		string keyword,
 		CancellationToken cancellationToken) => GetBySubUrlAsync<GraphPlot>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>

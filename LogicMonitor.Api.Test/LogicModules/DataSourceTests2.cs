@@ -10,7 +10,7 @@ public class DataSourceTests2 : TestWithOutput
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
 		var dataSources = await LogicMonitorClient
-			.GetDatasourceListAsync()
+			.GetDatasourceListAsync(new())
 			.ConfigureAwait(false);
 		dataSources.Items.Should().NotBeNullOrEmpty();
 	}

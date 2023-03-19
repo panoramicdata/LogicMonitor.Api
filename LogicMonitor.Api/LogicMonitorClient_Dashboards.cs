@@ -193,7 +193,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get widget list (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
 	/// </summary>
-	/// <param name="cancellationToken"></param
+	/// <param name="cancellationToken"></param>
 	/// <param name="filter"></param>
 	public async Task<Page<Widget>> GetWidgetListAsync(
 		Filter<Widget> filter,

@@ -684,16 +684,10 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get datasource list
 	/// </summary>
-	/// <param name="format"></param>
-	/// <param name="fields"></param>
-	/// <param name="size"></param>
-	/// <param name="offset"></param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<DataSource>> GetDatasourceListAsync(
-		string? format = null,
-		string? fields = null,
-		int size = 50,
-		int offset = 0,
+		Filter<DataSource> filter,
 		CancellationToken cancellationToken = default)
-		=> await GetBySubUrlAsync<Page<DataSource>>($"setting/datasources?format={format}&fields={fields}&size={size}&offset={offset}", cancellationToken);
+		=> await FilteredGetAsync<DataSource>($"setting/datasources", filter, cancellationToken);
 }

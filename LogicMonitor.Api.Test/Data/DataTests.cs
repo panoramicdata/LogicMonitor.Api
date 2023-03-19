@@ -267,4 +267,5 @@ public class DataTests : TestWithOutput
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 	}
+
 }
