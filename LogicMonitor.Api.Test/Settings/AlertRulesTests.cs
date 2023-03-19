@@ -8,7 +8,7 @@ public class AlertRulesTests : TestWithOutput
 
 	private static async Task GetAlertRule(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 	{
-		var alertRule = (await portalClient.GetAllAsync<AlertRule>(default).ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName)
+		var alertRule = (await portalClient.GetAlertRuleListAsync(new(), default).ConfigureAwait(false)).Items.SingleOrDefault(ar => ar.Name == alertRuleName)
 			?? throw new ArgumentException($"No alert rule found with name {alertRuleName}");
 
 		alertRule.SuppressAlertClear = !enableAlertClear;
@@ -25,16 +25,16 @@ public class AlertRulesTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertRules()
 	{
-		var alertRules = await LogicMonitorClient.GetAllAsync<AlertRule>(default).ConfigureAwait(false);
-		alertRules.Should().NotBeNullOrEmpty();
+		var alertRules = await LogicMonitorClient.GetAlertRuleListAsync(new(), default).ConfigureAwait(false);
+		alertRules.Items.Should().NotBeNullOrEmpty();
 
 		// Get each one individually and check everything matches
-		foreach (var alertRule in alertRules)
+		foreach (var alertRule in alertRules.Items)
 		{
 			// Save it
 			await LogicMonitorClient.SaveAlertRuleAsync(alertRule, default).ConfigureAwait(false);
 
-			var refetchedAlertRule = await LogicMonitorClient.GetAsync<AlertRule>(alertRule.Id, default).ConfigureAwait(false);
+			var refetchedAlertRule = await LogicMonitorClient.GetAlertRuleAsync(alertRule.Id, default).ConfigureAwait(false);
 			refetchedAlertRule.Id.Should().Be(alertRule.Id);
 			// Other tests?
 

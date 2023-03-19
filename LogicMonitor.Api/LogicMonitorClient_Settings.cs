@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Primitives;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -69,7 +71,48 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get integration audit logs list
 	/// </summary>
+	/// <param name="cancellationToken"></param>
 	public async Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync(
 		CancellationToken cancellationToken = default)
 		=> await GetBySubUrlAsync<Page<IntegrationAuditLog>>("$setting/integrations/auditlogs", cancellationToken);
+
+	/// <summary>
+	/// get alert rule by id
+	/// </summary>
+	/// <param name="id">The alert rule id</param>
+	/// <param name="fields"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<AlertRule> GetAlertRuleAsync(
+		int id,
+		string? fields,
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<AlertRule>($"setting/alert/rules/{id}?fields={fields}", cancellationToken);
+
+	/// <summary>
+	/// delete alert rule
+	/// </summary>
+	/// <param name="id">The alert rule id</param>
+	/// <param name="cancellationToken"></param>
+	public async Task DeleteAlertRuleAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await DeleteAsync($"setting/alert/rules/{id}", cancellationToken);
+
+	/// <summary>
+	/// add alert rule
+	/// </summary>
+	/// <param name="body">The rule to be added</param>
+	/// <param name="cancellationToken"></param>
+	public async Task<AlertRule> AddAlertRuleAsync(
+		AlertRule body,
+		CancellationToken cancellationToken)
+		=> await PostAsync<AlertRule, AlertRule>(body, $"setting/alert/rules", cancellationToken);
+
+	/// <summary>
+	/// get alert rule list
+	/// </summary>
+	public async Task<Page<AlertRule>> GetAlertRuleListAsync(
+		Filter<AlertRule> filter,
+		CancellationToken cancellationToken)
+		=> await FilteredGetAsync<AlertRule>($"setting/alert/rules", filter, cancellationToken);
 }
