@@ -310,4 +310,15 @@ public class DashboardTests : TestWithOutput
 		// Make sure that all have Unique Ids
 		dashboards.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 	}
+
+	[Fact]
+	public async Task GetWidgets()
+	{
+
+		var widgets = await LogicMonitorClient.GetWidgetListAsync(new(), default).ConfigureAwait(false);
+
+		widgets.Should().NotBeNull();
+
+		widgets.Items.Should().NotBeEmpty();
+	}
 }
