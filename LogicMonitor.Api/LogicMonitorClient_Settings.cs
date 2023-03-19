@@ -111,8 +111,55 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get alert rule list
 	/// </summary>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
 	public async Task<Page<AlertRule>> GetAlertRuleListAsync(
 		Filter<AlertRule> filter,
 		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<AlertRule>($"setting/alert/rules", filter, cancellationToken);
+
+	/// <summary>
+	/// add api tokens for a user
+	/// </summary>
+	/// <param name="adminId">The admin id of the user</param>
+	/// <param name="body"></param>
+	/// <param name="type"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<ApiToken> AddApiTokensAsync(
+		int adminId,
+		ApiToken body,
+		string? type,
+		CancellationToken cancellationToken)
+		=> await PostAsync<ApiToken, ApiToken>(body, $"setting/admins/{adminId}/apitokens?type={type}", cancellationToken);
+
+	/// <summary>
+	/// get api tokens for a user
+	/// </summary>
+	public async Task<Page<ApiToken>> GetApiTokens(
+		int adminId,
+		string? type,
+		string? permission,
+		string? fields,
+		string? filter,
+		int size = 50,
+		int offset = 0,
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<Page<ApiToken>>
+		($"setting/admins/{adminId}/apitokens?type={type}&permission={permission}&fields={fields}&size={size}&offset={offset}&filter={filter}",
+			cancellationToken);
+
+	/// <summary>
+	/// get a list of api tokens across users
+	/// </summary>
+	public async Task<Page<ApiToken>> GetApiTokenList(
+		string? type,
+		string? permission,
+		string? fields,
+		string? filter,
+		int size = 50,
+		int offset = 0,
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<Page<ApiToken>>
+		($"setting/admins/apitokens?type={type}&permission={permission}&fields={fields}&size={size}&offset={offset}&filter={filter}",
+			cancellationToken);
 }
