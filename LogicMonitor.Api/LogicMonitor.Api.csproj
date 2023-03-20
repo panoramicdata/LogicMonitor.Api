@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Added ManualConnections to AttributeCollector.cs to fix some unit tests.</PackageReleaseNotes>
+		<PackageReleaseNotes>Changed some incorrect booleans (enableAnomalyAlertGeneration, etc.) back to strings (they are NOT bools).</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -136,7 +136,7 @@ public class DataPoint : NamedItem
 	/// Expression of anomaly detection setting, split by comma\n0 means off,  1 means on, -1 means invalid\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string SuppressAnomalyAlerts { get; set; } = string.Empty;
+	public string SuppressAnomalyAlerts { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
 
 	/// <summary>
 	/// the AD advance setting enable flag

@@ -40,11 +40,11 @@ public class ParentDeviceGroupAlertExpression
 	///     Whether Anomaly Alert Generation is enabled
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string IsAnomalyAlertGenerationEnabled { get; set; } = string.Empty;
+	public string IsAnomalyAlertGenerationEnabled { get; set; } = string.Empty;       // This is a string NOT a bool e.g. "enableAnomalyAlertGeneration": "1,1,1"
 
 	/// <summary>
 	///     Whether anomaly alert suppression is enabled
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string IsAnomalyAlertSuppressionEnabled { get; set; } = string.Empty;
+	public string IsAnomalyAlertSuppressionEnabled { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
 }

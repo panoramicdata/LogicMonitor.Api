@@ -100,14 +100,14 @@ public class DataPointConfiguration : IdentifiedItem
 	///     Whether to enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public bool? EnableAnomalyAlertGeneration { get; set; }
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;       // This is a string NOT a bool e.g. "enableAnomalyAlertGeneration": "1,1,1"
 
 	/// <summary>
 	///     Whether to enable anomaly alert suppression
 	/// </summary>
 	///
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public bool? EnableAnomalyAlertSuppression { get; set; }
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
 
 	/// <summary>
 	///     The Global alert expression
@@ -120,14 +120,14 @@ public class DataPointConfiguration : IdentifiedItem
 	/// </summary>
 	///
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration")]
-	public bool? GlobalEnableAnomalyAlertGeneration { get; set; }
+	public string GlobalEnableAnomalyAlertGeneration { get; set; } = string.Empty;       // This is a string NOT a bool e.g. "enableAnomalyAlertGeneration": "1,1,1"
 
 	/// <summary>
 	///     Whether to enable anomaly alert suppression globally
 	/// </summary>
 	///
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression")]
-	public bool? GlobalEnableAnomalyAlertSuppression { get; set; }
+	public string GlobalEnableAnomalyAlertSuppression { get; set; } = string.Empty;      // STRING not a bool e.g. "1,1,1"
 
 	/// <summary>
 	///     Whether the active discover advanced setting is enabled

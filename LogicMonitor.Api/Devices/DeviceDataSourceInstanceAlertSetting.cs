@@ -34,13 +34,13 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The global enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration")]
-	public string GlobalEnableAnomalyAlertGeneration { get; set; } = string.Empty;
+	public string GlobalEnableAnomalyAlertGeneration { get; set; } = string.Empty;  // STRING not a bool
 
 	/// <summary>
 	/// enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;    // STRING not a bool
 
 	/// <summary>
 	/// The group full path lists who disable alert for this datapoint on devicegroup level
@@ -64,7 +64,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The global enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression")]
-	public string GlobalEnableAnomalyAlertSuppression { get; set; } = string.Empty;
+	public string GlobalEnableAnomalyAlertSuppression { get; set; } = string.Empty;		// STRING not a bool e.g. "1,1,1"
 
 	/// <summary>
 	/// The ID of the device group
@@ -88,7 +88,7 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
 
 	/// <summary>
 	/// The interval of alert clear transition

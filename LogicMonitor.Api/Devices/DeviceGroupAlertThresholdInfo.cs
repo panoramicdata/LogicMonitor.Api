@@ -11,7 +11,7 @@ public class DeviceGroupAlertThresholdInfo
 	/// enable anomaly alert generation
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;    // STRING not a bool
 
 	/// <summary>
 	/// userPermission
@@ -23,7 +23,7 @@ public class DeviceGroupAlertThresholdInfo
 	/// enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
 
 	/// <summary>
 	/// The group id

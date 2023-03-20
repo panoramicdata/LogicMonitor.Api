@@ -15,7 +15,7 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// enableAnomalyAlertSuppression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
-	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;
+	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
 
 	/// <summary>
 	/// criticalAdAdvSetting
@@ -57,13 +57,13 @@ public class DeviceGroupDataSourceDataPointConfig
 	/// globalEnableAnomalyAlertGeneration
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertGeneration")]
-	public string GlobalEnableAnomalyAlertGeneration { get; set; } = string.Empty;
+	public string GlobalEnableAnomalyAlertGeneration { get; set; } = string.Empty;  // STRING not a bool
 
 	/// <summary>
 	/// enableAnomalyAlertGeneration
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;    // STRING not a bool
 
 	/// <summary>
 	/// warnAdAdvSetting
