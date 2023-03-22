@@ -41,7 +41,7 @@ public class LogicMonitorServiceUnavailableException : LogicMonitorApiException
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	public LogicMonitorServiceUnavailableException() : base()
+	public LogicMonitorServiceUnavailableException()
 	{
 	}
 
