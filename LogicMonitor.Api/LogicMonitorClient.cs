@@ -132,7 +132,7 @@ public partial class LogicMonitorClient : IDisposable
 		_client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
 		_client.DefaultRequestHeaders.Add("X-version", "3");
 		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
-		_client.Timeout = TimeSpan.FromMinutes(1);
+		_client.Timeout = TimeSpan.FromSeconds(logicMonitorClientOptions.HttpClientTimeoutSeconds);
 	}
 
 	private static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
@@ -1233,7 +1233,7 @@ public partial class LogicMonitorClient : IDisposable
 		var deserializedObject = portalResponse.GetObject();
 
 		// Return
-		if (deserializedObject != null )
+		if (deserializedObject != null)
 		{
 			return deserializedObject;
 		}

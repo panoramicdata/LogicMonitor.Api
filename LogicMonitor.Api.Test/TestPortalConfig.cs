@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Globalization;
 
 namespace LogicMonitor.Api.Test;
@@ -13,12 +14,19 @@ internal sealed class TestPortalConfig
 			.AddUserSecrets<TestPortalConfig>();
 		Configuration = builder.Build();
 
+		var timeoutSetting = Configuration["Config:HttpClientTimeoutSeconds"] ?? "120";
+		if (!int.TryParse(timeoutSetting, out var clientTimeoutSeconds))
+		{
+			throw new ConfigurationErrorsException("Configuration setting HttpClientTimeoutSeconds is not an integer!");
+		}
+
 		LogicMonitorClient = new LogicMonitorClient(
 			new LogicMonitorClientOptions
 			{
 				Account = Configuration["Config:Account"] ?? "",
 				AccessId = Configuration["Config:AccessId"] ?? "",
 				AccessKey = Configuration["Config:AccessKey"] ?? "",
+				HttpClientTimeoutSeconds = clientTimeoutSeconds,
 				Logger = logger
 			}
 		)
