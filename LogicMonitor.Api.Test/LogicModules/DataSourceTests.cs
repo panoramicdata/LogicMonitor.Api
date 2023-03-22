@@ -346,7 +346,7 @@ public class DataSourceTests : TestWithOutput
 			deviceDataSourceRefetch.CreatedOnSeconds.Should().Be(deviceDataSource.CreatedOnSeconds);
 
 			// Get the instances
-			var _ = await LogicMonitorClient
+			_ = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(
 					device.Id,
 					deviceDataSource.Id,

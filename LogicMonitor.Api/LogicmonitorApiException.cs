@@ -13,8 +13,20 @@ public class LogicMonitorApiException : Exception
 	/// <param name="subUrl"></param>
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
+	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody)
+		: this(method, subUrl, httpStatusCode, responseBody, null)
+	{
+	}
+
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	/// <param name="method"></param>
+	/// <param name="subUrl"></param>
+	/// <param name="httpStatusCode"></param>
+	/// <param name="responseBody"></param>
 	/// <param name="message"></param>
-	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string? message = null)
+	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string? message)
 		: base(message ?? $"Unsuccessful {method} to {subUrl} ({httpStatusCode} - {(int)httpStatusCode}).  Response Body:\n{responseBody}")
 	{
 		HttpStatusCode = httpStatusCode;

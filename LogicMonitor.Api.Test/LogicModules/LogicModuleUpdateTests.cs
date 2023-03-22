@@ -106,8 +106,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 			.GetVersionAsync(default)
 			.ConfigureAwait(false);
 
-		var _ =
-			await LogicMonitorClient
+		_ = await LogicMonitorClient
 				.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
@@ -124,8 +123,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 			.GetVersionAsync(default)
 			.ConfigureAwait(false);
 
-		var _ =
-			await LogicMonitorClient
+		_ = await LogicMonitorClient
 				.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, version.Version.Major, default)
 				.ConfigureAwait(false);
 
@@ -190,8 +188,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (dataSourceUpdates.Count > 0)
 		{
 			var dataSourceToAudit = dataSourceUpdates[0];
-			var auditedDataSource =
-				await LogicMonitorClient.AuditDataSource(
+			_ = await LogicMonitorClient.AuditDataSource(
 					dataSourceToAudit.LocalId,
 					dataSourceToAudit.Version,
 					default)
@@ -221,8 +218,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (eventSourceUpdates.Count > 0)
 		{
 			var eventSourceToAudit = eventSourceUpdates[0];
-			var auditedEventSource =
-				await LogicMonitorClient.AuditEventSource(
+			_ = await LogicMonitorClient.AuditEventSource(
 					eventSourceToAudit.LocalId,
 					eventSourceToAudit.Version,
 					default)
@@ -252,7 +248,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (configSourceUpdates.Count > 0)
 		{
 			var configSourceToAudit = configSourceUpdates[0];
-			var auditedConfigSource =
+			_ =
 				await LogicMonitorClient.AuditConfigSource(
 					configSourceToAudit.LocalId,
 					configSourceToAudit.Version,
@@ -283,8 +279,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (propertySourceUpdates.Count > 0)
 		{
 			var propertySourceToAudit = propertySourceUpdates[0];
-			var auditedPropertySource =
-				await LogicMonitorClient.AuditPropertySource(
+			_ = await LogicMonitorClient.AuditPropertySource(
 					propertySourceToAudit.LocalId,
 					propertySourceToAudit.Version,
 					default)

@@ -1577,9 +1577,18 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	/// <param name="name">The name to match</param>
 	/// <param name="logicMonitorClassType">The type of class to query</param>
+	/// <returns>True if the property is read only</returns>
+	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType)
+		=> IsPropertyReadOnly(name, logicMonitorClassType, false);
+
+	/// <summary>
+	/// Returns true if the specified property on the class has the SantabaReadOnly attribute defined
+	/// </summary>
+	/// <param name="name">The name to match</param>
+	/// <param name="logicMonitorClassType">The type of class to query</param>
 	/// <param name="tryJsonNameFirst">If true, will use the DataMember/JSON property name to match before using property name</param>
 	/// <returns>True if the property is read only</returns>
-	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType, bool tryJsonNameFirst = false)
+	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType, bool tryJsonNameFirst)
 	{
 		PropertyInfo propertyInfo;
 		if (tryJsonNameFirst)

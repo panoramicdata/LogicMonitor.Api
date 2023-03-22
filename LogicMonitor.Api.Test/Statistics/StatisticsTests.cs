@@ -9,7 +9,7 @@ public class StatisticsTests : TestWithOutput
 	[Fact]
 	public async Task Statistics_GetVersion_Succeeds()
 	{
-		var _ = await LogicMonitorClient
+		_ = await LogicMonitorClient
 			.GetVersionAsync(default)
 			.ConfigureAwait(false);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
@@ -31,7 +31,7 @@ public class StatisticsTests : TestWithOutput
 	[Fact]
 	public async Task Statistics_GetCollectors_Succeeds()
 	{
-		var _ = await LogicMonitorClient
+		_ = await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
 			.ConfigureAwait(false);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
