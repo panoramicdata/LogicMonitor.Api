@@ -1509,7 +1509,7 @@ public partial class LogicMonitorClient : IDisposable
 				// Determine whether there is an existing property
 				try
 				{
-					var _ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
+					_ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 
 					// No exception thrown? It exists
 					// Are we deleting?
@@ -1531,7 +1531,7 @@ public partial class LogicMonitorClient : IDisposable
 					// so POST a new one (unless it's null, in which case nothing to do)
 					if (value is not null)
 					{
-						var _ = await PostAsync<EntityProperty, EntityProperty>(
+						_ = await PostAsync<EntityProperty, EntityProperty>(
 							new EntityProperty { Name = name, Value = value },
 							$"{propertiesSubUrl}",
 							cancellationToken).ConfigureAwait(false);

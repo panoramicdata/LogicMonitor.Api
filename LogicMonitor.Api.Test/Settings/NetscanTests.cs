@@ -48,12 +48,9 @@ public class NetscanTests : TestWithOutput
 		const string excludedIpAddresses = "10.9.9.1, 10.9.9.2";
 		const string ddrChangeName = "##REVERSEDNS##";
 		const NetscanExcludeDuplicatesStrategy duplicatesStrategyType = NetscanExcludeDuplicatesStrategy.MatchingAnyMonitoredDevices;
-		var duplicatedStrategyGroups = new List<object>();
-		var duplicatesStrategyCollectors = new List<object>();
 		const int assignmentDeviceGroupId = 1;
 		const bool assignmentDisableAlerting = false;
 		const NetscanInclusionType assignmentInclusionType = NetscanInclusionType.Include;
-		var assignmentQuery = string.Empty;
 		var netscanCreationDto = new NetscanCreationDto
 		{
 			Name = name,

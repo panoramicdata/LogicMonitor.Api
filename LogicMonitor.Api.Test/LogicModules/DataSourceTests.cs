@@ -72,12 +72,9 @@ public class DataSourceTests : TestWithOutput
 		{
 			if (deviceDataSourceInstance.DeviceId is not null && deviceDataSourceInstance.DataSourceId is not null)
 			{
-				var device = await LogicMonitorClient
-				.GetAsync<Device>(deviceDataSourceInstance.DeviceId.Value, default)
-				.ConfigureAwait(false);
 				var refetchedDeviceDataSourceInstanceCount = (await LogicMonitorClient
-				 .GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceDataSourceInstance.DeviceId.Value, deviceDataSourceInstance.DataSourceId.Value, default)
-				 .ConfigureAwait(false)).InstanceCount;
+					 .GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceDataSourceInstance.DeviceId.Value, deviceDataSourceInstance.DataSourceId.Value, default)
+					 .ConfigureAwait(false)).InstanceCount;
 				refetchedDeviceDataSourceInstanceCount.Should().NotBe(0);
 				sum += refetchedDeviceDataSourceInstanceCount;
 			}
