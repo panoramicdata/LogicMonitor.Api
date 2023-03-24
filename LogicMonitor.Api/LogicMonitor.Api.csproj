@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Changed some incorrect booleans (warnAdAdvSetting, etc.) back to strings (they are NOT bools).</PackageReleaseNotes>
+		<PackageReleaseNotes>Added Dexda to PrivilegeObjectType.</PackageReleaseNotes>
 
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
