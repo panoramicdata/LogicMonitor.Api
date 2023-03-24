@@ -112,7 +112,6 @@ public class AlertHistoryTests : TestWithOutput
 	public async Task GetAlertHistory_Custom24HoursWithNoEndSpecified_ThrowsArgumentException()
 	{
 		var start = DateTime.UtcNow.AddDays(-3);
-		var end = start.AddDays(1);
 
 		var request = new AlertHistoryRequest
 		{

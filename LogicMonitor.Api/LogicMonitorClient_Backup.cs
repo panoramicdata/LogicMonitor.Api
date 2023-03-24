@@ -8,7 +8,7 @@ public partial class LogicMonitorClient
 	/// <param name="fileInfo"></param>
 	public async Task BackupAllToFileAsync(FileInfo fileInfo)
 	{
-		var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }, default)
+		_ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }, default)
 			.ConfigureAwait(false);
 	}
 
@@ -312,7 +312,7 @@ public partial class LogicMonitorClient
 		using var msi = new MemoryStream(bytes);
 		using var mso = new MemoryStream();
 		using var gs = new GZipStream(msi, CompressionMode.Decompress);
-		await gs.CopyToAsync(mso).ConfigureAwait(false);
+		await gs.CopyToAsync(mso, 81920, cancellationToken).ConfigureAwait(false);
 		var json = Encoding.UTF8.GetString(mso.ToArray());
 
 		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Deserializing");

@@ -22,6 +22,11 @@ public class LogicMonitorClientOptions
 	public string AccessKey { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Allow overriding the HttpClient Timeout - defaults to original 60 seconds
+	/// </summary>
+	public int HttpClientTimeoutSeconds { get; set; } = 60;
+
+	/// <summary>
 	/// An optional ILogger
 	/// </summary>
 	public ILogger? Logger { get; set; }

@@ -9,7 +9,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
-		var _ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default).ConfigureAwait(false);
+		_ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default).ConfigureAwait(false);
 	}
 
 	[Fact]
@@ -24,7 +24,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource!.Id, default)
 			.ConfigureAwait(false);
 
-		var _ = await LogicMonitorClient
+		_ = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
 			.ConfigureAwait(false);
 	}

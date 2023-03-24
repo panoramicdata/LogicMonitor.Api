@@ -46,7 +46,7 @@ public class CacheTests : TestWithOutput
 		LogicMonitorClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
 
 		// Make a call to force authentication
-		var _ = await LogicMonitorClient
+		_ = await LogicMonitorClient
 			.GetTimeZoneSettingAsync(default)
 			.ConfigureAwait(false);
 
@@ -82,7 +82,7 @@ public class CacheTests : TestWithOutput
 		for (var n = 0; n < 1000; n++)
 		{
 			var innerStopwatch = Stopwatch.StartNew();
-			var _ = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+			_ = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 			Logger.LogInformation("Run {RunIndex}: {Milliseconds}ms", n, innerStopwatch.ElapsedMilliseconds);
 		}
 

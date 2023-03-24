@@ -92,7 +92,7 @@ public class DataTests : TestWithOutput
 	{
 		var utcNow = DateTime.UtcNow;
 		var netflowDevice = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
-		var _ = await LogicMonitorClient.GetGraphDataAsync(new NetflowGraphDataRequest
+		_ = await LogicMonitorClient.GetGraphDataAsync(new NetflowGraphDataRequest
 		{
 			DeviceId = netflowDevice.Id,
 			StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),

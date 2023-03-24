@@ -132,7 +132,7 @@ public partial class LogicMonitorClient : IDisposable
 		_client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
 		_client.DefaultRequestHeaders.Add("X-version", "3");
 		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
-		_client.Timeout = TimeSpan.FromMinutes(1);
+		_client.Timeout = TimeSpan.FromSeconds(logicMonitorClientOptions.HttpClientTimeoutSeconds);
 	}
 
 	private static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
@@ -1233,7 +1233,7 @@ public partial class LogicMonitorClient : IDisposable
 		var deserializedObject = portalResponse.GetObject();
 
 		// Return
-		if (deserializedObject != null )
+		if (deserializedObject != null)
 		{
 			return deserializedObject;
 		}
@@ -1509,7 +1509,7 @@ public partial class LogicMonitorClient : IDisposable
 				// Determine whether there is an existing property
 				try
 				{
-					var _ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
+					_ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 
 					// No exception thrown? It exists
 					// Are we deleting?
@@ -1531,7 +1531,7 @@ public partial class LogicMonitorClient : IDisposable
 					// so POST a new one (unless it's null, in which case nothing to do)
 					if (value is not null)
 					{
-						var _ = await PostAsync<EntityProperty, EntityProperty>(
+						_ = await PostAsync<EntityProperty, EntityProperty>(
 							new EntityProperty { Name = name, Value = value },
 							$"{propertiesSubUrl}",
 							cancellationToken).ConfigureAwait(false);
@@ -1577,9 +1577,18 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	/// <param name="name">The name to match</param>
 	/// <param name="logicMonitorClassType">The type of class to query</param>
+	/// <returns>True if the property is read only</returns>
+	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType)
+		=> IsPropertyReadOnly(name, logicMonitorClassType, false);
+
+	/// <summary>
+	/// Returns true if the specified property on the class has the SantabaReadOnly attribute defined
+	/// </summary>
+	/// <param name="name">The name to match</param>
+	/// <param name="logicMonitorClassType">The type of class to query</param>
 	/// <param name="tryJsonNameFirst">If true, will use the DataMember/JSON property name to match before using property name</param>
 	/// <returns>True if the property is read only</returns>
-	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType, bool tryJsonNameFirst = false)
+	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType, bool tryJsonNameFirst)
 	{
 		PropertyInfo propertyInfo;
 		if (tryJsonNameFirst)
