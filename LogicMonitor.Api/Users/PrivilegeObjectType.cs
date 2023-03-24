@@ -95,5 +95,11 @@ public enum PrivilegeObjectType
 	/// ManualMapping
 	/// </summary>
 	[DataMember(Name = "manualMapping")]
-	ManualMapping
+	ManualMapping,
+
+	/// <summary>
+	/// Dexda
+	/// </summary>
+	[DataMember(Name = "dexda")]
+	Dexda
 }
