@@ -38,6 +38,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	public bool AlertTotalIncludingAnyInSdt { get; set; }
 
 	/// <summary>
+	/// Allow shared reports
+	/// </summary>
+	[DataMember(Name = "allowSharedReports")]
+	public bool AllowSharedReports { get; set; }
+
+	/// <summary>
 	///     The API user count
 	/// </summary>
 	[DataMember(Name = "numberOfApiUsers")]

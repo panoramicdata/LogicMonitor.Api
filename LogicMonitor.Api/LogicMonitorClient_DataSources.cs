@@ -680,6 +680,12 @@ public partial class LogicMonitorClient
 		int instanceId,
 		CancellationToken cancellationToken) => PostAsync<object?, object>(null, $"device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection", cancellationToken);
 
+	/// <summary>
+	/// get datasource list
+	/// </summary>
+	/// <param name="filter"></param>
+	public async Task<Page<DataSource>> GetDatasourceListAsync(
+		Filter<DataSource> filter) => await GetDatasourceListAsync(filter, CancellationToken.None);
 
 	/// <summary>
 	/// get datasource list
@@ -688,6 +694,6 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<DataSource>> GetDatasourceListAsync(
 		Filter<DataSource> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<DataSource>($"setting/datasources", filter, cancellationToken);
 }

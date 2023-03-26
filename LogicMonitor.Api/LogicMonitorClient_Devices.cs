@@ -294,7 +294,7 @@ public partial class LogicMonitorClient
 			throw new ArgumentNullException(nameof(searchString));
 		}
 
-		var treeNodeFreeSearchResults = await TreeNodeFreeSearchAsync(searchString, maxResultCount, TreeNodeFreeSearchResultType.Device, cancellationToken).ConfigureAwait(false);
+		var treeNodeFreeSearchResults = await TreeNodeFreeSearchAsync(searchString, maxResultCount, cancellationToken, TreeNodeFreeSearchResultType.Device).ConfigureAwait(false);
 		var deviceList = new List<Device>();
 		foreach (var deviceResult in treeNodeFreeSearchResults)
 		{
@@ -344,12 +344,24 @@ public partial class LogicMonitorClient
 	/// <param name="searchText"></param>
 	/// <param name="maxResultCount"></param>
 	/// <param name="treeNodeFreeSearchResultType"></param>
+	public async Task<List<TreeNodeFreeSearchResult>> TreeNodeFreeSearchAsync(
+		string searchText,
+		int maxResultCount,
+		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
+		=> await TreeNodeFreeSearchAsync(searchText, maxResultCount, CancellationToken.None, treeNodeFreeSearchResultType);
+
+	/// <summary>
+	///     Tree node free search
+	/// </summary>
+	/// <param name="searchText"></param>
+	/// <param name="maxResultCount"></param>
+	/// <param name="treeNodeFreeSearchResultType"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<TreeNodeFreeSearchResult>> TreeNodeFreeSearchAsync(
 		string searchText,
 		int maxResultCount,
-		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken,
+		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
 	{
 		if (searchText is null)
 		{

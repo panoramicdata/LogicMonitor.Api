@@ -49,15 +49,34 @@ public partial class LogicMonitorClient
 	/// <param name="collectorDownloadType">The collector download type</param>
 	/// <param name="collectorSize">The Collector size</param>
 	/// <param name="collectorVersion">The collector version (e.g. 26001 for 26.001)</param>
-	/// <param name="cancellationToken"></param>
 	public async Task DownloadCollector(
 		int collectorId,
 		FileInfo fileInfo,
 		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,
 		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
 		CollectorSize collectorSize = CollectorSize.Small,
-		int? collectorVersion = null,
-		CancellationToken cancellationToken = default)
+		int? collectorVersion = null)
+		=> await DownloadCollector(collectorId, fileInfo, collectorPlatformAndArchitecture,
+			CancellationToken.None, collectorDownloadType, collectorSize, collectorVersion);
+
+	/// <summary>
+	///     Download a collector
+	/// </summary>
+	/// <param name="collectorId">The collector ID</param>
+	/// <param name="fileInfo">The fileInfo to download the Collector to</param>
+	/// <param name="collectorPlatformAndArchitecture">The Collector platform and architecture</param>
+	/// <param name="collectorDownloadType">The collector download type</param>
+	/// <param name="collectorSize">The Collector size</param>
+	/// <param name="collectorVersion">The collector version (e.g. 26001 for 26.001)</param>
+	/// <param name="cancellationToken"></param>
+	public async Task DownloadCollector(
+		int collectorId,
+		FileInfo fileInfo,
+		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,
+		CancellationToken cancellationToken,
+		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
+		CollectorSize collectorSize = CollectorSize.Small,
+		int? collectorVersion = null)
 	{
 		// Get the download token
 		var downloadToken = await GetBySubUrlAsync<DownloadToken>($"setting/collector/collectors/{collectorId}/downloadToken", cancellationToken).ConfigureAwait(false);

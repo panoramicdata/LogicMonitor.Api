@@ -35,4 +35,10 @@ public class EC2NetscanPolicyCredential
 	/// </summary>
 	[DataMember(Name = "deviceName")]
 	public string? DeviceName { get; set; }
+
+	/// <summary>
+	/// snmpV3Credentials
+	/// </summary>
+	[DataMember(Name = "snmpV3Credentials")]
+	public List<string> SnmpV3Credentials { get; set; } = new List<string>();
 }
