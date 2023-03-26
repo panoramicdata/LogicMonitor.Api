@@ -495,7 +495,7 @@ public class AuditEventTests : TestWithOutput
 	[Fact]
 	public void AddDeviceGroup_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Added device group Integration Testing/Test (6704) ,",
+			@"Added device group Integration Testing/Test (6704) , ",
 			new()
 			{
 				MatchedRegExId = 32,

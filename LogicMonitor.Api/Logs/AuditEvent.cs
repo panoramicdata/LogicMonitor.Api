@@ -187,4 +187,14 @@ public class AuditEvent
 	/// The regular device monthly metrics
 	/// </summary>
 	public int? MonthlyMetrics { get; internal set; }
+
+	/// <summary>
+	/// The scheduled down time start time
+	/// </summary>
+	public string? StartDownTime { get; internal set; }
+
+	/// <summary>
+	/// The scheduled down time end time
+	/// </summary>
+	public string? EndDownTime { get; internal set; }
 }

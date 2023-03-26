@@ -88,7 +88,7 @@ public static class LogItemExtensions
 			new(@"^(?<loginName>.+?) signs in via SAML$", RegexOptions.Singleline)),
 		new(22,
 			AuditEventEntityType.None,
-			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
+			new(@"^Failed API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
 		new(23,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Delete) the aws hosts \[(?<multipleHosts>.+?)\]$", RegexOptions.Singleline)),
@@ -130,7 +130,16 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?)ed device (?<resourceName>.+) \((?<resourceId>.+?)\)  via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(36,
 			AuditEventEntityType.None,
-			new(@"^regular device total monthly metrics -> (?<monthlyMetrics>.+?)$"))
+			new(@"^regular device total monthly metrics -> (?<monthlyMetrics>.+?)$")),
+		new(37,
+			AuditEventEntityType.None,
+			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
+		new(38,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ""DeviceName=(?<resourceName>.+?)""; ""DeviceId=(?<instanceId>.+?)""; ""StartDownTime=(?<startDownTime>.+?)""; ""EndDownTime=(?<endDownTime>.+?)"";$")),
+		new(39,
+			AuditEventEntityType.OpsNote,
+			new(@"^(?<action>add) new opsnote \((?<description>.+?)\)$"))
 		};
 
 	/// <summary>
@@ -185,6 +194,8 @@ public static class LogItemExtensions
 		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
 		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
 		auditEvent.MonthlyMetrics = GetGroupValueAsIntOrNull(match, "monthlyMetrics");
+		auditEvent.StartDownTime = GetGroupValueAsStringOrNull(match, "startDownTime");
+		auditEvent.EndDownTime = GetGroupValueAsStringOrNull(match, "endDownTime");
 
 		// Add metadata that can't be extracted from the description using the regex
 		switch (auditEvent.MatchedRegExId)
@@ -198,6 +209,10 @@ public static class LogItemExtensions
 				break;
 			case 36:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				break;
+			case 37:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
 			default:
 				break;
