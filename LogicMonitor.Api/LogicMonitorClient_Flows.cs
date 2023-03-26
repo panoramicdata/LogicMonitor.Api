@@ -39,10 +39,17 @@ public partial class LogicMonitorClient
 	/// get netflow flows
 	/// </summary>
 	/// <param name="id"></param>
+	public Task<Page<NetFlowRecord>> GetNetflowFlowPageAsync(
+		int id) => GetNetflowFlowPageAsync(id, CancellationToken.None);
+
+	/// <summary>
+	/// get netflow flows
+	/// </summary>
+	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	public Task<Page<NetFlowRecord>> GetNetflowFlowPageAsync(
 		int id,
-		CancellationToken cancellationToken = default
+		CancellationToken cancellationToken
 		) => GetBySubUrlAsync<Page<NetFlowRecord>>($"device/devices/{id}/flows", cancellationToken);
 
 	#region Device Group flows

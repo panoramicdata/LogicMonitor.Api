@@ -89,7 +89,7 @@ public class CollectorTests2
 				CollectorPlatformAndArchitecture.Win64,
 				CollectorDownloadType.Bootstrap,
 				CollectorSize.Medium,
-				collectorVersionInt, default).ConfigureAwait(false);
+				collectorVersionInt).ConfigureAwait(false);
 		}
 		finally
 		{

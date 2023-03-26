@@ -34,7 +34,7 @@ public class AlertRulesTests : TestWithOutput
 			// Save it
 			await LogicMonitorClient.SaveAlertRuleAsync(alertRule, default).ConfigureAwait(false);
 
-			var refetchedAlertRule = await LogicMonitorClient.GetAlertRuleAsync(alertRule.Id, default).ConfigureAwait(false);
+			var refetchedAlertRule = await LogicMonitorClient.GetAlertRuleAsync(alertRule.Id, new Filter<AlertRule>(), default).ConfigureAwait(false);
 			refetchedAlertRule.Id.Should().Be(alertRule.Id);
 			// Other tests?
 

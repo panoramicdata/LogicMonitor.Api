@@ -369,7 +369,7 @@ public class DeviceTests : TestWithOutput
 		var list = new List<TreeNodeFreeSearchResult>();
 		foreach (var treeNodeFreeSearchResultType in treeNodeFreeSearchResultTypes)
 		{
-			var treeNodeFreeSearchResult = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType, default).ConfigureAwait(false);
+			var treeNodeFreeSearchResult = await LogicMonitorClient.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType).ConfigureAwait(false);
 			list.AddRange(treeNodeFreeSearchResult);
 		}
 		// Make sure that some are returned

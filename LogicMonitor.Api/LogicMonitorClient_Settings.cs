@@ -65,28 +65,41 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get user list
 	/// </summary>
-	public async Task<Page<Admin>> GetAdminListAsync(CancellationToken cancellationToken = default)
+	public async Task<Page<Admin>> GetAdminListAsync()
+		=> await GetAdminListAsync(CancellationToken.None);
+
+	/// <summary>
+	/// get user list
+	/// </summary>
+	/// <param name="cancellationToken"></param>
+	public async Task<Page<Admin>> GetAdminListAsync(CancellationToken cancellationToken)
 		=> await GetBySubUrlAsync<Page<Admin>>("$setting/admins", cancellationToken);
+
+	/// <summary>
+	/// get integration audit logs list
+	/// </summary>
+	public async Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync()
+		=> await GetIntegrationAuditLogsAsync(CancellationToken.None);
 
 	/// <summary>
 	/// get integration audit logs list
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync(
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> await GetBySubUrlAsync<Page<IntegrationAuditLog>>("$setting/integrations/auditlogs", cancellationToken);
 
 	/// <summary>
 	/// get alert rule by id
 	/// </summary>
 	/// <param name="id">The alert rule id</param>
-	/// <param name="fields"></param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
 	public async Task<AlertRule> GetAlertRuleAsync(
 		int id,
-		string? fields,
-		CancellationToken cancellationToken = default)
-		=> await GetBySubUrlAsync<AlertRule>($"setting/alert/rules/{id}?fields={fields}", cancellationToken);
+		Filter<AlertRule> filter,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<AlertRule>($"setting/alert/rules/{id}?{filter}", cancellationToken);
 
 	/// <summary>
 	/// delete alert rule
@@ -137,29 +150,38 @@ public partial class LogicMonitorClient
 	/// </summary>
 	public async Task<Page<ApiToken>> GetApiTokens(
 		int adminId,
-		string? type,
-		string? permission,
-		string? fields,
-		string? filter,
-		int size = 50,
-		int offset = 0,
-		CancellationToken cancellationToken = default)
+		Filter<ApiToken> filter,
+		CancellationToken cancellationToken)
 		=> await GetBySubUrlAsync<Page<ApiToken>>
-		($"setting/admins/{adminId}/apitokens?type={type}&permission={permission}&fields={fields}&size={size}&offset={offset}&filter={filter}",
+		($"setting/admins/{adminId}/apitokens?{filter}",
 			cancellationToken);
 
 	/// <summary>
 	/// get a list of api tokens across users
 	/// </summary>
 	public async Task<Page<ApiToken>> GetApiTokenList(
-		string? type,
-		string? permission,
-		string? fields,
-		string? filter,
-		int size = 50,
-		int offset = 0,
-		CancellationToken cancellationToken = default)
+		Filter<ApiToken> filter,
+		CancellationToken cancellationToken)
 		=> await GetBySubUrlAsync<Page<ApiToken>>
-		($"setting/admins/apitokens?type={type}&permission={permission}&fields={fields}&size={size}&offset={offset}&filter={filter}",
+		($"setting/admins/apitokens?{filter}",
 			cancellationToken);
+
+	/// <summary>
+	/// get external api stats info
+	/// </summary>
+	public async Task<ExternalApiStats> GetExternalApiAsync(
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<ExternalApiStats>($"apiStats/externalApis", cancellationToken);
+
+
+	/// <summary>
+	/// Update applies to function
+	/// </summary>
+	public async Task<AppliesToFunction> UpdateAppliesToFunction(
+		AppliesToFunctionCreationDto body,
+		int id,
+		string reason,
+		bool ignoreReference = false,
+		CancellationToken cancellationToken = default)
+		=> await PostAsync<AppliesToFunctionCreationDto, AppliesToFunction>(body, $"setting/functions/{id}?reason={reason}&ignoreReference={ignoreReference}", cancellationToken);
 }

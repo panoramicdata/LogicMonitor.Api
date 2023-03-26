@@ -46,13 +46,18 @@ public class Filter<T>
 	/// </summary>
 	public string QueryString { get; set; } = string.Empty;
 
+	/// <summary>
+	/// Permission
+	/// </summary>
+	public string Permission { get; set; } = string.Empty;
+
 	/// <inheritdoc />
 	public override string ToString()
 	{
 		Validate();
 		return !string.IsNullOrWhiteSpace(QueryString)
 				  ? $"offset={Skip}&size={Take}&{QueryString}"
-				  : $"offset={Skip}&size={Take}{(Order is null ? string.Empty : $"&{Order}")}{(FilterItems is null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters is null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties is null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
+				  : $"offset={Skip}&size={Take}{(Order is null ? string.Empty : $"&{Order}")}{(Permission is null ? string.Empty : $"&permission={Permission}")}{(FilterItems is null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters is null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties is null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
 	}
 
 	private void Validate()

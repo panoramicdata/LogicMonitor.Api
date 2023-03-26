@@ -190,7 +190,7 @@ public partial class LogicMonitorClient
 	public async Task<Page<Website>> GetWebsitesByWebsiteGroupIdAsync(
 		int id,
 		Filter<Website> filter,
-		CancellationToken cancellationToken = default)
+		CancellationToken cancellationToken)
 		=> (await FilteredGetAsync($"website/groups/{id}/websites", filter, cancellationToken).ConfigureAwait(false));
 
 	/// <summary>

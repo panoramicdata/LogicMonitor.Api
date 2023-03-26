@@ -710,11 +710,21 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The device id</param>
 	/// <param name="filter"></param>
+	public async Task<Page<DeviceDataSourceInstance>> GetDeviceInstanceListAsync(
+		int id,
+		Filter<DeviceDataSourceInstance> filter)
+		=> await GetDeviceInstanceListAsync(id, filter, CancellationToken.None);
+
+	/// <summary>
+	/// get device instance list
+	/// </summary>
+	/// <param name="id">The device id</param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<Page<DeviceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
-		Filter<DeviceDataSourceInstance>? filter,
-		CancellationToken cancellationToken = default)
+		Filter<DeviceDataSourceInstance> filter,
+		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<DeviceDataSourceInstance>($"device/devices/{id}/instances", filter, cancellationToken);
 
 	/// <summary>
