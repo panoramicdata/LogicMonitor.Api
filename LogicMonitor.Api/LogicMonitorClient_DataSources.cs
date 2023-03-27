@@ -696,4 +696,16 @@ public partial class LogicMonitorClient
 		Filter<DataSource> filter,
 		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<DataSource>($"setting/datasources", filter, cancellationToken);
+
+	/// <summary>
+	/// get update history for a datasource
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<Page<DataSourceUpdateReason>> GetDataSourceUpdateReasonAsync(
+		int id,
+		Filter<DataSourceUpdateReason> filter,
+		CancellationToken cancellationToken)
+		=> await GetPageAsync<DataSourceUpdateReason>(filter, $"setting/datasources/{id}/updatereasons", cancellationToken);
 }
