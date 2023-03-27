@@ -183,5 +183,40 @@ public partial class LogicMonitorClient
 		string reason,
 		bool ignoreReference = false,
 		CancellationToken cancellationToken = default)
-		=> await PostAsync<AppliesToFunctionCreationDto, AppliesToFunction>(body, $"setting/functions/{id}?reason={reason}&ignoreReference={ignoreReference}", cancellationToken);
+		=> await PostAsync<AppliesToFunctionCreationDto, AppliesToFunction>(
+			body, $"setting/functions/{id}?reason={reason}&ignoreReference={ignoreReference}",
+			cancellationToken);
+
+	/// <summary>
+	/// Get applies to function
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken">s</param>
+	public async Task<AppliesToFunction> GetAppliesToFunctionAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<AppliesToFunction>(
+			$"setting/functions/{id}",
+			cancellationToken);
+
+	/// <summary>
+	/// Add applies to function
+	/// </summary>
+	/// <param name="body"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<AppliesToFunction> AddAppliesToFunctionAsync(
+		AppliesToFunctionCreationDto body,
+		CancellationToken cancellationToken)
+		=> await PostAsync<AppliesToFunctionCreationDto, AppliesToFunction>(
+			body, $"setting/functions", cancellationToken);
+
+	/// <summary>
+	/// Get applies to function list
+	/// </summary>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<Page<AppliesToFunction>> GetAppliesToFunctionListAsync(
+		Filter<AppliesToFunction> filter,
+		CancellationToken cancellationToken)
+		=> await FilteredGetAsync<AppliesToFunction>($"setting/functions", filter, cancellationToken);
 }
