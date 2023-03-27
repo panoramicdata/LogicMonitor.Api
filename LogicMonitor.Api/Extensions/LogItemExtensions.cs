@@ -136,10 +136,22 @@ public static class LogItemExtensions
 			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
 		new(38,
 			AuditEventEntityType.ScheduledDownTime,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ""DeviceName=(?<resourceName>.+?)""; ""DeviceId=(?<instanceId>.+?)""; ""StartDownTime=(?<startDownTime>.+?)""; ""EndDownTime=(?<endDownTime>.+?)"";$")),
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ""DeviceName=(?<resourceName>.+?)""; ""DeviceId=(?<instanceId>.+?)""; ""StartDownTime=(?<startDownTime>.+?)""; ""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(39,
 			AuditEventEntityType.OpsNote,
-			new(@"^(?<action>add) new opsnote \((?<description>.+?)\)$"))
+			new(@"^(?<action>add) new opsnote \((?<description>.+?)\)$", RegexOptions.Singleline)),
+		new(40,
+			AuditEventEntityType.AllCollectors,
+			new(@"^help run by (?<loginName>.+?) on collector \(id=(?<collectorId>.+?), hostname=(?<collectorName>.+?), desc=(?<description>.+?)\)$", RegexOptions.Singleline)),
+		new(41,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ""WebsiteGroupName=(?<resourceGroupName>.+?)""; ""WebsiteGroupId=(?<resourceGroupId>.+?)"";""StartDownTime=(?<startDownTime>.+?)""; ""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
+		new(42,
+			AuditEventEntityType.Resource,
+			new(@"^Schedule data-collection poll request, hostId=(?<hostId>.+?), agentId=(?<agentId>.+?), requestId=(?<requestId>.+?)$", RegexOptions.Singleline)),
+		new(43,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\), (?<actionTwo>Delet)ed device (?<resourceName>.+?) \(.+?\) \((?<resourceId>.+?)\)$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
@@ -213,6 +225,12 @@ public static class LogItemExtensions
 			case 37:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
+				break;
+			case 40:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				break;
+			case 42:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				break;
 			default:
 				break;
