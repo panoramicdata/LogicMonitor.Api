@@ -31,11 +31,11 @@ public class DashboardGroupTests : TestWithOutput
 				Description = "Created by Nuget test",
 				CustomProperties = new()
 				{
-					new EntityProperty
+					new DashboardGroupProperty
 					{
 						Name = "TestToken",
 						Value = "TestValue",
-						Type = PropertyType.Custom
+						Type = DashboardGroupPropertyType.Owned
 					}
 				}
 			},

@@ -28,7 +28,7 @@ public class DashboardGroupCreationDto : CreationDto<DashboardGroup>
 	///    The tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<DashboardGroupProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///    ToString override
