@@ -31,11 +31,11 @@ public class DashboardGroupTests : TestWithOutput
 				Description = "Created by Nuget test",
 				CustomProperties = new()
 				{
-					new DashboardGroupProperty
+					new SimpleProperty
 					{
 						Name = "TestToken",
 						Value = "TestValue",
-						Type = DashboardGroupPropertyType.Owned
+						Type = SimplePropertyType.Owned
 					}
 				}
 			},

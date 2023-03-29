@@ -58,7 +58,7 @@ public class DashboardGroup : NamedItem, IPatchable
 	///    The widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<DashboardGroupProperty> CustomProperties { get; set; } = new();
+	public List<SimpleProperty> CustomProperties { get; set; } = new();
 
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/groups";

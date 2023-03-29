@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A simple property
 /// </summary>
 [DataContract]
-public class DashboardGroupProperty
+public class SimpleProperty
 {
 	/// <summary>
 	/// The name of the property
@@ -23,7 +23,7 @@ public class DashboardGroupProperty
 	/// </summary>
 	[DataMember(Name = "type")]
 	[JsonConverter(typeof(StringEnumConverter))]
-	public DashboardGroupPropertyType? Type { get; set; } = DashboardGroupPropertyType.Owned;
+	public SimplePropertyType? Type { get; set; } = SimplePropertyType.Owned;
 
 	/// <summary>
 	/// The inherit list of the property

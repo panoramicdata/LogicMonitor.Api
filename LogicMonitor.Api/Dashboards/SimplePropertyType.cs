@@ -1,11 +1,11 @@
 ﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-///    A dashboard group property type
+///    The types of simple property
 /// </summary>
 [DataContract]
 [JsonConverter(typeof(StringEnumConverter))]
-public enum DashboardGroupPropertyType : byte
+public enum SimplePropertyType : byte
 {
 	/// <summary>
 	///    Inherit
