@@ -272,7 +272,10 @@ public class DataTests : TestWithOutput
 	public async Task GetDataSourceUpdateReasons()
 	{
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
-		var updateReasons = await LogicMonitorClient.GetDataSourceUpdateReasonAsync(dataSource.Id, new Filter<DataSourceUpdateReason>(), default).ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+
+		var updateReasons = await LogicMonitorClient.GetDataSourceUpdateReasonAsync(dataSource!.Id, new Filter<DataSourceUpdateReason>(), default).ConfigureAwait(false);
+
 		updateReasons.Should().NotBeNull();
 		updateReasons.Items.Should().NotBeEmpty();
 	}
