@@ -17,7 +17,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * No whitespace allowed
 	/// </summary>
 	[DataMember(Name = "resourceName")]
-	public string ResourceName { get; set; } = string.Empty;
+	public string? ResourceName { get; set; }
 
 	/// <summary>
 	/// Resource description. Only considered when creating a new resource.
@@ -73,7 +73,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Only positive whole numbers allowed
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
-	public string DataSourceId { get; set; } = string.Empty;
+	public string? DataSourceId { get; set; }
 
 	/// <summary>
 	/// DataSource unique name.
