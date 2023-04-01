@@ -219,4 +219,12 @@ public partial class LogicMonitorClient
 		Filter<AppliesToFunction> filter,
 		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<AppliesToFunction>($"setting/functions", filter, cancellationToken);
+
+	/// <summary>
+	/// Get user list
+	/// </summary>
+	public async Task<Page<User>> GetUsersAsync(
+		Filter<User> filter,
+		CancellationToken cancellationToken)
+		=> await FilteredGetAsync<User>($"setting/admins", filter, cancellationToken);
 }

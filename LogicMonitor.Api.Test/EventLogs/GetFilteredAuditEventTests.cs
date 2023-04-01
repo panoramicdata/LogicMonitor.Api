@@ -48,7 +48,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 		var filteredLogItemsSystemAppliesToAndSystemDiscovery = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(
 				0,
-				300,
+				filteredLogItemsSystemAppliesToCount + filteredLogItemsSystemActiveDiscoveryCount,
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
@@ -85,7 +85,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"* AND NOT *x*\"" },
+			{ TextFilter = "\"* AND NOT *health*\"" },
 			default
 			)
 			.ConfigureAwait(false);
@@ -99,7 +99,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				startDateTimeUtc,
 				endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
-			{ TextFilter = "\"*x*\"" },
+			{ TextFilter = "\"*health*\"" },
 			default
 			)
 			.ConfigureAwait(false);
