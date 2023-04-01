@@ -249,6 +249,16 @@ public class WebsiteTests : TestWithOutput
 
 
 	}
+
+	[Fact]
+	public async Task GetWebsiteSDTs()
+	{
+		var websiteList = await LogicMonitorClient.GetAllAsync<Website>(default).ConfigureAwait(false);
+
+		var sdts = await LogicMonitorClient.GetWebsiteSDTListAsync(websiteList[0].Id, new Filter<ScheduledDownTime>(), default).ConfigureAwait(false);
+		sdts.Should().NotBeNull();
+	}
+
 	private static WebsiteCreationDto GetWebsiteCreationDto(int websiteGroupId, string name)
 	=> new()
 	{

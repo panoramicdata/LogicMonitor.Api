@@ -229,4 +229,11 @@ public class DeviceGroupTests : TestWithOutput
 				.ConfigureAwait(false);
 		}
 	}
+
+	[Fact]
+	public async Task GetAwsExternalId()
+	{
+		var awsId = await LogicMonitorClient.GetExternalIdAsync(default).ConfigureAwait(false);
+		awsId.Should().NotBeNull();
+	}
 }

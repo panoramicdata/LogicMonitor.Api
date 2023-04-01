@@ -216,4 +216,14 @@ public partial class LogicMonitorClient
 		string format = ""
 		)
 		=> await GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{id}/data?start={start}&end={end}&format={format}", cancellationToken);
+
+	/// <summary>
+	/// delete widget
+	/// </summary>
+	///	<param name="id"></param>
+	///	<param name="cancellationToken"></param>
+	public async Task DeleteWidgetAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await DeleteAsync($"dashboard/widgets/{id}", cancellationToken);
 }

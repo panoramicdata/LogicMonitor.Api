@@ -891,4 +891,10 @@ public partial class LogicMonitorClient
 
 		return (allAlerts, false);
 	}
+
+	/// <summary>
+	/// Get AWS external id
+	/// </summary>
+	public async Task<AwsExternalId> GetExternalIdAsync(CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<AwsExternalId>($"aws/externalId", cancellationToken);
 }
