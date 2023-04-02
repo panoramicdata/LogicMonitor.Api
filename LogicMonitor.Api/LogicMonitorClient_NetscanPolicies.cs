@@ -28,4 +28,11 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Netscan>($"setting/netscans/{id}", cancellationToken);
 
+	/// <summary>
+	/// Add a new netscan
+	/// </summary>
+	public async Task<Netscan> AddNetscanAsync(
+		NetscanCreationDto body,
+		CancellationToken cancellationToken)
+		=> await PostAsync<NetscanCreationDto, Netscan>(body, $"setting/netscans", cancellationToken);
 }

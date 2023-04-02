@@ -55,6 +55,26 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
+	/// Add escalation chain by id
+	/// </summary>
+	/// <param name="body"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<EscalationChain> AddEscalationChainAsync(
+		EscalationChain body,
+		CancellationToken cancellationToken)
+		=> await PostAsync<EscalationChain, EscalationChain>(body, $"setting/alert/chains", cancellationToken);
+
+	/// <summary>
+	/// Get escalation chain by id
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<EscalationChain> GetEscalationChainAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<EscalationChain>($"setting/alert/chains/{id}", cancellationToken);
+
+	/// <summary>
 	///     Saves an alert rule
 	/// </summary>
 	/// <param name="alertRule">The alert rule</param>
@@ -227,4 +247,11 @@ public partial class LogicMonitorClient
 		Filter<User> filter,
 		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<User>($"setting/admins", filter, cancellationToken);
+
+	/// <summary>
+	/// Get metrics usage
+	/// </summary>
+	public async Task<AccountSettings> GetMetricsAsync(
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<AccountSettings>($"metrics/usage", cancellationToken);
 }

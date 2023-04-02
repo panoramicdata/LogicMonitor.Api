@@ -27,4 +27,13 @@ public class AccountSettingsTests : TestWithOutput
 
 		billingInformation.Should().NotBeNull();
 	}
+
+	[Fact]
+	public async Task GetMetrics()
+	{
+		var metrics = await LogicMonitorClient
+			.GetMetricsAsync(default)
+			.ConfigureAwait(false);
+		metrics.Should().NotBeNull();
+	}
 }
