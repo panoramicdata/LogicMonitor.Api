@@ -1,8 +1,8 @@
 ﻿namespace LogicMonitor.Api.Test.EventLogs;
 public class GetFilteredAuditEventTests : TestWithOutput
 {
-	private readonly DateTime endDateTimeUtc = DateTimeOffset.UtcNow.Date;
-	private readonly DateTime startDateTimeUtc = DateTimeOffset.UtcNow.Date.AddHours(-1);
+	private readonly DateTime endDateTimeUtc = DateTime.UtcNow;
+	private readonly DateTime startDateTimeUtc = DateTime.UtcNow.AddHours(-1);
 
 	public GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
@@ -84,7 +84,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				300,
 				startDateTimeUtc,
 				endDateTimeUtc,
-				LogFilterSortOrder.HappenedOnAsc)
+				LogFilterSortOrder.HappenedOnDesc)
 			{ TextFilter = "\"* AND NOT *health*\"" },
 			default
 			)
@@ -98,7 +98,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 				300,
 				startDateTimeUtc,
 				endDateTimeUtc,
-				LogFilterSortOrder.HappenedOnAsc)
+				LogFilterSortOrder.HappenedOnDesc)
 			{ TextFilter = "\"*health*\"" },
 			default
 			)
