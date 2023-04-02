@@ -938,7 +938,7 @@ public partial class LogicMonitorClient
 	/// Get device group alerts
 	/// </summary>
 	/// <param name="id"></param>
-	/// <param name="customColumns"></param
+	/// <param name="customColumns"></param>
 	/// <param name="needMessage"></param>
 	/// <param name="fields"></param>
 	/// <param name="size"></param>
@@ -955,4 +955,14 @@ public partial class LogicMonitorClient
 		string filter = "",
 		CancellationToken cancellationToken = default)
 		=> await GetBySubUrlAsync<Page<Alert>>($"device/groups/{id}/alerts?customColumns={customColumns}&needMessage={needMessage}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
+
+	/// <summary>
+	/// Get unmonitored device list
+	/// </summary>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<Page<UnmonitoredDevice>> GetUnmonitoredDeviceAsync(
+		Filter<UnmonitoredDevice> filter,
+		CancellationToken cancellationToken)
+		=> await FilteredGetAsync<UnmonitoredDevice>($"device/unmonitoreddevices", filter, cancellationToken);
 }

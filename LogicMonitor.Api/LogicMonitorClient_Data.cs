@@ -157,4 +157,16 @@ public partial class LogicMonitorClient
 			$"device/instances/datafetch?start={startDateTimeUtcTimestamp}&end={endDateTimeUtcTimestamp}",
 			cancellationToken).ConfigureAwait(false);
 	}
+
+	/// <summary>
+	/// Get device datasource data
+	/// </summary>
+	/// <param name="deviceId"></param>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<DeviceDataSourceData> GetDeviceDataSourceDataAsync(
+		int deviceId,
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{deviceId}/devicedatasources{id}/data", cancellationToken);
 }
