@@ -130,6 +130,18 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
+	/// get device group datasource
+	/// </summary>
+	/// <param name="deviceGroupId"></param>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<DeviceGroupDataSource> GetDeviceGroupDataSourceByIdAsync(
+		int deviceGroupId,
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<DeviceGroupDataSource>($"device/groups/{deviceGroupId}/datasources/{id}", cancellationToken);
+
+	/// <summary>
 	///     Gets a list of DataSource graphs given its dataSourceId
 	/// </summary>
 	/// <param name="dataSourceId">The datasource Id</param>

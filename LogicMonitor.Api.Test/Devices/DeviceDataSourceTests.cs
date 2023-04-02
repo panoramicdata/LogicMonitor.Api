@@ -26,7 +26,7 @@ public class DeviceDataSourceTests : TestWithOutput
 		var deviceDataSources = new List<DeviceDataSource>();
 		foreach (var device in devices)
 		{
-			if (dataSource != null) 
+			if (dataSource != null)
 			{
 				var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
 				if (deviceDataSourceByDeviceIdAndDataSourceId is null)

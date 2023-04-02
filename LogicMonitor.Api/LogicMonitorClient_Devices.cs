@@ -335,8 +335,32 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceGroupId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<EntityProperty>> GetDeviceGroupPropertiesAsync(int deviceGroupId, CancellationToken cancellationToken)
-		=> GetAllAsync<EntityProperty>($"device/groups/{deviceGroupId}/properties", cancellationToken);
+	public async Task<List<EntityProperty>> GetDeviceGroupPropertiesAsync(int deviceGroupId, CancellationToken cancellationToken)
+		=> await GetAllAsync<EntityProperty>($"device/groups/{deviceGroupId}/properties", cancellationToken);
+
+	/// <summary>
+	/// Get device group property by name
+	/// </summary>
+	/// <param name="gid"></param>
+	/// <param name="name"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<EntityProperty> GetDeviceGroupPropertiesByNameAsync(
+		int gid,
+		string name,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<EntityProperty>($"device/groups/{gid}/properties/{name}", cancellationToken);
+
+	/// <summary>
+	/// Delete device group property
+	/// </summary>
+	/// <param name="gid"></param>
+	/// <param name="name"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task DeleteDeviceGroupPropertyAsync(
+		int gid,
+		string name,
+		CancellationToken cancellationToken)
+		=> await DeleteAsync($"device/groups/{gid}/properties/{name}", cancellationToken);
 
 	/// <summary>
 	///     Tree node free search
@@ -897,4 +921,38 @@ public partial class LogicMonitorClient
 	/// </summary>
 	public async Task<AwsExternalId> GetExternalIdAsync(CancellationToken cancellationToken)
 		=> await GetBySubUrlAsync<AwsExternalId>($"aws/externalId", cancellationToken);
+
+	/// <summary>
+	/// Get device group SDTs
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<Page<ScheduledDownTime>> GetDeviceGroupSDTsAsync(
+		int id,
+		Filter<ScheduledDownTime> filter,
+		CancellationToken cancellationToken)
+		=> await FilteredGetAsync<ScheduledDownTime>($"device/groups/{id}/sdts", filter, cancellationToken);
+
+	/// <summary>
+	/// Get device group alerts
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="customColumns"></param
+	/// <param name="needMessage"></param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<Page<Alert>> GetDeviceGroupAlertsAsync(
+		int id,
+		string customColumns = "",
+		bool needMessage = false,
+		string fields = "",
+		int size = 50,
+		int offset = 0,
+		string filter = "",
+		CancellationToken cancellationToken = default)
+		=> await GetBySubUrlAsync<Page<Alert>>($"device/groups/{id}/alerts?customColumns={customColumns}&needMessage={needMessage}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
 }
