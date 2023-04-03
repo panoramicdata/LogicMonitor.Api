@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Primitives;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
