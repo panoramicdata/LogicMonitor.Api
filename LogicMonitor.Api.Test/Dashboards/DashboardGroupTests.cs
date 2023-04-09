@@ -59,4 +59,19 @@ public class DashboardGroupTests : TestWithOutput
 			.DeleteAsync(dashboardGroup, default)
 			.ConfigureAwait(false);
 	}
+
+	[Fact]
+	public async Task GetDashboardGroupByFullPath()
+	{
+		var dashboardGroup = (await LogicMonitorClient
+			.GetAllAsync<DashboardGroup>(default)
+			.ConfigureAwait(false))[1];
+
+		var dashboardGroupByPath = await LogicMonitorClient
+			.GetDashboardGroupByFullPathAsync(dashboardGroup.FullPath, default)
+			.ConfigureAwait(false);
+
+		dashboardGroupByPath.Should().NotBeNull();
+		dashboardGroupByPath.Id.Should().Be(dashboardGroup.Id);
+	}
 }

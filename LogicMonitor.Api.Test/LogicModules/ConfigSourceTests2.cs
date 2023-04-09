@@ -29,4 +29,25 @@ public class ConfigSourceTests2 : TestWithOutput
 		configSource.Should().NotBeNull();
 	}
 
+	[Fact]
+	public async Task UpdateAuditVersion()
+	{
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
+		configSources.Should().NotBeNullOrEmpty();
+
+		var original = configSources[0];
+		var defaultVersion = original.AuditVersion;
+
+		await LogicMonitorClient
+			.AddConfigsourceAuditVersionAsync(original.Id, new Audit() { Version = 1 }, default)
+			.ConfigureAwait(false);
+
+		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(original.Id, default).ConfigureAwait(false);
+
+		configSource.AuditVersion.Should().Be(1);
+
+		await LogicMonitorClient
+			.AddConfigsourceAuditVersionAsync(original.Id, new Audit() { Version = defaultVersion }, default)
+			.ConfigureAwait(false);
+	}
 }

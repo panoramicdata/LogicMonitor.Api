@@ -125,42 +125,12 @@ public partial class LogicMonitorClient
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task PatchCollectorByIdAsync(
-		int id,
-		Collector body,
-		CancellationToken cancellationToken)
-		=> await PutAsync(
-			$"setting/collector/collectors/{id}",
-			body,
-			cancellationToken).ConfigureAwait(false);
-
-	/// <summary>
-	/// update collector
-	/// </summary>
-	/// <param name="id">The collector id</param>
-	/// <param name="body">The body</param>
-	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task UpdateCollectorByIdAsync(
 		int id,
 		Collector body,
 		CancellationToken cancellationToken)
 		=> await PutAsync(
 			$"setting/collector/collectors/{id}",
-			body,
-			cancellationToken).ConfigureAwait(false);
-
-	/// <summary>
-	/// update collector group
-	/// </summary>
-	/// <param name="id">The collector id</param>
-	/// <param name="body">The body</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task PatchCollectorGroupByIdAsync(
-		int id,
-		CollectorGroup body,
-		CancellationToken cancellationToken)
-		=> await PutAsync(
-			$"setting/collector/groups/{id}",
 			body,
 			cancellationToken).ConfigureAwait(false);
 

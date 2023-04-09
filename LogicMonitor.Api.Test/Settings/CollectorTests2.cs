@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace LogicMonitor.Api.Test;
 
 [Collection("CollectorRelated")]
@@ -80,6 +82,62 @@ public class CollectorTests2
 		response.Should().NotBeNull();
 		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
+	}
+
+	[Fact]
+	public async Task UpdateCollectorGroup()
+	{
+		var collectorGroup = (await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(false))[2];
+
+		var defaultDesc = collectorGroup.Description;
+		collectorGroup.Description = "test desc";
+
+		await LogicMonitorClient
+			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
+			.ConfigureAwait(false);
+
+		var updatedGroup = (await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(false))[1];
+
+		var updatedDesc = collectorGroup.Description;
+		collectorGroup.Description = defaultDesc;
+
+		await LogicMonitorClient
+			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
+			.ConfigureAwait(false);
+
+		updatedDesc.Should().Be("test desc");
+	}
+
+	[Fact]
+	public async Task UpdateCollector()
+	{
+		var collector = (await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(false))[0];
+
+		var defaultDesc = collector.Description;
+		collector.Description = "test desc";
+
+		await LogicMonitorClient
+			.UpdateCollectorByIdAsync(collector.Id, collector, default)
+			.ConfigureAwait(false);
+
+		var updatedGroup = (await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(false))[1];
+
+		var updatedDesc = collector.Description;
+		collector.Description = defaultDesc;
+
+		await LogicMonitorClient
+			.UpdateCollectorByIdAsync(collector.Id, collector, default)
+			.ConfigureAwait(false);
+
+		updatedDesc.Should().Be("test desc");
 	}
 
 	[Fact]
