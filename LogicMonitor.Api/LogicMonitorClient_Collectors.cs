@@ -27,15 +27,11 @@ public partial class LogicMonitorClient
 	///     Get all collectors in a given collector group
 	/// </summary>
 	/// <param name="collectorGroupId">The collector group id</param>
-	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Collector>> GetAllCollectorsByCollectorGroupId(
+	public Task<Page<Collector>> GetAllCollectorsByCollectorGroupId(
 		int collectorGroupId,
-		Filter<Collector> filter,
-		CancellationToken cancellationToken
-	)
-		=> GetAllAsync(
-			filter,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<Collector>>(
 			$"setting/collector/groups/{collectorGroupId}/collectors",
 			cancellationToken
 		);

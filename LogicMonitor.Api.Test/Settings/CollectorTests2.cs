@@ -23,6 +23,33 @@ public class CollectorTests2
 	}
 
 	[Fact]
+	public async Task GetCollectorsFromGroup()
+	{
+		var collectorGroups = await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(false);
+
+		var fullGroup = new CollectorGroup();
+		var collectorGroup = new CollectorGroup();
+		int i = 0;
+		while (fullGroup.Id == 0)
+		{
+			collectorGroup = collectorGroups[i];
+			if (collectorGroup.CollectorCount > 0)
+			{
+				fullGroup = collectorGroup;
+			}
+			i++;
+		}
+
+		var collectors = await LogicMonitorClient
+			.GetAllCollectorsByCollectorGroupId(fullGroup.Id, default)
+			.ConfigureAwait(false);
+
+		collectors.Items.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
 	public async Task GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
