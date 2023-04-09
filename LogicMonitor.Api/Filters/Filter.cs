@@ -49,7 +49,7 @@ public class Filter<T>
 	/// <summary>
 	/// Permission
 	/// </summary>
-	public string Permission { get; set; } = string.Empty;
+	public string? Permission { get; set; }
 
 	/// <inheritdoc />
 	public override string ToString()
