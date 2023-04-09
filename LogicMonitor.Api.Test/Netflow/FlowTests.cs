@@ -22,7 +22,6 @@ public class FlowTests : TestWithOutput
 			.GetFlowApplicationsPageAsync(
 				new FlowApplicationsRequest
 				{
-					TimePeriod = TimePeriod.OneDay,
 					DeviceId = device.Id
 				},
 				default

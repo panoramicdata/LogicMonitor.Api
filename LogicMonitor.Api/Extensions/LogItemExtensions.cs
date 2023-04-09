@@ -145,7 +145,7 @@ public static class LogItemExtensions
 			new(@"^help run by (?<loginName>.+?) on collector \(id=(?<collectorId>.+?), hostname=(?<collectorName>.+?), desc=(?<description>.+?)\)$", RegexOptions.Singleline)),
 		new(41,
 			AuditEventEntityType.ScheduledDownTime,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ""WebsiteGroupName=(?<resourceGroupName>.+?)""; ""WebsiteGroupId=(?<resourceGroupId>.+?)"";""StartDownTime=(?<startDownTime>.+?)""; ""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Description=(?<description>.+?)""; "".+?GroupName=(?<resourceGroupName>.+?)""; "".+?GroupId=(?<resourceGroupId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(42,
 			AuditEventEntityType.Resource,
 			new(@"^Schedule data-collection poll request, hostId=(?<hostId>.+?), agentId=(?<agentId>.+?), requestId=(?<requestId>.+?)$", RegexOptions.Singleline)),
@@ -154,7 +154,10 @@ public static class LogItemExtensions
 			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\), (?<actionTwo>Delet)ed device (?<resourceName>.+?) \(.+?\) \((?<resourceId>.+?)\)$", RegexOptions.Singleline)),
 		new(44,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\)$", RegexOptions.Singleline))
+			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\)$", RegexOptions.Singleline)),
+		new(45,
+			AuditEventEntityType.Account,
+			new(@"^(?<loginName>.+?) Could not log into the system - Authentication failed \.$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
@@ -234,6 +237,9 @@ public static class LogItemExtensions
 				break;
 			case 42:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				break;
+			case 45:
+				auditEvent.ActionType = AuditEventActionType.Login;
 				break;
 			default:
 				break;
