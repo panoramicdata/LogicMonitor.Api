@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Google Map widget
 /// </summary>
 [DataContract]
-public class GoogleMapWidget : Widget
+public class GoogleMapWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The map points

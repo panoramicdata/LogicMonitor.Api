@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     An alert widget
 /// </summary>
 [DataContract]
-public class AlertWidget : Widget
+public class AlertWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The alert filter

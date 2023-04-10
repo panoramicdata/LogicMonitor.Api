@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>A Gauge widget</summary>
-public class GaugeWidget : Widget
+public class GaugeWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The display type

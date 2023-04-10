@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     An HTML widget
 /// </summary>
 [DataContract]
-public class HtmlWidget : Widget
+public class HtmlWidget : Widget, IWidget
 {
 	/// <summary>
 	///     Constructor with default parameters

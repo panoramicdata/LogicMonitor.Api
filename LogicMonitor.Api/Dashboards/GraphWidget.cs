@@ -4,6 +4,6 @@ namespace LogicMonitor.Api.Dashboards;
 /// A graph widget
 /// </summary>
 [DataContract]
-public abstract class GraphWidget : Widget
+public abstract class GraphWidget : Widget, IWidget
 {
 }

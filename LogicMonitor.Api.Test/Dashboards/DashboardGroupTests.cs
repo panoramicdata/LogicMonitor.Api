@@ -74,4 +74,32 @@ public class DashboardGroupTests : TestWithOutput
 		dashboardGroupByPath.Should().NotBeNull();
 		dashboardGroupByPath.Id.Should().Be(dashboardGroup.Id);
 	}
+
+	[Fact]
+	public async Task GetChildDashboardGroups()
+	{
+		var dashboardGroup = (await LogicMonitorClient
+			.GetAllAsync<DashboardGroup>(default)
+			.ConfigureAwait(false))[0];
+
+		var dashboardChildren = await LogicMonitorClient
+			.GetChildDashboardGroupsAsync(dashboardGroup.Id, new Filter<DashboardGroup>(), default)
+			.ConfigureAwait(false);
+
+		dashboardChildren.Items.Should().NotBeEmpty();
+	}
+
+	[Fact]
+	public async Task GetChildDashboards()
+	{
+		var dashboardGroup = (await LogicMonitorClient
+			.GetAllAsync<DashboardGroup>(default)
+			.ConfigureAwait(false))[0];
+
+		var children = await LogicMonitorClient
+			.GetChildDashboardsAsync(dashboardGroup.Id, new Filter<Dashboard>(), default)
+			.ConfigureAwait(false);
+
+		children.Items.Should().NotBeEmpty();
+	}
 }

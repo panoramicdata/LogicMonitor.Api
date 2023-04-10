@@ -4,7 +4,7 @@
 ///     A Device NOC widget
 /// </summary>
 [DataContract]
-public class DeviceNocWidget : NocWidget
+public class DeviceNocWidget : NocWidget, IWidget
 {
 	/// <summary>
 	///     The Items

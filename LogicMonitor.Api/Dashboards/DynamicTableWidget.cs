@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Dynamic table widget
 /// </summary>
 [DataContract]
-public class DynamicTableWidget : Widget
+public class DynamicTableWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The dataSourceId

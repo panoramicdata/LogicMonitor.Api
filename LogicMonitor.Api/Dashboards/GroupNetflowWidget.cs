@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Group Netflow widget
 /// </summary>
 [DataContract]
-public class GroupNetflowWidget : Widget
+public class GroupNetflowWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The data type

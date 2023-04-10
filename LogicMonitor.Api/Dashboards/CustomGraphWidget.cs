@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     Complex graph widget
 /// </summary>
 [DataContract]
-public class CustomGraphWidget : GraphWidget
+public class CustomGraphWidget : GraphWidget, IWidget
 {
 	/// <summary>
 	/// The graph info

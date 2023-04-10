@@ -4,7 +4,7 @@
 ///     A big number widget
 /// </summary>
 [DataContract]
-public class BigNumberWidget : Widget
+public class BigNumberWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The alert filter

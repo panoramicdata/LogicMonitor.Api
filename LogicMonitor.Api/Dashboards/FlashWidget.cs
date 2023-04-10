@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A flash widget
 /// </summary>
 [DataContract]
-public class FlashWidget : Widget
+public class FlashWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The height

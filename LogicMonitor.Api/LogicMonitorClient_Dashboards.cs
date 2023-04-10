@@ -50,14 +50,14 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<DashboardGroup>> GetChildDashboardGroupsAsync(
+	public Task<Page<DashboardGroup>> GetChildDashboardGroupsAsync(
 		int parentDashboardGroupId,
 		Filter<DashboardGroup> filter,
 		CancellationToken cancellationToken
 	)
-		=> GetAllAsync(
-			filter,
+		=> FilteredGetAsync<DashboardGroup>(
 			$"dashboard/groups/{parentDashboardGroupId}/groups",
+			filter,
 			cancellationToken);
 
 	/// <summary>
@@ -66,14 +66,14 @@ public partial class LogicMonitorClient
 	/// <param name="parentDashboardGroupId">The Id of the parent dashboard group</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken"></param>
-	public Task<List<Dashboard>> GetChildDashboardsAsync(
+	public Task<Page<Dashboard>> GetChildDashboardsAsync(
 		int parentDashboardGroupId,
 		Filter<Dashboard> filter,
 		CancellationToken cancellationToken
 	)
-		=> GetAllAsync(
-			filter,
+		=> FilteredGetAsync<Dashboard>(
 			$"dashboard/groups/{parentDashboardGroupId}/dashboards",
+			filter,
 			cancellationToken
 		);
 
@@ -128,9 +128,9 @@ public partial class LogicMonitorClient
 	/// <param name="widget">The widget to save</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task SaveNewWidgetAsync(
-		HtmlWidget widget,
+		IWidget widget,
 		CancellationToken cancellationToken)
-		=> await PostAsync<HtmlWidget, HtmlWidget>(widget, "dashboard/widgets", cancellationToken).ConfigureAwait(false);
+		=> await PostAsync<IWidget, EmptyResponse>(widget, $"dashboard/widgets", cancellationToken);
 
 	/// <summary>
 	///     Delete a dashboard group and all child dashboard groups and their dashboards

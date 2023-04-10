@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     A Device SLA widget
 /// </summary>
 [DataContract]
-public class DeviceSlaWidget : Widget
+public class DeviceSlaWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The bottom label

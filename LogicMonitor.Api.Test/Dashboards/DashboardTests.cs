@@ -321,4 +321,13 @@ public class DashboardTests : TestWithOutput
 
 		widgets.Items.Should().NotBeEmpty();
 	}
+
+	[Fact]
+	public async Task SaveWidget()
+	{
+		var newWidget = new HtmlWidget
+		{
+			
+		};
+	}
 }
