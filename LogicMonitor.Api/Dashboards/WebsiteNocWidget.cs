@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Website NOC widget
 /// </summary>
 [DataContract]
-public class WebsiteNocWidget : Widget
+public class WebsiteNocWidget : Widget, IWidget
 {
 	/// <summary>
 	/// Items

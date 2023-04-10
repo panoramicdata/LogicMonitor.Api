@@ -11,6 +11,21 @@ namespace LogicMonitor.Api.Dashboards;
 public interface IWidget
 {
 	/// <summary>
+	///    The LogicMonitor Name
+	/// </summary>
+	public string Name { get; set; }
+
+	/// <summary>
+	///    The LogicMonitor Description
+	/// </summary>
+	public string Description { get; set; }
+
+	/// <summary>
+	/// Id
+	/// </summary>
+	public int Id { get; set; }
+
+	/// <summary>
 	/// alert | batchjob | flash | gmap | ngraph | ograph | cgraph | sgraph | netflowgraph | groupNetflowGraph | netflow | groupNetflow | html | bigNumber | gauge | pieChart | table | dynamicTable | deviceSLA | text | statsd | deviceStatus | serviceAlert | noc | websiteOverview | websiteOverallStatus | websiteIndividualStatus | websiteSLA | savedMap
 	/// </summary>
 	public string Type { get; set; }

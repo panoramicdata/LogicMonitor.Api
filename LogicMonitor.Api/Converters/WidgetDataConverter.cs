@@ -15,6 +15,7 @@ internal class WidgetDataConverter : JsonCreationConverter<WidgetData>
 			"cgraph" => new CustomGraphWidgetData(),
 			"graph" => new CustomGraphWidgetData(),
 			"noc" => new NOCWidgetData(),
+			"alert" => new AlertWidgetData(),
 			"dynamictable" => new WidgetData(),
 			_ => new WidgetData(),
 		};

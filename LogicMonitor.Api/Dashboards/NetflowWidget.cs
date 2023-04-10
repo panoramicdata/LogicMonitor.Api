@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A netflow widget
 /// </summary>
 [DataContract]
-public class NetflowWidget : Widget
+public class NetflowWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The function

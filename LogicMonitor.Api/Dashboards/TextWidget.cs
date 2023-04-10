@@ -4,7 +4,7 @@
 /// A Text widget
 /// </summary>
 [DataContract]
-public class TextWidget : Widget
+public class TextWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The Html

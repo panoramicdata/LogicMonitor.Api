@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A pie chart widget
 /// </summary>
 [DataContract]
-public class PieChartWidget : Widget
+public class PieChartWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The pie chart info

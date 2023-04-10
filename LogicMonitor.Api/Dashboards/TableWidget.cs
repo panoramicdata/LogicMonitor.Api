@@ -4,7 +4,7 @@
 /// A Table widget
 /// </summary>
 [DataContract]
-public class TableWidget : Widget
+public class TableWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The columns

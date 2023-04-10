@@ -3,7 +3,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// <summary>
 /// A netflow graph widget
 /// </summary>
-public class NetflowGraphWidget : Widget
+public class NetflowGraphWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The graph type

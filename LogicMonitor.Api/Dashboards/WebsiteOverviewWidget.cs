@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Website overview widget
 /// </summary>
 [DataContract]
-public class WebsiteOverviewWidget : Widget
+public class WebsiteOverviewWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The Website Id

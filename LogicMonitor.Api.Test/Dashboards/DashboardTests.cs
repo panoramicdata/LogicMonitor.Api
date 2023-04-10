@@ -323,11 +323,30 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
-	public async Task SaveWidget()
+	public async Task GetWidgetById()
 	{
-		var newWidget = new HtmlWidget
-		{
-			
-		};
+		var widget = (await LogicMonitorClient
+			.GetWidgetListAsync(new Filter<Widget>(), default)
+			.ConfigureAwait(false)).Items[0];
+
+		var getWidget = await LogicMonitorClient
+			.GetWidgetByIdAsync(widget.Id, default)
+			.ConfigureAwait(false);
+
+		getWidget.Name.Should().Be(widget.Name);
+	}
+
+	[Fact]
+	public async Task GetWidgetDataById()
+	{
+		var widget = (await LogicMonitorClient
+			.GetWidgetListAsync(new Filter<Widget>(), default)
+			.ConfigureAwait(false)).Items[0];
+
+		var widgetData = await LogicMonitorClient
+			.GetWidgetDataByIdAsync(widget.Id, default)
+			.ConfigureAwait(false);
+
+		widgetData.Should().NotBeNull();
 	}
 }

@@ -4,7 +4,7 @@
 /// A saved map widget
 /// </summary>
 [DataContract]
-public class SavedMapWidget : Widget
+public class SavedMapWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The display settings

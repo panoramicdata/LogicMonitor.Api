@@ -4,7 +4,7 @@
 /// RestSavedMapWidgetV3
 /// </summary>
 [DataContract]
-public class RestSavedMapWidgetV3 : Widget
+public class RestSavedMapWidgetV3 : Widget, IWidget
 {
 	/// <summary>
 	/// Scale

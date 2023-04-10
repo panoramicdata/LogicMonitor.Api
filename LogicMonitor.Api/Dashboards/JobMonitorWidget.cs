@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     A job monitor widget
 /// </summary>
 [DataContract]
-public class JobMonitorWidget : Widget
+public class JobMonitorWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The device display name

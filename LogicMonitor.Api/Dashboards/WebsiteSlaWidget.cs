@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     A Website SLA widget
 /// </summary>
 [DataContract]
-public class WebsiteSlaWidget : Widget
+public class WebsiteSlaWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The metrics

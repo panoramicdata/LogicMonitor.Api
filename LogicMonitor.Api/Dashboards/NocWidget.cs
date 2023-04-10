@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A NOC widget
 /// </summary>
 [DataContract]
-public class NocWidget : Widget
+public class NocWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The Alert Level

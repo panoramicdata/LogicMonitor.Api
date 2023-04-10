@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Website overall status widget
 /// </summary>
 [DataContract]
-public class WebsiteOverallStatusWidget : Widget
+public class WebsiteOverallStatusWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The Website select mode

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Website individual status widget
 /// </summary>
 [DataContract]
-public class WebsiteIndividualStatusWidget : Widget
+public class WebsiteIndividualStatusWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The Website group id
