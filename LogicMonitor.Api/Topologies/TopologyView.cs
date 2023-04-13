@@ -7,16 +7,28 @@ namespace LogicMonitor.Api.Topologies;
 public class TopologyView
 {
 	/// <summary>
+	///    The resource id
+	/// </summary>
+	[DataMember(Name = "rid")]
+	public string ResourceId { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The resource
+	/// </summary>
+	[DataMember(Name = "resource")]
+	public string Resource { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The vertices
 	/// </summary>
 	[DataMember(Name = "vertices")]
-	public List<string> Vertices { get; set; } = new();
+	public List<string>? Vertices { get; set; } = new();
 
 	/// <summary>
 	///    The edge types
 	/// </summary>
 	[DataMember(Name = "edgeTypes")]
-	public List<object> EdgeTypes { get; set; } = new();
+	public List<EdgeType> EdgeTypes { get; set; } = new();
 
 	/// <summary>
 	///    The algorithm
