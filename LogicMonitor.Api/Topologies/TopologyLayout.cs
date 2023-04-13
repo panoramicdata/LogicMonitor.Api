@@ -10,7 +10,7 @@ public class TopologyLayout
 	///    The mode
 	/// </summary>
 	[DataMember(Name = "mode")]
-	public string Mode { get; set; } = string.Empty;
+	public TopologyLayoutMode Mode { get; set; }
 
 	/// <summary>
 	///    The vertices

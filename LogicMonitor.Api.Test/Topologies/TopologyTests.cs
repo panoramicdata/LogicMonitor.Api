@@ -2,8 +2,6 @@
 
 public class TopologyTests : TestWithOutput
 {
-	private const string TestName = "Test Name";
-
 	public TopologyTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
 	}
