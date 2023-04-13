@@ -28,11 +28,11 @@ public class TopologyView
 	///    The edge types
 	/// </summary>
 	[DataMember(Name = "edgeTypes")]
-	public List<EdgeType> EdgeTypes { get; set; } = new();
+	public List<EdgeTypeAndDirection> EdgeTypes { get; set; } = new();
 
 	/// <summary>
 	///    The algorithm
 	/// </summary>
 	[DataMember(Name = "algorithm")]
-	public string Algorithm { get; set; } = string.Empty;
+	public TopologyAlgorithm Algorithm { get; set; }
 }

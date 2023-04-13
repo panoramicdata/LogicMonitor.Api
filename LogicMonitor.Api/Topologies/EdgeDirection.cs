@@ -4,7 +4,7 @@
 /// The edge type direction
 /// </summary>
 [JsonConverter(typeof(StringEnumConverter))]
-public enum EdgeTypeDirection
+public enum EdgeDirection
 {
 	/// <summary>
 	/// In

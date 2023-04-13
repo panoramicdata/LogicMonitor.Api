@@ -4,15 +4,17 @@
 /// The edge type
 /// </summary>
 [DataContract]
-public class EdgeType
+public class EdgeTypeAndDirection
 {
 	/// <summary>
 	/// The type
 	/// </summary>
+	[DataMember(Name = "type")]
 	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The type
 	/// </summary>
-	public EdgeTypeDirection Direction { get; set; }
+	[DataMember(Name = "direction")]
+	public EdgeDirection Direction { get; set; }
 }
