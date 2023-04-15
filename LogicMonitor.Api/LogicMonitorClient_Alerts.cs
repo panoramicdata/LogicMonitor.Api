@@ -14,15 +14,6 @@ public partial class LogicMonitorClient
 	/// <returns>a list of alerts that meet the filter</returns>
 	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter, CancellationToken cancellationToken)
 	{
-		// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
-		//var alerts =
-		//	alertFilter?.StartUtcIsAfter is not null
-		//		&& alertFilter.StartUtcIsBefore is not null
-		//		&& alertFilter.EndUtcIsAfter is null
-		//		&& alertFilter.EndUtcIsBefore is null
-		//			? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false)
-		//			: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
-
 		var (alerts, limitReached) = await GetRestAlertsWithoutV84BugAsync(alertFilter, false, cancellationToken).ConfigureAwait(false);
 
 		if (limitReached)
@@ -215,6 +206,22 @@ public partial class LogicMonitorClient
 
 	/// <summary>
 	/// Acknowledge an alert
+	/// </summary>
+	/// <param name="alertId">The non-unique alert id</param>
+	/// <param name="acknowledgementComment">The acknowledgement comment</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task AcknowledgeAlertAsync(
+		string alertId,
+		string acknowledgementComment,
+		CancellationToken cancellationToken)
+		=> await PostAsync<AlertAcknowledgement, EmptyResponse>(
+			new AlertAcknowledgement { AcknowledgementComment = acknowledgementComment },
+			$"alert/alerts/{alertId}/ack",
+			cancellationToken
+			).ConfigureAwait(false);
+
+	/// <summary>
+	/// add alert notes
 	/// </summary>
 	/// <param name="alertIds">The non-unique alert ids</param>
 	/// <param name="note">The note</param>

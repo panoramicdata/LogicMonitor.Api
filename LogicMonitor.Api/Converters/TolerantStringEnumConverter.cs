@@ -37,14 +37,6 @@ internal class TolerantStringEnumConverter : JsonConverter
 
 				if (!string.IsNullOrEmpty(enumText))
 				{
-					// This just does it by name - we need to use the EnumMemberAttribute
-					//var match = names
-					//	.FirstOrDefault(n => string.Equals(n, enumText, StringComparison.OrdinalIgnoreCase));
-					//if (match is not null)
-					//{
-					//	return Enum.Parse(enumType, match);
-					//}
-
 					// Get the right member using the EnumMember attribute
 					var match = Array.Find(Enum
 						.GetNames(objectType), name => GetEnumMemberAttrValue(objectType, Enum.Parse(enumType, name)) == enumText);

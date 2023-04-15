@@ -259,9 +259,6 @@ public partial class LogicMonitorClient
 				foreach (var deviceGroup in deviceGroups)
 				{
 					devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, null, cancellationToken).ConfigureAwait(false));
-
-					// NO! This does NOT return enough devices - only 300!
-					//devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device> { Skip = 0, Take = 300 }).ConfigureAwait(false));
 				}
 			}
 		}

@@ -6,24 +6,6 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 	/// <summary>
-	///     Gets all collectors
-	/// </summary>
-	/// <param name="cancellationToken">The cancellation token</param>
-	[Obsolete("Use GetAllAsync<Collector>() instead")]
-	public Task<List<Collector>> GetAllCollectorsAsync(CancellationToken cancellationToken)
-		=> GetAllAsync<Collector>(cancellationToken);
-	//{
-	//	var allCollectors = new List<Collector>();
-	//	var collectorGroups = await GetAllAsync<CollectorGroup>().ConfigureAwait(false);
-	//	foreach (var collectorGroup in collectorGroups)
-	//	{
-	//		var collectors = await GetAllCollectorsByCollectorGroupId(collectorGroup.Id, null, cancellationToken).ConfigureAwait(false);
-	//		allCollectors.AddRange(collectors);
-	//	}
-	//	return allCollectors;
-	//}
-
-	/// <summary>
 	///     Get all collectors in a given collector group
 	/// </summary>
 	/// <param name="collectorGroupId">The collector group id</param>

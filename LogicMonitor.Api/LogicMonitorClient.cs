@@ -1155,7 +1155,6 @@ public partial class LogicMonitorClient : IDisposable
 
 		// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
 		var data = JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-		//var subUrl1 = "rest/" + (subUrl ?? "functions/");
 		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)

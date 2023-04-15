@@ -21,4 +21,20 @@ public partial class LogicMonitorClient
 
 		return response;
 	}
+
+	/// <summary>
+	/// Get a topology group using its id
+	/// </summary>
+	public async Task<TopologyGroup> GetTopologyGroupAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<TopologyGroup>($"topology/groups/{id}", cancellationToken);
+
+	/// <summary>
+	/// Get a topology group using its id
+	/// </summary>
+	public async Task<Page<Topology>> GetTopologiesFromGroupAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<Page<Topology>>($"topology/groups/{id}/topologies", cancellationToken);
 }

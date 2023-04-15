@@ -53,4 +53,24 @@ public class TopologyGroupTests : TestWithOutput
 			.DeleteAsync(newItem, cancellationToken: default)
 			.ConfigureAwait(false);
 	}
+
+	[Fact]
+	public async Task GetTopologyGroup()
+	{
+		var topGroup = await LogicMonitorClient
+			.GetTopologyGroupAsync(1, default)
+			.ConfigureAwait(false);
+
+		topGroup.Should().NotBeNull();
+	}
+
+	[Fact]
+	public async Task GetTopologiesFromGroup()
+	{
+		var topologies = await LogicMonitorClient
+			.GetTopologiesFromGroupAsync(2, default)
+			.ConfigureAwait(false);
+
+		topologies.Items.Should().NotBeNullOrEmpty();
+	}
 }
