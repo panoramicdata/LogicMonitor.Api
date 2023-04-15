@@ -13,8 +13,8 @@ public enum TopologyLayoutMode
 	Dynamic,
 
 	/// <summary>
-	/// Dynamic
+	/// Hierarchical
 	/// </summary>
-	[EnumMember(Value = "HIERARCHIC")]
-	Hierarchic
+	[EnumMember(Value = "hierarchical")]
+	Hierarchical
 }

@@ -93,9 +93,8 @@ public class DeviceGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceGroupPropertiesByName()
 	{
-		throw new NotImplementedException();
-		//var deviceGroupProperties = await LogicMonitorClient.GetDeviceGroupPropertiesByNameAsync(1, "api.account", default).ConfigureAwait(false);
-		//deviceGroupProperties.Name.Should().NotBe(string.Empty);
+		var deviceGroupProperties = await LogicMonitorClient.GetDeviceGroupPropertiesByNameAsync(1, "api.account", default).ConfigureAwait(false);
+		deviceGroupProperties.Name.Should().NotBe(string.Empty);
 	}
 
 	[Fact]
@@ -241,26 +240,23 @@ public class DeviceGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetAwsExternalId()
 	{
-		throw new NotImplementedException();
-		//var awsId = await LogicMonitorClient.GetExternalIdAsync(default).ConfigureAwait(false);
-		//awsId.Should().NotBeNull();
+		var awsId = await LogicMonitorClient.GetExternalIdAsync(default).ConfigureAwait(false);
+		awsId.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetDeviceGroupSDTs()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
-		throw new NotImplementedException();
-		//var sdts = await LogicMonitorClient.GetDeviceGroupSDTsAsync(deviceGroup.Id, new Filter<ScheduledDownTime>(), default).ConfigureAwait(false);
-		//sdts.Should().NotBeNull();
+		var sdts = await LogicMonitorClient.GetDeviceGroupSDTsAsync(deviceGroup.Id, new Filter<ScheduledDownTime>(), default).ConfigureAwait(false);
+		sdts.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetDeviceGroupAlerts()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
-		throw new NotImplementedException();
-		//var alerts = await LogicMonitorClient.GetDeviceGroupAlertsAsync(deviceGroup.Id).ConfigureAwait(false);
-		//alerts.Items.Should().NotBeEmpty();
+		var alerts = await LogicMonitorClient.GetDeviceGroupAlertsAsync(deviceGroup.Id).ConfigureAwait(false);
+		alerts.Items.Should().NotBeEmpty();
 	}
 }

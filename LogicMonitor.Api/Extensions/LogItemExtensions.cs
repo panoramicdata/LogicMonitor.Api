@@ -157,7 +157,10 @@ public static class LogItemExtensions
 			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\)$", RegexOptions.Singleline)),
 		new(45,
 			AuditEventEntityType.Account,
-			new(@"^(?<loginName>.+?) Could not log into the system - Authentication failed \.$", RegexOptions.Singleline))
+			new(@"^(?<loginName>.+?) Could not log into the system - Authentication failed \.$", RegexOptions.Singleline)),
+		new(46,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Add) a widget test to dashboard (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
