@@ -62,7 +62,7 @@ public partial class LogicMonitorClient
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/datasources/{dataSourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
-	///     Gets a list of all overview graphs for a DataSource.
+	///     Gets an overview graph for a DataSource by graph name.
 	/// </summary>
 	/// <param name="dataSourceId">The datasource id</param>
 	/// <param name="graphName">The graph name</param>

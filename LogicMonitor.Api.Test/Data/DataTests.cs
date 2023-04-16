@@ -70,6 +70,7 @@ public class DataTests : TestWithOutput
 
 		var overviewGraph = await LogicMonitorClient.GetDeviceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets", default).ConfigureAwait(false);
 		overviewGraph.Should().NotBeNull();
+
 		var graphDataRequest = new DeviceDataSourceGraphDataRequest
 		{
 			DataSourceInstanceGroupId = deviceDataSourceInstanceGroup.Id,

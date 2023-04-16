@@ -21,12 +21,12 @@ public class CollectorGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(default).ConfigureAwait(false);
-		collectorGroups.Should().NotBeNullOrEmpty();
-		collectorGroups.Should().NotContain(cg => cg.Id == 0);
-		collectorGroups.Should().NotContain(cg => cg.Name == null);
+		var collectorGroups = await LogicMonitorClient.GetPageAsync<CollectorGroup>(new Filter<CollectorGroup>(), $"setting/collector/groups", default).ConfigureAwait(false);
+		collectorGroups.Items.Should().NotBeNullOrEmpty();
+		collectorGroups.Items.Should().NotContain(cg => cg.Id == 0);
+		collectorGroups.Items.Should().NotContain(cg => cg.Name == null);
 		// Bug in LogicMonitor's API
-		// collectorGroups.TotalCount.Should().NotBe(0);
+		collectorGroups.TotalCount.Should().NotBe(0);
 	}
 
 	[Fact]

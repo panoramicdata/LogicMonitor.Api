@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Test.Extensions;
 using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Websites;
@@ -97,7 +98,7 @@ public class WebsiteTests : TestWithOutput
 		websiteMonitorCheckpoints.Should().NotBeNullOrEmpty();
 
 		//// Website folders should have unique Ids
-		//((websiteMonitorCheckpoints.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
+		((websiteMonitorCheckpoints.Select(c => c.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	[Fact]

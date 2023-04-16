@@ -36,9 +36,12 @@ public class LogicModuleMetadataTests : TestWithOutput
 	{
 		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS", default).ConfigureAwait(false);
 		configSource.Should().NotBeNull();
-		configSource.Id.Should().NotBe(0);
-		var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.ConfigSource, configSource.Id, default).ConfigureAwait(false);
-		CheckMetadata(logicModuleMetadata);
+		if (configSource != null)
+		{
+			configSource.Id.Should().NotBe(0);
+			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.ConfigSource, configSource.Id, default).ConfigureAwait(false);
+			CheckMetadata(logicModuleMetadata);
+		}
 	}
 
 	[Fact]
@@ -46,9 +49,12 @@ public class LogicModuleMetadataTests : TestWithOutput
 	{
 		var propertySource = await LogicMonitorClient.GetByNameAsync<PropertySource>("Cisco_Product_Info", default).ConfigureAwait(false);
 		propertySource.Should().NotBeNull();
-		propertySource.Id.Should().NotBe(0);
-		var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id, default).ConfigureAwait(false);
-		CheckMetadata(logicModuleMetadata);
+		if (propertySource != null)
+		{
+			propertySource.Id.Should().NotBe(0);
+			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id, default).ConfigureAwait(false);
+			CheckMetadata(logicModuleMetadata);
+		}
 	}
 
 	private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)

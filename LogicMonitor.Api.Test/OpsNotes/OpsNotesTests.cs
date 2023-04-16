@@ -88,7 +88,7 @@ public class OpsNotesTests : TestWithOutput
 		refetchedOpsNote.Should().NotBeNull();
 		refetchedOpsNote.Note.Should().Be(createdOpsNote.Note);
 		refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch().Should().Be(utcNow);
-		//refetchedOpsNote.Tags.Select(t => t.Name).Should().Be(createdOpsNote.Tags.Select(t => t.Name));
+		refetchedOpsNote.Tags.Select(t => t.Name).Should().Equal(createdOpsNote.Tags.Select(t => t.Name));
 
 		// Remove the test OpsNote - this takes some time
 		await LogicMonitorClient.DeleteAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default).ConfigureAwait(false);

@@ -436,4 +436,22 @@ public class DataSourceTests : TestWithOutput
 		deviceDataSource.DeviceId.Should().Be(device.Id);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);
 	}
+
+	[Fact]
+	public async Task GetDataSourceOGraphByName()
+	{
+		var dataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("CiscoTemp-", default)
+			.ConfigureAwait(false);
+
+		if (dataSource != null)
+		{
+
+			var ograph = await LogicMonitorClient
+				.GetDataSourceOverviewGraphByNameAsync(dataSource.Id, "Temperature", default)
+				.ConfigureAwait(false);
+
+			ograph.Should().NotBeNull();
+		}
+	}
 }
