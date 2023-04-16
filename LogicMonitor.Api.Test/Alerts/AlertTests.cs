@@ -208,7 +208,7 @@ public class AlertTests : TestWithOutput
 				StartUtcIsBefore = startUtcIsBefore
 			};
 			var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter, default).ConfigureAwait(false);
-			// TODO CheckAlertsAreValid(alerts);
+			CheckAlertsAreValid(alerts);
 
 			// Make sure there are no alerts for hosts not mentioned by the hostFilter
 			Assert.All(alerts, alert => Assert.Equal(alert.MonitorObjectName, device.DisplayName));
@@ -246,7 +246,7 @@ public class AlertTests : TestWithOutput
 			StartEpochIsBefore = utcNow.SecondsSinceTheEpoch()
 		};
 		var alerts = await LogicMonitorClient.GetAlertsAsync(alertFilter, default).ConfigureAwait(false);
-		// TODO CheckAlertsAreValid(alerts);
+		CheckAlertsAreValid(alerts);
 
 		// Make sure there are no alerts for hosts not mentioned by the hostFilter
 		Assert.All(alerts, alert => Assert.Equal(alert.MonitorObjectName, device.DisplayName));

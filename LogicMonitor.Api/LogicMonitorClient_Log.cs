@@ -21,7 +21,6 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="logFilter"></param>
 	/// <param name="cancellationToken"></param>
-	// public List<LogItem> GetLogItemsAsync(LogFilter logFilter) => Get<LogItemCollection>(ApiMethod.Do, $"onesetting?func=getAccessLog&needTotal=true&orderBy=happenedOn&orderDirection=desc&start={logFilter.Skip}&results={logFilter.Take}").AccessLogItems;
 	public async Task<List<LogItem>> GetLogItemsAsync(LogFilter? logFilter, CancellationToken cancellationToken)
 	{
 		// If take is specified, do only that chunk.

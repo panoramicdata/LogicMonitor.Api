@@ -160,7 +160,13 @@ public static class LogItemExtensions
 			new(@"^(?<loginName>.+?) Could not log into the system - Authentication failed \.$", RegexOptions.Singleline)),
 		new(46,
 			AuditEventEntityType.Resource,
-			new(@"^(?<action>Add) a widget test to dashboard (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline))
+			new(@"^(?<action>Add) a widget test to dashboard (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(47,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Group""; ""Device=NA""; ""GroupName=(?<resourceGroupName>.+?)""; ""Description=(?<description>(.|\n)+?)""; ""Alert_threshold_changes=((.|\n)+?)""; ""DataSource=(?<dataSourceName>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
+		new(48,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""; ""Alert_threshold_changes=\[DataPointId=(.+?),DataPointName=(.+?),OldDataPointValue=(?<instanceOldValue>.+?),NewDataPointValue=(?<instanceNewValue>.+?)\]""; ""InstanceId=(?<instanceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
