@@ -1,3 +1,4 @@
+using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test;
@@ -32,10 +33,17 @@ public class EventSourceTests2 : TestWithOutput
 		var eventSourcesString = string.Empty;
 		foreach (var eventSource in eventSourcePage.Items)
 		{
-			// TODO
-			//dataSourcesString += $"{dataSource.Name} / {dataSource.DisplayedAs}\r\n";
-			//TestOverviewGraphs(dataSource);
-			//TestGraphs(dataSource);
+			eventSourcesString += $"{eventSource.Name}\r\n";
+
+			var overviewGraphs = await LogicMonitorClient
+			.GetDataSourceOverviewGraphsPageAsync(eventSource.Id, new Filter<DataSourceOverviewGraph>(), default)
+			.ConfigureAwait(false);
+
+			var testGraphs = await LogicMonitorClient
+				.GetDataSourceGraphsAsync(eventSource.Id, default)
+				.ConfigureAwait(false);
+
+			testGraphs.Should().NotBeNull();
 		}
 
 		Logger.LogInformation("{Message}", eventSourcesString);

@@ -31,25 +31,25 @@ public class LogicModuleMetadataTests : TestWithOutput
 	//	CheckMetadata(logicModuleMetadata);
 	//}
 
-	//[Fact]
-	//public async Task GetConfigSourceMetadata()
-	//{
-	//	var configSource = await PortalClient.GetByNameAsync<ConfigSource>("Cisco_IOS").ConfigureAwait(false);
-	//	configSource.Should().NotBeNull();
-	//	configSource.Id.Should().NotBe(0);
-	//	var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.ConfigSource, configSource.Id).ConfigureAwait(false);
-	//	CheckMetadata(logicModuleMetadata);
-	//}
+	[Fact]
+	public async Task GetConfigSourceMetadata()
+	{
+		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS", default).ConfigureAwait(false);
+		configSource.Should().NotBeNull();
+		configSource.Id.Should().NotBe(0);
+		var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.ConfigSource, configSource.Id, default).ConfigureAwait(false);
+		CheckMetadata(logicModuleMetadata);
+	}
 
-	//[Fact]
-	//public async Task GetPropertySourceMetadata()
-	//{
-	//	var propertySource = await PortalClient.GetByNameAsync<PropertySource>("Cisco_Product_Info").ConfigureAwait(false);
-	//	propertySource.Should().NotBeNull();
-	//	propertySource.Id.Should().NotBe(0);
-	//	var logicModuleMetadata = await PortalClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id).ConfigureAwait(false);
-	//	CheckMetadata(logicModuleMetadata);
-	//}
+	[Fact]
+	public async Task GetPropertySourceMetadata()
+	{
+		var propertySource = await LogicMonitorClient.GetByNameAsync<PropertySource>("Cisco_Product_Info", default).ConfigureAwait(false);
+		propertySource.Should().NotBeNull();
+		propertySource.Id.Should().NotBe(0);
+		var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id, default).ConfigureAwait(false);
+		CheckMetadata(logicModuleMetadata);
+	}
 
 	private static void CheckMetadata(LogicModuleMetadata logicModuleMetadata)
 	{

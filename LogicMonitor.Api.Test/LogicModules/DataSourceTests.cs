@@ -8,19 +8,6 @@ public class DataSourceTests : TestWithOutput
 	{
 	}
 
-	public async Task<bool> TestOverviewGraphs(DataSource dataSource)
-	{
-		var overviewGraphs = await LogicMonitorClient
-			.GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceOverviewGraph>(), default)
-			.ConfigureAwait(false);
-
-		if (overviewGraphs == null)
-		{
-			return false;
-		}
-		return true;
-	}
-
 	[Fact]
 	public async Task GetDataSourceByName()
 	{
@@ -144,10 +131,17 @@ public class DataSourceTests : TestWithOutput
 		foreach (var dataSource in dataSourcePage.Items)
 		{
 			// TODO
-			dataSourcesString += $"{dataSource.Name}";
-			TestOverviewGraphs(dataSource).Should().Be(true);
-			// TestGraphs(dataSource);
+			var overviewGraphs = await LogicMonitorClient
+			.GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceOverviewGraph>(), default)
+			.ConfigureAwait(false);
 
+			overviewGraphs.Should().NotBeNull();
+
+			var testGraphs = await LogicMonitorClient
+				.GetDataSourceGraphsAsync(dataSource.Id, default)
+				.ConfigureAwait(false);
+
+			testGraphs.Should().NotBeNull();
 		}
 
 		Logger.LogInformation("{DataSourcesString}", dataSourcesString);
