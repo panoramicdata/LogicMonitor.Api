@@ -1,4 +1,6 @@
+using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.Test.Extensions;
+using System.Security.Cryptography;
 
 namespace LogicMonitor.Api.Test.LogicModules;
 
@@ -26,6 +28,12 @@ public class DataSourceTests : TestWithOutput
 
 		var deviceGroupDataSources = await LogicMonitorClient.GetAllDeviceGroupDataSourcesAsync(deviceGroup.Id, default).ConfigureAwait(false);
 		deviceGroupDataSources.Should().NotBeNullOrEmpty();
+
+		var deviceGroupDataSource = await LogicMonitorClient
+			.GetDeviceGroupDataSourceByIdAsync(deviceGroup.Id, deviceGroupDataSources[0].DataSourceId, default)
+			.ConfigureAwait(false);
+
+		deviceGroupDataSources[0].DataSourceName.Should().Be(deviceGroupDataSource.DataSourceName);
 	}
 
 	[Fact]
@@ -249,6 +257,14 @@ public class DataSourceTests : TestWithOutput
 			.ConfigureAwait(false);
 		deviceDataSourceInstanceGroups.Should().NotBeNull();
 
+		var fetchedGraph = await LogicMonitorClient
+			.GetDeviceDataSourceInstanceGroupAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroups[0].Id, false, default)
+			.ConfigureAwait(false);
+		if (fetchedGraph != null)
+		{
+			deviceDataSourceInstanceGroups[0].Name.Should().Be(fetchedGraph.Name);
+		}
+
 		foreach (var deviceDataSourceInstanceGroup in deviceDataSourceInstanceGroups)
 		{
 			deviceDataSourceInstanceGroup.Should().NotBeNull();
@@ -452,6 +468,33 @@ public class DataSourceTests : TestWithOutput
 				.ConfigureAwait(false);
 
 			ograph.Should().NotBeNull();
+
+			var ographById = await LogicMonitorClient
+				.GetDataSourceOverviewGraphAsync(dataSource.Id, ograph.Id, default)
+				.ConfigureAwait(false);
+
+			ographById.Should().NotBeNull();
+		}
+	}
+
+	[Fact]
+	public async Task GetDataSourceGraph()
+	{
+		var dataSource = await LogicMonitorClient
+			.GetByNameAsync<DataSource>("Ping", default)
+			.ConfigureAwait(false);
+
+		if (dataSource != null )
+		{
+			var testGraphs = await LogicMonitorClient
+				.GetDataSourceGraphsAsync(dataSource.Id, default)
+				.ConfigureAwait(false);
+
+			var graph = await LogicMonitorClient
+				.GetDataSourceGraphAsync(dataSource.Id, testGraphs[0].Id, default)
+				.ConfigureAwait(false);
+
+			testGraphs[0].Name.Should().Be(graph.Name);
 		}
 	}
 }
