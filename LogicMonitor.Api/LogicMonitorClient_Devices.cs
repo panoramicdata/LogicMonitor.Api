@@ -631,7 +631,7 @@ public partial class LogicMonitorClient
 		DataPointConfiguration dataPointConfiguration,
 		CancellationToken cancellationToken)
 		=> await PutAsync(
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointConfiguration.Id}",
+			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			dataPointConfiguration,
 			cancellationToken).ConfigureAwait(false);
 

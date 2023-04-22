@@ -95,7 +95,7 @@ public partial class LogicMonitorClient
 			cancellationToken);
 
 	/// <summary>
-	///     Gets a device data source
+	///     Gets a device event source
 	/// </summary>
 	/// <param name="deviceId"></param>
 	/// <param name="eventSourceId"></param>

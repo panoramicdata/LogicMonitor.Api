@@ -135,4 +135,5 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 
 		config.Should().NotBeEmpty();
 	}
+
 }

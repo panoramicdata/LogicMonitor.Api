@@ -621,4 +621,17 @@ public class DeviceTests : TestWithOutput
 	[Fact]
 	public async Task ScheduleActiveDiscovery()
 		=> await LogicMonitorClient.ScheduleActiveDiscovery(WindowsDeviceId, default).ConfigureAwait(false);
+
+	[Fact]
+	public async Task GetDeviceAlertSettings()
+	{
+		var device = await GetWindowsDeviceAsync(default)
+			.ConfigureAwait(false);
+
+		var config = await LogicMonitorClient
+			.GetDeviceDataPointConfigurations(device.Id, default)
+			.ConfigureAwait(false);
+
+		config.Should().NotBeEmpty();
+	}
 }
