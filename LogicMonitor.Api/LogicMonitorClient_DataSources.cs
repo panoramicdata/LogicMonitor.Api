@@ -593,20 +593,6 @@ public partial class LogicMonitorClient
 			cancellationToken);
 
 	/// <summary>
-	///     Gets a list of devices that a datasource applies to
-	/// </summary>
-	/// <param name="deviceGroupId">The device group id</param>
-	/// <param name="filter">The filter</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<CollectionDataSourceAppliesTo>> GetDataSourceAppliesToCollectionsPageAsync(
-		int deviceGroupId,
-		Filter<CollectionDataSourceAppliesTo> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<CollectionDataSourceAppliesTo>>(
-			$"device/groups/{deviceGroupId}/datasources?{filter}",
-			cancellationToken);
-
-	/// <summary>
 	///     Gets a list of DataSources that apply to a device group
 	/// </summary>
 	/// <param name="deviceGroupId">The device group Id</param>
@@ -651,7 +637,7 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	///     Adds a device data source
+	///     Adds a device data source instance
 	/// </summary>
 	/// <param name="deviceId">The device Id</param>
 	/// <param name="deviceDataSourceId"></param>
