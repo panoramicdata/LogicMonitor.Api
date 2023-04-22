@@ -190,13 +190,17 @@ public class DeviceGroupTests : TestWithOutput
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 			actual.Should().Be(1);
 
-			// Set it to null (delete it)
-			await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(
-				deviceGroup.Id,
-				propertyName,
-				null,
-				SetPropertyMode.Automatic,
-				default).ConfigureAwait(false);
+			// Delete it
+			await LogicMonitorClient
+				.DeleteDeviceGroupPropertyAsync(deviceGroup.Id, propertyName, default)
+				.ConfigureAwait(false);
+
+			//await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(
+			//	deviceGroup.Id,
+			//	propertyName,
+			//	null,
+			//	SetPropertyMode.Automatic,
+			//	default).ConfigureAwait(false);
 			deviceProperties = await LogicMonitorClient.GetDeviceGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
 			actual.Should().Be(0);

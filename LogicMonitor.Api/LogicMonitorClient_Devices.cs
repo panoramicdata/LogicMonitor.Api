@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -45,7 +47,7 @@ public partial class LogicMonitorClient
 		=> GetAllAsync<EntityProperty>($"device/devices/{deviceId}/properties", cancellationToken);
 
 	/// <summary>
-	///     Get device properties
+	/// schedule active discovery for a device
 	/// </summary>
 	/// <param name="deviceId">The Device Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
