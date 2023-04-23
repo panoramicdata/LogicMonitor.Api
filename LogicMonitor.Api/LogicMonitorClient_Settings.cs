@@ -83,15 +83,15 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get user list
 	/// </summary>
-	public async Task<Page<Admin>> GetAdminListAsync()
+	public async Task<Page<User>> GetAdminListAsync()
 		=> await GetAdminListAsync(CancellationToken.None);
 
 	/// <summary>
 	/// get user list
 	/// </summary>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<Admin>> GetAdminListAsync(CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<Page<Admin>>("$setting/admins", cancellationToken);
+	public async Task<Page<User>> GetAdminListAsync(CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<Page<User>>($"setting/admins", cancellationToken);
 
 	/// <summary>
 	/// get integration audit logs list
@@ -105,7 +105,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public async Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync(
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<Page<IntegrationAuditLog>>("$setting/integrations/auditlogs", cancellationToken);
+		=> await GetBySubUrlAsync<Page<IntegrationAuditLog>>($"setting/integrations/auditlogs", cancellationToken);
 
 	/// <summary>
 	/// get alert rule by id
@@ -187,9 +187,9 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get external api stats info
 	/// </summary>
-	public async Task<ExternalApiStats> GetExternalApiAsync(
+	public async Task<Page<ExternalApiStats>> GetExternalApiAsync(
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<ExternalApiStats>($"apiStats/externalApis", cancellationToken);
+		=> await GetBySubUrlAsync<Page<ExternalApiStats>>($"apiStats/externalApis", cancellationToken);
 
 
 	/// <summary>

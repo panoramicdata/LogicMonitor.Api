@@ -42,4 +42,53 @@ public class AlertRulesTests : TestWithOutput
 			break;
 		}
 	}
+
+	[Fact]
+	public async Task AddAndDeleteAlertRule()
+	{
+		var newRule = new AlertRule()
+		{
+			DataPoint = "*",
+			DataSourceInstanceName = "*",
+			Devices = new List<string> { "Test Device" },
+			DeviceGroups = new List<string> { "Test Groups" },
+			EscalationChainId = 67,
+			SendAnomalySuppressedAlert = false,
+			Priority = 100,
+			SuppressAlertAckSdt = false,
+			DataSourceName = "*",
+			SuppressAlertClear = false,
+			Name = "LornaTest",
+			LevelString = "All",
+		};
+
+		await LogicMonitorClient
+			.AddAlertRuleAsync(newRule, default)
+			.ConfigureAwait(false);
+
+		var alertRules = await LogicMonitorClient
+			.GetAlertRuleListAsync(new Filter<AlertRule>(), default)
+			.ConfigureAwait (false);
+
+		var found = false;
+		var createdAlert = new AlertRule();
+		
+		foreach (var alertRule in alertRules.Items)
+		{
+			if (alertRule.Name.Equals("LornaTest", StringComparison.Ordinal))
+			{
+				found = true;
+				createdAlert = alertRule;
+				break;
+			}
+		}
+		found.Should().BeTrue();
+
+		if (found)
+		{
+			await LogicMonitorClient
+				.DeleteAlertRuleAsync(createdAlert.Id, default)
+				.ConfigureAwait(false);
+		}
+	}
 }

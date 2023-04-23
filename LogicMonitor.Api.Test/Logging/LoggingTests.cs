@@ -14,4 +14,14 @@ public class PushMetricTests : TestWithOutput
 			.ConfigureAwait(false);
 		response.Should().NotBeNull();
 	}
+
+	[Fact]
+	public async Task GetLogItems_Succeeds()
+	{
+		var logItems = await LogicMonitorClient
+			.GetLogItemsAsync(default)
+			.ConfigureAwait(false);
+
+		logItems.Should().NotBeNull();
+	}
 }

@@ -14,4 +14,14 @@ public class ExternalAlertsTests : TestWithOutput
 			.ConfigureAwait(false);
 		items.Should().NotBeNull();
 	}
+
+	[Fact]
+	public async Task GetExternalApi()
+	{
+		var api = await LogicMonitorClient
+			.GetExternalApiAsync(default)
+			.ConfigureAwait(false);
+
+		api.Should().NotBeNull();
+	}
 }

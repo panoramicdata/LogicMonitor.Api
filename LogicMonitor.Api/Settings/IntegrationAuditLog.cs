@@ -5,7 +5,7 @@
 /// </summary>
 [DataContract]
 
-public class IntegrationAuditLog : IdentifiedItem
+public class IntegrationAuditLog : IdentifiedItemBase<string>
 {
 	/// <summary>
 	/// HTTP request headers used in alert delivery

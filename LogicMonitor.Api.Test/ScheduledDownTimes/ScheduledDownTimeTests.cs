@@ -50,6 +50,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 			var scheduledDownTimes = await LogicMonitorClient
 				.GetAllAsync<ScheduledDownTime>(subUrl, default)
 				.ConfigureAwait(false);
+
 			scheduledDownTimes.Should().AllSatisfy(sdt =>
 			{
 				sdt.Comment.Should().Contain(commentGuid.ToString());
@@ -502,5 +503,17 @@ public class ScheduledDownTimeTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		groupSDTs.Items.Should().NotBeEmpty();
+	}
+
+	[Fact]
+	public async Task GetHistoricWebsiteGroupSDT()
+	{
+		var websiteGroupId = 1;
+
+		var websiteGroupSdts = await LogicMonitorClient
+			.GetSdtHistoryListByWebsiteGroupIdAsync(websiteGroupId, new Filter<ScheduledDownTimeHistory>(), default)
+			.ConfigureAwait(false);
+
+		websiteGroupSdts.Should().NotBeNull();
 	}
 }

@@ -76,4 +76,33 @@ public class UserTests : TestWithOutput
 		// Delete again
 		await LogicMonitorClient.DeleteAsync(user, cancellationToken: default).ConfigureAwait(false);
 	}
+
+	[Fact]
+	public async Task GetAdmins()
+	{
+		var admins = await LogicMonitorClient
+			.GetAdminListAsync()
+			.ConfigureAwait(false);
+
+		admins.Items.Should().NotBeEmpty();
+	}
+
+	[Fact]
+	public async Task GetApiTokens()
+	{
+		var admins = await LogicMonitorClient
+			.GetAdminListAsync()
+			.ConfigureAwait(false);
+
+		var tokens = await LogicMonitorClient
+			.GetApiTokens(admins.Items[0].Id, new Filter<ApiToken>(), default)
+			.ConfigureAwait(false);
+
+		tokens.Items.Should().NotBeEmpty();
+
+		var allTokens = await LogicMonitorClient
+			.GetApiTokenList(new Filter<ApiToken>(), default)
+			.ConfigureAwait(false);
+		allTokens.Items.Should().NotBeEmpty();
+	}
 }

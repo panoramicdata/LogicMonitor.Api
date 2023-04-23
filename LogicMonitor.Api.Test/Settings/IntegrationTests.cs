@@ -14,4 +14,14 @@ public class IntegrationTests : TestWithOutput
 		// Text should be set
 		integrations.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
 	}
+
+	[Fact]
+	public async Task GetIntegrationAuditLogs()
+	{
+		var auditLogs = await LogicMonitorClient
+			.GetIntegrationAuditLogsAsync()
+			.ConfigureAwait(false);
+
+		auditLogs.Items.Should().NotBeEmpty();
+	}
 }
