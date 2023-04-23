@@ -63,7 +63,7 @@ public class DataTests : TestWithOutput
 		var deviceDataSourceInstanceGroups = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id, default).ConfigureAwait(false);
 		deviceDataSourceInstanceGroups.Should().NotBeNull();
 		deviceDataSourceInstanceGroups.Should().NotBeNullOrEmpty();
-		var deviceDataSourceInstanceGroup = deviceDataSourceInstanceGroups.Skip(1).First();
+		var deviceDataSourceInstanceGroup = deviceDataSourceInstanceGroups.Skip(2).First();
 		var deviceDataSourceInstanceGroupRefetch = await LogicMonitorClient.GetDeviceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name, default).ConfigureAwait(false);
 		deviceDataSourceInstanceGroupRefetch.Should().NotBeNull();
 		deviceDataSourceInstanceGroupRefetch.Name.Should().Be(deviceDataSourceInstanceGroup.Name);
@@ -75,6 +75,8 @@ public class DataTests : TestWithOutput
 		{
 			DataSourceInstanceGroupId = deviceDataSourceInstanceGroup.Id,
 			OverviewGraphId = overviewGraph.Id,
+			DeviceId = device.Id,
+			DeviceDataSourceId = deviceDataSource.Id,
 			StartDateTime = DateTime.UtcNow.FirstDayOfLastMonth(),
 			EndDateTime = DateTime.UtcNow.LastDayOfLastMonth(),
 			TimePeriod = TimePeriod.Zoom,
