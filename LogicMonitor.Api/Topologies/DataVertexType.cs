@@ -71,4 +71,10 @@ public enum DataVertexType
 	/// </summary>
 	[EnumMember(Value = "Service")]
 	Service,
+
+	/// <summary>
+	/// PhysicalServer
+	/// </summary>
+	[EnumMember(Value = "PhysicalServer")]
+	PhysicalServer,
 }
