@@ -7,6 +7,12 @@
 public enum DataVertexType
 {
 	/// <summary>
+	/// Router
+	/// </summary>
+	[EnumMember(Value = "unknown")]
+	Unknown,
+
+	/// <summary>
 	/// VMDatastore
 	/// </summary>
 	[EnumMember(Value = "Undiscovered")]
