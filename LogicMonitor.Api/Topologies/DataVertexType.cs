@@ -61,8 +61,14 @@ public enum DataVertexType
 	Router,
 
 	/// <summary>
-	/// Router
+	/// Firewall
 	/// </summary>
 	[EnumMember(Value = "Firewall")]
 	Firewall,
+
+	/// <summary>
+	/// Service
+	/// </summary>
+	[EnumMember(Value = "Service")]
+	Service,
 }
