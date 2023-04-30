@@ -624,7 +624,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceInstanceId">The DeviceDataSourceInstance Id</param>
 	/// <param name="dataPointConfiguration">The DataPointConfiguration</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task UpdateDataPointConfiguration(
+	public async Task UpdateDataPointConfigurationAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
@@ -645,7 +645,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
 	/// <param name="alertExpressionNote">A note explaining the threshold</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetDeviceDataSourceInstanceGroupDataPointThresholds(
+	public async Task SetDeviceDataSourceInstanceGroupDataPointThresholdsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceGroupId,
@@ -670,7 +670,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertExpressionNote">A note explaining the threshold</param>
 	/// <param name="disableAlerting">Disable alerting</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetDeviceGroupDataSourceDataPointThresholds(
+	public async Task SetDeviceGroupDataSourceDataPointThresholdsAsync(
 		int deviceGroupId,
 		int dataSourceId,
 		int dataPointId,

@@ -195,7 +195,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// Update applies to function
 	/// </summary>
-	public async Task<AppliesToFunction> UpdateAppliesToFunction(
+	public async Task<AppliesToFunction> UpdateAppliesToFunctionAsync(
 		AppliesToFunctionCreationDto body,
 		int id,
 		string reason,
@@ -237,14 +237,6 @@ public partial class LogicMonitorClient
 		Filter<AppliesToFunction> filter,
 		CancellationToken cancellationToken)
 		=> await FilteredGetAsync<AppliesToFunction>($"setting/functions", filter, cancellationToken);
-
-	/// <summary>
-	/// Get user list
-	/// </summary>
-	public async Task<Page<User>> GetUsersAsync(
-		Filter<User> filter,
-		CancellationToken cancellationToken)
-		=> await FilteredGetAsync<User>($"setting/admins", filter, cancellationToken);
 
 	/// <summary>
 	/// Get metrics usage

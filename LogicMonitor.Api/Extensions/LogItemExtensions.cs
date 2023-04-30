@@ -28,7 +28,7 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<failed>Failed)(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
 		new(02,
 			AuditEventEntityType.Resource,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.*?)""$", RegexOptions.Singleline)),
 		new(03,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
@@ -241,10 +241,10 @@ public static class LogItemExtensions
 			case 40:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				break;
-			case 42:
+			case 41:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				break;
-			case 45:
+			case 44:
 				auditEvent.ActionType = AuditEventActionType.Login;
 				break;
 			default:

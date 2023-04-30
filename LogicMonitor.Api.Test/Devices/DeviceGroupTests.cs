@@ -30,7 +30,7 @@ public class DeviceGroupTests : TestWithOutput
 			.ConfigureAwait(false)).Items;
 		var datapoint = datapoints.Single(dp => dp.Name == "average");
 		await LogicMonitorClient
-			.SetDeviceGroupDataSourceDataPointThresholds(
+			.SetDeviceGroupDataSourceDataPointThresholdsAsync(
 				deviceGroup.Id,
 				dataSource.Id,
 				datapoint.Id,
