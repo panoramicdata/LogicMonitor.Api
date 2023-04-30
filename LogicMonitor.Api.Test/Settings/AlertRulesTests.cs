@@ -82,7 +82,6 @@ public class AlertRulesTests : TestWithOutput
 				break;
 			}
 		}
-		found.Should().BeTrue();
 
 		if (found)
 		{
@@ -90,5 +89,8 @@ public class AlertRulesTests : TestWithOutput
 				.DeleteAlertRuleAsync(createdAlert.Id, default)
 				.ConfigureAwait(false);
 		}
+
+		found.Should().BeTrue();
+
 	}
 }

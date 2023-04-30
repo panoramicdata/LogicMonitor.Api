@@ -97,14 +97,13 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				testInstance = instance;
 			}
 		}
-		foundTest.Should().BeTrue();
 		if (foundTest)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(new DeviceDataSourceInstance() { DeviceId = device.Id, DeviceDataSourceId = deviceDataSources[9].Id, Id = testInstance.Id }, default)
 				.ConfigureAwait(false);
 		}
-
+		foundTest.Should().BeTrue();
 	}
 
 	[Fact]
