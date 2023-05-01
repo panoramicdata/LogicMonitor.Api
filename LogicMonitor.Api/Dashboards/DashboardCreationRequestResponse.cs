@@ -67,7 +67,7 @@ public class DashboardCreationRequestResponse
 	///     Whether to use widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public string WidgetTokens { get; set; } = string.Empty;
+	public string[] WidgetTokens { get; set; } = Array.Empty<string>();
 
 	/// <summary>
 	/// Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.

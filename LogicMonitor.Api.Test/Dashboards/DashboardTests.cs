@@ -328,6 +328,28 @@ public class DashboardTests : TestWithOutput
 		await LogicMonitorClient
 			.AddDashboardAsync(newDashboard, default)
 			.ConfigureAwait(false);
+
+		var fetchedDashboards = await LogicMonitorClient
+			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
+			.ConfigureAwait(false);
+
+		var found = false;
+		var foundBoard = new Dashboard();
+
+		foreach(Dashboard dashboard in fetchedDashboards.Items)
+		{
+			if (dashboard.Description.Equals("Test dashboard - will be deleted", StringComparison.Ordinal))
+			{
+				found = true;
+				foundBoard = dashboard;
+			}
+		}
+
+		await LogicMonitorClient
+			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
+			.ConfigureAwait(false);
+
+		found.Should().Be(true);
 	}
 
 	[Fact]
