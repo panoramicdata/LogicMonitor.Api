@@ -63,7 +63,7 @@ public class DashboardTests : TestWithOutput
 			Name = "All widgets clone",
 			Description = "I'm a clone and so is my wife.",
 			DashboardGroupId = originalDashboard.DashboardGroupId,
-			WidgetsConfig = originalDashboard.WidgetsConfig,
+			//WidgetsConfig = originalDashboard.WidgetsConfig,
 			WidgetsOrder = originalDashboard.WidgetsOrder
 		}, default).ConfigureAwait(false);
 
@@ -312,6 +312,25 @@ public class DashboardTests : TestWithOutput
 	}
 
 	[Fact]
+	public async Task CreateAndDeleteDashboard()
+	{
+		var newDashboard = new DashboardCreationDto()
+		{
+			Owner = "test",
+			Template = new(),
+			GroupId = 1,
+			Description = "Test dashboard - will be deleted",
+			Sharable = true,
+			GroupName = "panoramicdata",
+			Name = "test dashboard"
+		};
+
+		await LogicMonitorClient
+			.AddDashboardAsync(newDashboard, default)
+			.ConfigureAwait(false);
+	}
+
+	[Fact]
 	public async Task GetWidgets()
 	{
 
@@ -348,5 +367,14 @@ public class DashboardTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		widgetData.Should().NotBeNull();
+	}
+
+	[Fact]
+	public async Task SaveWidget()
+	{
+		var widget = new HtmlWidget()
+		{
+
+		};
 	}
 }

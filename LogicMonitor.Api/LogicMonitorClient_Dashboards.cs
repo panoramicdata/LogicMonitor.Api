@@ -78,6 +78,16 @@ public partial class LogicMonitorClient
 		);
 
 	/// <summary>
+	/// Adds a new dashboard
+	/// </summary>
+	/// <param name="body"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<DashboardCreationRequestResponse> AddDashboardAsync(
+		DashboardCreationDto body,
+		CancellationToken cancellationToken
+		) => PostAsync<DashboardCreationDto, DashboardCreationRequestResponse>(body, $"dashboard/dashboards", cancellationToken);
+
+	/// <summary>
 	///     Gets widget data
 	/// </summary>
 	/// <param name="widgetId">The Id of the widget</param>
