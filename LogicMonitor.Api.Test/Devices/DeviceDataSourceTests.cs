@@ -41,4 +41,18 @@ public class DeviceDataSourceTests : TestWithOutput
 
 		deviceDataSources.Should().NotBeNullOrEmpty();
 	}
+
+	[Fact]
+	public async Task GetDeviceDatasourceData()
+	{
+		var deviceDataSources = await LogicMonitorClient
+			.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, default)
+			.ConfigureAwait(false);
+
+		var data = await LogicMonitorClient
+			.GetDeviceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, default)
+			.ConfigureAwait(false);
+		
+		data.Should().NotBeNull();
+	}
 }

@@ -166,5 +166,5 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int id,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{deviceId}/devicedatasources{id}/data", cancellationToken);
+		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{deviceId}/devicedatasources/{id}/data", cancellationToken);
 }

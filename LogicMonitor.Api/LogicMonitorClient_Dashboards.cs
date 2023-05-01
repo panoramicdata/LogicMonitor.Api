@@ -137,7 +137,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="widget">The widget to save</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SaveNewWidgetAsync(
+	public async Task<Widget> SaveNewWidgetAsync(
 		IWidget widget,
 		CancellationToken cancellationToken)
 		=> await PostAsync<IWidget, Widget>(widget, $"dashboard/widgets", cancellationToken);
