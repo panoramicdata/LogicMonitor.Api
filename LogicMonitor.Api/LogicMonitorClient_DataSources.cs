@@ -142,17 +142,6 @@ public partial class LogicMonitorClient
 		=> await GetBySubUrlAsync<DeviceGroupDataSource>($"device/groups/{deviceGroupId}/datasources/{id}", cancellationToken);
 
 	/// <summary>
-	///     Gets a list of DataSource graphs given its dataSourceId
-	/// </summary>
-	/// <param name="dataSourceId">The datasource Id</param>
-	/// <param name="filter">Filter</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DataSourceOverviewGraph>> GetDataSourceGraphsPageAsync(int dataSourceId,
-		Filter<DataSourceOverviewGraph> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DataSourceOverviewGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
-
-	/// <summary>
 	///     Gets a DataSource graph given dataSourceId and graphId
 	/// </summary>
 	/// <param name="dataSourceId">The DataSource Id</param>

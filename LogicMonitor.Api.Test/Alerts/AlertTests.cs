@@ -570,4 +570,34 @@ public class AlertTests : TestWithOutput
 		// Make sure the numbers add up
 		(nonSdtAlerts.Count + sdtAlerts.Count).Should().Be(allAlerts.Count);
 	}
+
+	[Fact]
+	public async Task AckAlert()
+	{
+		var notAckedFilter = new Filter<Alert>
+		{
+			FilterItems = new List<FilterItem<Alert>>
+			{
+				new Eq<Alert>(nameof(Alert.Acked), false),
+			},
+			Take = 1
+		};
+
+		var nonAckedAlerts = await LogicMonitorClient
+			.GetAllAsync(notAckedFilter, default)
+			.ConfigureAwait(false);
+
+		var alertToAck = nonAckedAlerts[0];
+		var alertId = alertToAck.Id;
+
+		await LogicMonitorClient
+			.AcknowledgeAlertAsync(alertId, "acknowledgementTest", default)
+			.ConfigureAwait(false);
+
+		var fetchAlert = await LogicMonitorClient
+			.GetAlertAsync(alertId, default)
+			.ConfigureAwait(false);
+
+		fetchAlert.Acked.Should().Be(true);
+	}
 }
