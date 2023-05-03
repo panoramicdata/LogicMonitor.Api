@@ -79,7 +79,7 @@ public class Dashboard
 	///     The widgets configuration
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public object WidgetsConfig { get; set; } = new();
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
 
 	/// <summary>
 	///     The order of the widgets
