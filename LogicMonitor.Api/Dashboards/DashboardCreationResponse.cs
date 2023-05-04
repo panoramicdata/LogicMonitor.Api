@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     A dashboard
 /// </summary>
 [DataContract]
-public class DashboardCreationRequestResponse
+public class DashboardCreationResponse
 	: NamedItem,
 	IPatchable,
 	ICloneableItem

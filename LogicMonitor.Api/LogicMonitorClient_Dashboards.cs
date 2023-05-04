@@ -82,10 +82,10 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="body"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<DashboardCreationRequestResponse> AddDashboardAsync(
+	public Task<DashboardCreationResponse> AddDashboardAsync(
 		DashboardCreationDto body,
 		CancellationToken cancellationToken
-		) => PostAsync<DashboardCreationDto, DashboardCreationRequestResponse>(body, $"dashboard/dashboards", cancellationToken);
+		) => PostAsync<DashboardCreationDto, DashboardCreationResponse>(body, $"dashboard/dashboards", cancellationToken);
 
 	/// <summary>
 	///     Gets widget data
