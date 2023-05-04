@@ -91,8 +91,14 @@ public enum DataVertexType
 	LoadBalancer,
 
 	/// <summary>
-	/// LoadBalancer
+	/// StorageNode
 	/// </summary>
 	[EnumMember(Value = "StorageNode")]
 	StorageNode,
+
+	/// <summary>
+	/// LoadBalancer
+	/// </summary>
+	[EnumMember(Value = "Cluster")]
+	Cluster,
 }
