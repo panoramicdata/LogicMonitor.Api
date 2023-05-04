@@ -336,7 +336,7 @@ public class DashboardTests : TestWithOutput
 		var found = false;
 		var foundBoard = new Dashboard();
 
-		foreach(Dashboard dashboard in fetchedDashboards.Items)
+		foreach (Dashboard dashboard in fetchedDashboards.Items)
 		{
 			if (dashboard.Description.Equals("Test dashboard - will be deleted", StringComparison.Ordinal))
 			{

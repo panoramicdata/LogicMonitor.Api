@@ -40,7 +40,7 @@ public class DashboardCreationDto : CreationDto<Dashboard>
 	/// Information about widget configuration used by the UI
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public WidgetConfig WidgetsConfig { get; set; } = new();
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
 
 	/// <summary>
 	/// The name of group where created dashboard will reside
