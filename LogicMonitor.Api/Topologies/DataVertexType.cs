@@ -101,4 +101,10 @@ public enum DataVertexType
 	/// </summary>
 	[EnumMember(Value = "Cluster")]
 	Cluster,
+
+	/// <summary>
+	/// PhysicalDisk
+	/// </summary>
+	[EnumMember(Value = "PhysicalDisk")]
+	PhysicalDisk,
 }
