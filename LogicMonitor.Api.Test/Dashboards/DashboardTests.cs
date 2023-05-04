@@ -336,7 +336,7 @@ public class DashboardTests : TestWithOutput
 		var found = false;
 		var foundBoard = new Dashboard();
 
-		foreach(Dashboard dashboard in fetchedDashboards.Items)
+		foreach (Dashboard dashboard in fetchedDashboards.Items)
 		{
 			if (dashboard.Description.Equals("Test dashboard - will be deleted", StringComparison.Ordinal))
 			{
@@ -396,7 +396,54 @@ public class DashboardTests : TestWithOutput
 	{
 		var widget = new HtmlWidget()
 		{
-
+			DashboardId = 415,
+			Name = "test",
+			Description = "test widget",
+			Theme = "newBorderBlue",
+			UpdateIntervalMinutes = 5,
+			Type = "html",
+			Timescale = "string",
+			HtmlWidgetResources = new List<HtmlWidgetResource> { new HtmlWidgetResource()
+				{
+					Type = "html",
+					Url = "string"
+				}
+			}
 		};
+
+		var createdWidget = await LogicMonitorClient
+			.SaveNewWidgetAsync(widget, default)
+			.ConfigureAwait(false);
+
+		var getWidget = (HtmlWidget)await LogicMonitorClient
+			.GetWidgetByIdAsync(createdWidget.Id, default)
+			.ConfigureAwait(false);
+
+		var patchedWidget = new HtmlWidget()
+		{
+			DashboardId = getWidget.DashboardId,
+			Name = getWidget.Name,
+			Description = "Updated test widget",
+			Theme = getWidget.Theme,
+			UpdateIntervalMinutes = getWidget.UpdateIntervalMinutes,
+			Type = getWidget.Type,
+			Timescale = getWidget.Timescale,
+			HtmlWidgetResources = getWidget.HtmlWidgetResources
+		};
+
+		await LogicMonitorClient
+			.PatchWidgetByIdAsync(getWidget.Id, patchedWidget, default)
+			.ConfigureAwait(false);
+
+		getWidget = (HtmlWidget)await LogicMonitorClient
+			.GetWidgetByIdAsync(createdWidget.Id, default)
+			.ConfigureAwait(false);
+
+		await LogicMonitorClient
+			.DeleteWidgetAsync(createdWidget.Id, default)
+			.ConfigureAwait(false);
+
+		getWidget.Name.Should().Be("test");
+		getWidget.Description.Should().Be("Updated test widget");
 	}
 }
