@@ -97,7 +97,7 @@ public enum DataVertexType
 	StorageNode,
 
 	/// <summary>
-	/// LoadBalancer
+	/// Cluster
 	/// </summary>
 	[EnumMember(Value = "Cluster")]
 	Cluster,
