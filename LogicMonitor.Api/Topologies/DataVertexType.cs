@@ -107,4 +107,10 @@ public enum DataVertexType
 	/// </summary>
 	[EnumMember(Value = "PhysicalDisk")]
 	PhysicalDisk,
+
+	/// <summary>
+	/// StorageVolume
+	/// </summary>
+	[EnumMember(Value = "StorageVolume")]
+	StorageVolume,
 }
