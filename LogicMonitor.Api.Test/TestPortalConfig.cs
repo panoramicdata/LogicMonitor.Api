@@ -40,6 +40,7 @@ internal sealed class TestPortalConfig
 		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "0", CultureInfo.InvariantCulture);
 		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "0", CultureInfo.InvariantCulture);
 		SDTResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "0", CultureInfo.InvariantCulture);
+		TestDashboardId = int.Parse(Configuration["Config:TestDashboardId"] ?? "0", CultureInfo.InvariantCulture);
 		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"] ?? "";
 		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"] ?? "";
 		ResourceGroupFullPath = Configuration["Config:ResourceGroupFullPath"] ?? "";
@@ -80,4 +81,6 @@ internal sealed class TestPortalConfig
 	public int SDTResourceGroupId { get; }
 
 	public string AlertRuleName { get; }
+
+	public int TestDashboardId { get; }
 }

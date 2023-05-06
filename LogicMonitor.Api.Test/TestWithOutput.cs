@@ -31,6 +31,7 @@ public abstract class TestWithOutput
 	protected int AllWidgetsDashboardId { get; }
 
 	protected bool AccountHasBillingInformation { get; }
+	protected int TestDashboardId { get; }
 
 	protected TestWithOutput(ITestOutputHelper iTestOutputHelper)
 	{
@@ -44,6 +45,7 @@ public abstract class TestWithOutput
 		ServiceDeviceId = testPortalConfig.ServiceDeviceId;
 		NetflowDeviceId = testPortalConfig.NetflowDeviceId;
 		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
+		TestDashboardId = testPortalConfig.TestDashboardId;
 		DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 		WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
 		ResourceGroupFullPath = testPortalConfig.ResourceGroupFullPath;

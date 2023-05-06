@@ -396,7 +396,7 @@ public class DashboardTests : TestWithOutput
 	{
 		var widget = new HtmlWidget()
 		{
-			DashboardId = 415,
+			DashboardId = TestDashboardId,
 			Name = "test",
 			Description = "test widget",
 			Theme = "newBorderBlue",
