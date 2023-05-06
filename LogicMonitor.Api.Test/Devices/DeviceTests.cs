@@ -634,4 +634,11 @@ public class DeviceTests : TestWithOutput
 
 		config.Should().NotBeEmpty();
 	}
+
+	[Fact]
+	public async Task UpdateDataPointAsync()
+	{
+		var device = await GetWindowsDeviceAsync(default)
+			.ConfigureAwait(false);
+	}
 }

@@ -259,8 +259,7 @@ public class DeviceGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceGroupAlerts()
 	{
-		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
-		var alerts = await LogicMonitorClient.GetDeviceGroupAlertsAsync(deviceGroup.Id).ConfigureAwait(false);
+		var alerts = await LogicMonitorClient.GetDeviceGroupAlertsAsync(1).ConfigureAwait(false);
 		alerts.Items.Should().NotBeEmpty();
 	}
 }

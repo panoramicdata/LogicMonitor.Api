@@ -608,6 +608,27 @@ public partial class LogicMonitorClient
 			cancellationToken);
 
 	/// <summary>
+	///     Update a DataPointConfiguration
+	/// </summary>
+	/// <param name="deviceId">The Device Id</param>
+	/// <param name="deviceDataSourceId">The DeviceDataSource Id</param>
+	/// <param name="deviceDataSourceInstanceId">The DeviceDataSourceInstance Id</param>
+	/// <param name="dataPointConfiguration">The DataPointConfiguration</param>
+	/// <param name="dataPointId"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task UpdateDataPointConfigurationAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		DataPointConfigurationCreationDTO dataPointConfiguration,
+		CancellationToken cancellationToken)
+		=> await PutAsync(
+			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			dataPointConfiguration,
+			cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
 	///     Gets a device data source
 	/// </summary>
 	/// <param name="deviceId"></param>

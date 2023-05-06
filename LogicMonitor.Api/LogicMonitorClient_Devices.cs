@@ -588,23 +588,6 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	/// Gets a DeviceDataSourceInstance's DataPointConfigurations
-	/// </summary>
-	/// <param name="deviceId"></param>
-	/// <param name="deviceDataSourceId"></param>
-	/// <param name="deviceDataSourceInstanceId"></param>
-	/// <param name="cancellationToken"></param>
-	public async Task<List<DataPointConfiguration>> GetDeviceDataSourceInstanceDataPointConfigurations(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
-		CancellationToken cancellationToken)
-		=> (await GetAsync<Page<DataPointConfiguration>>(
-			false,
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings?offset=0&size=300",
-			cancellationToken).ConfigureAwait(false)).Items;
-
-	/// <summary>
 	/// Gets a Device's DataPointConfigurations
 	/// </summary>
 	/// <param name="deviceId">The device id</param>
@@ -614,25 +597,6 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken)
 		=> await GetAllAsync<DataPointConfiguration>(
 			$"device/devices/{deviceId}/alertsettings",
-			cancellationToken).ConfigureAwait(false);
-
-	/// <summary>
-	///     Update a DataPointConfiguration
-	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
-	/// <param name="deviceDataSourceId">The DeviceDataSource Id</param>
-	/// <param name="deviceDataSourceInstanceId">The DeviceDataSourceInstance Id</param>
-	/// <param name="dataPointConfiguration">The DataPointConfiguration</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task UpdateDataPointConfigurationAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
-		DataPointConfiguration dataPointConfiguration,
-		CancellationToken cancellationToken)
-		=> await PutAsync(
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
-			dataPointConfiguration,
 			cancellationToken).ConfigureAwait(false);
 
 	/// <summary>

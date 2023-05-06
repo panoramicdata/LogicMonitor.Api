@@ -1,4 +1,6 @@
-﻿namespace LogicMonitor.Api.Test.Devices;
+﻿using System.Runtime.InteropServices;
+
+namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceDataSourceInstanceTests : TestWithOutput
 {
@@ -129,10 +131,72 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		var config = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurations(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
 			.ConfigureAwait(false);
 
-		config.Should().NotBeEmpty();
+		config.Items.Should().NotBeEmpty();
 	}
 
+	[Fact]
+	public async Task UpdateDataPointConfig()
+	{
+		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
+		{
+			Skip = 0,
+			Take = 10,
+			Properties = new List<string>
+				{
+					nameof(DeviceDataSource.Id),
+				}
+		}, default).ConfigureAwait(false);
+
+		var datasourceInstances = await LogicMonitorClient
+			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
+			{
+				Skip = 0,
+				Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName) }
+			}, default)
+			.ConfigureAwait(false);
+
+		var config = await LogicMonitorClient
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.ConfigureAwait(false);
+
+		var configId = config.Items[0].Id;
+		var prevSetting = config.Items[0].DisableAlerting;
+		var updateConfig = new DataPointConfigurationCreationDTO()
+		{
+			AlertExpression = config.Items[0].AlertExpression,
+			AlertExpressionNote = config.Items[0].AlertExpressionNote,
+			DisableAlerting = !(prevSetting),
+			IsActiveDiscoveryAdvancedSettingEnabled = config.Items[0].IsActiveDiscoveryAdvancedSettingEnabled,
+			WarnActiveDiscvoeryAdvancedSetting = config.Items[0].WarnActiveDiscvoeryAdvancedSetting,
+			ErrorActiveDiscvoeryAdvancedSetting = config.Items[0].ErrorActiveDiscvoeryAdvancedSetting,
+			CriticalActiveDiscvoeryAdvancedSetting = config.Items[0].CriticalActiveDiscvoeryAdvancedSetting,
+			ParentInstanceGroupAlertExpression = config.Items[0].ParentInstanceGroupAlertExpression
+		};
+
+		await LogicMonitorClient
+			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
+			.ConfigureAwait(false);
+
+		var refetchedConfig = await LogicMonitorClient
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.ConfigureAwait(false);
+
+		updateConfig.DisableAlerting = prevSetting;
+
+		await LogicMonitorClient
+			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
+			.ConfigureAwait(false);
+
+		foreach (var dataPointConfig in refetchedConfig.Items)
+		{
+			if (dataPointConfig.Id == configId)
+			{
+				dataPointConfig.DisableAlerting.Should().Be(!(prevSetting));
+			}
+		}
+	}
 }
