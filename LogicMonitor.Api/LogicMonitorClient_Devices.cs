@@ -717,9 +717,9 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get top talkers graph
 	/// </summary>
-	public Task<GraphPlot> GetTopTalkersGraphAsync(
+	public Task<CustomGraphWidgetData> GetTopTalkersGraphAsync(
 		int id,
-		CancellationToken cancellationToken) => GetBySubUrlAsync<GraphPlot>($"device/devices/{id}/topTalkersGraph", cancellationToken);
+		CancellationToken cancellationToken) => GetBySubUrlAsync<CustomGraphWidgetData>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>
 	/// Get Alerts for a Device by ID

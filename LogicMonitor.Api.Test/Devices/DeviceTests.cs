@@ -636,9 +636,14 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async Task UpdateDataPointAsync()
+	public async Task GetTopTalkerGraphAsync()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var devicesPage = await LogicMonitorClient
+			.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = 50 }, default)
+			.ConfigureAwait(false);
+
+		var graph = await LogicMonitorClient
+			.GetTopTalkersGraphAsync(1052, default)
 			.ConfigureAwait(false);
 	}
 }
