@@ -89,6 +89,22 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
+	public async Task GetDeviceEventSourceByIdAsync()
+	{
+		var eventsources = await LogicMonitorClient
+			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<DeviceEventSource>(), default)
+			.ConfigureAwait(false);
+
+		var specificEventSource = eventsources.Items[0];
+
+		var refetchedEventSource = await LogicMonitorClient
+			.GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(WindowsDeviceId, specificEventSource.EventSourceId)
+			.ConfigureAwait(false);
+
+		refetchedEventSource.Should().Be(specificEventSource);
+	}
+
+	[Fact]
 	public async Task GetFilteredEventSources()
 	{
 		const string groupName = "Integrator";
