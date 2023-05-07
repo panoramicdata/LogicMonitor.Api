@@ -642,8 +642,18 @@ public class DeviceTests : TestWithOutput
 			.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = 50 }, default)
 			.ConfigureAwait(false);
 
+		var netflowEnabledId = 0;
+
+		foreach (var device in devicesPage.Items) 
+		{
+			if (device.EnableNetflow)
+			{
+				netflowEnabledId = device.Id;
+			}
+		}
+
 		var graph = await LogicMonitorClient
-			.GetTopTalkersGraphAsync(1052, default)
+			.GetTopTalkersGraphAsync(netflowEnabledId, default)
 			.ConfigureAwait(false);
 	}
 }

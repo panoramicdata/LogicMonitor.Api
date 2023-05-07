@@ -111,4 +111,16 @@ public class EventSourceTests2 : TestWithOutput
 		// The whole thing should take less than 5 seconds
 		AssertIsFast(5);
 	}
+
+	[Fact]
+	public async Task GetEventSourceGroupsAsync()
+	{
+		var eventSource = await LogicMonitorClient
+			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<DeviceEventSource>(), default)
+			.ConfigureAwait(false);
+
+		var groups = await LogicMonitorClient
+			.GetDeviceEventSourceGroupsPageAsync(WindowsDeviceId, eventSource.Items[0].EventSourceId, new Filter<DeviceEventSourceGroup>(), default)
+			.ConfigureAwait(false);
+	}
 }
