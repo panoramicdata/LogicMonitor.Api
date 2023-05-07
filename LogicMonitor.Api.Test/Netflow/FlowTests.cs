@@ -168,7 +168,7 @@ public class FlowTests : TestWithOutput
 		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
 		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
-			DeviceId = device.Id,
+			DeviceId = NetflowDeviceId,
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = _startDateTimeSeconds,
 			EndDateTime = _endDateTimeSeconds
@@ -177,5 +177,13 @@ public class FlowTests : TestWithOutput
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
+	public async Task GetDeviceFlowInformation()
+	{
+		var interfaces = await LogicMonitorClient
+			.GetDeviceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), default)
+			.ConfigureAwait(false);
 	}
 }
