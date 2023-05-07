@@ -17,12 +17,24 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetApplications()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await LogicMonitorClient
+			.GetDevicesPageAsync(new Filter<Device>(), default).ConfigureAwait(false);
+
+		List<Device> netflowDeviceList = new();
+
+		foreach (var d in device.Items)
+		{
+			if (d.EnableNetflow)
+			{
+				netflowDeviceList.Add(d);
+			}
+		}
+
 		var flowApplications = await LogicMonitorClient
 			.GetFlowApplicationsPageAsync(
 				new FlowApplicationsRequest
 				{
-					DeviceId = device.Id
+					DeviceId = netflowDeviceList[3].Id
 				},
 				default
 			)
