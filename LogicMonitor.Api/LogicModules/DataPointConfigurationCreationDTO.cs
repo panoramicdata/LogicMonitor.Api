@@ -34,19 +34,19 @@ public class DataPointConfigurationCreationDTO : IdentifiedItem
 	///     The warn active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "warnAdAdvSetting")]
-	public string WarnActiveDiscvoeryAdvancedSetting { get; set; } = string.Empty; // NOTE: do NOT change to bools. In LM they are like this: "1,100,1.5,1,0,5,,"
+	public string WarnActiveDiscoveryAdvancedSetting { get; set; } = string.Empty; // NOTE: do NOT change to bools. In LM they are like this: "1,100,1.5,1,0,5,,"
 
 	/// <summary>
 	///     The error active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "errorAdAdvSetting")]
-	public string ErrorActiveDiscvoeryAdvancedSetting { get; set; } = string.Empty; // NOTE: do NOT change to bools. In LM they are like this: "1,100,1.5,1,0,5,,"
+	public string ErrorActiveDiscoveryAdvancedSetting { get; set; } = string.Empty; // NOTE: do NOT change to bools. In LM they are like this: "1,100,1.5,1,0,5,,"
 
 	/// <summary>
 	///     The critical active discovery advanced setting
 	/// </summary>
 	[DataMember(Name = "criticalAdAdvSetting")]
-	public string CriticalActiveDiscvoeryAdvancedSetting { get; set; } = string.Empty; // NOTE: do NOT change to bools. In LM they are like this: "1,100,1.5,1,0,5,,"
+	public string CriticalActiveDiscoveryAdvancedSetting { get; set; } = string.Empty; // NOTE: do NOT change to bools. In LM they are like this: "1,100,1.5,1,0,5,,"
 
 	/// <summary>
 	///     Parent Instance Group Alert Expression

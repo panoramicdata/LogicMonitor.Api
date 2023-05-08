@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace LogicMonitor.Api.Test.Devices;
+﻿namespace LogicMonitor.Api.Test.Devices;
 
 public class DeviceDataSourceInstanceTests : TestWithOutput
 {
@@ -171,9 +169,9 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 			AlertExpressionNote = config.Items[0].AlertExpressionNote,
 			DisableAlerting = !(prevSetting),
 			IsActiveDiscoveryAdvancedSettingEnabled = config.Items[0].IsActiveDiscoveryAdvancedSettingEnabled,
-			WarnActiveDiscvoeryAdvancedSetting = config.Items[0].WarnActiveDiscvoeryAdvancedSetting,
-			ErrorActiveDiscvoeryAdvancedSetting = config.Items[0].ErrorActiveDiscvoeryAdvancedSetting,
-			CriticalActiveDiscvoeryAdvancedSetting = config.Items[0].CriticalActiveDiscvoeryAdvancedSetting,
+			WarnActiveDiscoveryAdvancedSetting = config.Items[0].WarnActiveDiscoveryAdvancedSetting,
+			ErrorActiveDiscoveryAdvancedSetting = config.Items[0].ErrorActiveDiscoveryAdvancedSetting,
+			CriticalActiveDiscoveryAdvancedSetting = config.Items[0].CriticalActiveDiscoveryAdvancedSetting,
 			ParentInstanceGroupAlertExpression = config.Items[0].ParentInstanceGroupAlertExpression
 		};
 
