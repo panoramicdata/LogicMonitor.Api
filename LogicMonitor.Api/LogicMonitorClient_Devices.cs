@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -623,6 +621,25 @@ public partial class LogicMonitorClient
 				AlertExpression = alertExpression,
 				AlertExpressionNote = alertExpressionNote
 			}, cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// Sets alert thresholds for an entire device datasource instance group
+	/// </summary>
+	/// <param name="deviceId">The device id</param>
+	/// <param name="deviceDataSourceId">The DeviceDataSource id</param>
+	/// <param name="deviceDataSourceInstanceId">The deviceDataSource Instance Group Id (0 == default)</param>
+	/// <param name="dataPointId">The DataPoint Id</param>
+	/// <param name="dataPointConfiguration"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task SetDeviceDataSourceInstanceDataPointThresholdsAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		DataPointConfiguration dataPointConfiguration,
+		CancellationToken cancellationToken)
+		=> await PutAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			dataPointConfiguration, cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	/// Sets alert thresholds for an entire device datasource instance group

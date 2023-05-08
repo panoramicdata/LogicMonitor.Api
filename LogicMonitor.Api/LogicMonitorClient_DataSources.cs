@@ -607,6 +607,44 @@ public partial class LogicMonitorClient
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			cancellationToken);
 
+
+	/// <summary>
+	///     Gets a list of DataPointConfiguration for a specific device, device data source, and data source instance
+	/// </summary>
+	/// <param name="deviceId">The device Id</param>
+	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
+	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
+	/// <param name="dataPointId"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<DataPointConfiguration> GetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<DataPointConfiguration>(
+			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			cancellationToken);
+
+	/// <summary>
+	/// Sets alert thresholds for an entire device datasource instance group
+	/// </summary>
+	/// <param name="deviceId">The device id</param>
+	/// <param name="deviceDataSourceId">The DeviceDataSource id</param>
+	/// <param name="deviceDataSourceInstanceId">The deviceDataSource Instance Group Id (0 == default)</param>
+	/// <param name="dataPointId">The DataPoint Id</param>
+	/// <param name="dataPointConfiguration"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task SetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		DataPointConfiguration dataPointConfiguration,
+		CancellationToken cancellationToken)
+		=> await PutAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			dataPointConfiguration, cancellationToken).ConfigureAwait(false);
+
 	/// <summary>
 	///     Update a DataPointConfiguration
 	/// </summary>
