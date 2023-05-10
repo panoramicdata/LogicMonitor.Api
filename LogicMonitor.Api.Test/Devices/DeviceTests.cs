@@ -623,6 +623,7 @@ public class DeviceTests : TestWithOutput
 		=> await LogicMonitorClient.ScheduleActiveDiscovery(WindowsDeviceId, default).ConfigureAwait(false);
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetDeviceAlertSettings()
 	{
 		var device = await GetWindowsDeviceAsync(default)

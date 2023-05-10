@@ -118,6 +118,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetAlerts_SdtsMatchRequest()
 	{
 		// This unit test currently fails horribly due to some inability of the LogicMonitor API to sort the Alerts by Id descending
@@ -255,6 +256,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetAlertsIncludeInactiveShouldWork()
 	{
 		// IncludeCleared set false should bring back only active alerts
@@ -293,6 +295,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetFilteredAlerts_LevelsMatch()
 	{
 		var unfilteredAlerts =
@@ -449,6 +452,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetFilteredAlertsForOneDay()
 	{
 		var alerts = await LogicMonitorClient.GetAlertsAsync(

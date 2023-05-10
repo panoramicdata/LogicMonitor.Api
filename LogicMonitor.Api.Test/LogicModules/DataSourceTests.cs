@@ -92,6 +92,7 @@ public class DataSourceTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetWinService()
 	{
 		var device = await GetWindowsDeviceAsync(default)
