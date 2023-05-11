@@ -314,21 +314,6 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task CreateAndDeleteDashboard()
 	{
-		var newDashboard = new DashboardCreationDto()
-		{
-			Owner = "test",
-			Template = new(),
-			GroupId = 1,
-			Description = "Test dashboard - will be deleted",
-			Sharable = true,
-			GroupName = "panoramicdata",
-			Name = "test dashboard"
-		};
-
-		await LogicMonitorClient
-			.AddDashboardAsync(newDashboard, default)
-			.ConfigureAwait(false);
-
 		var fetchedDashboards = await LogicMonitorClient
 			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
 			.ConfigureAwait(false);
@@ -345,9 +330,50 @@ public class DashboardTests : TestWithOutput
 			}
 		}
 
-		await LogicMonitorClient
+		if (found)
+		{
+			await LogicMonitorClient
 			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
 			.ConfigureAwait(false);
+		}
+
+		var newDashboard = new DashboardCreationDto()
+		{
+			Owner = "test",
+			Template = new(),
+			GroupId = 1,
+			Description = "Test dashboard - will be deleted",
+			Sharable = true,
+			GroupName = "panoramicdata",
+			Name = "test dashboard"
+		};
+
+		await LogicMonitorClient
+			.AddDashboardAsync(newDashboard, default)
+			.ConfigureAwait(false);
+
+		var refetchedDashboards = await LogicMonitorClient
+			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
+			.ConfigureAwait(false);
+
+		found = false;
+		foundBoard = new Dashboard();
+
+		foreach (Dashboard dashboard in refetchedDashboards.Items)
+		{
+			if (dashboard.Description.Equals("Test dashboard - will be deleted", StringComparison.Ordinal))
+			{
+				found = true;
+				foundBoard = dashboard;
+			}
+		}
+
+		if (found)
+		{
+			await LogicMonitorClient
+			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
+			.ConfigureAwait(false);
+		}
 
 		found.Should().Be(true);
 	}
