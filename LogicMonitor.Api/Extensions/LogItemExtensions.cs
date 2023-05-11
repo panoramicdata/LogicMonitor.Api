@@ -171,14 +171,14 @@ public static class LogItemExtensions
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>.+?) .* folder (?<resourceName>.+?)$", RegexOptions.Singleline)),
 		new(50,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.ResourceGroup,
 			new(@"^(?<action>.+?)ed NetScan group '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
 		new(51,
 			AuditEventEntityType.ResourceGroup,
 			new(@"^(?<action>.+?) the website group (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(52,
-			AuditEventEntityType.Account,
-			new(@"^(?<action>.+?)ed role group (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)(ed)? .*group (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(53,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>.+?) website (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
@@ -190,7 +190,25 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?)ed NetScan '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
 		new(56,
 			AuditEventEntityType.Account,
-			new(@"^(?<action>.+?) .*user role (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline))
+			new(@"^(?<action>.+?) .*user role (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(57,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) api tokens - (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(58,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) Collector (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(59,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) (the |a |the widget test of )?dashboard (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(60,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) a new alert rule Name=(?<resourceName>.+?),.+?$", RegexOptions.Singleline)),
+		new(61,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)(ed)? alert rule (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(62,
+			AuditEventEntityType.Resource,
+			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline))
 		};
 
 	/// <summary>
@@ -379,9 +397,9 @@ public static class LogItemExtensions
 
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
-			"ADD" => AuditEventActionType.Create,
+			"ADD" or "CREATE" => AuditEventActionType.Create,
 			"FETCH" => AuditEventActionType.Read,
-			"UPDAT" or "UPDATE" => AuditEventActionType.Update,
+			"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
 			"DELET" or "DELETE" => AuditEventActionType.Delete,
 			_ => AuditEventActionType.None
 		};
