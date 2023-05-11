@@ -169,10 +169,28 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(49,
 			AuditEventEntityType.Resource,
-			new(@"^(?<action>.+?) the report folder (?<resourceName>.+?)$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+?) .* folder (?<resourceName>.+?)$", RegexOptions.Singleline)),
 		new(50,
 			AuditEventEntityType.Resource,
-			new(@"^(?<action>.+?) report folder (?<resourceName>.+?)$", RegexOptions.Singleline))
+			new(@"^(?<action>.+?)ed NetScan group '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
+		new(51,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?) the website group (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(52,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?)ed role group (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(53,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) website (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(54,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?) .*account (?<accountName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(55,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)ed NetScan '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
+		new(56,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?) .*user role (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
