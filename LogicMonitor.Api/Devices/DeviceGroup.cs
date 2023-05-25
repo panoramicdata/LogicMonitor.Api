@@ -336,6 +336,12 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public SdtStatus SdtStatus { get; set; }
 
 	/// <summary>
+	/// servicesTemplatesId
+	/// </summary>
+	[DataMember(Name = "servicesTemplatesId")]
+	public int ServicesTemplatesId { get; set; }
+
+	/// <summary>
 	/// The child device groups within this device group
 	/// </summary>
 	[SantabaReadOnly]

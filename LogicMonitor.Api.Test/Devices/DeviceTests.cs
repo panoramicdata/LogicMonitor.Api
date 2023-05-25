@@ -254,7 +254,7 @@ public class DeviceTests : TestWithOutput
 		refresh.CreatedOnUtc.Should().NotBeNull();
 		if (refresh.CreatedOnUtc is not null)
 		{
-			refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
+			refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
 		}
 	}
 

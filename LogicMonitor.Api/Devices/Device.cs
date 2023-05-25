@@ -303,6 +303,12 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public string NetflowCollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Op
+	/// </summary>
+	[DataMember(Name = "op")]
+	public string Op { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The preferred Collector Id
 	/// </summary>
 	[DataMember(Name = "preferredCollectorId")]
