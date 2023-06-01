@@ -92,13 +92,13 @@ public class EventSourceTests2 : TestWithOutput
 	public async Task GetDeviceEventSourceByIdAsync()
 	{
 		var eventsources = await LogicMonitorClient
-			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<DeviceEventSource>(), default)
+			.GetDeviceEventSourcesPageAsync(425, new Filter<DeviceEventSource>(), default)
 			.ConfigureAwait(false);
 
 		var specificEventSource = eventsources.Items[0];
 
 		var refetchedEventSource = await LogicMonitorClient
-			.GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(WindowsDeviceId, specificEventSource.EventSourceId)
+			.GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(425, specificEventSource.EventSourceId)
 			.ConfigureAwait(false);
 
 		refetchedEventSource.Should().Be(specificEventSource);

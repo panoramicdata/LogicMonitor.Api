@@ -11,21 +11,19 @@ public class DataTests : TestWithOutput
 	[Fact]
 	public async Task GetForecastGraphData()
 	{
-		var device = await GetWindowsDeviceAsync(default)
-			.ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinCPU", default)
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
 			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		var dataSourceGraphs = await LogicMonitorClient
 			.GetDataSourceGraphsAsync(dataSource!.Id, default)
 			.ConfigureAwait(false);
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(
-				device.Id,
+				425,
 				deviceDataSource.Id,
 				new(),
 				cancellationToken: default)
@@ -138,15 +136,14 @@ public class DataTests : TestWithOutput
 		LogicMonitorClient.UseCache = true;
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 
-		var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource!.Id, "CPU Usage", default).ConfigureAwait(false);
+		var dataSourceGraph = await LogicMonitorClient.GetDataSourceGraphByNameAsync(dataSource!.Id, "Certificate Validity", default).ConfigureAwait(false);
 		dataSourceGraph.Should().NotBeNull();
 
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
-		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default).ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default).ConfigureAwait(false);
+		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default).ConfigureAwait(false);
 		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
 		{
 			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
@@ -168,27 +165,25 @@ public class DataTests : TestWithOutput
 	{
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
-		device.Should().NotBeNull();
 
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinCPU", default)
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
 			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 
 		var dataSourceGraph = await LogicMonitorClient
-			.GetDataSourceGraphByNameAsync(dataSource.Id, "CPU Usage", default)
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Certificate Validity", default)
 			.ConfigureAwait(false);
 		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
 			.ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default)
+			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default)
 			.ConfigureAwait(false);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -247,16 +242,15 @@ public class DataTests : TestWithOutput
 	}
 
 	[Fact]
-	public async Task GetWinCpuDeviceDataSourceInstancesFromDev()
+	public async Task GetDeviceDataSourceInstancesFromDev()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default).ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(
-					device.Id,
+					425,
 					deviceDataSource.Id,
 					new Filter<DeviceDataSourceInstance>
 					{
