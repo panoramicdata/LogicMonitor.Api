@@ -483,7 +483,7 @@ public class AuditEventTests : TestWithOutput
 			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token xx123xxx",
 			new()
 			{
-				MatchedRegExId = 31,
+				MatchedRegExId = 48,
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ScheduledDownTime,
 				ResourceNames = new() { "somehost name" },

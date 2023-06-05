@@ -165,7 +165,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.DeviceDataSourceInstance,
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""; ""Alert_threshold_changes=\[DataPointId=(.+?),DataPointName=(.+?),OldDataPointValue=(?<instanceOldValue>.+?),NewDataPointValue=(?<instanceNewValue>.+?)\]""; ""InstanceId=(?<instanceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
 		new(48,
-			AuditEventEntityType.DeviceDataSourceInstance,
+			AuditEventEntityType.ScheduledDownTime,
 			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(49,
 			AuditEventEntityType.Resource,
