@@ -108,9 +108,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetMonitoredWinService()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
-		device.Should().NotBeNull();
-		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(1765, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
@@ -166,20 +164,19 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataPointThresholdDetailsForDeviceDataSourceInstance()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinCPU", default)
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
 			.ConfigureAwait(false);
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, default)
+			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(425, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
 			.ConfigureAwait(false);
 		var dataPointConfiguration = dataPointDetails.Items[0];
 		dataPointConfiguration.Should().NotBeNull();

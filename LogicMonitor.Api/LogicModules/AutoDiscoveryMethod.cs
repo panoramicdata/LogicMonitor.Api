@@ -407,4 +407,10 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "zoomRoomIssueType")]
 	public string ZoomRoomIssueType { get; set; } = string.Empty;
+
+	/// <summary>
+	/// azureTagKeys
+	/// </summary>
+	[DataMember(Name = "azureTagKeys")]
+	public string AzureTagKeys { get; set; } = string.Empty;
 }

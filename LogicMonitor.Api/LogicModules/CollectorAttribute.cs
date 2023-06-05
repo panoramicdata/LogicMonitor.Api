@@ -461,4 +461,10 @@ public class CollectorAttribute
 	/// </summary>
 	[DataMember(Name = "endpointUrlSuffix")]
 	public string EndpointUrlSuffix { get; set; } = string.Empty;
+
+	/// <summary>
+	/// endpointUrlPrefix
+	/// </summary>
+	[DataMember(Name = "endpointUrlPrefix")]
+	public string EndpointUrlPrefix { get; set; } = string.Empty;
 }
