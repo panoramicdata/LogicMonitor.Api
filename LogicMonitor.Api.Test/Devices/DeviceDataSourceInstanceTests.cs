@@ -16,16 +16,16 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	public async Task GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinIf-", cancellationToken: default)
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", cancellationToken: default)
 			.ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource!.Id, default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource!.Id, default)
 			.ConfigureAwait(false);
 
 		_ = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new(), cancellationToken: default)
 			.ConfigureAwait(false);
 	}
 

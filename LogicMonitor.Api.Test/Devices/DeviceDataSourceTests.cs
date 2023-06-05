@@ -16,7 +16,7 @@ public class DeviceDataSourceTests : TestWithOutput
 	[Fact]
 	public async Task DeviceDataSourceTests2()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 
 		// Get all windows devices in the datacenter
 		var devices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, default).ConfigureAwait(false);

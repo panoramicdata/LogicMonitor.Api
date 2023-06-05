@@ -14,7 +14,7 @@ public class DeviceDataSourceGraphDataRequest : GraphDataRequest
 	///    The OverviewGraph Id
 	/// </summary>
 	public int? OverviewGraphId { get; set; }
-	
+
 	/// <summary>
 	///  The Device Id
 	/// </summary>
