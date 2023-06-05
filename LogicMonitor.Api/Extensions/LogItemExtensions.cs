@@ -208,7 +208,10 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?)(ed)? alert rule (?<resourceName>.+?)$", RegexOptions.Singleline)),
 		new(62,
 			AuditEventEntityType.Resource,
-			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline))
+			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline)),
+		new(63,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+?).  \{\n\[\n.+?\n\]\n\}.+$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
