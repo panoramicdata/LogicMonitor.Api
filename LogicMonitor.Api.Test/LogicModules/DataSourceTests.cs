@@ -108,7 +108,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetMonitoredWinService()
 	{
-		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(1765, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(29, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
@@ -334,7 +334,9 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceDataSources()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var device = await LogicMonitorClient
+			.GetDeviceByDisplayNameAsync("PDL-LINUX-TEST-01", default)
+			.ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -469,11 +471,10 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task WindowsServerDisks()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default).ConfigureAwait(false);
 		dataSource ??= new();
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
-		deviceDataSource.DeviceId.Should().Be(device.Id);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(1765, dataSource.Id, default).ConfigureAwait(false);
+		deviceDataSource.DeviceId.Should().Be(1765);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);
 	}
 
