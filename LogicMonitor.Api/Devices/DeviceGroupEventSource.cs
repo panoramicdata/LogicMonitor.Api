@@ -41,4 +41,16 @@ public class DeviceGroupEventSource
 	/// </summary>
 	[DataMember(Name = "eventSourceGroupName")]
 	public string EventSourceGroupName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// List of devices
+	/// </summary>
+	[DataMember(Name = "EventSourceDeviceList")]
+	public List<EventSourceDevice> EventSourceDevices { get; set; } = new();
+
+	/// <summary>
+	/// The EventSourceDisplayName
+	/// </summary>
+	[DataMember(Name = "eventSourceDisplayName")]
+	public string EventSourceDisplayName { get; set; } = string.Empty;
 }

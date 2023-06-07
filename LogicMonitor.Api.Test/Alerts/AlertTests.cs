@@ -118,6 +118,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetAlerts_SdtsMatchRequest()
 	{
 		// This unit test currently fails horribly due to some inability of the LogicMonitor API to sort the Alerts by Id descending
@@ -255,6 +256,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetAlertsIncludeInactiveShouldWork()
 	{
 		// IncludeCleared set false should bring back only active alerts
@@ -293,6 +295,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetFilteredAlerts_LevelsMatch()
 	{
 		var unfilteredAlerts =
@@ -449,6 +452,7 @@ public class AlertTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetFilteredAlertsForOneDay()
 	{
 		var alerts = await LogicMonitorClient.GetAlertsAsync(
@@ -569,5 +573,35 @@ public class AlertTests : TestWithOutput
 
 		// Make sure the numbers add up
 		(nonSdtAlerts.Count + sdtAlerts.Count).Should().Be(allAlerts.Count);
+	}
+
+	[Fact]
+	public async Task AckAlert()
+	{
+		var notAckedFilter = new Filter<Alert>
+		{
+			FilterItems = new List<FilterItem<Alert>>
+			{
+				new Eq<Alert>(nameof(Alert.Acked), false),
+			},
+			Take = 1
+		};
+
+		var nonAckedAlerts = await LogicMonitorClient
+			.GetAllAsync(notAckedFilter, default)
+			.ConfigureAwait(false);
+
+		var alertToAck = nonAckedAlerts[0];
+		var alertId = alertToAck.Id;
+
+		await LogicMonitorClient
+			.AcknowledgeAlertAsync(alertId, "acknowledgementTest", default)
+			.ConfigureAwait(false);
+
+		var fetchAlert = await LogicMonitorClient
+			.GetAlertAsync(alertId, default)
+			.ConfigureAwait(false);
+
+		fetchAlert.Acked.Should().Be(true);
 	}
 }

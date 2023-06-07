@@ -73,12 +73,6 @@ public class DataSource : LogicModule, IHasEndpoint
 	public string AutoDiscoveryWindowsScript { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The DataSourceType
-	/// </summary>
-	[DataMember(Name = "collector")]
-	public string Collector { get; set; } = string.Empty;
-
-	/// <summary>
 	/// The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen
 	/// </summary>
 	[DataMember(Name = "collectMethod")]

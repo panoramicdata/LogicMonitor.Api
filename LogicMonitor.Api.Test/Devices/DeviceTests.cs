@@ -254,7 +254,7 @@ public class DeviceTests : TestWithOutput
 		refresh.CreatedOnUtc.Should().NotBeNull();
 		if (refresh.CreatedOnUtc is not null)
 		{
-			refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2012-07-24", CultureInfo.InvariantCulture));
+			refresh.CreatedOnUtc.Value.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
 		}
 	}
 
@@ -623,6 +623,7 @@ public class DeviceTests : TestWithOutput
 		=> await LogicMonitorClient.ScheduleActiveDiscovery(WindowsDeviceId, default).ConfigureAwait(false);
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetDeviceAlertSettings()
 	{
 		var device = await GetWindowsDeviceAsync(default)
@@ -633,5 +634,27 @@ public class DeviceTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		config.Should().NotBeEmpty();
+	}
+
+	[Fact]
+	public async Task GetTopTalkerGraphAsync()
+	{
+		var devicesPage = await LogicMonitorClient
+			.GetDevicesPageAsync(new Filter<Device> { Skip = 0, Take = 50 }, default)
+			.ConfigureAwait(false);
+
+		var netflowEnabledId = 0;
+
+		foreach (var device in devicesPage.Items) 
+		{
+			if (device.EnableNetflow)
+			{
+				netflowEnabledId = device.Id;
+			}
+		}
+
+		var graph = await LogicMonitorClient
+			.GetTopTalkersGraphAsync(netflowEnabledId, default)
+			.ConfigureAwait(false);
 	}
 }

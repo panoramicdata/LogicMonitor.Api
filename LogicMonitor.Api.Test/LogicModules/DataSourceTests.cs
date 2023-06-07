@@ -92,6 +92,7 @@ public class DataSourceTests : TestWithOutput
 	}
 
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetWinService()
 	{
 		var device = await GetWindowsDeviceAsync(default)
@@ -107,9 +108,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetMonitoredWinService()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
-		device.Should().NotBeNull();
-		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(29, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
@@ -165,20 +164,19 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataPointThresholdDetailsForDeviceDataSourceInstance()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinCPU", default)
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
 			.ConfigureAwait(false);
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, default)
+			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, default)
 			.ConfigureAwait(false);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(425, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
 			.ConfigureAwait(false);
 		var dataPointConfiguration = dataPointDetails.Items[0];
 		dataPointConfiguration.Should().NotBeNull();
@@ -336,7 +334,9 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceDataSources()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var device = await LogicMonitorClient
+			.GetDeviceByDisplayNameAsync("PDL-LINUX-TEST-01", default)
+			.ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -471,11 +471,10 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task WindowsServerDisks()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default).ConfigureAwait(false);
 		dataSource ??= new();
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
-		deviceDataSource.DeviceId.Should().Be(device.Id);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(1765, dataSource.Id, default).ConfigureAwait(false);
+		deviceDataSource.DeviceId.Should().Be(1765);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);
 	}
 

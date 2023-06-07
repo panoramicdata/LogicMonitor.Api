@@ -89,4 +89,28 @@ public enum DataVertexType
 	/// </summary>
 	[EnumMember(Value = "LoadBalancer")]
 	LoadBalancer,
+
+	/// <summary>
+	/// StorageNode
+	/// </summary>
+	[EnumMember(Value = "StorageNode")]
+	StorageNode,
+
+	/// <summary>
+	/// Cluster
+	/// </summary>
+	[EnumMember(Value = "Cluster")]
+	Cluster,
+
+	/// <summary>
+	/// PhysicalDisk
+	/// </summary>
+	[EnumMember(Value = "PhysicalDisk")]
+	PhysicalDisk,
+
+	/// <summary>
+	/// StorageVolume
+	/// </summary>
+	[EnumMember(Value = "StorageVolume")]
+	StorageVolume,
 }

@@ -17,12 +17,24 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetApplications()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await LogicMonitorClient
+			.GetDevicesPageAsync(new Filter<Device>(), default).ConfigureAwait(false);
+
+		List<Device> netflowDeviceList = new();
+
+		foreach (var d in device.Items)
+		{
+			if (d.EnableNetflow)
+			{
+				netflowDeviceList.Add(d);
+			}
+		}
+
 		var flowApplications = await LogicMonitorClient
 			.GetFlowApplicationsPageAsync(
 				new FlowApplicationsRequest
 				{
-					DeviceId = device.Id
+					DeviceId = netflowDeviceList[3].Id
 				},
 				default
 			)
@@ -168,7 +180,7 @@ public class FlowTests : TestWithOutput
 		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
 		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
-			DeviceId = device.Id,
+			DeviceId = NetflowDeviceId,
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = _startDateTimeSeconds,
 			EndDateTime = _endDateTimeSeconds
@@ -177,5 +189,14 @@ public class FlowTests : TestWithOutput
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
+	public async Task GetDeviceFlowInformation()
+	{
+		var interfaces = await LogicMonitorClient
+			.GetDeviceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), default)
+			.ConfigureAwait(false);
+		interfaces.Items.Should().NotBeNullOrEmpty();
 	}
 }

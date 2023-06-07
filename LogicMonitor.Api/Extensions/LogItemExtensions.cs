@@ -28,7 +28,7 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<failed>Failed)(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
 		new(02,
 			AuditEventEntityType.Resource,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.*?)""$", RegexOptions.Singleline)),
 		new(03,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
@@ -115,7 +115,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?) SDT from (?<sdtStart>.+?) to (?<sdtEnd>.+?) from .+ on Host (?<resourceName>.+) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(31,
 			AuditEventEntityType.ScheduledDownTime,
-			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>.+?)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ?""DeviceDatasourceInstanceName=(?<instanceName>.+?)""; ?""DeviceDataSourceInstanceId=(?<instanceId>.+?)""; ?""DeviceName=(?<resourceName>.+?)""; ?""DeviceId=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(32,
 			AuditEventEntityType.ResourceGroup,
 			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,.+$", RegexOptions.Singleline)),
@@ -163,7 +163,55 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Group""; ""Device=NA""; ""GroupName=(?<resourceGroupName>.+?)""; ""Description=(?<description>(.|\n)+?)""; ""Alert_threshold_changes=((.|\n)+?)""; ""DataSource=(?<dataSourceName>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
 		new(47,
 			AuditEventEntityType.DeviceDataSourceInstance,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""; ""Alert_threshold_changes=\[DataPointId=(.+?),DataPointName=(.+?),OldDataPointValue=(?<instanceOldValue>.+?),NewDataPointValue=(?<instanceNewValue>.+?)\]""; ""InstanceId=(?<instanceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline))
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""; ""Alert_threshold_changes=\[DataPointId=(.+?),DataPointName=(.+?),OldDataPointValue=(?<instanceOldValue>.+?),NewDataPointValue=(?<instanceNewValue>.+?)\]""; ""InstanceId=(?<instanceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
+		new(48,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(49,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) .* folder (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(50,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?)ed NetScan group '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
+		new(51,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?) the website group (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(52,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)(ed)? .*group (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(53,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) website (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(54,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?) .*account (?<accountName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(55,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)ed NetScan '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
+		new(56,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?) .*user role (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(57,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) api tokens - (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(58,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) Collector (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(59,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) (the |a |the widget test of )?dashboard (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(60,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) a new alert rule Name=(?<resourceName>.+?),.+?$", RegexOptions.Singleline)),
+		new(61,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)(ed)? alert rule (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(62,
+			AuditEventEntityType.Resource,
+			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline)),
+		new(63,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+?).  \{\n\[\n.+?\n\]\n\}.+$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
@@ -241,10 +289,10 @@ public static class LogItemExtensions
 			case 40:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				break;
-			case 42:
+			case 41:
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				break;
-			case 45:
+			case 44:
 				auditEvent.ActionType = AuditEventActionType.Login;
 				break;
 			default:
@@ -352,9 +400,9 @@ public static class LogItemExtensions
 
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
-			"ADD" => AuditEventActionType.Create,
+			"ADD" or "CREATE" => AuditEventActionType.Create,
 			"FETCH" => AuditEventActionType.Read,
-			"UPDAT" or "UPDATE" => AuditEventActionType.Update,
+			"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
 			"DELET" or "DELETE" => AuditEventActionType.Delete,
 			_ => AuditEventActionType.None
 		};

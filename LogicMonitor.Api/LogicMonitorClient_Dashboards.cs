@@ -78,6 +78,16 @@ public partial class LogicMonitorClient
 		);
 
 	/// <summary>
+	/// Adds a new dashboard
+	/// </summary>
+	/// <param name="body"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<DashboardCreationResponse> AddDashboardAsync(
+		DashboardCreationDto body,
+		CancellationToken cancellationToken
+		) => PostAsync<DashboardCreationDto, DashboardCreationResponse>(body, $"dashboard/dashboards", cancellationToken);
+
+	/// <summary>
 	///     Gets widget data
 	/// </summary>
 	/// <param name="widgetId">The Id of the widget</param>
@@ -127,7 +137,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="widget">The widget to save</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SaveNewWidgetAsync(
+	public async Task<Widget> SaveNewWidgetAsync(
 		IWidget widget,
 		CancellationToken cancellationToken)
 		=> await PostAsync<IWidget, Widget>(widget, $"dashboard/widgets", cancellationToken);

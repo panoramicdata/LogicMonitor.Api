@@ -141,4 +141,14 @@ public class WebsiteGroupTests : TestWithOutput
 		string.IsNullOrWhiteSpace(websiteGroup.Name).Should().BeFalse();
 		(websiteGroup.FullPath is null).Should().BeFalse();
 	}
+
+	[Fact]
+	public async Task GetWebsitesInGroup()
+	{
+		var websites = await LogicMonitorClient
+			.GetWebsitesByWebsiteGroupIdAsync(1, new Filter<Website>(), default)
+			.ConfigureAwait(false);
+
+		websites.Items.Should().NotBeNull();
+	}
 }

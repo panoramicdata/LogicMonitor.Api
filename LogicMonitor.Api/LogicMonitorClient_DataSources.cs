@@ -142,17 +142,6 @@ public partial class LogicMonitorClient
 		=> await GetBySubUrlAsync<DeviceGroupDataSource>($"device/groups/{deviceGroupId}/datasources/{id}", cancellationToken);
 
 	/// <summary>
-	///     Gets a list of DataSource graphs given its dataSourceId
-	/// </summary>
-	/// <param name="dataSourceId">The datasource Id</param>
-	/// <param name="filter">Filter</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DataSourceOverviewGraph>> GetDataSourceGraphsPageAsync(int dataSourceId,
-		Filter<DataSourceOverviewGraph> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DataSourceOverviewGraph>>($"setting/datasources/{dataSourceId}/graphs?{filter}", cancellationToken);
-
-	/// <summary>
 	///     Gets a DataSource graph given dataSourceId and graphId
 	/// </summary>
 	/// <param name="dataSourceId">The DataSource Id</param>
@@ -617,6 +606,65 @@ public partial class LogicMonitorClient
 		=> await GetBySubUrlAsync<Page<DataPointConfiguration>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			cancellationToken);
+
+
+	/// <summary>
+	///     Gets a list of DataPointConfiguration for a specific device, device data source, and data source instance
+	/// </summary>
+	/// <param name="deviceId">The device Id</param>
+	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
+	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
+	/// <param name="dataPointId"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<DataPointConfiguration> GetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<DataPointConfiguration>(
+			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			cancellationToken);
+
+	/// <summary>
+	/// Sets alert thresholds for an entire device datasource instance group
+	/// </summary>
+	/// <param name="deviceId">The device id</param>
+	/// <param name="deviceDataSourceId">The DeviceDataSource id</param>
+	/// <param name="deviceDataSourceInstanceId">The deviceDataSource Instance Group Id (0 == default)</param>
+	/// <param name="dataPointId">The DataPoint Id</param>
+	/// <param name="dataPointConfiguration"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task SetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		DataPointConfiguration dataPointConfiguration,
+		CancellationToken cancellationToken)
+		=> await PutAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			dataPointConfiguration, cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	///     Update a DataPointConfiguration
+	/// </summary>
+	/// <param name="deviceId">The Device Id</param>
+	/// <param name="deviceDataSourceId">The DeviceDataSource Id</param>
+	/// <param name="deviceDataSourceInstanceId">The DeviceDataSourceInstance Id</param>
+	/// <param name="dataPointConfiguration">The DataPointConfiguration</param>
+	/// <param name="dataPointId"></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task UpdateDataPointConfigurationAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		int dataPointId,
+		DataPointConfigurationCreationDTO dataPointConfiguration,
+		CancellationToken cancellationToken)
+		=> await PutAsync(
+			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			dataPointConfiguration,
+			cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Gets a device data source

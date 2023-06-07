@@ -89,6 +89,22 @@ public class EventSourceTests2 : TestWithOutput
 	}
 
 	[Fact]
+	public async Task GetDeviceEventSourceByIdAsync()
+	{
+		var eventsources = await LogicMonitorClient
+			.GetDeviceEventSourcesPageAsync(425, new Filter<DeviceEventSource>(), default)
+			.ConfigureAwait(false);
+
+		var specificEventSource = eventsources.Items[0];
+
+		var refetchedEventSource = await LogicMonitorClient
+			.GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(425, specificEventSource.EventSourceId)
+			.ConfigureAwait(false);
+
+		refetchedEventSource.Should().Be(specificEventSource);
+	}
+
+	[Fact]
 	public async Task GetFilteredEventSources()
 	{
 		const string groupName = "Integrator";
@@ -110,5 +126,17 @@ public class EventSourceTests2 : TestWithOutput
 
 		// The whole thing should take less than 5 seconds
 		AssertIsFast(5);
+	}
+
+	[Fact]
+	public async Task GetEventSourceGroupsAsync()
+	{
+		var eventSource = await LogicMonitorClient
+			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<DeviceEventSource>(), default)
+			.ConfigureAwait(false);
+
+		var groups = await LogicMonitorClient
+			.GetDeviceEventSourceGroupsPageAsync(WindowsDeviceId, eventSource.Items[0].EventSourceId, new Filter<DeviceEventSourceGroup>(), default)
+			.ConfigureAwait(false);
 	}
 }

@@ -9,14 +9,14 @@ public class DeviceDataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, default).ConfigureAwait(false);
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(1765, null, default).ConfigureAwait(false);
 		deviceDataSources.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task DeviceDataSourceTests2()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinCPU", default).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 
 		// Get all windows devices in the datacenter
 		var devices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, default).ConfigureAwait(false);
@@ -40,5 +40,19 @@ public class DeviceDataSourceTests : TestWithOutput
 		}
 
 		deviceDataSources.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
+	public async Task GetDeviceDatasourceData()
+	{
+		var deviceDataSources = await LogicMonitorClient
+			.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, default)
+			.ConfigureAwait(false);
+
+		var data = await LogicMonitorClient
+			.GetDeviceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, default)
+			.ConfigureAwait(false);
+		
+		data.Should().NotBeNull();
 	}
 }

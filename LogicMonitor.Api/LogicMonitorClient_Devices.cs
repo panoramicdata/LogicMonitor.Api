@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -588,23 +586,6 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	/// Gets a DeviceDataSourceInstance's DataPointConfigurations
-	/// </summary>
-	/// <param name="deviceId"></param>
-	/// <param name="deviceDataSourceId"></param>
-	/// <param name="deviceDataSourceInstanceId"></param>
-	/// <param name="cancellationToken"></param>
-	public async Task<List<DataPointConfiguration>> GetDeviceDataSourceInstanceDataPointConfigurations(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
-		CancellationToken cancellationToken)
-		=> (await GetAsync<Page<DataPointConfiguration>>(
-			false,
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings?offset=0&size=300",
-			cancellationToken).ConfigureAwait(false)).Items;
-
-	/// <summary>
 	/// Gets a Device's DataPointConfigurations
 	/// </summary>
 	/// <param name="deviceId">The device id</param>
@@ -617,25 +598,6 @@ public partial class LogicMonitorClient
 			cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	///     Update a DataPointConfiguration
-	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
-	/// <param name="deviceDataSourceId">The DeviceDataSource Id</param>
-	/// <param name="deviceDataSourceInstanceId">The DeviceDataSourceInstance Id</param>
-	/// <param name="dataPointConfiguration">The DataPointConfiguration</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task UpdateDataPointConfiguration(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
-		DataPointConfiguration dataPointConfiguration,
-		CancellationToken cancellationToken)
-		=> await PutAsync(
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
-			dataPointConfiguration,
-			cancellationToken).ConfigureAwait(false);
-
-	/// <summary>
 	/// Sets alert thresholds for an entire device datasource instance group
 	/// </summary>
 	/// <param name="deviceId">The device id</param>
@@ -645,7 +607,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
 	/// <param name="alertExpressionNote">A note explaining the threshold</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetDeviceDataSourceInstanceGroupDataPointThresholds(
+	public async Task SetDeviceDataSourceInstanceGroupDataPointThresholdsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceGroupId,
@@ -670,7 +632,7 @@ public partial class LogicMonitorClient
 	/// <param name="alertExpressionNote">A note explaining the threshold</param>
 	/// <param name="disableAlerting">Disable alerting</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetDeviceGroupDataSourceDataPointThresholds(
+	public async Task SetDeviceGroupDataSourceDataPointThresholdsAsync(
 		int deviceGroupId,
 		int dataSourceId,
 		int dataPointId,
@@ -753,9 +715,9 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get top talkers graph
 	/// </summary>
-	public Task<GraphPlot> GetTopTalkersGraphAsync(
+	public Task<CustomGraphWidgetData> GetTopTalkersGraphAsync(
 		int id,
-		CancellationToken cancellationToken) => GetBySubUrlAsync<GraphPlot>($"device/devices/{id}/topTalkersGraph", cancellationToken);
+		CancellationToken cancellationToken) => GetBySubUrlAsync<CustomGraphWidgetData>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>
 	/// Get Alerts for a Device by ID
