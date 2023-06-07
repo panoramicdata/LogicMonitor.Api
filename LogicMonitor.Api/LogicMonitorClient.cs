@@ -1004,6 +1004,12 @@ public partial class LogicMonitorClient : IDisposable
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
+				if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden)
+				{
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.Forbidden, responseBody, $"{prefix} failed - permission denied - ({httpResponseMessage.StatusCode}): {responseBody}");
+				}
+
 				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
