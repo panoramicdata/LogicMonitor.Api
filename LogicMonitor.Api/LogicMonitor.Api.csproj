@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>3.186 support</PackageReleaseNotes>
+		<PackageReleaseNotes>HTTP denied (403) responses now don't result in retries but fail immediately.</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>
