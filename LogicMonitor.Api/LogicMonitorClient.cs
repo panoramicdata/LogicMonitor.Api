@@ -1,3 +1,5 @@
+using System.Net.Http;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -1180,6 +1182,7 @@ public partial class LogicMonitorClient : IDisposable
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
+
 				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
@@ -1377,6 +1380,12 @@ public partial class LogicMonitorClient : IDisposable
 
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
+				if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden)
+				{
+					var body = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					throw new LogicMonitorApiException(HttpMethod.Post, subUrl, HttpStatusCode.Forbidden, body, $"{prefix} failed ({httpResponseMessage.StatusCode}): {body}");
+				}
+
 				if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 				{
 					// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
