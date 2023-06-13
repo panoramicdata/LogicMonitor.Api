@@ -223,6 +223,18 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int GcpDeviceCount { get; set; }
 
 	/// <summary>
+	/// numOfMongoDBAtlasDevices
+	/// </summary>
+	[DataMember(Name = "numOfMongoDBAtlasDevices")]
+	public int NumOfMongoDBAtlasDevices { get; set; }
+
+	/// <summary>
+	/// numberOfCommittedCloudDevices
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedCloudDevices")]
+	public int NumberOfCommittedCloudDevices { get; set; }
+
+	/// <summary>
 	/// The account balance in USD
 	/// </summary>
 	[DataMember(Name = "zuoraInvoiceDetails")]
