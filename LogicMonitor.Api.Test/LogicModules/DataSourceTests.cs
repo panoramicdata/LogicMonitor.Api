@@ -303,9 +303,8 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDeviceDataSourceByName_IsFast()
 	{
 		var stopwatch = Stopwatch.StartNew();
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(
-			device.Id,
+			425,
 			new Filter<DeviceDataSource>
 			{
 				Take = 1,
@@ -319,7 +318,7 @@ public class DataSourceTests : TestWithOutput
 						new FilterItem<DeviceDataSource> {
 							Property = nameof(DeviceDataSource.DataSourceName),
 							Operation = ":",
-							Value = "WinCPU"
+							Value = "SSL_Certificates"
 						}
 				}
 			}, default).ConfigureAwait(false);
