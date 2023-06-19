@@ -10,17 +10,17 @@ public class AppliesToFunctionCreationDto : CreationDto<AppliesToFunction>
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The code
 	/// </summary>
 	[DataMember(Name = "code")]
-	public string Code { get; set; }
+	public string Code { get; set; } = string.Empty;
 }

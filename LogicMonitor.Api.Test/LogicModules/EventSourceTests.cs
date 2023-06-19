@@ -11,12 +11,12 @@ public class EventSourceTests : TestWithOutput
 	public async Task GetDeviceGroupEventSources()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken.None)
+			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default)
 			.ConfigureAwait(false);
 		deviceGroup.Should().NotBeNull();
 
 		var eventGroupDataSources = await LogicMonitorClient
-			.GetAllDeviceGroupEventSourcesAsync(deviceGroup.Id, CancellationToken.None)
+			.GetAllDeviceGroupEventSourcesAsync(deviceGroup.Id, default)
 			.ConfigureAwait(false);
 		eventGroupDataSources.Should().NotBeNullOrEmpty();
 	}

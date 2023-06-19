@@ -1,0 +1,266 @@
+	"AzureExpressRouteCircuitPeeringCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]},
+	
+	"AzureRecoveryServicesVaultAgentsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureReplicationDisasterRecoveryCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureRecoveryServiceRTOCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaaSZoomStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"RestAwsRdsPerformanceInsightsEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"num":{"format":"int32","description":"Maximum number of items to return","type":"integer"},"dimension":{"description":"The dimension to query","type":"string"}}}]}
+	
+	"ConfigCheck":{"type":"object","properties":{"ackClearAlert":{"description":"Clear alert after ACKED or not","type":"boolean"},"originId":{"description":"portable id for origin tracking","type":"string"},"name":{"description":"The ConfigCheck name","type":"string"},"alertLevel":{"format":"int32","description":"The triggered alert level if config check failure. 1-4 (1: no alert, 2: warn alert, 3: error alert, 4: critical alert)","type":"integer"},"description":{"description":"The ConfigCheck id","type":"string"},"configSourceId":{"format":"int32","description":"The ConfigSource id","type":"integer"},"id":{"format":"int32","description":"The ConfigCheck id","type":"integer"},"type":{"description":"The ConfigCheck type. fetch|ignore|missing|value|groovy","type":"string"},"alertEffectiveIval":{"format":"int32","description":"Alert effective interval","type":"integer"},"script":{"description":"The ConfigCheck script","$ref":"#/definitions/JSONObject"},"alertTransitionInterval":{"format":"int32","description":"The count that the alert must exist for these many poll cycles before it will be triggered","type":"integer"}}}
+	
+	"AwsMediaConnectOutputDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectoutput"}
+	
+	"SaasZoomPlanUsageCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["planType"],"properties":{"period":{"format":"int32","type":"integer"},"planType":{"type":"string"}}}]}
+	
+	"DeviceProperty":{"type":"object","required":["name","value"],"properties":{"name":{"description":"The resource property name","type":"string"},"value":{"description":"The resource property value","type":"string"}}}
+	
+	"RestHighestPriorityCollectorStatus":{"type":"object","properties":{"inSDT":{"description":"The SDT status of the highest priority sub collector","readOnly":true,"type":"boolean"},"acked":{"description":"The acked status of the highest priority sub collector","readOnly":true,"type":"boolean"},"isDown":{"description":"The down status of the highest priority sub collector","readOnly":true,"type":"boolean"},"status":{"format":"int32","description":"The status of the highest priority sub collector","readOnly":true,"type":"integer"}}}
+	
+	"SaasO365ServiceHealthDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AwsWebACLWafV2DiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awswebaclwafv2"}
+	
+	"AzureLogAnalyticsReplicationJobCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureAppServiceEnvironmentMultiRolePoolDiscoverMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"GcpVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureBackupProtectedItemHealthCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"Audit":{"type":"object","properties":{"version":{"format":"int64","description":"value of audit version","type":"integer"}}}
+	
+	"AzureEABillingCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"SaaSWebexLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	"AwsEbsVolumeSnapshotCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureBackupProtectedItemBackupJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"NbarApplicationNames":{"type":"object","properties":{"operator":{"type":"string"},"applicationName":{"type":"string"}}}
+	
+	"AzureCostManagementSubscriptionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AwsCognitoIdentityProvidersDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"NetflowFilters":{"type":"object","properties":{"nodeB":{"type":"string"},"qosType":{"type":"string"},"deviceInterfaces":{"type":"array","items":{"$ref":"#/definitions/InterfacesFilter"}},"ports":{"type":"string"},"protocol":{"type":"string"},"ipVersion":{"type":"string"},"netflowDevices":{"description":"Netlow filter netflowDevices expression","type":"array","items":{"$ref":"#/definitions/NetflowDeviceInfo"}},"top":{"format":"int32","type":"integer"},"appType":{"type":"string"},"nbarApplicationNames":{"type":"array","items":{"$ref":"#/definitions/NbarApplicationNames"}},"nodeA":{"type":"string"},"conversation":{"type":"array","items":{"$ref":"#/definitions/ConversationFilter"}},"ifNames":{"type":"array","items":{"type":"string"}},"direction":{"type":"string"}}}
+	
+	"AzureWebAppInstanceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"PropertyRule":{"type":"object","required":["name"],"properties":{"scheduleOption":{"description":"property rule schedule option: onAP | onAPpropertyChanges","readOnly":true,"type":"string"},"groovyScript":{"description":"groovy script","type":"string"},"windowsScript":{"description":"external windows script name","type":"string"},"dataType":{"format":"int32","description":"The data type of property source, default is 0\n\n0: property source\n\n1: raw ERI\n\n ","readOnly":true,"type":"integer"},"description":{"description":"property rule description","readOnly":true,"type":"string"},"appliesTo":{"description":"property rule applies to","readOnly":true,"type":"string"},"technology":{"description":"technology notes","readOnly":true,"type":"string"},"linuxCmdline":{"description":"external linux script args","type":"string"},"version":{"format":"int64","description":"the property rule version","readOnly":true,"type":"integer"},"windowsCmdline":{"description":"external windows script args","type":"string"},"lineageId":{"description":"LM module lineageId","readOnly":true,"type":"string"},"tags":{"description":"property rule tags","readOnly":true,"type":"string"},"auditVersion":{"format":"int64","description":"the property rule auditVersion","readOnly":true,"type":"integer"},"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"},"scriptType":{"description":"script type: embed | powershell | external","type":"string"},"name":{"description":"property rule name","readOnly":true,"type":"string"},"checksum":{"description":"LM module checksum","readOnly":true,"type":"string"},"interval":{"format":"int32","description":"The collect interval of raw ERI","readOnly":true,"type":"integer"},"id":{"format":"int32","type":"integer"},"linuxScript":{"description":"external linux script name","type":"string"},"group":{"description":"property rule group name","readOnly":true,"type":"string"}}}
+	
+	"AzureDimensionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["dimensionName","period"],"properties":{"period":{"type":"string"},"metricName":{"type":"string"},"dimensionName":{"type":"string"}}}]}
+	
+	"AzureVirtualDesktopHostPoolsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"RestNetscanPorts":{"type":"object","properties":{"isGlobalDefault":{"description":"Whether or not default ports should be used","type":"boolean","example":true},"value":{"description":"The ports that should be used in the Netscan","type":"string","example":"21,22,23"}}}
+	
+	"AzureBackupJobCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SyntheticsSeleniumAutoDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{"isInternal":{"type":"boolean"},"checkpoints":{"type":"string"}}}]}
+	
+	"IntegrationMetadata":{"type":"object","properties":{"targetLastPublishedId":{"description":"Specifies the target last published Id","readOnly":true,"type":"string"},"targetLastPublishedChecksum":{"description":"The metadata checksum for the target last published LMModule content","readOnly":true,"type":"string"},"targetLastPublishedVersion":{"description":"Specifies the target last published version","readOnly":true,"type":"string"},"originChecksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"},"originAuthorNamespace":{"description":"Specifies the origin Author companies namespace","readOnly":true,"type":"string"},"isChangedFromOrigin":{"description":"Specifies if the Applies To function is changed from origin or not","readOnly":true,"type":"boolean"},"auditedRegistryId":{"description":"Specifies the audited registry Id","readOnly":true,"type":"string"},"targetLineageId":{"description":"Specifies the target lineage Id","readOnly":true,"type":"string"},"logicModuleType":{"description":"DataSources | EventSources | PropertySources | ConfigSources | LogSources | TopologySources | Jobmonitors | AppliesTo Functions | SNMP SysOID Maps\nThe type of LogicModule","readOnly":true,"type":"string","enum":["DATASOURCE","EVENTSOURCE","JOBMONITOR","APPLIESTO_FUNCTION","SNMP_SYSOID_MAP","PROPERTYSOURCE","CONFIGSOURCE","TOPOLOGYSOURCE","LOGSOURCE"]},"isChangedFromTargetLastPublished":{"description":"Specifies if the Applies To function is changed from target last published or not","readOnly":true,"type":"boolean"},"originLineageId":{"description":"The origin lineage Id of the LMmodule","readOnly":true,"type":"string"},"originAuthorCompanyUUID":{"description":"Specifies the origin Author companies unique Id","readOnly":true,"type":"string"},"localModuleId":{"format":"int32","description":"The LocalModule Id","readOnly":true,"type":"integer"},"originRegistryId":{"description":"The Registry ID of the Exchange Integration this module is based from","readOnly":true,"type":"string"},"originVersion":{"description":"Specifies the origin version","readOnly":true,"type":"string"},"auditedVersion":{"description":"Specifies the audited registry version","readOnly":true,"type":"string"}}}
+	
+	"AzureLogAnalyticsWorkspacesCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["query"],"properties":{"query":{"type":"string"}}}]}
+	
+	"AlertRulePaginationResponse":{"type":"object","properties":{"total":{"format":"int32","readOnly":true,"type":"integer"},"searchId":{"readOnly":true,"type":"string"},"items":{"type":"array","items":{"$ref":"#/definitions/AlertRule"}}}}
+	
+	"RestNMapNetscanPolicyCredential":{"type":"object","properties":{"deviceGroupId":{"format":"int32","description":"The ID of the device group that credentials should be inherited from, for this scan","type":"integer","example":1.0},"custom":{"description":"Custom credentials that should be used for this scan","type":"array","items":{"additionalProperties":{"type":"string"},"type":"object"},"example":"[{\"snmp.community\":\"test\"}]"},"deviceGroupName":{"description":"The name of the device group that credentials should be inherited from, for this scan","type":"string","example":"Network Devices"},"deviceId":{"format":"int32","description":"The ID of the device that credentials should be inherited from, for this scan","type":"integer","example":0.0},"deviceName":{"description":"The name of the device that credentials should be inherited from, for this scan","type":"string","example":"LinuxDC1"}}}
+	
+	"CollectorGroup":{"type":"object","required":["name"],"properties":{"userPermission":{"description":"The permission level of the user that made the API request","readOnly":true,"type":"string"},"numOfCollectors":{"format":"int32","description":"The number of Collectors that belong to the group","readOnly":true,"type":"integer"},"autoBalanceInstanceCountThreshold":{"format":"int32","description":"threshold for instance count strategy to check if a collector has high load","type":"integer"},"description":{"description":"The description of the Collector Group","type":"string","example":"Group for collectors dedicated to Network Devices"},"highestPriorityCollectorStatus":{"description":"The status of the highest priority sub collector","readOnly":true,"$ref":"#/definitions/RestHighestPriorityCollectorStatus"},"platform":{"description":"the platform limitation","readOnly":true,"type":"string"},"autoBalance":{"description":"if the collector has autoBalance set as true or false","type":"boolean"},"customProperties":{"description":"The custom properties defined for the Collector group","type":"array","items":{"$ref":"#/definitions/NameAndValue"}},"numOfHosts":{"format":"int64","description":"The number of hosts that belong to the group","readOnly":true,"type":"integer"},"numOfInstances":{"format":"int64","description":"The number of instances that belong to the group","readOnly":true,"type":"integer"},"name":{"description":"The name of the Collector Group","type":"string","example":"Collector (Network Devices)"},"autoBalanceStrategy":{"description":"the auto balance strategy","type":"string"},"createOn":{"format":"int64","description":"The time at which the group was created, in epoch format","readOnly":true,"type":"integer"},"id":{"format":"int32","description":"The id of the Collector Group","readOnly":true,"type":"integer"},"mismatchVersion":{"description":"specifies if the version of all collectors in group is same","readOnly":true,"type":"boolean"}}}
+	
+	"GcpPubSubSubscriptionDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureWebJobCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaaSO365SharePointSiteDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"RestSavedMapWidgetV3":{"allOf":[{"$ref":"#/definitions/Widget"},{"type":"object","properties":{"scale":{"format":"double","type":"number"},"savedMapName":{"type":"string"},"savedMapId":{"format":"int32","type":"integer"},"savedMapGroupName":{"type":"string"}}}]}
+	
+	"AzureEABillingDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureEABillingType"],"properties":{"azureEABillingType":{"type":"string"}}}]}
+	
+	"IntegrationAuditLogPaginationResponse":{"type":"object","properties":{"items":{"type":"array","items":{"$ref":"#/definitions/IntegrationAuditLog"}}}}
+	
+	"SaasOffice365HealthCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"EnhancedScriptNetscan":{"allOf":[{"$ref":"#/definitions/Netscan"},{"type":"object","required":["scriptType"],"properties":{"scriptPath":{"description":"The script path for an external script","type":"string","example":"C://scripts"},"defaultGroupFullPath":{"description":"The full path of the default group to add discovered devices to","readOnly":true,"type":"string","example":"lm/prod/servers"},"groovyScript":{"description":"For embedded script scans, the groovy script contents","type":"string","example":"testing"},"credentials":{"description":"The credentials to be used for the scan","$ref":"#/definitions/RestNMapNetscanPolicyCredential","example":"2"},"linuxScriptParams":{"type":"string"},"groovyScriptParams":{"description":"For embedded script scans, the groovy script parameters","type":"string","example":"prod\u003dtrue"},"windowsScript":{"type":"string"},"filters":{"description":"The filter to be applied to filter out the reported devices","type":"array","items":{"$ref":"#/definitions/DeviceFilter"}},"defaultGroup":{"format":"int32","description":"The ID of the default group to add discovered devices to","type":"integer","example":1.0},"scriptType":{"description":"For script scans, the type of script. Options are embeded and external","type":"string","example":"embeded"},"windowsScriptParams":{"type":"string"},"scriptParams":{"description":"The parameters for an external script","type":"string","example":"prod\u003dtrue"},"linuxScript":{"type":"string"}}}]}
+	
+	"NetflowBgpTable":{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"type":"object","properties":{"percentUsage":{"format":"double","readOnly":true,"type":"number"},"asNumber":{"format":"int64","readOnly":true,"type":"integer"},"usage":{"format":"double","readOnly":true,"type":"number"},"description":{"readOnly":true,"type":"string"}}}]}
+	
+	"GcpComputeServiceLimitsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"NetflowNbarApplication":{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"type":"object","properties":{"percentUsage":{"format":"double","readOnly":true,"type":"number"},"usage":{"format":"double","readOnly":true,"type":"number"},"name":{"readOnly":true,"type":"string"},"type":{"readOnly":true,"type":"string"},"applicationTag":{"format":"int64","readOnly":true,"type":"integer"}}}]}
+	
+	"AwsApiGatewayStageDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsapigatewaystage"}
+	
+	"InterfaceType":{"type":"object","properties":{"ifPosition":{"type":"string"},"ifId":{"format":"int64","type":"integer"}}}
+	
+	"AzureRecoveryServiceVaultSRCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"GcpBillingBigQuerySourceDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["gcpBillingPeriodType","gcpBillingType"],"properties":{"gcpBillingPeriodType":{"type":"string"},"gcpBillingType":{"type":"string"}}}]}
+	
+	"AzureSynapseDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureSynapseType"],"properties":{"azureSynapseType":{"type":"string"}}}]}
+	
+	"NetflowAlertModulesCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"typeOfAlert":{"type":"string"},"thresholdValueUnit":{"type":"string"},"netflowFilters":{"type":"string"},"trafficType":{"type":"string"},"alertEnable":{"type":"boolean"},"topThresholdExpression":{"type":"string"},"dataDuration":{"type":"string"},"enabled":{"type":"boolean"}}}]}
+	
+	"AzureVMBackupStatusCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]},
+	
+	"RestAwsHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]},
+	
+	"AzureBackupJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"ResourceSDT":{"allOf":[{"$ref":"#/definitions/SDT"},{"type":"object","properties":{"deviceId":{"format":"int32","description":"The id of the device that the SDT will be associated with","type":"integer"},"deviceDisplayName":{"description":"The name of the device that this SDT will be associated with","type":"string"}}}]},
+	
+	"SaasSalesforceInstanceStatusCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"AzureVirtualDesktopSessionHostsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_azurevirtualdesktopsessionhosts"}
+	
+	"NetflowPort":{"allOf":[{"$ref":"#/definitions/NetflowDataBase"},{"type":"object","properties":{"percentUsage":{"format":"double","readOnly":true,"type":"number"},"port":{"format":"int32","readOnly":true,"type":"integer"},"usage":{"format":"double","readOnly":true,"type":"number"},"description":{"readOnly":true,"type":"string"}}}],"x-discriminator-value":"port"}
+	
+	"SaasStatusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasO365SkusDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureWebJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"PaaSMongoDbCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["resourceUrl"],"properties":{"resourceUrl":{"type":"string"}}}]}
+	
+	"SaasSalesforceJsonCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaasOffice365CsvReportCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["reportName"],"properties":{"period":{"format":"int32","type":"integer"},"reportName":{"type":"string"},"instanceColumnName":{"type":"string"}}}]}
+	
+	"GcpPubSubSnapshotDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"GcpStackDriverCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"DeviceFilter":{"type":"object","required":["attribute"],"properties":{"comment":{"type":"string"},"attribute":{"type":"string"},"operation":{"type":"string"},"value":{"type":"string"}}}
+	
+	"GcpBackendServiceHealthCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SyntheticsSeleniumCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["checkType","configs","syntheticScript"],"properties":{"checkType":{"type":"string"},"configs":{"type":"string"},"syntheticScript":{"type":"string"}}}]}
+	
+	"IntegrationAuditLog":{"type":"object","properties":{"headers":{"description":"HTTP request headers used in alert delivery","readOnly":true,"type":"string"},"alertType":{"format":"int32","description":"The type of the alert","readOnly":true,"type":"integer"},"integrationName":{"description":"The name of integration","readOnly":true,"type":"string"},"numRetries":{"format":"int32","description":"The number of times delivery was retried","readOnly":true,"type":"integer"},"integrationAlertStatus":{"description":"The Integration Alert Status used for delivery","readOnly":true,"type":"string"},"errorMessage":{"description":"Error message (if any) from ADC","readOnly":true,"type":"string"},"externalTicketId":{"description":"The parsed External Ticket ID from alert delivery","readOnly":true,"type":"string"},"payloadFormat":{"description":"The outbound payload format","readOnly":true,"type":"string"},"url":{"description":"The URL where the alert was delivered to","readOnly":true,"type":"string"},"happenedOnMs":{"format":"int64","description":"When the delivery result was saved in LMES","readOnly":true,"type":"integer"},"integrationType":{"description":"The type of integration","readOnly":true,"type":"string"},"alertInstanceId":{"description":"The id of the alert instance","readOnly":true,"type":"string"},"payload":{"description":"The HTTP Request payload","readOnly":true,"type":"string"},"httpResponseCode":{"format":"int32","description":"The HTTP Response Code received from 3rd party API","readOnly":true,"type":"integer"},"id":{"description":"The id of audit log record","readOnly":true,"type":"string"},"alertId":{"description":"The id of the alert","readOnly":true,"type":"string"},"httpResponse":{"description":"The HTTP Response Body received after alert delivery","readOnly":true,"type":"string"}}}
+	
+	"JSONObject":{"type":"object"}
+	
+	"AzureNetAppVolumesDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureVNGConnectionCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureCostManagementTagsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureTagKeys"],"properties":{"azureTagKeys":{"type":"string"}}}]}
+	
+	"AzureReplicationJobCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureAppServiceEnvironmentMultiRolePoolCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureAutomationAccountCertificateCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaasAirbrakeCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"AwsRdsPerformanceInsightsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AwsVpnTunnelDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureLogAnalyticsReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"AzureRecoveryServiceRTODiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasWebexCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"},"endpointUrlPrefix":{"type":"string"},"instanceColumnName":{"type":"string"}}}]}
+	
+	"AzureVirtualDesktopSessionHostsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureLogAnalyticsWorkspacesDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["columnInstanceName","query"],"properties":{"query":{"type":"string"},"columnInstanceName":{"type":"string"}}}]}
+	
+	"RestAzureAdvisorEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"GcpBillingCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"AwsGlobalWebACLDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"ResourceGroupSDT":{"allOf":[{"$ref":"#/definitions/SDT"},{"type":"object","properties":{"dataSourceId":{"format":"int32","description":"The id of the datasource that this SDT will be associated with, for the specified group. dataSourceId 0 indicates all datasources","type":"integer"},"deviceGroupId":{"format":"int32","description":"The id of the device group that the SDT will be associated with","type":"integer"},"dataSourceName":{"description":"The name of the datasource that this SDT will be associated with, for the specified group. dataSourceName \"All\" indicates all datasources","type":"string"},"deviceGroupFullPath":{"description":"The full path of the device group that this SDT will be associated with","type":"string"}}}]}
+	
+	"AzureCostManagementDimensionsDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["azureCostManagementType"],"properties":{"azureCostManagementType":{"type":"string"}}}]}
+	
+	"ScriptERIDiscoveryAttributeV3":{"type":"object","required":["name"],"properties":{"winScript":{"description":"windows script","type":"string"},"groovyScript":{"description":"groovy script ","type":"string"},"name":{"description":"ERI detection name","type":"string"},"type":{"description":"script type","type":"string"},"linuxCmdline":{"description":"linux script command line","type":"string"},"linuxScript":{"description":"linux script file","type":"string"},"winCmdline":{"description":"windows script command line","type":"string"}}}
+	
+	"SaasZoomRoomDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["zoomRoomIssueType"],"properties":{"zoomRoomIssueType":{"type":"string"}}}]}
+	
+	"GcpBillingDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["gcpBillingType"],"properties":{"gcpBillingType":{"type":"string"}}}]}
+	
+	"AzureAutomationAccountCertificateDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasOffice365SkusCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaasStatusCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"InterfacesFilter":{"type":"object","properties":{"interfaceTypes":{"type":"array","items":{"$ref":"#/definitions/InterfaceType"}},"deviceId":{"format":"int32","type":"integer"}}}
+	
+	"PushModulesCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"AzureExpressRouteCircuitPeeringDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"NetflowDataBase":{"type":"object","properties":{"dataType":{"readOnly":true,"type":"string"}},"discriminator":"dataType"}
+	
+	"SaasOffice365SharepointReportCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaasOffice365TeamsCallsQosCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"IPMIEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","required":["checkInterval"],"properties":{"checkInterval":{"format":"int32","description":"impmi check interval","type":"integer"}}}]}
+	
+	"AzureVNGConnectionDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasSalesforceSOQLQueryCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["soqlEntity"],"properties":{"period":{"format":"int32","type":"integer"},"whereClause":{"type":"string"},"groupByClause":{"type":"string"},"soqlEntity":{"type":"string"},"dateColumn":{"type":"string"},"instanceColumnName":{"type":"string"}}}]}
+	
+	"InstanceGroupAlertThresholdInfo":{"type":"object","properties":{"enableAnomalyAlertGeneration":{"description":"enable anomaly alert generation","readOnly":true,"type":"string"},"enableAnomalyAlertSuppression":{"description":"enable anomaly alert suppression","readOnly":true,"type":"string"},"groupId":{"format":"int32","readOnly":true,"type":"integer"},"alertEnabled":{"readOnly":true,"type":"boolean"},"alertExpr":{"readOnly":true,"type":"string"}}}
+	
+	"GcpBillingBigQuerySourceCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"RestAwsTrustedAdvisorEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"AzureBackupProtectedItemBackupJobCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"RestAzureResourceLogAnalyticsWorkspacesSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"},"query":{"description":"Azure Log Analytics Workspaces Query","type":"string"},"columnInstanceName":{"description":"Column Instance Name","type":"string"}}}]}
+	
+	"SaaSZoomPlanUsageDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["zoomPlanUsageType"],"properties":{"zoomPlanUsageType":{"type":"string"}}}]}
+	
+	"DeviceLogPipeLineResourceSDT":{"allOf":[{"$ref":"#/definitions/SDT"},{"type":"object","properties":{"deviceLogPipeLineResourceId":{"format":"int32","description":"The id of the device logPipeLineResource that the SDT will be associated with","type":"integer"},"logPipeLineName":{"description":"The name of the pipe line that the SDT will apply to","type":"string"},"deviceId":{"format":"int32","description":"The id of the device associated with the pipe line that the SDT will apply to","type":"integer"},"deviceDisplayName":{"description":"The display name of the device associated with the logPipeLine that the SDT will apply to","type":"string"}}}]}
+	
+	"AzureReplicationJobDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasO365MailboxDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasSalesforceLicenseDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"ConfigSource":{"type":"object","required":["id"],"properties":{"collectorAttribute":{"description":"Collector attribute","$ref":"#/definitions/CollectorAttribute"},"autoDiscoveryConfig":{"description":"Auto discovery configuration","$ref":"#/definitions/AutoDiscoveryConfiguration"},"displayName":{"description":"The ConfigSource display name","type":"string"},"configChecks":{"description":"The List of ConfigChecks","type":"array","items":{"$ref":"#/definitions/ConfigCheck"}},"description":{"description":"The description for the LMModule","type":"string"},"appliesTo":{"description":"The Applies To for the LMModule","type":"string"},"enableAutoDiscovery":{"description":"Enable active discovery if ConfigSource has multiple instances. true|false","type":"boolean"},"technology":{"description":"The Technical Notes for the LMModule","type":"string"},"version":{"format":"int64","description":"The ConfigSource version","type":"integer"},"lineageId":{"description":"The lineageId the LMModule belongs to","readOnly":true,"type":"string"},"tags":{"description":"The Tags for the LMModule","type":"string"},"auditVersion":{"format":"int64","description":"The ConfigSource audit version","type":"integer"},"collectMethod":{"description":"The method to collect data","type":"string"},"hasMultiInstances":{"description":"Whether the ConfigSource has multiple instances. true|false","type":"boolean"},"installationMetadata":{"description":"The local module\u0027s IntegrationMetadata, readable for troubleshooting purposes","readOnly":true,"$ref":"#/definitions/IntegrationMetadata"},"collectInterval":{"format":"int32","description":"The ConfigSource data collect interval","type":"integer"},"checksum":{"description":"The metadata checksum for the LMModule content","readOnly":true,"type":"string"},"name":{"description":"The config source name","type":"string"},"timestampFormat":{"description":"Timestamp format. ex. yyyy-MM-dd hh:mm:ss","type":"string"},"id":{"format":"int32","description":"The ID of the LMModule","readOnly":true,"type":"integer"},"fileFormat":{"description":"Configuration file format. arbitrary|unix|java-properties|JSON|XML","type":"string"},"group":{"description":"The group the LMModule is in","type":"string"}}}
+	
+	"GcpLBBackendServiceDiscoveryMethodV3":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}
+	
+	"SaasZoomJsonCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["endpointUrlSuffix"],"properties":{"endpointUrlSuffix":{"type":"string"},"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AwsMediaConnectSourceDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}],"x-discriminator-value":"ad_awsmediaconnectsource"}
+	
+	"RestAzureResourceHealthEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"ConversationFilter":{"type":"object","properties":{"fromOperator":{"type":"string"},"fromEndpoint":{"type":"string"},"toEndpoint":{"type":"string"},"toOperator":{"type":"string"},"includeOrExclude":{"type":"string"}}}
+	
+	"SaasAccountTestResult":{"type":"object","properties":{"nonPermissionApisErrors":{"uniqueItems":true,"type":"array","items":{"type":"string"}},"invalidStatusUrls":{"type":"string"},"noPermissionService":{"type":"string"},"resultCode":{"format":"int32","type":"integer"},"detailLink":{"type":"string"},"noPermissionApis":{"uniqueItems":true,"type":"array","items":{"type":"string"}}}}
+	
+	"OpenMetricCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"headers":{"type":"string"},"followRedirect":{"type":"boolean"},"readTimeout":{"format":"int32","type":"integer"},"connectTimeout":{"format":"int32","type":"integer"},"url":{"type":"string"}}}]}
+	
+	"AzureCostManagementCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{}}]}
+	
+	"NetflowDeviceInfo":{"type":"object","properties":{"deleted":{"type":"boolean"},"displayName":{"type":"string"},"id":{"type":"string"}}}
+	
+	"AwsRdsServiceLimitsCollectorAttributeV3":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"AzureEmergingIssueEventSource":{"allOf":[{"$ref":"#/definitions/EventSource"},{"type":"object","properties":{"schedule":{"format":"int32","description":"The polling interval for the EventSource","type":"integer"}}}]}
+	
+	"PaaSJsonPathDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","required":["instancePath","resourceUrl","valueAttribute"],"properties":{"valueAttribute":{"type":"string"},"aliasAttribute":{"type":"string"},"descriptionAttribute":{"type":"string"},"resourceUrl":{"type":"string"},"propertyAttributes":{"type":"string"},"value2Attribute":{"type":"string"},"instancePath":{"type":"string"}}}]}
+	
+	"AzureVMBackupStatusLogAnalyticsCollectorAttribute":{"allOf":[{"$ref":"#/definitions/CollectorAttribute"},{"type":"object","required":["period"],"properties":{"period":{"format":"int32","type":"integer"}}}]}
+	
+	"SaasAirbrakeDiscoveryMethod":{"allOf":[{"$ref":"#/definitions/AutoDiscoveryMethod"},{"type":"object","properties":{}}]}

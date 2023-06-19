@@ -10,7 +10,7 @@ public class ServerCpuReport : DateRangeReport
 	/// The hostsVal
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string HostsVal { get; set; }
+	public string HostsVal { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to only show the top 10

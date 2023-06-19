@@ -4,34 +4,34 @@ namespace LogicMonitor.Api.Reports;
 /// A host inventory report
 /// </summary>
 [DataContract]
-public class DeviceInventoryReport : Report
+public class DeviceInventoryReport : ReportBase
 {
 	/// <summary>
 	/// The hostsVal
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string HostsVal { get; set; }
+	public string HostsVal { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The hostsValType
 	/// </summary>
 	[DataMember(Name = "hostsValType")]
-	public string HostsValType { get; set; }
+	public string HostsValType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns to sort by
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<string> Properties { get; set; }
+	public List<string> Properties { get; set; } = new();
 
 	/// <summary>
 	/// The metrics
 	/// </summary>
-	public List<DeviceInventoryReportMetric> Metrics { get; set; }
+	public List<DeviceInventoryReportMetric> Metrics { get; set; } = new();
 }

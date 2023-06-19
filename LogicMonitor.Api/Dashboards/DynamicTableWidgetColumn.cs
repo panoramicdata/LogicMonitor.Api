@@ -3,13 +3,14 @@ namespace LogicMonitor.Api.Dashboards;
 /// <summary>
 /// A dynamic table widget column
 /// </summary>
+[DataContract]
 public class DynamicTableWidgetColumn
 {
 	/// <summary>
 	///     The column name
 	/// </summary>
 	[DataMember(Name = "columnName")]
-	public string ColumnName { get; set; }
+	public string ColumnName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The DataPoint id
@@ -21,7 +22,7 @@ public class DynamicTableWidgetColumn
 	///     The DataPoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	///     Whether to enable forecast
@@ -33,13 +34,13 @@ public class DynamicTableWidgetColumn
 	///     The minimum value
 	/// </summary>
 	[DataMember(Name = "minValue")]
-	public double? MinValue { get; set; }
+	public double MinValue { get; set; }
 
 	/// <summary>
 	///     The maximum value
 	/// </summary>
 	[DataMember(Name = "maxValue")]
-	public double? MaxValue { get; set; }
+	public double MaxValue { get; set; }
 
 	/// <summary>
 	///     The rounding decimal
@@ -51,7 +52,7 @@ public class DynamicTableWidgetColumn
 	///     The RPN
 	/// </summary>
 	[DataMember(Name = "rpn")]
-	public string Rpn { get; set; }
+	public string Rpn { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The display type
@@ -63,11 +64,11 @@ public class DynamicTableWidgetColumn
 	///     The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; }
+	public List<ColorThreshold> ColorThresholds { get; set; } = new();
 
 	/// <summary>
 	///     The unit label
 	/// </summary>
 	[DataMember(Name = "unitLabel")]
-	public string UnitLabel { get; set; }
+	public string UnitLabel { get; set; } = string.Empty;
 }

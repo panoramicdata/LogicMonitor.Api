@@ -1,32 +1,32 @@
 ﻿namespace LogicMonitor.Api.Websites;
 
 /// <summary>
-///     A LogicMonitor Collector
+/// A LogicMonitor Collector
 /// </summary>
 [DataContract]
 public class WebsiteCollectorInfo : DescribedItem
 {
 	/// <summary>
-	///     Hostname
+	/// The hostname of the collector
 	/// </summary>
 	[DataMember(Name = "hostname")]
-	public string HostName { get; set; }
+	public string? HostName { get; set; }
 
 	/// <summary>
-	///     The collector group id
+	/// The group name of the group the collector is present in
+	/// </summary>
+	[DataMember(Name = "collectorGroupName")]
+	public string? CollectorGroupName { get; set; }
+
+	/// <summary>
+	/// The group Id of the group the collector is present in
 	/// </summary>
 	[DataMember(Name = "collectorGroupId")]
 	public int CollectorGroupId { get; set; }
 
 	/// <summary>
-	///     The collector group name
-	/// </summary>
-	[DataMember(Name = "collectorGroupName")]
-	public string CollectorGroupName { get; set; }
-
-	/// <summary>
-	///     The local time of user change
+	/// The status of the collector
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string Status { get; set; }
+	public string? Status { get; set; }
 }

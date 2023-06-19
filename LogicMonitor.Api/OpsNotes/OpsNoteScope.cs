@@ -11,7 +11,7 @@ public abstract class OpsNoteScope
 	/// The type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group id
@@ -23,5 +23,5 @@ public abstract class OpsNoteScope
 	/// The group full path
 	/// </summary>
 	[DataMember(Name = "fullPath")]
-	public string GroupFullPath { get; set; }
+	public string GroupFullPath { get; set; } = string.Empty;
 }

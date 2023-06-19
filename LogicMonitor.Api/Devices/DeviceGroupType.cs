@@ -8,7 +8,7 @@ namespace LogicMonitor.Api.Devices;
 public enum DeviceGroupType
 {
 	/// <summary>
-	///     Unknown)
+	///     Unknown
 	/// </summary>
 	[EnumMember(Value = "0")]
 	Unknown = 0,
@@ -775,6 +775,12 @@ public enum DeviceGroupType
 	/// </summary>
 	[EnumMember(Value = "Saas/OFFICE365")]
 	SaasOffice365 = 127,
+
+	/// <summary>
+	///     LogPipeLineGroup
+	/// </summary>
+	[EnumMember(Value = "LogPipeLineGroup")]
+	LogPipeLineGroup = 128,
 
 	/// <summary>
 	///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.

@@ -10,12 +10,12 @@ public class NamedEntity
 	/// The entity's name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The entity's description
 	/// </summary>
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Returns a string that represents the current object.

@@ -6,13 +6,13 @@ namespace LogicMonitor.Api.Dashboards;
 [DataContract]
 [DebuggerDisplay("{Type}:{Name}")]
 [JsonConverter(typeof(WidgetConverter))]
-public class Widget : NamedItem, IHasEndpoint
+public class Widget : NamedItem, IHasEndpoint, IWidget
 {
 	/// <summary>
-	///     The widget type
+	/// alert | batchjob | flash | gmap | ngraph | ograph | cgraph | sgraph | netflowgraph | groupNetflowGraph | netflow | groupNetflow | html | bigNumber | gauge | pieChart | table | dynamicTable | deviceSLA | text | statsd | deviceStatus | serviceAlert | noc | websiteOverview | websiteOverallStatus | websiteIndividualStatus | websiteSLA | savedMap
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///     When the widget was last updated
@@ -24,7 +24,7 @@ public class Widget : NamedItem, IHasEndpoint
 	///     The ordinal
 	/// </summary>
 	[DataMember(Name = "lastUpdatedBy")]
-	public string LastUpdatedBy { get; set; }
+	public string LastUpdatedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dashboard id
@@ -48,7 +48,7 @@ public class Widget : NamedItem, IHasEndpoint
 	///     The theme
 	/// </summary>
 	[DataMember(Name = "theme")]
-	public string Theme { get; set; }
+	public string Theme { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The column span
@@ -63,7 +63,7 @@ public class Widget : NamedItem, IHasEndpoint
 	public int RowSpan { get; set; }
 
 	/// <summary>
-	///     The row span
+	///     The user permission values
 	/// </summary>
 	[DataMember(Name = "userPermission")]
 	public UserPermission UserPermission { get; set; }
@@ -78,13 +78,13 @@ public class Widget : NamedItem, IHasEndpoint
 	///     The timescale
 	/// </summary>
 	[DataMember(Name = "timescale")]
-	public string Timescale { get; set; }
+	public string Timescale { get; set; } = string.Empty;
 
 	/// <summary>
 	///     SortBy
 	/// </summary>
 	[DataMember(Name = "sortBy")]
-	public string SortBy { get; set; }
+	public string SortBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Display Column
@@ -126,13 +126,13 @@ public class Widget : NamedItem, IHasEndpoint
 	///     The widget parameters
 	/// </summary>
 	[DataMember(Name = "params")]
-	public List<WidgetParameter> WidgetParameters { get; set; }
+	public List<WidgetParameter> WidgetParameters { get; set; } = new();
 
 	/// <summary>
 	///    Time Zone
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The handled parameters

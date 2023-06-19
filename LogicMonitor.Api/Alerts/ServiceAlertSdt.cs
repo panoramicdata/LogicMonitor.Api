@@ -10,7 +10,7 @@ public class ServiceAlertSdt : AlertSdt
 	/// The Collector description
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Collector description

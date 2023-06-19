@@ -16,13 +16,13 @@ public class NetscanExecutionResponse
 	///    The scan id
 	/// </summary>
 	[DataMember(Name = "scanId")]
-	public string ScanId { get; set; }
+	public string ScanId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The status
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string Status { get; set; }
+	public string Status { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Id
@@ -56,5 +56,5 @@ public class NetscanExecutionResponse
 	///    The user that ran the netscan
 	/// </summary>
 	[DataMember(Name = "runBy")]
-	public string RunBy { get; set; }
+	public string RunBy { get; set; } = string.Empty;
 }

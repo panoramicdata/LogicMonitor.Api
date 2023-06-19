@@ -10,5 +10,5 @@ public class PagerDutyIntegration : HttpIntegration
 	/// Service Key
 	/// </summary>
 	[DataMember(Name = "serviceKey")]
-	public string ServiceKey { get; set; }
+	public string ServiceKey { get; set; } = string.Empty;
 }

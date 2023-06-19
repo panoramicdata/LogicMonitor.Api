@@ -82,7 +82,7 @@ public class CustomGraphWidgetDataLine
 	/// The decimal
 	/// </summary>
 	[DataMember(Name = "decimal")]
-	public int Decimal { get; set; }
+	public int LineDecimal { get; set; }
 
 	/// <summary>
 	/// The data values for this line

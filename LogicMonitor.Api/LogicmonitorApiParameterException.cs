@@ -9,7 +9,7 @@ public class LogicMonitorApiParameterException : Exception
 	/// <summary>
 	/// The parameter
 	/// </summary>
-	public string Parameter { get; }
+	public string Parameter { get; } = string.Empty;
 
 	/// <summary>
 	/// Constructor

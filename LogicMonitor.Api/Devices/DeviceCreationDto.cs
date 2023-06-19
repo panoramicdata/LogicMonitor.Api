@@ -10,31 +10,31 @@ public class DeviceCreationDto : CreationDto<Device>
 	///    A comma-separated list of device group ids
 	/// </summary>
 	[DataMember(Name = "hostGroupIds")]
-	public string DeviceGroupIds { get; set; }
+	public string DeviceGroupIds { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The display name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device name
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device link
 	/// </summary>
 	[DataMember(Name = "link")]
-	public string Link { get; set; }
+	public string Link { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether to disable alerting
@@ -52,7 +52,7 @@ public class DeviceCreationDto : CreationDto<Device>
 	///    The Netflow Collector Id as a string
 	/// </summary>
 	[DataMember(Name = "netflowCollectorId")]
-	public string NetflowCollectorId { get; set; }
+	public string NetflowCollectorId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Preferred Collector's Id
@@ -64,7 +64,7 @@ public class DeviceCreationDto : CreationDto<Device>
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///    ToString override

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A Website individual status widget
 /// </summary>
 [DataContract]
-public class WebsiteIndividualStatusWidget : Widget
+public class WebsiteIndividualStatusWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The Website group id
@@ -22,25 +22,25 @@ public class WebsiteIndividualStatusWidget : Widget
 	/// The graph name
 	/// </summary>
 	[DataMember(Name = "graph")]
-	public string GraphName { get; set; }
+	public string GraphName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Website group name
 	/// </summary>
 	[DataMember(Name = "websiteGroupName")]
-	public string WebsiteGroupName { get; set; }
+	public string WebsiteGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The website name
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Website locations
 	/// </summary>
 	[DataMember(Name = "locations")]
-	public List<WebsiteCheckpointSelection> Locations { get; set; }
+	public List<WebsiteCheckpointSelection> Locations { get; set; } = new();
 
 	/// <summary>
 	/// Whether the Website is internal
@@ -52,5 +52,5 @@ public class WebsiteIndividualStatusWidget : Widget
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

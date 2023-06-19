@@ -22,7 +22,7 @@ public class OverviewGraphWidget : GraphWidget
 	/// The datasource name
 	/// </summary>
 	[DataMember(Name = "dsName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The datasource instance group id
@@ -34,13 +34,13 @@ public class OverviewGraphWidget : GraphWidget
 	/// The datasource instance group name
 	/// </summary>
 	[DataMember(Name = "dsigName")]
-	public string DataSourceInstanceGroupName { get; set; }
+	public string DataSourceInstanceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device name
 	/// </summary>
 	[DataMember(Name = "hostName")]
-	public string DeviceName { get; set; }
+	public string DeviceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The graph id
@@ -52,11 +52,11 @@ public class OverviewGraphWidget : GraphWidget
 	/// The graph name
 	/// </summary>
 	[DataMember(Name = "graphName")]
-	public string GraphName { get; set; }
+	public string GraphName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

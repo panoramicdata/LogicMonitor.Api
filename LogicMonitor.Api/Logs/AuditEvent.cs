@@ -25,7 +25,7 @@ public class AuditEvent
 	/// <summary>
 	/// The original description from the LogItem
 	/// </summary>
-	public string OriginalDescription { get; internal set; } = string.Empty;
+	public string? OriginalDescription { get; internal set; } = string.Empty;
 
 	/// <summary>
 	/// The event's session Id
@@ -176,10 +176,25 @@ public class AuditEvent
 	/// <summary>
 	/// The alert id for alert update events
 	/// </summary>
-	public int? AlertId { get; internal set; }
+	public string? AlertId { get; internal set; }
 
 	/// <summary>
 	/// The alert note for alert update events
 	/// </summary>
 	public string? AlertNote { get; internal set; }
+
+	/// <summary>
+	/// The regular device monthly metrics
+	/// </summary>
+	public int? MonthlyMetrics { get; internal set; }
+
+	/// <summary>
+	/// The scheduled down time start time
+	/// </summary>
+	public string? StartDownTime { get; internal set; }
+
+	/// <summary>
+	/// The scheduled down time end time
+	/// </summary>
+	public string? EndDownTime { get; internal set; }
 }

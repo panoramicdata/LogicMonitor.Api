@@ -10,31 +10,31 @@ public class GraphData : NamedItem
 	///    Data type
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<object> Instances { get; set; }
+	public List<object> Instances { get; set; } = new();
 
 	/// <summary>
 	///    Data type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Timescale
 	/// </summary>
 	[DataMember(Name = "timescale")]
-	public string TimeScale { get; set; }
+	public string TimeScale { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Time Zone
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Time Zone Id
 	/// </summary>
 	[DataMember(Name = "timeZoneId")]
-	public string TimeZoneId { get; set; }
+	public string TimeZoneId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Status
@@ -46,7 +46,7 @@ public class GraphData : NamedItem
 	///    Title
 	/// </summary>
 	[DataMember(Name = "title")]
-	public string TitleString { get; set; }
+	public string TitleString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The end timezone offset
@@ -76,13 +76,13 @@ public class GraphData : NamedItem
 	///    The x-axis name
 	/// </summary>
 	[DataMember(Name = "xaxisname")]
-	public string XAxisName { get; set; }
+	public string XAxisName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The y-axis label
 	/// </summary>
 	[DataMember(Name = "verticallabel")]
-	public string VerticalLabel { get; set; }
+	public string VerticalLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The height in pixels
@@ -94,7 +94,7 @@ public class GraphData : NamedItem
 	///    The XML title
 	/// </summary>
 	[DataMember(Name = "xmlTitle")]
-	public string XmlTitleString { get; set; }
+	public string XmlTitleString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The display priority
@@ -130,19 +130,19 @@ public class GraphData : NamedItem
 	///    The list of missing lines
 	/// </summary>
 	[DataMember(Name = "missingLines")]
-	public List<string> MissingLines { get; set; }
+	public List<string> MissingLines { get; set; } = new();
 
 	/// <summary>
 	///    The XML y-axis label
 	/// </summary>
 	[DataMember(Name = "xmlVerticalLabel")]
-	public string XmlVerticalLabel { get; set; }
+	public string XmlVerticalLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The data source name
 	/// </summary>
 	[DataMember(Name = "dsName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The milliseconds that the graph start time is since the Epoch
@@ -178,7 +178,7 @@ public class GraphData : NamedItem
 	///    The x-axis timestamps in ms since the Epoch
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<long> TimeStamps { get; set; }
+	public List<long> TimeStamps { get; set; } = new();
 
 	/// <summary>
 	///    Whether it is rigid
@@ -190,13 +190,13 @@ public class GraphData : NamedItem
 	///    The graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<Line> Lines { get; set; }
+	public List<Line> Lines { get; set; } = new();
 
 	/// <summary>
 	///    The export filename
 	/// </summary>
 	[DataMember(Name = "exportFileName")]
-	public string ExportFileName { get; set; }
+	public string ExportFileName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The step
@@ -208,11 +208,11 @@ public class GraphData : NamedItem
 	///    The scopes
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<GraphDataScope> Scopes { get; set; }
+	public List<GraphDataScope> Scopes { get; set; } = new();
 
 	/// <summary>
 	///    The training graph data
 	/// </summary>
 	[DataMember(Name = "training")]
-	public TrainingGraphData TrainingGraphData { get; set; }
+	public TrainingGraphData TrainingGraphData { get; set; } = new();
 }

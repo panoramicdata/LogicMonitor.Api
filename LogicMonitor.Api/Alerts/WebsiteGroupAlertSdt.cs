@@ -9,6 +9,6 @@ public class WebsiteGroupAlertSdt : AlertSdt
 	/// <summary>
 	/// The website group id
 	/// </summary>
-	[DataMember(Name = "websiteGroupId")]
-	public int WebsiteGroupId { get; set; }
+	[DataMember(Name = "serviceFolderId")]
+	public int ServiceFolderId { get; set; }
 }

@@ -21,7 +21,6 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="logFilter"></param>
 	/// <param name="cancellationToken"></param>
-	// public List<LogItem> GetLogItemsAsync(LogFilter logFilter) => Get<LogItemCollection>(ApiMethod.Do, $"onesetting?func=getAccessLog&needTotal=true&orderBy=happenedOn&orderDirection=desc&start={logFilter.Skip}&results={logFilter.Take}").AccessLogItems;
 	public async Task<List<LogItem>> GetLogItemsAsync(LogFilter? logFilter, CancellationToken cancellationToken)
 	{
 		// If take is specified, do only that chunk.
@@ -69,6 +68,7 @@ public partial class LogicMonitorClient
 				// Need to UrlEncode before adding to the filter
 				filter += HttpUtility.UrlEncode($",username:{logFilter.UsernameFilter}");
 			}
+
 			if (!string.IsNullOrWhiteSpace(logFilter.TextFilter))
 			{
 				filter += HttpUtility.UrlEncode($",_all~{logFilter.TextFilter}");

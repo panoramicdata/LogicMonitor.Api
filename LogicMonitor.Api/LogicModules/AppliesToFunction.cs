@@ -4,19 +4,19 @@ namespace LogicMonitor.Api.LogicModules;
 /// An AppliesTo Function
 /// </summary>
 [DataContract]
-public class AppliesToFunction : NamedItem, IHasEndpoint
+public class AppliesToFunction : LogicModule, IHasEndpoint
 {
 	/// <summary>
-	/// The parameters
-	/// </summary>
-	[DataMember(Name = "params")]
-	public string Parameters { get; set; }
-
-	/// <summary>
-	/// The code
+	/// The AppliesTo Function code. Note that special characters may need to be escaped.
 	/// </summary>
 	[DataMember(Name = "code")]
-	public string Code { get; set; }
+	public string Code { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The AppliesTo Function parameters
+	/// </summary>
+	[DataMember(Name = "params")]
+	public string Parameters { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Published

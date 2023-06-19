@@ -7,26 +7,26 @@ namespace LogicMonitor.Api.LogicModules;
 public class AutoDiscoveryFilter
 {
 	/// <summary>
-	/// attribute
+	/// attribute to filter
 	/// </summary>
 	[DataMember(Name = "attribute")]
-	public string Attribute { get; set; }
+	public string Attribute { get; set; } = string.Empty;
 
 	/// <summary>
-	/// operation
+	/// filter\u0027s operation values can be : Equal|NotEqual|GreaterThan|GreaterEqual|LessThan|LessEqual|Contain|NotContain|NotExist|RegexMatch|RegexNotMatch
 	/// </summary>
 	[DataMember(Name = "operation")]
-	public string Operation { get; set; }
+	public AutoDiscoveryFilterOperation Operation { get; set; }
 
 	/// <summary>
-	/// value
+	/// operation value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
-	/// comment
+	/// filter comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 }

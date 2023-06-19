@@ -10,41 +10,41 @@ public class ValueCheckRange
 	///    GreaterThan
 	/// </summary>
 	[DataMember(Name = "gt")]
-	public string GreaterThan { get; set; }
+	public string GreaterThan { get; set; } = string.Empty;
 
 	/// <summary>
 	///    GreaterThanOrEqualTo
 	/// </summary>
 	[DataMember(Name = "ge")]
-	public string GreaterThanOrEqualTo { get; set; }
+	public string GreaterThanOrEqualTo { get; set; } = string.Empty;
 
 	/// <summary>
 	///    LessThan
 	/// </summary>
 	[DataMember(Name = "lt")]
-	public string LessThan { get; set; }
+	public string LessThan { get; set; } = string.Empty;
 
 	/// <summary>
 	///    LessThanOrEqual
 	/// </summary>
 	[DataMember(Name = "lte")]
-	public string LessThanOrEqualTo2 { get; set; }
+	public string LessThanOrEqualTo2 { get; set; } = string.Empty;
 
 	/// <summary>
 	///    LessThanOrEqualTo
 	/// </summary>
 	[DataMember(Name = "le")]
-	public string LessThanOrEqualTo { get; set; }
+	public string LessThanOrEqualTo { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Equals
 	/// </summary>
 	[DataMember(Name = "eq")]
-	public new string Equals { get; set; }
+	public new string Equals { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Not equals
 	/// </summary>
 	[DataMember(Name = "ne")]
-	public string NotEquals { get; set; }
+	public string NotEquals { get; set; } = string.Empty;
 }

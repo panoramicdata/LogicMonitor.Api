@@ -16,13 +16,13 @@ public class NetscanExecution
 	///    The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "policyName")]
-	public string PolicyName { get; set; }
+	public string PolicyName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The netscan poicy id
@@ -40,13 +40,13 @@ public class NetscanExecution
 	///    Full scan
 	/// </summary>
 	[DataMember(Name = "fullScan")]
-	public string FullScan { get; set; }
+	public string FullScan { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The summary text
 	/// </summary>
 	[DataMember(Name = "summary")]
-	public string Summary { get; set; }
+	public string Summary { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The time that the scan started in seconds since the Epoch UTC
@@ -74,5 +74,5 @@ public class NetscanExecution
 	///    The user that ran the netscan
 	/// </summary>
 	[DataMember(Name = "runBy")]
-	public string RunBy { get; set; }
+	public string RunBy { get; set; } = string.Empty;
 }

@@ -7,7 +7,7 @@ namespace LogicMonitor.Api.Devices;
 public class Device : NamedItem, IHasCustomProperties, IPatchable
 {
 	/// <summary>
-	///    The autoBalanced CollectorGroup id
+	/// The Auto Balanced Collector Group id. 0 means not monitored by ABCG
 	/// </summary>
 	[DataMember(Name = "autoBalancedCollectorGroupId")]
 	public int AutoBalancedCollectorGroupId { get; set; }
@@ -23,7 +23,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	///    The alert status
@@ -50,7 +50,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "autoProperties")]
-	public List<Property> AutoProperties { get; set; }
+	public List<EntityProperty> AutoProperties { get; set; } = new();
 
 	/// <summary>
 	///    The time that the auto-properties were assigned in seconds since the Epoch
@@ -74,14 +74,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public AwsState AwsState { get; set; }
 
 	/// <summary>
-	///    The device Azure status
+	/// The azure instance state (if applicable): 1 indicates that the instance is running, 2 indicates that the instance is stopped and 3 the instance is terminated.
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "azureState")]
 	public AzureState AzureState { get; set; }
 
 	/// <summary>
-	///    The device GCP status
+	/// The gcp instance state (if applicable): 1 indicates that the instance is running, 2 indicates that the instance is stopped and 3 the instance is terminated.
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "gcpState")]
@@ -98,7 +98,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    When the device was created
@@ -108,17 +108,24 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public long? CreatedOnSeconds { get; set; }
 
 	/// <summary>
-	///    The Current Collector's ID
+	/// The id of the collector currently monitoring the device and discovering instances
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "currentCollectorId")]
 	public int CurrentCollectorId { get; set; }
 
 	/// <summary>
+	/// The id of the Log collector currently collecting logs.
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "currentLogCollectorId")]
+	public int CurrentLogCollectorId { get; set; }
+
+	/// <summary>
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///    The device status
@@ -141,10 +148,10 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	public bool IsAlertingDisabled { get; set; }
 
 	/// <summary>
-	///    The display name
+	/// The display name of the device
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether alerting is effectively enabled
@@ -184,7 +191,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    The device type (usually Host)
 	/// </summary>
 	[DataMember(Name = "hostGroupIds")]
-	public string DeviceGroupIdsString { get; set; }
+	public string DeviceGroupIdsString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device status
@@ -198,14 +205,21 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "inheritedProperties")]
-	public List<Property> InheritedProperties { get; set; }
+	public List<EntityProperty> InheritedProperties { get; set; } = new();
 
 	/// <summary>
 	///    The instances
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "instance")]
-	public List<DeviceDataSourceInstanceSummary> Instances { get; set; }
+	public List<DeviceDataSourceInstanceSummary> Instances { get; set; } = new();
+
+	/// <summary>
+	/// Indicates whether Preferred Log Collector is configured  (true) or not (false) for the device
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "isPreferredLogCollectorConfigured")]
+	public bool IsPreferredLogCollectorConfigured { get; set; }
 
 	/// <summary>
 	///    The last time that raw data was received for the device
@@ -225,19 +239,45 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    The device's configured URL
 	/// </summary>
 	[DataMember(Name = "link")]
-	public string Link { get; set; }
+	public string Link { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The description/name of the log collector for this device
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "logCollectorDescription")]
+	public string LogCollectorDescription { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The id of the Collector Group associated with the device\u0027s log collection
+	/// </summary>
+	[DataMember(Name = "logCollectorGroupId")]
+	public int LogCollectorGroupId { get; set; }
+
+	/// <summary>
+	/// The name of the Collector Group associated with the device\u0027s.
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "logCollectorGroupName")]
+	public string LogCollectorGroupName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Id of the netflow collector associated with the device
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "logCollectorId")]
+	public int LogCollectorId { get; set; }
 
 	/// <summary>
 	///    Whether the device has a disabled sub-resource
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "manualDiscoveryFlags")]
-	public ManualDiscoveryFlags ManualDiscoveryFlags { get; set; }
+	public ManualDiscoveryFlags ManualDiscoveryFlags { get; set; } = new();
 
 	/// <summary>
 	///    The Netflow Collector Id
 	/// </summary>
-	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorId")]
 	public int NetflowCollectorId { get; set; }
 
@@ -246,7 +286,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorDescription")]
-	public string NetflowCollectorDescription { get; set; }
+	public string NetflowCollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Netflow Collector Group Id
@@ -260,7 +300,13 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "netflowCollectorGroupName")]
-	public string NetflowCollectorGroupName { get; set; }
+	public string NetflowCollectorGroupName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Op
+	/// </summary>
+	[DataMember(Name = "op")]
+	public string Op { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The preferred Collector Id
@@ -280,13 +326,76 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "preferredCollectorGroupName")]
-	public string PreferredCollectorGroupName { get; set; }
+	public string PreferredCollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The ID of the related device
 	/// </summary>
 	[DataMember(Name = "relatedDeviceId")]
 	public int RelatedDeviceId { get; set; }
+
+	/// <summary>
+	///    The AWS test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "awsTestResult")]
+	public string AwsTestResult { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The AWS test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "awsTestResultCode")]
+	public int AwsTestResultCode { get; set; }
+
+	/// <summary>
+	///    The Azure test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "azureTestResult")]
+	public string AzureTestResult { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The Azure test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "azureTestResultCode")]
+	public int AzureTestResultCode { get; set; }
+
+	/// <summary>
+	///    The GCP test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "gcpTestResult")]
+	public string GcpTestResult { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The GCP test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "gcpTestResultCode")]
+	public int GcpTestResultCode { get; set; }
+
+	/// <summary>
+	///    The SaaS test result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "saasTestResult")]
+	public string SaasTestResult { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The SaaS test result code
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "saasTestResultCode")]
+	public int SaasTestResultCode { get; set; }
+
+	/// <summary>
+	///    The auto visual result
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "autoVisualResult")]
+	public string AutoVisualResult { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Scan config ID
@@ -307,7 +416,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "systemProperties")]
-	public List<Property> SystemProperties { get; set; }
+	public List<EntityProperty> SystemProperties { get; set; } = new();
 
 	/// <summary>
 	///    The time in Ms before the device will be deleted
@@ -335,6 +444,25 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[DataMember(Name = "loadBalanceCollectorGroupId")]
 	public int LoadBalanceCollectorGroupId { get; set; }
+
+	/// <summary>
+	/// Any non-system properties (aside from system.categories) defined for this device
+	/// </summary>
+	[DataMember(Name = "resourceIds")]
+	public List<int>? ResourceIds { get; set; }
+
+	/// <summary>
+	/// The list of ids of the collectors currently monitoring the resource and discovering instances
+	/// </summary>
+	[DataMember(Name = "syntheticsCollectorIds")]
+	public List<int>? SyntheticsCollectorIds { get; set; }
+
+	/// <summary>
+	/// The role privilege operation(s) for this device that are granted to the user who made the API request
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "rolePrivileges")]
+	public List<RolePrivilege> RolePrivileges { get; set; } = new();
 
 	/// <summary>
 	///    User Permission

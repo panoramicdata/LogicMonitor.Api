@@ -37,7 +37,7 @@ public class WriteLogRequest : Dictionary<string, object>
 		this["message"] = GetPrefix(level) + message;
 	}
 
-	private string GetPrefix(WriteLogLevel level) => level switch
+	private static string GetPrefix(WriteLogLevel level) => level switch
 	{
 		WriteLogLevel.Trace => "[TRCE] ",
 		WriteLogLevel.Debug => "[DEBG] ",

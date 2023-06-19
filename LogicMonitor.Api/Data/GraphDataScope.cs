@@ -16,5 +16,5 @@ public class GraphDataScope
 	///    The type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 }

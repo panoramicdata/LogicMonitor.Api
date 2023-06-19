@@ -9,14 +9,13 @@ public class RawDataTests : TestWithOutput
 	[Fact]
 	public async Task GetRawData()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource!.Id, default).ConfigureAwait(false);
 		var deviceDataSourceInstance =
-		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false)
+		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false)
 		).Single();
-		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		var rawData = await LogicMonitorClient.GetRawDataSetAsync(425, deviceDataSource.Id, deviceDataSourceInstance.Id, null, null, cancellationToken: default).ConfigureAwait(false);
 
 		rawData.Should().NotBeNull();
 	}
@@ -26,14 +25,13 @@ public class RawDataTests : TestWithOutput
 	{
 		var utcNow = DateTime.UtcNow;
 		var yesterday = utcNow - TimeSpan.FromDays(1);
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinOS", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource!.Id, default).ConfigureAwait(false);
 		var deviceDataSourceInstance =
-		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false)
+		(await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false)
 		).Single();
-		var rawData = await LogicMonitorClient.GetRawDataSetAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow, CancellationToken.None).ConfigureAwait(false);
+		var rawData = await LogicMonitorClient.GetRawDataSetAsync(425, deviceDataSource.Id, deviceDataSourceInstance.Id, yesterday, utcNow, default).ConfigureAwait(false);
 
 		rawData.Should().NotBeNull();
 
@@ -49,17 +47,16 @@ public class RawDataTests : TestWithOutput
 	public async Task PollNow()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var dataSource = await portalClient.GetDataSourceByUniqueNameAsync("WinIf-", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await portalClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
-		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
+		var deviceDataSource = await portalClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource!.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstance =
-		(await portalClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false)
+		(await portalClient.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false)
 		).FirstOrDefault();
 		deviceDataSourceInstance.Should().NotBeNull();
 
-		var pollNowResponse = await portalClient.PollNowAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstance!.Id, CancellationToken.None).ConfigureAwait(false);
+		var pollNowResponse = await portalClient.PollNowAsync(425, deviceDataSource.Id, deviceDataSourceInstance!.Id, default).ConfigureAwait(false);
 
 		pollNowResponse.Should().NotBeNull();
 	}
@@ -67,17 +64,16 @@ public class RawDataTests : TestWithOutput
 	[Fact]
 	public async Task FetchInstanceData()
 	{
-		var device = await GetWindowsDeviceAsync(CancellationToken.None).ConfigureAwait(false);
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("WinIf-", CancellationToken.None).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
 		dataSource.Should().NotBeNull();
-		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, CancellationToken.None).ConfigureAwait(false);
+		var deviceDataSource = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource!.Id, default).ConfigureAwait(false);
 		deviceDataSource.Should().NotBeNull();
-		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new(), cancellationToken: default).ConfigureAwait(false);
 
 		var end = DateTime.UtcNow;
 		var start = end.AddHours(-2);
 
-		var rawData = await LogicMonitorClient.GetFetchDataResponseAsync(deviceDataSourceInstances.ConvertAll(ddsi => ddsi.Id), start, end, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		var rawData = await LogicMonitorClient.GetFetchDataResponseAsync(deviceDataSourceInstances.ConvertAll(ddsi => ddsi.Id), start, end, cancellationToken: default).ConfigureAwait(false);
 
 		rawData.Should().NotBeNull();
 		rawData.TotalCount.Should().Be(deviceDataSourceInstances.Count);

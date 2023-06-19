@@ -16,73 +16,73 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The roles assigned to this user
 	/// </summary>
 	[DataMember(Name = "roles")]
-	public List<Role> Roles { get; set; }
+	public List<Role> Roles { get; set; } = new();
 
 	/// <summary>
 	///    The user's preferred contact method
 	/// </summary>
 	[DataMember(Name = "contactMethod")]
-	public string ContactMethod { get; set; }
+	public string ContactMethod { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The e-mail address
 	/// </summary>
 	[DataMember(Name = "email")]
-	public string Email { get; set; }
+	public string Email { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Training e-mail address
 	/// </summary>
 	[DataMember(Name = "trainingEmail")]
-	public string TrainingEmail { get; set; }
+	public string TrainingEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The phone number
 	/// </summary>
 	[DataMember(Name = "phone")]
-	public string Phone { get; set; }
+	public string Phone { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The SMS e-mail address
 	/// </summary>
 	[DataMember(Name = "smsEmail")]
-	public string SmsEmail { get; set; }
+	public string SmsEmail { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The SMS e-mail address format
 	/// </summary>
 	[DataMember(Name = "smsEmailFormat")]
-	public string SmsEmailFormat { get; set; }
+	public string SmsEmailFormat { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The UserName
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string UserName { get; set; }
+	public string UserName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The first name
 	/// </summary>
 	[DataMember(Name = "firstName")]
-	public string FirstName { get; set; }
+	public string FirstName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The last name
 	/// </summary>
 	[DataMember(Name = "lastName")]
-	public string LastName { get; set; }
+	public string LastName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The password (asterisked out)
 	/// </summary>
 	[DataMember(Name = "password")]
-	public string Password { get; set; }
+	public string Password { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The status ("active" for users who can log in)
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string Status { get; set; }
+	public string Status { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The status ("active" for users who can log in)
@@ -94,13 +94,13 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The note
 	/// </summary>
 	[DataMember(Name = "note")]
-	public string Note { get; set; }
+	public string Note { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The user that created this user
 	/// </summary>
 	[DataMember(Name = "createdBy")]
-	public string CreatedBy { get; set; }
+	public string CreatedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether the password will be force changed on next login
@@ -112,25 +112,25 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The user's API tokens
 	/// </summary>
 	[DataMember(Name = "apiTokens")]
-	public List<ApiToken> ApiTokens { get; set; }
+	public List<ApiToken> ApiTokens { get; set; } = new();
 
 	/// <summary>
 	///    The view permissions
 	/// </summary>
 	[DataMember(Name = "viewPermission")]
-	public ViewPermission ViewPermission { get; set; }
+	public ViewPermission? ViewPermission { get; set; }
 
 	/// <summary>
 	///    The last action performed by this user
 	/// </summary>
 	[DataMember(Name = "lastAction")]
-	public string LastAction { get; set; }
+	public string LastAction { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The last local action time as a string
 	/// </summary>
 	[DataMember(Name = "lastActionOnLocal")]
-	public string LastActionOnLocal { get; set; }
+	public string LastActionOnLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The last action time in seconds since the Epoch
@@ -166,7 +166,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The setupWizardStatus
 	/// </summary>
 	[DataMember(Name = "setupWizardStatus")]
-	public string SetupWizardStatus { get; set; }
+	public string SetupWizardStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The tenant ID
@@ -178,13 +178,13 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    Two factor authentication is enabled
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string Timezone { get; set; }
+	public string Timezone { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The user group ids
 	/// </summary>
 	[DataMember(Name = "adminGroupIds")]
-	public List<int> UserGroupIds { get; set; }
+	public List<int> UserGroupIds { get; set; } = new();
 
 	/// <summary>
 	///    The user permission

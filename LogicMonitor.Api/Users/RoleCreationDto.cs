@@ -10,13 +10,13 @@ public class RoleCreationDto : CreationDto<Role>
 	/// Name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether EULA acceptance is required
@@ -34,19 +34,19 @@ public class RoleCreationDto : CreationDto<Role>
 	/// Custom Help label
 	/// </summary>
 	[DataMember(Name = "customHelpLabel")]
-	public string CustomHelpLabel { get; set; }
+	public string CustomHelpLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Custom Help URL
 	/// </summary>
 	[DataMember(Name = "customHelpURL")]
-	public string CustomHelpUrl { get; set; }
+	public string CustomHelpUrl { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Privileges
 	/// </summary>
 	[DataMember(Name = "privileges")]
-	public List<RolePrivilege> Privileges { get; set; }
+	public List<RolePrivilege> Privileges { get; set; } = new();
 
 	/// <summary>
 	/// Role Group ID

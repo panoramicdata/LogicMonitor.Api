@@ -14,9 +14,13 @@ public abstract class TestWithOutput
 
 	protected string DeviceGroupFullPath { get; }
 
+	protected string ResourceGroupFullPath { get; }
+
 	protected int ServiceDeviceId { get; }
 
 	protected int WindowsDeviceId { get; }
+
+	protected int SDTResourceGroupId { get; }
 
 	protected int WindowsDeviceLargeDeviceDataSourceId { get; }
 
@@ -27,6 +31,7 @@ public abstract class TestWithOutput
 	protected int AllWidgetsDashboardId { get; }
 
 	protected bool AccountHasBillingInformation { get; }
+	protected int TestDashboardId { get; }
 
 	protected TestWithOutput(ITestOutputHelper iTestOutputHelper)
 	{
@@ -39,8 +44,12 @@ public abstract class TestWithOutput
 		WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
 		ServiceDeviceId = testPortalConfig.ServiceDeviceId;
 		NetflowDeviceId = testPortalConfig.NetflowDeviceId;
+		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
+		TestDashboardId = testPortalConfig.TestDashboardId;
 		DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 		WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
+		ResourceGroupFullPath = testPortalConfig.ResourceGroupFullPath;
+		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
 		WebsiteName = testPortalConfig.WebsiteName;
 		SnmpDeviceId = testPortalConfig.SnmpDeviceId;
 		AllWidgetsDashboardId = testPortalConfig.AllWidgetsDashboardId;

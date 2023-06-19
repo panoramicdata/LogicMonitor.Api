@@ -4,7 +4,7 @@
 /// An instance property
 /// </summary>
 [DataContract]
-public class InstanceProperty : Property
+public class InstanceProperty : EntityProperty
 {
 	/// <summary>
 	///    The property Id

@@ -17,7 +17,7 @@ public class Page<T>
 	/// The Search Id
 	/// </summary>
 	[DataMember(Name = "searchId")]
-	public string SearchId { get; set; }
+	public string SearchId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether it is min
@@ -29,5 +29,5 @@ public class Page<T>
 	/// The items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<T> Items { get; set; }
+	public List<T> Items { get; set; } = new();
 }

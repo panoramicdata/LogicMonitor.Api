@@ -16,13 +16,13 @@ public class LogicModuleUpdate : IHasEndpoint
 	/// The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The appliesTo
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The permission
@@ -40,19 +40,19 @@ public class LogicModuleUpdate : IHasEndpoint
 	/// The collection method
 	/// </summary>
 	[DataMember(Name = "collectionMethod")]
-	public string CollectionMethod { get; set; }
+	public string CollectionMethod { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The group
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string Group { get; set; }
+	public string Group { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The version (installed). This is an epoch timestamp
@@ -76,13 +76,13 @@ public class LogicModuleUpdate : IHasEndpoint
 	/// The rest LM (?)
 	/// </summary>
 	[DataMember(Name = "restLm")]
-	public string RestLm { get; set; }
+	public string RestLm { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The registryVersion
 	/// </summary>
 	[DataMember(Name = "registryVersion")]
-	public string RegistryVersion { get; set; }
+	public string RegistryVersion { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The publish time
@@ -94,37 +94,37 @@ public class LogicModuleUpdate : IHasEndpoint
 	/// The quality
 	/// </summary>
 	[DataMember(Name = "quality")]
-	public string Quality { get; set; }
+	public string Quality { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The locator
 	/// </summary>
 	[DataMember(Name = "locator")]
-	public string Locator { get; set; }
+	public string Locator { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The currentUuid
 	/// </summary>
 	[DataMember(Name = "currentUuid")]
-	public string CurrentUuid { get; set; }
+	public string CurrentUuid { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The namespace
 	/// </summary>
 	[DataMember(Name = "namespace")]
-	public string Namespace { get; set; }
+	public string Namespace { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The local version
 	/// </summary>
 	[DataMember(Name = "local")]
-	public string Local { get; set; }
+	public string Local { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The remote version
 	/// </summary>
 	[DataMember(Name = "remote")]
-	public string Remote { get; set; }
+	public string Remote { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The endpoint

@@ -4,17 +4,17 @@ namespace LogicMonitor.Api.Dashboards;
 ///     Complex graph widget
 /// </summary>
 [DataContract]
-public class CustomGraphWidget : GraphWidget
+public class CustomGraphWidget : GraphWidget, IWidget
 {
 	/// <summary>
 	/// The graph info
 	/// </summary>
 	[DataMember(Name = "graphInfo")]
-	public CustomGraphWidgetGraphInfo GraphInfo { get; set; }
+	public CustomGraphWidgetGraphInfo GraphInfo { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

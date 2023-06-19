@@ -13,25 +13,10 @@ public class CustomGraphWidgetData : WidgetData
 	public int Id { get; set; }
 
 	/// <summary>
-	/// The type identifier for the data
-	/// </summary>
-	/// <remarks>
-	/// This value is used for type discrimination during deserialization
-	/// </remarks>
-	[DataMember(Name = "type")]
-	public string Type { get; set; } = string.Empty;
-
-	/// <summary>
 	/// The name of the graph
 	/// </summary>
 	[DataMember(Name = "name")]
 	public string Name { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The title to display for the graph
-	/// </summary>
-	[DataMember(Name = "title")]
-	public string Title { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The vertical label for the graph
@@ -76,13 +61,13 @@ public class CustomGraphWidgetData : WidgetData
 	public bool Base1024 { get; set; }
 
 	/// <summary>
-	/// The maximum data value for the data in the graph
+	/// The maximum value that should be displayed on the y-axis
 	/// </summary>
 	[DataMember(Name = "maxValue")]
 	public string MaxValue { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The minimum data value for the data in the graph
+	/// The minimum value that should be displayed on the y-axis
 	/// </summary>
 	[DataMember(Name = "minValue")]
 	public string MinValue { get; set; } = string.Empty;

@@ -16,23 +16,23 @@ public class NotificationStage
 	/// The destination address
 	/// </summary>
 	[DataMember(Name = "addr")]
-	public string Address { get; set; }
+	public string Address { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The method
 	/// </summary>
 	[DataMember(Name = "method")]
-	public string Method { get; set; }
+	public string Method { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The contact details
 	/// </summary>
 	[DataMember(Name = "contact")]
-	public string Contact { get; set; }
+	public string Contact { get; set; } = string.Empty;
 }

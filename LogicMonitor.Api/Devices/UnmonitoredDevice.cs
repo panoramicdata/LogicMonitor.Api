@@ -10,43 +10,43 @@ public class UnmonitoredDevice : IdentifiedItem, IHasEndpoint
 	///    The status
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string Status { get; set; }
+	public string Status { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The IP
 	/// </summary>
 	[DataMember(Name = "ip")]
-	public string IpAddress { get; set; }
+	public string IpAddress { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The DNS
 	/// </summary>
 	[DataMember(Name = "dns")]
-	public string Dns { get; set; }
+	public string Dns { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The forward IP
 	/// </summary>
 	[DataMember(Name = "forwardIp")]
-	public string ForwardIp { get; set; }
+	public string ForwardIp { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The ports
 	/// </summary>
 	[DataMember(Name = "ports")]
-	public string Ports { get; set; }
+	public string Ports { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The SysName
 	/// </summary>
 	[DataMember(Name = "sysName")]
-	public string SysName { get; set; }
+	public string SysName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The displayAs
 	/// </summary>
 	[DataMember(Name = "displayAs")]
-	public string DisplayAs { get; set; }
+	public string DisplayAs { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Netscan id
@@ -58,7 +58,7 @@ public class UnmonitoredDevice : IdentifiedItem, IHasEndpoint
 	///    The Netscan name
 	/// </summary>
 	[DataMember(Name = "nspName")]
-	public string NetscanName { get; set; }
+	public string NetscanName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The Netscan Event Id
@@ -70,7 +70,7 @@ public class UnmonitoredDevice : IdentifiedItem, IHasEndpoint
 	///    The Netscan Event Id
 	/// </summary>
 	[DataMember(Name = "nseScanId")]
-	public string NetscanEventScanId { get; set; }
+	public string NetscanEventScanId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The end timestamp
@@ -88,13 +88,13 @@ public class UnmonitoredDevice : IdentifiedItem, IHasEndpoint
 	///    The human-readable EndDate
 	/// </summary>
 	[DataMember(Name = "endDate")]
-	public string EndDateTimeLocal { get; set; }
+	public string EndDateTimeLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device type
 	/// </summary>
 	[DataMember(Name = "deviceType")]
-	public string DeviceType { get; set; }
+	public string DeviceType { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether collector id
@@ -106,19 +106,19 @@ public class UnmonitoredDevice : IdentifiedItem, IHasEndpoint
 	///    The collector description
 	/// </summary>
 	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device status
 	/// </summary>
 	[DataMember(Name = "deviceStatus")]
-	public string DeviceStatus { get; set; }
+	public string DeviceStatus { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The manufacturer
 	/// </summary>
 	[DataMember(Name = "manufacturer")]
-	public string Manufacturer { get; set; }
+	public string Manufacturer { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public string Endpoint() => "device/unmonitoreddevices";

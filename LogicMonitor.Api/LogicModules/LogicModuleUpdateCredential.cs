@@ -10,7 +10,7 @@ public class LogicModuleUpdateCredential
 	/// The server address
 	/// </summary>
 	[DataMember(Name = "coreServer")]
-	public string CoreServer { get; set; }
+	public string CoreServer { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The username

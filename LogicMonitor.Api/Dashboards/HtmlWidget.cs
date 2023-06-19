@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///     An HTML widget
 /// </summary>
 [DataContract]
-public class HtmlWidget : Widget
+public class HtmlWidget : Widget, IWidget
 {
 	/// <summary>
 	///     Constructor with default parameters
@@ -18,7 +18,7 @@ public class HtmlWidget : Widget
 	///     The HTML widget resources
 	/// </summary>
 	[DataMember(Name = "resources")]
-	public List<HtmlWidgetResource> HtmlWidgetResources { get; set; }
+	public List<HtmlWidgetResource> HtmlWidgetResources { get; set; } = new();
 
 	/// <summary>
 	///     Whether this is a custom Html widget
@@ -30,5 +30,5 @@ public class HtmlWidget : Widget
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

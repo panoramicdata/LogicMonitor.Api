@@ -11,13 +11,13 @@ public class AlertHistoryTests : TestWithOutput
 	{
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Last24Hours
 		};
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -29,13 +29,13 @@ public class AlertHistoryTests : TestWithOutput
 	{
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Last7Days
 		};
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -47,13 +47,13 @@ public class AlertHistoryTests : TestWithOutput
 	{
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Last30Days
 		};
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -68,7 +68,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = end
@@ -76,7 +76,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		history.Should().NotBeNull();
@@ -91,7 +91,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = null,
 			EndDateTimeUtc = end
@@ -99,7 +99,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		await act
@@ -112,11 +112,10 @@ public class AlertHistoryTests : TestWithOutput
 	public async Task GetAlertHistory_Custom24HoursWithNoEndSpecified_ThrowsArgumentException()
 	{
 		var start = DateTime.UtcNow.AddDays(-3);
-		var end = start.AddDays(1);
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = null
@@ -124,7 +123,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		await act
@@ -141,7 +140,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26985243",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = end
@@ -149,7 +148,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, CancellationToken.None)
+			.GetAlertHistoryAsync(request, default)
 			.ConfigureAwait(false);
 
 		await act

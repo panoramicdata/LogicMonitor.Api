@@ -10,7 +10,7 @@ public class WidgetCell
 	/// Device Display Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Value
@@ -28,7 +28,7 @@ public class WidgetCell
 	/// Instance name
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string InstanceName { get; set; }
+	public string InstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Forecast day
@@ -40,19 +40,19 @@ public class WidgetCell
 	/// Alert status
 	/// </summary>
 	[DataMember(Name = "alertStatus")]
-	public object AlertStatus { get; set; }
+	public object AlertStatus { get; set; } = new();
 
 	/// <summary>
 	/// Alert severity
 	/// </summary>
 	[DataMember(Name = "alertSeverity")]
-	public string AlertSeverity { get; set; }
+	public string AlertSeverity { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Days until Alert list
 	/// </summary>
 	[DataMember(Name = "daysUntilAlertList")]
-	public List<object> DaysUntilAlertList { get; set; }
+	public List<object> DaysUntilAlertList { get; set; } = new();
 
 	/// <summary>
 	/// Color Level

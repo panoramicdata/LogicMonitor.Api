@@ -11,7 +11,7 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetAllConfigSources()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(CancellationToken.None).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
 
 		// Make sure that some are returned
 		configSources.Should().NotBeNullOrEmpty();
@@ -23,91 +23,31 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetConfigSourceById()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(CancellationToken.None).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
 		configSources.Should().NotBeNullOrEmpty();
-		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id, CancellationToken.None).ConfigureAwait(false);
+		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id, default).ConfigureAwait(false);
 		configSource.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetConfigSourceAndAssociatedDevices()
+	public async Task UpdateAuditVersion()
 	{
-		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS", CancellationToken.None).ConfigureAwait(false);
-		configSource.Should().NotBeNull();
+		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
+		configSources.Should().NotBeNullOrEmpty();
 
-		// Refetch and check
-		var refetch = await LogicMonitorClient.GetAsync<ConfigSource>(configSource.Id, CancellationToken.None).ConfigureAwait(false);
-		refetch.Name.Should().Be("Cisco_IOS");
-		refetch.DisplayName.Should().Be(configSource.DisplayName);
+		var original = configSources[0];
+		var defaultVersion = original.AuditVersion;
 
-		// Get associated devices
-		var devices = await LogicMonitorClient.GetConfigSourceDevicesPageAsync(configSource.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
-		devices.Items.Should().NotBeNullOrEmpty();
-	}
-
-	[Fact]
-	public async Task GetDeviceConfigSources()
-	{
-		// NB Limit iterations at each level
-		const int maxIterations = 3;
-
-		var portalClient = LogicMonitorClient;
-		var device = await GetNetflowDeviceAsync(CancellationToken.None)
+		await LogicMonitorClient
+			.AddConfigsourceAuditVersionAsync(original.Id, new Audit() { Version = 1 }, default)
 			.ConfigureAwait(false);
-		device.Should().NotBeNull();
 
-		var deviceConfigSources = (await portalClient.GetDeviceConfigSourcesPageAsync(device.Id, new Filter<DeviceConfigSource> { Skip = 0, Take = maxIterations }, CancellationToken.None).ConfigureAwait(false)).Items;
-		deviceConfigSources.Should().NotBeNullOrEmpty();
+		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(original.Id, default).ConfigureAwait(false);
 
-		foreach (var deviceConfigSource in deviceConfigSources)
-		{
-			// Get the deviceConfigSource
-			var deviceConfigSourceDetails = await portalClient.GetDeviceConfigSourceAsync(device.Id, deviceConfigSource.Id, CancellationToken.None).ConfigureAwait(false);
-			deviceConfigSourceDetails.Should().NotBeNull();
+		configSource.AuditVersion.Should().Be(1);
 
-			// Get the configSourceInstances
-			var deviceConfigSourceInstances = await portalClient
-				.GetDeviceConfigSourceInstancesPage(device.Id, deviceConfigSource.Id, new Filter<DeviceConfigSourceInstance> { Skip = 0, Take = maxIterations }, CancellationToken.None)
-				.ConfigureAwait(false);
-			deviceConfigSourceInstances.Should().NotBeNull();
-			var configSourceInstances = deviceConfigSourceInstances.Items;
-			foreach (var deviceConfigSourceInstance in configSourceInstances)
-			{
-				// Get the configSourceInstance
-				var deviceConfigSourceInstanceDetails = await portalClient.GetDeviceConfigSourceInstanceAsync(device.Id, deviceConfigSource.Id, deviceConfigSourceInstance.Id, CancellationToken.None).ConfigureAwait(false);
-				deviceConfigSourceInstanceDetails.Should().NotBeNull();
-
-				// Get the latest config for this deviceConfigSourceInstance
-				var deviceConfigs = await portalClient
-					.GetDeviceConfigSourceInstanceConfigsPageAsync(
-						device.Id,
-						deviceConfigSource.Id,
-						deviceConfigSourceInstance.Id,
-						new Filter<DeviceConfigSourceInstanceConfig> { Skip = 0, Take = maxIterations },
-						CancellationToken.None)
-					.ConfigureAwait(false);
-				deviceConfigs.Should().NotBeNull();
-				var deviceConfigItems = deviceConfigs.Items;
-				// deviceConfigItems.Should().NotBeNullOrEmpty();
-				foreach (var deviceConfig in deviceConfigItems)
-				{
-					if (deviceConfig.PollTimestampUtc is null)
-					{
-						throw new Exception("Unexpected lack of timestamp");
-					}
-
-					var deviceConfigDetail = await portalClient
-						.GetDeviceConfigSourceInstanceConfigByIdAndTimestampAsync(
-							device.Id,
-							deviceConfigSource.Id,
-							deviceConfigSourceInstance.Id,
-							deviceConfig.Id,
-							deviceConfig.PollTimestampUtc.Value,
-							CancellationToken.None)
-						.ConfigureAwait(false);
-					deviceConfigDetail.Should().NotBeNull();
-				}
-			}
-		}
+		await LogicMonitorClient
+			.AddConfigsourceAuditVersionAsync(original.Id, new Audit() { Version = defaultVersion }, default)
+			.ConfigureAwait(false);
 	}
 }

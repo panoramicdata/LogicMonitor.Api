@@ -25,6 +25,11 @@ public abstract class UndescribedNamedItem : IdentifiedItem
 
 		var logicMonitorNamedEntity = obj as NamedItem;
 
+		if (logicMonitorNamedEntity is null)
+		{
+			return false;
+		}
+
 		return base.Equals(logicMonitorNamedEntity)
 			   && logicMonitorNamedEntity is not null
 			   && logicMonitorNamedEntity.Name == Name;

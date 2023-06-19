@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// A JobMonitor
 /// </summary>
 [DataContract]
-public class JobMonitor : NamedItem, IHasEndpoint
+public class JobMonitor : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// Whether it is active monitoring
@@ -16,7 +16,7 @@ public class JobMonitor : NamedItem, IHasEndpoint
 	/// The alert message's body
 	/// </summary>
 	[DataMember(Name = "alertBody")]
-	public string AlertBody { get; set; }
+	public string AlertBody { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Alert effective interval
@@ -34,37 +34,37 @@ public class JobMonitor : NamedItem, IHasEndpoint
 	/// The alert message's body
 	/// </summary>
 	[DataMember(Name = "alertSubject")]
-	public string AlertSubject { get; set; }
+	public string AlertSubject { get; set; } = string.Empty;
 
 	/// <summary>
 	/// What this applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The cron schedule
 	/// </summary>
 	[DataMember(Name = "cronSchedule")]
-	public string CronSchedule { get; set; }
+	public string CronSchedule { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The time zone of the cron schedule
 	/// </summary>
 	[DataMember(Name = "cronTimeZone")]
-	public string CronTimeZone { get; set; }
+	public string CronTimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Group name
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string Group { get; set; }
+	public string Group { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Longest run time in minutes
 	/// </summary>
 	[DataMember(Name = "longestRunTimeInMinute")]
-	public string LongestRunTimeMinutes { get; set; }
+	public string LongestRunTimeMinutes { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Published
@@ -82,13 +82,13 @@ public class JobMonitor : NamedItem, IHasEndpoint
 	/// Tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
+	public string Tags { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Technology
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
+	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ToString override

@@ -39,7 +39,7 @@ public class DeviceDataSource : IdentifiedItem
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object AlertingDisabledOn { get; set; } = new();
 
 	/// <summary>
 	///    The collection method
@@ -63,7 +63,7 @@ public class DeviceDataSource : IdentifiedItem
 	///    The data source type
 	/// </summary>
 	[DataMember(Name = "dataSourceType")]
-	public string DataSourceType { get; set; }
+	public string DataSourceType { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The time it was updated in seconds since the Epoch
@@ -87,25 +87,25 @@ public class DeviceDataSource : IdentifiedItem
 	///    DataSource Name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    DataSource Description
 	/// </summary>
 	[DataMember(Name = "dataSourceDescription")]
-	public string DataSourceDescription { get; set; }
+	public string DataSourceDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    DataSource DisplayName
 	/// </summary>
 	[DataMember(Name = "dataSourceDisplayName")]
-	public string DataSourceDisplayName { get; set; }
+	public string DataSourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Graph summary info.  Note that not all fields are completed
 	/// </summary>
 	[DataMember(Name = "graphs")]
-	public List<DataSourceGraph> DataSourceGraphs { get; set; }
+	public List<DataSourceOverviewGraph> DataSourceGraphs { get; set; } = new();
 
 	/// <summary>
 	///    The device Id
@@ -117,25 +117,25 @@ public class DeviceDataSource : IdentifiedItem
 	///    The device name
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; }
+	public string DeviceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The group name
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Disabled InstanceGroups
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public object DisabledInstanceGroups { get; set; }
+	public object DisabledInstanceGroups { get; set; } = new();
 
 	/// <summary>
 	///    Instance autogroup enabled
@@ -171,7 +171,7 @@ public class DeviceDataSource : IdentifiedItem
 	///    Graph summary info.  Note that not all fields are completed
 	/// </summary>
 	[DataMember(Name = "overviewGraphs")]
-	public List<DataSourceGraph> OverviewGraphs { get; set; }
+	public List<DataSourceOverviewGraph> OverviewGraphs { get; set; } = new();
 
 	/// <summary>
 	///    AutoDiscovery is enabled
@@ -207,7 +207,7 @@ public class DeviceDataSource : IdentifiedItem
 	///    SDT at
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
+	public string SdtAt { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString() => $"{Id}: {DataSourceName} ({DataSourceId}) on device {DeviceDisplayName} ({DeviceId})";

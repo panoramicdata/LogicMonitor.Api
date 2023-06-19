@@ -13,5 +13,5 @@ public class BigNumberWidgetCreationDto : WidgetCreationDto<BigNumberWidget>
 	/// The Big Number info
 	/// </summary>
 	[DataMember(Name = "bigNumberInfo")]
-	public BigNumberInfo BigNumberInfo { get; set; }
+	public BigNumberInfo BigNumberInfo { get; set; } = new();
 }

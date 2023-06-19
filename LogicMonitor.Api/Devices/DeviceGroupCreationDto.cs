@@ -10,19 +10,19 @@ public class DeviceGroupCreationDto : CreationDto<DeviceGroup>
 	///    The Parent Group Id as a string
 	/// </summary>
 	[DataMember(Name = "parentId")]
-	public string ParentId { get; set; }
+	public string ParentId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Disable Alerting
@@ -34,13 +34,13 @@ public class DeviceGroupCreationDto : CreationDto<DeviceGroup>
 	///    What the DeviceGroup applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Custom DeviceGroup properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///    ToString override

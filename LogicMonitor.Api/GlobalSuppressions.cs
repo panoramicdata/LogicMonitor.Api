@@ -30,5 +30,8 @@
 	"CA1848:Use the LoggerMessage delegates",
 	Justification = "More effort than the benefits gained",
 	Scope = "namespaceanddescendants",
-	Target = "~N:LogicMonitor.Api")
-]
+	Target = "~N:LogicMonitor.Api")]
+[assembly: SuppressMessage(
+	"Naming",
+	"CA1711:Identifiers should not have incorrect suffix",
+	Justification = "Names selected by LogicMonitor")]

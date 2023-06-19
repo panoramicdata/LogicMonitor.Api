@@ -10,7 +10,7 @@ public class ExecuteDebugCommandResponse
 	///    The output
 	/// </summary>
 	[DataMember(Name = "output")]
-	public string Output { get; set; }
+	public string Output { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The session ID
@@ -22,25 +22,25 @@ public class ExecuteDebugCommandResponse
 	///    The command
 	/// </summary>
 	[DataMember(Name = "cmdline")]
-	public string Command { get; set; }
+	public string Command { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The command context
 	/// </summary>
 	[DataMember(Name = "cmdContext")]
-	public string CommandContext { get; set; }
+	public string CommandContext { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The error message (if any)
 	/// </summary>
 	[DataMember(Name = "errorMessage")]
-	public string ErrorMessage { get; set; }
+	public string ErrorMessage { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The error detail (if any)
 	/// </summary>
 	[DataMember(Name = "errorDetail")]
-	public object ErrorDetail { get; set; }
+	public object ErrorDetail { get; set; } = new();
 
 	/// <summary>
 	///    The error message (if any)

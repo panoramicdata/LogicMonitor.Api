@@ -16,7 +16,7 @@ public class OpsNoteCreationDto : CreationDto<OpsNote>
 	/// The note
 	/// </summary>
 	[DataMember(Name = "note")]
-	public string Note { get; set; }
+	public string Note { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The note
@@ -28,11 +28,11 @@ public class OpsNoteCreationDto : CreationDto<OpsNote>
 	/// Tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public List<OpsNoteTagCreationDto> Tags { get; set; }
+	public List<OpsNoteTagCreationDto> Tags { get; set; } = new();
 
 	/// <summary>
 	/// Scopes
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<OpsNoteScopeCreationDto> Scopes { get; set; }
+	public List<OpsNoteScopeCreationDto> Scopes { get; set; } = new();
 }

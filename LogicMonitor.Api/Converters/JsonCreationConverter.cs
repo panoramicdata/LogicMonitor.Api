@@ -23,9 +23,9 @@ public abstract class JsonCreationConverter<T> : JsonConverter
 	public override bool CanWrite => false;
 
 	/// <inheritdoc />
-	public override object ReadJson(JsonReader reader,
+	public override object? ReadJson(JsonReader reader,
 		Type objectType,
-		object existingValue,
+		object? existingValue,
 		JsonSerializer serializer)
 	{
 		if (reader.TokenType == JsonToken.Null)
@@ -39,8 +39,11 @@ public abstract class JsonCreationConverter<T> : JsonConverter
 		// Create target object based on JObject
 		var target = Create(objectType, jObject);
 
-		// Populate the object properties
-		serializer.Populate(jObject.CreateReader(), target);
+		if (target != null)
+		{
+			// Populate the object properties
+			serializer.Populate(jObject.CreateReader(), target);
+		}
 
 		return target;
 	}

@@ -7,44 +7,56 @@ namespace LogicMonitor.Api.Dashboards;
 public class DashboardCreationDto : CreationDto<Dashboard>
 {
 	/// <summary>
-	///    The Parent Group Id as a string
+	/// Owner
+	/// </summary>
+	[DataMember(Name = "owner")]
+	public string Owner { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The template which is used for importing dashboard
+	/// </summary>
+	[DataMember(Name = "template")]
+	public object Template { get; set; } = new();
+
+	/// <summary>
+	/// The id of the group the dashboard belongs to
 	/// </summary>
 	[DataMember(Name = "groupId")]
-	public string ParentId { get; set; }
+	public int GroupId { get; set; }
 
 	/// <summary>
-	///    The name
-	/// </summary>
-	[DataMember(Name = "name")]
-	public string Name { get; set; }
-
-	/// <summary>
-	///    The description
+	/// The description of the dashboard
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Whether the dashboard group is shareable
+	/// Whether or not the dashboard is sharable. This value will always be true unless the dashboard is a private dashboard
 	/// </summary>
 	[DataMember(Name = "sharable")]
 	public bool Sharable { get; set; }
 
 	/// <summary>
-	///    Whether to use dynamic widgets
+	/// Information about widget configuration used by the UI
 	/// </summary>
-	[DataMember(Name = "useDynamicWidget")]
-	public bool UseDynamicWidgets { get; set; }
+	[DataMember(Name = "widgetsConfig")]
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
 
 	/// <summary>
-	///    The name
+	/// The name of group where created dashboard will reside
+	/// </summary>
+	[DataMember(Name = "groupName")]
+	public string GroupName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// If useDynamicWidget\u003dtrue, this field must at least contain tokens defaultDeviceGroup and defaultServiceGroup
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> CustomProperties { get; set; }
+	public string[] WidgetTokens { get; set; } = Array.Empty<string>();
 
 	/// <summary>
-	///    ToString override
+	/// The name of the dashboard
 	/// </summary>
-	/// <returns>Name</returns>
-	public override string ToString() => Name;
+	[DataMember(Name = "name")]
+	public string Name { get; set; } = string.Empty;
 }

@@ -9,7 +9,7 @@ public class AccountSettingsTests : TestWithOutput
 	[Fact]
 	public async Task Get()
 	{
-		var accountSettings = await LogicMonitorClient.GetAsync<AccountSettings>(CancellationToken.None).ConfigureAwait(false);
+		var accountSettings = await LogicMonitorClient.GetAsync<AccountSettings>(default).ConfigureAwait(false);
 		accountSettings.Should().NotBeNull();
 		(accountSettings.DeviceCount > 0).Should().BeTrue();
 	}
@@ -23,8 +23,17 @@ public class AccountSettingsTests : TestWithOutput
 			return;
 		}
 
-		var billingInformation = await LogicMonitorClient.GetAsync<BillingInformation>(CancellationToken.None).ConfigureAwait(false);
+		var billingInformation = await LogicMonitorClient.GetAsync<BillingInformation>(default).ConfigureAwait(false);
 
 		billingInformation.Should().NotBeNull();
+	}
+
+	[Fact]
+	public async Task GetMetrics()
+	{
+		var metrics = await LogicMonitorClient
+			.GetMetricsAsync(default)
+			.ConfigureAwait(false);
+		metrics.Should().NotBeNull();
 	}
 }

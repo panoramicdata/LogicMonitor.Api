@@ -10,13 +10,13 @@ public class DeviceSlaWidgetMetric
 	/// The groupName
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string DeviceGroupName { get; set; }
+	public string DeviceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The deviceName
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; }
+	public string DeviceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSourceId
@@ -28,41 +28,41 @@ public class DeviceSlaWidgetMetric
 	/// The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instances
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public string DataSourceInstances { get; set; }
+	public string DataSourceInstances { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The metric
 	/// </summary>
 	[DataMember(Name = "metric")]
-	public string Metric { get; set; }
+	public string Metric { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The threshold
 	/// </summary>
 	[DataMember(Name = "threshold")]
-	public string Threshold { get; set; }
+	public string Threshold { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The unit label
 	/// </summary>
 	[DataMember(Name = "unitLabel")]
-	public string UnitLabel { get; set; }
+	public string UnitLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The bottom label
 	/// </summary>
 	[DataMember(Name = "bottomLabel")]
-	public string BottomLabel { get; set; }
+	public string BottomLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The exclusionSDTType
 	/// </summary>
 	[DataMember(Name = "exclusionSDTType")]
-	public string ExclusionSdtType { get; set; }
+	public string ExclusionSdtType { get; set; } = string.Empty;
 }

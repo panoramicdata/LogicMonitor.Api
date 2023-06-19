@@ -7,31 +7,19 @@ namespace LogicMonitor.Api.Reports;
 public class ReportGroup : NamedItem, IHasEndpoint
 {
 	/// <summary>
-	/// Child ReportGroups
-	/// </summary>
-	[DataMember(Name = "subGroups")]
-	public List<ReportGroup> SubGroups { get; set; }
-
-	/// <summary>
-	/// Reports
-	/// </summary>
-	[DataMember(Name = "reports")]
-	public List<Report> Reports { get; set; }
-
-	/// <summary>
-	/// Report count
+	/// The reports count of this group
 	/// </summary>
 	[DataMember(Name = "reportsCount")]
 	public int ReportCount { get; set; }
 
 	/// <summary>
-	/// Matched report count
+	/// The matched reports count of this group
 	/// </summary>
 	[DataMember(Name = "matchedReportCount")]
 	public int MatchedReportCount { get; set; }
 
 	/// <summary>
-	/// User permission
+	/// The user permission on the report group
 	/// </summary>
 	[DataMember(Name = "userPermission")]
 	public UserPermission UserPermission { get; set; }

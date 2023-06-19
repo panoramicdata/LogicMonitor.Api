@@ -20,13 +20,13 @@ internal class PortalResponse<T> where T : new()
 			.GetResult();
 		Init(responseBody);
 		HttpStatusCode = httpResponseMessage.StatusCode;
-		ErrorMessage = IsSuccessStatusCode ? null : httpResponseMessage.StatusCode.ToString();
+		ErrorMessage = IsSuccessStatusCode ? "" : httpResponseMessage.StatusCode.ToString();
 	}
 
 	private void Init(string jsonString)
 	{
 		// Determine the PortalResponse
-		if (jsonString?.Length == 0 || jsonString == "{}\r\n")
+		if (jsonString?.Length == 0 || jsonString == "{}\r\n" || jsonString is null)
 		{
 			return;
 		}
@@ -64,12 +64,12 @@ internal class PortalResponse<T> where T : new()
 	/// <summary>
 	///    A JContainer for the Data element
 	/// </summary>
-	public JContainer Data { get; set; }
+	public JContainer? Data { get; set; }
 
 	/// <summary>
 	///    The error message
 	/// </summary>
-	public string? ErrorMessage { get; set; }
+	public string ErrorMessage { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether the HttpStatusCode is of an error type
@@ -127,6 +127,7 @@ internal class PortalResponse<T> where T : new()
 		}
 
 		var dataString = Data.ToString();
+		converters ??= Array.Empty<JsonConverter>();
 		try
 		{
 			var deserializedObject = JsonConvert.DeserializeObject<T>(dataString, new JsonSerializerSettings

@@ -12,17 +12,8 @@ public partial class LogicMonitorClient
 	/// <param name="alertFilter">An alert filter</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>a list of alerts that meet the filter</returns>
-	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter = null, CancellationToken cancellationToken = default)
+	public async Task<List<Alert>> GetAlertsAsync(AlertFilter alertFilter, CancellationToken cancellationToken)
 	{
-		// When scanning using both startAfter and startBefore (but not endAfter or endBefore), apply the workaround to avoid LogicMonitor's 10,000 alert limit
-		//var alerts =
-		//	alertFilter?.StartUtcIsAfter is not null
-		//		&& alertFilter.StartUtcIsBefore is not null
-		//		&& alertFilter.EndUtcIsAfter is null
-		//		&& alertFilter.EndUtcIsBefore is null
-		//			? await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false)
-		//			: await GetRestAlertsWithoutV84BugAsync(alertFilter, cancellationToken).ConfigureAwait(false);
-
 		var (alerts, limitReached) = await GetRestAlertsWithoutV84BugAsync(alertFilter, false, cancellationToken).ConfigureAwait(false);
 
 		if (limitReached)
@@ -31,12 +22,12 @@ public partial class LogicMonitorClient
 			alerts = await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false);
 		}
 
-		if (alertFilter?.IsCleared == true)
+		if (alertFilter.IsCleared == true)
 		{
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
 
-		if (alertFilter?.IsCleared == false)
+		if (alertFilter.IsCleared == false)
 		{
 			return alerts.Where(a => !a.IsCleared).ToList();
 		}
@@ -73,7 +64,7 @@ public partial class LogicMonitorClient
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
 			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, CancellationToken.None).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
 			}
@@ -85,7 +76,10 @@ public partial class LogicMonitorClient
 		return allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue).ToList();
 	}
 
-	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(AlertFilter alertFilter, bool calledFromChunked = false, CancellationToken cancellationToken = default)
+	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(
+		AlertFilter? alertFilter,
+		bool calledFromChunked,
+		CancellationToken cancellationToken)
 	{
 		var correctedAlertFilter = alertFilter?.Clone() ?? new AlertFilter
 		{
@@ -99,7 +93,7 @@ public partial class LogicMonitorClient
 		var alertFilterMonitorObjectId = alertFilter?.MonitorObjectId;
 		if (alertFilterMonitorObjectId.HasValue)
 		{
-			var alertTypesOrNull = alertFilter.GetAlertTypes();
+			var alertTypesOrNull = alertFilter?.GetAlertTypes();
 			var alertTypesAreOnlyWebsite = alertTypesOrNull?.All(alertType => alertType == AlertType.Website) ?? false;
 			correctedAlertFilter.MonitorObjectName = alertTypesAreOnlyWebsite
 				? (await GetAsync<Website>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).Name
@@ -227,7 +221,7 @@ public partial class LogicMonitorClient
 			).ConfigureAwait(false);
 
 	/// <summary>
-	/// Acknowledge an alert
+	/// add alert notes
 	/// </summary>
 	/// <param name="alertIds">The non-unique alert ids</param>
 	/// <param name="note">The note</param>

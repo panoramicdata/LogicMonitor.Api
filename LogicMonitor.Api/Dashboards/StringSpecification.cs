@@ -10,7 +10,7 @@ public class StringSpecification
 	/// The value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether this is a glob

@@ -12,13 +12,13 @@ public class Integration : NamedItem, IHasEndpoint
 	///     The integration type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Extra configuration
 	/// </summary>
 	[DataMember(Name = "extra")]
-	public string Extra { get; set; }
+	public string Extra { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The endpoint

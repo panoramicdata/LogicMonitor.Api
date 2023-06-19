@@ -8,7 +8,7 @@ public partial class LogicMonitorClient
 	/// <param name="fileInfo"></param>
 	public async Task BackupAllToFileAsync(FileInfo fileInfo)
 	{
-		var _ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }, CancellationToken.None)
+		_ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }, default)
 			.ConfigureAwait(false);
 	}
 
@@ -27,7 +27,7 @@ public partial class LogicMonitorClient
 
 		var configurationBackup = new ConfigurationBackup();
 
-		var progressReporter = ProgressReporter.StartNew(_logger);
+		var progressReporter = ProgressReporter.StartNewProgressReporter(_logger);
 		// AccountSettings
 		if (backupSpecification.AccountSettings)
 		{
@@ -133,14 +133,14 @@ public partial class LogicMonitorClient
 			configurationBackup.DataSources = await GetAllAsync<DataSource>(cancellationToken: cancellationToken).ConfigureAwait(false);
 			progressReporter.CompleteSubTaskAndStartNew("- DataSource graphs");
 
-			configurationBackup.DataSourceGraphs = new List<DataSourceGraph>();
-			configurationBackup.DataSourceOverviewGraphs = new List<DataSourceGraph>();
+			configurationBackup.DataSourceGraphs = new List<DataSourceOverviewGraph>();
+			configurationBackup.DataSourceOverviewGraphs = new List<DataSourceOverviewGraph>();
 			configurationBackup.DataSourceDataPoints = new List<DataPointConfiguration>();
 			foreach (var dataSource in configurationBackup.DataSources)
 			{
 				var dataSourceGraphs = await GetDataSourceGraphsAsync(dataSource.Id, cancellationToken).ConfigureAwait(false);
 				configurationBackup.DataSourceGraphs.AddRange(dataSourceGraphs);
-				var dataSourceOverviewGraphs = (await GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceGraph> { Skip = 0, Take = 300 }, cancellationToken).ConfigureAwait(false)).Items;
+				var dataSourceOverviewGraphs = (await GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceOverviewGraph> { Skip = 0, Take = 300 }, cancellationToken).ConfigureAwait(false)).Items;
 				configurationBackup.DataSourceOverviewGraphs.AddRange(dataSourceOverviewGraphs);
 			}
 
@@ -264,14 +264,14 @@ public partial class LogicMonitorClient
 		return configurationBackup;
 	}
 
-	private static byte[] SerializeAndCompress<T>(T objectToWrite, FileInfo fileInfo) where T : class
+	private static byte[]? SerializeAndCompress<T>(T objectToWrite, FileInfo fileInfo) where T : class
 	{
 		if (objectToWrite is null)
 		{
 			return null;
 		}
 
-		byte[] result = null;
+		byte[]? result = null;
 		using (var outputStream = new FileStream(fileInfo.FullName, FileMode.Create))
 		using (var compressionStream = new GZipStream(outputStream, CompressionMode.Compress))
 		using (var sw = new StreamWriter(compressionStream))
@@ -312,7 +312,7 @@ public partial class LogicMonitorClient
 		using var msi = new MemoryStream(bytes);
 		using var mso = new MemoryStream();
 		using var gs = new GZipStream(msi, CompressionMode.Decompress);
-		await gs.CopyToAsync(mso).ConfigureAwait(false);
+		await gs.CopyToAsync(mso, 81920, cancellationToken).ConfigureAwait(false);
 		var json = Encoding.UTF8.GetString(mso.ToArray());
 
 		_logger.LogDebug($"{nameof(LoadBackupAsync)}: {{Message}}", "Deserializing");

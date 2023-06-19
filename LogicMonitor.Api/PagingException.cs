@@ -50,13 +50,28 @@ public class PagingException : LogicMonitorApiException
 	/// <param name="subUrl"></param>
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
+	public PagingException(
+		HttpMethod method,
+		string subUrl,
+		HttpStatusCode httpStatusCode,
+		string responseBody) : base(method, subUrl, httpStatusCode, responseBody, null)
+	{
+	}
+
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	/// <param name="method"></param>
+	/// <param name="subUrl"></param>
+	/// <param name="httpStatusCode"></param>
+	/// <param name="responseBody"></param>
 	/// <param name="message"></param>
 	public PagingException(
 		HttpMethod method,
 		string subUrl,
 		HttpStatusCode httpStatusCode,
 		string responseBody,
-		string message = null) : base(method, subUrl, httpStatusCode, responseBody, message)
+		string? message) : base(method, subUrl, httpStatusCode, responseBody, message)
 	{
 	}
 

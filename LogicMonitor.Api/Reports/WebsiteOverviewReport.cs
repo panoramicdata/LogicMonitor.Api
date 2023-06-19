@@ -10,13 +10,13 @@ public class WebsiteOverviewReport : DateRangeReport
 	/// The items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public string Items { get; set; }
+	public string Items { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The items type
 	/// </summary>
 	[DataMember(Name = "itemsType")]
-	public string ItemsType { get; set; }
+	public string ItemsType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The displayType
@@ -28,7 +28,7 @@ public class WebsiteOverviewReport : DateRangeReport
 	/// The filter
 	/// </summary>
 	[DataMember(Name = "includeTypes")]
-	public List<object> IncludeTypes { get; set; }
+	public List<object> IncludeTypes { get; set; } = new();
 
 	/// <summary>
 	/// Whether to exclude SDT

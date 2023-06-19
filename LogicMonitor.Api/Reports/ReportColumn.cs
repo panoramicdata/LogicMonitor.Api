@@ -10,7 +10,7 @@ public class ReportColumn
 	/// The column name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether the column is hidden

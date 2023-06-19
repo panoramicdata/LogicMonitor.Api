@@ -16,5 +16,5 @@ public class WebsiteParameter : NamedEntity
 	/// The website id
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 }

@@ -12,7 +12,7 @@ public static class LoggerExtensions
 	/// <param name="isRequest">Whether it's HTTP request headers / HTTP response headers</param>
 	/// <param name="prefix">A GUID prefix</param>
 	/// <param name="headers">HTTP headers</param>
-	public static void LogHttpHeaders(this ILogger logger, bool isRequest, string? prefix, HttpHeaders? headers)
+	public static void LogHttpHeaders(this ILogger logger, bool isRequest, string prefix, HttpHeaders? headers)
 	{
 		var guidPrefix = prefix != null ? (prefix + " ") : string.Empty;
 

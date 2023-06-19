@@ -11,5 +11,5 @@ public class ValueCheckMust
 	/// </summary>
 	[DataMember(Name = "range")]
 
-	public ValueCheckRange Range { get; set; }
+	public ValueCheckRange Range { get; set; } = new();
 }

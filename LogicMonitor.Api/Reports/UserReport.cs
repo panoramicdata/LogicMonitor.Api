@@ -4,23 +4,23 @@ namespace LogicMonitor.Api.Reports;
 /// A user report
 /// </summary>
 [DataContract]
-public class UserReport : Report
+public class UserReport : ReportBase
 {
 	/// <summary>
 	/// The user filter
 	/// </summary>
 	[DataMember(Name = "userFilter")]
-	public UserReportUserFilter UserFilter { get; set; }
+	public UserReportUserFilter UserFilter { get; set; } = new();
 
 	/// <summary>
 	/// The sorted-by column
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

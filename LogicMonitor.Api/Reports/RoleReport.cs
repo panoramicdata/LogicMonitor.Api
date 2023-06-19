@@ -4,17 +4,17 @@ namespace LogicMonitor.Api.Reports;
 /// A role report
 /// </summary>
 [DataContract]
-public class RoleReport : Report
+public class RoleReport : ReportBase
 {
 	/// <summary>
 	/// The display format
 	/// </summary>
 	[DataMember(Name = "displayFormat")]
-	public string DisplayFormat { get; set; }
+	public string DisplayFormat { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

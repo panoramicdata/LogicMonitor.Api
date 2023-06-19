@@ -10,19 +10,19 @@ public class BigNumberDataPoint
 	///     The deviceGroupFullPath
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataSource Id
@@ -34,13 +34,13 @@ public class BigNumberDataPoint
 	///     The instanceName
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string InstanceName { get; set; }
+	public string InstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	///     The dataSource Id
@@ -52,19 +52,19 @@ public class BigNumberDataPoint
 	///     The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The aggregateFunction
 	/// </summary>
 	[DataMember(Name = "aggregateFunction")]
-	public string AggregateFunction { get; set; }
+	public string AggregateFunction { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The globMode

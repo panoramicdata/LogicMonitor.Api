@@ -10,7 +10,7 @@ public class TableWidgetRow
 	///     The label
 	/// </summary>
 	[DataMember(Name = "label")]
-	public string Label { get; set; }
+	public string Label { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The groupId
@@ -22,7 +22,7 @@ public class TableWidgetRow
 	///     The groupFullPath
 	/// </summary>
 	[DataMember(Name = "groupFullPath")]
-	public string GroupFullPath { get; set; }
+	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The deviceId
@@ -34,11 +34,11 @@ public class TableWidgetRow
 	///     The deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The DataSourceInstances
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<TableWidgetRowDataSourceInstance> DataSourceInstance { get; set; }
+	public List<TableWidgetRowDataSourceInstance> DataSourceInstance { get; set; } = new();
 }

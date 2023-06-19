@@ -16,80 +16,80 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	}
 
 	/// <summary>
-	///    Recurrence type
+	/// The type of SDT
 	/// </summary>
 	[DataMember(Name = "sdtType")]
 	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }
 
 	/// <summary>
-	///    Type
+	/// The type resource that this SDT is for
 	/// </summary>
 	[DataMember(Name = "type")]
 	public ScheduledDownTimeType Type { get; set; }
 
 	/// <summary>
-	///    Comment
+	/// The notes associated with the SDT
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public string Comment { get; set; }
+	public string Comment { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Start date time milliseconds since the Epoch
+	/// The epoch time, in milliseconds, that the SDT will start
 	/// </summary>
 	[DataMember(Name = "startDateTime")]
 	public long StartDateTimeEpochMs { get; set; }
 
 	/// <summary>
-	///    End date time milliseconds since the Epoch
+	/// The epoch time, in milliseconds, that the SDT will end
 	/// </summary>
 	[DataMember(Name = "endDateTime")]
 	public long EndDateTimeEpochMs { get; set; }
 
 	/// <summary>
-	///    The month day (used for monthly)
+	/// 1 | 2....| 31 The day of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "monthDay")]
 	public int MonthDay { get; set; }
 
 	/// <summary>
-	///    The week day (used for monthlyByWeek)
+	/// the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public WeekDay WeekDay { get; set; }
+	public string WeekDay { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The start hour
+	/// 1 | 2....| 24 The hour that the SDT will start for a repeating SDT (daily, weekly, or monthly)
 	/// </summary>
 	[DataMember(Name = "hour")]
 	public int StartHour { get; set; }
 
 	/// <summary>
-	///    The start minute
+	/// 1 | 2....| 60 The minute of the hour that the SDT should begin for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "minute")]
 	public int StartMinute { get; set; }
 
 	/// <summary>
-	///    The end hour
+	/// 1 | 2....| 24 The hour that the SDT ends for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "endHour")]
 	public int EndHour { get; set; }
 
 	/// <summary>
-	///    The end minute
+	/// 1 | 2....| 60 The minute of the hour that the SDT ends for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "endMinute")]
 	public int EndMinute { get; set; }
 
 	/// <summary>
-	///    The time zone
+	/// The specific timezone for SDT
 	/// </summary>
 	[DataMember(Name = "timezone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The week of month (used for monthlyByWeek)
+	/// The week of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "weekOfMonth")]
-	public WeekOfMonth WeekOfMonth { get; set; }
+	public string WeekOfMonth { get; set; } = string.Empty;
 }

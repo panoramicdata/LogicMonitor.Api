@@ -24,7 +24,7 @@ public abstract class FlowRequest : TimeBasedRequest
 	/// <summary>
 	/// The netflow filter
 	/// </summary>
-	public NetflowFilter NetflowFilter { get; set; } = new NetflowFilter();
+	public NetflowFilters NetflowFilter { get; set; } = new NetflowFilters();
 
 	/// <summary>
 	/// The specific flow id (defaults to -1)

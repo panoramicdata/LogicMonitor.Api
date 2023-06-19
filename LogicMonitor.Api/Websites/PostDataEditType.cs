@@ -4,6 +4,7 @@
 /// The Post data edit type
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(StringEnumConverter))]
 public enum PostDataEditType
 {
 	/// <summary>

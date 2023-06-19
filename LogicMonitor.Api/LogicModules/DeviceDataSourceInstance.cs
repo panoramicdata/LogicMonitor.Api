@@ -8,49 +8,80 @@ namespace LogicMonitor.Api.LogicModules;
 public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 {
 	/// <summary>
-	///     The Alerting disabled on
-	/// </summary>
-	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
-
-	/// <summary>
-	/// AlertDisableStatus
-	/// </summary>
-	[DataMember(Name = "alertDisableStatus")]
-	public AlertDisableStatus AlertDisableStatus { get; set; }
-
-	/// <summary>
-	/// Alert Status
+	/// The alert status
 	/// </summary>
 	[DataMember(Name = "alertStatus")]
 	public AlertStatus AlertStatus { get; set; }
 
 	/// <summary>
-	/// Alert Status Priority
+	/// The alert disabled status
+	/// </summary>
+	[DataMember(Name = "alertDisableStatus")]
+	public AlertDisableStatus AlertDisableStatus { get; set; }
+
+	/// <summary>
+	/// The alert disabled on
+	/// </summary>
+	[DataMember(Name = "alertingDisabledOn")]
+	public object AlertDisabledOn { get; set; } = new();
+
+	/// <summary>
+	/// The alert status priority
 	/// </summary>
 	[DataMember(Name = "alertStatusPriority")]
 	public int AlertStatusPriority { get; set; }
 
 	/// <summary>
+	/// Whether or not UNC Monitoring enabled for device
+	/// </summary>
+	[DataMember(Name = "isUNCInstance")]
+	public bool IsUncInstance { get; set; }
+
+	/// <summary>
+	/// Whether or not monitoring is disabled for the instance
+	/// </summary>
+	[DataMember(Name = "stopMonitoring")]
+	public bool StopMonitoring { get; set; }
+
+	/// <summary>
+	/// The id of the unique device-datasource the instance is associated with
+	/// </summary>
+	[DataMember(Name = "deviceDataSourceId")]
+	public int DeviceDataSourceId { get; set; }
+
+	/// <summary>
+	/// The instance alias. This is the descriptive name of the instance, and should be unique for the device/datasource combination
+	/// </summary>
+	[DataMember(Name = "displayName")]
+	public string DisplayName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Any instance level properties assigned to the instance
+	/// Collector Id
+	/// </summary>
+	[DataMember(Name = "collectorId")]
+	public int? CollectorId { get; set; }
+
+	/// <summary>
 	/// Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
-	/// System properties
+	/// Any instance level system properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "systemProperties")]
-	public List<Property> SystemProperties { get; set; }
+	public List<EntityProperty> SystemProperties { get; set; } = new();
 
 	/// <summary>
-	/// System properties
+	/// Any instance level auto properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "autoProperties")]
-	public List<Property> AutoProperties { get; set; }
+	public List<EntityProperty> AutoProperties { get; set; } = new();
 
 	/// <summary>
-	/// The DataSource Id
+	/// The id of the datasource definition that the instance represents
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
 	public int? DataSourceId { get; set; }
@@ -59,67 +90,49 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The DataSource Name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// DataSourceType
+	/// The type of LogicModule, e.g. DS (datasource)
 	/// </summary>
 	[DataMember(Name = "dataSourceType")]
-	public string DataSourceType { get; set; }
+	public string DataSourceType { get; set; } = string.Empty;
 
 	/// <summary>
-	/// DeviceDisplayName
+	/// The display name of the device the datasource instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The DeviceDataSource Id
-	/// </summary>
-	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
-
-	/// <summary>
-	/// The Device Id
+	/// The id of the device the datasource instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int? DeviceId { get; set; }
 
 	/// <summary>
-	/// Disable Alerting
+	/// Whether or not alerting is disabled for the instance
 	/// </summary>
 	[DataMember(Name = "disableAlerting")]
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
-	/// Display Name
-	/// </summary>
-	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
-
-	/// <summary>
-	/// The Group Id
+	/// The id of the instance group associated with the datasource instance
 	/// </summary>
 	[DataMember(Name = "groupId")]
 	public int GroupId { get; set; }
 
 	/// <summary>
-	/// The Group Name
+	/// The name of the instance group associated with the datasource instance
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// groupsDisabledThisSource
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<DisabledGroup> GroupsDisabledThisSource { get; set; }
-
-	/// <summary>
-	/// groupsDisabledThisSource
-	/// </summary>
-	[DataMember(Name = "isUNCInstance")]
-	public bool? IsUncInstance { get; set; }
+	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = new();
 
 	/// <summary>
 	/// The last collected time in seconds since the Epoch
@@ -134,38 +147,32 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public long LastUpdatedTimeSeconds { get; set; }
 
 	/// <summary>
-	/// The lockDescription
+	/// Whether or not Active Discovery is enabled, and thus whether or not the instance description is editable
 	/// </summary>
 	[DataMember(Name = "lockDescription")]
 	public bool LockDescription { get; set; }
 
 	/// <summary>
-	/// The lockDescription
-	/// </summary>
-	[DataMember(Name = "stopMonitoring")]
-	public bool StopMonitoring { get; set; }
-
-	/// <summary>
-	/// SDT Status
-	/// </summary>
-	[DataMember(Name = "sdtStatus")]
-	public SdtStatus SdtStatus { get; set; }
-
-	/// <summary>
-	/// SDT at
-	/// </summary>
-	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
-
-	/// <summary>
 	/// WildValue
 	/// </summary>
 	[DataMember(Name = "wildValue")]
-	public string WildValue { get; set; }
+	public string WildValue { get; set; } = string.Empty;
 
 	/// <summary>
-	/// WildValue2
+	/// Only used for two dimensional active discovery. When used, during Active Discovery runs, the token ##WILDVALUE## is replaces with the value of ALIAS and the token ##WILDVALUE2## is replaced with the value of the second part alias. This value must be unique for the device/datasource/WILDVALUE combination
 	/// </summary>
 	[DataMember(Name = "wildValue2")]
-	public string WildValue2 { get; set; }
+	public string WildValue2 { get; set; } = string.Empty;
+
+	/// <summary>
+	/// SDT status
+	/// </summary>
+	[DataMember(Name = "sdtStatus")]
+	public string SdtStatus { get; set; } = string.Empty;
+
+	/// <summary>
+	/// SDT status
+	/// </summary>
+	[DataMember(Name = "sdtAt")]
+	public string SdtAt { get; set; } = string.Empty;
 }

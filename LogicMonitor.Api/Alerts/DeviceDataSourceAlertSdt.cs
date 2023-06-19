@@ -10,7 +10,7 @@ public class DeviceDataSourceAlertSdt : AlertSdt
 	/// The DataSource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource ID
@@ -22,7 +22,7 @@ public class DeviceDataSourceAlertSdt : AlertSdt
 	/// The Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Device ID

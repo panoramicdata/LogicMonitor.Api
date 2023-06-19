@@ -10,11 +10,11 @@ public class DeviceGroupAndDevices
 	/// DeviceGroup
 	/// </summary>
 	[DataMember(Name = "hostGroup")]
-	public DeviceGroup DeviceGroup { get; set; }
+	public DeviceGroup DeviceGroup { get; set; } = new();
 
 	/// <summary>
 	/// Devices
 	/// </summary>
 	[DataMember(Name = "hosts")]
-	public List<Device> Devices { get; set; }
+	public List<Device> Devices { get; set; } = new();
 }

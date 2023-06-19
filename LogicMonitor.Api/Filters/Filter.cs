@@ -19,7 +19,7 @@ public class Filter<T>
 	/// <summary>
 	///     The order the results should come back
 	/// </summary>
-	public Order<T> Order { get; set; }
+	public Order<T>? Order { get; set; }
 
 	/// <summary>
 	///  The filter type (defaults to "And")
@@ -34,25 +34,30 @@ public class Filter<T>
 	/// <summary>
 	///     Extra filters
 	/// </summary>
-	public List<FilterItem<T>> ExtraFilters { get; set; }
+	public List<FilterItem<T>> ExtraFilters { get; set; } = new();
 
 	/// <summary>
 	///     The properties to complete
 	/// </summary>
-	public List<string> Properties { get; set; }
+	public List<string> Properties { get; set; } = new();
 
 	/// <summary>
 	/// If present will be used as the query string on the request
 	/// </summary>
-	public string QueryString { get; set; }
+	public string QueryString { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Permission
+	/// </summary>
+	public string? Permission { get; set; }
 
 	/// <inheritdoc />
 	public override string ToString()
 	{
 		Validate();
-		return QueryString is not null
+		return !string.IsNullOrWhiteSpace(QueryString)
 				  ? $"offset={Skip}&size={Take}&{QueryString}"
-				  : $"offset={Skip}&size={Take}{(Order is null ? string.Empty : $"&{Order}")}{(FilterItems is null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters is null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties is null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
+				  : $"offset={Skip}&size={Take}{(Order is null ? string.Empty : $"&{Order}")}{(Permission is null ? string.Empty : $"&permission={Permission}")}{(FilterItems is null || FilterItems.Count == 0 ? string.Empty : $"&filter={HttpUtility.UrlEncode(string.Join(Type == FilterType.And ? "," : "||", FilterItems.Select(fi => fi.ToString())))}")}{(ExtraFilters is null || ExtraFilters.Count == 0 ? string.Empty : $"&extraFilters={HttpUtility.UrlEncode(string.Join(",", ExtraFilters.Select(fi => fi.ToJsonString())))}")}{(Properties is null ? string.Empty : $"&fields={HttpUtility.UrlEncode(string.Join(",", GetFields()))}")}";
 	}
 
 	private void Validate()
@@ -78,7 +83,7 @@ public class Filter<T>
 		}
 	}
 
-	internal void AppendFilterItemIfNotNull(string property, object value, string operation = ":")
+	internal void AppendFilterItemIfNotNull(string property, object? value, string operation = ":")
 	{
 		if (value is null)
 		{

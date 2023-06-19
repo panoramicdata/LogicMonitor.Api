@@ -69,4 +69,9 @@ public enum AuditEventEntityType
 	/// Alert Note
 	/// </summary>
 	AlertNote,
+
+	/// <summary>
+	/// Ops Note
+	/// </summary>
+	OpsNote,
 }

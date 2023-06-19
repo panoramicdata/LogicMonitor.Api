@@ -10,6 +10,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get DataSource updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleDataSourceUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -28,6 +29,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get EventSource updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleEventSourceUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -46,6 +48,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get ConfigSource updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleConfigSourceUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -64,6 +67,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get PropertySource updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModulePropertySourceUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -82,6 +86,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get TopologySource updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleTopologySourceUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -100,14 +105,14 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get Job Monitor updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleJobMonitorUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
 			.ConfigureAwait(false);
 
-		var _ =
-			await LogicMonitorClient
+		_ = await LogicMonitorClient
 				.GetLogicModuleUpdates(LogicModuleType.PropertySource, version.Version.Major, default)
 				.ConfigureAwait(false);
 
@@ -118,14 +123,14 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get AppliesTo Function updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleAppliesToUpdates()
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
 			.ConfigureAwait(false);
 
-		var _ =
-			await LogicMonitorClient
+		_ = await LogicMonitorClient
 				.GetLogicModuleUpdates(LogicModuleType.AppliesToFunction, version.Version.Major, default)
 				.ConfigureAwait(false);
 
@@ -136,6 +141,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get SnmpSysOID updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleSnmpSysOidUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -154,6 +160,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Get ALL LogicModule updates
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task GetAllLogicModuleUpdates()
 	{
 		var version = await LogicMonitorClient
@@ -172,6 +179,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited data source update and mark as audited
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task AuditDataSource()
 	{
 		var version = await LogicMonitorClient
@@ -190,8 +198,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (dataSourceUpdates.Count > 0)
 		{
 			var dataSourceToAudit = dataSourceUpdates[0];
-			var auditedDataSource =
-				await LogicMonitorClient.AuditDataSource(
+			_ = await LogicMonitorClient.AuditDataSource(
 					dataSourceToAudit.LocalId,
 					dataSourceToAudit.Version,
 					default)
@@ -203,6 +210,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited event source update and mark as audited
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task AuditEventSource()
 	{
 		var version = await LogicMonitorClient
@@ -221,8 +229,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (eventSourceUpdates.Count > 0)
 		{
 			var eventSourceToAudit = eventSourceUpdates[0];
-			var auditedEventSource =
-				await LogicMonitorClient.AuditEventSource(
+			_ = await LogicMonitorClient.AuditEventSource(
 					eventSourceToAudit.LocalId,
 					eventSourceToAudit.Version,
 					default)
@@ -234,6 +241,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited config source update and mark as audited
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task AuditConfigSource()
 	{
 		var version = await LogicMonitorClient
@@ -252,7 +260,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (configSourceUpdates.Count > 0)
 		{
 			var configSourceToAudit = configSourceUpdates[0];
-			var auditedConfigSource =
+			_ =
 				await LogicMonitorClient.AuditConfigSource(
 					configSourceToAudit.LocalId,
 					configSourceToAudit.Version,
@@ -265,6 +273,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one unaudited property source update and mark as audited
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task AuditPropertySource()
 	{
 		var version = await LogicMonitorClient
@@ -283,8 +292,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 		if (propertySourceUpdates.Count > 0)
 		{
 			var propertySourceToAudit = propertySourceUpdates[0];
-			var auditedPropertySource =
-				await LogicMonitorClient.AuditPropertySource(
+			_ = await LogicMonitorClient.AuditPropertySource(
 					propertySourceToAudit.LocalId,
 					propertySourceToAudit.Version,
 					default)
@@ -296,6 +304,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Data Source and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportDataSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.DataSource;
@@ -332,6 +341,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Event Source and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportEventSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.EventSource;
@@ -368,6 +378,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Config Source and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportConfigSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
@@ -394,8 +405,8 @@ public class LogicModuleUpdateTests : TestWithOutput
 				{
 						configSourceUpdates[0].Name
 				},
-				default,
-				CancellationToken.None)
+				version.Version.Major,
+				default)
 				.ConfigureAwait(false);
 		}
 	}
@@ -404,6 +415,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Property Source and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportPropertySource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
@@ -440,6 +452,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Topology Source and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportTopologySource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
@@ -476,6 +489,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated Job Monitor and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportJobMonitor()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
@@ -503,7 +517,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 						jobMonitorUpdates[0].Name
 				},
 				default,
-				CancellationToken.None)
+				default)
 				.ConfigureAwait(false);
 		}
 	}
@@ -512,6 +526,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated AppliesToFunction and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportAppliesToFunction()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
@@ -539,7 +554,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 						appliesToFunctionUpdates[0].Name
 				},
 				default,
-				CancellationToken.None)
+				default)
 				.ConfigureAwait(false);
 		}
 	}
@@ -548,6 +563,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 	/// Find one updated SNMP SysOID Map and import
 	/// </summary>
 	[Fact]
+	[Trait("Long Tests", "")]
 	public async Task ImportSnmpSysOidMap()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;

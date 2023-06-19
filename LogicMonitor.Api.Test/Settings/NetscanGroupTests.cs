@@ -13,18 +13,18 @@ public class NetscanGroupTests : TestWithOutput
 		const string description = "API Unit Test CanCreateAndDeleteNetscanGroups Description";
 
 		var allNetscanGroups = await LogicMonitorClient
-			.GetAllAsync<NetscanGroup>(CancellationToken.None)
+			.GetAllAsync<NetscanGroup>(default)
 			.ConfigureAwait(false);
 
 		var existingTestNetscanGroup = allNetscanGroups
 			.SingleOrDefault(group => group.Name == name);
 		if (existingTestNetscanGroup is not null)
 		{
-			await LogicMonitorClient.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id, cancellationToken: default).ConfigureAwait(false);
 		}
 
 		var netscanGroups = await LogicMonitorClient
-			.GetAllAsync<NetscanGroup>(CancellationToken.None)
+			.GetAllAsync<NetscanGroup>(default)
 			.ConfigureAwait(false);
 		netscanGroups.Should().AllSatisfy(group => group.Name.Should().NotBe(name));
 		// Definitely not there now
@@ -35,19 +35,19 @@ public class NetscanGroupTests : TestWithOutput
 			Name = name,
 			Description = description
 		};
-		var newNetscanGroup = await LogicMonitorClient.CreateAsync(netscanGroupCreationDto, CancellationToken.None).ConfigureAwait(false);
-		var netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>(CancellationToken.None).ConfigureAwait(false);
+		var newNetscanGroup = await LogicMonitorClient.CreateAsync(netscanGroupCreationDto, default).ConfigureAwait(false);
+		var netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
 		netscanGroupsRefetched.Should().Contain(group => group.Name == name);
 
-		await LogicMonitorClient.DeleteAsync(newNetscanGroup, cancellationToken: CancellationToken.None).ConfigureAwait(false);
-		netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>(CancellationToken.None).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(newNetscanGroup, cancellationToken: default).ConfigureAwait(false);
+		netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
 		netscanGroupsRefetched.Should().NotContain(group => group.Name == name);
 	}
 
 	[Fact]
 	public async Task CanGetNetscanGroups()
 	{
-		var allNetscanGroups = await LogicMonitorClient.GetAllAsync<NetscanGroup>(CancellationToken.None).ConfigureAwait(false);
+		var allNetscanGroups = await LogicMonitorClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
 		allNetscanGroups.Should().NotBeNull();
 		allNetscanGroups.Should().NotBeNullOrEmpty();
 		var ids = allNetscanGroups.Select(nspg => nspg.Id);

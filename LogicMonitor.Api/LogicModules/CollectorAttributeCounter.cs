@@ -10,17 +10,17 @@ public class CollectorAttributeCounter
 	/// comment
 	/// </summary>
 	[DataMember(Name = "comment")]
-	public object Comment { get; set; }
+	public object Comment { get; set; } = new();
 
 	/// <summary>
 	/// name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public object Value { get; set; }
+	public object Value { get; set; } = new();
 }

@@ -10,8 +10,22 @@ public class EscalationChainTests : TestWithOutput
 	public async Task GetAll()
 	{
 		var escalationChains = await LogicMonitorClient
-			.GetAllAsync<EscalationChain>(CancellationToken.None)
+			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), default)
 			.ConfigureAwait(false);
-		escalationChains.Should().NotBeNullOrEmpty();
+		escalationChains.Items.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
+	public async Task GetEscalationChain()
+	{
+		var escalationChains = await LogicMonitorClient
+			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), default)
+			.ConfigureAwait(false);
+
+		var chain = await LogicMonitorClient
+			.GetEscalationChainAsync(escalationChains.Items[0].Id, default)
+			.ConfigureAwait(false);
+
+		chain.Should().NotBeNull();
 	}
 }

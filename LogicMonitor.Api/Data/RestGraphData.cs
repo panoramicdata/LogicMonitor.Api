@@ -10,13 +10,13 @@ public class RestGraphData : IdentifiedItem
 	///    Timescale
 	/// </summary>
 	[DataMember(Name = "timeScale")]
-	public string TimeScale { get; set; }
+	public string TimeScale { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Time Zone
 	/// </summary>
 	[DataMember(Name = "timeZone")]
-	public string TimeZone { get; set; }
+	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Status
@@ -28,7 +28,7 @@ public class RestGraphData : IdentifiedItem
 	///    Title
 	/// </summary>
 	[DataMember(Name = "title")]
-	public string TitleString { get; set; }
+	public string TitleString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The end timezone offset
@@ -58,13 +58,13 @@ public class RestGraphData : IdentifiedItem
 	///    The x-axis name
 	/// </summary>
 	[DataMember(Name = "xAxisName")]
-	public string XAxisName { get; set; }
+	public string XAxisName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The y-axis label
 	/// </summary>
 	[DataMember(Name = "verticalLabel")]
-	public string VerticalLabel { get; set; }
+	public string VerticalLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The height in pixels
@@ -76,7 +76,7 @@ public class RestGraphData : IdentifiedItem
 	///    The XML title
 	/// </summary>
 	[DataMember(Name = "xmlTitle")]
-	public string XmlTitleString { get; set; }
+	public string XmlTitleString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The display priority
@@ -106,19 +106,19 @@ public class RestGraphData : IdentifiedItem
 	///    The list of missing lines
 	/// </summary>
 	[DataMember(Name = "missingLines")]
-	public List<string> MissingLines { get; set; }
+	public List<string> MissingLines { get; set; } = new();
 
 	/// <summary>
 	///    The XML y-axis label
 	/// </summary>
 	[DataMember(Name = "xmlVerticalLabel")]
-	public string XmlVerticalLabel { get; set; }
+	public string XmlVerticalLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The data source name
 	/// </summary>
 	[DataMember(Name = "dsName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The milliseconds that the graph start time is since the Epoch
@@ -152,7 +152,7 @@ public class RestGraphData : IdentifiedItem
 	///    The x-axis timestamps in ms since the Epoch
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<long> TimeStamps { get; set; }
+	public List<long> TimeStamps { get; set; } = new();
 
 	/// <summary>
 	///    Whether it is rigid
@@ -164,13 +164,13 @@ public class RestGraphData : IdentifiedItem
 	///    The graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<Line> Lines { get; set; }
+	public List<Line> Lines { get; set; } = new();
 
 	/// <summary>
 	///    The export filename
 	/// </summary>
 	[DataMember(Name = "exportFileName")]
-	public string ExportFileName { get; set; }
+	public string ExportFileName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The step

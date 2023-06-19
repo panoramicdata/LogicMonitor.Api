@@ -22,7 +22,7 @@ public class AppliesToMatch
 	///     The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <inheritdoc />
 	public override string ToString() => $"{Type} {Id}: {Name}";

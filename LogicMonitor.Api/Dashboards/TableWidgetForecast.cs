@@ -10,7 +10,7 @@ public class TableWidgetForecast
 	///     The algorithm
 	/// </summary>
 	[DataMember(Name = "algorithm")]
-	public string Algorithm { get; set; }
+	public string Algorithm { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The confidence
@@ -22,11 +22,11 @@ public class TableWidgetForecast
 	///     The timeRange
 	/// </summary>
 	[DataMember(Name = "timeRange")]
-	public string TimeRange { get; set; }
+	public string TimeRange { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The severity
 	/// </summary>
 	[DataMember(Name = "severity")]
-	public string Severity { get; set; }
+	public string Severity { get; set; } = string.Empty;
 }

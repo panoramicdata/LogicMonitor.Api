@@ -11,7 +11,7 @@ public class LogoTests : TestWithOutput
 	{
 		foreach (var imageType in Enum.GetValues(typeof(ImageType)).Cast<ImageType>())
 		{
-			var buffer = await LogicMonitorClient.GetImageByteArrayAsync(imageType, CancellationToken.None).ConfigureAwait(false);
+			var buffer = await LogicMonitorClient.GetImageByteArrayAsync(imageType, default).ConfigureAwait(false);
 			var image = SixLabors.ImageSharp.Image.Load(buffer);
 			image.Width.Should().BeGreaterThan(0);
 		}

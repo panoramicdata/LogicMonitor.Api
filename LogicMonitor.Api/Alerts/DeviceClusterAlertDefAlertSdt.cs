@@ -10,7 +10,7 @@ public class DeviceClusterAlertDefSdt : AlertSdt
 	/// The DataSource name
 	/// </summary>
 	[DataMember(Name = "dataSourceName")]
-	public string DataSourceName { get; set; }
+	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Device Cluster Alert Def ID
@@ -22,7 +22,7 @@ public class DeviceClusterAlertDefSdt : AlertSdt
 	/// The Device Group full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; }
+	public string DeviceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Device Group ID

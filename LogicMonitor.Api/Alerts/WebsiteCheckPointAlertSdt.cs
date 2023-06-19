@@ -16,11 +16,11 @@ public class WebsiteCheckpointAlertSdt : AlertSdt
 	/// The Checkpoint name
 	/// </summary>
 	[DataMember(Name = "checkpointName")]
-	public string CheckpointName { get; set; }
+	public string CheckpointName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Checkpoint name
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 }
