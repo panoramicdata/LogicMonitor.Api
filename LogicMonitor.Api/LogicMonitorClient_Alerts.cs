@@ -208,7 +208,7 @@ public partial class LogicMonitorClient
 	/// Acknowledge an alert
 	/// </summary>
 	/// <param name="alertId">The non-unique alert id</param>
-	/// <param name="acknowledgementComment">The acknowledgement comment</param>
+	/// <param name="acknowledgementComment">The acknowledgment comment</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task AcknowledgeAlertAsync(
 		string alertId,
