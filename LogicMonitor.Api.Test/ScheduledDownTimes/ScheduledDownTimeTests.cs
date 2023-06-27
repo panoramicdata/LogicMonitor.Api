@@ -75,7 +75,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	{
 		// Device
 		var testsdts =
-			await LogicMonitorClient.GetDeviceHistorySdts(1053, default)
+			await LogicMonitorClient.GetDeviceHistorySdtsAsync(1053, default)
 			.ConfigureAwait(false);
 		testsdts.Should().NotBeNull();
 
@@ -87,19 +87,19 @@ public class ScheduledDownTimeTests : TestWithOutput
 
 		// Device
 		var deviceHistorySdts =
-			await LogicMonitorClient.GetDeviceHistorySdts(1765, default)
+			await LogicMonitorClient.GetDeviceHistorySdtsAsync(1765, default)
 			.ConfigureAwait(false);
 		deviceHistorySdts.Should().NotBeNull();
 
 		// Device Data Source
 		var deviceDataSourceHistorySdts =
-			await LogicMonitorClient.GetDeviceDataSourceHistorySdts(1765, 98562, default)
+			await LogicMonitorClient.GetDeviceDataSourceHistorySdtsAsync(1765, 98562, default)
 			.ConfigureAwait(false);
 		deviceDataSourceHistorySdts.Should().NotBeNull();
 
 		// Device Data Source Instance
 		var deviceDataSourceInstanceHistorySdts =
-			await LogicMonitorClient.GetDeviceDataSourceInstanceHistorySdts(1765, 98562, 244662832, default)
+			await LogicMonitorClient.GetDeviceDataSourceInstanceHistorySdtsAsync(1765, 98562, 244662832, default)
 			.ConfigureAwait(false);
 		deviceDataSourceInstanceHistorySdts.Should().NotBeNull();
 
@@ -499,7 +499,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	public async Task GetDeviceGroupSDTs()
 	{
 		var groupSDTs = await LogicMonitorClient
-			.GetDeviceGroupHistorySdts(1028, default)
+			.GetDeviceGroupHistorySdtsAsync(1028, default)
 			.ConfigureAwait(false);
 
 		groupSDTs.Items.Should().NotBeEmpty();

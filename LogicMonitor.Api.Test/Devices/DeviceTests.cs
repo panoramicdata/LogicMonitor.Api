@@ -630,7 +630,7 @@ public class DeviceTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		var config = await LogicMonitorClient
-			.GetDeviceDataPointConfigurations(device.Id, default)
+			.GetDeviceDataPointConfigurationsAsync(device.Id, default)
 			.ConfigureAwait(false);
 
 		config.Should().NotBeEmpty();
@@ -645,7 +645,7 @@ public class DeviceTests : TestWithOutput
 
 		var netflowEnabledId = 0;
 
-		foreach (var device in devicesPage.Items) 
+		foreach (var device in devicesPage.Items)
 		{
 			if (device.EnableNetflow)
 			{

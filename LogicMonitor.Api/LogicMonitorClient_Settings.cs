@@ -166,7 +166,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get api tokens for a user
 	/// </summary>
-	public async Task<Page<ApiToken>> GetApiTokens(
+	public async Task<Page<ApiToken>> GetApiTokensAsync(
 		int adminId,
 		Filter<ApiToken> filter,
 		CancellationToken cancellationToken)
@@ -177,7 +177,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get a list of api tokens across users
 	/// </summary>
-	public async Task<Page<ApiToken>> GetApiTokenList(
+	public async Task<Page<ApiToken>> GetApiTokenListAsync(
 		Filter<ApiToken> filter,
 		CancellationToken cancellationToken)
 		=> await GetBySubUrlAsync<Page<ApiToken>>

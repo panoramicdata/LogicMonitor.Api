@@ -381,7 +381,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceInstanceId"></param>
 	/// <param name="filter">The filter to apply</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<InstanceProperty>> GetAllDeviceDataSourceInstanceProperties(
+	public async Task<List<InstanceProperty>> GetAllDeviceDataSourceInstancePropertiesAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
@@ -471,7 +471,7 @@ public partial class LogicMonitorClient
 						var thisDeviceDataSourceInstances = await GetAllDeviceDataSourceInstancesAsync(deviceId, deviceDataSource.Id, instanceFilter, cancellationToken).ConfigureAwait(false);
 						foreach (var deviceDataSourceInstance in thisDeviceDataSourceInstances)
 						{
-							var instanceCustomProperties = await GetAllDeviceDataSourceInstanceProperties(deviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
+							var instanceCustomProperties = await GetAllDeviceDataSourceInstancePropertiesAsync(deviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
 							if (instancePropertyValueRegex is not null)
 							{
 								if (!instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))

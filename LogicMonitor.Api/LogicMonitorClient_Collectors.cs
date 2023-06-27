@@ -10,7 +10,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="collectorGroupId">The collector group id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Collector>> GetAllCollectorsByCollectorGroupId(
+	public Task<Page<Collector>> GetAllCollectorsByCollectorGroupIdAsync(
 		int collectorGroupId,
 		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Collector>>(
@@ -27,14 +27,14 @@ public partial class LogicMonitorClient
 	/// <param name="collectorDownloadType">The collector download type</param>
 	/// <param name="collectorSize">The Collector size</param>
 	/// <param name="collectorVersion">The collector version (e.g. 26001 for 26.001)</param>
-	public async Task DownloadCollector(
+	public async Task DownloadCollectorAsync(
 		int collectorId,
 		FileInfo fileInfo,
 		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,
 		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
 		CollectorSize collectorSize = CollectorSize.Small,
 		int? collectorVersion = null)
-		=> await DownloadCollector(collectorId, fileInfo, collectorPlatformAndArchitecture,
+		=> await DownloadCollectorAsync(collectorId, fileInfo, collectorPlatformAndArchitecture,
 			CancellationToken.None, collectorDownloadType, collectorSize, collectorVersion);
 
 	/// <summary>
@@ -47,7 +47,7 @@ public partial class LogicMonitorClient
 	/// <param name="collectorSize">The Collector size</param>
 	/// <param name="collectorVersion">The collector version (e.g. 26001 for 26.001)</param>
 	/// <param name="cancellationToken"></param>
-	public async Task DownloadCollector(
+	public async Task DownloadCollectorAsync(
 		int collectorId,
 		FileInfo fileInfo,
 		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,

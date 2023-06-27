@@ -590,7 +590,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The device id</param>
 	/// <param name="cancellationToken"></param>
-	public async Task<List<DataPointConfiguration>> GetDeviceDataPointConfigurations(
+	public async Task<List<DataPointConfiguration>> GetDeviceDataPointConfigurationsAsync(
 		int deviceId,
 		CancellationToken cancellationToken)
 		=> await GetAllAsync<DataPointConfiguration>(
@@ -889,7 +889,7 @@ public partial class LogicMonitorClient
 	/// <param name="id"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<ScheduledDownTime>> GetDeviceGroupSDTsAsync(
+	public async Task<Page<ScheduledDownTime>> GetDeviceGroupSdtsAsync(
 		int id,
 		Filter<ScheduledDownTime> filter,
 		CancellationToken cancellationToken)

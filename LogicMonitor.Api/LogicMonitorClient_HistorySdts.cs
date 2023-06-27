@@ -8,7 +8,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The Device ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceHistorySdtsAsync(
 		int deviceId,
 		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/historysdts", cancellationToken).ConfigureAwait(false);
@@ -18,7 +18,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceGroupId">The Device Group ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdtsAsync(
 		int deviceGroupId,
 		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/groups/{deviceGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
@@ -29,7 +29,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The Device ID</param>
 	/// <param name="deviceDataSourceId">The Device Data Source ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceDataSourceHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceDataSourceHistorySdtsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The Device Data Source ID</param>
 	/// <param name="deviceDataSourceInstanceId">The Device Data Source Instance ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceDataSourceInstanceHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceDataSourceInstanceHistorySdtsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,

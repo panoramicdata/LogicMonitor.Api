@@ -45,7 +45,7 @@ public class CollectorTests2
 		}
 
 		var collectors = await LogicMonitorClient
-			.GetAllCollectorsByCollectorGroupId(fullGroup.Id, default)
+			.GetAllCollectorsByCollectorGroupIdAsync(fullGroup.Id, default)
 			.ConfigureAwait(false);
 
 		collectors.Items.Should().NotBeNullOrEmpty();
@@ -168,7 +168,7 @@ public class CollectorTests2
 		var tempFileInfo = new FileInfo(Path.GetTempPath() + Guid.NewGuid().ToString());
 		try
 		{
-			await LogicMonitorClient.DownloadCollector(
+			await LogicMonitorClient.DownloadCollectorAsync(
 				collector.Id,
 				tempFileInfo,
 				CollectorPlatformAndArchitecture.Win64,

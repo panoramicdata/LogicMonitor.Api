@@ -95,13 +95,13 @@ public class UserTests : TestWithOutput
 			.ConfigureAwait(false);
 
 		var tokens = await LogicMonitorClient
-			.GetApiTokens(admins.Items[0].Id, new Filter<ApiToken>(), default)
+			.GetApiTokensAsync(admins.Items[0].Id, new Filter<ApiToken>(), default)
 			.ConfigureAwait(false);
 
 		tokens.Items.Should().NotBeEmpty();
 
 		var allTokens = await LogicMonitorClient
-			.GetApiTokenList(new Filter<ApiToken>(), default)
+			.GetApiTokenListAsync(new Filter<ApiToken>(), default)
 			.ConfigureAwait(false);
 		allTokens.Items.Should().NotBeEmpty();
 	}

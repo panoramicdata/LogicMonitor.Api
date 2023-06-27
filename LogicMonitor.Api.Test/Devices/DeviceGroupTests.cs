@@ -252,7 +252,7 @@ public class DeviceGroupTests : TestWithOutput
 	public async Task GetDeviceGroupSDTs()
 	{
 		var deviceGroup = await LogicMonitorClient.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default).ConfigureAwait(false);
-		var sdts = await LogicMonitorClient.GetDeviceGroupSDTsAsync(deviceGroup.Id, new Filter<ScheduledDownTime>(), default).ConfigureAwait(false);
+		var sdts = await LogicMonitorClient.GetDeviceGroupSdtsAsync(deviceGroup.Id, new Filter<ScheduledDownTime>(), default).ConfigureAwait(false);
 		sdts.Should().NotBeNull();
 	}
 
