@@ -598,12 +598,12 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
 	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Page<DataPointConfiguration>> GetDeviceDataSourceInstanceDataPointConfigurationAsync(
+	public Task<Page<DataPointConfiguration>> GetDeviceDataSourceInstanceDataPointConfigurationAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<Page<DataPointConfiguration>>(
+		=> GetBySubUrlAsync<Page<DataPointConfiguration>>(
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			cancellationToken);
 
@@ -614,15 +614,16 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
 	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Page<DeviceDataSourceInstanceConfig>> GetDeviceDataSourceInstanceConfigAsync(
+	public Task<List<DeviceDataSourceInstanceConfig>> GetAllDeviceDataSourceInstanceConfigsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
+		Filter<DeviceDataSourceInstanceConfig> filter,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<Page<DeviceDataSourceInstanceConfig>>(
+		=> GetAllAsync(
+			filter,
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/config",
 			cancellationToken);
-
 
 	/// <summary>
 	///     Gets a list of DataPointConfiguration for a specific device, device data source, and data source instance
