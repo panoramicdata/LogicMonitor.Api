@@ -607,6 +607,22 @@ public partial class LogicMonitorClient
 			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/alertsettings",
 			cancellationToken);
 
+	/// <summary>
+	///     Gets a list of Configs for a specific device, device data source, and data source instance
+	/// </summary>
+	/// <param name="deviceId">The device Id</param>
+	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
+	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<Page<DeviceDataSourceInstanceConfig>> GetDeviceDataSourceInstanceConfigAsync(
+		int deviceId,
+		int deviceDataSourceId,
+		int deviceDataSourceInstanceId,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<Page<DeviceDataSourceInstanceConfig>>(
+			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/config",
+			cancellationToken);
+
 
 	/// <summary>
 	///     Gets a list of DataPointConfiguration for a specific device, device data source, and data source instance
