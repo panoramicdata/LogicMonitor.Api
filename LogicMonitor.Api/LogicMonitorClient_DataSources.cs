@@ -722,7 +722,7 @@ public partial class LogicMonitorClient
 	/// <param name="id">The datasource id</param>
 	/// <param name="body">The audit to be added</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSource> AddDatasourceAuditVersionAsync(
+	public async Task<DataSource> AddDataSourceAuditVersionAsync(
 		int id,
 		Audit body,
 		CancellationToken cancellationToken) => await PostAsync<Audit, DataSource>(body,

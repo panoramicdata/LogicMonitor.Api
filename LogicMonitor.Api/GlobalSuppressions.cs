@@ -23,7 +23,7 @@
 	"SCS0005:Weak random generator",
 	Justification = "Not used for cryptography",
 	Scope = "member",
-	Target = "~M:LogicMonitor.Api.LogicMonitorClient.GetRestAlertsWithV84Bug(LogicMonitor.Api.Alerts.AlertFilter,System.TimeSpan)~System.Threading.Tasks.Task{System.Collections.Generic.List{LogicMonitor.Api.Alerts.Alert}}")]
+	Target = "~M:LogicMonitor.Api.LogicMonitorClient.GetRestAlertsWithV84BugAsync(LogicMonitor.Api.Alerts.AlertFilter,System.TimeSpan)~System.Threading.Tasks.Task{System.Collections.Generic.List{LogicMonitor.Api.Alerts.Alert}}")]
 
 [assembly: SuppressMessage(
 	"Performance",

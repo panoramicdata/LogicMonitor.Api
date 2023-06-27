@@ -473,7 +473,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The device id</param>
 	/// <param name="deviceProcessServiceTaskType">The process/service type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DeviceDataSourceInstance>> GetMonitoredDeviceProcesses(
+	public async Task<List<DeviceDataSourceInstance>> GetMonitoredDeviceProcessesAsync(
 		int deviceId,
 		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
@@ -515,7 +515,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The device id</param>
 	/// <param name="deviceProcessServiceTaskType">The device process/service task type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<DeviceProcessServiceTask> GetProcessServiceTaskForDevice(
+	public Task<DeviceProcessServiceTask> GetProcessServiceTaskForDeviceAsync(
 		int deviceId,
 		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
@@ -551,7 +551,7 @@ public partial class LogicMonitorClient
 	/// <param name="taskId">The task id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The task results</returns>
-	public async Task<Page<DeviceProcess>> GetProcessServiceTaskResults(
+	public async Task<Page<DeviceProcess>> GetProcessServiceTaskResultsAsync(
 		int deviceId,
 		int taskId,
 		CancellationToken cancellationToken)
@@ -576,13 +576,13 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The device id</param>
 	/// <param name="deviceProcessServiceTaskType">The process/service type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Page<DeviceProcess>> GetDeviceProcesses(
+	public async Task<Page<DeviceProcess>> GetDeviceProcessesAsync(
 		int deviceId,
 		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
 	{
-		var task = await GetProcessServiceTaskForDevice(deviceId, deviceProcessServiceTaskType, cancellationToken).ConfigureAwait(false);
-		return await GetProcessServiceTaskResults(deviceId, task.TaskId, cancellationToken).ConfigureAwait(false);
+		var task = await GetProcessServiceTaskForDeviceAsync(deviceId, deviceProcessServiceTaskType, cancellationToken).ConfigureAwait(false);
+		return await GetProcessServiceTaskResultsAsync(deviceId, task.TaskId, cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>

@@ -39,7 +39,7 @@ public class ConfigSourceTests2 : TestWithOutput
 		var defaultVersion = original.AuditVersion;
 
 		await LogicMonitorClient
-			.AddConfigsourceAuditVersionAsync(original.Id, new Audit() { Version = 1 }, default)
+			.AddConfigSourceAuditVersionAsync(original.Id, new Audit() { Version = 1 }, default)
 			.ConfigureAwait(false);
 
 		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(original.Id, default).ConfigureAwait(false);
@@ -47,7 +47,7 @@ public class ConfigSourceTests2 : TestWithOutput
 		configSource.AuditVersion.Should().Be(1);
 
 		await LogicMonitorClient
-			.AddConfigsourceAuditVersionAsync(original.Id, new Audit() { Version = defaultVersion }, default)
+			.AddConfigSourceAuditVersionAsync(original.Id, new Audit() { Version = defaultVersion }, default)
 			.ConfigureAwait(false);
 	}
 }

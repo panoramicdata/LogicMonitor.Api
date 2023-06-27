@@ -180,7 +180,7 @@ public class AlertTests : TestWithOutput
 	public async Task GetAlertsAndCheckUnique()
 	{
 		var startEpoch = DateTime.UtcNow.AddDays(-1).SecondsSinceTheEpoch();
-		var alertList = await LogicMonitorClient.GetRestAlertsWithV84Bug(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8)).ConfigureAwait(false);
+		var alertList = await LogicMonitorClient.GetRestAlertsWithV84BugAsync(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8)).ConfigureAwait(false);
 
 		var unique = true;
 		foreach (var alert in alertList)

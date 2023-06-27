@@ -98,7 +98,7 @@ public partial class LogicMonitorClient
 	/// <param name="id">The id</param>
 	/// <param name="body">The audit to be added</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<EventSource> AddEventsourceAuditVersion(
+	public Task<EventSource> AddEventSourceAuditVersionAsync(
 		int id,
 		Audit body,
 		CancellationToken cancellationToken) => PostAsync<Audit, EventSource>(body,

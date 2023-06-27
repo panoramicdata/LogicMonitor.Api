@@ -1,6 +1,4 @@
-using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.Test.Extensions;
-using System.Security.Cryptography;
 
 namespace LogicMonitor.Api.Test.LogicModules;
 
@@ -98,7 +96,7 @@ public class DataSourceTests : TestWithOutput
 		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(false);
 		var windowsServices = await LogicMonitorClient
-			.GetDeviceProcesses(device.Id, DeviceProcessServiceTaskType.WindowsService, default)
+			.GetDeviceProcessesAsync(device.Id, DeviceProcessServiceTaskType.WindowsService, default)
 			.ConfigureAwait(false);
 		windowsServices.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNull();
@@ -108,7 +106,7 @@ public class DataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetMonitoredWinService()
 	{
-		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcesses(29, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
+		var windowsServices = await LogicMonitorClient.GetMonitoredDeviceProcessesAsync(29, DeviceProcessServiceTaskType.WindowsService, default).ConfigureAwait(false);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
@@ -508,7 +506,7 @@ public class DataSourceTests : TestWithOutput
 			.GetByNameAsync<DataSource>("Ping", default)
 			.ConfigureAwait(false);
 
-		if (dataSource != null )
+		if (dataSource != null)
 		{
 			var testGraphs = await LogicMonitorClient
 				.GetDataSourceGraphsAsync(dataSource.Id, default)

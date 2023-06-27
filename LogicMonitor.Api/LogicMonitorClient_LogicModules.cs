@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="logicModuleType">The LogicModule type.  Note that not all types are supported by LogicMonitor.</param>
 	/// <param name="id">The LogicModule Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<LogicModuleMetadata> GetLogicModuleMetadata(
+	public Task<LogicModuleMetadata> GetLogicModuleMetadataAsync(
 		LogicModuleType logicModuleType,
 		int id,
 		CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ public partial class LogicMonitorClient
 	/// <param name="repositoryVersion">The LogicMonitor repository version</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>A LogicModuleUpdate collection</returns>
-	public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdates(
+	public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdatesAsync(
 		LogicModuleType logicModuleType,
 		int repositoryVersion,
 		CancellationToken cancellationToken)
@@ -89,7 +89,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<DataSource> AuditDataSource(int dataSourceId, long auditVersion, CancellationToken cancellationToken)
+	public async Task<DataSource> AuditDataSourceAsync(int dataSourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, DataSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -103,7 +103,7 @@ public partial class LogicMonitorClient
 	/// <param name="eventSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<EventSource> AuditEventSource(int eventSourceId, long auditVersion, CancellationToken cancellationToken)
+	public async Task<EventSource> AuditEventSourceAsync(int eventSourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, EventSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -117,7 +117,7 @@ public partial class LogicMonitorClient
 	/// <param name="configSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<ConfigSource> AuditConfigSource(int configSourceId, long auditVersion, CancellationToken cancellationToken)
+	public async Task<ConfigSource> AuditConfigSourceAsync(int configSourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, ConfigSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -131,7 +131,7 @@ public partial class LogicMonitorClient
 	/// <param name="propertySourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<PropertySource> AuditPropertySource(int propertySourceId, long auditVersion, CancellationToken cancellationToken)
+	public async Task<PropertySource> AuditPropertySourceAsync(int propertySourceId, long auditVersion, CancellationToken cancellationToken)
 		=> await PostAsync<LogicModuleUpdateVersion, PropertySource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
@@ -146,7 +146,7 @@ public partial class LogicMonitorClient
 	/// <param name="logicModuleNames">A list of LogicModule names</param>
 	/// <param name="repositoryVersion">The LogicMonitor repository version</param>
 	/// <param name="cancellationToken"></param>
-	public async Task ImportLogicModules(
+	public async Task ImportLogicModulesAsync(
 		LogicModuleType logicModuleType,
 		List<string> logicModuleNames,
 		int repositoryVersion,
@@ -158,7 +158,7 @@ public partial class LogicMonitorClient
 			LogicModuleType.PropertySource => "propertyrules",
 			LogicModuleType.JobMonitor => "batchjobs",
 			LogicModuleType.AppliesToFunction => "functions",
-			LogicModuleType.SnmpSysOIDMap => throw new NotSupportedException($"Unsupported import type. Use {nameof(ImportSnmpSysOidMap)} instead."),
+			LogicModuleType.SnmpSysOIDMap => throw new NotSupportedException($"Unsupported import type. Use {nameof(ImportSnmpSysOidMapAsync)} instead."),
 			_ => throw new NotSupportedException("Unsupported import type."),
 		};
 		await PostAsync<LogicModuleImportObject, object>
@@ -181,7 +181,7 @@ public partial class LogicMonitorClient
 	/// <param name="snmpSysOidMapImportItems">A list of LogicModule names</param>
 	/// <param name="repositoryVersion">The LogicMonitor Repository version</param>
 	/// <param name="cancellationToken"></param>
-	public async Task ImportSnmpSysOidMap(
+	public async Task ImportSnmpSysOidMapAsync(
 		List<SnmpSysOidMapImportItem> snmpSysOidMapImportItems,
 		int repositoryVersion,
 		CancellationToken cancellationToken)

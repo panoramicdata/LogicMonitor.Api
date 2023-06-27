@@ -19,7 +19,7 @@ public partial class LogicMonitorClient
 		if (limitReached)
 		{
 			// Fall back to the chunked method
-			alerts = await GetRestAlertsWithV84Bug(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false);
+			alerts = await GetRestAlertsWithV84BugAsync(alertFilter, TimeSpan.FromHours(24)).ConfigureAwait(false);
 		}
 
 		if (alertFilter.IsCleared == true)
@@ -40,7 +40,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="alertFilter"></param>
 	/// <param name="chunkSize"></param>
-	public async Task<List<Alert>> GetRestAlertsWithV84Bug(AlertFilter alertFilter, TimeSpan chunkSize)
+	public async Task<List<Alert>> GetRestAlertsWithV84BugAsync(AlertFilter alertFilter, TimeSpan chunkSize)
 	{
 		var originalStartEpochIsAfter = alertFilter.StartEpochIsAfter;
 		var originalStartEpochIsBefore = alertFilter.StartEpochIsBefore;

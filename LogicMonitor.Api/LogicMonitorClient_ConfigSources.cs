@@ -30,7 +30,7 @@ public partial class LogicMonitorClient
 	/// <param name="id">The ConfigSource id</param>
 	/// <param name="body">The body</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task AddConfigsourceAuditVersionAsync(
+	public async Task AddConfigSourceAuditVersionAsync(
 		int id,
 		Audit body,
 		CancellationToken cancellationToken

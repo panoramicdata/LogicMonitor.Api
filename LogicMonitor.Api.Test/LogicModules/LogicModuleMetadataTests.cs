@@ -16,7 +16,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 		dataSource ??= new();
 		dataSource.Id.Should().NotBe(0);
 		var logicModuleMetadata = await LogicMonitorClient
-			.GetLogicModuleMetadata(LogicModuleType.DataSource, dataSource.Id, default)
+			.GetLogicModuleMetadataAsync(LogicModuleType.DataSource, dataSource.Id, default)
 			.ConfigureAwait(false);
 		CheckMetadata(logicModuleMetadata);
 	}
@@ -39,7 +39,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 		if (configSource != null)
 		{
 			configSource.Id.Should().NotBe(0);
-			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.ConfigSource, configSource.Id, default).ConfigureAwait(false);
+			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadataAsync(LogicModuleType.ConfigSource, configSource.Id, default).ConfigureAwait(false);
 			CheckMetadata(logicModuleMetadata);
 		}
 	}
@@ -52,7 +52,7 @@ public class LogicModuleMetadataTests : TestWithOutput
 		if (propertySource != null)
 		{
 			propertySource.Id.Should().NotBe(0);
-			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadata(LogicModuleType.PropertySource, propertySource.Id, default).ConfigureAwait(false);
+			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadataAsync(LogicModuleType.PropertySource, propertySource.Id, default).ConfigureAwait(false);
 			CheckMetadata(logicModuleMetadata);
 		}
 	}
