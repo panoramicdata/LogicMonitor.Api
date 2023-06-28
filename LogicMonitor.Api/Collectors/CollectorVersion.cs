@@ -7,6 +7,12 @@ namespace LogicMonitor.Api.Collectors;
 public class CollectorVersion
 {
 	/// <summary>
+	/// Specifies if this is a feature version
+	/// </summary>
+	[DataMember(Name = "feature")]
+	public bool Feature { get; set; }
+
+	/// <summary>
 	/// Major Version
 	/// </summary>
 	[DataMember(Name = "majorVersion")]

@@ -20,7 +20,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteGroupFullPath">The website group full path.  The root is "/".</param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
-	public async Task<WebsiteGroup> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken)
+	public async Task<WebsiteGroup?> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken)
 	{
 		if (websiteGroupFullPath is null)
 		{
@@ -137,10 +137,9 @@ public partial class LogicMonitorClient
 		}
 		else
 		{
-			switch (mode)
+			if (mode == SetPropertyMode.Delete)
 			{
-				case SetPropertyMode.Delete:
-					throw new LogicMonitorApiException("Can't delete a custom property that is not there.");
+				throw new LogicMonitorApiException("Can't delete a custom property that is not there.");
 			}
 
 			switch (value)
@@ -148,7 +147,7 @@ public partial class LogicMonitorClient
 				case null:
 					break;
 				default:
-					websiteOrGroup.CustomProperties.Add(new Property
+					websiteOrGroup.CustomProperties.Add(new EntityProperty
 					{
 						Name = name,
 						Value = value
@@ -183,14 +182,16 @@ public partial class LogicMonitorClient
 		SetWebsiteOrWebsiteGroupPropertyAsync<WebsiteGroup>(websiteGroupId, name, value, mode, cancellationToken);
 
 	/// <summary>
-	///    Set website overviews for the specified website group
+	/// get a list of websites for a group (Response may contain extra fields depending upon the type of check { PingCheck | WebCheck} being added)
 	/// </summary>
-	/// <param name="websiteGroupId">The parent website group id.  If not specified, the root id (1) is used.</param>
+	/// <param name="id">The parent website group id.  If not specified, the root id (1) is used.</param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public async Task<List<Website>> GetWebsitesByWebsiteGroupIdAsync(
-		int websiteGroupId = 1,
-		CancellationToken cancellationToken = default)
-		=> (await GetBySubUrlAsync<Page<Website>>($"website/groups/{websiteGroupId}/websites", cancellationToken).ConfigureAwait(false)).Items;
+	public async Task<Page<Website>> GetWebsitesByWebsiteGroupIdAsync(
+		int id,
+		Filter<Website> filter,
+		CancellationToken cancellationToken)
+		=> (await FilteredGetAsync($"website/groups/{id}/websites", filter, cancellationToken).ConfigureAwait(false));
 
 	/// <summary>
 	///     Get website properties, in the following order:
@@ -201,16 +202,16 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="websiteId">The Website Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetWebsitePropertiesAsync(int websiteId, CancellationToken cancellationToken)
-		=> GetAllAsync<Property>($"website/websites/{websiteId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetWebsitePropertiesAsync(int websiteId, CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"website/websites/{websiteId}/properties", cancellationToken);
 
 	/// <summary>
 	///     Gets website Group properties
 	/// </summary>
 	/// <param name="websiteGroupId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<Property>> GetWebsiteGroupPropertiesAsync(int websiteGroupId, CancellationToken cancellationToken)
-		=> GetAllAsync<Property>($"website/groups/{websiteGroupId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetWebsiteGroupPropertiesAsync(int websiteGroupId, CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"website/groups/{websiteGroupId}/properties", cancellationToken);
 
 	/// <summary>
 	/// Get Alerts for a Website by ID
@@ -286,7 +287,7 @@ public partial class LogicMonitorClient
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
 			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetWebsiteAlertsByIdNormalAsync(websiteId, individualAlertFilter, true, CancellationToken.None).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetWebsiteAlertsByIdNormalAsync(websiteId, individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
 			}
@@ -367,4 +368,13 @@ public partial class LogicMonitorClient
 
 		return (allAlerts, false);
 	}
+
+	/// <summary>
+	/// get a list of SDTs for a website
+	/// </summary>
+	public async Task<Page<ScheduledDownTime>> GetWebsiteSDTListAsync(
+		int websiteId,
+		Filter<ScheduledDownTime> filter,
+		CancellationToken cancellationToken)
+		=> await FilteredGetAsync<ScheduledDownTime>($"website/websites/{websiteId}/sdts", filter, cancellationToken);
 }

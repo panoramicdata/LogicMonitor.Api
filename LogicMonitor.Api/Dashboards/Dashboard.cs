@@ -7,7 +7,6 @@ namespace LogicMonitor.Api.Dashboards;
 public class Dashboard
 	: NamedItem,
 	IPatchable,
-	IHasCustomProperties,
 	ICloneableItem
 {
 	/// <summary>
@@ -26,7 +25,7 @@ public class Dashboard
 	///     The full name
 	/// </summary>
 	[DataMember(Name = "fullName")]
-	public string FullName { get; set; }
+	public string FullName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dashboard group Id
@@ -38,25 +37,25 @@ public class Dashboard
 	///     The dashboard group Id
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string DashboardGroupName { get; set; }
+	public string DashboardGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dashboard group full path
 	/// </summary>
 	[DataMember(Name = "groupFullPath")]
-	public string DashboardGroupFullPath { get; set; }
+	public string DashboardGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dashboard owner
 	/// </summary>
 	[DataMember(Name = "owner")]
-	public string Owner { get; set; }
+	public string Owner { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The template
+	/// The template which is used for importing dashboard
 	/// </summary>
 	[DataMember(Name = "template")]
-	public string Template { get; set; }
+	public object Template { get; set; } = new();
 
 	/// <summary>
 	///     Whether to use widget tokens
@@ -68,19 +67,25 @@ public class Dashboard
 	///     Whether to use widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> CustomProperties { get; set; }
+	public List<WidgetToken> WidgetTokens { get; set; } = new();
+
+	/// <summary>
+	/// Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.
+	/// </summary>
+	[DataMember(Name = "overwriteGroupFields")]
+	public bool OverwriteGroupFields { get; set; }
 
 	/// <summary>
 	///     The widgets configuration
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; }
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
 
 	/// <summary>
 	///     The order of the widgets
 	/// </summary>
 	[DataMember(Name = "widgetsOrder")]
-	public string WidgetsOrder { get; set; }
+	public string WidgetsOrder { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The user permission

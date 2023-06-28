@@ -10,5 +10,5 @@ public class DownloadToken
 	/// The token string
 	/// </summary>
 	[DataMember(Name = "token")]
-	public string Token { get; set; }
+	public string Token { get; set; } = string.Empty;
 }

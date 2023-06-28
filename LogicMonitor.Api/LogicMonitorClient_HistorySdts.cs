@@ -8,7 +8,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceId">The Device ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceHistorySdtsAsync(
 		int deviceId,
 		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/historysdts", cancellationToken).ConfigureAwait(false);
@@ -18,7 +18,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="deviceGroupId">The Device Group ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdtsAsync(
 		int deviceGroupId,
 		CancellationToken cancellationToken)
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/groups/{deviceGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
@@ -29,7 +29,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The Device ID</param>
 	/// <param name="deviceDataSourceId">The Device Data Source ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceDataSourceHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceDataSourceHistorySdtsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		CancellationToken cancellationToken)
@@ -42,7 +42,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The Device Data Source ID</param>
 	/// <param name="deviceDataSourceInstanceId">The Device Data Source Instance ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetDeviceDataSourceInstanceHistorySdts(
+	public async Task<HistorySdtCollection> GetDeviceDataSourceInstanceHistorySdtsAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
@@ -50,22 +50,38 @@ public partial class LogicMonitorClient
 	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	///     Gets history SDTs for a Website Group
+	/// Get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)
 	/// </summary>
-	/// <param name="websiteGroupId">The Website Group ID</param>
+	/// <param name="id">The Website Group ID</param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetWebsiteGroupHistorySdts(
-		int websiteGroupId,
+	public async Task<Page<ScheduledDownTime>> GetAllSdtListByWebsiteGroupIdAsync(
+		int id,
+		Filter<ScheduledDownTime> filter,
 		CancellationToken cancellationToken)
-	=> await GetBySubUrlAsync<HistorySdtCollection>($"website/groups/{websiteGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
+	=> await FilteredGetAsync($"website/groups/{id}/sdts", filter, cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	///     Gets history SDTs for a Website
+	/// Get SDT histories for a website group (Response may contain extra fields depending upon the type of SDT)
 	/// </summary>
-	/// <param name="websiteId">The Website ID</param>
+	/// <param name="id">The Website Group ID</param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public async Task<HistorySdtCollection> GetWebsiteHistorySdts(
-		int websiteId,
+	public async Task<Page<ScheduledDownTimeHistory>> GetSdtHistoryListByWebsiteGroupIdAsync(
+		int id,
+		Filter<ScheduledDownTimeHistory> filter,
 		CancellationToken cancellationToken)
-	=> await GetBySubUrlAsync<HistorySdtCollection>($"website/websites/{websiteId}/historysdts", cancellationToken).ConfigureAwait(false);
+	=> await FilteredGetAsync($"website/groups/{id}/historysdts", filter, cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// Get SDT history for the website (Response may contain extra fields depending upon the type of SDT)
+	/// </summary>
+	/// <param name="id">The Website ID</param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken">The CancellationToken</param>
+	public async Task<Page<ScheduledDownTimeHistory>> GetSdtHistoryByWebsiteIdAsync(
+		int id,
+		Filter<ScheduledDownTimeHistory> filter,
+		CancellationToken cancellationToken)
+	=> await FilteredGetAsync($"website/websites/{id}/historysdts", filter, cancellationToken).ConfigureAwait(false);
 }

@@ -9,7 +9,7 @@ public abstract class DescribedItem : IdentifiedItem
 	///    The LogicMonitor Description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    ToString override

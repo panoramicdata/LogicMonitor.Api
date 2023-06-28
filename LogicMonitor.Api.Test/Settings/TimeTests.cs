@@ -10,7 +10,7 @@ public class TimeTests : TestWithOutput
 	public async Task GetTimeZoneSetting()
 	{
 		var timeZoneSetting = await LogicMonitorClient
-			.GetTimeZoneSettingAsync(CancellationToken.None)
+			.GetTimeZoneSettingAsync(default)
 			.ConfigureAwait(false);
 
 		// Text should be set

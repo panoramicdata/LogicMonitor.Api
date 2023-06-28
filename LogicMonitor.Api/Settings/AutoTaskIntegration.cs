@@ -22,7 +22,7 @@ public class AutoTaskIntegration : HttpIntegration
 	/// The dueDateTime
 	/// </summary>
 	[DataMember(Name = "dueDateTime")]
-	public string DueDateTime { get; set; }
+	public string DueDateTime { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The queueId

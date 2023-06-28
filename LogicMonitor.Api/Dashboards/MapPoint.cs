@@ -9,5 +9,5 @@ public class MapPoint
 	/// <summary>
 	///    The type
 	/// </summary>
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 }

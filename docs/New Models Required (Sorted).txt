@@ -1,0 +1,41 @@
+Settings
+"/setting/integrations/auditlogs": {
+			"get": {
+				"summary": "get integration audit logs list",
+				"security": [
+					{
+						"LMv1": [
+						]
+					}
+				],
+				"produces": [
+					"application/json"
+				],
+				"description": "",
+				"operationId": "getIntegrationAuditLogs",
+				"responses": {
+					"200": {
+						"schema": {
+							"$ref": "#/definitions/IntegrationAuditLogPaginationResponse"
+						},
+						"description": "successful operation"
+					},
+					"default": {
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						},
+						"description": "Error"
+					}
+				},
+				"parameters": [
+				],
+				"tags": [
+					"IntegrationAuditLogs"
+				]
+			}
+		}
+
+
+
+Version
+Websites

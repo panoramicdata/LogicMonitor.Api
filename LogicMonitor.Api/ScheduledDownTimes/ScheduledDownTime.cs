@@ -9,31 +9,31 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	#region Basics
 
 	/// <summary>
-	///    Type
+	/// The type resource that this SDT is for
 	/// </summary>
 	[DataMember(Name = "type")]
 	public ScheduledDownTimeType Type { get; set; }
 
 	/// <summary>
-	///    Weekday
+	/// true: the SDT is currently actice\nfalse: the SDT is currently inactive
 	/// </summary>
 	[DataMember(Name = "isEffective")]
 	public bool IsEffective { get; set; }
 
 	/// <summary>
-	///    ScheduledDownTime type
+	/// the type of sdt, values can be oneTime|weekly|monthly|daily|monthlyByWeek
 	/// </summary>
 	[DataMember(Name = "sdtType")]
 	public ScheduledDownTimeRecurrenceType RecurrenceType { get; set; }
 
 	/// <summary>
-	///    Admin
+	/// The name of the user that created the SDT
 	/// </summary>
 	[DataMember(Name = "admin")]
 	public string Admin { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Comment
+	/// The notes associated with the SDT
 	/// </summary>
 	[DataMember(Name = "comment")]
 	public string Comment { get; set; } = string.Empty;
@@ -46,7 +46,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	///    The collector description
 	/// </summary>
 	[DataMember(Name = "collectorDescription")]
-	public string? CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The checkpoint id
@@ -124,6 +124,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "collectorId")]
 	public int? CollectorId { get; set; }
+
 	/// <summary>
 	///    The dataSourceInstance Id
 	/// </summary>
@@ -170,55 +171,55 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 
 	#region Time-related
 	/// <summary>
-	///    Weekday
+	/// the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public WeekDay? WeekDay { get; set; }
+	public string WeekDay { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Month day
+	/// 1 | 2....| 31 The day of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "monthDay")]
 	public int MonthDay { get; set; }
 
 	/// <summary>
-	///    Hour
+	/// 1 | 2....| 24 The hour that the SDT will start for a repeating SDT (daily, weekly, or monthly)
 	/// </summary>
 	[DataMember(Name = "hour")]
 	public int Hour { get; set; }
 
 	/// <summary>
-	///    Minute
+	/// 1 | 2....| 60 The minute of the hour that the SDT should begin for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "minute")]
 	public int Minute { get; set; }
 
 	/// <summary>
-	///    End Hour
+	/// 1 | 2....| 24 The hour that the SDT ends for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "endHour")]
 	public int EndHour { get; set; }
 
 	/// <summary>
-	///    End Minute
+	/// 1 | 2....| 60 The minute of the hour that the SDT ends for a repeating SDT
 	/// </summary>
 	[DataMember(Name = "endMinute")]
 	public int EndMinute { get; set; }
 
 	/// <summary>
-	///    Duration in minutes
+	/// The duration of the SDT in minutes
 	/// </summary>
 	[DataMember(Name = "duration")]
 	public int DurationMinutes { get; set; }
 
 	/// <summary>
-	///    Start date time local
+	/// The date, time and time zone that the SDT will end at
 	/// </summary>
 	[DataMember(Name = "startDateTimeOnLocal")]
 	public string StartDateTimeLocal { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Start date time local
+	/// The epoch time, in milliseconds, that the SDT will start
 	/// </summary>
 	[DataMember(Name = "startDateTime")]
 	public long StartDateTimeMs { get; set; }
@@ -230,13 +231,13 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public DateTime StartDateTimeUtc => StartDateTimeMs.ToDateTimeUtcFromMs();
 
 	/// <summary>
-	///    End date time local
+	/// The date, time and time zone that the SDT will end at
 	/// </summary>
 	[DataMember(Name = "endDateTimeOnLocal")]
 	public string EndDateTimeLocal { get; set; } = string.Empty;
 
 	/// <summary>
-	///    End date time local
+	/// The epoch time, in milliseconds, that the SDT will end
 	/// </summary>
 	[DataMember(Name = "endDateTime")]
 	public long EndDateTimeMs { get; set; }
@@ -248,16 +249,16 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public DateTime EndDateTimeUtc => EndDateTimeMs.ToDateTimeUtcFromMs();
 
 	/// <summary>
-	/// The time zone
+	/// The specific timezone for SDT
 	/// </summary>
 	[DataMember(Name = "timezone")]
 	public string TimeZone { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Week of Month
+	/// The week of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "weekOfMonth")]
-	public WeekOfMonth WeekOfMonth { get; set; } = WeekOfMonth.None;
+	public string WeekOfMonth { get; set; } = string.Empty;
 
 	#endregion
 

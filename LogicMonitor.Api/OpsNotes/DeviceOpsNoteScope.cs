@@ -16,5 +16,5 @@ public class DeviceOpsNoteScope : OpsNoteScope
 	/// The device name
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; }
+	public string DeviceName { get; set; } = string.Empty;
 }

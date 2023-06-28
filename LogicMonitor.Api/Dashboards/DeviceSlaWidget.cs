@@ -4,31 +4,43 @@ namespace LogicMonitor.Api.Dashboards;
 ///     A Device SLA widget
 /// </summary>
 [DataContract]
-public class DeviceSlaWidget : Widget
+public class DeviceSlaWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The bottom label
 	/// </summary>
 	[DataMember(Name = "bottomLabel")]
-	public string BottomLabel { get; set; }
+	public string BottomLabel { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Calculation method: 0 \u003d percent all resources available, 1 \u003d average of all SLA metrics
+	/// </summary>
+	[DataMember(Name = "calculationMethod")]
+	public int CalculationMethod { get; set; }
+
+	/// <summary>
+	/// Whether a progress bar is displayed in list mode
+	/// </summary>
+	[DataMember(Name = "displayPercentageBar")]
+	public bool DisplayPercentageBar { get; set; }
 
 	/// <summary>
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<DeviceSlaWidgetMetric> Metrics { get; set; }
+	public List<DeviceSlaWidgetMetric> Metrics { get; set; } = new();
 
 	/// <summary>
 	/// The daysInWeek
 	/// </summary>
 	[DataMember(Name = "daysInWeek")]
-	public string DaysInWeek { get; set; }
+	public string DaysInWeek { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The periodInOneDay
 	/// </summary>
 	[DataMember(Name = "periodInOneDay")]
-	public string PeriodInOneDay { get; set; }
+	public string PeriodInOneDay { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The unmonitoredTimeType
@@ -46,7 +58,7 @@ public class DeviceSlaWidget : Widget
 	/// The unit label
 	/// </summary>
 	[DataMember(Name = "unitLabel")]
-	public string UnitLabel { get; set; }
+	public string UnitLabel { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The top X
@@ -58,11 +70,11 @@ public class DeviceSlaWidget : Widget
 	/// The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; }
+	public List<ColorThreshold> ColorThresholds { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

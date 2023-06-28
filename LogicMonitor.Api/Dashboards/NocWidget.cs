@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// A NOC widget
 /// </summary>
 [DataContract]
-public class NocWidget : Widget
+public class NocWidget : Widget, IWidget
 {
 	/// <summary>
 	/// The Alert Level
@@ -16,23 +16,23 @@ public class NocWidget : Widget
 	/// The device type
 	/// </summary>
 	[DataMember(Name = "hostsType")]
-	public string DeviceType { get; set; }
+	public string DeviceType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The device type
 	/// </summary>
 	[DataMember(Name = "hosts")]
-	public string Devices { get; set; }
+	public string Devices { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<NocWidgetItem> Items { get; set; }
+	public List<NocWidgetItem> Items { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

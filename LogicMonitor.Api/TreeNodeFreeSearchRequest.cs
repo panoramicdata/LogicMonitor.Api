@@ -16,7 +16,7 @@ public class TreeNodeFreeSearchRequest
 	/// The search text
 	/// </summary>
 	[DataMember(Name = "searchText")]
-	public string SearchText { get; set; }
+	public string SearchText { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The result limitation

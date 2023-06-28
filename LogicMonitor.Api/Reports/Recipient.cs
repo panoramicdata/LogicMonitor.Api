@@ -1,32 +1,33 @@
-namespace LogicMonitor.Api.Reports;
+﻿namespace LogicMonitor.Api.Reports;
 
 /// <summary>
-/// A report recipient
+/// Recipient
 /// </summary>
+
 [DataContract]
 public class Recipient
 {
 	/// <summary>
-	/// The recipient type
-	/// </summary>
-	[DataMember(Name = "type")]
-	public string Type { get; set; }
-
-	/// <summary>
-	/// The receipt method
+	/// EMAIL|SMEMAIL|VOICE|SMS, Recipient method for each type\n            group: \"method\" not used\n            arbitrary: the method should be email.\n            admin: the method  Should be email, smsEmail, voice, sms, or defaultMethod;\n
 	/// </summary>
 	[DataMember(Name = "method")]
-	public string Method { get; set; }
+	public string Method { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The address
+	/// contact details, email address or phone number
+	/// </summary>
+	[DataMember(Name = "contact")]
+	public string Contact { get; set; } = string.Empty;
+
+	/// <summary>
+	/// GROUP|ARBITRARY|ADMIN, where Admin \u003d a user, and Arbitrary \u003d an arbitrary email
+	/// </summary>
+	[DataMember(Name = "type")]
+	public string Type { get; set; } = string.Empty;
+
+	/// <summary>
+	/// the user name if method \u003d admin, or the email address if method \u003d arbitrary
 	/// </summary>
 	[DataMember(Name = "addr")]
-	public string Address { get; set; }
-
-	/// <summary>
-	/// The additional information
-	/// </summary>
-	[DataMember(Name = "additionInfo")]
-	public string AdditionInfo { get; set; }
+	public string Addr { get; set; } = string.Empty;
 }

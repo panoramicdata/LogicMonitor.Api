@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///    A dashboard group
 /// </summary>
 [DataContract]
-public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
+public class DashboardGroup : NamedItem, IPatchable
 {
 	/// <summary>
 	///    The full path
@@ -49,16 +49,16 @@ public class DashboardGroup : NamedItem, IPatchable, IHasCustomProperties
 	public List<Dashboard> Dashboards { get; set; } = new();
 
 	/// <summary>
-	///     The template
+	/// The template which is used for importing dashboard group
 	/// </summary>
 	[DataMember(Name = "template")]
-	public string? Template { get; set; }
+	public object Template { get; set; } = new();
 
 	/// <summary>
 	///    The widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> CustomProperties { get; set; } = new();
+	public List<SimpleProperty> CustomProperties { get; set; } = new();
 
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/groups";

@@ -10,25 +10,25 @@ public class FlowApplication
 	/// The data type
 	/// </summary>
 	[DataMember(Name = "dataType")]
-	public string DataType { get; set; }
+	public string DataType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Source DNS
 	/// </summary>
 	[DataMember(Name = "dns")]
-	public string Dns { get; set; }
+	public string Dns { get; set; } = string.Empty;
 
 	/// <summary>
 	/// IP address
 	/// </summary>
 	[DataMember(Name = "IP")]
-	public string Ip { get; set; }
+	public string Ip { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The protocol
 	/// </summary>
 	[DataMember(Name = "protocol")]
-	public string Protocol { get; set; }
+	public string Protocol { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The port number

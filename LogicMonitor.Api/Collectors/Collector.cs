@@ -10,7 +10,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The collector down acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
-	public string AckComment { get; set; }
+	public string AckComment { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Platform
@@ -24,14 +24,14 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "ackedBy")]
-	public string AckedBy { get; set; }
+	public string AckedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Acked on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "ackedOnLocal")]
-	public string AckedOnLocalString { get; set; }
+	public string AckedOnLocalString { get; set; } = string.Empty;
 
 	/// <summary>
 	///     When the collector was Acked in UTC (or null if not acked)
@@ -51,20 +51,26 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "arch")]
-	public string Architecture { get; set; }
+	public string Architecture { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The automatic upgrade information
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "automaticUpgradeInfo", IsRequired = false)]
-	public object AutomaticUpgradeInfo { get; set; } // TODO - use the AutomaticUpgradeInfo class
+	[DataMember(Name = "automaticUpgradeInfo")]
+	public AutomaticUpgradeInfo AutomaticUpgradeInfo { get; set; } = new AutomaticUpgradeAutomaticUpgradeInfo();
 
 	/// <summary>
 	///     This collector's backup collector's Id
 	/// </summary>
 	[DataMember(Name = "backupAgentId")]
 	public int BackupCollectorId { get; set; }
+
+	/// <summary>
+	///     This collector's bearer token
+	/// </summary>
+	[DataMember(Name = "bearerToken")]
+	public string BearerToken { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Netscan version
@@ -85,7 +91,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "canDowngradeReason")]
-	public string CanDowngradeReason { get; set; }
+	public string CanDowngradeReason { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Whether a clear has been sent for a collector down alert
@@ -99,7 +105,35 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorConf")]
-	public string CollectorConfiguration { get; set; }
+	public string CollectorConfiguration { get; set; } = string.Empty;
+
+	/// <summary>
+	///     Collector configuration
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "collectorType")]
+	public CollectorType Type { get; set; }
+
+	/// <summary>
+	/// This is key value pairs of collector config properties
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "agentConfFields")]
+	public string ConfigurationFields { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The copy URL
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "copyUrl")]
+	public string CopyUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The download URL
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "downloadUrl")]
+	public string DownloadUrl { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The collector device id
@@ -107,6 +141,19 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorDeviceId")]
 	public int DeviceId { get; set; }
+
+	/// <summary>
+	///     The encoded config data
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "encodedConfigData")]
+	public string EncodedConfigData { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The format
+	/// </summary>
+	[DataMember(Name = "format")]
+	public string Format { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The collector group id
@@ -119,14 +166,14 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorGroupName")]
-	public string GroupName { get; set; }
+	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Agent configuration
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "agentConf")]
-	public string Configuration { get; set; }
+	[DataMember(Name = "config")]
+	public string Configuration { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The configuration version
@@ -140,7 +187,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "createdOnLocal")]
-	public string CreatedOnLocalString { get; set; }
+	public string CreatedOnLocalString { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Created on
@@ -153,19 +200,19 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The credential
 	/// </summary>
 	[DataMember(Name = "credential")]
-	public string Credential { get; set; }
+	public string Credential { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The other credential
 	/// </summary>
 	[DataMember(Name = "credential2")]
-	public string Credential2 { get; set; }
+	public string Credential2 { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	///     Number of hosts
@@ -195,7 +242,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The escalation chain
 	/// </summary>
 	[DataMember(Name = "escalatingChain")]
-	public EscalationChain EscalationChain { get; set; }
+	public EscalationChain EscalationChain { get; set; } = new();
 
 	/// <summary>
 	///     Escalating chain Id
@@ -213,7 +260,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Hostname
 	/// </summary>
 	[DataMember(Name = "hostname")]
-	public string HostName { get; set; }
+	public string HostName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     In SDT
@@ -228,10 +275,22 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool IsDown { get; set; }
 
 	/// <summary>
+	///     Whether the collector is encoded
+	/// </summary>
+	[DataMember(Name = "isEncoded")]
+	public bool IsEncoded { get; set; }
+
+	/// <summary>
+	///     Whether LM Logs is enabled
+	/// </summary>
+	[DataMember(Name = "enableLmLogs")]
+	public bool IsLmLogsEnabled { get; set; }
+
+	/// <summary>
 	///     Last sent notification on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[DataMember(Name = "lastSentNotificationOnLocal")]
-	public string LastSentNotificationOnLocal { get; set; }
+	public string LastSentNotificationOnLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Last send notification on UTC
@@ -261,31 +320,43 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Collector next upgrade info
 	/// </summary>
 	[DataMember(Name = "nextUpgradeInfo")]
-	public CollectorNextUpgradeInfo NextUpgradeInfo { get; set; }
+	public CollectorNextUpgradeInfo NextUpgradeInfo { get; set; } = new();
 
 	/// <summary>
 	///     The one-time downgrade information
 	/// </summary>
 	[DataMember(Name = "onetimeDowngradeInfo")]
-	public string OnetimeDowngradeInfo { get; set; }
+	public string OnetimeDowngradeInfo { get; set; } = string.Empty;
 
 	/// <summary>
 	///     One time upgrade info
 	/// </summary>
 	[DataMember(Name = "onetimeUpgradeInfo")]
-	public OneTimeUpgradeInfo OneTimeUpgradeInfo { get; set; }
+	public OneTimeUpgradeInfo OneTimeUpgradeInfo { get; set; } = new();
+
+	/// <summary>
+	///     The OTEL Id
+	/// </summary>
+	[DataMember(Name = "otelId")]
+	public int? OtelId { get; set; }
+
+	/// <summary>
+	///     The OTEL version
+	/// </summary>
+	[DataMember(Name = "otelVersion")]
+	public string OtelVerison { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Platform
 	/// </summary>
 	[DataMember(Name = "platform")]
-	public string Platform { get; set; }
+	public string Platform { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The predefined configuration
 	/// </summary>
 	[DataMember(Name = "predefinedConfig")]
-	public object PredefinedConfiguration { get; set; }
+	public object PredefinedConfiguration { get; set; } = new();
 
 	/// <summary>
 	///     The previous version
@@ -294,10 +365,10 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int PreviousVersion { get; set; }
 
 	/// <summary>
-	///     The sbproxyConf file contents
+	/// The Proxy\u0027s configuration
 	/// </summary>
 	[DataMember(Name = "sbproxyConf")]
-	public string ProxyConfiguration { get; set; }
+	public string ProxyConfiguration { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Resend interval
@@ -309,7 +380,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Website configuration
 	/// </summary>
 	[DataMember(Name = "websiteConf")]
-	public string WebsiteConfiguration { get; set; }
+	public string WebsiteConfiguration { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Number of Website
@@ -321,7 +392,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Size
 	/// </summary>
 	[DataMember(Name = "collectorSize")]
-	public string Size { get; set; }
+	public string Size { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The specified collector DeviceGroupId
@@ -342,10 +413,16 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool SuppressAlertClear { get; set; }
 
 	/// <summary>
+	/// Whether the collector can monitor Synthetic devices (Selenium grid property must be defined)
+	/// </summary>
+	[DataMember(Name = "syntheticsEnabled")]
+	public bool IsSyntheticsEnables { get; set; }
+
+	/// <summary>
 	///     Updated on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[DataMember(Name = "updatedOnLocal")]
-	public string UpdatedOnLocalString { get; set; }
+	public string UpdatedOnLocalString { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The upgrade time in seconds since the Epoch
@@ -369,7 +446,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The local time of user change
 	/// </summary>
 	[DataMember(Name = "userChangeOnLocal")]
-	public string UserChangeOnLocal { get; set; }
+	public string UserChangeOnLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The local time of user change
@@ -399,13 +476,13 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Watchdog configuration
 	/// </summary>
 	[DataMember(Name = "watchdogConf")]
-	public string WatchdogConfiguration { get; set; }
+	public string WatchdogConfiguration { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Updated on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[DataMember(Name = "watchdogUpdatedOnLocal")]
-	public string WatchdogUpdatedOnLocal { get; set; }
+	public string WatchdogUpdatedOnLocal { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Watchdog updated on
@@ -423,7 +500,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Wrapper configuration
 	/// </summary>
 	[DataMember(Name = "wrapperConf")]
-	public string WrapperConfiguration { get; set; }
+	public string WrapperConfiguration { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The instance count

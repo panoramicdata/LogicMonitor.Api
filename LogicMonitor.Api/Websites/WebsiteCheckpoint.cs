@@ -7,13 +7,13 @@
 public class WebsiteCheckpoint : IdentifiedItem
 {
 	/// <summary>
-	/// Website authentication credentials
+	/// The geographical information (location) of the SiteMonitor Checkpoint
 	/// </summary>
 	[DataMember(Name = "geoInfo")]
-	public string GeographicInformation { get; set; }
+	public string? GeographicInformation { get; set; }
 
 	/// <summary>
-	/// Website MG Id
+	/// The sitemonitor group id
 	/// </summary>
 	[DataMember(Name = "smgId")]
 	public int SmgId { get; set; }

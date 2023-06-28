@@ -1,10 +1,10 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace LogicMonitor.Api.Test.Converters;
 
-public class DoubleOrNAConverter : TestWithOutput
+public class DoubleOrNAConverterTests : TestWithOutput
 {
-	public DoubleOrNAConverter(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
+	public DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
 	{
 	}
 

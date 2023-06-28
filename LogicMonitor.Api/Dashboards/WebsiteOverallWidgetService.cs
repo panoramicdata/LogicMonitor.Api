@@ -16,13 +16,13 @@ public class WebsiteOverallWidgetWebsite
 	/// The Website group name
 	/// </summary>
 	[DataMember(Name = "websiteGroupName")]
-	public string WebsiteGroupName { get; set; }
+	public string WebsiteGroupName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Website name
 	/// </summary>
 	[DataMember(Name = "websiteName")]
-	public string WebsiteName { get; set; }
+	public string WebsiteName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether all are chosen
@@ -34,5 +34,5 @@ public class WebsiteOverallWidgetWebsite
 	/// The Website locations
 	/// </summary>
 	[DataMember(Name = "websites")]
-	public List<WebsiteOverallWidgetWebsiteDetail> Websites { get; set; }
+	public List<WebsiteOverallWidgetWebsiteDetail> Websites { get; set; } = new();
 }

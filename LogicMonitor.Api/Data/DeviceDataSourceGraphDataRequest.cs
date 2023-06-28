@@ -15,7 +15,17 @@ public class DeviceDataSourceGraphDataRequest : GraphDataRequest
 	/// </summary>
 	public int? OverviewGraphId { get; set; }
 
-	internal override string SubUrl => $"device/devicedatasourceinstancegroups/{DataSourceInstanceGroupId}/graphs/{OverviewGraphId}/data?{TimePart}";
+	/// <summary>
+	///  The Device Id
+	/// </summary>
+	public int? DeviceId { get; set; }
+
+	/// <summary>
+	/// The Datasource Id
+	/// </summary>
+	public int DeviceDataSourceId { get; set; }
+
+	internal override string SubUrl => $"device/devices/{DeviceId}/devicedatasources/{DeviceDataSourceId}/groups/{DataSourceInstanceGroupId}/graphs/{OverviewGraphId}/data?{TimePart}";
 
 	/// <inheritdoc />
 	public override void Validate()

@@ -3,11 +3,11 @@ namespace LogicMonitor.Api.Converters;
 /// <summary>
 /// A report converter
 /// </summary>
-internal class ReportConverter : JsonCreationConverter<Report>
+internal class ReportConverter : JsonCreationConverter<ReportBase>
 {
-	protected override Report Create(Type objectType, JObject jObject)
+	protected override ReportBase Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 
 		return type switch
 		{
@@ -22,7 +22,7 @@ internal class ReportConverter : JsonCreationConverter<Report>
 			"host group inventory" => new DeviceGroupInventoryReport(),
 			"host inventory" => new DeviceInventoryReport(),
 			"host metric trends" => new DeviceMetricTrendsReport(),
-			"interfaces bandwidth" => new InterfacesBandwidthReport(),
+			"interfaces bandwidth" => new InterfBandwidthReport(),
 			"netflow device metric" => new NetflowDeviceMetricReport(),
 			"role" => new RoleReport(),
 			"service level agreement" => new SlaReport(),
@@ -34,6 +34,6 @@ internal class ReportConverter : JsonCreationConverter<Report>
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		=> throw new NotSupportedException();
 }

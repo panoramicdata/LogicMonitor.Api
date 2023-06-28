@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace LogicMonitor.Api.Test;
 
 [Collection("CollectorRelated")]
@@ -11,27 +13,54 @@ public class CollectorTests2
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
+		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(default).ConfigureAwait(false);
 		collectorGroups.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collectorGroup in collectorGroups)
 		{
-			var refetch = await LogicMonitorClient.GetAsync<CollectorGroup>(collectorGroup.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<CollectorGroup>(collectorGroup.Id, default).ConfigureAwait(false);
 			refetch.Should().NotBeNull();
 		}
 	}
 
 	[Fact]
+	public async Task GetCollectorsFromGroup()
+	{
+		var collectorGroups = await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(false);
+
+		var fullGroup = new CollectorGroup();
+		var collectorGroup = new CollectorGroup();
+		int i = 0;
+		while (fullGroup.Id == 0)
+		{
+			collectorGroup = collectorGroups[i];
+			if (collectorGroup.CollectorCount > 0)
+			{
+				fullGroup = collectorGroup;
+			}
+			i++;
+		}
+
+		var collectors = await LogicMonitorClient
+			.GetAllCollectorsByCollectorGroupIdAsync(fullGroup.Id, default)
+			.ConfigureAwait(false);
+
+		collectors.Items.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
 	public async Task GetAllCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
 		collectors.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collector in collectors)
 		{
-			var refetch = await LogicMonitorClient.GetAsync<Collector>(collector.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient.GetAsync<Collector>(collector.Id, default).ConfigureAwait(false);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -39,14 +68,76 @@ public class CollectorTests2
 	[Fact]
 	public async Task RunDebugCommand()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(CancellationToken.None).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
 		var testCollector = collectors.Find(c => !c.IsDown);
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
-			.ExecuteDebugCommandAndWaitForResultAsync(testCollector.Id, "!ping 8.8.8.8", cancellationToken: CancellationToken.None)
+			.ExecuteDebugCommandAndWaitForResultAsync(
+				testCollector!.Id,
+				"!ping 8.8.8.8",
+				10_000,
+				500,
+				default)
 			.ConfigureAwait(false);
 		response.Should().NotBeNull();
+		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
+	}
+
+	[Fact]
+	public async Task UpdateCollectorGroup()
+	{
+		var collectorGroup = (await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(false))[2];
+
+		var defaultDesc = collectorGroup.Description;
+		collectorGroup.Description = "test desc";
+
+		await LogicMonitorClient
+			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
+			.ConfigureAwait(false);
+
+		var updatedGroup = (await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(false))[1];
+
+		var updatedDesc = collectorGroup.Description;
+		collectorGroup.Description = defaultDesc;
+
+		await LogicMonitorClient
+			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
+			.ConfigureAwait(false);
+
+		updatedDesc.Should().Be("test desc");
+	}
+
+	[Fact]
+	public async Task UpdateCollector()
+	{
+		var collector = (await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(false))[0];
+
+		var defaultDesc = collector.Description;
+		collector.Description = "test desc";
+
+		await LogicMonitorClient
+			.UpdateCollectorByIdAsync(collector.Id, collector, default)
+			.ConfigureAwait(false);
+
+		var updatedGroup = (await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(false))[1];
+
+		var updatedDesc = collector.Description;
+		collector.Description = defaultDesc;
+
+		await LogicMonitorClient
+			.UpdateCollectorByIdAsync(collector.Id, collector, default)
+			.ConfigureAwait(false);
+
+		updatedDesc.Should().Be("test desc");
 	}
 
 	[Fact]
@@ -60,7 +151,7 @@ public class CollectorTests2
 				{
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
 				}
-			}, CancellationToken.None
+			}, default
 			).ConfigureAwait(false))
 			.Select(cv => (cv.MajorVersion * 1000) + cv.MinorVersion)
 			.OrderByDescending(v => v)
@@ -72,18 +163,18 @@ public class CollectorTests2
 		var collectorVersionInt = collectorVersionInts[0];
 
 		// Create the collector
-		var collector = await LogicMonitorClient.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, CancellationToken.None).ConfigureAwait(false);
+		var collector = await LogicMonitorClient.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, default).ConfigureAwait(false);
 
 		var tempFileInfo = new FileInfo(Path.GetTempPath() + Guid.NewGuid().ToString());
 		try
 		{
-			await LogicMonitorClient.DownloadCollector(
+			await LogicMonitorClient.DownloadCollectorAsync(
 				collector.Id,
 				tempFileInfo,
 				CollectorPlatformAndArchitecture.Win64,
 				CollectorDownloadType.Bootstrap,
 				CollectorSize.Medium,
-				collectorVersionInt, CancellationToken.None).ConfigureAwait(false);
+				collectorVersionInt).ConfigureAwait(false);
 		}
 		finally
 		{
@@ -92,7 +183,9 @@ public class CollectorTests2
 			tempFileInfo.Delete();
 
 			// Remove the collector from the API
-			await LogicMonitorClient.DeleteAsync(collector, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(
+				collector,
+				default).ConfigureAwait(false);
 		}
 	}
 }

@@ -8,5 +8,5 @@ public abstract class ValidationIssue
 	/// <summary>
 	/// The message
 	/// </summary>
-	public string Message { get; }
+	public string Message { get; } = string.Empty;
 }

@@ -8,12 +8,8 @@ public class AlertRulesTests : TestWithOutput
 
 	private static async Task GetAlertRule(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 	{
-		var alertRule = (await portalClient.GetAllAsync<AlertRule>(CancellationToken.None).ConfigureAwait(false)).SingleOrDefault(ar => ar.Name == alertRuleName);
-
-		if (alertRule is null)
-		{
-			throw new ArgumentException($"No alert rule found with name {alertRuleName}");
-		}
+		var alertRule = (await portalClient.GetAlertRuleListAsync(new(), default).ConfigureAwait(false)).Items.SingleOrDefault(ar => ar.Name == alertRuleName)
+			?? throw new ArgumentException($"No alert rule found with name {alertRuleName}");
 
 		alertRule.SuppressAlertClear = !enableAlertClear;
 	}
@@ -29,21 +25,72 @@ public class AlertRulesTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertRules()
 	{
-		var alertRules = await LogicMonitorClient.GetAllAsync<AlertRule>(CancellationToken.None).ConfigureAwait(false);
-		alertRules.Should().NotBeNullOrEmpty();
+		var alertRules = await LogicMonitorClient.GetAlertRuleListAsync(new(), default).ConfigureAwait(false);
+		alertRules.Items.Should().NotBeNullOrEmpty();
 
 		// Get each one individually and check everything matches
-		foreach (var alertRule in alertRules)
+		foreach (var alertRule in alertRules.Items)
 		{
 			// Save it
-			await LogicMonitorClient.SaveAlertRuleAsync(alertRule, CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.SaveAlertRuleAsync(alertRule, default).ConfigureAwait(false);
 
-			var refetchedAlertRule = await LogicMonitorClient.GetAsync<AlertRule>(alertRule.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetchedAlertRule = await LogicMonitorClient.GetAlertRuleAsync(alertRule.Id, new Filter<AlertRule>(), default).ConfigureAwait(false);
 			refetchedAlertRule.Id.Should().Be(alertRule.Id);
 			// Other tests?
 
 			// Only do one for now
 			break;
 		}
+	}
+
+	[Fact]
+	public async Task AddAndDeleteAlertRule()
+	{
+		var newRule = new AlertRule()
+		{
+			DataPoint = "*",
+			DataSourceInstanceName = "*",
+			Devices = new List<string> { "Test Device" },
+			DeviceGroups = new List<string> { "Test Groups" },
+			EscalationChainId = 67,
+			SendAnomalySuppressedAlert = false,
+			Priority = 100,
+			SuppressAlertAckSdt = false,
+			DataSourceName = "*",
+			SuppressAlertClear = false,
+			Name = "LornaTest",
+			LevelString = "All",
+		};
+
+		await LogicMonitorClient
+			.AddAlertRuleAsync(newRule, default)
+			.ConfigureAwait(false);
+
+		var alertRules = await LogicMonitorClient
+			.GetAlertRuleListAsync(new Filter<AlertRule>(), default)
+			.ConfigureAwait (false);
+
+		var found = false;
+		var createdAlert = new AlertRule();
+		
+		foreach (var alertRule in alertRules.Items)
+		{
+			if (alertRule.Name.Equals("LornaTest", StringComparison.Ordinal))
+			{
+				found = true;
+				createdAlert = alertRule;
+				break;
+			}
+		}
+
+		if (found)
+		{
+			await LogicMonitorClient
+				.DeleteAlertRuleAsync(createdAlert.Id, default)
+				.ConfigureAwait(false);
+		}
+
+		found.Should().BeTrue();
+
 	}
 }

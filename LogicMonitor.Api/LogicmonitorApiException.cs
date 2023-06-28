@@ -13,12 +13,32 @@ public class LogicMonitorApiException : Exception
 	/// <param name="subUrl"></param>
 	/// <param name="httpStatusCode"></param>
 	/// <param name="responseBody"></param>
+	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody)
+		: this(method, subUrl, httpStatusCode, responseBody, null)
+	{
+	}
+
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	/// <param name="method"></param>
+	/// <param name="subUrl"></param>
+	/// <param name="httpStatusCode"></param>
+	/// <param name="responseBody"></param>
 	/// <param name="message"></param>
-	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string message = null)
+	public LogicMonitorApiException(HttpMethod method, string subUrl, HttpStatusCode httpStatusCode, string responseBody, string? message)
 		: base(message ?? $"Unsuccessful {method} to {subUrl} ({httpStatusCode} - {(int)httpStatusCode}).  Response Body:\n{responseBody}")
 	{
 		HttpStatusCode = httpStatusCode;
-		ErrorMessage = message;
+		if (message != null)
+		{
+			ErrorMessage = message;
+		}
+		else
+		{
+			ErrorMessage = string.Empty;
+		}
+
 		ResponseBody = responseBody;
 	}
 
@@ -69,7 +89,7 @@ public class LogicMonitorApiException : Exception
 	/// <summary>
 	/// The body of the response sent by LogicMonitor
 	/// </summary>
-	public string ResponseBody { get; protected set; }
+	public string ResponseBody { get; protected set; } = string.Empty;
 
 	/// <summary>
 	/// The HTTP status code
@@ -79,9 +99,9 @@ public class LogicMonitorApiException : Exception
 	/// <summary>
 	/// The error message
 	/// </summary>
-	public string ErrorMessage { get; }
+	public string ErrorMessage { get; } = string.Empty;
 
-	private bool Equals(LogicMonitorApiException other) => HttpStatusCode == other.HttpStatusCode && string.Equals(ErrorMessage, other.ErrorMessage);
+	private bool Equals(LogicMonitorApiException other) => HttpStatusCode == other.HttpStatusCode && string.Equals(ErrorMessage, other.ErrorMessage, StringComparison.Ordinal);
 
 	/// <inheritdoc />
 	public override bool Equals(object obj)

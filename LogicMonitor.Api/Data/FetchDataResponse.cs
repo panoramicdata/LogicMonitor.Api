@@ -16,13 +16,13 @@ public class FetchDataResponse
 	/// The instance FetchData responses
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<InstanceFetchDataResponse> InstanceFetchDataResponses { get; set; }
+	public List<InstanceFetchDataResponse> InstanceFetchDataResponses { get; set; } = new();
 
 	/// <summary>
 	/// The searh id
 	/// </summary>
 	[DataMember(Name = "searchId")]
-	public object SearchId { get; set; }
+	public object SearchId { get; set; } = new();
 
 	/// <summary>
 	/// Whether it is min

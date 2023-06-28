@@ -28,7 +28,7 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<failed>Failed)(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
 		new(02,
 			AuditEventEntityType.Resource,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.*?)""$", RegexOptions.Singleline)),
 		new(03,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
@@ -115,10 +115,10 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?) SDT from (?<sdtStart>.+?) to (?<sdtEnd>.+?) from .+ on Host (?<resourceName>.+) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(31,
 			AuditEventEntityType.ScheduledDownTime,
-			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>.+?)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ?""DeviceDatasourceInstanceName=(?<instanceName>.+?)""; ?""DeviceDataSourceInstanceId=(?<instanceId>.+?)""; ?""DeviceName=(?<resourceName>.+?)""; ?""DeviceId=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(32,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+)\) ,.+$", RegexOptions.Singleline)),
 		new(33,
 			AuditEventEntityType.DataSource,
 			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<dataSourceName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
@@ -128,6 +128,90 @@ public static class LogItemExtensions
 		new(35,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>.+?)ed device (?<resourceName>.+) \((?<resourceId>.+?)\)  via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(36,
+			AuditEventEntityType.None,
+			new(@"^regular device total monthly metrics -> (?<monthlyMetrics>.+?)$")),
+		new(37,
+			AuditEventEntityType.None,
+			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
+		new(38,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ?""Type=SDT""; ?""Description=(?<description>.+?)""; ?"".+?Name=(?<resourceName>.+?)""; ?"".+?Id=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
+		new(39,
+			AuditEventEntityType.OpsNote,
+			new(@"^(?<action>add) new opsnote \((?<description>.+?)\)$", RegexOptions.Singleline)),
+		new(40,
+			AuditEventEntityType.AllCollectors,
+			new(@"^help run by (?<loginName>.+?) on collector \(id=(?<collectorId>.+?), hostname=(?<collectorName>.+?), desc=(?<description>.+?)\)$", RegexOptions.Singleline)),
+		new(41,
+			AuditEventEntityType.Resource,
+			new(@"^Schedule data-collection poll request, hostId=(?<hostId>.+?), agentId=(?<agentId>.+?), requestId=(?<requestId>.+?)$", RegexOptions.Singleline)),
+		new(42,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\), (?<actionTwo>Delet)ed device (?<resourceName>.+?) \(.+?\) \((?<resourceId>.+?)\)$", RegexOptions.Singleline)),
+		new(43,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\)$", RegexOptions.Singleline)),
+		new(44,
+			AuditEventEntityType.Account,
+			new(@"^(?<loginName>.+?) Could not log into the system - Authentication failed \.$", RegexOptions.Singleline)),
+		new(45,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Add) a widget test to dashboard (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(46,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Group""; ""Device=NA""; ""GroupName=(?<resourceGroupName>.+?)""; ""Description=(?<description>(.|\n)+?)""; ""Alert_threshold_changes=((.|\n)+?)""; ""DataSource=(?<dataSourceName>.+?)""; ""DataSourceId=(?<dataSourceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
+		new(47,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""; ""Alert_threshold_changes=\[DataPointId=(.+?),DataPointName=(.+?),OldDataPointValue=(?<instanceOldValue>.+?),NewDataPointValue=(?<instanceNewValue>.+?)\]""; ""InstanceId=(?<instanceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
+		new(48,
+			AuditEventEntityType.ScheduledDownTime,
+			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
+		new(49,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) .* folder (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(50,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?)ed NetScan group '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
+		new(51,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>.+?) the website group (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(52,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)(ed)? .*group (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(53,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) website (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(54,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?) .*account (?<accountName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(55,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)ed NetScan '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
+		new(56,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+?) .*user role (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(57,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) api tokens - (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(58,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) Collector (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(59,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) (the |a |the widget test of )?dashboard (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+		new(60,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?) a new alert rule Name=(?<resourceName>.+?),.+?$", RegexOptions.Singleline)),
+		new(61,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>.+?)(ed)? alert rule (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(62,
+			AuditEventEntityType.Resource,
+			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline)),
+		new(63,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+?).  \{\n\[\n.+?\n\]\n\}.+$", RegexOptions.Singleline))
 		};
 
 	/// <summary>
@@ -174,13 +258,16 @@ public static class LogItemExtensions
 		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
 		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
-		auditEvent.AlertId = GetGroupValueAsIntOrNull(match, "alertId");
+		auditEvent.AlertId = GetGroupValueAsStringOrNull(match, "alertId");
 		auditEvent.AlertNote = GetGroupValueAsStringOrNull(match, "alertNote");
 		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
 		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
 		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
 		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
 		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
+		auditEvent.MonthlyMetrics = GetGroupValueAsIntOrNull(match, "monthlyMetrics");
+		auditEvent.StartDownTime = GetGroupValueAsStringOrNull(match, "startDownTime");
+		auditEvent.EndDownTime = GetGroupValueAsStringOrNull(match, "endDownTime");
 
 		// Add metadata that can't be extracted from the description using the regex
 		switch (auditEvent.MatchedRegExId)
@@ -191,6 +278,22 @@ public static class LogItemExtensions
 				break;
 			case 27:
 				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
+			case 36:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				break;
+			case 37:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
+				break;
+			case 40:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				break;
+			case 41:
+				auditEvent.ActionType = AuditEventActionType.GeneralApi;
+				break;
+			case 44:
+				auditEvent.ActionType = AuditEventActionType.Login;
 				break;
 			default:
 				break;
@@ -297,9 +400,9 @@ public static class LogItemExtensions
 
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
-			"ADD" => AuditEventActionType.Create,
+			"ADD" or "CREATE" => AuditEventActionType.Create,
 			"FETCH" => AuditEventActionType.Read,
-			"UPDAT" or "UPDATE" => AuditEventActionType.Update,
+			"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
 			"DELET" or "DELETE" => AuditEventActionType.Delete,
 			_ => AuditEventActionType.None
 		};

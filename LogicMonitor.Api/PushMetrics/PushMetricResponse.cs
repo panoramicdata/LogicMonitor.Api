@@ -10,13 +10,13 @@ public class PushMetricResponse
 	/// The message
 	/// </summary>
 	[DataMember(Name = "message")]
-	public string Message { get; set; }
+	public string Message { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The resource ids
 	/// </summary>
 	[DataMember(Name = "resourceIds")]
-	public PushMetricResponseResourceIds ResourceIds { get; set; }
+	public PushMetricResponseResourceIds ResourceIds { get; set; } = new();
 
 	/// <summary>
 	/// The timestamp

@@ -10,7 +10,7 @@ public class ExternalAlertDestination : IdentifiedItem, IHasEndpoint
 	/// The groups
 	/// </summary>
 	[DataMember(Name = "groups")]
-	public string Groups { get; set; }
+	public string Groups { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Collector Id
@@ -22,49 +22,49 @@ public class ExternalAlertDestination : IdentifiedItem, IHasEndpoint
 	/// The collectorDescription
 	/// </summary>
 	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The mechanism
 	/// </summary>
 	[DataMember(Name = "mechanism")]
-	public string Mechanism { get; set; }
+	public string Mechanism { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The script path
 	/// </summary>
 	[DataMember(Name = "scriptPath")]
-	public string ScriptPath { get; set; }
+	public string ScriptPath { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The script command line
 	/// </summary>
 	[DataMember(Name = "scriptCmdline")]
-	public string ScriptCommandLine { get; set; }
+	public string ScriptCommandLine { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The snmpTrapVersion
 	/// </summary>
 	[DataMember(Name = "snmpTrapVersion")]
-	public string SnmpTrapVersion { get; set; }
+	public string SnmpTrapVersion { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The SNMP Trap server
 	/// </summary>
 	[DataMember(Name = "snmpTrapServer")]
-	public string SnmpTrapServer { get; set; }
+	public string SnmpTrapServer { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The SNMP community string
 	/// </summary>
 	[DataMember(Name = "snmpCommunity")]
-	public string SnmpCommunityString { get; set; }
+	public string SnmpCommunityString { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Syslog server
 	/// </summary>
 	[DataMember(Name = "syslogServer")]
-	public string SyslogServer { get; set; }
+	public string SyslogServer { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The endpoint

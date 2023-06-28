@@ -11,7 +11,7 @@ public abstract class IdentifiedItemBase<T>
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "id")]
-	public T Id { get; set; }
+	public T Id { get; set; } = default!;
 
 	/// <summary>
 	/// Equals override
@@ -21,6 +21,7 @@ public abstract class IdentifiedItemBase<T>
 	public override bool Equals(object obj)
 		=> obj is not null
 			&& GetType() == obj.GetType()
+			&& Id is not null
 			&& Id.Equals(((IdentifiedItemBase<T>)obj).Id);
 
 	/// <summary>

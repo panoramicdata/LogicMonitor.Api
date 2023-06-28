@@ -22,5 +22,5 @@ public class DataSourceDevice
 	/// The deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 }

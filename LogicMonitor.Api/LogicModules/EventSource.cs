@@ -4,163 +4,151 @@ namespace LogicMonitor.Api.LogicModules;
 /// An EventSource
 /// </summary>
 [DataContract]
-public class EventSource : NamedItem, IHasEndpoint
+public class EventSource : LogicModule, IHasEndpoint
 {
 	/// <summary>
-	/// The alert subject template
-	/// </summary>
-	[DataMember(Name = "alertSubjectTemplate")]
-	public string AlertBodyTemplate { get; set; }
-
-	/// <summary>
-	/// The Alert effective interval
-	/// </summary>
-	[DataMember(Name = "alertEffectiveIval")]
-	public int AlertEffectiveIntervalMinutes { get; set; }
-
-	/// <summary>
-	/// The alert body template
-	/// </summary>
-	[DataMember(Name = "alertBodyTemplate")]
-	public string AlertSubjectTemplate { get; set; }
-
-	/// <summary>
-	/// The alert level
-	/// </summary>
-	[DataMember(Name = "alertLevel")]
-	public AlertLevel AlertLevel { get; set; }
-
-	/// <summary>
-	/// What this applies to
-	/// </summary>
-	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
-
-	/// <summary>
-	/// The audit version
-	/// </summary>
-	[DataMember(Name = "auditVersion")]
-	public int? AuditVersion { get; set; }
-
-	/// <summary>
-	/// The check interval in seconds.  Applies to IPMI events
-	/// </summary>
-	[DataMember(Name = "checkInterval")]
-	public int? CheckIntervalSeconds { get; set; }
-
-	/// <summary>
-	/// The checksum
-	/// </summary>
-	[DataMember(Name = "checksum")]
-	public string CheckSum { get; set; }
-
-	/// <summary>
-	/// Whether to clear after acknowledgement
-	/// </summary>
-	[DataMember(Name = "clearAfterAck")]
-	public bool ClearAfterAcknowledgement { get; set; }
-
-	/// <summary>
-	/// The collection method
-	/// </summary>
-	[DataMember(Name = "collector")]
-	public EventSourceType EventSourceType { get; set; }
-
-	/// <summary>
-	/// The filters
-	/// </summary>
-	[DataMember(Name = "filters")]
-	public List<EventSourceFilter> Filters { get; set; }
-
-	/// <summary>
-	/// GroovyScript
-	/// </summary>
-	[DataMember(Name = "groovyScript")]
-	public string GroovyScript { get; set; }
-
-	/// <summary>
-	/// The Group name
-	/// </summary>
-	[DataMember(Name = "group")]
-	public string Group { get; set; }
-
-	/// <summary>
-	/// Linux command line
-	/// </summary>
-	[DataMember(Name = "linuxCmdline")]
-	public string LinuxCommandLine { get; set; }
-
-	/// <summary>
-	/// Log files
-	/// </summary>
-	[DataMember(Name = "logFiles")]
-	public List<EventSourceLogFile> LogFiles { get; set; }
-
-	/// <summary>
-	/// Linux script
-	/// </summary>
-	[DataMember(Name = "linuxScript")]
-	public string LinuxScript { get; set; }
-
-	/// <summary>
-	/// Linux script
-	/// </summary>
-	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; }
-
-	/// <summary>
-	/// Published
-	/// </summary>
-	[DataMember(Name = "published")]
-	public int Published { get; set; }
-
-	/// <summary>
-	/// The schedule
-	/// </summary>
-	[DataMember(Name = "schedule")]
-	public int? Schedule { get; set; }
-
-	/// <summary>
-	/// Script type
-	/// </summary>
-	[DataMember(Name = "scriptType")]
-	public EventSourceScriptType ScriptType { get; set; }
-
-	/// <summary>
-	/// Suppress duplicates
+	/// Whether or not duplicate alerts have to be suppressed
 	/// </summary>
 	[DataMember(Name = "suppressDuplicatesES")]
 	public bool SuppressDuplicates { get; set; }
 
 	/// <summary>
-	/// Tags
+	/// The alert message subject for the EventSource
 	/// </summary>
-	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
+	[DataMember(Name = "alertSubjectTemplate")]
+	public string AlertBodyTemplate { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Technology
+	/// The default alert level: warn | error | critical | doMapping
+	/// </summary>
+	[DataMember(Name = "alertLevel")]
+	public string AlertLevel { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Applies To for the LMModule
+	/// </summary>
+	[DataMember(Name = "appliesTo")]
+	public string AppliesTo { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Technical Notes for the LMModule
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
+	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The version
+	/// The filters for the EventSource
+	/// </summary>
+	[DataMember(Name = "filters")]
+	public List<RestEventSourceFilter> Filters { get; set; } = new();
+
+	/// <summary>
+	/// The epoch time of the last update to the EventSource
 	/// </summary>
 	[DataMember(Name = "version")]
-	public int? Version { get; set; }
+	public long Version { get; set; }
 
 	/// <summary>
-	/// Windows command line
+	/// The EventSource collector type
 	/// </summary>
-	[DataMember(Name = "windowsCmdline")]
-	public string WindowsCommandLine { get; set; }
+	[DataMember(Name = "collector")]
+	public EventSourceType Type { get; set; }
 
 	/// <summary>
-	/// Windows script
+	/// The Tags for the LMModule
+	/// </summary>
+	[DataMember(Name = "tags")]
+	public string Tags { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The auditVersion of the EventSource
+	/// </summary>
+	[DataMember(Name = "auditVersion")]
+	public long AuditVersion { get; set; }
+
+	/// <summary>
+	/// The alert message body for the EventSource
+	/// </summary>
+	[DataMember(Name = "alertBodyTemplate")]
+	public string AlertSubjectTemplate { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Whether or not the alert should clear after acknowledgement
+	/// </summary>
+	[DataMember(Name = "clearAfterAck")]
+	public bool ClearAfterAcknowledgement { get; set; }
+
+	/// <summary>
+	/// The time in minutes after which the alert should clear
+	/// </summary>
+	[DataMember(Name = "alertEffectiveIval")]
+	public int AlertEffectiveIntervalMinutes { get; set; }
+
+	/// <summary>
+	/// The LMModule dimension
+	/// </summary>
+	[DataMember(Name = "dimension")]
+	public string Dimension { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Groovy script
+	/// </summary>
+	[DataMember(Name = "groovyScript")]
+	public string GroovyScript { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The group the LMModule is in
+	/// </summary>
+	[DataMember(Name = "group")]
+	public string Group { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Linux command line
+	/// </summary>
+	[DataMember(Name = "linuxCmdLine")]
+	public string LinuxCommandLine { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Linux script
+	/// </summary>
+	[DataMember(Name = "linuxScript")]
+	public string LinuxScript { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Log files
+	/// </summary>
+	[DataMember(Name = "logFiles")]
+	public List<LogFile>? LogFiles { get; set; }
+
+	/// <summary>
+	/// The num(???)
+	/// </summary>
+	[DataMember(Name = "num")]
+	public int? Number { get; set; }
+
+	/// <summary>
+	/// The EventSource schedule
+	/// </summary>
+	[DataMember(Name = "schedule")]
+	public int? ScheduleMinutes { get; set; }
+
+	/// <summary>
+	/// The script type
+	/// </summary>
+	[DataMember(Name = "scriptType")]
+	public EventSourceScriptType? ScriptType { get; set; }
+
+	/// <summary>
+	/// The Windows command line
+	/// </summary>
+	[DataMember(Name = "windowsCmdLine")]
+	public string WindowsCommandLine { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Windows script
 	/// </summary>
 	[DataMember(Name = "windowsScript")]
-	public string WindowsScript { get; set; }
+	public string WindowsScript { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ToString override

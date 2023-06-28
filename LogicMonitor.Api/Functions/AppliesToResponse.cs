@@ -10,23 +10,23 @@ public class AppliesToResponse
 	/// The requested original applies to
 	/// </summary>
 	[DataMember(Name = "originalAppliesTo")]
-	public string OriginalAppliesTo { get; set; }
+	public string OriginalAppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The requested original applies to
 	/// </summary>
 	[DataMember(Name = "currentAppliesTo")]
-	public string CurrentAppliesTo { get; set; }
+	public string CurrentAppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The original matches
 	/// </summary>
 	[DataMember(Name = "originalMatches")]
-	public List<AppliesToMatch> OriginalMatches { get; set; }
+	public List<AppliesToMatch> OriginalMatches { get; set; } = new();
 
 	/// <summary>
 	/// The current matches
 	/// </summary>
 	[DataMember(Name = "currentMatches")]
-	public List<AppliesToMatch> CurrentMatches { get; set; }
+	public List<AppliesToMatch> CurrentMatches { get; set; } = new();
 }

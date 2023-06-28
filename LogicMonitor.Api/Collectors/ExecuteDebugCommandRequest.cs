@@ -10,5 +10,5 @@ public class ExecuteDebugCommandRequest
 	/// The request ID
 	/// </summary>
 	[DataMember(Name = "cmdline")]
-	public string Command { get; set; }
+	public string Command { get; set; } = string.Empty;
 }

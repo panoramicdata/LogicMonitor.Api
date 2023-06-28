@@ -10,47 +10,47 @@ public class UserReportUserFilter
 	/// The status
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string Status { get; set; }
+	public string Status { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The enable2fa
 	/// </summary>
 	[DataMember(Name = "enable2fa")]
-	public string Enable2fa { get; set; }
+	public string Enable2fa { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The apiOnlyUser
 	/// </summary>
 	[DataMember(Name = "apiOnlyUser")]
-	public string ApiOnlyUser { get; set; }
+	public string ApiOnlyUser { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The roleAssignment
 	/// </summary>
 	[DataMember(Name = "roleAssignment")]
-	public string RoleAssignment { get; set; }
+	public string RoleAssignment { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The firstName
 	/// </summary>
 	[DataMember(Name = "firstName")]
-	public string FirstName { get; set; }
+	public string FirstName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The lastName
 	/// </summary>
 	[DataMember(Name = "lastName")]
-	public string LastName { get; set; }
+	public string LastName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The email
 	/// </summary>
 	[DataMember(Name = "email")]
-	public string Email { get; set; }
+	public string Email { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The username
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string Username { get; set; }
+	public string Username { get; set; } = string.Empty;
 }

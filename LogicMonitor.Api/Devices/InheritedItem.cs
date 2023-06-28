@@ -10,7 +10,7 @@ public class InheritedItem
 	///    The type
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The type
@@ -22,17 +22,17 @@ public class InheritedItem
 	///    The id
 	/// </summary>
 	[DataMember(Name = "id")]
-	public string Id { get; set; }
+	public string Id { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The full path
 	/// </summary>
 	[DataMember(Name = "fullPath")]
-	public string FullPath { get; set; }
+	public string FullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The value
 	/// </summary>
 	[DataMember(Name = "value")]
-	public string Value { get; set; }
+	public string Value { get; set; } = string.Empty;
 }

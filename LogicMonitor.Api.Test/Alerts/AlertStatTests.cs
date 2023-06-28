@@ -9,7 +9,7 @@ public class AlertStatTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertStat()
 	{
-		var alertStat = await LogicMonitorClient.GetAsync<AlertStat>(CancellationToken.None).ConfigureAwait(false);
+		var alertStat = await LogicMonitorClient.GetAsync<AlertStat>(default).ConfigureAwait(false);
 		alertStat.Should().NotBeNull();
 	}
 }

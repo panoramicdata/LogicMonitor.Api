@@ -4,25 +4,19 @@ namespace LogicMonitor.Api.LogicModules;
 /// A TopologySource
 /// </summary>
 [DataContract]
-public class TopologySource : NamedItem, IHasEndpoint
+public class TopologySource : LogicModule, IHasEndpoint
 {
 	/// <summary>
 	/// What this applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
-	public string AppliesTo { get; set; }
+	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The audit version
 	/// </summary>
 	[DataMember(Name = "auditVersion")]
 	public int? AuditVersion { get; set; }
-
-	/// <summary>
-	/// The checksum
-	/// </summary>
-	[DataMember(Name = "checksum")]
-	public string Checksum { get; set; }
 
 	/// <summary>
 	/// The collection interval in seconds
@@ -34,7 +28,7 @@ public class TopologySource : NamedItem, IHasEndpoint
 	/// The collector attribute
 	/// </summary>
 	[DataMember(Name = "collectorAttribute")]
-	public CollectorAttribute CollectorAttribute { get; set; }
+	public CollectorAttribute CollectorAttribute { get; set; } = new();
 
 	/// <summary>
 	/// The collection method
@@ -46,31 +40,19 @@ public class TopologySource : NamedItem, IHasEndpoint
 	/// The Group name
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string Group { get; set; }
-
-	/// <summary>
-	/// The installation metadata
-	/// </summary>
-	[DataMember(Name = "installationMetadata")]
-	public object InstallationMetadata { get; set; }
-
-	/// <summary>
-	/// The lineage id
-	/// </summary>
-	[DataMember(Name = "lineageId")]
-	public string LineageId { get; set; }
+	public string Group { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public string Tags { get; set; }
+	public string Tags { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Technology
 	/// </summary>
 	[DataMember(Name = "technology")]
-	public string Technology { get; set; }
+	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The version

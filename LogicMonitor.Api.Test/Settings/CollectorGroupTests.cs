@@ -13,7 +13,7 @@ public class CollectorGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
+		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(default).ConfigureAwait(false);
 		collectorGroups.Should().NotBeNull();
 		collectorGroups.Should().NotBeNullOrEmpty();
 	}
@@ -21,12 +21,12 @@ public class CollectorGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(CancellationToken.None).ConfigureAwait(false);
-		collectorGroups.Should().NotBeNullOrEmpty();
-		collectorGroups.Should().NotContain(cg => cg.Id == 0);
-		collectorGroups.Should().NotContain(cg => cg.Name == null);
+		var collectorGroups = await LogicMonitorClient.GetPageAsync<CollectorGroup>(new Filter<CollectorGroup>(), $"setting/collector/groups", default).ConfigureAwait(false);
+		collectorGroups.Items.Should().NotBeNullOrEmpty();
+		collectorGroups.Items.Should().NotContain(cg => cg.Id == 0);
+		collectorGroups.Items.Should().NotContain(cg => cg.Name == null);
 		// Bug in LogicMonitor's API
-		// collectorGroups.TotalCount.Should().NotBe(0);
+		collectorGroups.TotalCount.Should().NotBe(0);
 	}
 
 	[Fact]
@@ -39,11 +39,11 @@ public class CollectorGroupTests : TestWithOutput
 					{
 						new Eq<CollectorGroup>(nameof(CollectorGroup.Name), TestName)
 					}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 
 		foreach (var priorCollectorGroup in collectorGroups)
 		{
-			await LogicMonitorClient.DeleteAsync(priorCollectorGroup, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(priorCollectorGroup, cancellationToken: default).ConfigureAwait(false);
 		}
 		// There are now none with this name
 
@@ -52,15 +52,15 @@ public class CollectorGroupTests : TestWithOutput
 		{
 			Name = TestName,
 			Description = TestDescription,
-			CustomProperties = new List<Property>
+			CustomProperties = new List<EntityProperty>
 				{
-					new Property { Name = "a", Value = "b" }
+					new EntityProperty { Name = "a", Value = "b" }
 				}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		newCollectorGroup.Should().NotBeNull();
 		newCollectorGroup.Id.Should().NotBe(0);
 
-		var newCollectorGroupRefetch = await LogicMonitorClient.GetAsync<CollectorGroup>(newCollectorGroup.Id, CancellationToken.None).ConfigureAwait(false);
+		var newCollectorGroupRefetch = await LogicMonitorClient.GetAsync<CollectorGroup>(newCollectorGroup.Id, default).ConfigureAwait(false);
 		newCollectorGroupRefetch.Should().NotBeNull();
 		newCollectorGroupRefetch.Name.Should().NotBeNull();
 		newCollectorGroupRefetch.Description.Should().NotBeNull();
@@ -71,9 +71,9 @@ public class CollectorGroupTests : TestWithOutput
 		newCollectorGroupRefetch.CustomProperties[0].Value.Should().Be("b");
 
 		// Put
-		await LogicMonitorClient.PutAsync(newCollectorGroupRefetch, CancellationToken.None).ConfigureAwait(false);
+		await LogicMonitorClient.PutAsync(newCollectorGroupRefetch, default).ConfigureAwait(false);
 
 		// Delete
-		await LogicMonitorClient.DeleteAsync(newCollectorGroupRefetch, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(newCollectorGroupRefetch, cancellationToken: default).ConfigureAwait(false);
 	}
 }

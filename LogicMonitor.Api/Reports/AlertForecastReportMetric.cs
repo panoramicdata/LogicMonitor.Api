@@ -16,19 +16,19 @@ public class AlertForecastReportMetric
 	/// The dataSourceFullName
 	/// </summary>
 	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; }
+	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instances
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public string Instances { get; set; }
+	public string Instances { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataPointName
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataPointId

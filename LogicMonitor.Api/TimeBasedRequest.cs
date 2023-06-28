@@ -20,28 +20,11 @@ public abstract class TimeBasedRequest : IRequest
 	/// </summary>
 	public DateTime EndDateTime { get; set; }
 
-	///// <summary>
-	///// Partial query string
-	///// </summary>
-	///// <returns></returns>
-	//protected string GetTimePartialQueryString()
-	//{
-	//	switch (TimePeriod)
-	//	{
-	//		case TimePeriod.Unknown:
-	//			throw new ArgumentException("TimePeriod not set.");
-	//		case TimePeriod.Zoom:
-	//			return $"&time=zoom&startTime={StartDateTime.SecondsSinceTheEpoch()}&endTime={EndDateTime.SecondsSinceTheEpoch()}";
-	//		default:
-	//			return $"&time={TimePeriod.ToString().LowerCaseFirst()}";
-	//	}
-	//}
-
 	/// <summary>
 	/// Used for flow queries
 	/// </summary>
 	/// <exception cref="ArgumentException"></exception>
-	protected string GetTimePartialQueryStringNew()
+	protected string GetTimePartialQueryString()
 	{
 		if (StartDateTime > EndDateTime)
 		{

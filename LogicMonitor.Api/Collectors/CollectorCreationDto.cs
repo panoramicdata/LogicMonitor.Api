@@ -10,7 +10,7 @@ public class CollectorCreationDto : CreationDto<Collector>
 	///     The Collector's description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Id of the failover Collector configured for this Collector
@@ -51,7 +51,7 @@ public class CollectorCreationDto : CreationDto<Collector>
 	/// <summary>
 	///     Whether or not the device the Collector is installed on is enabled for fail over
 	/// </summary>
-	[DataMember(Name = "enableFailOverOnCollectorDevice", IsRequired = false)]
+	[DataMember(Name = "enableFailOverOnCollectorDevice")]
 	public bool? EnableFailOverOnCollectorDevice { get; set; } // TODO - use the AutomaticUpgradeInfo class
 
 	/// <summary>

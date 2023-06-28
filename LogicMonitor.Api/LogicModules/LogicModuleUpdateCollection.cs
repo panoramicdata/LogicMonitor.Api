@@ -16,13 +16,13 @@ public class LogicModuleUpdateCollection
 	/// The LogicModule Update items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<LogicModuleUpdate> Items { get; set; }
+	public List<LogicModuleUpdate> Items { get; set; } = new();
 
 	/// <summary>
 	/// The search ID
 	/// </summary>
 	[DataMember(Name = "searchId")]
-	public string SearchId { get; set; }
+	public string SearchId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Is Min

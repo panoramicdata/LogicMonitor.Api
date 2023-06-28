@@ -30,7 +30,7 @@ public class AlertFilter
 	/// A list of alert types.
 	/// If set, AlertType should not be (and vice versa)
 	/// </summary>
-	public List<AlertType> AlertTypes { get; set; }
+	public List<AlertType>? AlertTypes { get; set; }
 
 	/// <summary>
 	///    The DataPoint
@@ -299,7 +299,7 @@ public class AlertFilter
 		}
 
 		filter.AppendFilterItemIfNotNull(nameof(Alert.Id), Id);
-		filter.AppendFilterItemIfNotNull(nameof(Alert.AlertType), GetAlertTypes()?.Select(alertType => alertType.ToString().LowerCaseFirst()).ToList());
+		filter.AppendFilterItemIfNotNull(nameof(Alert.AlertType), GetAlertTypes()?.Select(alertType => alertType.GetQueryString()).ToList());
 		filter.AppendFilterItemIfNotNull(nameof(Alert.InternalId), InternalId);
 		filter.AppendFilterItemIfNotNull(nameof(Alert.StartOnSeconds), StartEpochIsAfter, ">");
 		filter.AppendFilterItemIfNotNull(nameof(Alert.StartOnSeconds), StartEpochIsBefore, "<");

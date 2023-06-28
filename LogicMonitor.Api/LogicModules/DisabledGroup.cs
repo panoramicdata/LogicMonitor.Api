@@ -10,13 +10,13 @@ public class DisabledGroup : IdentifiedItem
 	///    The LogicMonitor Display Name
 	/// </summary>
 	[DataMember(Name = "displayName")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The LogicMonitor Display Name
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The user permission

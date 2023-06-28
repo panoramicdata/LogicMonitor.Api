@@ -22,7 +22,7 @@ public enum DestinationType
 	///     Single
 	/// </summary>
 	[EnumMember(Value = "single")]
-	Single = 2,
+	SingleDest = 2,
 
 	/// <summary>
 	///     Time-based

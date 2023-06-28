@@ -10,7 +10,7 @@ public class LogItem : StringIdentifiedItem, IHasEndpoint
 	///    The user that performed the action
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string UserName { get; set; }
+	public string UserName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The DateTime the event happened in seconds since the Epoch
@@ -22,25 +22,25 @@ public class LogItem : StringIdentifiedItem, IHasEndpoint
 	///    The session ID
 	/// </summary>
 	[DataMember(Name = "sessionId")]
-	public string SessionId { get; set; }
+	public string SessionId { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Event description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Event time (local)
 	/// </summary>
 	[DataMember(Name = "happenedOnLocal")]
-	public string HappenedOnLocalString { get; set; }
+	public string HappenedOnLocalString { get; set; } = string.Empty;
 
 	/// <summary>
 	///    IP Address
 	/// </summary>
 	[DataMember(Name = "ip")]
-	public string IpAddress { get; set; }
+	public string IpAddress { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The DateTime the event happened UTC

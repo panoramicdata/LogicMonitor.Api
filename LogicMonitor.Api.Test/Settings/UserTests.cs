@@ -9,13 +9,13 @@ public class UserTests : TestWithOutput
 	[Fact]
 	public async Task GetUsers()
 	{
-		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
+		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
 		users.Should().NotBeNull();
 		users.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var user in users.Items)
 		{
-			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, CancellationToken.None).ConfigureAwait(false);
+			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, default).ConfigureAwait(false);
 			var roles = refetchedUser.Roles;
 			roles.Should().NotBeNullOrEmpty();
 			user.UserGroupIds.Should().NotBeNullOrEmpty();
@@ -32,9 +32,9 @@ public class UserTests : TestWithOutput
 			{
 				new Eq<User>(nameof(User.UserName), "test")
 			}
-		}, CancellationToken.None).ConfigureAwait(false))
+		}, default).ConfigureAwait(false))
 		{
-			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: default).ConfigureAwait(false);
 		}
 
 		var userCreationDto = new UserCreationDto
@@ -52,8 +52,8 @@ public class UserTests : TestWithOutput
 			FirstName = "first",
 			LastName = "last",
 			Email = "david@davidbond.net",
-			Password = "Abc123!!!",
-			Password1 = "Abc123!!!",
+			Password = "0snAP9GQIMGUG68%",
+			Password1 = "0snAP9GQIMGUG68%",
 			ForcePasswordChange = true,
 			TwoFAEnabled = false,
 			SmsEmail = "",
@@ -71,9 +71,38 @@ public class UserTests : TestWithOutput
 			ApiOnly = false
 		};
 
-		var user = await LogicMonitorClient.CreateAsync(userCreationDto, CancellationToken.None).ConfigureAwait(false);
+		var user = await LogicMonitorClient.CreateAsync(userCreationDto, default).ConfigureAwait(false);
 
 		// Delete again
-		await LogicMonitorClient.DeleteAsync(user, cancellationToken: CancellationToken.None).ConfigureAwait(false);
+		await LogicMonitorClient.DeleteAsync(user, cancellationToken: default).ConfigureAwait(false);
+	}
+
+	[Fact]
+	public async Task GetAdmins()
+	{
+		var admins = await LogicMonitorClient
+			.GetAdminListAsync()
+			.ConfigureAwait(false);
+
+		admins.Items.Should().NotBeEmpty();
+	}
+
+	[Fact]
+	public async Task GetApiTokens()
+	{
+		var admins = await LogicMonitorClient
+			.GetAdminListAsync()
+			.ConfigureAwait(false);
+
+		var tokens = await LogicMonitorClient
+			.GetApiTokensAsync(admins.Items[0].Id, new Filter<ApiToken>(), default)
+			.ConfigureAwait(false);
+
+		tokens.Items.Should().NotBeEmpty();
+
+		var allTokens = await LogicMonitorClient
+			.GetApiTokenListAsync(new Filter<ApiToken>(), default)
+			.ConfigureAwait(false);
+		allTokens.Items.Should().NotBeEmpty();
 	}
 }

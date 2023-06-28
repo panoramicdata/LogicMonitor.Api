@@ -4,19 +4,20 @@ namespace LogicMonitor.Api.LogicModules;
 /// An AppliesTo Function
 /// </summary>
 [DataContract]
-public class SnmpSysOidMap : IdentifiedItem, IHasEndpoint
+public class SnmpSysOidMap : LogicModule, IHasEndpoint
 {
-	/// <summary>
-	/// The parameters
-	/// </summary>
-	[DataMember(Name = "oid")]
-	public string Oid { get; set; }
-
 	/// <summary>
 	/// The categories
 	/// </summary>
 	[DataMember(Name = "categories")]
-	public string Categories { get; set; }
+	public string Categories { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The parameters
+	/// </summary>
+	[DataMember(Name = "oid")]
+	public string Oid { get; set; } = string.Empty;
+
 
 	/// <summary>
 	/// Published

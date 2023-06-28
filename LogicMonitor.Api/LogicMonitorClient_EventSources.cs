@@ -19,7 +19,7 @@ public partial class LogicMonitorClient
 	/// <param name="eventSourceId">The EventSource id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<string> GetEventSourceXmlAsync(int eventSourceId, CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<XmlResponse>($"setting/eventsources/{eventSourceId}?format=xml", cancellationToken).ConfigureAwait(false))?.Content;
+		=> (await GetBySubUrlAsync<XmlResponse>($"setting/eventsources/{eventSourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
 	///     Gets a list of EventSources that apply to a device group
@@ -81,28 +81,27 @@ public partial class LogicMonitorClient
 		=> GetBySubUrlAsync<Page<DeviceEventSourceGroup>>($"device/devices/{deviceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
 
 	/// <summary>
-	///     Gets a list of devices that a EventSource applies to
-	/// </summary>
-	/// <param name="deviceGroupId">The device group id</param>
-	/// <param name="filter">The filter</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<EventSourceAppliesToCollection>> GetEventSourceAppliesToCollectionsPageAsync(
-		int deviceGroupId,
-		Filter<EventSourceAppliesToCollection> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<EventSourceAppliesToCollection>>(
-			$"device/groups/{deviceGroupId}/eventSources?{filter}",
-			cancellationToken);
-
-	/// <summary>
-	///     Gets a device data source
+	///     Gets a device event source
 	/// </summary>
 	/// <param name="deviceId"></param>
 	/// <param name="eventSourceId"></param>
 	public async Task<DeviceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(int deviceId, int eventSourceId)
 	{
 		// TODO - Make this use a search field
-		var page = await GetDeviceEventSourcesPageAsync(deviceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, CancellationToken.None).ConfigureAwait(false);
+		var page = await GetDeviceEventSourcesPageAsync(deviceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
 		return page.Items.SingleOrDefault(deviceEventSource => deviceEventSource.EventSourceId == eventSourceId);
 	}
+
+	/// <summary>
+	/// add audit version
+	/// </summary>
+	/// <param name="id">The id</param>
+	/// <param name="body">The audit to be added</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<EventSource> AddEventSourceAuditVersionAsync(
+		int id,
+		Audit body,
+		CancellationToken cancellationToken) => PostAsync<Audit, EventSource>(body,
+			$"setting/eventsources/{id}/audit",
+			cancellationToken);
 }

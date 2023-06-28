@@ -11,7 +11,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 		return type?.IsEnum ?? false;
 	}
 
-	private static string GetEnumMemberAttrValue(Type type, object enumVal)
+	private static string? GetEnumMemberAttrValue(Type type, object enumVal)
 	{
 		var memberInfos = type.GetMember(enumVal.ToString());
 		var memberInfo = memberInfos.SingleOrDefault(m => m.Name == enumVal.ToString());
@@ -22,7 +22,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 			?.Value;
 	}
 
-	public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+	public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 	{
 		var isNullable = IsNullableType(objectType);
 		var enumType = isNullable ? Nullable.GetUnderlyingType(objectType) : objectType;
@@ -33,18 +33,10 @@ internal class TolerantStringEnumConverter : JsonConverter
 		switch (reader.TokenType)
 		{
 			case JsonToken.String:
-				var enumText = reader.Value.ToString();
+				var enumText = reader.Value?.ToString();
 
 				if (!string.IsNullOrEmpty(enumText))
 				{
-					// This just does it by name - we need to use the EnumMemberAttribute
-					//var match = names
-					//	.FirstOrDefault(n => string.Equals(n, enumText, StringComparison.OrdinalIgnoreCase));
-					//if (match is not null)
-					//{
-					//	return Enum.Parse(enumType, match);
-					//}
-
 					// Get the right member using the EnumMember attribute
 					var match = Array.Find(Enum
 						.GetNames(objectType), name => GetEnumMemberAttrValue(objectType, Enum.Parse(enumType, name)) == enumText);
@@ -63,7 +55,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 				if (defaultName is not null)
 				{
 #if DEBUG
-						throw new Exception($"{objectType} missing an enum member for {enumText}");
+						throw new NotImplementedException($"{objectType} missing an enum member for {enumText}");
 #else
 					return Enum.Parse(objectType, defaultName);
 #endif
@@ -94,7 +86,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 		}
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => writer.WriteValue(value.ToString());
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) => writer.WriteValue(value?.ToString());
 
 	private static bool IsNullableType(Type t) => t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>);
 }

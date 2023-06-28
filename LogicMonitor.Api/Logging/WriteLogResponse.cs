@@ -16,11 +16,11 @@ public class WriteLogResponse
 	/// The response message
 	/// </summary>
 	[DataMember(Name = "message")]
-	public string Message { get; set; }
+	public string Message { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Errors
 	/// </summary>
 	[DataMember(Name = "errors")]
-	public List<WriteLogError> Errors { get; set; }
+	public List<WriteLogError> Errors { get; set; } = new();
 }

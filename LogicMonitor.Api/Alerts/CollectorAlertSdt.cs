@@ -10,7 +10,7 @@ public class CollectorAlertSdt : AlertSdt
 	/// The Collector description
 	/// </summary>
 	[DataMember(Name = "collectorDescription")]
-	public string CollectorDescription { get; set; }
+	public string CollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Collector description

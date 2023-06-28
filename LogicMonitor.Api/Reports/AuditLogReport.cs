@@ -10,23 +10,23 @@ public class AuditLogReport : DateRangeReport
 	/// The columns to sort by
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The filter
 	/// </summary>
 	[DataMember(Name = "filter")]
-	public string Filter { get; set; }
+	public string Filter { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The username
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string Username { get; set; }
+	public string Username { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; }
+	public List<ReportColumn> Columns { get; set; } = new();
 }

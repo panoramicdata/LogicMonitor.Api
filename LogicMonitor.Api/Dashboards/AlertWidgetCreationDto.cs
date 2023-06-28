@@ -15,19 +15,19 @@ public class AlertWidgetCreationDto : WidgetCreationDto<AlertWidget>
 	/// Widget Tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<Property> CustomProperties { get; set; }
+	public List<EntityProperty> CustomProperties { get; set; } = new();
 
 	/// <summary>
 	/// Additional specification, including column ordering
 	/// </summary>
 	[DataMember(Name = "extra")]
-	public string ExtraString { get; set; }
+	public string ExtraString { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The filters
 	/// </summary>
 	[DataMember(Name = "filters")]
-	public AlertCreationDtoFilter Filters { get; set; }
+	public AlertCreationDtoFilter Filters { get; set; } = new();
 
 	/// <summary>
 	/// Additional specification, including column ordering

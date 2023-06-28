@@ -16,7 +16,7 @@ public class DeviceDataSourceGroup : NamedItem
 	///    deviceDisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    createOn
@@ -58,19 +58,19 @@ public class DeviceDataSourceGroup : NamedItem
 	///    sdtAt
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
-	public string SdtAt { get; set; }
+	public string SdtAt { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
-	public object AlertingDisabledOn { get; set; }
+	public object? AlertingDisabledOn { get; set; }
 
 	/// <summary>
 	///    groupsDisabledThisSource
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<DisabledGroup> GroupsDisabledThisSource { get; set; }
+	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = new();
 
 	/// <summary>
 	///    instancesNum

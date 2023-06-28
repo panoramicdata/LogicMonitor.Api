@@ -6,14 +6,14 @@ namespace LogicMonitor.Api.LogicModules;
 public class EventSourceMatch
 {
 	/// <summary>
-	/// Pattern
+	/// The regex or plain text to look for in the file and trigger alert if found
 	/// </summary>
 	[DataMember(Name = "pattern")]
-	public string Pattern { get; set; }
+	public string Pattern { get; set; } = string.Empty;
 
 	/// <summary>
-	/// AlertLevel
+	/// The level of alert to trigger: warn | error | critical
 	/// </summary>
 	[DataMember(Name = "alertLevel")]
-	public AlertLevel AlertLevel { get; set; }
+	public string AlertLevel { get; set; } = string.Empty;
 }

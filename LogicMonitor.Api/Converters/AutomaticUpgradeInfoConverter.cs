@@ -4,7 +4,7 @@ internal class AutomaticUpgradeInfoConverter : JsonCreationConverter<AutomaticUp
 {
 	protected override AutomaticUpgradeInfo Create(Type objectType, JObject jObject)
 	{
-		var type = jObject["type"].Value<string>().ToLowerInvariant();
+		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
 			"automatic upgrade" => new AutomaticUpgradeAutomaticUpgradeInfo(),
@@ -12,7 +12,7 @@ internal class AutomaticUpgradeInfoConverter : JsonCreationConverter<AutomaticUp
 		};
 	}
 
-	public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 	{
 #pragma warning disable IDE0022 // Use expression body for methods
 		throw new NotSupportedException();

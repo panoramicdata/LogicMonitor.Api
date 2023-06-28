@@ -7,7 +7,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Flow>> GetFlows(FlowRequest flowRequest, CancellationToken cancellationToken)
+	public Task<Page<Flow>> GetFlowsPageAsync(FlowRequest flowRequest, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
@@ -15,16 +15,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowPortsRequest"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowPort>> GetFlowPortsPageAsync(FlowPortsRequest flowPortsRequest, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowPort>>(flowPortsRequest.GetQueryString(), cancellationToken);
-
-	/// <summary>
-	///    Get Flows using a FlowPortRequest
-	/// </summary>
-	/// <param name="flowEndpointsRequest"></param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowEndpoint>> GetFlowEndpointsPageAsync(FlowEndpointsRequest flowEndpointsRequest, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowEndpoint>>(flowEndpointsRequest.GetQueryString(), cancellationToken);
+	public Task<Page<NetflowPort>> GetFlowPortsPageAsync(FlowPortsRequest flowPortsRequest, CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<NetflowPort>>(flowPortsRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
 	///    Get Flows using a FlowPortRequest
@@ -42,6 +34,23 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
+
+	/// <summary>
+	/// get netflow flows
+	/// </summary>
+	/// <param name="id"></param>
+	public Task<Page<NetFlowRecord>> GetNetflowFlowPageAsync(
+		int id) => GetNetflowFlowPageAsync(id, CancellationToken.None);
+
+	/// <summary>
+	/// get netflow flows
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<NetFlowRecord>> GetNetflowFlowPageAsync(
+		int id,
+		CancellationToken cancellationToken
+		) => GetBySubUrlAsync<Page<NetFlowRecord>>($"device/devices/{id}/flows", cancellationToken);
 
 	#region Device Group flows
 
@@ -66,8 +75,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<FlowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
+	public Task<Page<NetflowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<NetflowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
 
 	#endregion
 }

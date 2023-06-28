@@ -4,29 +4,29 @@
 /// A Table widget
 /// </summary>
 [DataContract]
-public class TableWidget : Widget
+public class TableWidget : Widget, IWidget
 {
 	/// <summary>
 	///     The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<TableWidgetColumn> Columns { get; set; }
+	public List<TableWidgetColumn> Columns { get; set; } = new();
 
 	/// <summary>
 	///     The rows
 	/// </summary>
 	[DataMember(Name = "rows")]
-	public List<TableWidgetRow> Rows { get; set; }
+	public List<TableWidgetRow> Rows { get; set; } = new();
 
 	/// <summary>
 	///     The forecast
 	/// </summary>
 	[DataMember(Name = "forecast")]
-	public TableWidgetForecast Forecast { get; set; }
+	public TableWidgetForecast Forecast { get; set; } = new();
 
 	/// <summary>
 	///     The display settings
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
-	public object DisplaySettings { get; set; }
+	public DisplaySettings DisplaySettings { get; set; } = new();
 }

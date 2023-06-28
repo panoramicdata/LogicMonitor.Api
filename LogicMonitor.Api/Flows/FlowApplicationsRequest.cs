@@ -14,5 +14,5 @@ public class FlowApplicationsRequest : SortedFlowRequest
 		$"?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}" +
 		$"&netflowFilter={NetflowFilter.AsUrlEncodedString()}" +
 		$"&size={Take}&offset={Skip}" +
-		GetTimePartialQueryStringNew();
+		GetTimePartialQueryString();
 }

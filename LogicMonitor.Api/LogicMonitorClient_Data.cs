@@ -45,18 +45,12 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId"></param>
 	/// <param name="deviceDataSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DataSourceGraph>> GetDeviceOverviewGraphsAsync(int deviceId, int deviceDataSourceId, CancellationToken cancellationToken)
+	public async Task<List<DataSourceOverviewGraph>> GetDeviceOverviewGraphsAsync(int deviceId, int deviceDataSourceId, CancellationToken cancellationToken)
 	{
-		// return Get<OverviewGraphCollection>(ApiMethod.Do, $"ograph?func=getGroups&hId={deviceId}&dsId={dataSourceId}&dsigId={dataSourceInstanceGroupId}");
-		// https://panoramicdata.logicmonitor.com/santaba/rest/device/devices/575/devicedatasources
 		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
-		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId);
-		if (filteredDeviceDataSource is null)
-		{
-			throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
+		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId)
+			?? throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
 				nameof(deviceDataSourceId));
-		}
-
 		return filteredDeviceDataSource.OverviewGraphs;
 	}
 
@@ -67,7 +61,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceDataSourceId">The device dataSource Id</param>
 	/// <param name="name">The overview graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDeviceOverviewGraphByNameAsync(int deviceId, int deviceDataSourceId, string name, CancellationToken cancellationToken)
+	public async Task<DataSourceOverviewGraph> GetDeviceOverviewGraphByNameAsync(int deviceId, int deviceDataSourceId, string name, CancellationToken cancellationToken)
 		=> (await GetDeviceOverviewGraphsAsync(deviceId, deviceDataSourceId, cancellationToken).ConfigureAwait(false))
 			.SingleOrDefault(g => g.Name == name);
 
@@ -84,9 +78,9 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		int deviceDataSourceInstanceId,
-		DateTime? startDateTimeUtc = default,
-		DateTime? endDateTimeUtc = default,
-		CancellationToken cancellationToken = default
+		DateTime? startDateTimeUtc,
+		DateTime? endDateTimeUtc,
+		CancellationToken cancellationToken
 		)
 	{
 		var timeConstraint = startDateTimeUtc.HasValue && endDateTimeUtc.HasValue ? $"?start={startDateTimeUtc.Value.SecondsSinceTheEpoch()}&end={endDateTimeUtc.Value.SecondsSinceTheEpoch()}" : null;
@@ -161,4 +155,16 @@ public partial class LogicMonitorClient
 			$"device/instances/datafetch?start={startDateTimeUtcTimestamp}&end={endDateTimeUtcTimestamp}",
 			cancellationToken).ConfigureAwait(false);
 	}
+
+	/// <summary>
+	/// Get device datasource data
+	/// </summary>
+	/// <param name="deviceId"></param>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	public async Task<DeviceDataSourceData> GetDeviceDataSourceDataAsync(
+		int deviceId,
+		int id,
+		CancellationToken cancellationToken)
+		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{deviceId}/devicedatasources/{id}/data", cancellationToken);
 }

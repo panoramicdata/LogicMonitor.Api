@@ -18,7 +18,7 @@ public class PushMetricInstance
 	/// * No whitespace allowed
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The display name
@@ -31,7 +31,7 @@ public class PushMetricInstance
 	/// * *?,;`\\n&lt; characters not allowed
 	/// </summary>
 	[DataMember(Name = "instanceDisplayName")]
-	public string DisplayName { get; set; }
+	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The instance properties
@@ -51,11 +51,11 @@ public class PushMetricInstance
 	/// * Keys and values should not be null, empty, or having trailing spaces
 	/// </summary>
 	[DataMember(Name = "instanceProperties")]
-	public Dictionary<string, string> Properties { get; set; }
+	public Dictionary<string, string> Properties { get; set; } = new();
 
 	/// <summary>
 	/// The DataPoints
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<PushMetricDataPoint> DataPoints { get; set; }
+	public List<PushMetricDataPoint> DataPoints { get; set; } = new();
 }

@@ -10,23 +10,23 @@ public class DynamicTableWidgetRow
 	///     The label
 	/// </summary>
 	[DataMember(Name = "label")]
-	public string Label { get; set; }
+	public string Label { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The label
 	/// </summary>
 	[DataMember(Name = "instanceName")]
-	public string InstanceName { get; set; }
+	public string InstanceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The group FullPath
 	/// </summary>
 	[DataMember(Name = "groupFullPath")]
-	public string GroupFullPath { get; set; }
+	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; }
+	public string DeviceDisplayName { get; set; } = string.Empty;
 }

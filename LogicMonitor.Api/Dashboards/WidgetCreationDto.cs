@@ -30,7 +30,7 @@ public abstract class WidgetCreationDto<T> : CreationDto<T> where T : Widget
 	/// </summary>
 	[DataMember(Name = "dashboardId")]
 	[Obsolete("Use DashboardId instead.  This property is for serialization/deserialization only.")]
-	public string DashboardIdString { get; set; }
+	public string DashboardIdString { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dashboard Id
@@ -54,13 +54,13 @@ public abstract class WidgetCreationDto<T> : CreationDto<T> where T : Widget
 	///     The name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The type

@@ -10,13 +10,13 @@ public class CollectorNextUpgradeInfo
 	///    The type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Upgrade time
 	/// </summary>
 	[DataMember(Name = "upgradeTime")]
-	public string UpgradeTime { get; set; }
+	public string UpgradeTime { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Major version
@@ -28,7 +28,7 @@ public class CollectorNextUpgradeInfo
 	///    Minor version
 	/// </summary>
 	[DataMember(Name = "minorVersion")]
-	public string MinorVersion { get; set; }
+	public string MinorVersion { get; set; } = string.Empty;
 
 	/// <summary>
 	///    Whether the upgrade is mandatory

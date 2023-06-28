@@ -10,5 +10,5 @@ public class AlertAcknowledgement
 	/// The acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
-	public string AcknowledgementComment { get; set; }
+	public string AcknowledgementComment { get; set; } = string.Empty;
 }

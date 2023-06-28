@@ -52,20 +52,20 @@ public class Line
 	/// The line color name
 	/// </summary>
 	[DataMember(Name = "colorName")]
-	public string ColorName { get; set; }
+	public string ColorName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The line color string
 	/// </summary>
 	[DataMember(Name = "color")]
-	public string ColorString { get; set; }
+	public string ColorString { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The line data.
 	/// Must be implemented as an object as LogicMonitor have decided that null should be represented as "No Data" (brilliant!)
 	/// </summary>
 	[DataMember(Name = "data")]
-	public object[] DataInternal { get; set; }
+	public object[] DataInternal { get; set; } = Array.Empty<object>();
 
 	/// <summary>
 	/// The line data, accessing the DataInternal
@@ -95,19 +95,19 @@ public class Line
 	/// The datapoint name
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; }
+	public string? DataPointName { get; set; }
 
 	/// <summary>
 	/// The line decimal
 	/// </summary>
 	[DataMember(Name = "decimal")]
-	public int Decimal { get; set; }
+	public int LineDecimal { get; set; }
 
 	/// <summary>
 	/// The line description
 	/// </summary>
 	[DataMember(Name = "description")]
-	public string Description { get; set; }
+	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether it is a line for a virtual datapoint
@@ -143,19 +143,19 @@ public class Line
 	/// The line legend
 	/// </summary>
 	[DataMember(Name = "legend")]
-	public string Legend { get; set; }
+	public string Legend { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The line label
 	/// </summary>
 	[DataMember(Name = "label")]
-	public string Label { get; set; }
+	public string Label { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The line type
 	/// </summary>
 	[DataMember(Name = "type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to use the YMax

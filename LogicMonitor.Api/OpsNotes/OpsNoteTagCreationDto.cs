@@ -10,11 +10,11 @@ public class OpsNoteTagCreationDto
 	/// The tag id (leave null if there is no existing Tag)
 	/// </summary>
 	[DataMember(Name = "id")]
-	public string Id { get; set; }
+	public string? Id { get; set; }
 
 	/// <summary>
 	/// The tag name
 	/// </summary>
 	[DataMember(Name = "name")]
-	public string Name { get; set; }
+	public string Name { get; set; } = string.Empty;
 }

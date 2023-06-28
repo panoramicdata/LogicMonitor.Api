@@ -12,7 +12,7 @@ public class RoleGroupTests : TestWithOutput
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<RoleGroup>(CancellationToken.None)
+			.GetAllAsync<RoleGroup>(default)
 			.ConfigureAwait(false);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
@@ -28,11 +28,11 @@ public class RoleGroupTests : TestWithOutput
 				{
 					new Eq<RoleGroup>(nameof(RoleGroup.Name), TestName)
 				}
-		}, CancellationToken.None).ConfigureAwait(false);
+		}, default).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingItem, cancellationToken: CancellationToken.None)
+				.DeleteAsync(existingItem, cancellationToken: default)
 				.ConfigureAwait(false);
 		}
 
@@ -44,13 +44,13 @@ public class RoleGroupTests : TestWithOutput
 					Name = TestName,
 					Description = "Test Description"
 				},
-				CancellationToken.None
+				default
 			)
 			.ConfigureAwait(false);
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(newItem, cancellationToken: CancellationToken.None)
+			.DeleteAsync(newItem, cancellationToken: default)
 			.ConfigureAwait(false);
 	}
 }

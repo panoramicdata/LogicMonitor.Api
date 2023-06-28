@@ -4,13 +4,13 @@ namespace LogicMonitor.Api.Reports;
 /// A host group inventory report
 /// </summary>
 [DataContract]
-public class DeviceGroupInventoryReport : Report
+public class DeviceGroupInventoryReport : ReportBase
 {
 	/// <summary>
 	/// The comma-separated device groups
 	/// </summary>
 	[DataMember(Name = "hostGroups")]
-	public string DeviceGroups { get; set; }
+	public string DeviceGroups { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Whether to include sub groups
@@ -22,16 +22,16 @@ public class DeviceGroupInventoryReport : Report
 	/// The columns to sort by
 	/// </summary>
 	[DataMember(Name = "sortedBy")]
-	public string SortedBy { get; set; }
+	public string SortedBy { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<string> Properties { get; set; }
+	public List<string> Properties { get; set; } = new();
 
 	/// <summary>
 	/// The metrics
 	/// </summary>
-	public List<DeviceInventoryReportMetric> Metrics { get; set; }
+	public List<DeviceInventoryReportMetric> Metrics { get; set; } = new();
 }

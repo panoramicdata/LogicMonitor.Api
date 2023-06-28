@@ -10,13 +10,13 @@ public class SingleSignOn : IHasSingletonEndpoint
 	///     IdPMetadata
 	/// </summary>
 	[DataMember(Name = "IdPMetadata")]
-	public string IdPMetadata { get; set; }
+	public string IdPMetadata { get; set; } = string.Empty;
 
 	/// <summary>
 	///     SAML Version
 	/// </summary>
 	[DataMember(Name = "samlVersion")]
-	public string SamlVersion { get; set; }
+	public string SamlVersion { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Cookie expire seconds
@@ -31,10 +31,16 @@ public class SingleSignOn : IHasSingletonEndpoint
 	public int DefaultRoleId { get; set; }
 
 	/// <summary>
-	///     Enable status
+	///     Enable SSO status
 	/// </summary>
 	[DataMember(Name = "enableSSO")]
 	public bool Enabled { get; set; }
+
+	/// <summary>
+	///     Enable SLO status
+	/// </summary>
+	[DataMember(Name = "enableSLO")]
+	public bool EnableSlo { get; set; }
 
 	/// <summary>
 	///     Restricted status

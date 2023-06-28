@@ -10,7 +10,7 @@ public class ColorThreshold
 	/// The relation
 	/// </summary>
 	[DataMember(Name = "relation")]
-	public string Relation { get; set; }
+	public string Relation { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The level
@@ -22,5 +22,5 @@ public class ColorThreshold
 	/// The threshold
 	/// </summary>
 	[DataMember(Name = "threshold")]
-	public string Threshold { get; set; }
+	public string Threshold { get; set; } = string.Empty;
 }

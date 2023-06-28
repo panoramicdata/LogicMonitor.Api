@@ -114,16 +114,4 @@ public enum AlertStatus
 	/// </summary>
 	[EnumMember(Value = "confirmed-critical-sdt")]
 	ConfirmedCriticalSdt = 22,
-
-	/// <summary>
-	/// Alive
-	/// </summary>
-	[EnumMember(Value = "alive")]
-	Alive = 23,
-
-	/// <summary>
-	/// Dead
-	/// </summary>
-	[EnumMember(Value = "dead")]
-	Dead = 24
 }
