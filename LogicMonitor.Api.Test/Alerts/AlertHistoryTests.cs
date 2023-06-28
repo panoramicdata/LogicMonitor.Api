@@ -11,7 +11,7 @@ public class AlertHistoryTests : TestWithOutput
 	{
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26996821",
 			HistoryPeriod = AlertHistoryPeriod.Last24Hours
 		};
 
@@ -29,7 +29,7 @@ public class AlertHistoryTests : TestWithOutput
 	{
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26996821",
 			HistoryPeriod = AlertHistoryPeriod.Last7Days
 		};
 
@@ -47,7 +47,7 @@ public class AlertHistoryTests : TestWithOutput
 	{
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26996821",
 			HistoryPeriod = AlertHistoryPeriod.Last30Days
 		};
 
@@ -68,7 +68,7 @@ public class AlertHistoryTests : TestWithOutput
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS25658424",
+			Id = "DS26996821",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = end
