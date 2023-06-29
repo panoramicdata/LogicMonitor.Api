@@ -34,7 +34,7 @@ public class FlowTests : TestWithOutput
 			.GetFlowApplicationsPageAsync(
 				new FlowApplicationsRequest
 				{
-					DeviceId = netflowDeviceList[3].Id
+					DeviceId = netflowDeviceList[0].Id
 				},
 				default
 			)

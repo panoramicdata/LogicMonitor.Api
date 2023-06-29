@@ -499,7 +499,7 @@ public class ScheduledDownTimeTests : TestWithOutput
 	public async Task GetDeviceGroupSDTs()
 	{
 		var groupSDTs = await LogicMonitorClient
-			.GetDeviceGroupHistorySdtsAsync(1028, default)
+			.GetDeviceGroupHistorySdtsAsync(1950, default)
 			.ConfigureAwait(false);
 
 		groupSDTs.Items.Should().NotBeEmpty();
