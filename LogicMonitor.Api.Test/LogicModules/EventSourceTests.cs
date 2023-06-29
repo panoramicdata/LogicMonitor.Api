@@ -16,7 +16,7 @@ public class EventSourceTests : TestWithOutput
 		deviceGroup.Should().NotBeNull();
 
 		var eventGroupDataSources = await LogicMonitorClient
-			.GetAllDeviceGroupEventSourcesAsync(deviceGroup.Id, default)
+			.GetAllDeviceGroupEventSourcesAsync(1, default)
 			.ConfigureAwait(false);
 		eventGroupDataSources.Should().NotBeNullOrEmpty();
 	}

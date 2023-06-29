@@ -37,6 +37,12 @@ public class NetflowBandwidth : NetflowDataBase
 	public long UsageMb { get; set; }
 
 	/// <summary>
+	/// percentUsage
+	/// </summary>
+	[DataMember(Name = "percentUsage")]
+	public long PercentUsage { get; set; }
+
+	/// <summary>
 	/// Returns a string that represents the current object
 	/// </summary>
 	public override string ToString() => $"{DisplayName}. Send: {SendMb} MB. Receive: {ReceiveMb} MB. Usage: {UsageMb} MB]";

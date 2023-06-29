@@ -475,6 +475,30 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int WidgetCount { get; set; }
 
 	/// <summary>
+	/// enableScriptsInTextWidget
+	/// </summary>
+	[DataMember(Name = "enableScriptsInTextWidget")]
+	public bool EnableScriptsInTextWidget { get; set; }
+
+	/// <summary>
+	/// enableUpdateOfTenantIdentifierProperty
+	/// </summary>
+	[DataMember(Name = "enableUpdateOfTenantIdentifierProperty")]
+	public bool EnableUpdateOfTenantIdentifierProperty { get; set; }
+
+	/// <summary>
+	/// remainingTimeToKeepTenantIdentifierPropertyTextBoxDisabled
+	/// </summary>
+	[DataMember(Name = "remainingTimeToKeepTenantIdentifierPropertyTextBoxDisabled")]
+	public string RemainingTimeToKeepTenantIdentifierPropertyTextBoxDisabled { get; set; } = string.Empty;
+
+	/// <summary>
+	/// maximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins
+	/// </summary>
+	[DataMember(Name = "maximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins")]
+	public int MaximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/companySetting";
