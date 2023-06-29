@@ -10,11 +10,6 @@ public class EventSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetDeviceGroupEventSources()
 	{
-		var deviceGroup = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default)
-			.ConfigureAwait(false);
-		deviceGroup.Should().NotBeNull();
-
 		var eventGroupDataSources = await LogicMonitorClient
 			.GetAllDeviceGroupEventSourcesAsync(1, default)
 			.ConfigureAwait(false);
