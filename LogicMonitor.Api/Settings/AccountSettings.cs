@@ -463,6 +463,42 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int WidgetCount { get; set; }
 
 	/// <summary>
+	/// Whether to enable scripts in text widgets
+	/// </summary>
+	[DataMember(Name = "enableScriptsInTextWidget")]
+	public bool EnableScriptsInTextWidget { get; set; }
+
+	/// <summary>
+	/// numOfMongoDBAtlasDevices
+	/// </summary>
+	[DataMember(Name = "numOfMongoDBAtlasDevices")]
+	public int NumOfMongoDBAtlasDevices { get; set; }
+
+	/// <summary>
+	/// enableUpdateOfTenantIdentifierProperty
+	/// </summary>
+	[DataMember(Name = "enableUpdateOfTenantIdentifierProperty")]
+	public bool EnableUpdateOfTenantIdentifierProperty { get; set; }
+
+	/// <summary>
+	/// remainingTimeToKeepTenantIdentifierPropertyTextBoxDisabled
+	/// </summary>
+	[DataMember(Name = "remainingTimeToKeepTenantIdentifierPropertyTextBoxDisabled")]
+	public string RemainingTimeToKeepTenantIdentifierPropertyTextBoxDisabled { get; set; } = string.Empty;
+
+	/// <summary>
+	/// maximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins
+	/// </summary>
+	[DataMember(Name = "maximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins")]
+	public int MaximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMin { get; set; }
+
+	/// <summary>
+	/// numberOfCommittedCloudDevices
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedCloudDevices")]
+	public int NumberOfCommittedCloudDevices { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/companySetting";
