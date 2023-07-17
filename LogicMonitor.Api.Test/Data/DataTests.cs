@@ -201,6 +201,7 @@ public class DataTests : TestWithOutput
 		LogicMonitorClient.UseCache = true;
 
 		var graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest, default).ConfigureAwait(false);
+
 		graphData.Lines.Should().NotBeNullOrEmpty();
 		graphData.StartTimeUtc.Should().Be(startDateTime);
 		graphData.Lines[0].ColorString.Should().NotBeNull();
@@ -211,6 +212,58 @@ public class DataTests : TestWithOutput
 		graphData.Should().NotBeNull();
 		stopwatch.Stop();
 		stopwatch.ElapsedMilliseconds.Should().BeLessThan(50);
+	}
+
+	[Fact]
+	public async Task GetGraphDataWithoutFakeData()
+	{
+		var dataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("Ping", default)
+			.ConfigureAwait(false);
+		dataSource.Should().NotBeNull();
+		dataSource ??= new();
+
+		var dataSourceGraph = await LogicMonitorClient
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Ping Round-Trip Time", default)
+			.ConfigureAwait(false);
+		dataSourceGraph.Should().NotBeNull();
+
+		var deviceDataSource = await LogicMonitorClient
+			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(427, dataSource.Id, default)
+			.ConfigureAwait(false);
+		deviceDataSource.Should().NotBeNull();
+
+		var deviceDataSourceInstances = await LogicMonitorClient
+			.GetAllDeviceDataSourceInstancesAsync(427, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default)
+			.ConfigureAwait(false);
+		deviceDataSourceInstances.Should().NotBeNull();
+		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
+
+		var startDateTime = new DateTime(2023, 7, 12, 10, 0, 0, DateTimeKind.Utc);
+		var endDateTime = startDateTime.AddHours(1);
+
+		//while (startDateTime <= DateTime.UtcNow.AddDays(-1))
+		{
+			
+			var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
+			{
+				DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
+				DataSourceGraphId = dataSourceGraph.Id,
+				TimePeriod = TimePeriod.Zoom,
+				StartDateTime = startDateTime,
+				EndDateTime = endDateTime
+			};
+
+			//  Ensure Caching is enabled
+			LogicMonitorClient.UseCache = true;
+
+			await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest, default).ConfigureAwait(false);
+			startDateTime = startDateTime.AddHours(1);
+		}
+
+		//graphData.Lines.Should().NotBeNullOrEmpty();
+		//graphData.StartTimeUtc.Should().Be(startDateTime);
+		//graphData.Lines[0].ColorString.Should().NotBeNull();
 	}
 
 	[Fact]

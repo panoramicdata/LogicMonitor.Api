@@ -1,4 +1,5 @@
 using System.Net.Http;
+using LogicMonitor.Api.Extensions;
 
 namespace LogicMonitor.Api;
 
