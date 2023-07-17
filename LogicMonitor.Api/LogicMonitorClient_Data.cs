@@ -26,7 +26,7 @@ public partial class LogicMonitorClient
 	/// <param name="graphDataRequest">The </param>
 	/// <param name="cancellationToken">Optional cancellation token</param>
 	/// <exception cref="ArgumentNullException"></exception>
-	public Task<GraphData> GetGraphDataAsync(GraphDataRequest graphDataRequest, CancellationToken cancellationToken)
+	public async Task<GraphData> GetGraphDataAsync(GraphDataRequest graphDataRequest, CancellationToken cancellationToken)
 	{
 		if (graphDataRequest is null)
 		{
@@ -36,7 +36,9 @@ public partial class LogicMonitorClient
 		graphDataRequest.Validate();
 
 		var subUrl = graphDataRequest.SubUrl;
-		return GetBySubUrlAsync<GraphData>(subUrl, cancellationToken);
+		var graphData = await GetBySubUrlAsync<GraphData>(subUrl, cancellationToken).ConfigureAwait(false);
+		graphData.RemoveInvalidDataPoints();
+		return graphData;
 	}
 
 	/// <summary>
