@@ -12,7 +12,7 @@ public static class GraphDataExtensions
 	/// </summary>
 	/// <param name="graphData">The GraphData</param>
 	/// <returns>A list of timestamp indexes</returns>
-	public static List<(long Timestamp, int Index)>GetTimestampToRemove(this GraphData graphData)
+	private static List<(long Timestamp, int Index)> GetTimestampToRemove(this GraphData graphData)
 	{
 		var timestampToRemove = new List<(long, int)>();
 		for (var index = 0; index < graphData.TimeStamps.Count; index++)
@@ -39,11 +39,6 @@ public static class GraphDataExtensions
 	{
 		// Get invalid timestamps
 		var timestampsAndIndexes = graphData.GetTimestampToRemove();
-
-		if (timestampsAndIndexes.Count > 0)
-		{
-			var x = "YAY";
-		}
 		timestampsAndIndexes.Reverse();
 
 		// Remove timestamps from the data

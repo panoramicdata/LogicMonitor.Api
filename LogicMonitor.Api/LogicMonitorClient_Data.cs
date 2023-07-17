@@ -37,6 +37,8 @@ public partial class LogicMonitorClient
 
 		var subUrl = graphDataRequest.SubUrl;
 		var graphData = await GetBySubUrlAsync<GraphData>(subUrl, cancellationToken).ConfigureAwait(false);
+
+		// RM-14879 Fix duplicate datapoint values due to DEVTS-14598
 		graphData.RemoveInvalidDataPoints();
 		return graphData;
 	}

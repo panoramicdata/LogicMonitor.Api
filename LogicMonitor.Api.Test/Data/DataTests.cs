@@ -242,28 +242,20 @@ public class DataTests : TestWithOutput
 		var startDateTime = new DateTime(2023, 7, 12, 10, 0, 0, DateTimeKind.Utc);
 		var endDateTime = startDateTime.AddHours(1);
 
-		//while (startDateTime <= DateTime.UtcNow.AddDays(-1))
+		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
 		{
-			
-			var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
-			{
-				DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
-				DataSourceGraphId = dataSourceGraph.Id,
-				TimePeriod = TimePeriod.Zoom,
-				StartDateTime = startDateTime,
-				EndDateTime = endDateTime
-			};
+			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
+			DataSourceGraphId = dataSourceGraph.Id,
+			TimePeriod = TimePeriod.Zoom,
+			StartDateTime = startDateTime,
+			EndDateTime = endDateTime
+		};
 
-			//  Ensure Caching is enabled
-			LogicMonitorClient.UseCache = true;
+		//  Ensure Caching is enabled
+		LogicMonitorClient.UseCache = true;
 
-			await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest, default).ConfigureAwait(false);
-			startDateTime = startDateTime.AddHours(1);
-		}
-
-		//graphData.Lines.Should().NotBeNullOrEmpty();
-		//graphData.StartTimeUtc.Should().Be(startDateTime);
-		//graphData.Lines[0].ColorString.Should().NotBeNull();
+		var graphData = await LogicMonitorClient.GetGraphDataAsync(deviceGraphDataRequest, default).ConfigureAwait(false);
+		graphData.TimeStamps.Count.Should().Be(62);
 	}
 
 	[Fact]
