@@ -48,18 +48,10 @@ public static class GraphDataExtensions
 		foreach (var line in graphData.Lines)
 		{
 			var lineData = line.Data.ToList();
-			try
+			foreach (var (_, Index) in timestampsAndIndexes)
 			{
-				foreach (var (_, Index) in timestampsAndIndexes)
-				{
-					lineData.RemoveAt(Index);
-				}
+				lineData.RemoveAt(Index);
 			}
-			catch (Exception e)
-			{
-				var x = 1;
-			}
-
 			// Copy the data back
 			line.Data = lineData.ToArray();
 		}
