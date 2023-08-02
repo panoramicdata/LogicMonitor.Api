@@ -41,5 +41,11 @@ public enum MonitoredObjectType
 	/// A property rule
 	/// </summary>
 	[EnumMember(Value = "propertyRule")]
-	PropertyRule = 5
+	PropertyRule = 5,
+
+	/// <summary>
+	/// LM Logs
+	/// </summary>
+	[EnumMember(Value = "lmlogs")]
+	LmLogs = 6
 }
