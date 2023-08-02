@@ -1361,7 +1361,7 @@ public partial class LogicMonitorClient : IDisposable
 	public virtual async Task PatchAsync<T>(T entity, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken) where T : IPatchable
 	=> await PatchAsync($"{entity.Endpoint()}/{entity.Id}", fieldsToUpdate, cancellationToken).ConfigureAwait(false);
 
-	private async Task PatchAsync(string subUrl, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken)
+	public async Task PatchAsync(string subUrl, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken)
 	{
 		var prefix = GetPrefix(PatchHttpMethod);
 		var jsonString = JsonConvert.SerializeObject(fieldsToUpdate);
