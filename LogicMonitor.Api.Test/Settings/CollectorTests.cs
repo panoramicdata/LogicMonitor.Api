@@ -12,7 +12,13 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task ExecuteDebugCommand()
 	{
-		var debugCommandResponse = await LogicMonitorClient.ExecuteDebugCommandAsync(CollectorId, "!ping 8.8.8.8", default).ConfigureAwait(false);
+		var debugCommandResponse = await LogicMonitorClient
+			.ExecuteDebugCommandAsync(
+				CollectorId,
+				"!ping 8.8.8.8",
+				default
+			)
+			.ConfigureAwait(false);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
