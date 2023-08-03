@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -5,6 +7,34 @@ namespace LogicMonitor.Api;
 /// </summary>
 public partial class LogicMonitorClient
 {
+	private async Task<List<DeviceGroup>> GetAllSubDeviceGroups(int deviceGroupId, CancellationToken cancellationToken)
+	{
+		var allDeviceGroups = new List<DeviceGroup>();
+
+		var deviceGroups =
+			await GetAllAsync(
+				new Filter<DeviceGroup>
+				{
+					FilterItems = new List<FilterItem<DeviceGroup>>
+					{
+						new Eq<DeviceGroup>(nameof(DeviceGroup.ParentId), deviceGroupId)
+					}
+				},
+				cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
+		if (deviceGroups.Count != 0)
+		{
+			foreach (var deviceGroup in deviceGroups)
+			{
+				allDeviceGroups.Add(deviceGroup);
+				allDeviceGroups.AddRange(await GetAllSubDeviceGroups(deviceGroup.Id, cancellationToken).ConfigureAwait(false));
+			}
+		}
+
+		return allDeviceGroups;
+	}
+
 	/// <summary>
 	///     Gets devices by HostName
 	/// </summary>
@@ -207,7 +237,7 @@ public partial class LogicMonitorClient
 								{
 									FilterItems = new List<FilterItem<DeviceGroup>>
 									{
-											new Eq<DeviceGroup>(nameof(DeviceGroup.Id), 1)
+										new Eq<DeviceGroup>(nameof(DeviceGroup.Id), 1)
 									}
 								},
 								cancellationToken: cancellationToken)
@@ -215,19 +245,34 @@ public partial class LogicMonitorClient
 				}
 				else
 				{
-					deviceGroups =
-						recurse
-							? await GetAllAsync(
-								new Filter<DeviceGroup>
-								{
-									FilterItems = new List<FilterItem<DeviceGroup>>
+					if (recurse)
+					{
+						if (!checkedDeviceGroup.FullPath.Contains('(') &&
+							!checkedDeviceGroup.FullPath.Contains(')') &&
+							!checkedDeviceGroup.FullPath.Contains('|'))
+						{
+							deviceGroups =
+								await GetAllAsync(
+									new Filter<DeviceGroup>
 									{
+										FilterItems = new List<FilterItem<DeviceGroup>>
+										{
 											new Includes<DeviceGroup>(nameof(DeviceGroup.FullPath), checkedDeviceGroup.FullPath)
-									}
-								},
-								cancellationToken: cancellationToken)
-							.ConfigureAwait(false)
-							: await GetAllAsync(
+										}
+									},
+									cancellationToken: cancellationToken)
+								.ConfigureAwait(false);
+						}
+						else
+						{
+							// LM API Includes filter (~) cannot handle parentheses and pipes
+							deviceGroups = await GetAllSubDeviceGroups(checkedDeviceGroup.Id, cancellationToken).ConfigureAwait(false);
+						}
+					}
+					else
+					{
+						deviceGroups =
+							await GetAllAsync(
 								new Filter<DeviceGroup>
 								{
 									FilterItems = new List<FilterItem<DeviceGroup>>
@@ -237,22 +282,20 @@ public partial class LogicMonitorClient
 								},
 								cancellationToken: cancellationToken)
 							.ConfigureAwait(false);
+					}
 				}
 
 				// Ensure the one we actually found is included
-				if (deviceGroups.Any(dg => dg.Id != checkedDeviceGroup.Id))
+				if (!deviceGroups.Exists(dg => dg.Id == checkedDeviceGroup.Id))
 				{
 					deviceGroups.Add(checkedDeviceGroup);
 				}
 
-				if (recurse)
+				if (recurse && checkedDeviceGroup.Id != 1)
 				{
-					if (checkedDeviceGroup.Id != 1)  // Not the root
-					{
-						// Filter out the ones where the full path did not START with the searched-for group, as we could
-						// only use a Includes<DeviceGroup> filter and not a StartsWith (there isn't one!)
-						deviceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchDeviceGroupName, StringComparison.Ordinal));
-					}
+					// Filter out the ones where the full path did not START with the searched-for group, as we could
+					// only use a Includes<DeviceGroup> filter and not a StartsWith (there isn't one!)
+					deviceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchDeviceGroupName, StringComparison.Ordinal));
 				}
 
 				// Get the Devices
@@ -317,9 +360,9 @@ public partial class LogicMonitorClient
 		var allDeviceGroups = await GetAllAsync(new Filter<DeviceGroup>
 		{
 			FilterItems = new List<FilterItem<DeviceGroup>>
-				{
-					new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), deviceGroupFullPath.EscapePlusCharacter())
-				}
+			{
+				new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), deviceGroupFullPath.EscapePlusCharacter().EscapeParens())
+			}
 		},
 		cancellationToken: cancellationToken)
 		.ConfigureAwait(false);

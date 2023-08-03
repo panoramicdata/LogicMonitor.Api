@@ -16,6 +16,28 @@ public class DeviceGroupTests : TestWithOutput
 	}
 
 	[Fact]
+	public async Task GetDevicesByDeviceGroupByFullPathWhereNameContainsParentheses()
+	{
+		//// No recurse
+		//var nonrecurse = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("DSW - (Test) Denise Home Network", false, default).ConfigureAwait(false);
+
+		//// Recurse
+		//var recursed = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("DSW - (Test) Denise Home Network", true, default).ConfigureAwait(false);
+
+		//nonrecurse.Should().HaveCount(3);
+		//recursed.Should().HaveCount(6);
+
+		// No recurse
+		var nonrecurse = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("DSW - (Test) Denise Home Network/Sub Group 2 (XYZ)", false, default).ConfigureAwait(false);
+
+		// Recurse
+		var recursed = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("DSW - (Test) Denise Home Network/Sub Group 2 (XYZ)", true, default).ConfigureAwait(false);
+
+		nonrecurse.Should().HaveCount(1);
+		recursed.Should().HaveCount(2);
+	}
+
+	[Fact]
 	public async Task SetAlertThreshold()
 	{
 		var deviceGroup = await LogicMonitorClient

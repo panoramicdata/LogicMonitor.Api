@@ -28,4 +28,10 @@ internal static class StringExtensions
 	/// <param name="value"></param>
 	public static string EscapePlusCharacter(this string value)
 		=> value.Replace("+", "%2B");
+
+	public static string EscapeParens(this string value)
+		=> value.Replace("(", "%28").Replace(")", "%29");
+
+	public static string EscapeParens2(this string value)
+	=> value.Replace("(", "\\(").Replace(")", "\\)");
 }
