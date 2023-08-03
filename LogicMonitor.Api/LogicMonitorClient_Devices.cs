@@ -1,5 +1,3 @@
-using System.Threading;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
