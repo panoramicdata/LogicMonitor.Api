@@ -15,7 +15,8 @@ internal class IntegrationsConverter : JsonCreationConverter<Integration>
 			"email" => new EmailIntegration(),
 			"autotask" => new AutoTaskIntegration(),
 			"pagerduty" => new PagerDutyIntegration(),
-			_ => throw new NotSupportedException($"{integration} deserialization not supported.  IntegrationsConverter.cs needs updating."),
+			"jsm" => new JiraServiceManagementIntegration(),
+			_ => throw new NotSupportedException($"{integration} deserialization not supported. IntegrationsConverter.cs needs updating."),
 		};
 	}
 }
