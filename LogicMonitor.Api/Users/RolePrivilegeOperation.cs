@@ -41,5 +41,11 @@ public enum RolePrivilegeOperation
 	/// Threshold
 	/// </summary>
 	[EnumMember(Value = "threshold")]
-	Threshold
+	Threshold,
+
+	/// <summary>
+	/// Publish
+	/// </summary>
+	[EnumMember(Value = "publish")]
+	Publish,
 }
