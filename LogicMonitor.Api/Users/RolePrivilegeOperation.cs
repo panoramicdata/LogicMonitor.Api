@@ -48,4 +48,10 @@ public enum RolePrivilegeOperation
 	/// </summary>
 	[EnumMember(Value = "publish")]
 	Publish,
+
+	/// <summary>
+	/// NoPrivilege
+	/// </summary>
+	[EnumMember(Value = "noprivilege")]
+	NoPrivilege
 }
