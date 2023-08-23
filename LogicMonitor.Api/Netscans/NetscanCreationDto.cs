@@ -29,7 +29,7 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    Schedule on which to run this policy
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public RestSchedule Schedule { get; set; } = new();
+	public NetscanSchedule Schedule { get; set; } = new();
 
 	/// <summary>
 	///    The name
@@ -57,10 +57,10 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	public string CollectorId { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Schedule on which to run this policy
+	///    Netscan credentials
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public NetscanPolicyCredential Credentials { get; set; } = new();
+	public NetscanCredentials Credentials { get; set; } = new();
 
 	/// <summary>
 	///    The subnet scan range

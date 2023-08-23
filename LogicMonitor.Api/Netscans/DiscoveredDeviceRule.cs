@@ -10,7 +10,7 @@ public class DiscoveredDeviceRule
 	/// The assignment
 	/// </summary>
 	[DataMember(Name = "assignment")]
-	public List<Assignment>? Assignment { get; set; }
+	public List<NetscanAssignment>? Assignment { get; set; }
 
 	/// <summary>
 	/// The change name pattern

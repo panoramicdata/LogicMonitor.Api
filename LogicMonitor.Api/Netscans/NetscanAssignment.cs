@@ -1,10 +1,10 @@
 namespace LogicMonitor.Api.Netscans;
 
 /// <summary>
-///    A Netscan policy device group assignment
+///    A Netscan assignment
 /// </summary>
 [DataContract]
-public class Assignment
+public class NetscanAssignment
 {
 	/// <summary>
 	/// The name of the group that discovered devices should be added into

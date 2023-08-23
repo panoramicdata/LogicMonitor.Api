@@ -56,13 +56,13 @@ public class NetscanTests : TestWithOutput
 			Name = name,
 			Description = description,
 			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
-			Credentials = new NetscanPolicyCredential
+			Credentials = new EC2NetscanPolicyCredential
 			{
 				DeviceGroupId = credentialsDeviceGroupId,
 				Custom = credentialsCustom
 			},
 			Method = netscanMethod,
-			Schedule = new RestSchedule
+			Schedule = new NetscanSchedule
 			{
 				Type = netscanScheduleType,
 				Cron = netscanScheduleCron,
@@ -75,11 +75,11 @@ public class NetscanTests : TestWithOutput
 			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
 			SubnetScanRange = subnetScanRange,
 			ExcludedIpAddresses = excludedIpAddresses,
-			DiscoveredDeviceRule = new DiscoveredDeviceRule
+			Ddr = new Ec2DDR
 			{
-				Assignment = new List<Assignment>
+				Assignment = new List<NetscanAssignment>
 					{
-						new Assignment
+						new NetscanAssignment
 						{
 							DeviceGroupId = assignmentDeviceGroupId,
 							DisableAlerting = assignmentDisableAlerting,

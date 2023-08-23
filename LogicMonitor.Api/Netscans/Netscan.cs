@@ -40,7 +40,7 @@ public class Netscan : NamedItem, IExecutable
 	/// Information that determines how duplicate discovered devices should be handled
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = new();
+	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = new(); 
 
 	/// <summary>
 	/// The Id of the device
@@ -64,7 +64,7 @@ public class Netscan : NamedItem, IExecutable
 	/// Information related to the recurring execution schedule for the Netscan Policy
 	/// </summary>
 	[DataMember(Name = "schedule")]
-	public RestSchedule Schedule { get; set; } = new();
+	public NetscanSchedule Schedule { get; set; } = new();
 
 	/// <summary>
 	/// The description of the Collector associated with this Netscan
@@ -94,13 +94,13 @@ public class Netscan : NamedItem, IExecutable
 	/// The Discovered device rules
 	/// </summary>
 	[DataMember(Name = "ddr")]
-	public DiscoveredDeviceRule? DiscoveredDeviceRule { get; set; }
+	public Ec2DDR? Ddr { get; set; }
 
 	/// <summary>
 	/// The credentials to be used for the scan
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public NetscanPolicyCredential Credentials { get; set; } = new();
+	public EC2NetscanPolicyCredential Credentials { get; set; } = new();
 
 	/// <summary>
 	/// Which IP the EC2 instance should be monitored with for nec2 scans: private or public
