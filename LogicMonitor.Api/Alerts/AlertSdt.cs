@@ -89,7 +89,7 @@ public abstract class AlertSdt
 	/// The week day
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public string WeekDay { get; set; } = string.Empty;
+	public WeekDay WeekDay { get; set; }
 
 	/// <summary>
 	/// The comment

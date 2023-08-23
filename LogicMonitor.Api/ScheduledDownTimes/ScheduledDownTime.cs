@@ -174,7 +174,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public string WeekDay { get; set; } = string.Empty;
+	public WeekDay WeekDay { get; set; }
 
 	/// <summary>
 	/// 1 | 2....| 31 The day of the month that the SDT will be active for a monthly SDT
@@ -258,7 +258,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	/// The week of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "weekOfMonth")]
-	public string WeekOfMonth { get; set; } = string.Empty;
+	public WeekOfMonth WeekOfMonth { get; set; }
 
 	#endregion
 

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Netscans;
 ///    The Netscan discovered device rules
 /// </summary>
 [DataContract]
-public class Ec2DDR
+public class DiscoveredDeviceRule
 {
 	/// <summary>
 	/// The assignment

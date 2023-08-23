@@ -55,7 +55,7 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	/// the week day of sdt, values can be SUNDAY|MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY
 	/// </summary>
 	[DataMember(Name = "weekDay")]
-	public string WeekDay { get; set; } = string.Empty;
+	public WeekDay WeekDay { get; set; }
 
 	/// <summary>
 	/// 1 | 2....| 24 The hour that the SDT will start for a repeating SDT (daily, weekly, or monthly)
@@ -91,5 +91,5 @@ public abstract class ScheduledDownTimeCreationDto : CreationDto<ScheduledDownTi
 	/// The week of the month that the SDT will be active for a monthly SDT
 	/// </summary>
 	[DataMember(Name = "weekOfMonth")]
-	public string WeekOfMonth { get; set; } = string.Empty;
+	public WeekOfMonth WeekOfMonth { get; set; }
 }

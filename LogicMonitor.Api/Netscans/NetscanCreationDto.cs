@@ -60,7 +60,7 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    Schedule on which to run this policy
 	/// </summary>
 	[DataMember(Name = "credentials")]
-	public EC2NetscanPolicyCredential Credentials { get; set; } = new();
+	public NetscanPolicyCredential Credentials { get; set; } = new();
 
 	/// <summary>
 	///    The subnet scan range
@@ -75,10 +75,10 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	public string ExcludedIpAddresses { get; set; } = string.Empty;
 
 	/// <summary>
-	///    DDR
+	///    Discovered device rule
 	/// </summary>
 	[DataMember(Name = "ddr")]
-	public Ec2DDR Ddr { get; set; } = new();
+	public DiscoveredDeviceRule DiscoveredDeviceRule { get; set; } = new();
 
 	/// <summary>
 	///    IP addresses to exclude

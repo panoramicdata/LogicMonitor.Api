@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Netscans;
 ///    A netscan policy credential set
 /// </summary>
 [DataContract(Name = "credentials")]
-public class EC2NetscanPolicyCredential
+public class NetscanPolicyCredential
 {
 	/// <summary>
 	/// The ID of the device group that credentials should be inherited from, for this scan
