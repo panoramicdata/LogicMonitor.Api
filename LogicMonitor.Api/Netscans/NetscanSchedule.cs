@@ -34,7 +34,7 @@ public class NetscanSchedule
 	///    The weekday
 	/// </summary>
 	[DataMember(Name = "weekday")]
-	public List<WeekDay> WeekDays { get; set; } = new();
+	public List<string> WeekDays { get; set; } = new();
 
 	/// <summary>
 	///    The nth week
