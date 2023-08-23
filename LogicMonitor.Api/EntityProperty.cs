@@ -19,7 +19,7 @@ public class EntityProperty
 	public string Value { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The type of proprety among Inherit|System|Custom
+	/// The type of property among Inherit|System|Custom
 	/// </summary>
 	[DataMember(Name = "type")]
 	[JsonConverter(typeof(StringEnumConverter))]
