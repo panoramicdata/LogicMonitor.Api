@@ -16,7 +16,7 @@ public class WebsiteLocation
 	/// The Internal Service Groups Ids
 	/// </summary>
 	[DataMember(Name = "collectorIds")]
-	public int[]? CollectorIds { get; set; }
+	public List<int>? CollectorIds { get; set; }
 
 	/// <summary>
 	/// The collector info of the services
@@ -28,5 +28,5 @@ public class WebsiteLocation
 	/// The SiteMonitor Groups Ids
 	/// </summary>
 	[DataMember(Name = "smgIds")]
-	public int[]? SmgIds { get; set; }
+	public List<int>? SmgIds { get; set; }
 }
