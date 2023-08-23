@@ -17,7 +17,7 @@ public class WebCheckStep : NamedItem
 	/// Plain Text/String | Glob expression | JSON | XML | Multi line key value pair\nStep Response Type
 	/// </summary>
 	[DataMember(Name = "respType")]
-	public string? RespType { get; set; }
+	public string? ResponseType { get; set; }
 
 	/// <summary>
 	/// HTTP header
@@ -150,7 +150,7 @@ public class WebCheckStep : NamedItem
 	/// true | false\nChecks if full page should be loaded or not
 	/// </summary>
 	[DataMember(Name = "fullpageLoad")]
-	public bool FullpageLoad { get; set; }
+	public bool FullPageLoad { get; set; }
 
 	/// <summary>
 	/// The expected status code
