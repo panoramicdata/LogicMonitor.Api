@@ -88,11 +88,11 @@ public class NetscanTests : TestWithOutput
 					},
 				ChangeName = ddrChangeName
 			},
-			DuplicatesStrategy = new ExcludeDuplicateIps
+			DuplicatesStrategy = new NetscanDuplicatesStrategy
 			{
 				Type = duplicatesStrategyType,
 			},
-			Ports = new RestNetscanPorts
+			Ports = new NetscanPorts
 			{
 				IsGlobalDefault = false,
 				Value = "21,22,23,25,53,69,80,81,110,123,135,143,389,443,445,631,993,1433,1521,3306,3389,5432,5672,6081,7199,8000,8080,8081,9100,10000,11211,27017"

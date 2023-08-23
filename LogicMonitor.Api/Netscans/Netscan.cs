@@ -40,7 +40,7 @@ public class Netscan : NamedItem, IExecutable
 	/// Information that determines how duplicate discovered devices should be handled
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = new();
+	public NetscanDuplicatesStrategy DuplicatesStrategy { get; set; } = new();
 
 	/// <summary>
 	/// The Id of the device
@@ -118,7 +118,7 @@ public class Netscan : NamedItem, IExecutable
 	/// The ports
 	/// </summary>
 	[DataMember(Name = "ports")]
-	public RestNetscanPorts? Ports { get; set; }
+	public NetscanPorts? Ports { get; set; }
 
 	/// <summary>
 	/// The subnet to exclude from scanning from nmap scans

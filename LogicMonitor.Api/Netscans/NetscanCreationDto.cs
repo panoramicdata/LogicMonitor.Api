@@ -84,7 +84,7 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    IP addresses to exclude
 	/// </summary>
 	[DataMember(Name = "duplicate")]
-	public ExcludeDuplicateIps DuplicatesStrategy { get; set; } = new();
+	public NetscanDuplicatesStrategy DuplicatesStrategy { get; set; } = new();
 
 	/// <summary>
 	///    The script path (if required)
@@ -120,5 +120,5 @@ public class NetscanCreationDto : CreationDto<Netscan>
 	///    The ports
 	/// </summary>
 	[DataMember(Name = "ports")]
-	public RestNetscanPorts Ports { get; set; } = new();
+	public NetscanPorts Ports { get; set; } = new();
 }

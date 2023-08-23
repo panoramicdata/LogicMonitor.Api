@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Netscans;
 /// The Netscan policy duplication strategy
 /// </summary>
 [DataContract(Name = "duplicate")]
-public class ExcludeDuplicateIps
+public class NetscanDuplicatesStrategy
 {
 	/// <summary>
 	/// What types of duplicate IPs should be excluded. Options are 1 (matching any monitored devices), 2 (matching devices already discovered by this scan), 3 (matching devices in these groups), and 4 (matching devices assigned to these collectors)

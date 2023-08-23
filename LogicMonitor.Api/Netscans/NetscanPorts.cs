@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Netscans;
 /// Netscan ports
 /// </summary>
 [DataContract]
-public class RestNetscanPorts
+public class NetscanPorts
 {
 	/// <summary>
 	/// Whether or not default ports should be used
