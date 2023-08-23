@@ -13,7 +13,7 @@ public class WebsiteStepAuthentication
 	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
-	/// NTLM  authentication userName
+	/// NTLM authentication userName
 	/// </summary>
 	[DataMember(Name = "userName")]
 	public string UserName { get; set; } = string.Empty;
