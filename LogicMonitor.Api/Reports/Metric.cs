@@ -18,21 +18,14 @@ public class Metric
 	public string DataSourceFullName { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The Description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; } = string.Empty;
+
+	/// <summary>
 	/// The DataSource instances
 	/// </summary>
 	[DataMember(Name = "instances")]
 	public string Instances { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The DataPoint name
-	/// </summary>
-	[DataMember(Name = "dataPointName")]
-	public string DataPointName { get; set; } = string.Empty;
-
-
-	/// <summary>
-	/// The DataPoint ID
-	/// </summary>
-	[DataMember(Name = "dataPointId")]
-	public int DataPointId { get; set; }
 }

@@ -65,13 +65,13 @@ public class Line
 	/// Must be implemented as an object as LogicMonitor have decided that null should be represented as "No Data" (brilliant!)
 	/// </summary>
 	[DataMember(Name = "data")]
-	public object[] DataInternal { get; set; } = Array.Empty<object>();
+	public List<object> DataInternal { get; set; } = new();
 
 	/// <summary>
 	/// The line data, accessing the DataInternal
 	/// </summary>
 	[IgnoreDataMember]
-	public double?[] Data
+	public List<double?> Data
 	{
 		get => DataInternal.Select(@object =>
 			@object as double? == double.PositiveInfinity   // No, as object as double? is always null
@@ -81,8 +81,8 @@ public class Line
 					: double.TryParse(@object.ToString(), out var result)
 						? result
 							: (double?)null
-		).ToArray();
-		set => DataInternal = value.Select(v => v ?? (object)"No Data").ToArray();
+		).ToList();
+		set => DataInternal = value.Select(v => v ?? (object)"No Data").ToList();
 	}
 
 	/// <summary>

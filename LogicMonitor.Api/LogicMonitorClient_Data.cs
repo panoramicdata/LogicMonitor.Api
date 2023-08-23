@@ -12,13 +12,20 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<ForecastGraphData> GetForecastGraphDataAsync(
 		ForecastDataRequest forecastDataRequest,
-		CancellationToken cancellationToken) => new ForecastGraphData
+		CancellationToken cancellationToken)
+	{
+		var trainingGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.TrainingSubUrl, cancellationToken).ConfigureAwait(false);
+
+		var forcastedGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.ForecastedSubUrl, cancellationToken).ConfigureAwait(false);
+
+		return new ForecastGraphData
 		{
 			// graphs/trainingdata?_scope=internal&graphId=3040&dataSourceInstanceId=9053&type=host&selectedDataPointLabel=SIZEGB&maxSamples=249&time=1month&startTime=&endTime=&_=1481203870059
-			TrainingGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.TrainingSubUrl, cancellationToken).ConfigureAwait(false),
+			TrainingGraphData = trainingGraphData,
 			// device/devicedatasourceinstances/9065/graphs/3043/data/forecasting?_scope=internal&selectedDataPointLabel=CPU&maxSamples=286&end=1487982545&start=1485390545&time=1month&forecastTime=7days&_=1487979440482
-			ForecastedGraphData = await GetBySubUrlAsync<GraphData>(forecastDataRequest.ForecastedSubUrl, cancellationToken).ConfigureAwait(false)
+			ForecastedGraphData = forcastedGraphData
 		};
+	}
 
 	/// <summary>
 	///     Get graph data using the REST API

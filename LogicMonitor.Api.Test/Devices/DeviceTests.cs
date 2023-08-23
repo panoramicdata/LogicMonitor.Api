@@ -80,7 +80,7 @@ public class DeviceTests : TestWithOutput
 			ParentId = deviceGroupParentId.ToString(CultureInfo.InvariantCulture)
 		}, default).ConfigureAwait(false);
 
-		foreach (var finalHardDelete in new bool[] { false, true })
+		foreach (var finalHardDelete in new[] { false, true })
 		{
 			// Create device
 			var deviceCreationDto = new DeviceCreationDto

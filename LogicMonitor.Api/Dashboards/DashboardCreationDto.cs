@@ -52,7 +52,7 @@ public class DashboardCreationDto : CreationDto<Dashboard>
 	/// If useDynamicWidget\u003dtrue, this field must at least contain tokens defaultDeviceGroup and defaultServiceGroup
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public string[] WidgetTokens { get; set; } = Array.Empty<string>();
+	public List<string> WidgetTokens { get; set; } = new();
 
 	/// <summary>
 	/// The name of the dashboard

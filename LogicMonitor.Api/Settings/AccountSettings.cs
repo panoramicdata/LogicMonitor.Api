@@ -6,6 +6,11 @@ namespace LogicMonitor.Api.Settings;
 [DataContract]
 public class AccountSettings : IHasSingletonEndpoint
 {
+	/// <summary>
+	///     The number of committed containers
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedContainer")]
+	public int CommittedContainerCount { get; set; }
 
 	/// <summary>
 	///     The number of active alerts
@@ -14,11 +19,17 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int ActiveAlertCount { get; set; }
 
 	/// <summary>
+	///     The number of serverless resources
+	/// </summary>
+	[DataMember(Name = "numOfServerlessResources")]
+	public int ServerlessResourceCount { get; set; }
+
+	/// <summary>
 	///     The number of active users
 	/// </summary>
 	[DataMember(Name = "numberOfSessionUsers")]
-
 	public int ActiveUserCount { get; set; }
+
 	/// <summary>
 	///     The Alert Rule count
 	/// </summary>

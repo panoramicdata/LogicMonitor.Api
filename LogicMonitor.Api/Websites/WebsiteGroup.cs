@@ -47,7 +47,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// The privilege operations of the user\u0027s role that made the API request.  The array can contain the values ack, sdt and/or threshold
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]
-	public RolePrivilege[]? RolePrivileges { get; set; }
+	public List<RolePrivilege>? RolePrivileges { get; set; }
 
 	/// <summary>
 	/// The Id of the parent group. If parentId\u003d1 then the group exists under the root  group

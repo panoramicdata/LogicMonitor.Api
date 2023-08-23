@@ -1,4 +1,3 @@
-using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test;
@@ -134,6 +133,8 @@ public class EventSourceTests2 : TestWithOutput
 		var eventSource = await LogicMonitorClient
 			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<DeviceEventSource>(), default)
 			.ConfigureAwait(false);
+
+		eventSource.Items.Should().NotBeNullOrEmpty();
 
 		var groups = await LogicMonitorClient
 			.GetDeviceEventSourceGroupsPageAsync(WindowsDeviceId, eventSource.Items[0].EventSourceId, new Filter<DeviceEventSourceGroup>(), default)

@@ -11,13 +11,13 @@ public class WebsiteCheckpointRawData
 	/// datapoint values 2-D list
 	/// </summary>
 	[DataMember(Name = "values")]
-	public object[]? Values { get; set; }
+	public List<object>? Values { get; set; }
 
 	/// <summary>
 	/// timestamp list
 	/// </summary>
 	[DataMember(Name = "time")]
-	public long[]? Time { get; set; }
+	public List<long>? Time { get; set; }
 
 	/// <summary>
 	/// the next page parameters

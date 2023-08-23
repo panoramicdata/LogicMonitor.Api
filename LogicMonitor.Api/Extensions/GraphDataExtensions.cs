@@ -53,7 +53,7 @@ public static class GraphDataExtensions
 				lineData.RemoveAt(Index);
 			}
 			// Copy the data back
-			line.Data = lineData.ToArray();
+			line.Data = lineData;
 		}
 	}
 }

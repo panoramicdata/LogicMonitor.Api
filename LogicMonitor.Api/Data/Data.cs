@@ -10,13 +10,13 @@ public class Data
 	/// Data Values
 	/// </summary>
 	[DataMember(Name = "values")]
-	public Dictionary<string, object[][]> DataValues { get; set; } = new();
+	public Dictionary<string, List<List<object>>> DataValues { get; set; } = new();
 
 	/// <summary>
 	/// Data Points
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public string[] DataPoints { get; set; } = Array.Empty<string>();
+	public List<string> DataPoints { get; set; } = new();
 
 	/// <summary>
 	/// Data Points

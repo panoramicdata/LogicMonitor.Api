@@ -11,7 +11,7 @@ public class SaasAccountTestResult
 	/// nonPermissionApisErrors
 	/// </summary>
 	[DataMember(Name = "nonPermissionApisErrors")]
-	public string[] NonPermissionApisErrors { get; set; } = Array.Empty<string>();
+	public List<string> NonPermissionApisErrors { get; set; } = new();
 
 	/// <summary>
 	/// invalidStatusUrls
@@ -41,5 +41,5 @@ public class SaasAccountTestResult
 	/// nonPermissionApis
 	/// </summary>
 	[DataMember(Name = "nonPermissionApis")]
-	public string[] NonPermissionApis { get; set; } = Array.Empty<string>();
+	public List<string> NonPermissionApis { get; set; } = new();
 }

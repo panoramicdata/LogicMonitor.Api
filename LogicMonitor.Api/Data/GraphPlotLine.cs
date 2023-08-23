@@ -35,7 +35,7 @@ public class GraphPlotLine
 	/// The polled data used to plot the graph
 	/// </summary>
 	[DataMember(Name = "data")]
-	public object[] Data { get; set; } = Array.Empty<object>();
+	public List<object> Data { get; set; } = new();
 
 	/// <summary>
 	/// The max value of datapoint or instance

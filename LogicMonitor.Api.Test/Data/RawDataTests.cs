@@ -80,6 +80,6 @@ public class RawDataTests : TestWithOutput
 		rawData.InstanceFetchDataResponses.Count.Should().Be(deviceDataSourceInstances.Count);
 		rawData.InstanceFetchDataResponses
 			.Should()
-			.AllSatisfy(response => response.DataPoints.Length.Should().Be(dataSource.DataSourceDataPoints.Count));
+			.AllSatisfy(response => response.DataPoints.Count.Should().Be(dataSource.DataSourceDataPoints.Count));
 	}
 }

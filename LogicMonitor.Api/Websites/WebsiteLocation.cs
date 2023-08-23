@@ -22,7 +22,7 @@ public class WebsiteLocation
 	/// The collector info of the services
 	/// </summary>
 	[DataMember(Name = "collectors")]
-	public WebsiteCollectorInfo[]? Collectors { get; set; }
+	public List<WebsiteCollectorInfo>? Collectors { get; set; }
 
 	/// <summary>
 	/// The SiteMonitor Groups Ids

@@ -28,14 +28,14 @@ public class RawDataSet
 	///    The values as objects (string or double)
 	/// </summary>
 	[DataMember(Name = "values")]
-	public object[][] ValuesAsObjects { get; set; } = Array.Empty<object[]>();
+	public List<List<object>> ValuesAsObjects { get; set; } = new();
 
 	/// <summary>
 	///    The data point values
 	/// </summary>
 	[IgnoreDataMember]
-	public double?[][] Values => Enumerable
-				.Range(0, ValuesAsObjects.Length)
+	public List<List<double?>> Values => Enumerable
+				.Range(0, ValuesAsObjects.Count)
 				.Select(index => ValuesAsObjects[index]
 					.Select(valueAsObject =>
 						{
@@ -47,9 +47,9 @@ public class RawDataSet
 							return (double?)null;
 						}
 					)
-					.ToArray()
+					.ToList()
 				)
-				.ToArray();
+				.ToList();
 
 	/// <summary>
 	///    The next page parameters

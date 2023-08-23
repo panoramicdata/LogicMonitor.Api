@@ -77,7 +77,7 @@ public class AlertTests : TestWithOutput
 
 		// Add a note
 		await LogicMonitorClient
-			.SetAlertNoteAsync(new[] { alert.Id }, TestNoteComment, default)
+			.SetAlertNoteAsync(new List<string> { alert.Id }, TestNoteComment, default)
 			.ConfigureAwait(false);
 
 		var refetchedAlert = await LogicMonitorClient

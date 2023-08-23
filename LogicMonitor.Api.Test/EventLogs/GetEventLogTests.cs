@@ -69,8 +69,8 @@ public class GetEventLogTests : TestWithOutput
 			{
 				Logger.LogError("{Id}\n{Description}\n", logItem.Id, logItem.Description);
 			}
-
-			Assert.False(true, "Unhandled log items");
 		}
+
+		unhandledLogItems.Should().BeEmpty();
 	}
 }

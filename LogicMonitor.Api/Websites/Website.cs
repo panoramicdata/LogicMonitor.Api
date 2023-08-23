@@ -53,7 +53,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The role privilege operation(s) for this website that are granted to the user who made the API request
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]
-	public string[]? RolePrivileges { get; set; }
+	public List<string>? RolePrivileges { get; set; }
 
 	/// <summary>
 	/// The time (in epoch format) that the website was updated
@@ -90,13 +90,13 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The checkpoints from the which the website is monitored. This object should reference each location specified in testLocation in addition to an \u0027Overall\u0027 checkpoint
 	/// </summary>
 	[DataMember(Name = "checkpoints")]
-	public WebsiteCheckpoint[]? Checkpoints { get; set; }
+	public List<WebsiteCheckpoint>? Checkpoints { get; set; }
 
 	/// <summary>
-	/// Required for type\u003dwebcheck , An object comprising one or more steps, see the table below for the properties included in each step
+	/// Required for type webcheck. An object comprising one or more steps, see the table below for the properties included in each step
 	/// </summary>
 	[DataMember(Name = "steps")]
-	public WebCheckStep[]? Steps { get; set; }
+	public List<WebCheckStep>? Steps { get; set; }
 
 	/// <summary>
 	/// 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 30 | 60\nThe number of checks that must fail before an alert is triggered
@@ -120,7 +120,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The collectors that are monitoring the website, if the website is internal
 	/// </summary>
 	[DataMember(Name = "collectors")]
-	public WebsiteCollectorInfo[]? Collectors { get; set; }
+	public List<WebsiteCollectorInfo>? Collectors { get; set; }
 
 	/// <summary>
 	/// Required for type\u003dwebcheck , The domain of the service. This is the base URL of the service

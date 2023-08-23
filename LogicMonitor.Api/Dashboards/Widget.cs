@@ -137,7 +137,7 @@ public class Widget : NamedItem, IHasEndpoint, IWidget
 	/// <summary>
 	///     The handled parameters
 	/// </summary>
-	protected virtual IEnumerable<string> HandledParameters => new[] { "interval", "timescale" };
+	protected virtual List<string> HandledParameters => new() { "interval", "timescale" };
 
 	/// <summary>
 	///     The endpoint
