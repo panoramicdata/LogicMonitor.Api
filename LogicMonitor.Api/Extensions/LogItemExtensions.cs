@@ -356,7 +356,7 @@ public static class LogItemExtensions
 		auditEvent.MonthlyMetrics = GetGroupValueAsStructOrNull<int>(match, "monthlyMetrics");
 		auditEvent.ResourceHostname = GetGroupValueAsTypeOrNull<string>(match, "resourceHostname");
 		auditEvent.RemoteSessionType = GetGroupValueAsTypeOrNull<string>(match, "remoteSessionType");
-		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<int>(match, "remoteSessionId");
+		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<long>(match, "remoteSessionId");
 		auditEvent.StartDownTime = GetGroupValueAsTypeOrNull<string>(match, "startDownTime");
 		auditEvent.UserRole = GetGroupValueAsTypeOrNull<string>(match, "userRole");
 
@@ -421,6 +421,12 @@ public static class LogItemExtensions
 		if (typeof(T) == typeof(int))
 		{
 			var result = int.Parse(stringValue, CultureInfo.InvariantCulture);
+			return result is T t ? t : default;
+		}
+
+		if (typeof(T) == typeof(long))
+		{
+			var result = long.Parse(stringValue, CultureInfo.InvariantCulture);
 			return result is T t ? t : default;
 		}
 

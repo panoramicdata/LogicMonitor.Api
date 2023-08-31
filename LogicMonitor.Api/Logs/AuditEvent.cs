@@ -246,7 +246,7 @@ public class AuditEvent
 	/// <summary>
 	/// Remote Session ID
 	/// </summary>
-	public int? RemoteSessionId { get; internal set; }
+	public long? RemoteSessionId { get; internal set; }
 
 	/// <summary>
 	/// Remote Session Type
