@@ -334,6 +334,7 @@ public static class LogItemExtensions
 			default:
 				break;
 		}
+
 		var resourceIdString = GetGroupValueAsTypeOrNull<string>(match, "resourceId");
 		auditEvent.ResourceGroupId = GetGroupValueAsStructOrNull<int>(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsTypeOrNull<string>(match, "resourceGroupName");
