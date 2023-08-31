@@ -353,7 +353,7 @@ public static class LogItemExtensions
 		auditEvent.DataSourceDeletedInstanceNames = GetGroupValueAsTypeOrNull<List<string>>(match, "dataSourceDeletedInstanceNames");
 		auditEvent.Description = GetGroupValueAsTypeOrNull<string>(match, "description");
 		auditEvent.EndDownTime = GetGroupValueAsTypeOrNull<string>(match, "endDownTime");
-		auditEvent.MonthlyMetrics = GetGroupValueAsStructOrNull<int>(match, "monthlyMetrics");
+		auditEvent.MonthlyMetrics = GetGroupValueAsStructOrNull<long>(match, "monthlyMetrics");
 		auditEvent.ResourceHostname = GetGroupValueAsTypeOrNull<string>(match, "resourceHostname");
 		auditEvent.RemoteSessionType = GetGroupValueAsTypeOrNull<string>(match, "remoteSessionType");
 		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<long>(match, "remoteSessionId");

@@ -221,7 +221,7 @@ public class AuditEvent
 	/// <summary>
 	/// The regular device monthly metrics
 	/// </summary>
-	public int? MonthlyMetrics { get; internal set; }
+	public long? MonthlyMetrics { get; internal set; }
 
 	/// <summary>
 	/// The scheduled down time start time
