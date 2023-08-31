@@ -174,6 +174,11 @@ public class AuditEvent
 	public string? PropertyValue { get; internal set; }
 
 	/// <summary>
+	/// Time
+	/// </summary>
+	public string? Time { get; internal set; }
+
+	/// <summary>
 	/// The WildValue - available when a DeviceDataSourceInstance was added without Ids
 	/// </summary>
 	public string? WildValue { get; internal set; }
@@ -239,7 +244,12 @@ public class AuditEvent
 	public string? ResourceHostname { get; internal set; }
 
 	/// <summary>
-	/// RemoteSessionType
+	/// Remote Session ID
+	/// </summary>
+	public int? RemoteSessionId { get; internal set; }
+
+	/// <summary>
+	/// Remote Session Type
 	/// </summary>
 	public string? RemoteSessionType { get; internal set; }
 }

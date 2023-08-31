@@ -728,10 +728,12 @@ public class AuditEventTests : TestWithOutput
 );
 
 	[Theory]
-	[InlineData("update  account alice@bob.com (xxx)", "alice@bob.com")]
+	[InlineData("update  account alice@bob.com (xxx)", "alice@bob.com", "xxx")]
+	[InlineData("update  account bob@cratchett.com ()", "bob@cratchett.com", "")]
 	public void UpdateAccount_Success(
 		string logItemMessage,
-		string expectedUserName)
+		string expectedUserName,
+		string expectedDescription)
 		=> AssertToAuditEventSucceeds(
 	logItemMessage,
 	new()
@@ -740,6 +742,7 @@ public class AuditEventTests : TestWithOutput
 		ActionType = AuditEventActionType.Update,
 		EntityType = AuditEventEntityType.Account,
 		OutcomeType = AuditEventOutcomeType.Success,
+		Description = expectedDescription,
 		UserName = expectedUserName
 	}
 );
@@ -767,6 +770,44 @@ public class AuditEventTests : TestWithOutput
 		ResourceNames = new() { expectedResourceName },
 		InstanceName = expectedInstanceName,
 		Description = expectedDescription,
+	}
+);
+
+	[Theory]
+	[InlineData(
+		"Remote rdp session 1234 to 5.6.7.8 started at 09:10",
+		"rdp",
+		1234,
+		"5.6.7.8",
+		AuditEventActionType.Start,
+		"09:10")]
+	[InlineData(
+		"Remote ssh session 4321 to 8.7.6.5 terminated at 12:34",
+		"ssh",
+		4321,
+		"8.7.6.5",
+		AuditEventActionType.End,
+		"12:34")]
+	public void RemoteSession_Success(
+		string logItemMessage,
+		string expectedRemoteSessionType,
+		int expectedRemoteSessionId,
+		string expectedResourceHostname,
+		AuditEventActionType expectedActionType,
+		string expectedTime)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 78,
+		EntityType = AuditEventEntityType.Resource,
+		OutcomeType = AuditEventOutcomeType.Success,
+		ActionType = expectedActionType,
+		RemoteSessionType = expectedRemoteSessionType,
+		RemoteSessionId = expectedRemoteSessionId,
+		ResourceHostname = expectedResourceHostname,
+		Time = expectedTime
+
 	}
 );
 

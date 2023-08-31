@@ -78,5 +78,15 @@ public enum AuditEventActionType
 	/// <summary>
 	/// Request Password Reset
 	/// </summary>
-	RequestPasswordReset
+	RequestPasswordReset,
+
+	/// <summary>
+	/// Start
+	/// </summary>
+	Start,
+
+	/// <summary>
+	/// End
+	/// </summary>
+	End
 }

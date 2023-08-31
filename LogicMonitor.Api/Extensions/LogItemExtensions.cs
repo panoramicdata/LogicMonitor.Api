@@ -250,11 +250,17 @@ public static class LogItemExtensions
 			new(@"^User\(name=(?<userName>.+), email=(?<userEmail>.+)\) (?<action>forgot password)$", RegexOptions.Singleline)),
 		new(76,
 			AuditEventEntityType.Account,
-			new(@"^(?<action>.+)  account (?<userName>.+) \(.+\)$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+)  account (?<userName>.+) \((?<description>.*)\)$", RegexOptions.Singleline)),
 		new(77,
 			AuditEventEntityType.DeviceDataSourceInstance,
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
-		};
+		new(78,
+			AuditEventEntityType.Resource,
+			new(@"^Remote (?<remoteSessionType>.+) session (?<remoteSessionId>.+) to (?<resourceHostname>.+) (?<action>.+) at (?<time>.+)$", RegexOptions.Singleline)),
+		new(79,
+			AuditEventEntityType.Account,
+			new(@"^Modify account (?<userName>.+), (?<description>.+)$", RegexOptions.Singleline)),
+			};
 
 	/// <summary>
 	/// Converts a logItem to an AuditItem
@@ -328,41 +334,44 @@ public static class LogItemExtensions
 			default:
 				break;
 		}
-		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
-		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
-		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
-		auditEvent.AlertId = GetGroupValueAsStringOrNull(match, "alertId");
-		auditEvent.AlertNote = GetGroupValueAsStringOrNull(match, "alertNote");
-		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
-		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
-		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
-		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
-		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
-		auditEvent.CollectorDescription = GetGroupValueAsStringOrNull(match, "collectorDescription");
-		auditEvent.Command = GetGroupValueAsStringOrNull(match, "command");
-		auditEvent.DataSourceNewInstanceIds = GetGroupValueAsIntListOrNull(match, "dataSourceNewInstanceIds");
-		auditEvent.DataSourceNewInstanceNames = GetGroupValueAsStringListOrNull(match, "dataSourceNewInstanceNames");
-		auditEvent.DataSourceDeletedInstanceIds = GetGroupValueAsIntListOrNull(match, "dataSourceDeletedInstanceIds");
-		auditEvent.DataSourceDeletedInstanceNames = GetGroupValueAsStringListOrNull(match, "dataSourceDeletedInstanceNames");
-		auditEvent.Description = GetGroupValueAsStringOrNull(match, "description");
-		auditEvent.EndDownTime = GetGroupValueAsStringOrNull(match, "endDownTime");
-		auditEvent.MonthlyMetrics = GetGroupValueAsIntOrNull(match, "monthlyMetrics");
-		auditEvent.ResourceHostname = GetGroupValueAsStringOrNull(match, "resourceHostname");
-		auditEvent.RemoteSessionType = GetGroupValueAsStringOrNull(match, "remoteSessionType");
-		auditEvent.StartDownTime = GetGroupValueAsStringOrNull(match, "startDownTime");
-		auditEvent.UserRole = GetGroupValueAsStringOrNull(match, "userRole");
+		var resourceIdString = GetGroupValueAsTypeOrNull<string>(match, "resourceId");
+		auditEvent.ResourceGroupId = GetGroupValueAsStructOrNull<int>(match, "resourceGroupId");
+		auditEvent.ResourceGroupName = GetGroupValueAsTypeOrNull<string>(match, "resourceGroupName");
+		auditEvent.AlertId = GetGroupValueAsTypeOrNull<string>(match, "alertId");
+		auditEvent.AlertNote = GetGroupValueAsTypeOrNull<string>(match, "alertNote");
+		auditEvent.ApiTokenId = GetGroupValueAsTypeOrNull<string>(match, "apiTokenId");
+		auditEvent.ApiPath = GetGroupValueAsTypeOrNull<string>(match, "apiPath");
+		auditEvent.ApiMethod = GetGroupValueAsTypeOrNull<string>(match, "apiMethod");
+		auditEvent.CollectorId = GetGroupValueAsStructOrNull<int>(match, "collectorId");
+		auditEvent.CollectorName = GetGroupValueAsTypeOrNull<string>(match, "collectorName");
+		auditEvent.CollectorDescription = GetGroupValueAsTypeOrNull<string>(match, "collectorDescription");
+		auditEvent.Command = GetGroupValueAsTypeOrNull<string>(match, "command");
+		auditEvent.DataSourceNewInstanceIds = GetGroupValueAsTypeOrNull<List<int>>(match, "dataSourceNewInstanceIds");
+		auditEvent.DataSourceNewInstanceNames = GetGroupValueAsTypeOrNull<List<string>>(match, "dataSourceNewInstanceNames");
+		auditEvent.DataSourceDeletedInstanceIds = GetGroupValueAsTypeOrNull<List<int>>(match, "dataSourceDeletedInstanceIds");
+		auditEvent.DataSourceDeletedInstanceNames = GetGroupValueAsTypeOrNull<List<string>>(match, "dataSourceDeletedInstanceNames");
+		auditEvent.Description = GetGroupValueAsTypeOrNull<string>(match, "description");
+		auditEvent.EndDownTime = GetGroupValueAsTypeOrNull<string>(match, "endDownTime");
+		auditEvent.MonthlyMetrics = GetGroupValueAsStructOrNull<int>(match, "monthlyMetrics");
+		auditEvent.ResourceHostname = GetGroupValueAsTypeOrNull<string>(match, "resourceHostname");
+		auditEvent.RemoteSessionType = GetGroupValueAsTypeOrNull<string>(match, "remoteSessionType");
+		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<int>(match, "remoteSessionId");
+		auditEvent.StartDownTime = GetGroupValueAsTypeOrNull<string>(match, "startDownTime");
+		auditEvent.UserRole = GetGroupValueAsTypeOrNull<string>(match, "userRole");
 
-		auditEvent.InstanceId = GetGroupValueAsIntOrNull(match, "instanceId");
-		auditEvent.InstanceName = GetGroupValueAsStringOrNull(match, "instanceName");
-		auditEvent.LogicModuleId = GetGroupValueAsIntOrNull(match, "logicModuleId");
-		auditEvent.LogicModuleName = GetGroupValueAsStringOrNull(match, "logicModuleName");
-		auditEvent.LogicModuleVersion = GetGroupValueAsIntOrNull(match, "logicModuleVersion");
-		auditEvent.PropertyName = GetGroupValueAsStringOrNull(match, "propertyName");
-		auditEvent.PropertyValue = GetGroupValueAsStringOrNull(match, "propertyValue");
-		auditEvent.UserEmail = GetGroupValueAsStringOrNull(match, "userEmail");
-		auditEvent.UserId = GetGroupValueAsIntOrNull(match, "userId");
-		auditEvent.UserName = GetGroupValueAsStringOrNull(match, "userName");
-		auditEvent.WildValue = GetGroupValueAsStringOrNull(match, "wildValue");
+		auditEvent.InstanceId = GetGroupValueAsStructOrNull<int>(match, "instanceId");
+		auditEvent.InstanceName = GetGroupValueAsTypeOrNull<string>(match, "instanceName");
+		auditEvent.LogicModuleId = GetGroupValueAsStructOrNull<int>(match, "logicModuleId");
+		auditEvent.LogicModuleName = GetGroupValueAsTypeOrNull<string>(match, "logicModuleName");
+		auditEvent.LogicModuleVersion = GetGroupValueAsStructOrNull<int>(match, "logicModuleVersion");
+		auditEvent.PropertyName = GetGroupValueAsTypeOrNull<string>(match, "propertyName");
+		auditEvent.PropertyValue = GetGroupValueAsTypeOrNull<string>(match, "propertyValue");
+		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<int>(match, "remoteSessionId");
+		auditEvent.Time = GetGroupValueAsTypeOrNull<string>(match, "time");
+		auditEvent.UserEmail = GetGroupValueAsTypeOrNull<string>(match, "userEmail");
+		auditEvent.UserId = GetGroupValueAsStructOrNull<int>(match, "userId");
+		auditEvent.UserName = GetGroupValueAsTypeOrNull<string>(match, "userName");
+		auditEvent.WildValue = GetGroupValueAsTypeOrNull<string>(match, "wildValue");
 
 		if (match.Groups["multipleHosts"].Success)
 		{
@@ -385,7 +394,7 @@ public static class LogItemExtensions
 		else
 		{
 			int? resourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			var resourceName = GetGroupValueAsStringOrNull(match, "resourceName");
+			var resourceName = GetGroupValueAsTypeOrNull<string>(match, "resourceName");
 			auditEvent.ResourceIds = resourceId is null ? null : new() { resourceId.Value };
 			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
 		}
@@ -393,24 +402,61 @@ public static class LogItemExtensions
 		return auditEvent;
 	}
 
-	private static List<string>? GetGroupValueAsStringListOrNull(Match match, string groupName) => match.Groups[groupName].Success
-				? match.Groups[groupName].Value
-					.Split(',')
-					.ToList()
-				: null;
-	private static List<int>? GetGroupValueAsIntListOrNull(Match match, string groupName) => match.Groups[groupName].Success
-				? match.Groups[groupName].Value
-					.Split(',')
-					.Select(subString => int.Parse(subString, CultureInfo.InvariantCulture))
-					.ToList()
-				: null;
-	private static string? GetGroupValueAsStringOrNull(Match match, string groupName)
-		=> match.Groups[groupName].Success ? match.Groups[groupName].Value : null;
 
-	private static int? GetGroupValueAsIntOrNull(Match match, string groupName)
-		=> match.Groups[groupName].Success
-			? int.TryParse(match.Groups[groupName].Value, out var intValue) ? intValue : null
-			: null;
+	private static T? GetGroupValueAsStructOrNull<T>(Match match, string groupName) where T : struct
+	{
+		if (!match.Groups[groupName].Success)
+		{
+			return default;
+		}
+
+		var stringValue = match.Groups[groupName].Value;
+
+		if (stringValue == "NA")
+		{
+			return default;
+		}
+
+		if (typeof(T) == typeof(int))
+		{
+			var result = int.Parse(stringValue, CultureInfo.InvariantCulture);
+			return result is T t ? t : default;
+		}
+
+		throw new NotSupportedException($"Type {typeof(T)} is not supported");
+	}
+
+	private static T? GetGroupValueAsTypeOrNull<T>(Match match, string groupName) where T : class
+	{
+		if (!match.Groups[groupName].Success)
+		{
+			return default;
+		}
+
+		var stringValue = match.Groups[groupName].Value;
+
+		if (typeof(T) == typeof(string))
+		{
+			return stringValue is T t ? t : default;
+		}
+
+		if (typeof(T) == typeof(List<string>))
+		{
+			return stringValue
+				.Split(',')
+				.ToList() is T t ? t : default;
+		}
+
+		if (typeof(T) == typeof(List<int>))
+		{
+			return stringValue
+				.Split(',')
+				.Select(int.Parse)
+				.ToList() is T t ? t : default;
+		}
+
+		throw new NotSupportedException($"Type {typeof(T)} is not supported");
+	}
 
 	private static (LogItemRegex? LogItemRegex, Match? Match) GetMatchFromDescription(string description)
 		=> Regexs
@@ -442,6 +488,8 @@ public static class LogItemExtensions
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
 			"ADD" or "CREATE" => AuditEventActionType.Create,
+			"STARTED" => AuditEventActionType.Start,
+			"TERMINATED" => AuditEventActionType.End,
 			"FETCH" or "VIEW" => AuditEventActionType.Read,
 			"LOGIN" => AuditEventActionType.Login,
 			"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
