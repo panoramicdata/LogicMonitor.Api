@@ -8,6 +8,11 @@ namespace LogicMonitor.Api.Logs;
 public class AuditEvent
 {
 	/// <summary>
+	/// The original LogItem ID
+	/// </summary>
+	public string Id { get; internal set; } = string.Empty;
+
+	/// <summary>
 	/// When the event occurred
 	/// </summary>
 	public DateTimeOffset DateTime { get; internal set; }

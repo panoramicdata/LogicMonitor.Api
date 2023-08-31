@@ -227,6 +227,7 @@ public static class LogItemExtensions
 
 		var auditEvent = new AuditEvent
 		{
+			Id = logItem.Id,
 			DateTime = logItem.HappenedOnUtc,
 			UserName = logItem.UserName,
 			Host = logItem.IpAddress,
