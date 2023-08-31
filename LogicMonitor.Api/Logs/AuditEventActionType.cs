@@ -88,5 +88,15 @@ public enum AuditEventActionType
 	/// <summary>
 	/// End
 	/// </summary>
-	End
+	End,
+
+	/// <summary>
+	/// Rebalance Collector Group
+	/// </summary>
+	Rebalance,
+
+	/// <summary>
+	/// Collect Now
+	/// </summary>
+	CollectNow
 }

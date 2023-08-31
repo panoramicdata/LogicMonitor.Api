@@ -252,4 +252,19 @@ public class AuditEvent
 	/// Remote Session Type
 	/// </summary>
 	public string? RemoteSessionType { get; internal set; }
+
+	/// <summary>
+	/// Restrict SSO
+	/// </summary>
+	public bool? RestrictSso { get; internal set; }
+
+	/// <summary>
+	/// Collector Group Name
+	/// </summary>
+	public string? CollectorGroupName { get; internal set; }
+
+	/// <summary>
+	/// Collector Group Id
+	/// </summary>
+	public int? CollectorGroupId { get; internal set; }
 }

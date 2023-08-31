@@ -18,7 +18,7 @@ public class AuditEventTests : TestWithOutput
 			{
 				MatchedRegExId = 01,
 				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.CollectorGroup,
 				OutcomeType = AuditEventOutcomeType.Failure,
 				ResourceIds = new() { 0 },
 				ResourceNames = new() { "ReportMagic alpha-Scheduler" }
@@ -67,7 +67,7 @@ public class AuditEventTests : TestWithOutput
 			{
 				MatchedRegExId = 3,
 				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.CollectorGroup,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = new() { 4030 },
 				ResourceNames = new() { "docker-registry-deploy-default-PDL-K8S-PROD" },
@@ -283,7 +283,7 @@ public class AuditEventTests : TestWithOutput
 				ResourceIds = new() { 8443 },
 				ResourceNames = new() { "argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876" },
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.CollectorGroup,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -308,7 +308,7 @@ public class AuditEventTests : TestWithOutput
 					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
 				},
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.CollectorGroup,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -375,7 +375,7 @@ public class AuditEventTests : TestWithOutput
 					"EU-W1:i-0070bf1c74503d8ed"
 				},
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.CollectorGroup,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -617,7 +617,7 @@ public class AuditEventTests : TestWithOutput
 	{
 		MatchedRegExId = 68,
 		ActionType = AuditEventActionType.RequestRemoteSession,
-		EntityType = AuditEventEntityType.Resource,
+		EntityType = AuditEventEntityType.CollectorGroup,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ResourceHostname = expectedResourceHostname,
 		RemoteSessionType = expectedRemoteSessionType
@@ -800,7 +800,7 @@ public class AuditEventTests : TestWithOutput
 	new()
 	{
 		MatchedRegExId = 78,
-		EntityType = AuditEventEntityType.Resource,
+		EntityType = AuditEventEntityType.CollectorGroup,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ActionType = expectedActionType,
 		RemoteSessionType = expectedRemoteSessionType,
@@ -810,6 +810,121 @@ public class AuditEventTests : TestWithOutput
 
 	}
 );
+
+	[Theory]
+	[InlineData(
+		"lmsupport signs in on behalf of alice.brown - restrictSSO=false (adminId=2).",
+		"alice.brown",
+		false,
+		2)]
+	[InlineData(
+		"lmsupport signs in on behalf of clive.down - restrictSSO=true (adminId=4).",
+		"clive.down",
+		true,
+		4)]
+	public void LmSupportLogin_Success(
+		string logItemMessage,
+		string expectedUserName,
+		bool expectedRestrictSso,
+		int expectedAdminId)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 80,
+		EntityType = AuditEventEntityType.Account,
+		ActionType = AuditEventActionType.Login,
+		OutcomeType = AuditEventOutcomeType.Success,
+		UserName = expectedUserName,
+		UserId = expectedAdminId,
+		RestrictSso = expectedRestrictSso
+	}
+);
+
+	[Theory]
+	[InlineData(
+		"Re-balanced collector group ABC(123),XXX",
+		"ABC",
+		123,
+		"XXX")]
+	public void ResourceRebalanceCollectorGroup_Success(
+		string logItemMessage,
+		string expectedCollectorGroupName,
+		int expectedCollectorGroupId,
+		string expectedDescription)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 81,
+		EntityType = AuditEventEntityType.CollectorGroup,
+		ActionType = AuditEventActionType.Rebalance,
+		OutcomeType = AuditEventOutcomeType.Success,
+		CollectorGroupName = expectedCollectorGroupName,
+		CollectorGroupId = expectedCollectorGroupId,
+		Description = expectedDescription
+	}
+);
+
+	[Theory]
+	[InlineData(
+		"Schedule collect now for ConfigSource instance<123>. \"ConfigSourceInstanceName=ABC\"; \"ConfigSourceName=IOS Configs\"; \"DeviceName=DeviceA\"; \"DeviceId=5678\";",
+		123,
+		"ABC",
+		"IOS Configs",
+		"DeviceA",
+		5678)]
+	public void ScheduleCollectNow_Success(
+		string logItemMessage,
+		int expectedInstanceId,
+		string expectedInstanceName,
+		string expectedLogicModuleName,
+		string expectedResourceName,
+		int expectedResourceId
+		)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 82,
+		EntityType = AuditEventEntityType.ConfigSourceInstance,
+		ActionType = AuditEventActionType.CollectNow,
+		OutcomeType = AuditEventOutcomeType.Success,
+		InstanceId = expectedInstanceId,
+		InstanceName = expectedInstanceName,
+		LogicModuleName = expectedLogicModuleName,
+		ResourceNames = new() { expectedResourceName },
+		ResourceIds = new() { expectedResourceId }
+	}
+);
+
+
+	[Theory]
+	[InlineData(
+		"Delete the collector 123 (hostname=HostName, desc=Description)",
+		123,
+		"HostName",
+		"Description")]
+	public void DeleteCollector_Success(
+		string logItemMessage,
+		int expectedCollectorId,
+		string expectedCollectorName,
+		string expectedCollectorDescription
+		)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 83,
+		EntityType = AuditEventEntityType.Collector,
+		ActionType = AuditEventActionType.Delete,
+		OutcomeType = AuditEventOutcomeType.Success,
+		CollectorId = expectedCollectorId,
+		CollectorName = expectedCollectorName,
+		CollectorDescription = expectedCollectorDescription
+	}
+);
+
 
 	private static void AssertToAuditEventSucceeds(
 		string description,

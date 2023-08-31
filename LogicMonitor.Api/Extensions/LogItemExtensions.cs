@@ -24,19 +24,19 @@ public static class LogItemExtensions
 	private static readonly List<LogItemRegex> Regexs = new()
 	{
 		new(01,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<failed>Failed)(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
 		new(02,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Device""; ""Device=(?<resourceName>.+?) \((?<resourceId>.+?)\)""; ""Description=(?<additionalInfo>.*?)""$", RegexOptions.Singleline)),
 		new(03,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
 		new(14,
 			AuditEventEntityType.ResourceGroup,
 			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
 		new(04,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>Add)ed device (?<resourceName>.+?) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$", RegexOptions.Singleline)),
 		new(05,
 			AuditEventEntityType.ResourceGroupProperty,
@@ -75,7 +75,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.ResourceGroups,
 			new(@"^host\(id= (?<resourceId>.+?) ,name= (?<resourceName>.+?).(?<action>add) to groups, list: (?<groupList>.+?),add group number is (?<groupCount>.+?)$", RegexOptions.Singleline)),
 		new(18,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>Delete) the Kubernetes hosts those were marked for deletion \[(?<multipleHosts>.+?)\]$", RegexOptions.Singleline)),
 		new(19,
 			AuditEventEntityType.ResourceGroups,
@@ -90,7 +90,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.None,
 			new(@"^Failed API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
 		new(23,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>Delete) the aws hosts \[(?<multipleHosts>.+?)\]$", RegexOptions.Singleline)),
 		new(24,
 			AuditEventEntityType.Account,
@@ -126,7 +126,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.AlertNote,
 			new(@"^Note \((?<alertNote>.+?)\) added to \((?<alertId>.+?)\) by \((?<username>.+?)\).$", RegexOptions.Singleline)),
 		new(35,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?)ed device (?<resourceName>.+) \((?<resourceId>.+?)\)  via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(36,
 			AuditEventEntityType.None,
@@ -144,7 +144,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.AllCollectors,
 			new(@"(?<command>.+) (?<action>run) by .+? on collector \(id=(?<collectorId>.+?), hostname=(?<collectorName>.+?), desc=(?<collectorDescription>.+?)\)$", RegexOptions.Singleline)),
 		new(41,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^Schedule data-collection poll request, hostId=(?<hostId>.+?), agentId=(?<agentId>.+?), requestId=(?<requestId>.+?)$", RegexOptions.Singleline)),
 		new(42,
 			AuditEventEntityType.ResourceGroup,
@@ -156,7 +156,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.Account,
 			new(@"^(?<userName>.+?) (?<login>Could not log into the system) - Authentication failed \.$", RegexOptions.Singleline)),
 		new(45,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>Add) a widget test to dashboard (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(46,
 			AuditEventEntityType.ResourceGroup,
@@ -168,7 +168,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.ScheduledDownTime,
 			new(@"^(?<action>.+?) SDT for .+ on Host (?<resourceName>.+) with scheduled downtime from (?<sdtStart>.+?) to (?<sdtEnd>.+?) via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(49,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?) .* folder (?<resourceName>.+?)$", RegexOptions.Singleline)),
 		new(50,
 			AuditEventEntityType.ResourceGroup,
@@ -177,37 +177,37 @@ public static class LogItemExtensions
 			AuditEventEntityType.ResourceGroup,
 			new(@"^(?<action>.+?) the website group (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(52,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?)(ed)? .*group (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(53,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?) website (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(54,
 			AuditEventEntityType.Account,
 			new(@"^(?<action>.+?) .*account (?<userName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(55,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?)ed NetScan '(?<resourceName>.+?)'$", RegexOptions.Singleline)),
 		new(56,
 			AuditEventEntityType.Account,
 			new(@"^(?<action>.+?) .*user role (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(57,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?) api tokens - (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(58,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?) Collector (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(59,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?) (the |a |the widget test of )?dashboard (?<resourceName>.+?) .?via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(60,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?) a new alert rule Name=(?<resourceName>.+?),.+?$", RegexOptions.Singleline)),
 		new(61,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+?)(ed)? alert rule (?<resourceName>.+?)$", RegexOptions.Singleline)),
 		new(62,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline)),
 		new(63,
 			AuditEventEntityType.ResourceGroup,
@@ -225,7 +225,7 @@ public static class LogItemExtensions
 			AuditEventEntityType.DataSource,
 			new(@"^(?<action>.+) (?<logicModuleName>.+) for hostgroup (?<resourceGroupName>.+)$", RegexOptions.Singleline)),
 		new(68,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^(?<action>.+) (?<remoteSessionType>.+) session to (?<resourceHostname>.+)$", RegexOptions.Singleline)),
 		new(69,
 			AuditEventEntityType.Account,
@@ -255,11 +255,23 @@ public static class LogItemExtensions
 			AuditEventEntityType.DeviceDataSourceInstance,
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
 		new(78,
-			AuditEventEntityType.Resource,
+			AuditEventEntityType.CollectorGroup,
 			new(@"^Remote (?<remoteSessionType>.+) session (?<remoteSessionId>.+) to (?<resourceHostname>.+) (?<action>.+) at (?<time>.+)$", RegexOptions.Singleline)),
 		new(79,
 			AuditEventEntityType.Account,
 			new(@"^Modify account (?<userName>.+), (?<description>.+)$", RegexOptions.Singleline)),
+		new(80,
+			AuditEventEntityType.Account,
+			new(@"^lmsupport (?<login>signs in) on behalf of (?<userName>.+) - restrictSSO=(?<restrictSso>true|false) \(adminId=(?<userId>\d+)\).$", RegexOptions.Singleline)),
+		new(81,
+			AuditEventEntityType.CollectorGroup,
+			new(@"^(?<action>Re-balanced) collector group (?<collectorGroupName>.+)\((?<collectorGroupId>\d+)\),(?<description>.+)$", RegexOptions.Singleline)),
+		new(82,
+			AuditEventEntityType.ConfigSourceInstance,
+			new(@"^Schedule (?<action>collect now) for (?<logicModuleType>ConfigSource) instance<(?<instanceId>\d+)>\. ""ConfigSourceInstanceName=(?<instanceName>.+)""; ""ConfigSourceName=(?<logicModuleName>.+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
+		new(83,
+			AuditEventEntityType.Collector,
+			new(@"^(?<action>Add|Update|Delete) the collector (?<collectorId>\d+) \(hostname=(?<collectorName>.+), desc=(?<collectorDescription>.+)\)$", RegexOptions.Singleline)),
 			};
 
 	/// <summary>
@@ -343,6 +355,8 @@ public static class LogItemExtensions
 		auditEvent.ApiTokenId = GetGroupValueAsTypeOrNull<string>(match, "apiTokenId");
 		auditEvent.ApiPath = GetGroupValueAsTypeOrNull<string>(match, "apiPath");
 		auditEvent.ApiMethod = GetGroupValueAsTypeOrNull<string>(match, "apiMethod");
+		auditEvent.CollectorGroupId = GetGroupValueAsStructOrNull<int>(match, "collectorGroupId");
+		auditEvent.CollectorGroupName = GetGroupValueAsTypeOrNull<string>(match, "collectorGroupName");
 		auditEvent.CollectorId = GetGroupValueAsStructOrNull<int>(match, "collectorId");
 		auditEvent.CollectorName = GetGroupValueAsTypeOrNull<string>(match, "collectorName");
 		auditEvent.CollectorDescription = GetGroupValueAsTypeOrNull<string>(match, "collectorDescription");
@@ -357,6 +371,7 @@ public static class LogItemExtensions
 		auditEvent.ResourceHostname = GetGroupValueAsTypeOrNull<string>(match, "resourceHostname");
 		auditEvent.RemoteSessionType = GetGroupValueAsTypeOrNull<string>(match, "remoteSessionType");
 		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<long>(match, "remoteSessionId");
+		auditEvent.RestrictSso = GetGroupValueAsStructOrNull<bool>(match, "restrictSso");
 		auditEvent.StartDownTime = GetGroupValueAsTypeOrNull<string>(match, "startDownTime");
 		auditEvent.UserRole = GetGroupValueAsTypeOrNull<string>(match, "userRole");
 
@@ -430,6 +445,16 @@ public static class LogItemExtensions
 			return result is T t ? t : default;
 		}
 
+		if (typeof(T) == typeof(bool))
+		{
+			if (bool.TryParse(stringValue, out var boolValue))
+			{
+				return boolValue is T t ? t : default;
+			}
+
+			return default;
+		}
+
 		throw new NotSupportedException($"Type {typeof(T)} is not supported");
 	}
 
@@ -495,6 +520,7 @@ public static class LogItemExtensions
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
 			"ADD" or "CREATE" => AuditEventActionType.Create,
+			"COLLECT NOW" => AuditEventActionType.CollectNow,
 			"STARTED" => AuditEventActionType.Start,
 			"TERMINATED" => AuditEventActionType.End,
 			"FETCH" or "VIEW" => AuditEventActionType.Read,
@@ -505,6 +531,7 @@ public static class LogItemExtensions
 			"DOWNLOAD" => AuditEventActionType.Download,
 			"DISABLE" => AuditEventActionType.Disable,
 			"REQUEST REMOTE" => AuditEventActionType.RequestRemoteSession,
+			"RE-BALANCED" => AuditEventActionType.Rebalance,
 			"FORGOT PASSWORD" => AuditEventActionType.RequestPasswordReset,
 			"RUN" => AuditEventActionType.Run,
 			_ => AuditEventActionType.None
