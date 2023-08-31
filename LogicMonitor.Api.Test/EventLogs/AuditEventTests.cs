@@ -51,7 +51,7 @@ public class AuditEventTests : TestWithOutput
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceNames = new() { "NA" },
 				ResourceIds = new() { 3271 },
-				DataSourceId = 94545589,
+				LogicModuleId = 94545589,
 				InstanceId = 263219850,
 				InstanceName = "NA"
 			}
@@ -89,7 +89,7 @@ public class AuditEventTests : TestWithOutput
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = new() { 2781 },
 				ResourceNames = new() { "PDL-LM.logicmonitor.com" },
-				DataSourceId = 112813425,
+				LogicModuleId = 112813425,
 				InstanceName = "NA",
 				DataSourceNewInstanceNames = new[] { "LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter" },
 				DataSourceNewInstanceIds = new[] { 263395102 }
@@ -109,8 +109,8 @@ public class AuditEventTests : TestWithOutput
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = new() { 1525 },
 				ResourceNames = new() { "PDL-K8S-TEST-03" },
-				DataSourceId = 94545589,
-				DataSourceName = "Critical Linux Processes-java",
+				LogicModuleId = 94545589,
+				LogicModuleName = "Critical Linux Processes-java",
 				InstanceName = "NA",
 				DataSourceDeletedInstanceIds = new[] { 263219849 }
 			}
@@ -130,7 +130,7 @@ public class AuditEventTests : TestWithOutput
 				ResourceIds = new() { 2365 },
 				ResourceNames = new() { "PDL-HAPROXY-TEST-02" },
 				InstanceName = "NA",
-				DataSourceId = 111613364,
+				LogicModuleId = 111613364,
 				DataSourceNewInstanceIds = new[] { 263956258, 263956259 },
 				DataSourceNewInstanceNames = new[] { "HA Proxy Backend-ui_alpha_reportmagic", "HA Proxy Backend-pdl_app_jira_test_01" },
 				DataSourceDeletedInstanceIds = new[] { 256832296 },
@@ -152,7 +152,7 @@ public class AuditEventTests : TestWithOutput
 				ResourceIds = new() { 2571 },
 				ResourceNames = new() { "EU-W1:recoveryservices:pambackup" },
 				InstanceName = "NA",
-				DataSourceId = 39016161,
+				LogicModuleId = 39016161,
 				DataSourceNewInstanceIds = new[] { 570930097, 570930098 },
 				DataSourceNewInstanceNames = new[] { "Microsoft_Azure_BackupJobStatus-xxx", "Microsoft_Azure_BackupJobStatus-yyy" },
 				DataSourceDeletedInstanceIds = new[] { 569154776, 569154777 },
@@ -204,8 +204,8 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSource,
 				OutcomeType = AuditEventOutcomeType.Success,
-				DataSourceId = 114345723,
-				DataSourceName = "Whois_TTL_Expiry"
+				LogicModuleId = 114345723,
+				LogicModuleName = "Whois_TTL_Expiry"
 			}
 		);
 
@@ -320,7 +320,7 @@ public class AuditEventTests : TestWithOutput
 			{
 				MatchedRegExId = 20,
 				ResourceNames = new() { "LM Push Server" },
-				DataSourceName = "HTTP per Page-",
+				LogicModuleName = "HTTP per Page-",
 				InstanceName = "Google",
 				WildValue = "https://google.com",
 				ActionType = AuditEventActionType.Create,
@@ -336,7 +336,7 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 21,
-				LoginName = "some.user123@domain.com",
+				UserName = "some.user123@domain.com",
 				ActionType = AuditEventActionType.Login,
 				EntityType = AuditEventEntityType.None,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -379,16 +379,23 @@ public class AuditEventTests : TestWithOutput
 			}
 		);
 
-	[Fact]
-	public void Login_Success()
+	[Theory]
+	[InlineData("some.user.admin signs in (adminId=123).", "some.user.admin", 123, 24)]
+	[InlineData("alice.brown log in.", "alice.brown", null, 66)]
+	public void Login_Success(
+		string logItemMessage,
+		string expectedUsername,
+		int? expectedId,
+		int expectedMatchedRegExId)
 		=> AssertToAuditEventSucceeds(
-			@"some.user.admin signs in (adminId=123).",
+			logItemMessage,
 			new()
 			{
-				MatchedRegExId = 24,
-				LoginName = "some.user.admin",
+				MatchedRegExId = expectedMatchedRegExId,
+				UserName = expectedUsername,
+				UserId = expectedId,
 				ActionType = AuditEventActionType.Login,
-				EntityType = AuditEventEntityType.None,
+				EntityType = AuditEventEntityType.Account,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -400,7 +407,7 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 25,
-				AccountName = "some.user.admin",
+				UserName = "some.user.admin",
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.Account,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -414,7 +421,7 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 26,
-				AccountName = "some.user.admin",
+				UserName = "some.user.admin",
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.Account,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -430,8 +437,8 @@ public class AuditEventTests : TestWithOutput
 				MatchedRegExId = 27,
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.DataSource,
-				DataSourceId = 1211,
-				DataSourceName = "NetApp_Cluster_FibreChannel",
+				LogicModuleId = 1211,
+				LogicModuleName = "NetApp_Cluster_FibreChannel",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -445,7 +452,7 @@ public class AuditEventTests : TestWithOutput
 				MatchedRegExId = 28,
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSourceGraph,
-				DataSourceName = "test_NetApp_Cluster_FibreChannel",
+				LogicModuleName = "test_NetApp_Cluster_FibreChannel",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -458,6 +465,7 @@ public class AuditEventTests : TestWithOutput
 			{
 				MatchedRegExId = 29,
 				ActionType = AuditEventActionType.DiscardedEventAlert,
+				LogicModuleName = "Azure Advisor Recommendations",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -517,17 +525,130 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSource,
 				ResourceIds = new() { 4808 },
-				DataSourceId = 33514257,
-				DataSourceName = "nttcms_ALL_ALL_IP_Addresses",
+				LogicModuleId = 33514257,
+				LogicModuleName = "nttcms_ALL_ALL_IP_Addresses",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
+
+	[Fact]
+	public void BangAccount_Success()
+		=> AssertToAuditEventSucceeds(
+			@"!account run by bob@bob.com on collector (id=123, hostname=Woo, desc=Yay)",
+			new()
+			{
+				MatchedRegExId = 40,
+				ActionType = AuditEventActionType.Run,
+				CollectorId = 123,
+				CollectorName = "Woo",
+				CollectorDescription = "Yay",
+				EntityType = AuditEventEntityType.AllCollectors,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Command = "!account"
+			}
+		);
+
+	[Fact]
+	public void AddAccount_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add a new account bob@bob.com (Default Role)",
+			new()
+			{
+				MatchedRegExId = 64,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success,
+				UserName = "bob@bob.com",
+				UserRole = "Default Role",
+			}
+		);
+
+	[Theory]
+	[InlineData("Enable WinVolumeUsage- for hostgroup Virtual Machine", "WinVolumeUsage-", "Virtual Machine")]
+	[InlineData("Enable WinUDP for hostgroup Woo", "WinUDP", "Woo")]
+	public void EnableDataSourceForResourceGroup_Success(
+		string logItemMessage,
+		string expectedLogicModuleName,
+		string expectedResourceGroupName)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 67,
+		ActionType = AuditEventActionType.Enable,
+		EntityType = AuditEventEntityType.DataSource,
+		OutcomeType = AuditEventOutcomeType.Success,
+		LogicModuleName = expectedLogicModuleName,
+		ResourceGroupName = expectedResourceGroupName
+	}
+);
+
+	[Theory]
+	[InlineData("Disable WinVolumeUsage- for hostgroup Virtual Machine", "WinVolumeUsage-", "Virtual Machine")]
+	[InlineData("Disable WinUDP for hostgroup Woo", "WinUDP", "Woo")]
+	public void DisableDataSourceForResourceGroup_Success(
+		string logItemMessage,
+		string expectedLogicModuleName,
+		string expectedResourceGroupName)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 67,
+		ActionType = AuditEventActionType.Disable,
+		EntityType = AuditEventEntityType.DataSource,
+		OutcomeType = AuditEventOutcomeType.Success,
+		LogicModuleName = expectedLogicModuleName,
+		ResourceGroupName = expectedResourceGroupName
+	}
+);
+
+	[Theory]
+	[InlineData("Request remote ssh session to 1.2.3.4", "ssh", "1.2.3.4")]
+	[InlineData("Request remote rdp session to 5.6.7.8", "rdp", "5.6.7.8")]
+	public void RequestRemoteSession_Success(
+		string logItemMessage,
+		string expectedRemoteSessionType,
+		string expectedResourceHostname)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 68,
+		ActionType = AuditEventActionType.RequestRemoteSession,
+		EntityType = AuditEventEntityType.Resource,
+		OutcomeType = AuditEventOutcomeType.Success,
+		ResourceHostname = expectedResourceHostname,
+		RemoteSessionType = expectedRemoteSessionType
+	}
+);
+
+	[Theory]
+	[InlineData("Suspended SAML user bob@cratchett.com tried to login", "bob@cratchett.com")]
+	[InlineData("Suspended SAML user bob2@cratchett.com tried to login", "bob2@cratchett.com")]
+	public void FailedLogin_Success(
+		string logItemMessage,
+		string expectedUserName)
+		=> AssertToAuditEventSucceeds(
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 69,
+		ActionType = AuditEventActionType.Login,
+		EntityType = AuditEventEntityType.Account,
+		OutcomeType = AuditEventOutcomeType.Failure,
+		UserName = expectedUserName,
+	}
+);
+
 
 	private static void AssertToAuditEventSucceeds(
 		string description,
 		AuditEvent expectedAuditEvent
 		)
 	{
+		expectedAuditEvent.Id = Guid.NewGuid().ToString();
+		expectedAuditEvent.PerformedByUsername = TestUsername;
 
 		if (expectedAuditEvent.OutcomeType == AuditEventOutcomeType.None)
 		{
@@ -539,16 +660,16 @@ public class AuditEventTests : TestWithOutput
 		{
 			HappenedOnTimeStampUtc = nowUnixTimeStamp,
 			HappenedOnLocalString = "",
-			Id = Guid.NewGuid().ToString(),
+			Id = expectedAuditEvent.Id,
 			IpAddress = TestIpAddress,
 			SessionId = Guid.NewGuid().ToString(),
-			UserName = TestUsername,
+			PerformedByUsername = TestUsername,
 			Description = description
 		};
 
 		var auditEvent = logItem.ToAuditEvent();
 		auditEvent.DateTime.ToUnixTimeSeconds().Should().Be(nowUnixTimeStamp);
-		auditEvent.UserName.Should().Be(TestUsername);
+		auditEvent.PerformedByUsername.Should().Be(TestUsername);
 		auditEvent.Host.Should().Be(TestIpAddress);
 		auditEvent.OriginalDescription.Should().Be(description);
 		auditEvent.OriginatorType.Should().Be(AuditEventOriginatorType.User);
@@ -562,7 +683,6 @@ public class AuditEventTests : TestWithOutput
 					.Excluding(ae => ae.OriginalDescription)
 					.Excluding(ae => ae.OriginatorType)
 					.Excluding(ae => ae.SessionId)
-					.Excluding(ae => ae.UserName)
 			);
 	}
 }

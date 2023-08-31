@@ -10,7 +10,7 @@ public class LogItem : StringIdentifiedItem, IHasEndpoint
 	///    The user that performed the action
 	/// </summary>
 	[DataMember(Name = "username")]
-	public string UserName { get; set; } = string.Empty;
+	public string PerformedByUsername { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The DateTime the event happened in seconds since the Epoch
@@ -51,7 +51,7 @@ public class LogItem : StringIdentifiedItem, IHasEndpoint
 	/// <summary>
 	///    Returns a string that represents the current object.
 	/// </summary>
-	public override string ToString() => $"{HappenedOnUtc:yyyy-MM-dd}: {UserName} - {Description}";
+	public override string ToString() => $"{HappenedOnUtc:yyyy-MM-dd}: {PerformedByUsername} - {Description}";
 
 	/// <inheritdoc />
 	public string Endpoint() => "setting/accesslogs";

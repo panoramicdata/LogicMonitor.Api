@@ -74,4 +74,14 @@ public enum AuditEventEntityType
 	/// Ops Note
 	/// </summary>
 	OpsNote,
+
+	/// <summary>
+	/// Alert Rule
+	/// </summary>
+	AlertRule,
+
+	/// <summary>
+	/// User Role
+	/// </summary>
+	UserRole,
 }

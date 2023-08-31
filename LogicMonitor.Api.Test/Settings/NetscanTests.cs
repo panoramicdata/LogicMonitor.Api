@@ -56,7 +56,7 @@ public class NetscanTests : TestWithOutput
 			Name = name,
 			Description = description,
 			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
-			Credentials = new EC2NetscanPolicyCredential
+			Credentials = new NetscanCredentials
 			{
 				DeviceGroupId = credentialsDeviceGroupId,
 				Custom = credentialsCustom
@@ -75,7 +75,7 @@ public class NetscanTests : TestWithOutput
 			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
 			SubnetScanRange = subnetScanRange,
 			ExcludedIpAddresses = excludedIpAddresses,
-			Ddr = new Ec2DDR
+			DiscoveredDeviceRule = new DiscoveredDeviceRule
 			{
 				Assignment = new List<NetscanAssignment>
 					{

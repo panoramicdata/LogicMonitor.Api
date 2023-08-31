@@ -18,11 +18,6 @@ public class AuditEvent
 	public DateTimeOffset DateTime { get; internal set; }
 
 	/// <summary>
-	/// The user that initiated the event
-	/// </summary>
-	public string? UserName { get; internal set; }
-
-	/// <summary>
 	/// The host that initiated the event
 	/// </summary>
 	public string? Host { get; internal set; }
@@ -68,14 +63,14 @@ public class AuditEvent
 	public Collection<string>? ResourceNames { get; internal set; }
 
 	/// <summary>
-	/// The DataSource id
+	/// The LogicModule id
 	/// </summary>
-	public int? DataSourceId { get; internal set; }
+	public int? LogicModuleId { get; internal set; }
 
 	/// <summary>
-	/// The DataSource name
+	/// The LogicModule name
 	/// </summary>
-	public string? DataSourceName { get; internal set; }
+	public string? LogicModuleName { get; internal set; }
 
 	/// <summary>
 	/// The Instance id
@@ -96,6 +91,11 @@ public class AuditEvent
 	/// The collector name
 	/// </summary>
 	public string? CollectorName { get; internal set; }
+
+	/// <summary>
+	/// The collector description
+	/// </summary>
+	public string? CollectorDescription { get; internal set; }
 
 	/// <summary>
 	/// The API Token Id
@@ -171,12 +171,22 @@ public class AuditEvent
 	/// <summary>
 	/// The login name for a login event
 	/// </summary>
-	public string? LoginName { get; internal set; }
+	public string? PerformedByUsername { get; internal set; }
 
 	/// <summary>
-	/// The account name for user account events
+	/// The login name for a login event
 	/// </summary>
-	public string? AccountName { get; internal set; }
+	public string? UserName { get; internal set; }
+
+	/// <summary>
+	/// The user id
+	/// </summary>
+	public int? UserId { get; internal set; }
+
+	/// <summary>
+	/// The role name for role events
+	/// </summary>
+	public string? UserRole { get; internal set; }
 
 	/// <summary>
 	/// The alert id for alert update events
@@ -202,4 +212,19 @@ public class AuditEvent
 	/// The scheduled down time end time
 	/// </summary>
 	public string? EndDownTime { get; internal set; }
+
+	/// <summary>
+	/// The Collector command that was run
+	/// </summary>
+	public string? Command { get; internal set; }
+
+	/// <summary>
+	/// Resource host name
+	/// </summary>
+	public string? ResourceHostname { get; internal set; }
+
+	/// <summary>
+	/// RemoteSessionType
+	/// </summary>
+	public string? RemoteSessionType { get; internal set; }
 }

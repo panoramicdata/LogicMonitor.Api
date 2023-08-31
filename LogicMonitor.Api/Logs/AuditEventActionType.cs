@@ -48,5 +48,25 @@ public enum AuditEventActionType
 	/// <summary>
 	/// An event alert was discarded
 	/// </summary>
-	DiscardedEventAlert
+	DiscardedEventAlert,
+
+	/// <summary>
+	/// Run
+	/// </summary>
+	Run,
+
+	/// <summary>
+	/// Enable
+	/// </summary>
+	Enable,
+
+	/// <summary>
+	/// Disable
+	/// </summary>
+	Disable,
+
+	/// <summary>
+	/// Request Remote Session
+	/// </summary>
+	RequestRemoteSession
 }

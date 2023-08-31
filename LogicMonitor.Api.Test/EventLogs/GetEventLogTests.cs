@@ -33,7 +33,7 @@ public class GetEventLogTests : TestWithOutput
 					{
 						auditEvent.AlertId.Should().NotBeNull();
 						auditEvent.AlertNote.Should().NotBeNullOrWhiteSpace();
-						auditEvent.UserName.Should().NotBeNull();
+						auditEvent.PerformedByUsername.Should().NotBeNull();
 					}
 
 					if (auditEvent.MatchedRegExId == -1)
