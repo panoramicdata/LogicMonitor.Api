@@ -229,7 +229,31 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+) (?<remoteSessionType>.+) session to (?<resourceHostname>.+)$", RegexOptions.Singleline)),
 		new(69,
 			AuditEventEntityType.Account,
-			new(@"^Suspended SAML user (?<userName>.+) tried to (?<action>.+)", RegexOptions.Singleline)),
+			new(@"^Suspended SAML user (?<userName>.+) tried to (?<action>.+)$", RegexOptions.Singleline)),
+		new(70,
+			AuditEventEntityType.Account,
+			new(@"^(?<userName>.+) (?<action>.+)d Two Factor Authentication.$", RegexOptions.Singleline)),
+		new(71,
+			AuditEventEntityType.Account,
+			new(@"^API token (?<apiTokenId>.+) is locked due to too many failed attempts$", RegexOptions.Singleline)),
+		new(72,
+			AuditEventEntityType.Account,
+			new(@"^(?<userName>.+) update password Change password from forgot$", RegexOptions.Singleline)),
+		new(73,
+			AuditEventEntityType.ConfigSource,
+			new(@"^(?<action>.+) (?<logicModuleType>.+)<(?<instanceName>.+)>\. ""ConfigSourceInstanceId=(?<instanceId>\d+)""; ""ConfigSourceName=(?<logicModuleName>.+)""; ""ConfigVersion=(?<logicModuleVersion>\d+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
+		new(74,
+			AuditEventEntityType.DataSource,
+			new(@"^(?<action>.+) (?<logicModuleType>.+)<(?<instanceName>.+)>\. ""DataSourceInstanceId=(?<instanceId>\d+)""; ""DataSourceName=(?<logicModuleName>.+)""; ""DataSourceVersion=(?<logicModuleVersion>\d+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
+		new(75,
+			AuditEventEntityType.Account,
+			new(@"^User\(name=(?<userName>.+), email=(?<userEmail>.+)\) (?<action>forgot password)$", RegexOptions.Singleline)),
+		new(76,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>.+)  account (?<userName>.+) \(.+\)$", RegexOptions.Singleline)),
+		new(77,
+			AuditEventEntityType.DeviceDataSourceInstance,
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
 		};
 
 	/// <summary>
@@ -273,26 +297,6 @@ public static class LogItemExtensions
 
 		auditEvent.ActionType = GetAction(match);
 		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
-
-		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
-		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
-		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
-		auditEvent.AlertId = GetGroupValueAsStringOrNull(match, "alertId");
-		auditEvent.AlertNote = GetGroupValueAsStringOrNull(match, "alertNote");
-		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
-		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
-		auditEvent.CollectorDescription = GetGroupValueAsStringOrNull(match, "collectorDescription");
-		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
-		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
-		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
-		auditEvent.MonthlyMetrics = GetGroupValueAsIntOrNull(match, "monthlyMetrics");
-		auditEvent.StartDownTime = GetGroupValueAsStringOrNull(match, "startDownTime");
-		auditEvent.EndDownTime = GetGroupValueAsStringOrNull(match, "endDownTime");
-		auditEvent.Command = GetGroupValueAsStringOrNull(match, "command");
-		auditEvent.UserRole = GetGroupValueAsStringOrNull(match, "userRole");
-		auditEvent.ResourceHostname = GetGroupValueAsStringOrNull(match, "resourceHostname");
-		auditEvent.RemoteSessionType = GetGroupValueAsStringOrNull(match, "remoteSessionType");
-
 		// Add metadata that can't be extracted from the description using the regex
 		switch (auditEvent.MatchedRegExId)
 		{
@@ -316,46 +320,49 @@ public static class LogItemExtensions
 			case 69:
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
+			case 70:
+			case 71:
+			case 72:
+				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
 			default:
 				break;
 		}
+		var resourceIdString = GetGroupValueAsStringOrNull(match, "resourceId");
+		auditEvent.ResourceGroupId = GetGroupValueAsIntOrNull(match, "resourceGroupId");
+		auditEvent.ResourceGroupName = GetGroupValueAsStringOrNull(match, "resourceGroupName");
+		auditEvent.AlertId = GetGroupValueAsStringOrNull(match, "alertId");
+		auditEvent.AlertNote = GetGroupValueAsStringOrNull(match, "alertNote");
+		auditEvent.ApiTokenId = GetGroupValueAsStringOrNull(match, "apiTokenId");
+		auditEvent.ApiPath = GetGroupValueAsStringOrNull(match, "apiPath");
+		auditEvent.ApiMethod = GetGroupValueAsStringOrNull(match, "apiMethod");
+		auditEvent.CollectorId = GetGroupValueAsIntOrNull(match, "collectorId");
+		auditEvent.CollectorName = GetGroupValueAsStringOrNull(match, "collectorName");
+		auditEvent.CollectorDescription = GetGroupValueAsStringOrNull(match, "collectorDescription");
+		auditEvent.Command = GetGroupValueAsStringOrNull(match, "command");
+		auditEvent.DataSourceNewInstanceIds = GetGroupValueAsIntListOrNull(match, "dataSourceNewInstanceIds");
+		auditEvent.DataSourceNewInstanceNames = GetGroupValueAsStringListOrNull(match, "dataSourceNewInstanceNames");
+		auditEvent.DataSourceDeletedInstanceIds = GetGroupValueAsIntListOrNull(match, "dataSourceDeletedInstanceIds");
+		auditEvent.DataSourceDeletedInstanceNames = GetGroupValueAsStringListOrNull(match, "dataSourceDeletedInstanceNames");
+		auditEvent.Description = GetGroupValueAsStringOrNull(match, "description");
+		auditEvent.EndDownTime = GetGroupValueAsStringOrNull(match, "endDownTime");
+		auditEvent.MonthlyMetrics = GetGroupValueAsIntOrNull(match, "monthlyMetrics");
+		auditEvent.ResourceHostname = GetGroupValueAsStringOrNull(match, "resourceHostname");
+		auditEvent.RemoteSessionType = GetGroupValueAsStringOrNull(match, "remoteSessionType");
+		auditEvent.StartDownTime = GetGroupValueAsStringOrNull(match, "startDownTime");
+		auditEvent.UserRole = GetGroupValueAsStringOrNull(match, "userRole");
 
-		auditEvent.LogicModuleId = GetGroupValueAsIntOrNull(match, "logicModuleId");
-		auditEvent.LogicModuleName = GetGroupValueAsStringOrNull(match, "logicModuleName");
 		auditEvent.InstanceId = GetGroupValueAsIntOrNull(match, "instanceId");
 		auditEvent.InstanceName = GetGroupValueAsStringOrNull(match, "instanceName");
-		auditEvent.WildValue = GetGroupValueAsStringOrNull(match, "wildValue");
-
-		auditEvent.UserName = GetGroupValueAsStringOrNull(match, "userName");
-		auditEvent.UserId = match.Groups["userId"].Success
-			? int.Parse(GetGroupValueAsStringOrNull(match, "userId"), CultureInfo.InvariantCulture)
-			: null;
-
+		auditEvent.LogicModuleId = GetGroupValueAsIntOrNull(match, "logicModuleId");
+		auditEvent.LogicModuleName = GetGroupValueAsStringOrNull(match, "logicModuleName");
+		auditEvent.LogicModuleVersion = GetGroupValueAsIntOrNull(match, "logicModuleVersion");
 		auditEvent.PropertyName = GetGroupValueAsStringOrNull(match, "propertyName");
 		auditEvent.PropertyValue = GetGroupValueAsStringOrNull(match, "propertyValue");
-
-		auditEvent.DataSourceNewInstanceIds = match.Groups["dataSourceNewInstanceIds"].Success
-			? match.Groups["dataSourceNewInstanceIds"].Value
-				.Split(',')
-				.Select(subString => int.Parse(subString, CultureInfo.InvariantCulture))
-				.ToList()
-			: null;
-		auditEvent.DataSourceNewInstanceNames = match.Groups["dataSourceNewInstanceNames"].Success
-			? match.Groups["dataSourceNewInstanceNames"].Value
-				.Split(',')
-				.ToList()
-			: null;
-		auditEvent.DataSourceDeletedInstanceIds = match.Groups["dataSourceDeletedInstanceIds"].Success
-			? match.Groups["dataSourceDeletedInstanceIds"].Value
-				.Split(',')
-				.Select(subString => int.Parse(subString, CultureInfo.InvariantCulture))
-				.ToList()
-			: null;
-		auditEvent.DataSourceDeletedInstanceNames = match.Groups["dataSourceDeletedInstanceNames"].Success
-			? match.Groups["dataSourceDeletedInstanceNames"].Value
-				.Split(',')
-				.ToList()
-			: null;
+		auditEvent.UserEmail = GetGroupValueAsStringOrNull(match, "userEmail");
+		auditEvent.UserId = GetGroupValueAsIntOrNull(match, "userId");
+		auditEvent.UserName = GetGroupValueAsStringOrNull(match, "userName");
+		auditEvent.WildValue = GetGroupValueAsStringOrNull(match, "wildValue");
 
 		if (match.Groups["multipleHosts"].Success)
 		{
@@ -386,6 +393,17 @@ public static class LogItemExtensions
 		return auditEvent;
 	}
 
+	private static List<string>? GetGroupValueAsStringListOrNull(Match match, string groupName) => match.Groups[groupName].Success
+				? match.Groups[groupName].Value
+					.Split(',')
+					.ToList()
+				: null;
+	private static List<int>? GetGroupValueAsIntListOrNull(Match match, string groupName) => match.Groups[groupName].Success
+				? match.Groups[groupName].Value
+					.Split(',')
+					.Select(subString => int.Parse(subString, CultureInfo.InvariantCulture))
+					.ToList()
+				: null;
 	private static string? GetGroupValueAsStringOrNull(Match match, string groupName)
 		=> match.Groups[groupName].Success ? match.Groups[groupName].Value : null;
 
@@ -424,13 +442,15 @@ public static class LogItemExtensions
 		return value.Groups["action"].Value.ToUpperInvariant() switch
 		{
 			"ADD" or "CREATE" => AuditEventActionType.Create,
-			"FETCH" => AuditEventActionType.Read,
+			"FETCH" or "VIEW" => AuditEventActionType.Read,
 			"LOGIN" => AuditEventActionType.Login,
 			"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
 			"DELET" or "DELETE" => AuditEventActionType.Delete,
 			"ENABLE" => AuditEventActionType.Enable,
+			"DOWNLOAD" => AuditEventActionType.Download,
 			"DISABLE" => AuditEventActionType.Disable,
 			"REQUEST REMOTE" => AuditEventActionType.RequestRemoteSession,
+			"FORGOT PASSWORD" => AuditEventActionType.RequestPasswordReset,
 			"RUN" => AuditEventActionType.Run,
 			_ => AuditEventActionType.None
 		};

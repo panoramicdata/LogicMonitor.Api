@@ -73,6 +73,11 @@ public class AuditEvent
 	public string? LogicModuleName { get; internal set; }
 
 	/// <summary>
+	/// The LogicModule version
+	/// </summary>
+	public int? LogicModuleVersion { get; internal set; }
+
+	/// <summary>
 	/// The Instance id
 	/// </summary>
 	public int? InstanceId { get; internal set; }
@@ -96,6 +101,11 @@ public class AuditEvent
 	/// The collector description
 	/// </summary>
 	public string? CollectorDescription { get; internal set; }
+
+	/// <summary>
+	/// Description
+	/// </summary>
+	public string? Description { get; internal set; }
 
 	/// <summary>
 	/// The API Token Id
@@ -174,9 +184,14 @@ public class AuditEvent
 	public string? PerformedByUsername { get; internal set; }
 
 	/// <summary>
-	/// The login name for a login event
+	/// The user name for an event
 	/// </summary>
 	public string? UserName { get; internal set; }
+
+	/// <summary>
+	/// The email address
+	/// </summary>
+	public string? UserEmail { get; internal set; }
 
 	/// <summary>
 	/// The user id

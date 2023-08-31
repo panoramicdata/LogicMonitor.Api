@@ -68,5 +68,15 @@ public enum AuditEventActionType
 	/// <summary>
 	/// Request Remote Session
 	/// </summary>
-	RequestRemoteSession
+	RequestRemoteSession,
+
+	/// <summary>
+	/// Download
+	/// </summary>
+	Download,
+
+	/// <summary>
+	/// Request Password Reset
+	/// </summary>
+	RequestPasswordReset
 }

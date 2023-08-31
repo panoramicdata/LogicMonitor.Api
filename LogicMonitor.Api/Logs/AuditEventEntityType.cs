@@ -84,4 +84,9 @@ public enum AuditEventEntityType
 	/// User Role
 	/// </summary>
 	UserRole,
+
+	/// <summary>
+	/// ConfigSource
+	/// </summary>
+	ConfigSource,
 }
