@@ -13,7 +13,7 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Device
 	/// </summary>
-	CollectorGroup,
+	Device,
 
 	/// <summary>
 	/// Device DataSource Instance
@@ -99,4 +99,9 @@ public enum AuditEventEntityType
 	/// Collector
 	/// </summary>
 	Collector,
+
+	/// <summary>
+	/// Collector Group
+	/// </summary>
+	CollectorGroup,
 }

@@ -18,7 +18,7 @@ public class AuditEventTests : TestWithOutput
 			{
 				MatchedRegExId = 01,
 				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.CollectorGroup,
+				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Failure,
 				ResourceIds = new() { 0 },
 				ResourceNames = new() { "ReportMagic alpha-Scheduler" }
@@ -59,21 +59,52 @@ public class AuditEventTests : TestWithOutput
 		);
 
 
-	[Fact]
-	public void Update_Device_Success()
+	[Theory]
+	[InlineData(
+		"Update host<4030, docker-registry-deploy-default-PDL-K8S-PROD> (monitored by collector <295, pdl-k8s-prod-0>), ,  via API token xx123",
+		3,
+		4030,
+		"docker-registry-deploy-default-PDL-K8S-PROD",
+		295,
+		"pdl-k8s-prod-0",
+		"xx123"
+		)]
+	[InlineData(
+"""
+"Action=Update"; "Type=Device"; "Device=ecloud-vm-124345 (124345) (1661057)"; "Description=(monitored by collector <1007, Workgroup\I-A7F966D2>),   {
+	[
+		getAlertEnable: update value=false, old value=true.
+	]
+	}[Added property (system.categories:)]"
+""",
+		2,
+		1661057,
+		"ecloud-vm-124345 (124345)",
+		null,
+		null,
+		null
+		)]
+	public void Update_Device_Success(
+		string message,
+		int expectedRegexId,
+		int expectedResourceId,
+		string expectedResourceName,
+		int? expectedCollectorId,
+		string expectedCollectorName,
+		string expectedTokenId)
 		=> AssertToAuditEventSucceeds(
-			"Update host<4030, docker-registry-deploy-default-PDL-K8S-PROD> (monitored by collector <295, pdl-k8s-prod-0>), ,  via API token xx123",
+			message,
 			new()
 			{
-				MatchedRegExId = 3,
+				MatchedRegExId = expectedRegexId,
 				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.CollectorGroup,
+				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 4030 },
-				ResourceNames = new() { "docker-registry-deploy-default-PDL-K8S-PROD" },
-				CollectorId = 295,
-				CollectorName = "pdl-k8s-prod-0",
-				ApiTokenId = "xx123"
+				ResourceIds = new() { expectedResourceId },
+				ResourceNames = new() { expectedResourceName },
+				CollectorId = expectedCollectorId,
+				CollectorName = expectedCollectorName,
+				ApiTokenId = expectedTokenId
 			}
 		);
 
@@ -283,7 +314,7 @@ public class AuditEventTests : TestWithOutput
 				ResourceIds = new() { 8443 },
 				ResourceNames = new() { "argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876" },
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.CollectorGroup,
+				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -308,7 +339,7 @@ public class AuditEventTests : TestWithOutput
 					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
 				},
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.CollectorGroup,
+				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -375,7 +406,7 @@ public class AuditEventTests : TestWithOutput
 					"EU-W1:i-0070bf1c74503d8ed"
 				},
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.CollectorGroup,
+				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -617,7 +648,7 @@ public class AuditEventTests : TestWithOutput
 	{
 		MatchedRegExId = 68,
 		ActionType = AuditEventActionType.RequestRemoteSession,
-		EntityType = AuditEventEntityType.CollectorGroup,
+		EntityType = AuditEventEntityType.Device,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ResourceHostname = expectedResourceHostname,
 		RemoteSessionType = expectedRemoteSessionType
@@ -800,7 +831,7 @@ public class AuditEventTests : TestWithOutput
 	new()
 	{
 		MatchedRegExId = 78,
-		EntityType = AuditEventEntityType.CollectorGroup,
+		EntityType = AuditEventEntityType.Device,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ActionType = expectedActionType,
 		RemoteSessionType = expectedRemoteSessionType,
