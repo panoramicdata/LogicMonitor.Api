@@ -613,6 +613,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The device Id</param>
 	/// <param name="deviceDataSourceId">The deviceDataSource Id</param>
 	/// <param name="deviceDataSourceInstanceId">The deviceDataSourceInstance Id</param>
+	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<List<DeviceDataSourceInstanceConfig>> GetAllDeviceDataSourceInstanceConfigsAsync(
 		int deviceId,
@@ -734,14 +735,14 @@ public partial class LogicMonitorClient
 	/// collect a config for a device
 	/// </summary>
 	/// <param name="deviceId">The deviceId</param>
-	/// <param name="hdsId">The hdsId</param>
+	/// <param name="deviceDataSourceId">The device datasource id</param>
 	/// <param name="instanceId">The instanceId</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<object> CollectDeviceConfigSourceConfig(
 		int deviceId,
-		int hdsId,
+		int deviceDataSourceId,
 		int instanceId,
-		CancellationToken cancellationToken) => PostAsync<object?, object>(null, $"device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection", cancellationToken);
+		CancellationToken cancellationToken) => PostAsync<object?, object>(null, $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{instanceId}/config/configCollection", cancellationToken);
 
 	/// <summary>
 	/// get datasource list
