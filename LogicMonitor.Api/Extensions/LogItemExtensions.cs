@@ -118,7 +118,7 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>.+?)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ?""DeviceDatasourceInstanceName=(?<instanceName>.+?)""; ?""DeviceDataSourceInstanceId=(?<instanceId>.+?)""; ?""DeviceName=(?<resourceName>.+?)""; ?""DeviceId=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(32,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+?)\) ,.+$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\) ,.+$", RegexOptions.Singleline)),
 		new(33,
 			AuditEventEntityType.DataSource,
 			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<logicModuleName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),

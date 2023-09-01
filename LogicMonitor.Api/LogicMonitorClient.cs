@@ -1,6 +1,3 @@
-using System.Net.Http;
-using LogicMonitor.Api.Extensions;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -1361,6 +1358,14 @@ public partial class LogicMonitorClient : IDisposable
 	public virtual async Task PatchAsync<T>(T entity, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken) where T : IPatchable
 	=> await PatchAsync($"{entity.Endpoint()}/{entity.Id}", fieldsToUpdate, cancellationToken).ConfigureAwait(false);
 
+	/// <summary>
+	///    Patch specific fields
+	/// </summary>
+	/// <param name="subUrl"></param>
+	/// <param name="fieldsToUpdate"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	/// <exception cref="LogicMonitorApiException"></exception>
 	public async Task PatchAsync(string subUrl, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken)
 	{
 		var prefix = GetPrefix(PatchHttpMethod);

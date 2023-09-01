@@ -70,9 +70,11 @@ gcpbilling
 geoinfo
 gmap
 graphid
+gcp
 Gzip
 happenon
 Hashcode
+hostname
 href
 Inc
 int
@@ -87,6 +89,7 @@ Kinesis
 Kubernetes
 linuxprocess
 listcore
+lm
 Max
 maxvalue
 Memcached
@@ -106,6 +109,7 @@ ngraph
 noc
 nullable
 ographs
+oid
 oneopsnotes
 oneservice
 opsnotes

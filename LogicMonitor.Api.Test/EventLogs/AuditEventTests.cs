@@ -532,20 +532,34 @@ public class AuditEventTests : TestWithOutput
 			}
 		);
 
-	[Fact]
-	public void AddDeviceGroup_Success()
+	[Theory]
+	[InlineData(
+		@"Added device group Integration Testing/Test (6704) , ",
+		"Integration Testing/Test",
+		6704
+		)]
+	[InlineData(
+		"Added device group BLAH (1234) ,  appliesTo=join(system.staticgroups,\",\")=~\"WOO\" && system.azure.tag.application == \"Azure virtual desktop\" && system.displayname =~ \"YAY\" ,add hosts total=6 ,hosts list :  host(id=1, name=AAA (BBB)) , host(id=2, name=CCC (DDD)) , host(id=3, name=EEE (FFF)) , host(id=4, name=GGG (HHH)) , host(id=5, name=III (JJJ)) , host(id=6, name=KKK (LLL))",
+		"BLAH",
+		1234
+		)]
+	public void AddDeviceGroup_Success(
+		string logItemMessage,
+		string expectedResourceGroupName,
+		int expectedResourceGroupId
+		)
 		=> AssertToAuditEventSucceeds(
-			@"Added device group Integration Testing/Test (6704) , ",
-			new()
-			{
-				MatchedRegExId = 32,
-				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.ResourceGroup,
-				ResourceGroupName = "Integration Testing/Test",
-				ResourceGroupId = 6704,
-				OutcomeType = AuditEventOutcomeType.Success
-			}
-		);
+	logItemMessage,
+	new()
+	{
+		MatchedRegExId = 32,
+		EntityType = AuditEventEntityType.ResourceGroup,
+		ActionType = AuditEventActionType.Create,
+		OutcomeType = AuditEventOutcomeType.Success,
+		ResourceGroupName = expectedResourceGroupName,
+		ResourceGroupId = expectedResourceGroupId
+	}
+);
 
 	[Fact]
 	public void AddDataSource_Succeeds()
@@ -955,7 +969,6 @@ public class AuditEventTests : TestWithOutput
 		CollectorDescription = expectedCollectorDescription
 	}
 );
-
 
 	private static void AssertToAuditEventSucceeds(
 		string description,

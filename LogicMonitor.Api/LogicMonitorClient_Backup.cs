@@ -6,11 +6,9 @@ public partial class LogicMonitorClient
 	///     Backs up all supported aspects of LogicMonitor configuration to a file as a GZipped Json string.
 	/// </summary>
 	/// <param name="fileInfo"></param>
-	public async Task BackupAllToFileAsync(FileInfo fileInfo)
-	{
+	public async Task BackupAllToFileAsync(FileInfo fileInfo) =>
 		_ = await BackupAsync(new ConfigurationBackupSpecification(true) { GzipFileInfo = fileInfo }, default)
 			.ConfigureAwait(false);
-	}
 
 	/// <summary>
 	///     Gets a configuration backup.

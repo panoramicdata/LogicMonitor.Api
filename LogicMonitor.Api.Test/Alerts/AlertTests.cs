@@ -251,8 +251,8 @@ public class AlertTests : TestWithOutput
 
 		// Make sure there are no alerts for hosts not mentioned by the hostFilter
 		Assert.All(alerts, alert => Assert.Equal(alert.MonitorObjectName, device.DisplayName));
-		Assert.True(alerts.All(alert => alert.InstanceName.StartsWith(dataSourceNameFilter, StringComparison.Ordinal)));
-		Assert.True(alerts.All(alert => alert.DataPointName.StartsWith(dataPointNameFilter, StringComparison.Ordinal)));
+		alerts.Should().OnlyContain(alert => alert.InstanceName.StartsWith(dataSourceNameFilter, StringComparison.Ordinal));
+		alerts.Should().OnlyContain(alert => alert.DataPointName.StartsWith(dataPointNameFilter, StringComparison.Ordinal));
 	}
 
 	[Fact]
@@ -289,7 +289,7 @@ public class AlertTests : TestWithOutput
 			OrderDirection = OrderDirection.Desc
 		};
 		var alertsIncludngCleared = await LogicMonitorClient.GetAlertsAsync(alertFilterIncludingCleared, default).ConfigureAwait(false);
-		Assert.True(alertsIncludngCleared.Count > 0);
+		alertsIncludngCleared.Count.Should().BePositive();
 		Assert.Contains(alertsIncludngCleared, a => !a.IsActive);
 		Assert.Contains(alertsIncludngCleared, a => a.IsActive);
 	}
@@ -386,8 +386,8 @@ public class AlertTests : TestWithOutput
 				IsCleared = false,
 				IncludeCleared = null
 			}, default).ConfigureAwait(false);
-		Assert.True(alerts.All(a => a.StartOnUtc >= startUtcIsAfterOrAt));
-		Assert.True(alerts.All(a => !a.IsCleared));
+		alerts.Should().OnlyContain(a => a.StartOnUtc >= startUtcIsAfterOrAt);
+		alerts.Should().OnlyContain(a => !a.IsCleared);
 	}
 
 	[Fact]
@@ -400,8 +400,8 @@ public class AlertTests : TestWithOutput
 			IsCleared = true,
 			IncludeCleared = null,
 		}, default).ConfigureAwait(false);
-		Assert.True(alerts.All(a => a.StartOnUtc >= startUtcIsAfterOrAt));
-		Assert.True(alerts.All(a => a.IsCleared));
+		alerts.Should().OnlyContain(a => a.StartOnUtc >= startUtcIsAfterOrAt);
+		alerts.Should().OnlyContain(a => a.IsCleared);
 	}
 
 	[Fact]
@@ -509,9 +509,9 @@ public class AlertTests : TestWithOutput
 		Logger.LogDebug("{ErrorAndAboveCount}", errorAndAboveAlerts.Count);
 
 		// Ensure that the number of error and above is fewer than the total
-		Assert.True(errorAndAboveAlerts.Count < allAlerts.Count);
+		(errorAndAboveAlerts.Count < allAlerts.Count).Should().BeTrue();
 
-		Assert.True(errorAndAboveAlerts.All(a => a.AlertLevel >= AlertLevel.Error));
+		errorAndAboveAlerts.Should().OnlyContain(a => a.AlertLevel >= AlertLevel.Error);
 	}
 
 	[Fact]

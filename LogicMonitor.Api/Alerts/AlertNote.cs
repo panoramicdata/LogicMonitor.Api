@@ -21,7 +21,7 @@ public class AlertNote
 	/// The alert ids
 	/// </summary>
 	[DataMember(Name = "alertIds")]
-	IList<string> AlertIds { get; set; }
+	public IList<string> AlertIds { get; set; }
 
 	/// <summary>
 	/// The note

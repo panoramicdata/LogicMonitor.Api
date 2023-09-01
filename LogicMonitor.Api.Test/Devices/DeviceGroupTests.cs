@@ -33,7 +33,7 @@ public class DeviceGroupTests : TestWithOutput
 		// Recurse
 		var recursed = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync("DSW - (Test) Denise Home Network/Sub Group 2 (XYZ)", true, default).ConfigureAwait(false);
 
-		nonrecurse.Should().HaveCount(1);
+		nonrecurse.Should().ContainSingle();
 		recursed.Should().HaveCount(2);
 	}
 

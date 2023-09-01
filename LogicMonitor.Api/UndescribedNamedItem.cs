@@ -23,16 +23,14 @@ public abstract class UndescribedNamedItem : IdentifiedItem
 			return false;
 		}
 
-		var logicMonitorNamedEntity = obj as NamedItem;
-
-		if (logicMonitorNamedEntity is null)
+		if (obj is not NamedItem logicMonitorNamedEntity)
 		{
 			return false;
 		}
 
 		return base.Equals(logicMonitorNamedEntity)
-			   && logicMonitorNamedEntity is not null
-			   && logicMonitorNamedEntity.Name == Name;
+			&& logicMonitorNamedEntity is not null
+			&& logicMonitorNamedEntity.Name == Name;
 	}
 
 	/// <summary>
