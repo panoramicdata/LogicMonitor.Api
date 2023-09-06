@@ -13,14 +13,20 @@ public class WebsiteStepAuthentication
 	public string Type { get; set; } = string.Empty;
 
 	/// <summary>
-	/// NTLM authentication userName
+	/// Authentication userName
 	/// </summary>
 	[DataMember(Name = "userName")]
 	public string UserName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// NTLM authentication password
+	/// Authentication password
 	/// </summary>
 	[DataMember(Name = "password")]
 	public string Password { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Domain - required when type is NTLM
+	/// </summary>
+	[DataMember(Name = "domain")]
+	public string Domain { get; set; } = string.Empty;
 }
