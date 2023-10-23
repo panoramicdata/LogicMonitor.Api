@@ -725,7 +725,11 @@ public partial class LogicMonitorClient : IDisposable
 		data ??= string.Empty;
 
 		// Auth header
-		var authHeaderValue = $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
+		var authHeaderValue =
+			_accessKey.StartsWith("lmb_", StringComparison.Ordinal)
+				? $"Bearer {_accessKey}"
+				: $"LMv1 {_accessId}:{GetSignature(httpVerb, epoch, data, resourcePath, _accessKey)}:{epoch}";
+
 		requestMessage.Headers.Add("Authorization", authHeaderValue);
 
 		_logger.LogHttpHeaders(true, "", requestMessage.Headers);

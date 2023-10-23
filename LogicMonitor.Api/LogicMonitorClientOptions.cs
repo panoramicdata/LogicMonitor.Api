@@ -12,12 +12,12 @@ public class LogicMonitorClientOptions
 	public string Account { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Access Token's ID
+	/// The Access Token's ID. Can be left blank when using a Bearer Token set in the AccessKey property
 	/// </summary>
 	public string AccessId { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Account Token's Key
+	/// The Account Token's Key (or Bearer Token, in which case the AccessId can be left blank)
 	/// </summary>
 	public string AccessKey { get; set; } = string.Empty;
 
