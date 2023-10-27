@@ -1,8 +1,3 @@
-using LogicMonitor.Api.Devices;
-using LogicMonitor.Api.Filters;
-using LogicMonitor.Api.LogicModules;
-using System.Threading;
-
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -519,7 +514,7 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		CancellationToken cancellationToken)
-		=> await GetAllAsync<DeviceDataSourceInstanceGroup>(
+		=> await GetAllAsync(
 				filter: new Filter<DeviceDataSourceInstanceGroup>
 				{
 					FilterItems = new List<FilterItem<DeviceDataSourceInstanceGroup>>
