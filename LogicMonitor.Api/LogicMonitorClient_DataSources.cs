@@ -531,6 +531,7 @@ public partial class LogicMonitorClient
 				cancellationToken)
 			.ConfigureAwait(false);
 
+		// DO NOT use this one - it only appears to return 50 items!
 		//=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
 		//	$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups", cancellationToken).ConfigureAwait(false)).Items;
 
