@@ -1,3 +1,8 @@
+using LogicMonitor.Api.Devices;
+using LogicMonitor.Api.Filters;
+using LogicMonitor.Api.LogicModules;
+using System.Threading;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -514,17 +519,29 @@ public partial class LogicMonitorClient
 		int deviceId,
 		int deviceDataSourceId,
 		CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
-			$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups", cancellationToken).ConfigureAwait(false)).Items;
+		=> await GetAllAsync<DeviceDataSourceInstanceGroup>(
+				filter: new Filter<DeviceDataSourceInstanceGroup>
+				{
+					FilterItems = new List<FilterItem<DeviceDataSourceInstanceGroup>>
+					{
+						new Eq<DeviceDataSourceInstanceGroup>(nameof(DeviceDataSourceInstanceGroup.DeviceDataSourceId), deviceDataSourceId)
+					}
+				}, 
+				subUrl: $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups/",
+				cancellationToken)
+			.ConfigureAwait(false);
 
-	/// <summary>
-	///     Get DataSource Instance Groups
-	/// </summary>
-	/// <param name="deviceId"></param>
-	/// <param name="deviceDataSourceId"></param>
-	/// <param name="name">The device dataSource instanceGroup name</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DeviceDataSourceInstanceGroup> GetDeviceDataSourceInstanceGroupByNameAsync(
+		//=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
+		//	$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups", cancellationToken).ConfigureAwait(false)).Items;
+
+/// <summary>
+///     Get DataSource Instance Groups
+/// </summary>
+/// <param name="deviceId"></param>
+/// <param name="deviceDataSourceId"></param>
+/// <param name="name">The device dataSource instanceGroup name</param>
+/// <param name="cancellationToken">The cancellation token</param>
+public async Task<DeviceDataSourceInstanceGroup> GetDeviceDataSourceInstanceGroupByNameAsync(
 		int deviceId,
 		int deviceDataSourceId,
 		string name,
