@@ -21,7 +21,7 @@ public class PortalVersionTests(ITestOutputHelper iTestOutputHelper) : TestWithO
 	public async Task GetPortalVersionStatic()
 	{
 		var portalVersion = await LogicMonitorClient
-			.GetVersionAsync("altius", default)
+			.GetVersionAsync("panoramicdata", default)
 			.ConfigureAwait(true);
 		portalVersion.Version.Should().NotBeNull();
 		((object)portalVersion.Version.Module).Should().NotBeNull();

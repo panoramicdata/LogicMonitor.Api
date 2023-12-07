@@ -64,7 +64,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 			Description = "Desc",
 			Name = Value,
 			RequireEULA = false,
-			TwoFactorAuthenticationRequired = false,
+			TwoFactorAuthenticationRequired = true,
 			Privileges =
 				[
 					new RolePrivilege
