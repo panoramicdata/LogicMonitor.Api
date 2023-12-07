@@ -40,7 +40,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 				default)
 			.ConfigureAwait(true);
 
-		forecastGraphData.TrainingGraphData.Lines.Should().HaveCount(1);
+		forecastGraphData.TrainingGraphData.Lines.Should().ContainSingle();
 		forecastGraphData.ForecastedGraphData.Lines.Should().HaveCount(3);
 	}
 

@@ -70,7 +70,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper) : TestWith
 		newCollectorGroupRefetch.Description.Should().NotBeNull();
 		newCollectorGroupRefetch.CustomProperties.Should().NotBeNull();
 		newCollectorGroupRefetch.CustomProperties.Should().NotBeNullOrEmpty();
-		newCollectorGroupRefetch.CustomProperties.Should().HaveCount(1);
+		newCollectorGroupRefetch.CustomProperties.Should().ContainSingle();
 		newCollectorGroupRefetch.CustomProperties[0].Name.Should().Be("a");
 		newCollectorGroupRefetch.CustomProperties[0].Value.Should().Be("b");
 
