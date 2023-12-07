@@ -61,7 +61,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper) : TestWithOu
 		// Make sure that some are returned
 		eventSource.Should().NotBeNull();
 		eventSource ??= new();
-		string.IsNullOrWhiteSpace(eventSource.AppliesTo).Should().BeFalse();
+		eventSource.AppliesTo.Should().NotBeNullOrWhiteSpace();
 		// The whole thing should take less than 10 seconds
 		stopwatch.ElapsedMilliseconds.Should().BeLessThan(20000);
 	}

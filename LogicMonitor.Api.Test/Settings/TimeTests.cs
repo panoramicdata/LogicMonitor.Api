@@ -10,6 +10,6 @@ public class TimeTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 			.ConfigureAwait(true);
 
 		// Text should be set
-		string.IsNullOrWhiteSpace(timeZoneSetting.TimeZone).Should().BeFalse();
+		timeZoneSetting.TimeZone.Should().NotBeNullOrWhiteSpace();
 	}
 }

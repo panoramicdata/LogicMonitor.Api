@@ -76,7 +76,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 
 		// Ensure that this OpsNote has an ID set
 		createdOpsNote.Id.Should().NotBeNull();
-		string.IsNullOrWhiteSpace(createdOpsNote.Id).Should().BeFalse();
+		createdOpsNote.Id.Should().NotBeNullOrWhiteSpace();
 
 		// Wait 2 seconds
 		await Task.Delay(5000)

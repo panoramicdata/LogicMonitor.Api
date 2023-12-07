@@ -164,7 +164,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 		websiteGroup.ChildWebsiteGroups.Should().NotBeNullOrEmpty();
 		websiteGroup.ParentId.Should().Be(0);
 		websiteGroup.Id.Should().Be(1);
-		string.IsNullOrWhiteSpace(websiteGroup.Name).Should().BeFalse();
+		websiteGroup.Name.Should().NotBeNullOrWhiteSpace();
 		(websiteGroup.FullPath is null).Should().BeFalse();
 	}
 

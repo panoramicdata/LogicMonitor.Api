@@ -95,16 +95,16 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper) : TestWithOutpu
 		// AlertsList
 		var alertsListWidget = widgets.OfType<AlertWidget>().SingleOrDefault();
 		alertsListWidget.Should().NotBeNull();
-		string.IsNullOrWhiteSpace(alertsListWidget!.Theme).Should().BeFalse();
+		alertsListWidget!.Theme.Should().NotBeNullOrWhiteSpace();
 		alertsListWidget.AlertFilter.Should().NotBeNull();
 
 		// Job Monitor
 		var jobMonitorWidget = widgets.OfType<JobMonitorWidget>().SingleOrDefault();
 		jobMonitorWidget.Should().NotBeNull();
-		string.IsNullOrWhiteSpace(jobMonitorWidget!.DeviceDisplayName).Should().BeFalse();
-		string.IsNullOrWhiteSpace(jobMonitorWidget.DeviceGroupDisplayName).Should().BeFalse();
-		string.IsNullOrWhiteSpace(jobMonitorWidget.BatchJobName).Should().BeFalse();
-		string.IsNullOrWhiteSpace(jobMonitorWidget.BatchJobId).Should().BeFalse();
+		jobMonitorWidget!.DeviceDisplayName.Should().NotBeNullOrWhiteSpace();
+		jobMonitorWidget.DeviceGroupDisplayName.Should().NotBeNullOrWhiteSpace();
+		jobMonitorWidget.BatchJobName.Should().NotBeNullOrWhiteSpace();
+		jobMonitorWidget.BatchJobId.Should().NotBeNullOrWhiteSpace();
 
 		// Big Number
 		var bigNumberWidget = widgets.OfType<BigNumberWidget>().FirstOrDefault();

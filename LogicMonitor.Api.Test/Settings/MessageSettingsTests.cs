@@ -9,7 +9,7 @@ public class MessageSettingsTests(ITestOutputHelper iTestOutputHelper) : TestWit
 			.GetAsync<NewUserMessageTemplate>(default)
 			.ConfigureAwait(true);
 
-		string.IsNullOrWhiteSpace(messageTemplate.Subject).Should().BeFalse();
-		string.IsNullOrWhiteSpace(messageTemplate.Body).Should().BeFalse();
+		messageTemplate.Subject.Should().NotBeNullOrWhiteSpace();
+		messageTemplate.Body.Should().NotBeNullOrWhiteSpace();
 	}
 }
