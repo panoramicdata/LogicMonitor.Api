@@ -6,8 +6,8 @@ public class GetEventLogTests : TestWithOutput
 	}
 
 	[Fact]
-	public void ValidateRegexs()
-		=> LogItemExtensions.ValidateRegexs();
+	public void ValidateRegexes()
+		=> LogItemExtensions.ValidateRegexes();
 
 	[Fact]
 	public async Task GetEventLog_Succeeds()

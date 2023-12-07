@@ -1,6 +1,7 @@
 aaronenten
 Abbatt
 accesslogs
+ack
 acked
 Addleshaw
 alertsettings
@@ -30,6 +31,7 @@ batchscript
 ccdestination
 center
 cgraph
+CIDR
 cim
 Cisco
 color
@@ -47,6 +49,7 @@ desc
 deserialization
 deserialize
 deserialized
+deserializes
 dev
 devicedatasourceinstances
 devicedatasources
@@ -111,6 +114,7 @@ noc
 nullable
 ographs
 oid
+oids
 oneopsnotes
 oneservice
 opsnotes
@@ -118,12 +122,15 @@ opstags
 ord
 panoramicdata
 params
+PDL
 Perfmon
 Psl
 recipientgroups
 Recurse
 recursing
 Refetch
+refetches
+regexes
 santaba
 sbin
 sbui
@@ -136,6 +143,7 @@ smcheckpoints
 snmp
 sso
 starttzoffset
+stat
 Synoptek
 Sys
 sysname

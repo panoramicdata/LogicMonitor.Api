@@ -310,7 +310,7 @@ public class DeviceTests : TestWithOutput
 	}
 
 	[Fact]
-	public async Task GetDevicesByDeviceGroupFullPathv78()
+	public async Task GetDevicesByDeviceGroupFullPathV78()
 	{
 		// Recurse
 		var allDatacenterDevices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, default).ConfigureAwait(false);

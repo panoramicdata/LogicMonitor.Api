@@ -6,7 +6,7 @@
 public static class LogItemExtensions
 {
 
-	internal static void ValidateRegexs()
+	internal static void ValidateRegexes()
 	{
 		// Check that no two Regex have the same id
 		var regexIds = new HashSet<int>();
