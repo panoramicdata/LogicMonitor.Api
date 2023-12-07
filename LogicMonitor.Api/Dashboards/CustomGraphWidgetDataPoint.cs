@@ -69,6 +69,12 @@ public class CustomGraphWidgetDataPoint : IdentifiedItem
 	/// <summary>
 	/// The instanceName
 	/// </summary>
+	[DataMember(Name = "instanceId")]
+	public int? DataSourceInstanceId { get; set; } = new();
+
+	/// <summary>
+	/// The instanceName
+	/// </summary>
 	[DataMember(Name = "instanceName")]
 	public StringSpecification DataSourceInstanceName { get; set; } = new();
 

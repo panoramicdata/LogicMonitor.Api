@@ -55,6 +55,12 @@ public class ViewPermission
 	public bool? OnlyNewUi { get; set; }
 
 	/// <summary>
+	/// Recommendations view permission
+	/// </summary>
+	[DataMember(Name = "Recommendations")]
+	public bool Recommendations { get; set; }
+
+	/// <summary>
 	/// Reports view permission
 	/// </summary>
 	[DataMember(Name = "Reports")]
@@ -81,6 +87,7 @@ public class ViewPermission
 	/// <inheritdoc />
 	public override string ToString() =>
 		$"{nameof(Dashboards)}={Dashboards};" +
+		$"{nameof(Recommendations)}={Recommendations};" +
 		$"{nameof(Reports)}={Reports};" +
 		$"{nameof(Websites)}={Websites};" +
 		$"{nameof(Settings)}={Settings};" +

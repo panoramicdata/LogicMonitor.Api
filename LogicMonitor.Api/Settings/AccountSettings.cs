@@ -237,19 +237,25 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// numOfMongoDBAtlasDevices
 	/// </summary>
 	[DataMember(Name = "numOfMongoDBAtlasDevices")]
-	public int NumOfMongoDBAtlasDevices { get; set; }
+	public int MongoDbAtlasDeviceCount { get; set; }
 
 	/// <summary>
 	/// numberOfCommittedCloudDevices
 	/// </summary>
 	[DataMember(Name = "numberOfCommittedCloudDevices")]
-	public int NumberOfCommittedCloudDevices { get; set; }
+	public int CommittedCloudDeviceCount { get; set; }
 
 	/// <summary>
 	/// The account balance in USD
 	/// </summary>
 	[DataMember(Name = "zuoraInvoiceDetails")]
 	public InvoiceDetails InvoiceDetails { get; set; } = new();
+
+	/// <summary>
+	/// Kubernetes device stats
+	/// </summary>
+	[DataMember(Name = "kubernetesDevices")]
+	public KubernetesDeviceStats KubernetesDeviceStats { get; set; } = new();
 
 	/// <summary>
 	///     The Kubernetes device count

@@ -79,6 +79,12 @@ public class HttpIntegration : Integration
 	public string AckUsername { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The ACK OAuth version
+	/// </summary>
+	[DataMember(Name = "ackOAuthVersion")]
+	public string? AckOAuthVersion { get; set; } = string.Empty;
+
+	/// <summary>
 	///     The OAuth version
 	/// </summary>
 	[DataMember(Name = "oAuthVersion")]

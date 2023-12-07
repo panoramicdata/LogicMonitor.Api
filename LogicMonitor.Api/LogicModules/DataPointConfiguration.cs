@@ -31,6 +31,12 @@ public class DataPointConfiguration : IdentifiedItem
 	public int AlertTransitionInterval { get; set; }
 
 	/// <summary>
+	///     The Alert clear transition interval
+	/// </summary>
+	[DataMember(Name = "alertClearTransitionInterval")]
+	public int AlertClearTransitionInterval { get; set; }
+
+	/// <summary>
 	///     The Alerting disabled on
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
@@ -182,6 +188,12 @@ public class DataPointConfiguration : IdentifiedItem
 	/// </summary>
 	[DataMember(Name = "parentInstanceGroupAlertExpr")]
 	public string ParentInstanceGroupAlertExpression { get; set; } = string.Empty;
+
+	/// <summary>
+	///     Alert for no data
+	/// </summary>
+	[DataMember(Name = "alertForNoData")]
+	public int AlertForNoData { get; set; }
 
 	/// <inheritdoc />
 	public override string ToString()
