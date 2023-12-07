@@ -89,10 +89,10 @@ public class DeviceTests : TestWithOutput
 				DisplayName = deviceDisplayName,
 				Link = deviceLink,
 				DeviceGroupIds = $"{deviceGroup.Id}",
-				CustomProperties = new List<EntityProperty>
-					{
+				CustomProperties =
+					[
 						deviceProperty
-					},
+					],
 				Description = deviceDescription,
 				DisableAlerting = deviceDisableAlerting,
 				EnableNetflow = deviceEnableNetflow,
@@ -143,7 +143,7 @@ public class DeviceTests : TestWithOutput
 			{
 				// Restore from recycle bin
 				await logicMonitorClient
-					.RecycleBinRestoreAsync(new List<string> { recycleBinItem.Id }, default)
+					.RecycleBinRestoreAsync([recycleBinItem.Id], default)
 					.ConfigureAwait(false);
 
 				// Get the recycle bin item and make sure it was restored correctly
@@ -163,7 +163,7 @@ public class DeviceTests : TestWithOutput
 			{
 				// Remove from the recycle bin
 				await logicMonitorClient
-					.RecycleBinDeleteAsync(new List<string> { recycleBinItem.Id }, default)
+					.RecycleBinDeleteAsync([recycleBinItem.Id], default)
 					.ConfigureAwait(false);
 			}
 		}
@@ -202,12 +202,12 @@ public class DeviceTests : TestWithOutput
 		var deviceInstances = await LogicMonitorClient
 			.GetDeviceInstanceListAsync(WindowsDeviceId, new Filter<DeviceDataSourceInstance>
 			{
-				Properties = new List<string>
-				{
+				Properties =
+				[
 						nameof(DeviceDataSourceInstance.Id),
 						nameof(DeviceDataSourceInstance.Name),
 						nameof(DeviceDataSourceInstance.DataSourceName),
-				}
+				]
 			}, default)
 			.ConfigureAwait(false);
 		(deviceInstances.Items.Count > 10).Should().BeTrue();
@@ -521,10 +521,10 @@ public class DeviceTests : TestWithOutput
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Device>
 		{
-			FilterItems = new List<FilterItem<Device>>
-			{
+			FilterItems =
+			[
 				new Eq<Device>(nameof(Device.DeviceStatus), "dead")
-			}
+			]
 		}, default).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
@@ -535,10 +535,10 @@ public class DeviceTests : TestWithOutput
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Device>
 		{
-			FilterItems = new List<FilterItem<Device>>
-			{
+			FilterItems =
+			[
 				new Ne<Device>(nameof(Device.AlertDisableStatus), "none-none-none")
-			}
+			]
 		}, default).ConfigureAwait(false);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
@@ -588,12 +588,12 @@ public class DeviceTests : TestWithOutput
 		var alertFilter = new AlertFilter
 		{
 			IncludeCleared = true,
-			Levels = new List<AlertLevel>
-				 {
+			Levels =
+				 [
 					 AlertLevel.Warning,
 					 AlertLevel.Error,
 					 AlertLevel.Critical
-				 },
+				 ],
 			StartUtcIsAfter = DateTime.UtcNow.AddDays(-25)
 		};
 

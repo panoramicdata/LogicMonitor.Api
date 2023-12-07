@@ -10,5 +10,5 @@ public class DeviceNocWidget : NocWidget, IWidget
 	///     The Items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public new List<DeviceNocWidgetItem> Items { get; set; } = new();
+	public new List<DeviceNocWidgetItem> Items { get; set; } = [];
 }

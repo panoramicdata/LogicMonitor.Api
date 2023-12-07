@@ -11,7 +11,7 @@ public class AwsAccountTestResult
 	/// noPermissionServices
 	/// </summary>
 	[DataMember(Name = "noPermissionServices")]
-	public List<string> NoPermissionServices { get; set; } = new();
+	public List<string> NoPermissionServices { get; set; } = [];
 
 	/// <summary>
 	/// detailLink
@@ -23,5 +23,5 @@ public class AwsAccountTestResult
 	/// nonPermissionErrors
 	/// </summary>
 	[DataMember(Name = "nonPermissionErrors")]
-	public List<string> NonPermissionErrors { get; set; } = new();
+	public List<string> NonPermissionErrors { get; set; } = [];
 }

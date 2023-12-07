@@ -148,7 +148,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     Contacts
 	/// </summary>
 	[DataMember(Name = "contacts")]
-	public List<Contact> Contacts { get; set; } = new();
+	public List<Contact> Contacts { get; set; } = [];
 
 	/// <summary>
 	///     The data point count
@@ -303,7 +303,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     The per-datasource instance count
 	/// </summary>
 	[DataMember(Name = "numberOfInstancesPerDS")]
-	public Dictionary<string, int> PerDataSourceInstanceCount { get; set; } = new();
+	public Dictionary<string, int> PerDataSourceInstanceCount { get; set; } = [];
 
 	/// <summary>
 	///     Primary contact e-mail address

@@ -22,7 +22,7 @@ public class NetflowFilters
 	/// The device interfaces
 	/// </summary>
 	[DataMember(Name = "deviceInterfaces")]
-	public List<InterfacesFilter> DeviceInterfaces { get; set; } = new();
+	public List<InterfacesFilter> DeviceInterfaces { get; set; } = [];
 
 	/// <summary>
 	/// The ports
@@ -46,7 +46,7 @@ public class NetflowFilters
 	/// Netflow filter netflowDevices expression
 	/// </summary>
 	[DataMember(Name = "netflowDevices")]
-	public List<NetflowDeviceInfo> NetflowDevices { get; set; } = new();
+	public List<NetflowDeviceInfo> NetflowDevices { get; set; } = [];
 
 	/// <summary>
 	/// The top
@@ -64,7 +64,7 @@ public class NetflowFilters
 	/// nbarApplicationNames
 	/// </summary>
 	[DataMember(Name = "nbarApplicationNames")]
-	public List<NbarApplicationNames> NbarApplicationNames { get; set; } = new();
+	public List<NbarApplicationNames> NbarApplicationNames { get; set; } = [];
 
 	/// <summary>
 	/// Node A
@@ -76,13 +76,13 @@ public class NetflowFilters
 	/// The conversation
 	/// </summary>
 	[DataMember(Name = "conversation")]
-	public List<ConversationFilter> Conversations { get; set; } = new();
+	public List<ConversationFilter> Conversations { get; set; } = [];
 
 	/// <summary>
 	/// The interface names
 	/// </summary>
 	[DataMember(Name = "ifNames")]
-	public List<string> IfNames { get; set; } = new();
+	public List<string> IfNames { get; set; } = [];
 
 	/// <summary>
 	/// The direction

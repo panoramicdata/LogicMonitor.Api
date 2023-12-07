@@ -29,7 +29,7 @@ public class SimpleProperty
 	/// The inherit list of the property
 	/// </summary>
 	[DataMember(Name = "inheritList")]
-	public List<InheritedItem> InheritList { get; set; } = new();
+	public List<InheritedItem> InheritList { get; set; } = [];
 
 	/// <inheritdoc />
 	public override string ToString() => $"{Type}: {Name}={Value}";

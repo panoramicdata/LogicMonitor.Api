@@ -142,29 +142,29 @@ public class CustomGraphWidgetData : WidgetData
 	/// The lines of the graph (the data series)
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<CustomGraphWidgetDataLine> Lines { get; set; } = new();
+	public List<CustomGraphWidgetDataLine> Lines { get; set; } = [];
 
 	/// <summary>
 	/// Missing lines
 	/// </summary>
 	[DataMember(Name = "missingLines")]
-	public List<CustomGraphWidgetDataLine> MissingLines { get; set; } = new();
+	public List<CustomGraphWidgetDataLine> MissingLines { get; set; } = [];
 
 	/// <summary>
 	/// The timestamps for the data items (the series)
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<long> Timestamps { get; set; } = new();
+	public List<long> Timestamps { get; set; } = [];
 
 	/// <summary>
 	/// The scopes
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<CustomGraphWidgetDataScope> Scopes { get; set; } = new();
+	public List<CustomGraphWidgetDataScope> Scopes { get; set; } = [];
 
 	/// <summary>
 	/// The instances
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<int> Instances { get; set; } = new();
+	public List<int> Instances { get; set; } = [];
 }

@@ -38,10 +38,10 @@ public partial class LogicMonitorClient
 	public async Task<DashboardGroup> GetDashboardGroupByFullPathAsync(string dashboardGroupFullPath, CancellationToken cancellationToken)
 		=> (await GetAllAsync(new Filter<DashboardGroup>
 		{
-			FilterItems = new List<FilterItem<DashboardGroup>>
-			{
+			FilterItems =
+			[
 					new Eq<DashboardGroup>(nameof(DashboardGroup.FullPath), dashboardGroupFullPath)
-			}
+			]
 		}, cancellationToken).ConfigureAwait(false)).SingleOrDefault();
 
 	/// <summary>
@@ -125,10 +125,10 @@ public partial class LogicMonitorClient
 		=> (await GetAsync(new Filter<Widget>
 		{
 			Take = 100,
-			FilterItems = new List<FilterItem<Widget>>
-			{
+			FilterItems =
+			[
 					new Eq<Widget>(nameof(Widget.DashboardId), dashboardId)
-			}
+			]
 		}
 		, cancellationToken).ConfigureAwait(false)).Items;
 
@@ -160,11 +160,11 @@ public partial class LogicMonitorClient
 		// Delete its child dashboard groups
 		var dashboardGroupPage = await GetAsync(new Filter<DashboardGroup>
 		{
-			FilterItems = new List<FilterItem<DashboardGroup>>
-				{
+			FilterItems =
+				[
 					new Ne<DashboardGroup>(nameof(DashboardGroup.Id), 1),
 					new Eq<DashboardGroup>(nameof(DashboardGroup.ParentId), id)
-				}
+				]
 		}, cancellationToken).ConfigureAwait(false);
 		foreach (var childDashboardGroup in dashboardGroupPage.Items)
 		{

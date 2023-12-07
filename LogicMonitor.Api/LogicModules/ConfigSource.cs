@@ -28,7 +28,7 @@ public class ConfigSource : LogicModule, IHasEndpoint
 	/// The List of ConfigChecks
 	/// </summary>
 	[DataMember(Name = "configChecks")]
-	public List<ConfigCheck> ConfigChecks { get; set; } = new();
+	public List<ConfigCheck> ConfigChecks { get; set; } = [];
 
 	/// <summary>
 	/// The Applies To for the LMModule

@@ -106,7 +106,7 @@ public class RestGraphData : IdentifiedItem
 	///    The list of missing lines
 	/// </summary>
 	[DataMember(Name = "missingLines")]
-	public List<string> MissingLines { get; set; } = new();
+	public List<string> MissingLines { get; set; } = [];
 
 	/// <summary>
 	///    The XML y-axis label
@@ -152,7 +152,7 @@ public class RestGraphData : IdentifiedItem
 	///    The x-axis timestamps in ms since the Epoch
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<long> TimeStamps { get; set; } = new();
+	public List<long> TimeStamps { get; set; } = [];
 
 	/// <summary>
 	///    Whether it is rigid
@@ -164,7 +164,7 @@ public class RestGraphData : IdentifiedItem
 	///    The graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<Line> Lines { get; set; } = new();
+	public List<Line> Lines { get; set; } = [];
 
 	/// <summary>
 	///    The export filename

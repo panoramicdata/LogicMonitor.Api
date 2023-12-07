@@ -58,11 +58,11 @@ public class WebsiteFolder : NamedItem
 	/// Child groups
 	/// </summary>
 	[DataMember(Name = "subGroups")]
-	public List<WebsiteFolder> SubGroups { get; set; } = new();
+	public List<WebsiteFolder> SubGroups { get; set; } = [];
 
 	/// <summary>
 	/// Child Websites
 	/// </summary>
 	[DataMember(Name = "websites")]
-	public List<Website> Websites { get; set; } = new();
+	public List<Website> Websites { get; set; } = [];
 }

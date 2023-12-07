@@ -16,17 +16,17 @@ public class DataVertex : StringIdentifiedItem
 	/// managedEdgeTypes
 	/// </summary>
 	[DataMember(Name = "managedEdgeTypes")]
-	public List<ManagedEdgeType> ManagedEdgeTypes { get; set; } = new();
+	public List<ManagedEdgeType> ManagedEdgeTypes { get; set; } = [];
 
 	/// <summary>
 	/// Resources
 	/// </summary>
 	[DataMember(Name = "LMResources")]
-	public List<TopologyResource> Resources { get; set; } = new();
+	public List<TopologyResource> Resources { get; set; } = [];
 
 	/// <summary>
 	/// Alerts
 	/// </summary>
 	[DataMember(Name = "alerts")]
-	public List<TopologyAlert> Alerts { get; set; } = new();
+	public List<TopologyAlert> Alerts { get; set; } = [];
 }

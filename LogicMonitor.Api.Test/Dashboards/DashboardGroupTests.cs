@@ -29,15 +29,15 @@ public class DashboardGroupTests : TestWithOutput
 				ParentId = "1",
 				Name = DashboardGroupName,
 				Description = "Created by Nuget test",
-				CustomProperties = new()
-				{
+				CustomProperties =
+				[
 					new SimpleProperty
 					{
 						Name = "TestToken",
 						Value = "TestValue",
 						Type = SimplePropertyType.Owned
 					}
-				}
+				]
 			},
 			default)
 			.ConfigureAwait(false);

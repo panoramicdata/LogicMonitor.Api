@@ -10,5 +10,5 @@ public class LogicModuleImportObject : LogicModuleImportCredentials
 	/// The LogicModule names. This is the same for all Module types except SNMP SysOID Maps
 	/// </summary>
 	[DataMember(Name = "importDataSources")]
-	public List<string> ImportDataSources { get; set; } = new();
+	public List<string> ImportDataSources { get; set; } = [];
 }

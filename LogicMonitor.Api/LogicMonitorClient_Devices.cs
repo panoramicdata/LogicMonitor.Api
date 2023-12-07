@@ -13,10 +13,10 @@ public partial class LogicMonitorClient
 			await GetAllAsync(
 				new Filter<DeviceGroup>
 				{
-					FilterItems = new List<FilterItem<DeviceGroup>>
-					{
+					FilterItems =
+					[
 						new Eq<DeviceGroup>(nameof(DeviceGroup.ParentId), deviceGroupId)
-					}
+					]
 				},
 				cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
@@ -50,12 +50,12 @@ public partial class LogicMonitorClient
 	public async Task<Device> GetDeviceByDisplayNameAsync(string displayName, CancellationToken cancellationToken)
 		=> (await GetAllAsync(new Filter<Device>
 		{
-			FilterItems = new List<FilterItem<Device>>
-				{
+			FilterItems =
+				[
 						new Eq<Device>(nameof(Device.DisplayName), (displayName ?? throw new ArgumentNullException(nameof(displayName)))
 							.EscapeSlashes()
 							.EscapePlusCharacter())
-				}
+				]
 		}, cancellationToken)
 			   .ConfigureAwait(false))
 			   .SingleOrDefault();
@@ -233,10 +233,10 @@ public partial class LogicMonitorClient
 							: await GetAllAsync(
 								new Filter<DeviceGroup>
 								{
-									FilterItems = new List<FilterItem<DeviceGroup>>
-									{
+									FilterItems =
+									[
 										new Eq<DeviceGroup>(nameof(DeviceGroup.Id), 1)
-									}
+									]
 								},
 								cancellationToken: cancellationToken)
 							.ConfigureAwait(false);
@@ -253,10 +253,10 @@ public partial class LogicMonitorClient
 								await GetAllAsync(
 									new Filter<DeviceGroup>
 									{
-										FilterItems = new List<FilterItem<DeviceGroup>>
-										{
+										FilterItems =
+										[
 											new Includes<DeviceGroup>(nameof(DeviceGroup.FullPath), checkedDeviceGroup.FullPath)
-										}
+										]
 									},
 									cancellationToken: cancellationToken)
 								.ConfigureAwait(false);
@@ -273,10 +273,10 @@ public partial class LogicMonitorClient
 							await GetAllAsync(
 								new Filter<DeviceGroup>
 								{
-									FilterItems = new List<FilterItem<DeviceGroup>>
-									{
+									FilterItems =
+									[
 											new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), searchDeviceGroupName)
-									}
+									]
 								},
 								cancellationToken: cancellationToken)
 							.ConfigureAwait(false);
@@ -357,10 +357,10 @@ public partial class LogicMonitorClient
 		// This may actually return more than one, as LogicMonitor does not correctly handle brackets in some cases.
 		var allDeviceGroups = await GetAllAsync(new Filter<DeviceGroup>
 		{
-			FilterItems = new List<FilterItem<DeviceGroup>>
-			{
+			FilterItems =
+			[
 				new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), deviceGroupFullPath.EscapePlusCharacter().EscapeParens())
-			}
+			]
 		},
 		cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
@@ -473,7 +473,7 @@ public partial class LogicMonitorClient
 
 			if (parentGroup.SubGroups is null)
 			{
-				parentGroup.SubGroups = new List<DeviceGroup> { deviceGroup };
+				parentGroup.SubGroups = [deviceGroup];
 			}
 			else
 			{
@@ -499,7 +499,7 @@ public partial class LogicMonitorClient
 					continue;
 				}
 
-				deviceGroup.Devices ??= new List<Device>();
+				deviceGroup.Devices ??= [];
 				deviceGroup.Devices.Add(device);
 				deviceGroup.DeviceCount = deviceGroup.Devices.Count;
 			}
@@ -528,17 +528,17 @@ public partial class LogicMonitorClient
 		};
 		var filter = new Filter<DeviceDataSource>
 		{
-			FilterItems = new List<FilterItem<DeviceDataSource>>
-				{
+			FilterItems =
+				[
 					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceName), dataSourceName),
 					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceType), "DS")
-				}
+				]
 		};
 		var deviceDataSources = await GetAllAsync(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false);
 
 		if (deviceDataSources.Count != 1)
 		{
-			return new List<DeviceDataSourceInstance>();
+			return [];
 		}
 
 		return await GetAllDeviceDataSourceInstancesAsync(

@@ -67,7 +67,7 @@ public class Dashboard
 	///     Whether to use widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<WidgetToken> WidgetTokens { get; set; } = new();
+	public List<WidgetToken> WidgetTokens { get; set; } = [];
 
 	/// <summary>
 	/// Overwrite existing Resource/Website Group fields with ##defaultResourceGroup## and/or ##defaultWebsiteGroup## tokens. This value of this attribute is only considered while updating the Dashboard configuration. While creating the new Dashboard, this value will always be considered as false irrespective of the passed value.
@@ -79,7 +79,7 @@ public class Dashboard
 	///     The widgets configuration
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = [];
 
 	/// <summary>
 	///     The order of the widgets

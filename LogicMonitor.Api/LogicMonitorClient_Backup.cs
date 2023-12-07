@@ -131,9 +131,9 @@ public partial class LogicMonitorClient
 			configurationBackup.DataSources = await GetAllAsync<DataSource>(cancellationToken: cancellationToken).ConfigureAwait(false);
 			progressReporter.CompleteSubTaskAndStartNew("- DataSource graphs");
 
-			configurationBackup.DataSourceGraphs = new List<DataSourceOverviewGraph>();
-			configurationBackup.DataSourceOverviewGraphs = new List<DataSourceOverviewGraph>();
-			configurationBackup.DataSourceDataPoints = new List<DataPointConfiguration>();
+			configurationBackup.DataSourceGraphs = [];
+			configurationBackup.DataSourceOverviewGraphs = [];
+			configurationBackup.DataSourceDataPoints = [];
 			foreach (var dataSource in configurationBackup.DataSources)
 			{
 				var dataSourceGraphs = await GetDataSourceGraphsAsync(dataSource.Id, cancellationToken).ConfigureAwait(false);

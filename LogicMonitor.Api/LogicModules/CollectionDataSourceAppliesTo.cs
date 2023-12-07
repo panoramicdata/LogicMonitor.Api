@@ -46,7 +46,7 @@ public class CollectionDataSourceAppliesTo : IdentifiedItem
 	/// The DataSource Id
 	/// </summary>
 	[DataMember(Name = "dataSourceDeviceList")]
-	public List<DataSourceDevice> DataSourceDevices { get; set; } = new();
+	public List<DataSourceDevice> DataSourceDevices { get; set; } = [];
 
 	/// <summary>
 	/// Returns a string that represents the current object.

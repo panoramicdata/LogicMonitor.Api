@@ -27,5 +27,5 @@ public class AlertWidgetData : WidgetData
 	/// Items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<Alert> Items { get; set; } = new();
+	public List<Alert> Items { get; set; } = [];
 }

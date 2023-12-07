@@ -40,7 +40,7 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// The filters for the EventSource
 	/// </summary>
 	[DataMember(Name = "filters")]
-	public List<RestEventSourceFilter> Filters { get; set; } = new();
+	public List<RestEventSourceFilter> Filters { get; set; } = [];
 
 	/// <summary>
 	/// The epoch time of the last update to the EventSource

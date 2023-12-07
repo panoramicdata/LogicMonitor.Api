@@ -28,10 +28,10 @@ public class DeviceGroupInventoryReport : ReportBase
 	/// The properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<string> Properties { get; set; } = new();
+	public List<string> Properties { get; set; } = [];
 
 	/// <summary>
 	/// The metrics
 	/// </summary>
-	public List<DeviceInventoryReportMetric> Metrics { get; set; } = new();
+	public List<DeviceInventoryReportMetric> Metrics { get; set; } = [];
 }

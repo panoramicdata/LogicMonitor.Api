@@ -64,7 +64,7 @@ public class DynamicTableWidgetColumn
 	///     The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; } = new();
+	public List<ColorThreshold> ColorThresholds { get; set; } = [];
 
 	/// <summary>
 	///     The unit label

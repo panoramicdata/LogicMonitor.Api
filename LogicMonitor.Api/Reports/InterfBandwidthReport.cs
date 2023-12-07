@@ -34,7 +34,7 @@ public class InterfBandwidthReport : DateRangeReport
 	/// The datapoint or calculation on a datapoint that will be included in the report, where each datapoint/calculation is specified by three fields: dataSourceId, instances (glob is okay)
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<Metric> Metrics { get; set; } = new();
+	public List<Metric> Metrics { get; set; } = [];
 
 	/// <summary>
 	/// true | false\nfalse: Metrics will be displayed for all selected devices or groups\ntrue: Metrics will only be displayed for the top ten device or groups

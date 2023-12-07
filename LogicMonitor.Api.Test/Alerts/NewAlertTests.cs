@@ -16,29 +16,29 @@ public class NewAlertTests : TestWithOutput
 		// Arrange
 		var allFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-				{
+			FilterItems =
+				[
 					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
 					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-				}
+				]
 		};
 		var sdtFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-				{
+			FilterItems =
+				[
 					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
 					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
 					new Eq<Alert>(nameof(Alert.InScheduledDownTime), true)
-				}
+				]
 		};
 		var nonSdtFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-				{
+			FilterItems =
+				[
 					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
 					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
 					new Eq<Alert>(nameof(Alert.InScheduledDownTime), false)
-				}
+				]
 		};
 
 		// Act
@@ -61,11 +61,11 @@ public class NewAlertTests : TestWithOutput
 	{
 		var allFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-				{
+			FilterItems =
+				[
 					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
 					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-				}
+				]
 		};
 
 		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter, default).ConfigureAwait(false);
@@ -92,10 +92,10 @@ public class NewAlertTests : TestWithOutput
 			{
 				Skip = 0,
 				Take = 10,
-				FilterItems = new List<FilterItem<Alert>>
-					{
+				FilterItems =
+					[
 						new Eq<Alert>(nameof(Alert.MonitorObjectName), device.DisplayName)
-					}
+					]
 			};
 
 			// Refetch each alert
@@ -115,12 +115,12 @@ public class NewAlertTests : TestWithOutput
 		var severities = new List<int> { 4, 2 };
 		var filter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-				{
+			FilterItems =
+				[
 					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
 					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
 					new Eq<Alert>(nameof(Alert.Severity), severities)
-				}
+				]
 		};
 
 		// Act

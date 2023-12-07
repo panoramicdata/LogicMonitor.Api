@@ -11,7 +11,7 @@ public class InterfacesFilter
 	/// interfaceTypes
 	/// </summary>
 	[DataMember(Name = "interfaceTypes")]
-	public List<InterfaceType> InterfaceTypes { get; set; } = new();
+	public List<InterfaceType> InterfaceTypes { get; set; } = [];
 
 	/// <summary>
 	/// interfaceTypes

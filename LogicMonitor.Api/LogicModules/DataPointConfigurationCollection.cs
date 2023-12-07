@@ -16,5 +16,5 @@ public class DataPointConfigurationCollection
 	/// The items
 	/// </summary>
 	[DataMember(Name = "dpConfig")]
-	public List<DataPointConfiguration> Items { get; set; } = new();
+	public List<DataPointConfiguration> Items { get; set; } = [];
 }

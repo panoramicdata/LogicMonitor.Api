@@ -46,11 +46,11 @@ public class AlertForecastReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<AlertForecastReportMetric> Metrics { get; set; } = new();
+	public List<AlertForecastReportMetric> Metrics { get; set; } = [];
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; } = new();
+	public List<ReportColumn> Columns { get; set; } = [];
 }

@@ -52,5 +52,5 @@ public class AutoDiscoveryConfiguration
 	/// The version
 	/// </summary>
 	[DataMember(Name = "filters")]
-	public List<AutoDiscoveryFilter> AutoDiscoveryFilters { get; set; } = new();
+	public List<AutoDiscoveryFilter> AutoDiscoveryFilters { get; set; } = [];
 }

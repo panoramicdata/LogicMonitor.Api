@@ -35,7 +35,7 @@ public class Admin : IdentifiedItem
 	/// The roles assigned to the user
 	/// </summary>
 	[DataMember(Name = "roles")]
-	public List<Role> Roles { get; set; } = new();
+	public List<Role> Roles { get; set; } = [];
 
 	/// <summary>
 	/// The time that the user last logged in, in epoch format
@@ -65,13 +65,13 @@ public class Admin : IdentifiedItem
 	/// Any API Tokens associated with the user
 	/// </summary>
 	[DataMember(Name = "apiTokens")]
-	public List<ApiToken> ApiTokens { get; set; } = new();
+	public List<ApiToken> ApiTokens { get; set; } = [];
 
 	/// <summary>
 	/// The Id(s) of the groups the admin is in, where multiple group ids are comma separated
 	/// </summary>
 	[DataMember(Name = "adminGroupIds")]
-	public List<int> AdminGroupIds { get; set; } = new();
+	public List<int> AdminGroupIds { get; set; } = [];
 
 	/// <summary>
 	/// The password associated with the user

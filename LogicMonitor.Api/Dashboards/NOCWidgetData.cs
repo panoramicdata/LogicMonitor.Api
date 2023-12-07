@@ -22,6 +22,6 @@ public class NOCWidgetData : WidgetData
 	/// The data items to be reported on
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<NOCWidgetDataItem> Items { get; set; } = new();
+	public List<NOCWidgetDataItem> Items { get; set; } = [];
 }
 

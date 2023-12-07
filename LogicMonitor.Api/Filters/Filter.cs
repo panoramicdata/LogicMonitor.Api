@@ -29,17 +29,17 @@ public class Filter<T>
 	/// <summary>
 	///     Filters
 	/// </summary>
-	public List<FilterItem<T>> FilterItems { get; set; } = new List<FilterItem<T>>();
+	public List<FilterItem<T>> FilterItems { get; set; } = [];
 
 	/// <summary>
 	///     Extra filters
 	/// </summary>
-	public List<FilterItem<T>> ExtraFilters { get; set; } = new();
+	public List<FilterItem<T>> ExtraFilters { get; set; } = [];
 
 	/// <summary>
 	///     The properties to complete
 	/// </summary>
-	public List<string> Properties { get; set; } = new();
+	public List<string> Properties { get; set; } = [];
 
 	/// <summary>
 	/// If present will be used as the query string on the request

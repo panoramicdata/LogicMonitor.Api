@@ -11,7 +11,7 @@ public class GraphOpsNoteScope
 	/// The service group Id
 	/// </summary>
 	[DataMember(Name = "serviceGroupIds")]
-	public List<int> ServiceGroupIds { get; set; } = new();
+	public List<int> ServiceGroupIds { get; set; } = [];
 
 	/// <summary>
 	/// The service id
@@ -29,7 +29,7 @@ public class GraphOpsNoteScope
 	/// The device group Id
 	/// </summary>
 	[DataMember(Name = "deviceGroupIds")]
-	public List<int> DeviceGroupIds { get; set; } = new();
+	public List<int> DeviceGroupIds { get; set; } = [];
 
 	/// <summary>
 	/// The device Id

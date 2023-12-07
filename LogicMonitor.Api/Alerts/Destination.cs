@@ -40,7 +40,7 @@ public class Destination
 	/// The stages
 	/// </summary>
 	[DataMember(Name = "stages")]
-	public List<List<NotificationStage>> Stages { get; set; } = new();
+	public List<List<NotificationStage>> Stages { get; set; } = [];
 
 	/// <summary>
 	/// The destination type

@@ -77,7 +77,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// Properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	/// The alert Status
@@ -113,7 +113,7 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	/// Child groups
 	/// </summary>
 	[DataMember(Name = "subGroups")]
-	public List<WebsiteGroup> ChildWebsiteGroups { get; set; } = new();
+	public List<WebsiteGroup> ChildWebsiteGroups { get; set; } = [];
 
 	/// <inheritdoc />
 	public string Endpoint() => "website/groups";

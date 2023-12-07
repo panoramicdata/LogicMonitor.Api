@@ -24,10 +24,10 @@ public class UserGroupTests : TestWithOutput
 		// Delete it if it already exists
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<UserGroup>
 		{
-			FilterItems = new List<FilterItem<UserGroup>>
-				{
+			FilterItems =
+				[
 					new Eq<UserGroup>(nameof(ReportGroup.Name), TestName)
-				}
+				]
 		}, default).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
 		{

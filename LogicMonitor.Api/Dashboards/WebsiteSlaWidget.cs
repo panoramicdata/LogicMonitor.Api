@@ -10,13 +10,13 @@ public class WebsiteSlaWidget : Widget, IWidget
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<WebsiteSlaWidgetMetric> Items { get; set; } = new();
+	public List<WebsiteSlaWidgetMetric> Items { get; set; } = [];
 
 	/// <summary>
 	/// The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; } = new();
+	public List<ColorThreshold> ColorThresholds { get; set; } = [];
 
 	/// <summary>
 	/// The daysInWeek

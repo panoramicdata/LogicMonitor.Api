@@ -65,7 +65,7 @@ public class Topology : NamedItem, IHasEndpoint
 	///    The views
 	/// </summary>
 	[DataMember(Name = "views")]
-	public List<TopologyView> Views { get; set; } = new();
+	public List<TopologyView> Views { get; set; } = [];
 
 	/// <summary>
 	/// The REST API endpoint

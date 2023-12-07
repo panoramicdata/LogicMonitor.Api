@@ -91,8 +91,7 @@ public class WebsiteGroupTests : TestWithOutput
 				IsMonitoringDisabled = false,
 				ParentGroupFullPath = "",
 				ParentId = "1",
-				Properties = new List<EntityProperty>
-						{new EntityProperty {Name = "name", Value = "value"}},
+				Properties = [new EntityProperty {Name = "name", Value = "value"}],
 			}, default)
 			.ConfigureAwait(false);
 

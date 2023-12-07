@@ -82,7 +82,7 @@ public class UserCreationDto : CreationDto<User>
 	/// The view permissions
 	/// </summary>
 	[DataMember(Name = "view-permission")]
-	public List<bool> ViewPermissions { get; set; } = new();
+	public List<bool> ViewPermissions { get; set; } = [];
 
 	/// <summary>
 	/// The status
@@ -100,13 +100,13 @@ public class UserCreationDto : CreationDto<User>
 	/// The roles
 	/// </summary>
 	[DataMember(Name = "roles")]
-	public List<Role> Roles { get; set; } = new();
+	public List<Role> Roles { get; set; } = [];
 
 	/// <summary>
 	/// The API tokens
 	/// </summary>
 	[DataMember(Name = "apiTokens")]
-	public List<object> ApiTokens { get; set; } = new();
+	public List<object> ApiTokens { get; set; } = [];
 
 	/// <summary>
 	/// Phone number
@@ -124,5 +124,5 @@ public class UserCreationDto : CreationDto<User>
 	/// A list of user groups to which to add the user.
 	/// </summary>
 	[DataMember(Name = "adminGroupIds")]
-	public List<int> UserGroupIds { get; set; } = new List<int> { 1 };
+	public List<int> UserGroupIds { get; set; } = [1];
 }

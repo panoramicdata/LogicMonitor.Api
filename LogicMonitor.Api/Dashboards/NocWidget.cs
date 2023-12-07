@@ -28,7 +28,7 @@ public class NocWidget : Widget, IWidget
 	/// The Items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<NocWidgetItem> Items { get; set; } = new();
+	public List<NocWidgetItem> Items { get; set; } = [];
 
 	/// <summary>
 	///     The display settings

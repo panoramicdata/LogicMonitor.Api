@@ -29,5 +29,5 @@ public class WidgetToken
 	/// The widget token inherit list
 	/// </summary>
 	[DataMember(Name = "inheritList")]
-	public List<WidgetTokenInheritance> InheritList { get; set; } = new();
+	public List<WidgetTokenInheritance> InheritList { get; set; } = [];
 }

@@ -17,7 +17,7 @@ public class Chain
 	/// stages
 	/// </summary>
 	[DataMember(Name = "stages")]
-	public List<Recipient> Stages { get; set; } = new();
+	public List<Recipient> Stages { get; set; } = [];
 
 	/// <summary>
 	/// period

@@ -65,7 +65,7 @@ public class Line
 	/// Must be implemented as an object as LogicMonitor have decided that null should be represented as "No Data" (brilliant!)
 	/// </summary>
 	[DataMember(Name = "data")]
-	public List<object> DataInternal { get; set; } = new();
+	public List<object> DataInternal { get; set; } = [];
 
 	/// <summary>
 	/// The line data, accessing the DataInternal

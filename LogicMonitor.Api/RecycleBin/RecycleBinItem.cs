@@ -51,7 +51,7 @@ public class RecycleBinItem : IHasEndpoint
 	/// The paths
 	/// </summary>
 	[DataMember(Name = "paths")]
-	public List<string> Paths { get; set; } = new();
+	public List<string> Paths { get; set; } = [];
 
 	/// <summary>
 	/// The endpoint

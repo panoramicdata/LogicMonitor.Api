@@ -11,13 +11,13 @@ public class RawDataValues
 	/// datapoint values 2-D list
 	/// </summary>
 	[DataMember(Name = "values")]
-	public List<List<object>> Values { get; set; } = new();
+	public List<List<object>> Values { get; set; } = [];
 
 	/// <summary>
 	/// timestamp list
 	/// </summary>
 	[DataMember(Name = "time")]
-	public List<int> Time { get; set; } = new();
+	public List<int> Time { get; set; } = [];
 
 	/// <summary>
 	/// the next page parameters

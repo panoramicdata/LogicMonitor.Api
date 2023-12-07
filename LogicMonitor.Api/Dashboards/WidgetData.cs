@@ -37,23 +37,23 @@ public class WidgetData
 	///     Data
 	/// </summary>
 	[DataMember(Name = "data")]
-	public List<WidgetDataItem> Data { get; set; } = new();
+	public List<WidgetDataItem> Data { get; set; } = [];
 
 	/// <summary>
 	///     Result list (used by SLA Multi widget)
 	/// </summary>
 	[DataMember(Name = "resultList")]
-	public List<WidgetDataItem> ResultList { get; set; } = new();
+	public List<WidgetDataItem> ResultList { get; set; } = [];
 
 	/// <summary>
 	///     Column headers
 	/// </summary>
 	[DataMember(Name = "columnHeaders")]
-	public List<WidgetColumnHeader> ColumnHeaders { get; set; } = new();
+	public List<WidgetColumnHeader> ColumnHeaders { get; set; } = [];
 
 	/// <summary>
 	///     Rows
 	/// </summary>
 	[DataMember(Name = "rows")]
-	public List<WidgetRow> Rows { get; set; } = new();
+	public List<WidgetRow> Rows { get; set; } = [];
 }

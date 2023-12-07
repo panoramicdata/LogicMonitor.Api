@@ -46,5 +46,5 @@ public class BigNumberItem
 	/// The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; } = new();
+	public List<ColorThreshold> ColorThresholds { get; set; } = [];
 }

@@ -126,7 +126,7 @@ public class Widget : NamedItem, IHasEndpoint, IWidget
 	///     The widget parameters
 	/// </summary>
 	[DataMember(Name = "params")]
-	public List<WidgetParameter> WidgetParameters { get; set; } = new();
+	public List<WidgetParameter> WidgetParameters { get; set; } = [];
 
 	/// <summary>
 	///    Time Zone
@@ -137,7 +137,7 @@ public class Widget : NamedItem, IHasEndpoint, IWidget
 	/// <summary>
 	///     The handled parameters
 	/// </summary>
-	protected virtual List<string> HandledParameters => new() { "interval", "timescale" };
+	protected virtual List<string> HandledParameters => ["interval", "timescale"];
 
 	/// <summary>
 	///     The endpoint

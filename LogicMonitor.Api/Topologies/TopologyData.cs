@@ -10,7 +10,7 @@ public class TopologyData
 	/// vertices
 	/// </summary>
 	[DataMember(Name = "vertices")]
-	public List<DataVertex> Vertices { get; set; } = new();
+	public List<DataVertex> Vertices { get; set; } = [];
 
 	/// <summary>
 	/// neighbourVertices
@@ -22,5 +22,5 @@ public class TopologyData
 	/// XXXXXXX
 	/// </summary>
 	[DataMember(Name = "edges")]
-	public List<Edge> Edges { get; set; } = new();
+	public List<Edge> Edges { get; set; } = [];
 }

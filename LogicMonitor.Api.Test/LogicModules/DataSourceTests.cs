@@ -227,7 +227,7 @@ public class DataSourceTests : TestWithOutput
 				{
 					Skip = 0,
 					Take = 10,
-					Properties = new List<string> { nameof(DeviceDataSourceInstance.Id) }
+					Properties = [nameof(DeviceDataSourceInstance.Id)]
 				}, default)
 			.ConfigureAwait(false);
 		deviceDataSourceInstances.Should().NotBeNull();
@@ -273,10 +273,10 @@ public class DataSourceTests : TestWithOutput
 					{
 						Skip = 0,
 						Take = 300,
-						Properties = new List<string>
-						{
+						Properties =
+						[
 								nameof(DeviceDataSourceInstance.Id)
-						}
+						]
 					}, default)
 				.ConfigureAwait(false);
 			deviceDataSourceInstanceGroupInstances.Should().NotBeNull();
@@ -306,19 +306,19 @@ public class DataSourceTests : TestWithOutput
 			new Filter<DeviceDataSource>
 			{
 				Take = 1,
-				Properties = new List<string>
-				{
+				Properties =
+				[
 						nameof(DeviceDataSource.Id),
 						nameof(DeviceDataSource.DataSourceName)
-				},
-				FilterItems = new List<FilterItem<DeviceDataSource>>
-				{
+				],
+				FilterItems =
+				[
 						new FilterItem<DeviceDataSource> {
 							Property = nameof(DeviceDataSource.DataSourceName),
 							Operation = ":",
 							Value = "SSL_Certificates"
 						}
-				}
+				]
 			}, default).ConfigureAwait(false);
 		var durationMs = stopwatch.ElapsedMilliseconds;
 
@@ -338,11 +338,11 @@ public class DataSourceTests : TestWithOutput
 		{
 			Skip = 0,
 			Take = 10,
-			Properties = new List<string>
-				{
+			Properties =
+				[
 					nameof(DeviceDataSource.Id),
 					nameof(DeviceDataSource.CreatedOnSeconds),
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		// Make sure that we have groups and they are not null
@@ -382,7 +382,7 @@ public class DataSourceTests : TestWithOutput
 				{
 					Skip = 0,
 					Take = 300,
-					Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DeviceId) }
+					Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DeviceId)]
 				}, default).ConfigureAwait(false);
 
 			// Check any that come back
@@ -403,17 +403,17 @@ public class DataSourceTests : TestWithOutput
 		{
 			Skip = 0,
 			Take = 1,
-			Properties = new List<string>
-				{
+			Properties =
+				[
 					nameof(DeviceDataSource.Id),
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
 			{
 				Skip = 0,
-				Properties = new List<string> { nameof(DeviceDataSourceInstance.Id) }
+				Properties = [nameof(DeviceDataSourceInstance.Id)]
 			}, default)
 			.ConfigureAwait(false);
 
@@ -428,10 +428,10 @@ public class DataSourceTests : TestWithOutput
 		const string groupName = ".Net";
 		var dataSourcesPage = await LogicMonitorClient.GetAllAsync(new Filter<DataSource>
 		{
-			FilterItems = new List<FilterItem<DataSource>>
-				{
+			FilterItems =
+				[
 					new Eq<DataSource>(nameof(DataSource.Group), groupName)
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		// Make sure that some are returned
@@ -450,7 +450,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDataSourceGroupsQuickly()
 	{
 		// Get all DataSourceGroups
-		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.Group) } }, default).ConfigureAwait(false);
+		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = [nameof(DataSource.Group)] }, default).ConfigureAwait(false);
 
 		var distinctGroups = dataSources.Select(ds => ds.Group).Distinct().ToList();
 
@@ -461,7 +461,7 @@ public class DataSourceTests : TestWithOutput
 	public async Task GetDataSourceCollectionMethodsQuickly()
 	{
 		// Get all DataSource Collection methods
-		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = new List<string> { nameof(DataSource.CollectionMethod) } }, default).ConfigureAwait(false);
+		var dataSources = await LogicMonitorClient.GetAllAsync(new Filter<DataSource> { Properties = [nameof(DataSource.CollectionMethod)] }, default).ConfigureAwait(false);
 		dataSources.Should().NotBeNull();
 	}
 

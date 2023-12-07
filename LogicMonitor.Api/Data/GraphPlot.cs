@@ -11,7 +11,7 @@ public class GraphPlot : WidgetData
 	/// The Missing lines of the graph
 	/// </summary>
 	[DataMember(Name = "missinglines")]
-	public List<string> Missinglines { get; set; } = new();
+	public List<string> Missinglines { get; set; } = [];
 
 	/// <summary>
 	/// The specified timescale for the graph
@@ -23,13 +23,13 @@ public class GraphPlot : WidgetData
 	/// The matched instances of graph
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<int> Instances { get; set; } = new();
+	public List<int> Instances { get; set; } = [];
 
 	/// <summary>
 	/// The timestamps of the graph
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<int> Timestamps { get; set; } = new();
+	public List<int> Timestamps { get; set; } = [];
 
 	/// <summary>
 	/// Specifies the minimum value of the graph
@@ -59,7 +59,7 @@ public class GraphPlot : WidgetData
 	/// The properties of the graph and graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<GraphPlotLine> Lines { get; set; } = new();
+	public List<GraphPlotLine> Lines { get; set; } = [];
 
 	/// <summary>
 	/// Specifies the height of graph
@@ -155,7 +155,7 @@ public class GraphPlot : WidgetData
 	/// Scopes: use this field to find match opsnote
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<GraphOpsNoteScope> Scopes { get; set; } = new();
+	public List<GraphOpsNoteScope> Scopes { get; set; } = [];
 
 	/// <summary>
 	/// The Base of the graph

@@ -93,7 +93,7 @@ public class DashboardTests : TestWithOutput
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
 		widgets.Should().HaveCount(20); // There are 20 different types of widget
-		widgets ??= new();
+		widgets ??= [];
 		// Test each type
 
 		// AlertsList
@@ -429,12 +429,12 @@ public class DashboardTests : TestWithOutput
 			UpdateIntervalMinutes = 5,
 			Type = "html",
 			Timescale = "string",
-			HtmlWidgetResources = new List<HtmlWidgetResource> { new HtmlWidgetResource()
+			HtmlWidgetResources = [ new HtmlWidgetResource()
 				{
 					Type = "html",
 					Url = "string"
 				}
-			}
+			]
 		};
 
 		var createdWidget = await LogicMonitorClient

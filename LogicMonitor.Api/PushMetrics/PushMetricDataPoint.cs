@@ -60,5 +60,5 @@ public class PushMetricDataPoint
 	/// * Only digits accepted in values
 	/// </summary>
 	[DataMember(Name = "values")]
-	public Dictionary<string, string> Values { get; set; } = new();
+	public Dictionary<string, string> Values { get; set; } = [];
 }

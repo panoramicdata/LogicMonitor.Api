@@ -57,10 +57,10 @@ public class CollectorSettingTests
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
 			{
-				FilterItems = new List<FilterItem<CollectorVersion>>
-				{
+				FilterItems =
+				[
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true)
-				}
+				]
 			}, default)
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();
@@ -74,10 +74,10 @@ public class CollectorSettingTests
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync(new Filter<CollectorVersion>
 			{
-				FilterItems = new List<FilterItem<CollectorVersion>>
-				{
+				FilterItems =
+				[
 						new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
-				}
+				]
 			}, default)
 			.ConfigureAwait(false);
 		collectorVersions.Should().NotBeNull();

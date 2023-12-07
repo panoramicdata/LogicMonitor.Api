@@ -10,7 +10,7 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// Alerts associated to this configuration file
 	/// </summary>
 	[DataMember(Name = "alerts")]
-	public List<DeviceDataSourceInstanceConfigAlert> Alerts { get; set; } = new();
+	public List<DeviceDataSourceInstanceConfigAlert> Alerts { get; set; } = [];
 
 	/// <summary>
 	/// Configuration file content
@@ -52,7 +52,7 @@ public class DeviceDataSourceInstanceConfig : StringIdentifiedItem
 	/// Configuration file diff
 	/// </summary>
 	[DataMember(Name = "deltaConfig")]
-	public List<DeviceDataSourceInstanceConfigDiff> DeltaConfig { get; set; } = new();
+	public List<DeviceDataSourceInstanceConfigDiff> DeltaConfig { get; set; } = [];
 
 	/// <summary>
 	/// device datasource id

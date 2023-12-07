@@ -28,10 +28,10 @@ public class UserTests : TestWithOutput
 		// Delete it if it already exists
 		foreach (var existingUser in await LogicMonitorClient.GetAllAsync(new Filter<User>
 		{
-			FilterItems = new List<FilterItem<User>>
-			{
+			FilterItems =
+			[
 				new Eq<User>(nameof(User.UserName), "test")
-			}
+			]
 		}, default).ConfigureAwait(false))
 		{
 			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: default).ConfigureAwait(false);
@@ -59,14 +59,14 @@ public class UserTests : TestWithOutput
 			SmsEmail = "",
 			SmsEmailFormat = "sms",
 			Timezone = "",
-			ViewPermissions = new List<bool> { true, true, true, true, true, true },
+			ViewPermissions = [true, true, true, true, true, true],
 			Status = "active",
 			Note = "note",
-			Roles = new List<Role>
-				{
+			Roles =
+				[
 					new Role { Id = 1 }
-				},
-			ApiTokens = new List<object>(),
+				],
+			ApiTokens = [],
 			Phone = "+447761503941",
 			ApiOnly = false
 		};

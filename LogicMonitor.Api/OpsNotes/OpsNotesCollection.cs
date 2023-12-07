@@ -16,5 +16,5 @@ public class OpsNotesCollection
 	/// The OpsNotes
 	/// </summary>
 	[DataMember(Name = "opsnotes")]
-	public List<OpsNote> OpsNotes { get; set; } = new();
+	public List<OpsNote> OpsNotes { get; set; } = [];
 }

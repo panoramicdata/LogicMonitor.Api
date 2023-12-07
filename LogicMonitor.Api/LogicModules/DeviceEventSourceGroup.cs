@@ -70,7 +70,7 @@ public class DeviceEventSourceGroup : NamedItem
 	///    groupsDisabledThisSource
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = new();
+	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = [];
 
 	/// <summary>
 	///    instancesNum

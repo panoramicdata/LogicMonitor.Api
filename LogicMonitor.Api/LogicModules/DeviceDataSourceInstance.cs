@@ -66,19 +66,19 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	/// Any instance level system properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "systemProperties")]
-	public List<EntityProperty> SystemProperties { get; set; } = new();
+	public List<EntityProperty> SystemProperties { get; set; } = [];
 
 	/// <summary>
 	/// Any instance level auto properties assigned to the instance
 	/// </summary>
 	[DataMember(Name = "autoProperties")]
-	public List<EntityProperty> AutoProperties { get; set; } = new();
+	public List<EntityProperty> AutoProperties { get; set; } = [];
 
 	/// <summary>
 	/// The id of the datasource definition that the instance represents
@@ -132,7 +132,7 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// groupsDisabledThisSource
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = new();
+	public List<DisabledGroup> GroupsDisabledThisSource { get; set; } = [];
 
 	/// <summary>
 	/// The last collected time in seconds since the Epoch

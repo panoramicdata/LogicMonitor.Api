@@ -29,5 +29,5 @@ public class Page<T>
 	/// The items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<T> Items { get; set; } = new();
+	public List<T> Items { get; set; } = [];
 }

@@ -190,25 +190,25 @@ public class HttpIntegration : Integration
 	///     The Headers
 	/// </summary>
 	[DataMember(Name = "headers")]
-	public List<object> Headers { get; set; } = new();
+	public List<object> Headers { get; set; } = [];
 
 	/// <summary>
 	///     The update Headers
 	/// </summary>
 	[DataMember(Name = "updateHeaders")]
-	public List<object> UpdateHeaders { get; set; } = new();
+	public List<object> UpdateHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The clear Headers
 	/// </summary>
 	[DataMember(Name = "clearHeaders")]
-	public List<object> ClearHeaders { get; set; } = new();
+	public List<object> ClearHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The acknowledgement Headers
 	/// </summary>
 	[DataMember(Name = "ackHeaders")]
-	public List<object> AckHeaders { get; set; } = new();
+	public List<object> AckHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The parse method
@@ -226,5 +226,5 @@ public class HttpIntegration : Integration
 	///     The parse method
 	/// </summary>
 	[DataMember(Name = "enabledStatus")]
-	public List<string> EnabledStatus { get; set; } = new();
+	public List<string> EnabledStatus { get; set; } = [];
 }

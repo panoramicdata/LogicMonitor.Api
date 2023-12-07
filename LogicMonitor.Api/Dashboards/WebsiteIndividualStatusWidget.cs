@@ -40,7 +40,7 @@ public class WebsiteIndividualStatusWidget : Widget, IWidget
 	/// The Website locations
 	/// </summary>
 	[DataMember(Name = "locations")]
-	public List<WebsiteCheckpointSelection> Locations { get; set; } = new();
+	public List<WebsiteCheckpointSelection> Locations { get; set; } = [];
 
 	/// <summary>
 	/// Whether the Website is internal

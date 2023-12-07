@@ -16,13 +16,13 @@ public class ResourcePropertyUpdateDto : IHasSingletonEndpoint
 	/// Resource Ids
 	/// </summary>
 	[DataMember(Name = "resourceIds")]
-	public Dictionary<string, string> ResourceIds { get; set; } = new();
+	public Dictionary<string, string> ResourceIds { get; set; } = [];
 
 	/// <summary>
 	/// Resource Properties
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public Dictionary<string, string> ResourceProperties { get; set; } = new();
+	public Dictionary<string, string> ResourceProperties { get; set; } = [];
 
 	/// <inheritdoc />
 	public string Endpoint() => "resource_property/ingest";

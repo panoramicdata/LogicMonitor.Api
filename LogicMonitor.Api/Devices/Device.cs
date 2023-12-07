@@ -50,7 +50,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "autoProperties")]
-	public List<EntityProperty> AutoProperties { get; set; } = new();
+	public List<EntityProperty> AutoProperties { get; set; } = [];
 
 	/// <summary>
 	///    The time that the auto-properties were assigned in seconds since the Epoch
@@ -125,7 +125,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	///    The device status
@@ -205,14 +205,14 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "inheritedProperties")]
-	public List<EntityProperty> InheritedProperties { get; set; } = new();
+	public List<EntityProperty> InheritedProperties { get; set; } = [];
 
 	/// <summary>
 	///    The instances
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "instance")]
-	public List<DeviceDataSourceInstanceSummary> Instances { get; set; } = new();
+	public List<DeviceDataSourceInstanceSummary> Instances { get; set; } = [];
 
 	/// <summary>
 	/// Indicates whether Preferred Log Collector is configured  (true) or not (false) for the device
@@ -416,7 +416,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "systemProperties")]
-	public List<EntityProperty> SystemProperties { get; set; } = new();
+	public List<EntityProperty> SystemProperties { get; set; } = [];
 
 	/// <summary>
 	///    The time in Ms before the device will be deleted
@@ -462,7 +462,7 @@ public class Device : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "rolePrivileges")]
-	public List<RolePrivilege> RolePrivileges { get; set; } = new();
+	public List<RolePrivilege> RolePrivileges { get; set; } = [];
 
 	/// <summary>
 	///    User Permission

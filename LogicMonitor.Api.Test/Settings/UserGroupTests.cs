@@ -27,7 +27,7 @@ public class UserGroupTests : TestWithOutput
 	{
 		// Ensure there is no existing UserGroup called "Test"
 		var existingUserGroup = (await LogicMonitorClient
-				.GetAllAsync(new Filter<UserGroup> { FilterItems = new List<FilterItem<UserGroup>> { new Eq<UserGroup>(nameof(UserGroup.Name), Value) } }, default)
+				.GetAllAsync(new Filter<UserGroup> { FilterItems = [new Eq<UserGroup>(nameof(UserGroup.Name), Value)] }, default)
 				.ConfigureAwait(false))
 			.SingleOrDefault();
 		if (existingUserGroup is not null)

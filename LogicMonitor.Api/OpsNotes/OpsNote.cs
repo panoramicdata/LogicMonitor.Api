@@ -28,13 +28,13 @@ public class OpsNote : StringIdentifiedItem, IHasEndpoint
 	///    The scopes
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<OpsNoteScope> Scopes { get; set; } = new();
+	public List<OpsNoteScope> Scopes { get; set; } = [];
 
 	/// <summary>
 	///    The tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public List<OpsNoteTag> Tags { get; set; } = new();
+	public List<OpsNoteTag> Tags { get; set; } = [];
 
 	/// <summary>
 	///    The DateTime version of HappenOnTimeStampUtc

@@ -28,5 +28,5 @@ public class SnmpSysOidMapImportObject
 	/// The LogicModule names. This is the same for all Module types except SNMP SysOID Maps
 	/// </summary>
 	[DataMember(Name = "importOids")]
-	public List<SnmpSysOidMapImportItem> ImportOids { get; set; } = new();
+	public List<SnmpSysOidMapImportItem> ImportOids { get; set; } = [];
 }

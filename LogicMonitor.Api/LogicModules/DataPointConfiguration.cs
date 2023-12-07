@@ -139,7 +139,7 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The parent DeviceGroup Alert Expression List
 	/// </summary>
 	[DataMember(Name = "parentDeviceGroupAlertExprList")]
-	public List<ParentDeviceGroupAlertExpression> ParentDeviceGroupAlertExprList { get; set; } = new();
+	public List<ParentDeviceGroupAlertExpression> ParentDeviceGroupAlertExprList { get; set; } = [];
 
 	/// <summary>
 	///     The warn active discovery advanced setting

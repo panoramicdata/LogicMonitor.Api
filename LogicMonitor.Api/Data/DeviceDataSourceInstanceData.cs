@@ -16,13 +16,13 @@ public class DeviceDataSourceInstanceData
 	/// datapoint values 2-D list
 	/// </summary>
 	[DataMember(Name = "values")]
-	public List<List<float>> Values { get; set; } = new();
+	public List<List<float>> Values { get; set; } = [];
 
 	/// <summary>
 	/// timestamp list
 	/// </summary>
 	[DataMember(Name = "time")]
-	public List<long> Time { get; set; } = new();
+	public List<long> Time { get; set; } = [];
 
 	/// <summary>
 	/// the next page parameters

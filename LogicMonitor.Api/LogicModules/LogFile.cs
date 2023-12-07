@@ -22,7 +22,7 @@ public class LogFile
 	/// The regex or plain text to look for in the file and not trigger alert if found
 	/// </summary>
 	[DataMember(Name = "excludes")]
-	public List<string> Excludes { get; set; } = new();
+	public List<string> Excludes { get; set; } = [];
 
 	/// <summary>
 	/// Whether or not glob is used in the path
@@ -40,5 +40,5 @@ public class LogFile
 	/// The regex or plain text to look for in the file and trigger alert if found
 	/// </summary>
 	[DataMember(Name = "matches")]
-	public List<EventSourceMatch> Matches { get; set; } = new();
+	public List<EventSourceMatch> Matches { get; set; } = [];
 }

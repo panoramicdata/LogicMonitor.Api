@@ -51,11 +51,11 @@ public class PushMetricInstance
 	/// * Keys and values should not be null, empty, or having trailing spaces
 	/// </summary>
 	[DataMember(Name = "instanceProperties")]
-	public Dictionary<string, string> Properties { get; set; } = new();
+	public Dictionary<string, string> Properties { get; set; } = [];
 
 	/// <summary>
 	/// The DataPoints
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<PushMetricDataPoint> DataPoints { get; set; } = new();
+	public List<PushMetricDataPoint> DataPoints { get; set; } = [];
 }

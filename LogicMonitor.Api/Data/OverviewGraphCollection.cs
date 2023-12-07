@@ -22,5 +22,5 @@ public class OverviewGraphCollection
 	///    The overview Graphs
 	/// </summary>
 	[DataMember(Name = "ographs")]
-	public List<DataSourceOverviewGraph> OverviewGraphs { get; set; } = new();
+	public List<DataSourceOverviewGraph> OverviewGraphs { get; set; } = [];
 }

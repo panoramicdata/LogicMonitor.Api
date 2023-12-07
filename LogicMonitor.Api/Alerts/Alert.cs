@@ -214,7 +214,7 @@ public class Alert : IHasEndpoint
 	///    The monitor object's groups
 	/// </summary>
 	[DataMember(Name = "monitorObjectGroups")]
-	public List<DeviceGroup> MonitorObjectGroups { get; set; } = new();
+	public List<DeviceGroup> MonitorObjectGroups { get; set; } = [];
 
 	/// <summary>
 	///    The resource id

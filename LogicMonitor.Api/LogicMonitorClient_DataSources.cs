@@ -12,7 +12,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	[Obsolete("Use GetAsync(Filter<DataSource>) instead.", true)]
 	public async Task<List<DataSource>> GetDataSourcesAsync(Filter<DataSource> filter, CancellationToken cancellationToken)
-		=> (await GetAsync(filter, cancellationToken).ConfigureAwait(false)).Items ?? new List<DataSource>();
+		=> (await GetAsync(filter, cancellationToken).ConfigureAwait(false)).Items ?? [];
 
 	/// <summary>
 	///     Gets a list of all graphs for a DataSource.
@@ -26,7 +26,7 @@ public partial class LogicMonitorClient
 		var page = await GetBySubUrlAsync<Page<DataSourceOverviewGraph>>($"setting/datasources/{dataSourceId}/graphs", cancellationToken).ConfigureAwait(false);
 		if (page.Items is null)
 		{
-			return new List<DataSourceOverviewGraph>();
+			return [];
 		}
 
 		// DataSourceId is no longer sent, but needed for backups.  Re-add.
@@ -103,20 +103,20 @@ public partial class LogicMonitorClient
 		// Fetch mostly-empty objects with only the required fields
 		var filter = new Filter<DataSource>
 		{
-			Properties = new List<string>
-				{
+			Properties =
+				[
 					nameof(DataSource.Id),
 					nameof(DataSource.Name)
-				},
-			FilterItems = new List<FilterItem<DataSource>>
-				{
+				],
+			FilterItems =
+				[
 					new FilterItem<DataSource>
 					{
 						Property = nameof(DataSource.Name),
 						Operation = ":",
 						Value = dataSourceName
 					}
-				}
+				]
 		};
 
 		var dataSources = await GetAllAsync(filter, cancellationToken).ConfigureAwait(false);
@@ -426,8 +426,8 @@ public partial class LogicMonitorClient
 				throw new NotSupportedException($"LogicModuleType {logicModuleType} not yet supported.");
 		}
 
-		var deviceGroupFilter = new Filter<DeviceGroup> { Properties = new List<string> { nameof(DeviceGroup.Id), nameof(DeviceGroup.SubGroups), nameof(DeviceGroup.Devices) } };
-		var instanceFilter = new Filter<DeviceDataSourceInstance> { Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DataSourceId), nameof(DeviceDataSourceInstance.DeviceId) } };
+		var deviceGroupFilter = new Filter<DeviceGroup> { Properties = [nameof(DeviceGroup.Id), nameof(DeviceGroup.SubGroups), nameof(DeviceGroup.Devices)] };
+		var instanceFilter = new Filter<DeviceDataSourceInstance> { Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DataSourceId), nameof(DeviceDataSourceInstance.DeviceId)] };
 
 		var appliesToDeviceIds = new Dictionary<int, List<int>>();
 		foreach (var logicModuleId in logicModuleIds)
@@ -449,7 +449,7 @@ public partial class LogicMonitorClient
 
 			var deviceGroupDeviceIds = (await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, new Filter<Device>
 			{
-				Properties = new List<string> { nameof(Device.Id) }
+				Properties = [nameof(Device.Id)]
 			}, cancellationToken).ConfigureAwait(false))
 				.ConvertAll(d => d.Id)
 ;
@@ -517,32 +517,32 @@ public partial class LogicMonitorClient
 		=> await GetAllAsync(
 				filter: new Filter<DeviceDataSourceInstanceGroup>
 				{
-					FilterItems = new List<FilterItem<DeviceDataSourceInstanceGroup>>
-					{
+					FilterItems =
+					[
 						new Eq<DeviceDataSourceInstanceGroup>(nameof(DeviceDataSourceInstanceGroup.DeviceDataSourceId), deviceDataSourceId)
-					}
-				}, 
+					]
+				},
 				subUrl: $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups/",
 				cancellationToken)
 			.ConfigureAwait(false);
 
-		// DO NOT use this one - it only appears to return 50 items!
-		//=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
-		//	$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups", cancellationToken).ConfigureAwait(false)).Items;
+	// DO NOT use this one - it only appears to return 50 items!
+	//=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
+	//	$"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups", cancellationToken).ConfigureAwait(false)).Items;
 
-/// <summary>
-///     Get DataSource Instance Groups
-/// </summary>
-/// <param name="deviceId"></param>
-/// <param name="deviceDataSourceId"></param>
-/// <param name="name">The device dataSource instanceGroup name</param>
-/// <param name="cancellationToken">The cancellation token</param>
-public async Task<DeviceDataSourceInstanceGroup> GetDeviceDataSourceInstanceGroupByNameAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		string name,
-		CancellationToken cancellationToken)
-		=> (await GetDeviceDataSourceInstanceGroupsAsync(deviceId, deviceDataSourceId, cancellationToken).ConfigureAwait(false)).SingleOrDefault(ig => ig.Name == name);
+	/// <summary>
+	///     Get DataSource Instance Groups
+	/// </summary>
+	/// <param name="deviceId"></param>
+	/// <param name="deviceDataSourceId"></param>
+	/// <param name="name">The device dataSource instanceGroup name</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<DeviceDataSourceInstanceGroup> GetDeviceDataSourceInstanceGroupByNameAsync(
+			int deviceId,
+			int deviceDataSourceId,
+			string name,
+			CancellationToken cancellationToken)
+			=> (await GetDeviceDataSourceInstanceGroupsAsync(deviceId, deviceDataSourceId, cancellationToken).ConfigureAwait(false)).SingleOrDefault(ig => ig.Name == name);
 
 	/// <summary>
 	///     Get DataSource Instance Group details
@@ -707,10 +707,10 @@ public async Task<DeviceDataSourceInstanceGroup> GetDeviceDataSourceInstanceGrou
 	{
 		var deviceDataSources = await GetAllDeviceDataSourcesAsync(deviceId, new Filter<DeviceDataSource>
 		{
-			FilterItems = new List<FilterItem<DeviceDataSource>>
-				{
+			FilterItems =
+				[
 					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceId), dataSourceId.ToString(CultureInfo.InvariantCulture))
-				}
+				]
 		}, cancellationToken).ConfigureAwait(false);
 		return deviceDataSources.SingleOrDefault();
 	}

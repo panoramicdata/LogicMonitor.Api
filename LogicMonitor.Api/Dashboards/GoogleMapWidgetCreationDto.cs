@@ -15,11 +15,11 @@ public class GoogleMapWidgetCreationDto : WidgetCreationDto<GoogleMapWidget>
 	///     The name
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	///     The name
 	/// </summary>
 	[DataMember(Name = "mapPoints")]
-	public List<MapPoint> MapPoints { get; set; } = new();
+	public List<MapPoint> MapPoints { get; set; } = [];
 }

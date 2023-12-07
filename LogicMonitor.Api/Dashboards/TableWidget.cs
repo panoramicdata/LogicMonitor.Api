@@ -10,13 +10,13 @@ public class TableWidget : Widget, IWidget
 	///     The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<TableWidgetColumn> Columns { get; set; } = new();
+	public List<TableWidgetColumn> Columns { get; set; } = [];
 
 	/// <summary>
 	///     The rows
 	/// </summary>
 	[DataMember(Name = "rows")]
-	public List<TableWidgetRow> Rows { get; set; } = new();
+	public List<TableWidgetRow> Rows { get; set; } = [];
 
 	/// <summary>
 	///     The forecast

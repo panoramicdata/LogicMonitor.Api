@@ -75,7 +75,7 @@ public class DeviceEventSource : IdentifiedItem
 	///    Disabled groups
 	/// </summary>
 	[DataMember(Name = "groupsDisabledThisSource")]
-	public List<object> DisabledGroups { get; set; } = new();
+	public List<object> DisabledGroups { get; set; } = [];
 
 	/// <summary>
 	///    Is monitoring disabled

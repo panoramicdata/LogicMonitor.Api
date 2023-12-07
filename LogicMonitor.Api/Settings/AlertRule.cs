@@ -22,13 +22,13 @@ public class AlertRule : NamedItem, IHasEndpoint
 	/// The device filter
 	/// </summary>
 	[DataMember(Name = "devices")]
-	public List<string> Devices { get; set; } = new();
+	public List<string> Devices { get; set; } = [];
 
 	/// <summary>
 	/// The device group filter
 	/// </summary>
 	[DataMember(Name = "deviceGroups")]
-	public List<string> DeviceGroups { get; set; } = new();
+	public List<string> DeviceGroups { get; set; } = [];
 
 	/// <summary>
 	/// The affected DataSource name filter
@@ -70,7 +70,7 @@ public class AlertRule : NamedItem, IHasEndpoint
 	/// The resource property filters list
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public List<DeviceProperty> ResourceProperties { get; set; } = new();
+	public List<DeviceProperty> ResourceProperties { get; set; } = [];
 
 	/// <summary>
 	///  send anomaly suppressed alert

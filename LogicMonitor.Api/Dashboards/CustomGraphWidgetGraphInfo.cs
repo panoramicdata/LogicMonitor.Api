@@ -52,13 +52,13 @@ public class CustomGraphWidgetGraphInfo : IdentifiedItem
 	/// The data points
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<CustomGraphWidgetDataPoint> DataPoints { get; set; } = new();
+	public List<CustomGraphWidgetDataPoint> DataPoints { get; set; } = [];
 
 	/// <summary>
 	/// The virtual data points
 	/// </summary>
 	[DataMember(Name = "virtualDataPoints")]
-	public List<object> VirtualDataPoints { get; set; } = new();
+	public List<object> VirtualDataPoints { get; set; } = [];
 
 	/// <summary>
 	/// The global consolidation function

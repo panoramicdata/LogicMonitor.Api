@@ -300,10 +300,10 @@ public class DataTests : TestWithOutput
 					new Filter<DeviceDataSourceInstance>
 					{
 						Take = 300,
-						ExtraFilters = new List<FilterItem<DeviceDataSourceInstance>>
-						{
+						ExtraFilters =
+						[
 								new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
-						},
+						],
 						Order = new Order<DeviceDataSourceInstance> { Property = nameof(DeviceDataSourceInstance.Name), Direction = OrderDirection.Asc }
 					}, default).ConfigureAwait(false);
 		deviceDataSourceInstances.Should().NotBeNull();

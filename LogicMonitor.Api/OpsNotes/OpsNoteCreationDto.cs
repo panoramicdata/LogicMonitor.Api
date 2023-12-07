@@ -9,7 +9,7 @@ public class OpsNoteCreationDto : CreationDto<OpsNote>
 	/// <inheritdoc />
 	public OpsNoteCreationDto()
 	{
-		Tags = new List<OpsNoteTagCreationDto>();
+		Tags = [];
 	}
 
 	/// <summary>
@@ -28,11 +28,11 @@ public class OpsNoteCreationDto : CreationDto<OpsNote>
 	/// Tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public List<OpsNoteTagCreationDto> Tags { get; set; } = new();
+	public List<OpsNoteTagCreationDto> Tags { get; set; } = [];
 
 	/// <summary>
 	/// Scopes
 	/// </summary>
 	[DataMember(Name = "scopes")]
-	public List<OpsNoteScopeCreationDto> Scopes { get; set; } = new();
+	public List<OpsNoteScopeCreationDto> Scopes { get; set; } = [];
 }

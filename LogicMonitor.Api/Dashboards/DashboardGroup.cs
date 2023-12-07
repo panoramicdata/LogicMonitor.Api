@@ -46,7 +46,7 @@ public class DashboardGroup : NamedItem, IPatchable
 	///    The total number of child dashboards, not including those in subgroups
 	/// </summary>
 	[DataMember(Name = "dashboards")]
-	public List<Dashboard> Dashboards { get; set; } = new();
+	public List<Dashboard> Dashboards { get; set; } = [];
 
 	/// <summary>
 	/// The template which is used for importing dashboard group
@@ -58,7 +58,7 @@ public class DashboardGroup : NamedItem, IPatchable
 	///    The widget tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<SimpleProperty> CustomProperties { get; set; } = new();
+	public List<SimpleProperty> CustomProperties { get; set; } = [];
 
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/groups";

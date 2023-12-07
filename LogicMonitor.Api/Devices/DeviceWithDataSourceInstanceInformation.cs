@@ -10,5 +10,5 @@ public class DeviceWithDataSourceInstanceInformation : Device
 	/// The DataSourceInstance information
 	/// </summary>
 	[DataMember(Name = "instance")]
-	public List<DeviceDataSourceInstanceSummary> DeviceDataSourceInstances { get; set; } = new();
+	public List<DeviceDataSourceInstanceSummary> DeviceDataSourceInstances { get; set; } = [];
 }

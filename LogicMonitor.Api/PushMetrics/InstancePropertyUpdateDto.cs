@@ -11,7 +11,7 @@ public class InstancePropertyUpdateDto : IHasSingletonEndpoint
 	/// Resource Ids
 	/// </summary>
 	[DataMember(Name = "resourceIds")]
-	public Dictionary<string, string> ResourceIds { get; set; } = new();
+	public Dictionary<string, string> ResourceIds { get; set; } = [];
 
 	/// <summary>
 	/// DataSource unique name
@@ -35,7 +35,7 @@ public class InstancePropertyUpdateDto : IHasSingletonEndpoint
 	/// Instance Properties
 	/// </summary>
 	[DataMember(Name = "instanceProperties")]
-	public Dictionary<string, string> InstanceProperties { get; set; } = new();
+	public Dictionary<string, string> InstanceProperties { get; set; } = [];
 
 	/// <inheritdoc />
 	public string Endpoint() => "instance_property/ingest";

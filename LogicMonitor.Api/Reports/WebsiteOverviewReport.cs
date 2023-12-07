@@ -28,7 +28,7 @@ public class WebsiteOverviewReport : DateRangeReport
 	/// The filter
 	/// </summary>
 	[DataMember(Name = "includeTypes")]
-	public List<object> IncludeTypes { get; set; } = new();
+	public List<object> IncludeTypes { get; set; } = [];
 
 	/// <summary>
 	/// Whether to exclude SDT

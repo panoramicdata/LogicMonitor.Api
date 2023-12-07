@@ -16,5 +16,5 @@ public class ValueCheck
 	/// A value check must
 	/// </summary>
 	[DataMember(Name = "must")]
-	public List<ValueCheckMust> ValueCheckMust { get; set; } = new();
+	public List<ValueCheckMust> ValueCheckMust { get; set; } = [];
 }

@@ -28,5 +28,5 @@ public class WebsiteSlaReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<WebsiteSlaReportMetric> Metrics { get; set; } = new();
+	public List<WebsiteSlaReportMetric> Metrics { get; set; } = [];
 }

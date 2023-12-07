@@ -46,5 +46,5 @@ public class WebsiteGroupCreationDto : CreationDto<WebsiteGroup>
 	/// The properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty> Properties { get; set; } = new();
+	public List<EntityProperty> Properties { get; set; } = [];
 }

@@ -147,10 +147,10 @@ public class CollectorTests2
 		var collectorVersionInts = (await LogicMonitorClient.GetAllCollectorVersionsAsync(
 			new Filter<CollectorVersion>
 			{
-				FilterItems = new List<FilterItem<CollectorVersion>>
-				{
+				FilterItems =
+				[
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
-				}
+				]
 			}, default
 			).ConfigureAwait(false))
 			.Select(cv => (cv.MajorVersion * 1000) + cv.MinorVersion)

@@ -40,5 +40,5 @@ public class TableWidgetRow
 	///     The DataSourceInstances
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<TableWidgetRowDataSourceInstance> DataSourceInstance { get; set; } = new();
+	public List<TableWidgetRowDataSourceInstance> DataSourceInstance { get; set; } = [];
 }

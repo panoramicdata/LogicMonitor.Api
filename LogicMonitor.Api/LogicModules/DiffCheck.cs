@@ -22,17 +22,17 @@ public class DiffCheck
 	/// Ignore lines containing this string
 	/// </summary>
 	[DataMember(Name = "ignore_line_contain")]
-	public List<string> IgnoreLinesContainingList { get; set; } = new();
+	public List<string> IgnoreLinesContainingList { get; set; } = [];
 
 	/// <summary>
 	/// Ignore lines matching this regular expression
 	/// </summary>
 	[DataMember(Name = "ignore_line_with_regex")]
-	public List<string> IgnoreLinesMatchingRegexList { get; set; } = new();
+	public List<string> IgnoreLinesMatchingRegexList { get; set; } = [];
 
 	/// <summary>
 	/// Ignored lines
 	/// </summary>
 	[DataMember(Name = "ignore_line_start_with")]
-	public List<string> IgnoreLinesStartingWithList { get; set; } = new();
+	public List<string> IgnoreLinesStartingWithList { get; set; } = [];
 }

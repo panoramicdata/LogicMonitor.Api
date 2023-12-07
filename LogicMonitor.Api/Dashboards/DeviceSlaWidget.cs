@@ -28,7 +28,7 @@ public class DeviceSlaWidget : Widget, IWidget
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<DeviceSlaWidgetMetric> Metrics { get; set; } = new();
+	public List<DeviceSlaWidgetMetric> Metrics { get; set; } = [];
 
 	/// <summary>
 	/// The daysInWeek
@@ -70,7 +70,7 @@ public class DeviceSlaWidget : Widget, IWidget
 	/// The color thresholds
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
-	public List<ColorThreshold> ColorThresholds { get; set; } = new();
+	public List<ColorThreshold> ColorThresholds { get; set; } = [];
 
 	/// <summary>
 	///     The display settings

@@ -328,7 +328,7 @@ public class AutoDiscoveryMethod
 	/// The instance level properties
 	/// </summary>
 	[DataMember(Name = "ILP")]
-	public List<InstanceLevelProperty> InstanceLevelProperties { get; set; } = new();
+	public List<InstanceLevelProperty> InstanceLevelProperties { get; set; } = [];
 
 	/// <summary>
 	/// Discovery Type
@@ -376,7 +376,7 @@ public class AutoDiscoveryMethod
 	/// The linked classes
 	/// </summary>
 	[DataMember(Name = "linkedClasses")]
-	public List<LinkedWmiClass> LinkedClasses { get; set; } = new();
+	public List<LinkedWmiClass> LinkedClasses { get; set; } = [];
 
 	/// <summary>
 	/// wmiClass

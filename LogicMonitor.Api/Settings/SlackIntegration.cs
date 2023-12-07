@@ -160,25 +160,25 @@ public class SlackIntegration : Integration
 	///     The headers
 	/// </summary>
 	[DataMember(Name = "headers")]
-	public List<object> Headers { get; set; } = new();
+	public List<object> Headers { get; set; } = [];
 
 	/// <summary>
 	///     The updateHeaders
 	/// </summary>
 	[DataMember(Name = "updateHeaders")]
-	public List<object> UpdateHeaders { get; set; } = new();
+	public List<object> UpdateHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The clearHeaders
 	/// </summary>
 	[DataMember(Name = "clearHeaders")]
-	public List<object> ClearHeaders { get; set; } = new();
+	public List<object> ClearHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The ackHeaders
 	/// </summary>
 	[DataMember(Name = "ackHeaders")]
-	public List<object> AckHeaders { get; set; } = new();
+	public List<object> AckHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The parseMethod
@@ -190,13 +190,13 @@ public class SlackIntegration : Integration
 	///     The parseExpression
 	/// </summary>
 	[DataMember(Name = "parseExpression")]
-	public List<object> ParseExpression { get; set; } = new();
+	public List<object> ParseExpression { get; set; } = [];
 
 	/// <summary>
 	///     The enabledStatus
 	/// </summary>
 	[DataMember(Name = "enabledStatus")]
-	public List<string> EnabledStatus { get; set; } = new();
+	public List<string> EnabledStatus { get; set; } = [];
 
 	/// <summary>
 	///     The incomingWebhookUrl

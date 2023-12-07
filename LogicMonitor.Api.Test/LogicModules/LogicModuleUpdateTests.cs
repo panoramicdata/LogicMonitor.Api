@@ -327,10 +327,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						dataSourceUpdates[0].Name
-				},
+				],
 				version.Version.Major,
 				default)
 				.ConfigureAwait(false);
@@ -364,10 +363,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						eventSourceUpdates[0].Name
-				},
+				],
 				version.Version.Major,
 				default)
 				.ConfigureAwait(false);
@@ -401,10 +399,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						configSourceUpdates[0].Name
-				},
+				],
 				version.Version.Major,
 				default)
 				.ConfigureAwait(false);
@@ -438,10 +435,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						propertySourceUpdates[0].Name
-				},
+				],
 				version.Version.Major,
 				default)
 				.ConfigureAwait(false);
@@ -475,10 +471,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						topologySourceUpdates[0].Name
-				},
+				],
 				version.Version.Major,
 				default)
 				.ConfigureAwait(false);
@@ -512,10 +507,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						jobMonitorUpdates[0].Name
-				},
+				],
 				default,
 				default)
 				.ConfigureAwait(false);
@@ -549,10 +543,9 @@ public class LogicModuleUpdateTests : TestWithOutput
 			await LogicMonitorClient
 				.ImportLogicModulesAsync(
 				logicModuleType,
-				new List<string>
-				{
+				[
 						appliesToFunctionUpdates[0].Name
-				},
+				],
 				default,
 				default)
 				.ConfigureAwait(false);
@@ -585,14 +578,13 @@ public class LogicModuleUpdateTests : TestWithOutput
 		{
 			await LogicMonitorClient
 				.ImportSnmpSysOidMapAsync(
-				new List<SnmpSysOidMapImportItem>
-				{
+				[
 						new SnmpSysOidMapImportItem
 						{
 							Id = snmpSysOidMapUpdates[0].LocalId,
 							Oid = snmpSysOidMapUpdates[0].Name
 						}
-				},
+				],
 				version.Version.Major,
 				default)
 				.ConfigureAwait(false);

@@ -11,11 +11,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 	{
 		var sdts = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
-			FilterItems = new List<FilterItem<ScheduledDownTime>>
-				{
+			FilterItems =
+				[
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceSDT"),
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
-				}
+				]
 		}, default).ConfigureAwait(false);
 		Assert.All(sdts, sdt => Assert.False(sdt.IsEffective));
 	}
@@ -163,11 +163,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 			// Get all scheduled downtimes (we have created one, so at least that one should be there)
 			var scheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 			{
-				FilterItems = new List<FilterItem<ScheduledDownTime>>
-				{
+				FilterItems =
+				[
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "ResourceSDT"),
 					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
-				}
+				]
 			}, default).ConfigureAwait(false);
 			scheduledDownTimes.Should().NotBeNullOrEmpty();
 
@@ -230,11 +230,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 			// Get all scheduled downtimes (we have created one, so at least that one should be there)
 			var scheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 			{
-				FilterItems = new List<FilterItem<ScheduledDownTime>>
-				{
+				FilterItems =
+				[
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "ResourceGroupSDT"),
 					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
-				}
+				]
 			}, default).ConfigureAwait(false);
 			scheduledDownTimes.Should().NotBeNullOrEmpty();
 
@@ -303,11 +303,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 			// Get all scheduled downtimes (we have created one, so at least that one should be there)
 			var scheduledDownTimes = await portalClient.GetAllAsync(new Filter<ScheduledDownTime>
 			{
-				FilterItems = new List<FilterItem<ScheduledDownTime>>
-				{
+				FilterItems =
+				[
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "CollectorSDT"),
 					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
-				}
+				]
 			}, default).ConfigureAwait(false);
 			scheduledDownTimes.Should().NotBeNull();
 			scheduledDownTimes.Should().NotBeNullOrEmpty();
@@ -345,11 +345,11 @@ public class ScheduledDownTimeTests : TestWithOutput
 
 		var filteredScheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
-			FilterItems = new List<FilterItem<ScheduledDownTime>>
-				{
+			FilterItems =
+				[
 					new Eq<ScheduledDownTime>(nameof(Type), "DeviceSDT"),
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.DeviceId), deviceId!)
-				}
+				]
 		}, default
 		).ConfigureAwait(false);
 		filteredScheduledDownTimes.Should().NotBeNull();
@@ -394,10 +394,10 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var dataSource = (await LogicMonitorClient
 			.GetAllAsync(new Filter<DataSource>
 			{
-				FilterItems = new List<FilterItem<DataSource>>
-				{
+				FilterItems =
+				[
 						new Eq<DataSource>(nameof(DataSource.Name), "Ping")
-				}
+				]
 			}, default)
 			.ConfigureAwait(false))
 			.SingleOrDefault();
@@ -447,10 +447,10 @@ public class ScheduledDownTimeTests : TestWithOutput
 		var dataSource = (await LogicMonitorClient
 			.GetAllAsync(new Filter<DataSource>
 			{
-				FilterItems = new List<FilterItem<DataSource>>
-				{
+				FilterItems =
+				[
 					new Eq<DataSource>(nameof(DataSource.Name), "Ping")
-				}
+				]
 			}, default)
 			.ConfigureAwait(false))
 			.Single();

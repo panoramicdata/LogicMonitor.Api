@@ -18,7 +18,7 @@ public class HtmlWidget : Widget, IWidget
 	///     The HTML widget resources
 	/// </summary>
 	[DataMember(Name = "resources")]
-	public List<HtmlWidgetResource> HtmlWidgetResources { get; set; } = new();
+	public List<HtmlWidgetResource> HtmlWidgetResources { get; set; } = [];
 
 	/// <summary>
 	///     Whether this is a custom Html widget

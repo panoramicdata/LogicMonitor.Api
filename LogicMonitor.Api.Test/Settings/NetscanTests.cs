@@ -77,15 +77,15 @@ public class NetscanTests : TestWithOutput
 			ExcludedIpAddresses = excludedIpAddresses,
 			DiscoveredDeviceRule = new DiscoveredDeviceRule
 			{
-				Assignment = new List<NetscanAssignment>
-					{
+				Assignment =
+					[
 						new NetscanAssignment
 						{
 							DeviceGroupId = assignmentDeviceGroupId,
 							DisableAlerting = assignmentDisableAlerting,
 							InclusionType = assignmentInclusionType,
 						}
-					},
+					],
 				ChangeName = ddrChangeName
 			},
 			DuplicatesStrategy = new NetscanDuplicatesStrategy

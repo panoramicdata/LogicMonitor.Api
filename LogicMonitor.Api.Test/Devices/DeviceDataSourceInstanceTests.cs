@@ -45,10 +45,10 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 		{
 			Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
-			FilterItems = new List<FilterItem<DeviceDataSourceInstance>>
-				{
+			FilterItems =
+				[
 					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		deviceDataSourceInstances.Should().AllSatisfy(dsi => dsi.StopMonitoring.Should().BeFalse());
@@ -62,10 +62,10 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		{
 			Skip = 0,
 			Take = 10,
-			Properties = new List<string>
-				{
+			Properties =
+				[
 					nameof(DeviceDataSource.Id),
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		var newInstance = new DeviceDataSourceInstanceCreationDto()
@@ -83,7 +83,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[9].Id, new Filter<DeviceDataSourceInstance>()
 			{
 				Skip = 0,
-				Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName) }
+				Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName)]
 			}, default)
 			.ConfigureAwait(false);
 
@@ -114,17 +114,17 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		{
 			Skip = 0,
 			Take = 10,
-			Properties = new List<string>
-				{
+			Properties =
+				[
 					nameof(DeviceDataSource.Id),
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
 			{
 				Skip = 0,
-				Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName) }
+				Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName)]
 			}, default)
 			.ConfigureAwait(false);
 
@@ -143,17 +143,17 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		{
 			Skip = 0,
 			Take = 10,
-			Properties = new List<string>
-				{
+			Properties =
+				[
 					nameof(DeviceDataSource.Id),
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
 			{
 				Skip = 0,
-				Properties = new List<string> { nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName) }
+				Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName)]
 			}, default)
 			.ConfigureAwait(false);
 

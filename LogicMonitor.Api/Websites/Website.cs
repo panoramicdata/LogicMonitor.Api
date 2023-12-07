@@ -151,7 +151,7 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	/// The properties associated with the website
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	/// The SDT Status

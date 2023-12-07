@@ -24,10 +24,10 @@ public class TopologyGroupTests : TestWithOutput
 		// Delete it if it already exists
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<TopologyGroup>
 		{
-			FilterItems = new List<FilterItem<TopologyGroup>>
-				{
+			FilterItems =
+				[
 					new Eq<TopologyGroup>(nameof(TopologyGroup.Name), TestName)
-				}
+				]
 		}, default).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
 		{

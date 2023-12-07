@@ -220,7 +220,7 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			// Get a page
 			var page = await GetPageAsync(filter, subUrl, cancellationToken).ConfigureAwait(false);
-			var pageItems = page.Items ?? new List<T>();
+			var pageItems = page.Items ?? [];
 			var pageTotalCount = page?.TotalCount ?? 0;
 			list.AddRange(pageItems);
 
@@ -293,10 +293,10 @@ public partial class LogicMonitorClient : IDisposable
 
 		var items = await GetAllAsync(new Filter<T>
 		{
-			FilterItems = new List<FilterItem<T>>
-				{
+			FilterItems =
+				[
 					new Eq<T>(nameof(NamedEntity.Name), name)
-				}
+				]
 		}, cancellationToken: cancellationToken).ConfigureAwait(false);
 
 		// If only one, return that.

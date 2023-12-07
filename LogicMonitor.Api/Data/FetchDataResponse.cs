@@ -16,7 +16,7 @@ public class FetchDataResponse
 	/// The instance FetchData responses
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<InstanceFetchDataResponse> InstanceFetchDataResponses { get; set; } = new();
+	public List<InstanceFetchDataResponse> InstanceFetchDataResponses { get; set; } = [];
 
 	/// <summary>
 	/// The searh id

@@ -56,5 +56,5 @@ namespace LogicMonitor.Api.Settings;
 	/// Tags
 	/// </summary>
 	[DataMember(Name = "tags")]
-	public List<string> Tags { get; set; } = new();
+	public List<string> Tags { get; set; } = [];
     }

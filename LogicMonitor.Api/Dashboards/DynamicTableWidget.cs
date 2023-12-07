@@ -22,13 +22,13 @@ public class DynamicTableWidget : Widget, IWidget
 	///     The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<DynamicTableWidgetColumn> Columns { get; set; } = new();
+	public List<DynamicTableWidgetColumn> Columns { get; set; } = [];
 
 	/// <summary>
 	///     The columns
 	/// </summary>
 	[DataMember(Name = "rows")]
-	public List<DynamicTableWidgetRow> Rows { get; set; } = new();
+	public List<DynamicTableWidgetRow> Rows { get; set; } = [];
 
 	/// <summary>
 	///     The forecast
@@ -52,7 +52,7 @@ public class DynamicTableWidget : Widget, IWidget
 	///     The column headers
 	/// </summary>
 	[DataMember(Name = "columnHeaders")]
-	public List<ColumnHeader> ColumnHeaders { get; set; } = new();
+	public List<ColumnHeader> ColumnHeaders { get; set; } = [];
 
 	/// <summary>
 	///     The Display Settings

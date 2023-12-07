@@ -21,8 +21,8 @@ public class PushMetricTests : TestWithOutput
 				DataSourceName = "UnitTest_PushMetric_Succeeds",
 				DataSourceDisplayName = "PushMetric_Succeeds",
 				DataSourceGroup = "Unit Tests",
-				Instances = new()
-				{
+				Instances =
+				[
 					new()
 					{
 						Name = "Slot1",
@@ -31,8 +31,8 @@ public class PushMetricTests : TestWithOutput
 						{
 							["unit_test.slot_id"] = "1"
 						},
-						DataPoints = new()
-						{
+						DataPoints =
+						[
 							new()
 							{
 								Name = "DataPoint1",
@@ -44,9 +44,9 @@ public class PushMetricTests : TestWithOutput
 									[DateTimeOffset.UtcNow.AddSeconds(-2)] = 10
 								}.ToLogicMonitorDictionary()
 							}
-						}
+						]
 					}
-				}
+				]
 			}, cancellationToken: default)
 			.ConfigureAwait(false);
 		response.Should().NotBeNull();

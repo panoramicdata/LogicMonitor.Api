@@ -10,5 +10,5 @@ public class WebsiteNocWidget : Widget, IWidget
 	/// Items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<WebsiteNocWidgetItem> Items { get; set; } = new();
+	public List<WebsiteNocWidgetItem> Items { get; set; } = [];
 }

@@ -32,11 +32,11 @@ public class AlertTests : TestWithOutput
 	{
 		var closedItemsFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-					{
+			FilterItems =
+					[
 						new Eq<Alert>(nameof(Alert.IsCleared), "*"),
 						new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
-					},
+					],
 			Order = new Order<Alert>
 			{
 				Property = nameof(Alert.EndOnSeconds),
@@ -55,15 +55,15 @@ public class AlertTests : TestWithOutput
 	{
 		var noNoteItemsFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-			{
+			FilterItems =
+			[
 				new Eq<Alert>(nameof(Alert.AckComment), string.Empty),
-			},
-			Properties = new List<string>
-			{
+			],
+			Properties =
+			[
 				nameof(Alert.Id),
 				nameof(Alert.InternalId),
-			},
+			],
 			Take = 1
 		};
 		var alerts = await LogicMonitorClient
@@ -93,16 +93,16 @@ public class AlertTests : TestWithOutput
 	{
 		var closedItemsFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-					{
+			FilterItems =
+					[
 						new Eq<Alert>(nameof(Alert.IsCleared), "*"),
 						new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
-					},
-			Properties = new List<string>
-				{
+					],
+			Properties =
+				[
 					nameof(Alert.EndOnSeconds),
 					nameof(Alert.Severity)
-				},
+				],
 			Order = new Order<Alert>
 			{
 				Property = nameof(Alert.EndOnSeconds),
@@ -307,21 +307,21 @@ public class AlertTests : TestWithOutput
 			{
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
-				Levels = new List<AlertLevel> { AlertLevel.Critical }
+				Levels = [AlertLevel.Critical]
 			}, default).ConfigureAwait(false);
 		var errorAlerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
-				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
+				Levels = [AlertLevel.Critical, AlertLevel.Error]
 			}, default).ConfigureAwait(false);
 		var warningAlerts =
 			await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 			{
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
-				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
+				Levels = [AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning]
 			}, default).ConfigureAwait(false);
 
 		// Ensure that all alerts are at the appropriate level
@@ -344,7 +344,7 @@ public class AlertTests : TestWithOutput
 			AckFilter = AckFilter.All,
 			StartEpochIsBefore = EndDateTimeSeconds,
 			IncludeCleared = false,
-			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error },
+			Levels = [AlertLevel.Critical, AlertLevel.Error],
 			NeedMessage = true,
 			OrderDirection = OrderDirection.Desc,
 			SdtFilter = SdtFilter.NonSdt,
@@ -412,7 +412,7 @@ public class AlertTests : TestWithOutput
 			{
 				StartEpochIsAfter = StartDateTimeSeconds,
 				StartEpochIsBefore = EndDateTimeSeconds,
-				MonitorObjectGroupFullPaths = new List<string> { "Datacenter/*" },
+				MonitorObjectGroupFullPaths = ["Datacenter/*"],
 				IncludeCleared = true
 			}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
@@ -459,7 +459,7 @@ public class AlertTests : TestWithOutput
 			new AlertFilter
 			{
 				StartEpochIsAfter = DaysAgoAsUnixSeconds(1),
-				Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
+				Levels = [AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning]
 			}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(alerts);
 		alerts.Should().NotHaveCount(0);
@@ -486,7 +486,7 @@ public class AlertTests : TestWithOutput
 		var allAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 		{
 			StartUtcIsAfter = DateTime.UtcNow - timespan,
-			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning }
+			Levels = [AlertLevel.Critical, AlertLevel.Error, AlertLevel.Warning]
 		}, default).ConfigureAwait(false);
 		CheckAlertsAreValid(allAlerts);
 
@@ -503,7 +503,7 @@ public class AlertTests : TestWithOutput
 		var errorAndAboveAlerts = await LogicMonitorClient.GetAlertsAsync(new AlertFilter
 		{
 			StartUtcIsAfter = DateTime.UtcNow - timespan,
-			Levels = new List<AlertLevel> { AlertLevel.Critical, AlertLevel.Error }
+			Levels = [AlertLevel.Critical, AlertLevel.Error]
 		}, default).ConfigureAwait(false);
 
 		Logger.LogDebug("{ErrorAndAboveCount}", errorAndAboveAlerts.Count);
@@ -521,12 +521,12 @@ public class AlertTests : TestWithOutput
 
 		var alerts = await LogicMonitorClient.GetAllAsync(new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-				{
+			FilterItems =
+				[
 					new FilterItem<Alert> { Property = nameof(Alert.StartOnSeconds), Operation = ">", Value = dateTimeOffset.ToUnixTimeSeconds()},
 					new FilterItem<Alert> { Property = nameof(Alert.InternalId), Operation=":", Value="LMS462482416" },
 					new FilterItem<Alert> { Property = nameof(Alert.IsCleared), Operation=":", Value="*" },
-				}
+				]
 		}, default).ConfigureAwait(false);
 		alerts.Should().NotBeNull();
 	}
@@ -580,10 +580,10 @@ public class AlertTests : TestWithOutput
 	{
 		var notAckedFilter = new Filter<Alert>
 		{
-			FilterItems = new List<FilterItem<Alert>>
-			{
+			FilterItems =
+			[
 				new Eq<Alert>(nameof(Alert.Acked), false),
-			},
+			],
 			Take = 1
 		};
 

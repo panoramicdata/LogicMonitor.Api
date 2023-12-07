@@ -192,7 +192,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The properties associated with this device group
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	/// The number of total devices, including both AWS and normal devices, that belong to this device group (includes normal devices in sub groups)
@@ -232,7 +232,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(IsRequired = false)]
-	public List<Device> Devices { get; set; } = new();
+	public List<Device> Devices { get; set; } = [];
 
 	/// <summary>
 	/// The number of AWS and normal devices that belong only to this device group (doesn\u0027t include devices in sub-groups)
@@ -312,7 +312,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The role privilege operations for the device group that are granted to the user that made this API request
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]
-	public List<RolePrivilege> RolePrivileges { get; set; } = new();
+	public List<RolePrivilege> RolePrivileges { get; set; } = [];
 
 	/// <summary>
 	/// The result returned by the transaction that tests the SaaS credentials associated with the Saas group
@@ -346,7 +346,7 @@ public class DeviceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "subGroups")]
-	public List<DeviceGroup> SubGroups { get; set; } = new();
+	public List<DeviceGroup> SubGroups { get; set; } = [];
 
 	/// <summary>
 	/// The permissions for the device group that are granted to the user that made this API request

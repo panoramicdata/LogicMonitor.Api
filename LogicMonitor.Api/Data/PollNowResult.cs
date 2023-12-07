@@ -34,13 +34,13 @@ public class PollNowResult
 	/// The result
 	/// </summary>
 	[DataMember(Name = "result")]
-	public List<PollNowInnerResult> Result { get; set; } = new();
+	public List<PollNowInnerResult> Result { get; set; } = [];
 
 	/// <summary>
 	/// The raw data
 	/// </summary>
 	[DataMember(Name = "rawData")]
-	public List<PollNowItem> RawData { get; set; } = new();
+	public List<PollNowItem> RawData { get; set; } = [];
 
 	/// <summary>
 	/// The diagnosis

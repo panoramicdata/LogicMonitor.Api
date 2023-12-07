@@ -40,7 +40,7 @@ public class DeviceGroupCreationDto : CreationDto<DeviceGroup>
 	///    Custom DeviceGroup properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	///    ToString override

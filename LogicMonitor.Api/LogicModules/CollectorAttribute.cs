@@ -88,7 +88,7 @@ public class CollectorAttribute
 	///     The counters
 	/// </summary>
 	[DataMember(Name = "counters")]
-	public List<CollectorAttributeCounter> Counters { get; set; } = new();
+	public List<CollectorAttributeCounter> Counters { get; set; } = [];
 
 	/// <summary>
 	/// data collector\u0027s name
@@ -124,7 +124,7 @@ public class CollectorAttribute
 	///     The fields
 	/// </summary>
 	[DataMember(Name = "fields")]
-	public List<string> Fields { get; set; } = new();
+	public List<string> Fields { get; set; } = [];
 
 	/// <summary>
 	///     Whether to follow redirect
@@ -256,7 +256,7 @@ public class CollectorAttribute
 	///     The parameters
 	/// </summary>
 	[DataMember(Name = "params")]
-	public List<string> Parameters { get; set; } = new();
+	public List<string> Parameters { get; set; } = [];
 
 	/// <summary>
 	///     Payload

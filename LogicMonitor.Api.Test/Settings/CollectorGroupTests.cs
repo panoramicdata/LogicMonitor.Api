@@ -35,10 +35,10 @@ public class CollectorGroupTests : TestWithOutput
 		// Try to get this item
 		var collectorGroups = await LogicMonitorClient.GetAllAsync(new Filter<CollectorGroup>
 		{
-			FilterItems = new List<FilterItem<CollectorGroup>>
-					{
+			FilterItems =
+					[
 						new Eq<CollectorGroup>(nameof(CollectorGroup.Name), TestName)
-					}
+					]
 		}, default).ConfigureAwait(false);
 
 		foreach (var priorCollectorGroup in collectorGroups)
@@ -52,10 +52,10 @@ public class CollectorGroupTests : TestWithOutput
 		{
 			Name = TestName,
 			Description = TestDescription,
-			CustomProperties = new List<EntityProperty>
-				{
+			CustomProperties =
+				[
 					new EntityProperty { Name = "a", Value = "b" }
-				}
+				]
 		}, default).ConfigureAwait(false);
 		newCollectorGroup.Should().NotBeNull();
 		newCollectorGroup.Id.Should().NotBe(0);

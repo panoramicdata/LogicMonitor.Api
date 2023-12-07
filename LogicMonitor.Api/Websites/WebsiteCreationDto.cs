@@ -82,7 +82,7 @@ public class WebsiteCreationDto : CreationDto<Website>
 	/// The steps
 	/// </summary>
 	[DataMember(Name = "steps")]
-	public List<WebCheckStep> Steps { get; set; } = new();
+	public List<WebCheckStep> Steps { get; set; } = [];
 
 	/// <summary>
 	///    The attempt count as a string
@@ -154,7 +154,7 @@ public class WebsiteCreationDto : CreationDto<Website>
 	/// The website properties
 	/// </summary>
 	[DataMember(Name = "properties")]
-	public List<EntityProperty> WebsiteProperties { get; set; } = new();
+	public List<EntityProperty> WebsiteProperties { get; set; } = [];
 
 	/// <summary>
 	/// The alert expression for SSL expiration alerts

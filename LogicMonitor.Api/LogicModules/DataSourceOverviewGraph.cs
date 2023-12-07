@@ -40,7 +40,7 @@ public class DataSourceOverviewGraph : UndescribedNamedItem
 	/// the graph lines
 	/// </summary>
 	[DataMember(Name = "lines")]
-	public List<GraphLine> Lines { get; set; } = new();
+	public List<GraphLine> Lines { get; set; } = [];
 
 	/// <summary>
 	/// graph max value
@@ -88,13 +88,13 @@ public class DataSourceOverviewGraph : UndescribedNamedItem
 	/// the graph data point list
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<OverviewGraphDataPoint> DataPoints { get; set; } = new();
+	public List<OverviewGraphDataPoint> DataPoints { get; set; } = [];
 
 	/// <summary>
 	/// the virtual data point list
 	/// </summary>
 	[DataMember(Name = "virtualDataPoints")]
-	public List<GraphVirtualDataPoint> VirtualDataPoints { get; set; } = new();
+	public List<GraphVirtualDataPoint> VirtualDataPoints { get; set; } = [];
 
 	/// <summary>
 	/// ToString override

@@ -16,7 +16,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The roles assigned to this user
 	/// </summary>
 	[DataMember(Name = "roles")]
-	public List<Role> Roles { get; set; } = new();
+	public List<Role> Roles { get; set; } = [];
 
 	/// <summary>
 	///    The user's preferred contact method
@@ -112,7 +112,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The user's API tokens
 	/// </summary>
 	[DataMember(Name = "apiTokens")]
-	public List<ApiToken> ApiTokens { get; set; } = new();
+	public List<ApiToken> ApiTokens { get; set; } = [];
 
 	/// <summary>
 	///    The view permissions
@@ -184,7 +184,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The user group ids
 	/// </summary>
 	[DataMember(Name = "adminGroupIds")]
-	public List<int> UserGroupIds { get; set; } = new();
+	public List<int> UserGroupIds { get; set; } = [];
 
 	/// <summary>
 	///    The user permission

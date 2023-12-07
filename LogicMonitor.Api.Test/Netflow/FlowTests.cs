@@ -20,7 +20,7 @@ public class FlowTests : TestWithOutput
 		var device = await LogicMonitorClient
 			.GetDevicesPageAsync(new Filter<Device>(), default).ConfigureAwait(false);
 
-		List<Device> netflowDeviceList = new();
+		List<Device> netflowDeviceList = [];
 
 		foreach (var d in device.Items)
 		{

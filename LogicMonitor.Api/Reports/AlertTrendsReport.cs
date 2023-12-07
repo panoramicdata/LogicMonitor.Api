@@ -10,5 +10,5 @@ public class AlertTrendsReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<AlertTrendsReportMetric> Metrics { get; set; } = new();
+	public List<AlertTrendsReportMetric> Metrics { get; set; } = [];
 }

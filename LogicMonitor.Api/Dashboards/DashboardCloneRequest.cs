@@ -22,7 +22,7 @@ public class DashboardCloneRequest : CloneRequest<Dashboard>
 	/// The widgetTokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<EntityProperty> WidgetTokens { get; set; } = new List<EntityProperty>();
+	public List<EntityProperty> WidgetTokens { get; set; } = [];
 
 	/// <summary>
 	/// Whether it is shareable
@@ -46,7 +46,7 @@ public class DashboardCloneRequest : CloneRequest<Dashboard>
 	/// The WidgetsConfig
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = [];
 
 	/// <summary>
 	/// The widgetsOrder

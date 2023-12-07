@@ -21,8 +21,8 @@ public static class LogItemExtensions
 
 	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
 
-	private static readonly List<LogItemRegex> Regexs = new()
-	{
+	private static readonly List<LogItemRegex> Regexs =
+	[
 		new(01,
 			AuditEventEntityType.Device,
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Device""; ""Device=(?<resourceName>.+) \((?<resourceId>.+?)\)""; ""Description=(?<failed>Failed)(?<additionalInfo>.+?)""$", RegexOptions.Singleline)),
@@ -272,7 +272,7 @@ public static class LogItemExtensions
 		new(83,
 			AuditEventEntityType.Collector,
 			new(@"^(?<action>Add|Update|Delete) the collector (?<collectorId>\d+) \(hostname=(?<collectorName>.+), desc=(?<collectorDescription>.+)\)$", RegexOptions.Singleline))
-			};
+			];
 
 	/// <summary>
 	/// Converts a logItem to an AuditItem
@@ -394,8 +394,8 @@ public static class LogItemExtensions
 			var k8sHosts = match.Groups["multipleHosts"].ToString().Split(',').Select(h => h.Trim());
 			if (k8sHosts.Any())
 			{
-				auditEvent.ResourceIds ??= new();
-				auditEvent.ResourceNames ??= new();
+				auditEvent.ResourceIds ??= [];
+				auditEvent.ResourceNames ??= [];
 				foreach (var k8sHost in k8sHosts)
 				{
 					var k8sHostMatch = _k8sHostRegex.Match(k8sHost);

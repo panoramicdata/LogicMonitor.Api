@@ -24,10 +24,10 @@ public class RoleGroupTests : TestWithOutput
 		// Delete it if it already exists
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<RoleGroup>
 		{
-			FilterItems = new List<FilterItem<RoleGroup>>
-				{
+			FilterItems =
+				[
 					new Eq<RoleGroup>(nameof(RoleGroup.Name), TestName)
-				}
+				]
 		}, default).ConfigureAwait(false);
 		foreach (var existingItem in existingItems)
 		{

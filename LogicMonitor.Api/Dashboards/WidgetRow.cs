@@ -22,5 +22,5 @@ public class WidgetRow
 	/// Cells
 	/// </summary>
 	[DataMember(Name = "cells")]
-	public List<WidgetCell> Cells { get; set; } = new();
+	public List<WidgetCell> Cells { get; set; } = [];
 }

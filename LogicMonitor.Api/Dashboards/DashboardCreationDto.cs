@@ -40,7 +40,7 @@ public class DashboardCreationDto : CreationDto<Dashboard>
 	/// Information about widget configuration used by the UI
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]
-	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = new();
+	public Dictionary<string, WidgetConfig> WidgetsConfig { get; set; } = [];
 
 	/// <summary>
 	/// The name of group where created dashboard will reside
@@ -52,7 +52,7 @@ public class DashboardCreationDto : CreationDto<Dashboard>
 	/// If useDynamicWidget\u003dtrue, this field must at least contain tokens defaultDeviceGroup and defaultServiceGroup
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<string> WidgetTokens { get; set; } = new();
+	public List<string> WidgetTokens { get; set; } = [];
 
 	/// <summary>
 	/// The name of the dashboard

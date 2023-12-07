@@ -22,7 +22,7 @@ public class InvoiceDetails
 	/// The list of previous invoices
 	/// </summary>
 	[DataMember(Name = "previousInvoices")]
-	public List<Invoice> PreviousInvoices { get; set; } = new();
+	public List<Invoice> PreviousInvoices { get; set; } = [];
 
 	/// <summary>
 	/// The product name

@@ -20,8 +20,8 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Failure,
-				ResourceIds = new() { 0 },
-				ResourceNames = new() { "ReportMagic alpha-Scheduler" }
+				ResourceIds = [0],
+				ResourceNames = ["ReportMagic alpha-Scheduler"]
 			}
 		);
 
@@ -36,7 +36,7 @@ public class AuditEventTests : TestWithOutput
 				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				Description = "Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; ",
-				ResourceNames = new() { "NA" }
+				ResourceNames = ["NA"]
 			}
 		);
 
@@ -50,8 +50,8 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceNames = new() { "NA" },
-				ResourceIds = new() { 3271 },
+				ResourceNames = ["NA"],
+				ResourceIds = [3271],
 				LogicModuleId = 94545589,
 				InstanceId = 263219850,
 				InstanceName = "NA"
@@ -100,8 +100,8 @@ public class AuditEventTests : TestWithOutput
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { expectedResourceId },
-				ResourceNames = new() { expectedResourceName },
+				ResourceIds = [expectedResourceId],
+				ResourceNames = [expectedResourceName],
 				CollectorId = expectedCollectorId,
 				CollectorName = expectedCollectorName,
 				ApiTokenId = expectedTokenId
@@ -119,8 +119,8 @@ public class AuditEventTests : TestWithOutput
 				CollectorId = 249,
 				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 2781 },
-				ResourceNames = new() { "PDL-LM.logicmonitor.com" },
+				ResourceIds = [2781],
+				ResourceNames = ["PDL-LM.logicmonitor.com"],
 				LogicModuleId = 112813425,
 				InstanceName = "NA",
 				DataSourceNewInstanceNames = new[] { "LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter" },
@@ -139,8 +139,8 @@ public class AuditEventTests : TestWithOutput
 				CollectorId = 249,
 				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 1525 },
-				ResourceNames = new() { "PDL-K8S-TEST-03" },
+				ResourceIds = [1525],
+				ResourceNames = ["PDL-K8S-TEST-03"],
 				LogicModuleId = 94545589,
 				LogicModuleName = "Critical Linux Processes-java",
 				InstanceName = "NA",
@@ -159,8 +159,8 @@ public class AuditEventTests : TestWithOutput
 				CollectorId = 249,
 				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 2365 },
-				ResourceNames = new() { "PDL-HAPROXY-TEST-02" },
+				ResourceIds = [2365],
+				ResourceNames = ["PDL-HAPROXY-TEST-02"],
 				InstanceName = "NA",
 				LogicModuleId = 111613364,
 				DataSourceNewInstanceIds = new[] { 263956258, 263956259 },
@@ -181,8 +181,8 @@ public class AuditEventTests : TestWithOutput
 				CollectorId = -2,
 				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceIds = new() { 2571 },
-				ResourceNames = new() { "EU-W1:recoveryservices:pambackup" },
+				ResourceIds = [2571],
+				ResourceNames = ["EU-W1:recoveryservices:pambackup"],
 				InstanceName = "NA",
 				LogicModuleId = 39016161,
 				DataSourceNewInstanceIds = new[] { 570930097, 570930098 },
@@ -231,8 +231,8 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 15,
-				ResourceIds = new() { 8555 },
-				ResourceNames = new() { "UK-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID" },
+				ResourceIds = [8555],
+				ResourceNames = ["UK-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID"],
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSource,
 				OutcomeType = AuditEventOutcomeType.Success,
@@ -249,7 +249,7 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 16,
-				ResourceNames = new() { "resourceName" },
+				ResourceNames = ["resourceName"],
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceProperty,
 				OutcomeType = AuditEventOutcomeType.Success,
@@ -266,8 +266,8 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 17,
-				ResourceIds = new() { 4581 },
-				ResourceNames = new() { "LM Push Server (LM-Push-Server)" },
+				ResourceIds = [4581],
+				ResourceNames = ["LM Push Server (LM-Push-Server)"],
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceGroups,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -281,8 +281,8 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 17,
-				ResourceIds = new() { 4581 },
-				ResourceNames = new() { "LM Push Server (LM-Push-Server)" },
+				ResourceIds = [4581],
+				ResourceNames = ["LM Push Server (LM-Push-Server)"],
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceGroups,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -296,8 +296,8 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 19,
-				ResourceIds = new() { 4582 },
-				ResourceNames = new() { "resourceName" },
+				ResourceIds = [4582],
+				ResourceNames = ["resourceName"],
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceGroups,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -311,8 +311,8 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 18,
-				ResourceIds = new() { 8443 },
-				ResourceNames = new() { "argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876" },
+				ResourceIds = [8443],
+				ResourceNames = ["argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876"],
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -326,18 +326,18 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 18,
-				ResourceIds = new() {
+				ResourceIds = [
 					8595,
 					8603,
 					8581,
 					8438
-				},
-				ResourceNames = new() {
+				],
+				ResourceNames = [
 					"collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781",
 					"argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789",
 					"argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493",
 					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
-				},
+				],
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -351,7 +351,7 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 20,
-				ResourceNames = new() { "LM Push Server" },
+				ResourceNames = ["LM Push Server"],
 				LogicModuleName = "HTTP per Page-",
 				InstanceName = "Google",
 				WildValue = "https://google.com",
@@ -397,14 +397,14 @@ public class AuditEventTests : TestWithOutput
 			new()
 			{
 				MatchedRegExId = 23,
-				ResourceIds = new() {
+				ResourceIds = [
 					4573,
 					4574
-				},
-				ResourceNames = new() {
+				],
+				ResourceNames = [
 					"EU-W1:i-0ad560910aee79179",
 					"EU-W1:i-0070bf1c74503d8ed"
-				},
+				],
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.Device,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -511,7 +511,7 @@ public class AuditEventTests : TestWithOutput
 				MatchedRegExId = 30,
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.ScheduledDownTime,
-				ResourceNames = new() { "somehost name" },
+				ResourceNames = ["somehost name"],
 				OutcomeType = AuditEventOutcomeType.Success,
 				ApiTokenId = "xx123xxx"
 			}
@@ -526,7 +526,7 @@ public class AuditEventTests : TestWithOutput
 				MatchedRegExId = 48,
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ScheduledDownTime,
-				ResourceNames = new() { "somehost name" },
+				ResourceNames = ["somehost name"],
 				OutcomeType = AuditEventOutcomeType.Success,
 				ApiTokenId = "xx123xxx"
 			}
@@ -570,7 +570,7 @@ public class AuditEventTests : TestWithOutput
 				MatchedRegExId = 33,
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSource,
-				ResourceIds = new() { 4808 },
+				ResourceIds = [4808],
 				LogicModuleId = 33514257,
 				LogicModuleName = "nttcms_ALL_ALL_IP_Addresses",
 				OutcomeType = AuditEventOutcomeType.Success
@@ -748,8 +748,8 @@ public class AuditEventTests : TestWithOutput
 		InstanceId = expectedInstanceId,
 		LogicModuleName = expectedLogicModuleName,
 		LogicModuleVersion = expectedLogicModuleVersion,
-		ResourceNames = new() { expectedResourceName },
-		ResourceIds = new() { expectedResourceId }
+		ResourceNames = [expectedResourceName],
+		ResourceIds = [expectedResourceId]
 	}
 );
 
@@ -812,7 +812,7 @@ public class AuditEventTests : TestWithOutput
 		ActionType = AuditEventActionType.Update,
 		EntityType = AuditEventEntityType.DeviceDataSourceInstance,
 		OutcomeType = AuditEventOutcomeType.Success,
-		ResourceNames = new() { expectedResourceName },
+		ResourceNames = [expectedResourceName],
 		InstanceName = expectedInstanceName,
 		Description = expectedDescription,
 	}
@@ -938,8 +938,8 @@ public class AuditEventTests : TestWithOutput
 		InstanceId = expectedInstanceId,
 		InstanceName = expectedInstanceName,
 		LogicModuleName = expectedLogicModuleName,
-		ResourceNames = new() { expectedResourceName },
-		ResourceIds = new() { expectedResourceId }
+		ResourceNames = [expectedResourceName],
+		ResourceIds = [expectedResourceId]
 	}
 );
 

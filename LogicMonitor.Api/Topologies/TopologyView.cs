@@ -22,13 +22,13 @@ public class TopologyView
 	///    The vertices
 	/// </summary>
 	[DataMember(Name = "vertices")]
-	public List<string>? Vertices { get; set; } = new();
+	public List<string>? Vertices { get; set; } = [];
 
 	/// <summary>
 	///    The edge types
 	/// </summary>
 	[DataMember(Name = "edgeTypes")]
-	public List<EdgeTypeAndDirection> EdgeTypes { get; set; } = new();
+	public List<EdgeTypeAndDirection> EdgeTypes { get; set; } = [];
 
 	/// <summary>
 	///    The algorithm

@@ -34,5 +34,5 @@ public class WebsiteOverallWidgetWebsite
 	/// The Website locations
 	/// </summary>
 	[DataMember(Name = "websites")]
-	public List<WebsiteOverallWidgetWebsiteDetail> Websites { get; set; } = new();
+	public List<WebsiteOverallWidgetWebsiteDetail> Websites { get; set; } = [];
 }

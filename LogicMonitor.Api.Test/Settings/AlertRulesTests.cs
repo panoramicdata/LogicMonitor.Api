@@ -50,8 +50,8 @@ public class AlertRulesTests : TestWithOutput
 		{
 			DataPoint = "*",
 			DataSourceInstanceName = "*",
-			Devices = new List<string> { "Test Device" },
-			DeviceGroups = new List<string> { "Test Groups" },
+			Devices = ["Test Device"],
+			DeviceGroups = ["Test Groups"],
 			EscalationChainId = 67,
 			SendAnomalySuppressedAlert = false,
 			Priority = 100,

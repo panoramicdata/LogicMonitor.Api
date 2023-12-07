@@ -16,7 +16,7 @@ public class WebsiteOverallStatusWidget : Widget, IWidget
 	/// The selected Websites
 	/// </summary>
 	[DataMember(Name = "selectedWebsites")]
-	public List<WebsiteOverallWidgetWebsite> SelectedWebsites { get; set; } = new();
+	public List<WebsiteOverallWidgetWebsite> SelectedWebsites { get; set; } = [];
 
 	/// <summary>
 	///     The display settings
@@ -28,5 +28,5 @@ public class WebsiteOverallStatusWidget : Widget, IWidget
 	///     The items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<object> Items { get; set; } = new();
+	public List<object> Items { get; set; } = [];
 }

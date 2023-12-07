@@ -21,7 +21,7 @@ public class DeviceDataSourceData
 	/// Datapoints
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<string> DataPoints { get; set; } = new();
+	public List<string> DataPoints { get; set; } = [];
 
 	/// <summary>
 	/// Next page params

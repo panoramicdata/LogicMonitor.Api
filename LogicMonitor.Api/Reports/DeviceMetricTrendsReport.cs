@@ -46,11 +46,11 @@ public class DeviceMetricTrendsReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<DeviceMetricTrendsReportMetric> Metrics { get; set; } = new();
+	public List<DeviceMetricTrendsReportMetric> Metrics { get; set; } = [];
 
 	/// <summary>
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; } = new();
+	public List<ReportColumn> Columns { get; set; } = [];
 }

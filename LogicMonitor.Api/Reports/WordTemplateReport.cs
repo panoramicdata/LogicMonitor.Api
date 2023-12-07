@@ -10,5 +10,5 @@ public class WordTemplateReport : DateRangeReport
 	/// The macros
 	/// </summary>
 	[DataMember(Name = "macros")]
-	public List<object> Macros { get; set; } = new();
+	public List<object> Macros { get; set; } = [];
 }

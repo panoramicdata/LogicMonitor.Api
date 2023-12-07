@@ -16,7 +16,7 @@ public class RecipientGroup : DescribedItem, IHasEndpoint
 	/// The recipients
 	/// </summary>
 	[DataMember(Name = "recipients")]
-	public List<AlertRecipient> Recipients { get; set; } = new();
+	public List<AlertRecipient> Recipients { get; set; } = [];
 
 	/// <summary>
 	///    The endpoint

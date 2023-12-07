@@ -37,7 +37,7 @@ public class RoleTests : TestWithOutput
 	{
 		// Ensure there is no existing role called "Test"
 		var existingRole = (await LogicMonitorClient
-				.GetAllAsync(new Filter<Role> { FilterItems = new List<FilterItem<Role>> { new Eq<Role>(nameof(Role.Name), Value) } }, default)
+				.GetAllAsync(new Filter<Role> { FilterItems = [new Eq<Role>(nameof(Role.Name), Value)] }, default)
 				.ConfigureAwait(false))
 			.SingleOrDefault();
 		if (existingRole is not null)
@@ -61,8 +61,8 @@ public class RoleTests : TestWithOutput
 			Name = Value,
 			RequireEULA = false,
 			TwoFactorAuthenticationRequired = false,
-			Privileges = new List<RolePrivilege>
-				{
+			Privileges =
+				[
 					new RolePrivilege
 					{
 						ObjectType = PrivilegeObjectType.DashboardGroup,
@@ -110,7 +110,7 @@ public class RoleTests : TestWithOutput
 						ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		// Refetch

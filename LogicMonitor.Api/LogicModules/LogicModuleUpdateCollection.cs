@@ -16,7 +16,7 @@ public class LogicModuleUpdateCollection
 	/// The LogicModule Update items
 	/// </summary>
 	[DataMember(Name = "items")]
-	public List<LogicModuleUpdate> Items { get; set; } = new();
+	public List<LogicModuleUpdate> Items { get; set; } = [];
 
 	/// <summary>
 	/// The search ID

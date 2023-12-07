@@ -22,5 +22,5 @@ public class WriteLogError
 	/// The originating request
 	/// </summary>
 	[DataMember(Name = "event")]
-	public WriteLogRequest Event { get; set; } = new();
+	public WriteLogRequest Event { get; set; } = [];
 }

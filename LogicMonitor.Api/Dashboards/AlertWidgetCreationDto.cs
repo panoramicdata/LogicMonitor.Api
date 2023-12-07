@@ -15,7 +15,7 @@ public class AlertWidgetCreationDto : WidgetCreationDto<AlertWidget>
 	/// Widget Tokens
 	/// </summary>
 	[DataMember(Name = "widgetTokens")]
-	public List<EntityProperty> CustomProperties { get; set; } = new();
+	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
 	/// Additional specification, including column ordering

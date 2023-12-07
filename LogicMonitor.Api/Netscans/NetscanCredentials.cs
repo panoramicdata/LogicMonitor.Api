@@ -40,5 +40,5 @@ public class NetscanCredentials
 	/// snmpV3Credentials
 	/// </summary>
 	[DataMember(Name = "snmpV3Credentials")]
-	public List<string> SnmpV3Credentials { get; set; } = new List<string>();
+	public List<string> SnmpV3Credentials { get; set; } = [];
 }

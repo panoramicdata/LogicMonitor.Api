@@ -28,5 +28,5 @@ public class AuditLogReport : DateRangeReport
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<ReportColumn> Columns { get; set; } = new();
+	public List<ReportColumn> Columns { get; set; } = [];
 }

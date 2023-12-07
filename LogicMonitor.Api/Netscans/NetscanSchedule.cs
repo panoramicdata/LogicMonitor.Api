@@ -22,7 +22,7 @@ public class NetscanSchedule
 	///    The recipients
 	/// </summary>
 	[DataMember(Name = "recipients")]
-	public List<object> Recipients { get; set; } = new();
+	public List<object> Recipients { get; set; } = [];
 
 	/// <summary>
 	///    The cron
@@ -34,7 +34,7 @@ public class NetscanSchedule
 	///    The weekday
 	/// </summary>
 	[DataMember(Name = "weekday")]
-	public List<string> WeekDays { get; set; } = new();
+	public List<string> WeekDays { get; set; } = [];
 
 	/// <summary>
 	///    The nth week

@@ -52,7 +52,7 @@ public class Role : NamedItem, IHasEndpoint
 	/// The account privileges associated with the role. Privileges can be added to a role for each area of your account
 	/// </summary>
 	[DataMember(Name = "privileges")]
-	public List<RolePrivilege> Privileges { get; set; } = new();
+	public List<RolePrivilege> Privileges { get; set; } = [];
 
 	/// <summary>
 	/// The group Id of the role

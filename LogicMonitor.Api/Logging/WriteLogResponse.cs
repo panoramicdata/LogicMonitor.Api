@@ -22,5 +22,5 @@ public class WriteLogResponse
 	/// Errors
 	/// </summary>
 	[DataMember(Name = "errors")]
-	public List<WriteLogError> Errors { get; set; } = new();
+	public List<WriteLogError> Errors { get; set; } = [];
 }

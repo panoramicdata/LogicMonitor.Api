@@ -16,5 +16,5 @@ public class TopologyLayout
 	///    The vertices
 	/// </summary>
 	[DataMember(Name = "vertices")]
-	public List<Vertex> Vertices { get; set; } = new();
+	public List<Vertex> Vertices { get; set; } = [];
 }

@@ -22,11 +22,11 @@ public class AppliesToResponse
 	/// The original matches
 	/// </summary>
 	[DataMember(Name = "originalMatches")]
-	public List<AppliesToMatch> OriginalMatches { get; set; } = new();
+	public List<AppliesToMatch> OriginalMatches { get; set; } = [];
 
 	/// <summary>
 	/// The current matches
 	/// </summary>
 	[DataMember(Name = "currentMatches")]
-	public List<AppliesToMatch> CurrentMatches { get; set; } = new();
+	public List<AppliesToMatch> CurrentMatches { get; set; } = [];
 }

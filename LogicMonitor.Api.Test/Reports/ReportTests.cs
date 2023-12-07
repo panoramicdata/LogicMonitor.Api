@@ -32,10 +32,10 @@ public class ReportTests : TestWithOutput
 		// Delete it if it already exists
 		foreach (var existingReportGroup in await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup>
 		{
-			FilterItems = new List<FilterItem<ReportGroup>>
-					{
+			FilterItems =
+					[
 						new Eq<ReportGroup>(nameof(ReportGroup.Name), "Test Name")
-					}
+					]
 		}, default).ConfigureAwait(false)
 		)
 		{

@@ -14,10 +14,10 @@ public class LogItemTests : TestWithOutput
 		var accessLogItems = await LogicMonitorClient.GetAllAsync(new Filter<LogItem>
 		{
 			Take = 100,
-			FilterItems = new List<FilterItem<LogItem>>
-				{
+			FilterItems =
+				[
 					new Gt<LogItem>(nameof(LogItem.HappenedOnTimeStampUtc), DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeSeconds())
-				},
+				],
 			Order = new Order<LogItem>
 			{
 				Property = nameof(LogItem.HappenedOnTimeStampUtc),

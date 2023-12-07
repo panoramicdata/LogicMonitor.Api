@@ -10,17 +10,17 @@ public class Histogram
 	/// The legends for the data series that was returned
 	/// </summary>
 	[DataMember(Name = "datapoint")]
-	public List<string> Datapoint { get; set; } = new List<string>();
+	public List<string> Datapoint { get; set; } = [];
 
 	/// <summary>
 	/// The timestamps of the series that was returned
 	/// </summary>
 	[DataMember(Name = "timestamps")]
-	public List<int> Timestamps { get; set; } = new List<int>();
+	public List<int> Timestamps { get; set; } = [];
 
 	/// <summary>
 	/// The values of the series that was returned
 	/// </summary>
 	[DataMember(Name = "values")]
-	public List<List<int>> Values { get; set; } = new List<List<int>>();
+	public List<List<int>> Values { get; set; } = [];
 }

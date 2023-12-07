@@ -46,7 +46,7 @@ public class RoleCreationDto : CreationDto<Role>
 	/// Privileges
 	/// </summary>
 	[DataMember(Name = "privileges")]
-	public List<RolePrivilege> Privileges { get; set; } = new();
+	public List<RolePrivilege> Privileges { get; set; } = [];
 
 	/// <summary>
 	/// Role Group ID

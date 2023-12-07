@@ -151,11 +151,11 @@ public class AlertFilter
 	/// <summary>
 	///    The Alert level
 	/// </summary>
-	public List<AlertLevel> Levels { get; set; } = new List<AlertLevel>
-		{
+	public List<AlertLevel> Levels { get; set; } =
+		[
 			AlertLevel.Error,
 			AlertLevel.Critical
-		};
+		];
 
 	/// <summary>
 	///    The order by property, for example, nameof(Alert.StartOnSeconds) (the default)
@@ -343,9 +343,9 @@ public class AlertFilter
 
 	internal List<AlertType>? GetAlertTypes()
 	{
-		var alertTypes = (AlertTypes ?? new List<AlertType>()).Union(AlertType.HasValue
-			? new List<AlertType> { AlertType.Value }
-			: new List<AlertType>()).ToList();
+		var alertTypes = (AlertTypes ?? []).Union(AlertType.HasValue
+			? [AlertType.Value]
+			: []).ToList();
 		return alertTypes.Count > 0 ? alertTypes : null;
 	}
 

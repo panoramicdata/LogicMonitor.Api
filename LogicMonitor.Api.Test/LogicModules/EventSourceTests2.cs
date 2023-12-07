@@ -109,10 +109,10 @@ public class EventSourceTests2 : TestWithOutput
 		const string groupName = "Integrator";
 		var eventSources = await LogicMonitorClient.GetAllAsync(new Filter<EventSource>
 		{
-			FilterItems = new List<FilterItem<EventSource>>
-				{
+			FilterItems =
+				[
 					new Eq<EventSource>(nameof(EventSource.Group), groupName)
-				}
+				]
 		}, default).ConfigureAwait(false);
 
 		// Make sure that some are returned

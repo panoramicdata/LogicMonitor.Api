@@ -19,7 +19,7 @@ public class OpsNotesTests : TestWithOutput
 		{
 			DateTimeUtcSeconds = DateTime.UtcNow.SecondsSinceTheEpoch(),
 			Note = $"LogicMonitor.Api.Test run on {DateTime.UtcNow}",
-			Tags = new List<OpsNoteTagCreationDto> { new OpsNoteTagCreationDto { Name = "LogicMonitor.Api" } }
+			Tags = [new OpsNoteTagCreationDto { Name = "LogicMonitor.Api" }]
 		}, default)
 		.ConfigureAwait(false);
 
@@ -62,8 +62,8 @@ public class OpsNotesTests : TestWithOutput
 		{
 			Note = "Test&@!\"£$%^&*()_+-=",
 			DateTimeUtcSeconds = utcNow,
-			Scopes = new List<OpsNoteScopeCreationDto>
-			{
+			Scopes =
+			[
 				t.Name switch
 				{
 					nameof(DeviceOpsNoteScopeCreationDto) => new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id},
@@ -72,7 +72,7 @@ public class OpsNotesTests : TestWithOutput
 					nameof(WebsiteGroupOpsNoteScopeCreationDto) => new WebsiteGroupOpsNoteScopeCreationDto {WebsiteGroupId = website.GroupId},
 					_ => throw new NotSupportedException($"Unexpected type {t.Name}")
 				}
-			}
+			]
 		};
 		var createdOpsNote = await LogicMonitorClient.CreateAsync(opsNoteCreationDto, default).ConfigureAwait(false);
 

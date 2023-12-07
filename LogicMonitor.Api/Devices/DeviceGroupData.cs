@@ -41,7 +41,7 @@ public class DeviceGroupData : NamedItem
 	/// The role privilege operations for the device group that are granted to the user that made this API request
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]
-	public List<string> RolePrivileges { get; set; } = new();
+	public List<string> RolePrivileges { get; set; } = [];
 
 	/// <summary>
 	/// The number of instances in each AWS region (only applies to AWS groups)

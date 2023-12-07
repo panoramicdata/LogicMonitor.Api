@@ -16,5 +16,5 @@ public class DeviceGroupAndDevices
 	/// Devices
 	/// </summary>
 	[DataMember(Name = "hosts")]
-	public List<Device> Devices { get; set; } = new();
+	public List<Device> Devices { get; set; } = [];
 }

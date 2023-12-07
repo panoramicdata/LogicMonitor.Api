@@ -10,7 +10,7 @@ public class AlertCreationDtoAlertExtra
 	/// The columns
 	/// </summary>
 	[DataMember(Name = "columns")]
-	public List<AlertCreationDtoColumn> Columns { get; set; } = new();
+	public List<AlertCreationDtoColumn> Columns { get; set; } = [];
 
 	/// <summary>
 	/// Whether to show the filter

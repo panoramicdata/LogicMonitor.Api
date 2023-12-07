@@ -71,12 +71,12 @@ public class WebsiteTests : TestWithOutput
 		var alertFilter = new AlertFilter
 		{
 			IncludeCleared = true,
-			Levels = new List<AlertLevel>
-				 {
+			Levels =
+				 [
 					 AlertLevel.Warning,
 					 AlertLevel.Error,
 					 AlertLevel.Critical
-				 }
+				 ]
 		};
 
 		// Get the Website
@@ -107,10 +107,10 @@ public class WebsiteTests : TestWithOutput
 		// Ensure the website doesn't exist
 		var oldWebsites = await LogicMonitorClient.GetAllAsync(new Filter<Website>
 		{
-			FilterItems = new List<FilterItem<Website>>
-				{
+			FilterItems =
+				[
 					new Eq<Website>(nameof(Website.Name), nameof(CrudWebsiteGroupsAndWebsites))
-				}
+				]
 		}, default).ConfigureAwait(false);
 		foreach (var oldWebsite in oldWebsites)
 		{
@@ -134,10 +134,10 @@ public class WebsiteTests : TestWithOutput
 			IsMonitoringDisabled = false,
 			ParentGroupFullPath = "",
 			ParentId = "1",
-			Properties = new List<EntityProperty>
-			{
+			Properties =
+			[
 				new EntityProperty {Name = "name", Value = "value"}
-			}
+			]
 			//TestLocation = new TestLocation { All = true, SmgIds = new List<int> { 1, 2, 4, 3, 5, 6 } }
 		}, default).ConfigureAwait(false);
 
@@ -269,17 +269,17 @@ public class WebsiteTests : TestWithOutput
 		PollingIntervalMinutes = 1.ToString(CultureInfo.InvariantCulture),
 		Type = WebsiteType.WebCheck,
 		HttpSchema = HttpSchema.Https,
-		WebsiteProperties = new List<EntityProperty>
-			{
+		WebsiteProperties =
+			[
 						new EntityProperty
 						{
 							Name = "test",
 							Value = "test"
 						}
-},
+],
 		Domain = "www.google.com",
-		Steps = new List<WebCheckStep>
-			{
+		Steps =
+			[
 						new WebCheckStep
 						{
 							MatchType = Api.Websites.MatchType.Plain,
@@ -294,7 +294,7 @@ public class WebsiteTests : TestWithOutput
 							Timeout = 5,
 							UseDefaultRoot = true
 						}
-			},
+			],
 		TriggerSslExpirationAlerts = true,
 		AlertExpression = ExpectedAlertExpression,
 		IndividualAlertLevel = Level.Warning,

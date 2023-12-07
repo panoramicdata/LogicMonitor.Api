@@ -10,7 +10,7 @@ public class PieChartWidgetInfo
 	/// The title
 	/// </summary>
 	[DataMember(Name = "counters")]
-	public List<object> Counters { get; set; } = new();
+	public List<object> Counters { get; set; } = [];
 
 	/// <summary>
 	/// Whether to hide zero percent slices
@@ -46,17 +46,17 @@ public class PieChartWidgetInfo
 	/// The data points
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<PieChartWidgetDataPoint> DataPoints { get; set; } = new();
+	public List<PieChartWidgetDataPoint> DataPoints { get; set; } = [];
 
 	/// <summary>
 	/// The title
 	/// </summary>
 	[DataMember(Name = "virtualDataPoints")]
-	public List<object> VirtualDataPoints { get; set; } = new();
+	public List<object> VirtualDataPoints { get; set; } = [];
 
 	/// <summary>
 	/// The title
 	/// </summary>
 	[DataMember(Name = "pieChartItems")]
-	public List<PieChartWidgetInfoItem> Items { get; set; } = new();
+	public List<PieChartWidgetInfoItem> Items { get; set; } = [];
 }

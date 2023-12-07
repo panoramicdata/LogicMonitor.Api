@@ -27,7 +27,7 @@ public class RoleGroupTests : TestWithOutput
 	{
 		// Ensure there is no existing RoleGroup called "Test"
 		var existingRoleGroup = (await LogicMonitorClient
-				.GetAllAsync(new Filter<RoleGroup> { FilterItems = new List<FilterItem<RoleGroup>> { new Eq<RoleGroup>(nameof(RoleGroup.Name), Value) } }, default)
+				.GetAllAsync(new Filter<RoleGroup> { FilterItems = [new Eq<RoleGroup>(nameof(RoleGroup.Name), Value)] }, default)
 				.ConfigureAwait(false))
 			.SingleOrDefault();
 		if (existingRoleGroup is not null)

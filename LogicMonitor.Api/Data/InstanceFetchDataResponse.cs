@@ -28,19 +28,19 @@ public class InstanceFetchDataResponse
 	/// Data Points
 	/// </summary>
 	[DataMember(Name = "dataPoints")]
-	public List<string> DataPoints { get; set; } = new();
+	public List<string> DataPoints { get; set; } = [];
 
 	/// <summary>
 	/// Data Values
 	/// </summary>
 	[DataMember(Name = "values")]
-	public List<List<object>> DataValues { get; set; } = new();
+	public List<List<object>> DataValues { get; set; } = [];
 
 	/// <summary>
 	/// Timestamps
 	/// </summary>
 	[DataMember(Name = "time")]
-	public List<long> Timestamps { get; set; } = new();
+	public List<long> Timestamps { get; set; } = [];
 
 	/// <summary>
 	/// Next page parameters

@@ -52,7 +52,7 @@ public class WidgetCell
 	/// Days until Alert list
 	/// </summary>
 	[DataMember(Name = "daysUntilAlertList")]
-	public List<object> DaysUntilAlertList { get; set; } = new();
+	public List<object> DaysUntilAlertList { get; set; } = [];
 
 	/// <summary>
 	/// Color Level

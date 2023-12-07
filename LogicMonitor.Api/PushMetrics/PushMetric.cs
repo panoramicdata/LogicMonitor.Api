@@ -43,7 +43,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Case insensitive
 	/// </summary>
 	[DataMember(Name = "resourceIds")]
-	public Dictionary<string, string> ResourceIds { get; set; } = new();
+	public Dictionary<string, string> ResourceIds { get; set; } = [];
 
 	/// <summary>
 	/// New properties for resource.
@@ -62,7 +62,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// * Case insensitive
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public Dictionary<string, string> ResourceProperties { get; set; } = new();
+	public Dictionary<string, string> ResourceProperties { get; set; } = [];
 
 	/// <summary>
 	/// The DataSource id
@@ -117,7 +117,7 @@ public class PushMetric : IHasSingletonEndpoint
 	/// Required
 	/// </summary>
 	[DataMember(Name = "instances")]
-	public List<PushMetricInstance> Instances { get; set; } = new();
+	public List<PushMetricInstance> Instances { get; set; } = [];
 
 	/// <inheritdoc />
 	public string Endpoint() => "metric/ingest";
