@@ -68,6 +68,12 @@ public class Topology : NamedItem, IHasEndpoint
 	public List<TopologyView> Views { get; set; } = [];
 
 	/// <summary>
+	///    The connections
+	/// </summary>
+	[DataMember(Name = "connections")]
+	public List<TopologyConnection> Connection { get; set; } = [];
+
+	/// <summary>
 	/// The REST API endpoint
 	/// </summary>
 	public string Endpoint() => "topology/topologies";

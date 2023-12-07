@@ -153,7 +153,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 			ParentId = "1",
 			Properties =
 			[
-				new EntityProperty {Name = "name", Value = "value"}
+				new EntityProperty { Name = "name", Value = "value" }
 			]
 			//TestLocation = new TestLocation { All = true, SmgIds = new List<int> { 1, 2, 4, 3, 5, 6 } }
 		}, default).ConfigureAwait(true);
@@ -293,14 +293,14 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 	}
 
 	[Fact]
-	public async Task GetWebsiteSDTs()
+	public async Task GetWebsiteSdts()
 	{
 		var websiteList = await LogicMonitorClient
 			.GetAllAsync<Website>(default)
 			.ConfigureAwait(true);
 
 		var sdts = await LogicMonitorClient
-			.GetWebsiteSDTListAsync(websiteList[0].Id, new Filter<ScheduledDownTime>(), default)
+			.GetWebsiteSdtListAsync(websiteList[0].Id, new Filter<ScheduledDownTime>(), default)
 			.ConfigureAwait(true);
 		sdts.Should().NotBeNull();
 	}

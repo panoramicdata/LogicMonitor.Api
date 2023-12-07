@@ -85,6 +85,36 @@ public class HttpIntegration : Integration
 	public string? AckOAuthVersion { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The ACK OAuth grant type
+	/// </summary>
+	[DataMember(Name = "ackOAuthGrantType")]
+	public string? AckOAuthGrantType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The ACK OAuth access token Url
+	/// </summary>
+	[DataMember(Name = "ackOAuthAccessTokenUrl")]
+	public string? AckOAuthAccessTokenUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The ACK OAuth client id
+	/// </summary>
+	[DataMember(Name = "ackOAuthClientId")]
+	public string? AckOAuthClientId { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The ACK OAuth client secret
+	/// </summary>
+	[DataMember(Name = "ackOAuthClientSecret")]
+	public string? AckOAuthClientSecret { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The ACK OAuth scope
+	/// </summary>
+	[DataMember(Name = "ackOAuthScope")]
+	public string? AckOAuthScope { get; set; } = string.Empty;
+
+	/// <summary>
 	///     The OAuth version
 	/// </summary>
 	[DataMember(Name = "oAuthVersion")]

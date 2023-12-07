@@ -52,5 +52,5 @@ public class SlaReportMetric
 	/// The exclusion SDT type
 	/// </summary>
 	[DataMember(Name = "exclusionSDTType")]
-	public string ExclusionSDTType { get; set; } = string.Empty;
+	public string ExclusionSdtType { get; set; } = string.Empty;
 }

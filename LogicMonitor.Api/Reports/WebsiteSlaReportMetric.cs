@@ -22,5 +22,5 @@ public class WebsiteSlaReportMetric
 	/// Whether to exclude alerts occurring in SDT
 	/// </summary>
 	[DataMember(Name = "excludeSDT")]
-	public bool ExcludeSDT { get; set; }
+	public bool ExcludeSdt { get; set; }
 }

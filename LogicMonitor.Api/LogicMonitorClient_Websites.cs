@@ -372,7 +372,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get a list of SDTs for a website
 	/// </summary>
-	public async Task<Page<ScheduledDownTime>> GetWebsiteSDTListAsync(
+	public async Task<Page<ScheduledDownTime>> GetWebsiteSdtListAsync(
 		int websiteId,
 		Filter<ScheduledDownTime> filter,
 		CancellationToken cancellationToken)

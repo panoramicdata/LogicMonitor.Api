@@ -34,7 +34,7 @@ public class WebsiteOverviewReport : DateRangeReport
 	/// Whether to exclude SDT
 	/// </summary>
 	[DataMember(Name = "excludeSDT")]
-	public bool ExcludeSDT { get; set; }
+	public bool ExcludeSdt { get; set; }
 
 	/// <summary>
 	/// Whether to exclude services with 100% availability

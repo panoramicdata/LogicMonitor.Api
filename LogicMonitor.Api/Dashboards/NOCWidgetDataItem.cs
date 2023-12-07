@@ -10,7 +10,7 @@ public class NOCWidgetDataItem
 	/// Whether this is in scheduled downtime
 	/// </summary>
 	[DataMember(Name = "inSDT")]
-	public bool InSDT { get; set; }
+	public bool InSdt { get; set; }
 
 	/// <summary>
 	/// The type of the widget data item
@@ -79,13 +79,13 @@ public class NOCWidgetDataItem
 	/// Number in scheduled downtime error alerts
 	/// </summary>
 	[DataMember(Name = "inSDTErrorAlert")]
-	public int InSDTErrorAlert { get; set; }
+	public int InSdtErrorAlert { get; set; }
 
 	/// <summary>
 	/// Number of in scheduled downtime and confirmed error alerts
 	/// </summary>
 	[DataMember(Name = "inSDTAndConfirmedErrorAlert")]
-	public int InSDTAndConfirmedErrorAlert { get; set; }
+	public int InSdtAndConfirmedErrorAlert { get; set; }
 
 	/// <summary>
 	/// Number of error alerts
@@ -103,13 +103,13 @@ public class NOCWidgetDataItem
 	/// Number in scheduled downtime and critical alerts
 	/// </summary>
 	[DataMember(Name = "inSDTCriticalAlert")]
-	public int InSDTCriticalAlert { get; set; }
+	public int InSdtCriticalAlert { get; set; }
 
 	/// <summary>
 	/// Number in scheduled downtime and confirmed critical alerts
 	/// </summary>
 	[DataMember(Name = "inSDTAndConfirmedCriticalAlert")]
-	public int InSDTAndConfirmedCriticalAlert { get; set; }
+	public int InSdtAndConfirmedCriticalAlert { get; set; }
 
 	/// <summary>
 	/// Number of critical alerts

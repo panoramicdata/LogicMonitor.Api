@@ -20,7 +20,7 @@ public abstract class TestWithOutput
 
 	protected int WindowsDeviceId { get; }
 
-	protected int SDTResourceGroupId { get; }
+	protected int SdtResourceGroupId { get; }
 
 	protected int WindowsDeviceLargeDeviceDataSourceId { get; }
 
@@ -44,12 +44,12 @@ public abstract class TestWithOutput
 		WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
 		ServiceDeviceId = testPortalConfig.ServiceDeviceId;
 		NetflowDeviceId = testPortalConfig.NetflowDeviceId;
-		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
+		SdtResourceGroupId = testPortalConfig.SdtResourceGroupId;
 		TestDashboardId = testPortalConfig.TestDashboardId;
 		DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 		WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
 		ResourceGroupFullPath = testPortalConfig.ResourceGroupFullPath;
-		SDTResourceGroupId = testPortalConfig.SDTResourceGroupId;
+		SdtResourceGroupId = testPortalConfig.SdtResourceGroupId;
 		WebsiteName = testPortalConfig.WebsiteName;
 		SnmpDeviceId = testPortalConfig.SnmpDeviceId;
 		AllWidgetsDashboardId = testPortalConfig.AllWidgetsDashboardId;
