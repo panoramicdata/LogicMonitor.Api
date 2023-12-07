@@ -9,7 +9,9 @@ public class IntegrationTests : TestWithOutput
 	[Fact]
 	public async Task GetIntegrations()
 	{
-		var integrations = await LogicMonitorClient.GetAllAsync<Integration>(default).ConfigureAwait(false);
+		var integrations = await LogicMonitorClient
+			.GetAllAsync<Integration>(default)
+			.ConfigureAwait(true);
 
 		// Text should be set
 		integrations.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
@@ -20,7 +22,7 @@ public class IntegrationTests : TestWithOutput
 	{
 		var auditLogs = await LogicMonitorClient
 			.GetIntegrationAuditLogsAsync()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		auditLogs.Items.Should().NotBeEmpty();
 	}

@@ -11,7 +11,7 @@ public class PortalVersionTests : TestWithOutput
 	{
 		var portalVersion = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		portalVersion.Version.Should().NotBeNull();
 		portalVersion.Version.Module.Should().NotBeNull();
 		portalVersion.Extra.Should().NotBeNull();
@@ -26,7 +26,7 @@ public class PortalVersionTests : TestWithOutput
 	{
 		var portalVersion = await LogicMonitorClient
 			.GetVersionAsync("altius", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		portalVersion.Version.Should().NotBeNull();
 		((object)portalVersion.Version.Module).Should().NotBeNull();
 		portalVersion.Extra.Should().NotBeNull();

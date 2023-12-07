@@ -9,7 +9,9 @@ public class OpsNoteTests : TestWithOutput
 	[Fact]
 	public async Task GetOpsNotes()
 	{
-		var allOpsNotes = await LogicMonitorClient.GetAllAsync<OpsNote>(default).ConfigureAwait(false);
+		var allOpsNotes = await LogicMonitorClient
+			.GetAllAsync<OpsNote>(default)
+			.ConfigureAwait(true);
 
 		allOpsNotes.Should().NotBeNull();
 	}
@@ -24,7 +26,7 @@ public class OpsNoteTests : TestWithOutput
 				Direction = OrderDirection.Asc,
 				Property = nameof(OpsNoteTag.Name)
 			}
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		// Text should be set
 		allOpsNotesTags.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());

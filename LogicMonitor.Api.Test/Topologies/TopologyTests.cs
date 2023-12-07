@@ -11,7 +11,7 @@ public class TopologyTests : TestWithOutput
 	{
 		var items = await LogicMonitorClient
 			.GetAllAsync<Topology>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
 	}
@@ -32,7 +32,7 @@ public class TopologyTests : TestWithOutput
 					},
 					default
 				)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 			item.Should().NotBeNull();
 		}
 	}

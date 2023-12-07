@@ -18,7 +18,7 @@ public class AlertHistoryTests : TestWithOutput
 		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Count.Should().Be(25);
@@ -36,7 +36,7 @@ public class AlertHistoryTests : TestWithOutput
 		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Count.Should().Be(8);
@@ -54,7 +54,7 @@ public class AlertHistoryTests : TestWithOutput
 		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Count.Should().Be(31);
@@ -77,7 +77,7 @@ public class AlertHistoryTests : TestWithOutput
 		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Count.Should().Be(25);
@@ -100,12 +100,12 @@ public class AlertHistoryTests : TestWithOutput
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		await act
 			.Should()
 			.ThrowAsync<ArgumentException>()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -124,12 +124,12 @@ public class AlertHistoryTests : TestWithOutput
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		await act
 			.Should()
 			.ThrowAsync<ArgumentException>()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -149,11 +149,11 @@ public class AlertHistoryTests : TestWithOutput
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
 			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		await act
 			.Should()
 			.ThrowAsync<ArgumentException>()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 }

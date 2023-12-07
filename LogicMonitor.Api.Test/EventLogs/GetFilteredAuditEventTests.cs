@@ -13,7 +13,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 	{
 		var unfilteredLogItems = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		unfilteredLogItems.Count.Should().BePositive();
 
@@ -27,7 +27,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 			{ UsernameFilter = "\"System%3AActiveDiscovery\"" },
 			default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var filteredLogItemsSystemActiveDiscoveryCount = filteredLogItemsSystemActiveDiscovery.Count;
 
@@ -41,7 +41,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 			{ UsernameFilter = "\"System%3AAppliesTo\"" },
 			default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var filteredLogItemsSystemAppliesToCount = filteredLogItemsSystemAppliesTo.Count;
 
@@ -55,7 +55,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" },
 			default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var filteredLogItemsSystemAppliesToAndSystemDiscoveryCount = filteredLogItemsSystemAppliesToAndSystemDiscovery.Count;
 
@@ -72,7 +72,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
 			default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var unfilteredLogItemsCount = unfilteredLogItems.Count;
 
@@ -88,7 +88,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 			{ TextFilter = "\"* AND NOT *health*\"" },
 			default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var filteredLogItemsHealthTextExcludedCount = filteredLogItemsHealthTextExcluded.Count;
 
@@ -102,7 +102,7 @@ public class GetFilteredAuditEventTests : TestWithOutput
 			{ TextFilter = "\"*health*\"" },
 			default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var filteredLogItemsHealthTextIncludedCount = filteredLogItemsHealthTextIncluded.Count;
 

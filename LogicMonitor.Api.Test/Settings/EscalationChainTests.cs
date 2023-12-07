@@ -11,7 +11,7 @@ public class EscalationChainTests : TestWithOutput
 	{
 		var escalationChains = await LogicMonitorClient
 			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		escalationChains.Items.Should().NotBeNullOrEmpty();
 	}
 
@@ -20,11 +20,11 @@ public class EscalationChainTests : TestWithOutput
 	{
 		var escalationChains = await LogicMonitorClient
 			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var chain = await LogicMonitorClient
 			.GetEscalationChainAsync(escalationChains.Items[0].Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		chain.Should().NotBeNull();
 	}

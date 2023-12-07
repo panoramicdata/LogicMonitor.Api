@@ -14,10 +14,14 @@ public class AppliesToFunctionTests : TestWithOutput
 		const string testAppliesToFunctionCode = "displayname == \"" + testAppliesToFunctionName + "\"";
 
 		// Delete if already present
-		var existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default).ConfigureAwait(false);
+		var existingAppliesToFunction = await LogicMonitorClient
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
+			.ConfigureAwait(true);
 		if (existingAppliesToFunction != null)
 		{
-			await LogicMonitorClient.DeleteAsync(existingAppliesToFunction, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync(existingAppliesToFunction, cancellationToken: default)
+				.ConfigureAwait(true);
 		}
 
 		// Create
@@ -26,10 +30,12 @@ public class AppliesToFunctionTests : TestWithOutput
 			Name = testAppliesToFunctionName,
 			Description = testAppliesToFunctionDescription,
 			Code = testAppliesToFunctionCode
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		// Refetch and check
-		existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default).ConfigureAwait(false);
+		existingAppliesToFunction = await LogicMonitorClient
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
+			.ConfigureAwait(true);
 		existingAppliesToFunction.Should().NotBeNull();
 		if (existingAppliesToFunction != null)
 		{
@@ -41,19 +47,27 @@ public class AppliesToFunctionTests : TestWithOutput
 		// Update
 		const string newDescription = testAppliesToFunctionDescription + "2";
 		existingAppliesToFunction.Description = newDescription;
-		await LogicMonitorClient.PutAsync(existingAppliesToFunction, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.PutAsync(existingAppliesToFunction, default)
+			.ConfigureAwait(true);
 
 		// Refetch and check
-		existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default).ConfigureAwait(false);
+		existingAppliesToFunction = await LogicMonitorClient
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
+			.ConfigureAwait(true);
 
 		existingAppliesToFunction ??= new();
 		existingAppliesToFunction.Description.Should().Be(newDescription);
 
 		// Delete
-		await LogicMonitorClient.DeleteAsync(existingAppliesToFunction, cancellationToken: default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.DeleteAsync(existingAppliesToFunction, cancellationToken: default)
+			.ConfigureAwait(true);
 
 		// Refetch and check
-		existingAppliesToFunction = await LogicMonitorClient.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default).ConfigureAwait(false);
+		existingAppliesToFunction = await LogicMonitorClient
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
+			.ConfigureAwait(true);
 		existingAppliesToFunction.Should().BeNull();
 	}
 
@@ -110,7 +124,7 @@ public class AppliesToFunctionTests : TestWithOutput
 	{
 		var matches = await LogicMonitorClient
 			.GetAppliesToAsync("customer.code == \"PDL\"", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		matches.Should().NotBeNull();
 		matches.Should().NotBeEmpty();
 	}

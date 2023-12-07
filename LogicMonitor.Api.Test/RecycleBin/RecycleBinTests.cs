@@ -9,7 +9,7 @@ public class RecycleBinTests : TestWithOutput
 	[Fact]
 	public async Task GetAllRecycleBinItems()
 	{
-		var recycleBinItems = await LogicMonitorClient.GetAllAsync<RecycleBinItem>(default).ConfigureAwait(false);
+		var recycleBinItems = await LogicMonitorClient.GetAllAsync<RecycleBinItem>(default).ConfigureAwait(true);
 		recycleBinItems.Should().NotBeNull();
 	}
 }

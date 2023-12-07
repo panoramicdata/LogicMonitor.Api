@@ -12,7 +12,7 @@ public class EventSourceTests : TestWithOutput
 	{
 		var eventGroupDataSources = await LogicMonitorClient
 			.GetAllDeviceGroupEventSourcesAsync(1, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		eventGroupDataSources.Should().NotBeNullOrEmpty();
 	}
 }

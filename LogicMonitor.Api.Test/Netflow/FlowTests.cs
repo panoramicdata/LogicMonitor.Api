@@ -18,7 +18,8 @@ public class FlowTests : TestWithOutput
 	public async Task GetApplications()
 	{
 		var device = await LogicMonitorClient
-			.GetDevicesPageAsync(new Filter<Device>(), default).ConfigureAwait(false);
+			.GetDevicesPageAsync(new Filter<Device>(), default)
+			.ConfigureAwait(true);
 
 		List<Device> netflowDeviceList = [];
 
@@ -38,7 +39,7 @@ public class FlowTests : TestWithOutput
 				},
 				default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flowApplications.Items.Should().NotBeNullOrEmpty();
@@ -50,7 +51,8 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetApplicationsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default)
+			.ConfigureAwait(true);
 
 		var flowApplications = await LogicMonitorClient
 			.GetDeviceGroupFlowApplicationsPageAsync(
@@ -68,7 +70,7 @@ public class FlowTests : TestWithOutput
 					EndDateTime = DateTime.UtcNow.AddDays(-1),
 				},
 				default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flowApplications.Items.Should().NotBeNullOrEmpty();
@@ -77,7 +79,8 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetBandwidthsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default)
+			.ConfigureAwait(true);
 
 		var flowBandwidths = await LogicMonitorClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
 		{
@@ -91,7 +94,7 @@ public class FlowTests : TestWithOutput
 			StartDateTime = DateTime.UtcNow.AddDays(-2),
 			EndDateTime = DateTime.UtcNow.AddDays(-1)
 		}, default)
-		.ConfigureAwait(false);
+		.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flowBandwidths.Items.Should().NotBeNullOrEmpty();
@@ -100,7 +103,8 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlowsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default)
+			.ConfigureAwait(true);
 
 		var flows = await LogicMonitorClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
 		{
@@ -114,7 +118,7 @@ public class FlowTests : TestWithOutput
 			StartDateTime = DateTime.UtcNow.AddDays(-2),
 			EndDateTime = DateTime.UtcNow.AddDays(-1)
 		}, default)
-		.ConfigureAwait(false);
+		.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
@@ -123,13 +127,13 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlowApplications()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(true);
 		var flowEndpoints = await LogicMonitorClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
 		}, default
-		).ConfigureAwait(false);
+		).ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flowEndpoints.Items.Should().NotBeNullOrEmpty();
@@ -141,13 +145,13 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlows()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(true);
 		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
 		}, default
-		).ConfigureAwait(false);
+		).ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
@@ -159,13 +163,14 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetPorts()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default)
+			.ConfigureAwait(false);
 		var flowPorts = await LogicMonitorClient.GetFlowPortsPageAsync(new FlowPortsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
 			DeviceId = device.Id
 		}, default
-		).ConfigureAwait(false);
+		).ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flowPorts.Items.Should().NotBeNullOrEmpty();
@@ -177,7 +182,8 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetZoomTimeFlows()
 	{
-		var device = await GetNetflowDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetNetflowDeviceAsync(default)
+			.ConfigureAwait(true);
 		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
 			DeviceId = NetflowDeviceId,
@@ -185,7 +191,7 @@ public class FlowTests : TestWithOutput
 			StartDateTime = _startDateTimeSeconds,
 			EndDateTime = _endDateTimeSeconds
 		}, default
-		).ConfigureAwait(false);
+		).ConfigureAwait(true);
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
@@ -196,7 +202,7 @@ public class FlowTests : TestWithOutput
 	{
 		var interfaces = await LogicMonitorClient
 			.GetDeviceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		interfaces.Items.Should().NotBeNullOrEmpty();
 	}
 }

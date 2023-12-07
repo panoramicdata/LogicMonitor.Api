@@ -11,7 +11,7 @@ public class FunctionTests : TestWithOutput
 	{
 		var things = await LogicMonitorClient
 			.GetAppliesToAsync("isCisco()", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		things.Should().NotBeNull();
 		things.Should().NotBeNullOrEmpty();
 	}

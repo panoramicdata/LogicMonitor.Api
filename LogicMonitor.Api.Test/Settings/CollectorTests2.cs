@@ -13,13 +13,17 @@ public class CollectorTests2
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{
-		var collectorGroups = await LogicMonitorClient.GetAllAsync<CollectorGroup>(default).ConfigureAwait(false);
+		var collectorGroups = await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(true);
 		collectorGroups.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collectorGroup in collectorGroups)
 		{
-			var refetch = await LogicMonitorClient.GetAsync<CollectorGroup>(collectorGroup.Id, default).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient
+				.GetAsync<CollectorGroup>(collectorGroup.Id, default)
+				.ConfigureAwait(true);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -29,7 +33,7 @@ public class CollectorTests2
 	{
 		var collectorGroups = await LogicMonitorClient
 			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var fullGroup = new CollectorGroup();
 		var collectorGroup = new CollectorGroup();
@@ -46,7 +50,7 @@ public class CollectorTests2
 
 		var collectors = await LogicMonitorClient
 			.GetAllCollectorsByCollectorGroupIdAsync(fullGroup.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		collectors.Items.Should().NotBeNullOrEmpty();
 	}
@@ -54,13 +58,17 @@ public class CollectorTests2
 	[Fact]
 	public async Task GetAllCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
 		collectors.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collector in collectors)
 		{
-			var refetch = await LogicMonitorClient.GetAsync<Collector>(collector.Id, default).ConfigureAwait(false);
+			var refetch = await LogicMonitorClient
+				.GetAsync<Collector>(collector.Id, default)
+				.ConfigureAwait(true);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -68,7 +76,9 @@ public class CollectorTests2
 	[Fact]
 	public async Task RunDebugCommand()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
 		var testCollector = collectors.Find(c => !c.IsDown);
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
@@ -78,7 +88,7 @@ public class CollectorTests2
 				10_000,
 				500,
 				default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		response.Should().NotBeNull();
 		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
@@ -89,25 +99,25 @@ public class CollectorTests2
 	{
 		var collectorGroup = (await LogicMonitorClient
 			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(false))[2];
+			.ConfigureAwait(true))[2];
 
 		var defaultDesc = collectorGroup.Description;
 		collectorGroup.Description = "test desc";
 
 		await LogicMonitorClient
 			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var updatedGroup = (await LogicMonitorClient
 			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(false))[1];
+			.ConfigureAwait(true))[1];
 
 		var updatedDesc = collectorGroup.Description;
 		collectorGroup.Description = defaultDesc;
 
 		await LogicMonitorClient
 			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		updatedDesc.Should().Be("test desc");
 	}
@@ -117,25 +127,25 @@ public class CollectorTests2
 	{
 		var collector = (await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(false))[0];
+			.ConfigureAwait(true))[0];
 
 		var defaultDesc = collector.Description;
 		collector.Description = "test desc";
 
 		await LogicMonitorClient
 			.UpdateCollectorByIdAsync(collector.Id, collector, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var updatedGroup = (await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(false))[1];
+			.ConfigureAwait(true))[1];
 
 		var updatedDesc = collector.Description;
 		collector.Description = defaultDesc;
 
 		await LogicMonitorClient
 			.UpdateCollectorByIdAsync(collector.Id, collector, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		updatedDesc.Should().Be("test desc");
 	}
@@ -152,7 +162,7 @@ public class CollectorTests2
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
 				]
 			}, default
-			).ConfigureAwait(false))
+			).ConfigureAwait(true))
 			.Select(cv => (cv.MajorVersion * 1000) + cv.MinorVersion)
 			.OrderByDescending(v => v)
 			.ToList();
@@ -163,7 +173,9 @@ public class CollectorTests2
 		var collectorVersionInt = collectorVersionInts[0];
 
 		// Create the collector
-		var collector = await LogicMonitorClient.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, default).ConfigureAwait(false);
+		var collector = await LogicMonitorClient
+			.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, default)
+			.ConfigureAwait(true);
 
 		var tempFileInfo = new FileInfo(Path.GetTempPath() + Guid.NewGuid().ToString());
 		try
@@ -174,18 +186,19 @@ public class CollectorTests2
 				CollectorPlatformAndArchitecture.Win64,
 				CollectorDownloadType.Bootstrap,
 				CollectorSize.Medium,
-				collectorVersionInt).ConfigureAwait(false);
+				collectorVersionInt)
+				.ConfigureAwait(true);
 		}
 		finally
 		{
 			// No need to do this as the collector has not been registered
-			// await DefaultPortalClient.DeleteAsync(collector).ConfigureAwait(false);
+			// await DefaultPortalClient.DeleteAsync(collector).ConfigureAwait(true);
 			tempFileInfo.Delete();
 
 			// Remove the collector from the API
-			await LogicMonitorClient.DeleteAsync(
-				collector,
-				default).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync(collector, default)
+				.ConfigureAwait(true);
 		}
 	}
 }

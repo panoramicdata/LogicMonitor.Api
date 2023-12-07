@@ -11,7 +11,7 @@ public class ExternalAlertsTests : TestWithOutput
 	{
 		var items = await LogicMonitorClient
 			.GetAllAsync<ExternalAlert>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		items.Should().NotBeNull();
 	}
 
@@ -20,7 +20,7 @@ public class ExternalAlertsTests : TestWithOutput
 	{
 		var api = await LogicMonitorClient
 			.GetExternalApiAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		api.Should().NotBeNull();
 	}

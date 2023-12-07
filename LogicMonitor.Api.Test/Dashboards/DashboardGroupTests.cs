@@ -14,12 +14,12 @@ public class DashboardGroupTests : TestWithOutput
 		// Delete it if it already exists
 		var dashboardGroup = await LogicMonitorClient
 			.GetByNameAsync<DashboardGroup>(DashboardGroupName, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		if (dashboardGroup is not null)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(dashboardGroup, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 
 		// Create it
@@ -40,13 +40,13 @@ public class DashboardGroupTests : TestWithOutput
 				]
 			},
 			default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		dashboardGroup.Should().NotBeNull();
 
 		dashboardGroup = await LogicMonitorClient
 			.GetByNameAsync<DashboardGroup>(DashboardGroupName, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		dashboardGroup.Should().NotBeNull();
 
@@ -57,7 +57,7 @@ public class DashboardGroupTests : TestWithOutput
 
 		await LogicMonitorClient
 			.DeleteAsync(dashboardGroup, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -65,11 +65,11 @@ public class DashboardGroupTests : TestWithOutput
 	{
 		var dashboardGroup = (await LogicMonitorClient
 			.GetAllAsync<DashboardGroup>(default)
-			.ConfigureAwait(false))[1];
+			.ConfigureAwait(true))[1];
 
 		var dashboardGroupByPath = await LogicMonitorClient
 			.GetDashboardGroupByFullPathAsync(dashboardGroup.FullPath, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		dashboardGroupByPath.Should().NotBeNull();
 		dashboardGroupByPath.Id.Should().Be(dashboardGroup.Id);
@@ -80,11 +80,11 @@ public class DashboardGroupTests : TestWithOutput
 	{
 		var dashboardGroup = (await LogicMonitorClient
 			.GetAllAsync<DashboardGroup>(default)
-			.ConfigureAwait(false))[0];
+			.ConfigureAwait(true))[0];
 
 		var dashboardChildren = await LogicMonitorClient
 			.GetChildDashboardGroupsAsync(dashboardGroup.Id, new Filter<DashboardGroup>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		dashboardChildren.Items.Should().NotBeEmpty();
 	}
@@ -94,11 +94,11 @@ public class DashboardGroupTests : TestWithOutput
 	{
 		var dashboardGroup = (await LogicMonitorClient
 			.GetAllAsync<DashboardGroup>(default)
-			.ConfigureAwait(false))[0];
+			.ConfigureAwait(true))[0];
 
 		var children = await LogicMonitorClient
 			.GetChildDashboardsAsync(dashboardGroup.Id, new Filter<Dashboard>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		children.Items.Should().NotBeEmpty();
 	}

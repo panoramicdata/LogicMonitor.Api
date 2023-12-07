@@ -11,7 +11,7 @@ public class TimeTests : TestWithOutput
 	{
 		var timeZoneSetting = await LogicMonitorClient
 			.GetTimeZoneSettingAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Text should be set
 		string.IsNullOrWhiteSpace(timeZoneSetting.TimeZone).Should().BeFalse();

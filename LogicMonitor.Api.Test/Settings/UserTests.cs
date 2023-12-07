@@ -9,13 +9,15 @@ public class UserTests : TestWithOutput
 	[Fact]
 	public async Task GetUsers()
 	{
-		var users = await LogicMonitorClient.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
+		var users = await LogicMonitorClient
+			.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, default)
+			.ConfigureAwait(true);
 		users.Should().NotBeNull();
 		users.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var user in users.Items)
 		{
-			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, default).ConfigureAwait(false);
+			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, default).ConfigureAwait(true);
 			var roles = refetchedUser.Roles;
 			roles.Should().NotBeNullOrEmpty();
 			user.UserGroupIds.Should().NotBeNullOrEmpty();
@@ -32,9 +34,11 @@ public class UserTests : TestWithOutput
 			[
 				new Eq<User>(nameof(User.UserName), "test")
 			]
-		}, default).ConfigureAwait(false))
+		}, default).ConfigureAwait(true))
 		{
-			await LogicMonitorClient.DeleteAsync(existingUser, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync(existingUser, cancellationToken: default)
+				.ConfigureAwait(true);
 		}
 
 		var userCreationDto = new UserCreationDto
@@ -71,10 +75,14 @@ public class UserTests : TestWithOutput
 			ApiOnly = false
 		};
 
-		var user = await LogicMonitorClient.CreateAsync(userCreationDto, default).ConfigureAwait(false);
+		var user = await LogicMonitorClient
+			.CreateAsync(userCreationDto, default)
+			.ConfigureAwait(true);
 
 		// Delete again
-		await LogicMonitorClient.DeleteAsync(user, cancellationToken: default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.DeleteAsync(user, cancellationToken: default)
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -82,7 +90,7 @@ public class UserTests : TestWithOutput
 	{
 		var admins = await LogicMonitorClient
 			.GetAdminListAsync()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		admins.Items.Should().NotBeEmpty();
 	}
@@ -92,17 +100,17 @@ public class UserTests : TestWithOutput
 	{
 		var admins = await LogicMonitorClient
 			.GetAdminListAsync()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var tokens = await LogicMonitorClient
 			.GetApiTokensAsync(admins.Items[0].Id, new Filter<ApiToken>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		tokens.Items.Should().NotBeEmpty();
 
 		var allTokens = await LogicMonitorClient
 			.GetApiTokenListAsync(new Filter<ApiToken>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		allTokens.Items.Should().NotBeEmpty();
 	}
 }

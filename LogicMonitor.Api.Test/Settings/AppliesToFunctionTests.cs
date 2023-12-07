@@ -9,7 +9,9 @@ public class AppliesToFunctionTests : TestWithOutput
 	[Fact]
 	public async Task GetAppliesToFunctionListSucceeds()
 	{
-		var appliesToFunctions = await LogicMonitorClient.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), default).ConfigureAwait(false);
+		var appliesToFunctions = await LogicMonitorClient
+			.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), default)
+			.ConfigureAwait(true);
 		appliesToFunctions.Should().NotBeNull();
 		appliesToFunctions.Items.Should().NotBeEmpty();
 	}
@@ -17,7 +19,9 @@ public class AppliesToFunctionTests : TestWithOutput
 	[Fact]
 	public async Task GetSpecificAppliesToFunctionSucceeds()
 	{
-		var appliesToFunction = await LogicMonitorClient.GetAppliesToFunctionAsync(1, default).ConfigureAwait(false);
+		var appliesToFunction = await LogicMonitorClient
+			.GetAppliesToFunctionAsync(1, default)
+			.ConfigureAwait(true);
 		appliesToFunction.Name.Should().Be("NetSNMPComputers");
 	}
 
@@ -32,14 +36,14 @@ public class AppliesToFunctionTests : TestWithOutput
 		};
 		await LogicMonitorClient
 			.AddAppliesToFunctionAsync(newATF, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		var appliesToFunctions = await LogicMonitorClient
 			.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var found = false;
 		var foundATF = new AppliesToFunction();
-		foreach(AppliesToFunction atf in appliesToFunctions.Items) 
+		foreach (AppliesToFunction atf in appliesToFunctions.Items)
 		{
 			if (atf.Name.Equals("Test", StringComparison.Ordinal))
 			{
@@ -51,7 +55,7 @@ public class AppliesToFunctionTests : TestWithOutput
 		{
 			await LogicMonitorClient
 				.DeleteAsync($"setting/functions/{foundATF.Id}", default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 		found.Should().BeTrue();
 		foundATF.Description.Should().Be("LornaTest");

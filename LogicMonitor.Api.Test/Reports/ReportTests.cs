@@ -11,7 +11,7 @@ public class ReportTests : TestWithOutput
 	{
 		var reportGroups = await LogicMonitorClient
 			.GetAllAsync<ReportGroup>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		reportGroups.Should().NotBeNull();
 		reportGroups.Should().NotBeNullOrEmpty();
 	}
@@ -21,7 +21,7 @@ public class ReportTests : TestWithOutput
 	{
 		var reports = await LogicMonitorClient
 			.GetAllAsync<ReportBase>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		reports.Should().NotBeNull();
 		reports.Should().NotBeNullOrEmpty();
 	}
@@ -36,10 +36,12 @@ public class ReportTests : TestWithOutput
 					[
 						new Eq<ReportGroup>(nameof(ReportGroup.Name), "Test Name")
 					]
-		}, default).ConfigureAwait(false)
+		}, default).ConfigureAwait(true)
 		)
 		{
-			await LogicMonitorClient.DeleteAsync(existingReportGroup, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync(existingReportGroup, cancellationToken: default)
+				.ConfigureAwait(true);
 		}
 
 		// Create it
@@ -47,9 +49,11 @@ public class ReportTests : TestWithOutput
 		{
 			Name = "Test Name",
 			Description = "Test Description"
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		// Delete it again
-		await LogicMonitorClient.DeleteAsync(reportGroup, cancellationToken: default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.DeleteAsync(reportGroup, cancellationToken: default)
+			.ConfigureAwait(true);
 	}
 }

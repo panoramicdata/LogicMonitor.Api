@@ -13,67 +13,90 @@ public class WebsiteGroupTests : TestWithOutput
 		const string testWebsiteGroupName = "Property Test Device Group";
 		var existingWebsiteGroup = await LogicMonitorClient
 			.GetWebsiteGroupByFullPathAsync(testWebsiteGroupName, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		if (existingWebsiteGroup is not null)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingWebsiteGroup, cancellationToken: default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 
 		var deviceGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
 		{
 			ParentId = "1",
 			Name = testWebsiteGroupName
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		const string propertyName = "blah";
 		const string value1 = "test1";
 		const string value2 = "test2";
 
 		// Set it to an expected value
-		await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1).ConfigureAwait(false);
-		var deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1)
+			.ConfigureAwait(true);
+		var deviceProperties = await LogicMonitorClient
+			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.ConfigureAwait(true);
 		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Set it to a different value
-		await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2)
+			.ConfigureAwait(true);
+		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Set it to null (delete it)
-		await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null)
+			.ConfigureAwait(true);
+		deviceProperties = await LogicMonitorClient
+			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 
 		// This should fail as there is nothing to delete
-		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false)).ConfigureAwait(false);
+		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(true)).ConfigureAwait(true);
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
-		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(false)).ConfigureAwait(false);
+		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(true)).ConfigureAwait(true);
 		updateException.Should().BeOfType<InvalidOperationException>();
 
-		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(false)).ConfigureAwait(false);
+		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(true)).ConfigureAwait(true);
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
-		await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1, SetPropertyMode.Create).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1, SetPropertyMode.Create)
+			.ConfigureAwait(true);
+		deviceProperties = await LogicMonitorClient
+			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Update one without checking
-		await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2, SetPropertyMode.Update).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2, SetPropertyMode.Update)
+			.ConfigureAwait(true);
+		deviceProperties = await LogicMonitorClient
+			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Delete one without checking
-		await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(false);
-		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete)
+			.ConfigureAwait(true);
+		deviceProperties = await LogicMonitorClient
+			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 	}
@@ -91,9 +114,9 @@ public class WebsiteGroupTests : TestWithOutput
 				IsMonitoringDisabled = false,
 				ParentGroupFullPath = "",
 				ParentId = "1",
-				Properties = [new EntityProperty {Name = "name", Value = "value"}],
+				Properties = [new EntityProperty { Name = "name", Value = "value" }],
 			}, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		try
 		{
@@ -109,20 +132,28 @@ public class WebsiteGroupTests : TestWithOutput
 		finally
 		{
 			// Delete it
-			await LogicMonitorClient.DeleteAsync(websiteGroup, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync(websiteGroup, cancellationToken: default)
+				.ConfigureAwait(true);
 		}
 	}
 
 	[Fact]
 	public async Task GetWebsiteGroupByFullPath()
 	{
-		var websiteGroup0 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(string.Empty, default).ConfigureAwait(false);
+		var websiteGroup0 = await LogicMonitorClient
+			.GetWebsiteGroupByFullPathAsync(string.Empty, default)
+			.ConfigureAwait(true);
 		websiteGroup0.Should().NotBeNull();
 		websiteGroup0 ??= new();
 		websiteGroup0.FullPath.Should().Be(string.Empty);
-		var websiteGroup1 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath, default).ConfigureAwait(false);
+		var websiteGroup1 = await LogicMonitorClient
+			.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath, default)
+			.ConfigureAwait(true);
 		websiteGroup1.Should().NotBeNull();
-		var websiteGroup2 = await LogicMonitorClient.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath, default).ConfigureAwait(false);
+		var websiteGroup2 = await LogicMonitorClient
+			.GetWebsiteGroupByFullPathAsync(WebsiteGroupFullPath, default)
+			.ConfigureAwait(true);
 		websiteGroup2.Should().NotBeNull();
 		websiteGroup2 ??= new();
 		websiteGroup0.Id.Should().NotBe(websiteGroup2.Id);
@@ -131,7 +162,7 @@ public class WebsiteGroupTests : TestWithOutput
 	[Fact]
 	public async Task GetWebsiteGroupById()
 	{
-		var websiteGroup = await LogicMonitorClient.GetAsync<WebsiteGroup>(1, default).ConfigureAwait(false);
+		var websiteGroup = await LogicMonitorClient.GetAsync<WebsiteGroup>(1, default).ConfigureAwait(true);
 
 		websiteGroup.Should().NotBeNull();
 		websiteGroup.ChildWebsiteGroups.Should().NotBeNullOrEmpty();
@@ -146,7 +177,7 @@ public class WebsiteGroupTests : TestWithOutput
 	{
 		var websites = await LogicMonitorClient
 			.GetWebsitesByWebsiteGroupIdAsync(1, new Filter<Website>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		websites.Items.Should().NotBeNull();
 	}

@@ -10,21 +10,27 @@ public class CollectorSettingTests
 	[Fact]
 	public async Task GetAllCollectorGroupSettings()
 	{
-		var allCollectorGroupSettings = await LogicMonitorClient.GetAllAsync<CollectorGroup>(default).ConfigureAwait(false);
+		var allCollectorGroupSettings = await LogicMonitorClient
+			.GetAllAsync<CollectorGroup>(default)
+			.ConfigureAwait(true);
 		allCollectorGroupSettings.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async Task GetAllCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
 		collectors.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetAllCollectorsSettings()
 	{
-		var allCollectorSettings = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
+		var allCollectorSettings = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
 		allCollectorSettings.Should().NotBeNullOrEmpty();
 	}
 
@@ -33,10 +39,10 @@ public class CollectorSettingTests
 	{
 		var collectorGroups = await LogicMonitorClient
 			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		var pulsantCollectorGroupSettings = await LogicMonitorClient
 			.GetAsync<CollectorGroup>(collectorGroups[0].Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		pulsantCollectorGroupSettings.Should().NotBeNull();
 	}
 
@@ -45,7 +51,7 @@ public class CollectorSettingTests
 	{
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync(new(), cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
 		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.MajorVersion.Should().NotBe(0));
@@ -62,7 +68,7 @@ public class CollectorSettingTests
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true)
 				]
 			}, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
 		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.IsStable.Should().BeTrue());
@@ -79,7 +85,7 @@ public class CollectorSettingTests
 						new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
 				]
 			}, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
 		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.IsStable.Should().BeTrue());

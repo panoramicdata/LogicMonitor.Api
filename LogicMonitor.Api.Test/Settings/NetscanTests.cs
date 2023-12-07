@@ -11,13 +11,13 @@ public class NetscanTests : TestWithOutput
 	[Fact]
 	public async Task CanGetNetscanById()
 	{
-		var netscan = (await LogicMonitorClient.GetNetscanListAsync(default).ConfigureAwait(false)).Items?[0];
+		var netscan = (await LogicMonitorClient.GetNetscanListAsync(default).ConfigureAwait(true)).Items?[0];
 
 		if (netscan != null)
 		{
 			var refetchedNetscan = await LogicMonitorClient
 				.GetNetscanByIdAsync(netscan.Id, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 			refetchedNetscan.Should().NotBeNull();
 		}
 	}
@@ -27,7 +27,9 @@ public class NetscanTests : TestWithOutput
 	{
 		var portalClient = LogicMonitorClient;
 
-		var netscanGroups = await portalClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
+		var netscanGroups = await portalClient
+			.GetAllAsync<NetscanGroup>(default)
+			.ConfigureAwait(true);
 		var netscanGroup = netscanGroups.SingleOrDefault(npg => npg.Name == "LogicMonitor API Unit Tests");
 		netscanGroup.Should().NotBeNull();
 		netscanGroup ??= new();
@@ -100,14 +102,17 @@ public class NetscanTests : TestWithOutput
 		};
 
 		// Remove any existing  by this name
-		var existingNetscan = (await portalClient.GetAllAsync<Netscan>(default).ConfigureAwait(false)).SingleOrDefault(nsp => nsp.Name == name);
+		var existingNetscan = (await portalClient.GetAllAsync<Netscan>(default).ConfigureAwait(true)).SingleOrDefault(nsp => nsp.Name == name);
 		if (existingNetscan is not null)
 		{
-			await portalClient.DeleteAsync(existingNetscan, cancellationToken: default).ConfigureAwait(false);
+			await portalClient
+				.DeleteAsync(existingNetscan, cancellationToken: default)
+				.ConfigureAwait(true);
 		}
 
 		// Create one
-		var createdNetscan = await portalClient.CreateAsync(netscanCreationDto, default).ConfigureAwait(false);
+		var createdNetscan = await portalClient.CreateAsync(netscanCreationDto, default)
+			.ConfigureAwait(true);
 		createdNetscan.Should().NotBeNull();
 		// Ensure that the  is returned as expected
 
@@ -126,13 +131,15 @@ public class NetscanTests : TestWithOutput
 		createdNetscan.DuplicatesStrategy.Type.Should().Be(duplicatesStrategyType);
 
 		// Clean up
-		await portalClient.DeleteAsync(createdNetscan, cancellationToken: default).ConfigureAwait(false);
+		await portalClient
+			.DeleteAsync(createdNetscan, cancellationToken: default)
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
 	public async Task ListAllNetscans()
 	{
-		var netscans = (await LogicMonitorClient.GetNetscanListAsync(default).ConfigureAwait(false)).Items;
+		var netscans = (await LogicMonitorClient.GetNetscanListAsync(default).ConfigureAwait(true)).Items;
 		netscans.Should().NotBeNull();
 		netscans.Should().NotBeNullOrEmpty();
 
@@ -144,10 +151,14 @@ public class NetscanTests : TestWithOutput
 	[Fact]
 	public async Task ListFirst5Netscans()
 	{
-		var allNetscans = await LogicMonitorClient.GetAllAsync<Netscan>(default).ConfigureAwait(false);
+		var allNetscans = await LogicMonitorClient
+			.GetAllAsync<Netscan>(default)
+			.ConfigureAwait(true);
 
 		const int expectedCount = 5;
-		var netscans = await LogicMonitorClient.GetPageAsync(new Filter<Netscan> { Skip = 0, Take = expectedCount }, default).ConfigureAwait(false);
+		var netscans = await LogicMonitorClient
+			.GetPageAsync(new Filter<Netscan> { Skip = 0, Take = expectedCount }, default)
+			.ConfigureAwait(true);
 		netscans.Should().NotBeNull();
 		netscans.TotalCount.Should().Be(allNetscans.Count);
 		netscans.Items.Should().NotBeNullOrEmpty();

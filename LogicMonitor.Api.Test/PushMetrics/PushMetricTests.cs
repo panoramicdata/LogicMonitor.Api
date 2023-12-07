@@ -48,7 +48,7 @@ public class PushMetricTests : TestWithOutput
 					}
 				]
 			}, cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		response.Should().NotBeNull();
 	}
 }

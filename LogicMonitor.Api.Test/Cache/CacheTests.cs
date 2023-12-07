@@ -14,16 +14,16 @@ public class CacheTests : TestWithOutput
 		LogicMonitorClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
 
 		// Wait for any cache entry to expire (required for consistent operation)
-		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(true);
 
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
 
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 		stopwatch.Restart();
 
-		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
 
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -48,21 +48,21 @@ public class CacheTests : TestWithOutput
 		// Make a call to force authentication
 		_ = await LogicMonitorClient
 			.GetTimeZoneSettingAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Fetch a result
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
 		firstDevice.Should().NotBeNull();
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 
 		// Wait for the cache timeout duration
-		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(false);
+		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(true);
 
 		// Re-fetch a result
 		stopwatch.Restart();
-		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
 		secondDevice.Should().NotBeNull();
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -82,7 +82,7 @@ public class CacheTests : TestWithOutput
 		for (var n = 0; n < 1000; n++)
 		{
 			var innerStopwatch = Stopwatch.StartNew();
-			_ = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+			_ = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
 			Logger.LogInformation("Run {RunIndex}: {Milliseconds}ms", n, innerStopwatch.ElapsedMilliseconds);
 		}
 

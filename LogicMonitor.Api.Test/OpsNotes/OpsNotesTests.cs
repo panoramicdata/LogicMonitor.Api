@@ -21,13 +21,13 @@ public class OpsNotesTests : TestWithOutput
 			Note = $"LogicMonitor.Api.Test run on {DateTime.UtcNow}",
 			Tags = [new OpsNoteTagCreationDto { Name = "LogicMonitor.Api" }]
 		}, default)
-		.ConfigureAwait(false);
+		.ConfigureAwait(true);
 
 		await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
 
 		var allOpsNotes = await LogicMonitorClient
 			.GetAllAsync<OpsNote>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		allOpsNotes.Should().NotBeNullOrEmpty();
@@ -48,11 +48,11 @@ public class OpsNotesTests : TestWithOutput
 
 		var device = await LogicMonitorClient
 			.GetAsync<Device>(WindowsDeviceId, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var website = await LogicMonitorClient
 			.GetByNameAsync<Website>(WebsiteName, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		website ??= new();
 
@@ -74,33 +74,41 @@ public class OpsNotesTests : TestWithOutput
 				}
 			]
 		};
-		var createdOpsNote = await LogicMonitorClient.CreateAsync(opsNoteCreationDto, default).ConfigureAwait(false);
+		var createdOpsNote = await LogicMonitorClient
+			.CreateAsync(opsNoteCreationDto, default)
+			.ConfigureAwait(true);
 
 		// Ensure that this OpsNote has an ID set
 		createdOpsNote.Id.Should().NotBeNull();
 		string.IsNullOrWhiteSpace(createdOpsNote.Id).Should().BeFalse();
 
 		// Wait 2 seconds
-		await Task.Delay(5000).ConfigureAwait(false);
+		await Task.Delay(5000)
+			.ConfigureAwait(true);
 
 		// Make sure the opsNote is now present when listing opsNotes and that all properties match
-		var refetchedOpsNote = await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, default).ConfigureAwait(false);
+		var refetchedOpsNote = await LogicMonitorClient
+			.GetAsync<OpsNote>(createdOpsNote.Id, default)
+			.ConfigureAwait(true);
 		refetchedOpsNote.Should().NotBeNull();
 		refetchedOpsNote.Note.Should().Be(createdOpsNote.Note);
 		refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch().Should().Be(utcNow);
 		refetchedOpsNote.Tags.Select(t => t.Name).Should().Equal(createdOpsNote.Tags.Select(t => t.Name));
 
 		// Remove the test OpsNote - this takes some time
-		await LogicMonitorClient.DeleteAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.DeleteAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default)
+			.ConfigureAwait(true);
 
 		// Wait 2 seconds
-		await Task.Delay(2000).ConfigureAwait(false);
+		await Task.Delay(2000)
+			.ConfigureAwait(true);
 
 		// Make sure that it is gone
-		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default).ConfigureAwait(false);
+		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default).ConfigureAwait(true);
 		await operation
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 }

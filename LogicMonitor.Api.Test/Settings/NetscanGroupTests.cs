@@ -14,18 +14,20 @@ public class NetscanGroupTests : TestWithOutput
 
 		var allNetscanGroups = await LogicMonitorClient
 			.GetAllAsync<NetscanGroup>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var existingTestNetscanGroup = allNetscanGroups
 			.SingleOrDefault(group => group.Name == name);
 		if (existingTestNetscanGroup is not null)
 		{
-			await LogicMonitorClient.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id, cancellationToken: default).ConfigureAwait(false);
+			await LogicMonitorClient
+				.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id, cancellationToken: default)
+				.ConfigureAwait(true);
 		}
 
 		var netscanGroups = await LogicMonitorClient
 			.GetAllAsync<NetscanGroup>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		netscanGroups.Should().AllSatisfy(group => group.Name.Should().NotBe(name));
 		// Definitely not there now
 
@@ -35,12 +37,20 @@ public class NetscanGroupTests : TestWithOutput
 			Name = name,
 			Description = description
 		};
-		var newNetscanGroup = await LogicMonitorClient.CreateAsync(netscanGroupCreationDto, default).ConfigureAwait(false);
-		var netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
+		var newNetscanGroup = await LogicMonitorClient
+			.CreateAsync(netscanGroupCreationDto, default)
+			.ConfigureAwait(true);
+		var netscanGroupsRefetched = await LogicMonitorClient
+			.GetAllAsync<NetscanGroup>(default)
+			.ConfigureAwait(true);
 		netscanGroupsRefetched.Should().Contain(group => group.Name == name);
 
-		await LogicMonitorClient.DeleteAsync(newNetscanGroup, cancellationToken: default).ConfigureAwait(false);
-		netscanGroupsRefetched = await LogicMonitorClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
+		await LogicMonitorClient
+			.DeleteAsync(newNetscanGroup, cancellationToken: default)
+			.ConfigureAwait(true);
+		netscanGroupsRefetched = await LogicMonitorClient
+			.GetAllAsync<NetscanGroup>(default)
+			.ConfigureAwait(true);
 		netscanGroupsRefetched.Should().NotContain(group => group.Name == name);
 	}
 

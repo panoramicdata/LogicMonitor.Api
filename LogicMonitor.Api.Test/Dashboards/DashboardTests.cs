@@ -16,13 +16,13 @@ public class DashboardTests : TestWithOutput
 		// Multi-number
 		var widgetData = await LogicMonitorClient
 			.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		widgetData.Should().NotBeNull();
 
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
 			.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		widgetData2.Should().NotBeNull();
 	}
 
@@ -34,7 +34,7 @@ public class DashboardTests : TestWithOutput
 		// Multi-number
 		var widgetData = await LogicMonitorClient
 			.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		widgetData.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNullOrEmpty();
@@ -42,7 +42,7 @@ public class DashboardTests : TestWithOutput
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
 			.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		widgetData2.Should().NotBeNull();
 		widgetData2.Availability.Should().NotBe(0);
 		widgetData2.ResultList.Should().BeEmpty();
@@ -54,7 +54,7 @@ public class DashboardTests : TestWithOutput
 		// This one has all the different widget types on
 		var originalDashboard = await LogicMonitorClient
 			.GetByNameAsync<Dashboard>("All Widgets", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		originalDashboard ??= new();
 
@@ -65,11 +65,11 @@ public class DashboardTests : TestWithOutput
 			DashboardGroupId = originalDashboard.DashboardGroupId,
 			//WidgetsConfig = originalDashboard.WidgetsConfig,
 			WidgetsOrder = originalDashboard.WidgetsOrder
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		var newDashboardRefetch = await LogicMonitorClient.
 			GetAsync<Dashboard>(newDashboard.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Ensure that it is as expected
 		newDashboardRefetch.Should().NotBeNull();
@@ -77,7 +77,7 @@ public class DashboardTests : TestWithOutput
 		// Delete the clone
 		await LogicMonitorClient
 			.DeleteAsync(newDashboard, cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -86,10 +86,10 @@ public class DashboardTests : TestWithOutput
 		// This one has all the different widget types on
 		var dashboard = await LogicMonitorClient
 			.GetByNameAsync<Dashboard>("All Widgets", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		var widgets = await LogicMonitorClient
 			.GetWidgetsByDashboardNameAsync("All Widgets", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
 		widgets.Should().HaveCount(20); // There are 20 different types of widget
@@ -290,7 +290,9 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task GetDashboardsNoWidgets()
 	{
-		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(default).ConfigureAwait(false);
+		var dashboards = await LogicMonitorClient
+			.GetAllAsync<Dashboard>(default)
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();
@@ -302,7 +304,9 @@ public class DashboardTests : TestWithOutput
 	[Fact]
 	public async Task GetDashboardsWithWidgets()
 	{
-		var dashboards = await LogicMonitorClient.GetAllAsync<Dashboard>(default).ConfigureAwait(false);
+		var dashboards = await LogicMonitorClient
+			.GetAllAsync<Dashboard>(default)
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();
@@ -316,7 +320,7 @@ public class DashboardTests : TestWithOutput
 	{
 		var fetchedDashboards = await LogicMonitorClient
 			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var found = false;
 		var foundBoard = new Dashboard();
@@ -334,7 +338,7 @@ public class DashboardTests : TestWithOutput
 		{
 			await LogicMonitorClient
 			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		}
 
 		var newDashboard = new DashboardCreationDto()
@@ -350,11 +354,11 @@ public class DashboardTests : TestWithOutput
 
 		await LogicMonitorClient
 			.AddDashboardAsync(newDashboard, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var refetchedDashboards = await LogicMonitorClient
 			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		found = false;
 		foundBoard = new Dashboard();
@@ -372,7 +376,7 @@ public class DashboardTests : TestWithOutput
 		{
 			await LogicMonitorClient
 			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		}
 
 		found.Should().Be(true);
@@ -382,7 +386,9 @@ public class DashboardTests : TestWithOutput
 	public async Task GetWidgets()
 	{
 
-		var widgets = await LogicMonitorClient.GetWidgetListAsync(new(), default).ConfigureAwait(false);
+		var widgets = await LogicMonitorClient
+			.GetWidgetListAsync(new(), default)
+			.ConfigureAwait(true);
 
 		widgets.Should().NotBeNull();
 
@@ -394,11 +400,11 @@ public class DashboardTests : TestWithOutput
 	{
 		var widget = (await LogicMonitorClient
 			.GetWidgetListAsync(new Filter<Widget>(), default)
-			.ConfigureAwait(false)).Items[0];
+			.ConfigureAwait(true)).Items[0];
 
 		var getWidget = await LogicMonitorClient
 			.GetWidgetByIdAsync(widget.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		getWidget.Name.Should().Be(widget.Name);
 	}
@@ -408,11 +414,11 @@ public class DashboardTests : TestWithOutput
 	{
 		var widget = (await LogicMonitorClient
 			.GetWidgetListAsync(new Filter<Widget>(), default)
-			.ConfigureAwait(false)).Items[0];
+			.ConfigureAwait(true)).Items[0];
 
 		var widgetData = await LogicMonitorClient
 			.GetWidgetDataByIdAsync(widget.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		widgetData.Should().NotBeNull();
 	}
@@ -439,11 +445,11 @@ public class DashboardTests : TestWithOutput
 
 		var createdWidget = await LogicMonitorClient
 			.SaveNewWidgetAsync(widget, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var getWidget = (HtmlWidget)await LogicMonitorClient
 			.GetWidgetByIdAsync(createdWidget.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var patchedWidget = new HtmlWidget()
 		{
@@ -459,15 +465,15 @@ public class DashboardTests : TestWithOutput
 
 		await LogicMonitorClient
 			.PatchWidgetByIdAsync(getWidget.Id, patchedWidget, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		getWidget = (HtmlWidget)await LogicMonitorClient
 			.GetWidgetByIdAsync(createdWidget.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		await LogicMonitorClient
 			.DeleteWidgetAsync(createdWidget.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		getWidget.Name.Should().Be("test");
 		getWidget.Description.Should().Be("Updated test widget");

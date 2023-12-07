@@ -9,7 +9,9 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
-		_ = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default).ConfigureAwait(false);
+		_ = await LogicMonitorClient
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default)
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -17,31 +19,31 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	{
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("SSL_Certificates", cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
 			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource!.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		_ = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new(), cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
 	public async Task OnlyMonitoredInstances()
 	{
 		var device = await GetSnmpDeviceAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
 			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource!.Id, cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		var deviceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>
 		{
 			Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
@@ -49,7 +51,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				[
 					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
 				]
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		deviceDataSourceInstances.Should().AllSatisfy(dsi => dsi.StopMonitoring.Should().BeFalse());
 	}
@@ -57,7 +59,8 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task AddDeviceDataSourceInstance()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default)
+			.ConfigureAwait(true);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -66,7 +69,8 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				[
 					nameof(DeviceDataSource.Id),
 				]
-		}, default).ConfigureAwait(false);
+		}, default)
+			.ConfigureAwait(true);
 
 		var newInstance = new DeviceDataSourceInstanceCreationDto()
 		{
@@ -77,7 +81,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 
 		await LogicMonitorClient
 			.AddDeviceDataSourceInstanceAsync(device.Id, deviceDataSources[9].Id, newInstance, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[9].Id, new Filter<DeviceDataSourceInstance>()
@@ -85,7 +89,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				Skip = 0,
 				Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName)]
 			}, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var foundTest = false;
 		var testInstance = new DeviceDataSourceInstance();
@@ -101,7 +105,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 		{
 			await LogicMonitorClient
 				.DeleteAsync(new DeviceDataSourceInstance() { DeviceId = device.Id, DeviceDataSourceId = deviceDataSources[9].Id, Id = testInstance.Id }, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 		foundTest.Should().BeTrue();
 	}
@@ -109,7 +113,8 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task GetDataPointConfiguration()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default)
+			.ConfigureAwait(true);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -118,7 +123,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				[
 					nameof(DeviceDataSource.Id),
 				]
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
@@ -126,11 +131,11 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				Skip = 0,
 				Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName)]
 			}, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
 			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		config.Items.Should().NotBeEmpty();
 	}
@@ -138,7 +143,8 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 	[Fact]
 	public async Task UpdateDataPointConfig()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default)
+			.ConfigureAwait(true);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
@@ -147,7 +153,7 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				[
 					nameof(DeviceDataSource.Id),
 				]
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
@@ -155,11 +161,11 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 				Skip = 0,
 				Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DisplayName)]
 			}, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
 			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var configId = config.Items[0].Id;
 		var prevSetting = config.Items[0].DisableAlerting;
@@ -177,17 +183,17 @@ public class DeviceDataSourceInstanceTests : TestWithOutput
 
 		await LogicMonitorClient
 			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var refetchedConfig = await LogicMonitorClient
 			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		updateConfig.DisableAlerting = prevSetting;
 
 		await LogicMonitorClient
 			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		foreach (var dataPointConfig in refetchedConfig.Items)
 		{

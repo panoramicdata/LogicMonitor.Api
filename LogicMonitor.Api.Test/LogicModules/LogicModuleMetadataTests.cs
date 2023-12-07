@@ -11,35 +11,39 @@ public class LogicModuleMetadataTests : TestWithOutput
 	{
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 		dataSource.Id.Should().NotBe(0);
 		var logicModuleMetadata = await LogicMonitorClient
 			.GetLogicModuleMetadataAsync(LogicModuleType.DataSource, dataSource.Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		CheckMetadata(logicModuleMetadata);
 	}
 
 	//[Fact(Skip = "LogicMonitor is broken - ZenDesk ticket number 112910")]
 	//public async Task GetEventSourceMetadata()
 	//{
-	//	var eventSource = await DefaultPortalClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(false);
+	//	var eventSource = await DefaultPortalClient.GetByNameAsync<EventSource>("Windows System Event Log").ConfigureAwait(true);
 	//	eventSource.Should().NotBeNull();
 	//	eventSource.Id.Should().NotBe(0);
-	//	var logicModuleMetadata = await DefaultPortalClient.GetLogicModuleMetadata(LogicModuleType.EventSource, eventSource.Id).ConfigureAwait(false);
+	//	var logicModuleMetadata = await DefaultPortalClient.GetLogicModuleMetadata(LogicModuleType.EventSource, eventSource.Id).ConfigureAwait(true);
 	//	CheckMetadata(logicModuleMetadata);
 	//}
 
 	[Fact]
 	public async Task GetConfigSourceMetadata()
 	{
-		var configSource = await LogicMonitorClient.GetByNameAsync<ConfigSource>("Cisco_IOS", default).ConfigureAwait(false);
+		var configSource = await LogicMonitorClient
+			.GetByNameAsync<ConfigSource>("Cisco_IOS", default)
+			.ConfigureAwait(true);
 		configSource.Should().NotBeNull();
 		if (configSource != null)
 		{
 			configSource.Id.Should().NotBe(0);
-			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadataAsync(LogicModuleType.ConfigSource, configSource.Id, default).ConfigureAwait(false);
+			var logicModuleMetadata = await LogicMonitorClient
+				.GetLogicModuleMetadataAsync(LogicModuleType.ConfigSource, configSource.Id, default)
+				.ConfigureAwait(true);
 			CheckMetadata(logicModuleMetadata);
 		}
 	}
@@ -47,12 +51,16 @@ public class LogicModuleMetadataTests : TestWithOutput
 	[Fact]
 	public async Task GetPropertySourceMetadata()
 	{
-		var propertySource = await LogicMonitorClient.GetByNameAsync<PropertySource>("Cisco_Product_Info", default).ConfigureAwait(false);
+		var propertySource = await LogicMonitorClient
+			.GetByNameAsync<PropertySource>("Cisco_Product_Info", default)
+			.ConfigureAwait(true);
 		propertySource.Should().NotBeNull();
 		if (propertySource != null)
 		{
 			propertySource.Id.Should().NotBe(0);
-			var logicModuleMetadata = await LogicMonitorClient.GetLogicModuleMetadataAsync(LogicModuleType.PropertySource, propertySource.Id, default).ConfigureAwait(false);
+			var logicModuleMetadata = await LogicMonitorClient
+				.GetLogicModuleMetadataAsync(LogicModuleType.PropertySource, propertySource.Id, default)
+				.ConfigureAwait(true);
 			CheckMetadata(logicModuleMetadata);
 		}
 	}

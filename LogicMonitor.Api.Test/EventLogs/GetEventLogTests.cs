@@ -19,7 +19,7 @@ public class GetEventLogTests : TestWithOutput
 		{
 			var logItems = await LogicMonitorClient
 				.GetLogItemsAsync(new LogFilter(i, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 
 			foreach (var logItem in logItems)

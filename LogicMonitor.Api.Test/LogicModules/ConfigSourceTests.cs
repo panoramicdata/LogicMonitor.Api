@@ -10,9 +10,13 @@ public class ConfigSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetXml()
 	{
-		var eventSource = await LogicMonitorClient.GetConfigSourceByNameAsync("Test ConfigSource", default).ConfigureAwait(false);
+		var eventSource = await LogicMonitorClient
+			.GetConfigSourceByNameAsync("Test ConfigSource", default)
+			.ConfigureAwait(true);
 		eventSource ??= new();
-		var xml = await LogicMonitorClient.GetConfigSourceXmlAsync(eventSource.Id, default).ConfigureAwait(false);
+		var xml = await LogicMonitorClient
+			.GetConfigSourceXmlAsync(eventSource.Id, default)
+			.ConfigureAwait(true);
 
 		xml.Should().NotBeNull();
 	}

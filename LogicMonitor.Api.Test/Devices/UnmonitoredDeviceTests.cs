@@ -11,7 +11,7 @@ public class UnmonitoredDeviceTests : TestWithOutput
 	{
 		var unmonitoredDevices = await LogicMonitorClient
 			.GetUnmonitoredDeviceAsync(new Filter<UnmonitoredDevice>(), default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		unmonitoredDevices.Should().NotBeNull();
 	}
 }

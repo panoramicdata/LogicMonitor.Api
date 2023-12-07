@@ -11,7 +11,7 @@ public class StatisticsTests : TestWithOutput
 	{
 		_ = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
 		statistics.ApiCallFailureCount.Should().Be(0);
@@ -33,7 +33,7 @@ public class StatisticsTests : TestWithOutput
 	{
 		_ = await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
 		statistics.ApiCallFailureCount.Should().Be(0);

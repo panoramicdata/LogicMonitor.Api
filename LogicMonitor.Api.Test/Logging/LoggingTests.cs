@@ -11,7 +11,7 @@ public class PushMetricTests : TestWithOutput
 	{
 		var response = await LogicMonitorClient
 			.WriteLogAsync(WindowsDeviceId, "Test log message.", default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		response.Should().NotBeNull();
 	}
 
@@ -20,7 +20,7 @@ public class PushMetricTests : TestWithOutput
 	{
 		var logItems = await LogicMonitorClient
 			.GetLogItemsAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		logItems.Should().NotBeNull();
 	}

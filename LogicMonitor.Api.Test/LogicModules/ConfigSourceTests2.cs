@@ -11,7 +11,9 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetAllConfigSources()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient
+			.GetAllAsync<ConfigSource>(default)
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		configSources.Should().NotBeNullOrEmpty();
@@ -23,16 +25,22 @@ public class ConfigSourceTests2 : TestWithOutput
 	[Fact]
 	public async Task GetConfigSourceById()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient
+			.GetAllAsync<ConfigSource>(default)
+			.ConfigureAwait(true);
 		configSources.Should().NotBeNullOrEmpty();
-		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(configSources[0].Id, default).ConfigureAwait(false);
+		var configSource = await LogicMonitorClient
+			.GetAsync<ConfigSource>(configSources[0].Id, default)
+			.ConfigureAwait(true);
 		configSource.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task UpdateAuditVersion()
 	{
-		var configSources = await LogicMonitorClient.GetAllAsync<ConfigSource>(default).ConfigureAwait(false);
+		var configSources = await LogicMonitorClient
+			.GetAllAsync<ConfigSource>(default)
+			.ConfigureAwait(true);
 		configSources.Should().NotBeNullOrEmpty();
 
 		var original = configSources[0];
@@ -40,14 +48,16 @@ public class ConfigSourceTests2 : TestWithOutput
 
 		await LogicMonitorClient
 			.AddConfigSourceAuditVersionAsync(original.Id, new Audit() { Version = 1 }, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
-		var configSource = await LogicMonitorClient.GetAsync<ConfigSource>(original.Id, default).ConfigureAwait(false);
+		var configSource = await LogicMonitorClient
+			.GetAsync<ConfigSource>(original.Id, default)
+			.ConfigureAwait(true);
 
 		configSource.AuditVersion.Should().Be(1);
 
 		await LogicMonitorClient
 			.AddConfigSourceAuditVersionAsync(original.Id, new Audit() { Version = defaultVersion }, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 }

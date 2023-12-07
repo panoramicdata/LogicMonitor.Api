@@ -18,7 +18,7 @@ public class CollectorTests : TestWithOutput
 				"!ping 8.8.8.8",
 				default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -36,7 +36,7 @@ public class CollectorTests : TestWithOutput
 				100,
 				default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -48,7 +48,9 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task GetCollectors()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
 
 		// Make sure that some are returned
 		collectors.Should().NotBeNullOrEmpty();
@@ -59,7 +61,9 @@ public class CollectorTests : TestWithOutput
 		// Get each one by id
 		foreach (var collector in collectors)
 		{
-			var refetchedCollector = await LogicMonitorClient.GetAsync<Collector>(collector.Id, default).ConfigureAwait(false);
+			var refetchedCollector = await LogicMonitorClient
+				.GetAsync<Collector>(collector.Id, default)
+				.ConfigureAwait(true);
 			refetchedCollector.Should().NotBeNull();
 		}
 	}
@@ -67,12 +71,14 @@ public class CollectorTests : TestWithOutput
 	[Fact]
 	public async Task GetCollector()
 	{
-		var collectors = await LogicMonitorClient.GetAllAsync<Collector>(default).ConfigureAwait(false);
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
 		collectors.Should().NotBeNull();
 		collectors.Should().NotBeNullOrEmpty();
 		var refetchedCollector = await LogicMonitorClient
 			.GetAsync<Collector>(collectors[0].Id, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		refetchedCollector.Should().NotBeNull();
 	}
@@ -82,7 +88,7 @@ public class CollectorTests : TestWithOutput
 	{
 		var collector = await LogicMonitorClient
 			.GetAsync<Collector>(CollectorId, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		collector.Should().NotBeNull();
 	}

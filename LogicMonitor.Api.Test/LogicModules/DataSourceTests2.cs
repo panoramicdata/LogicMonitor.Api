@@ -11,7 +11,7 @@ public class DataSourceTests2 : TestWithOutput
 	{
 		var dataSources = await LogicMonitorClient
 			.GetDatasourceListAsync(new())
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		dataSources.Items.Should().NotBeNullOrEmpty();
 	}
 }

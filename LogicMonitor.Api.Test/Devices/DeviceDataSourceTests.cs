@@ -9,17 +9,23 @@ public class DeviceDataSourceTests : TestWithOutput
 	[Fact]
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(1765, null, default).ConfigureAwait(false);
+		var deviceDataSources = await LogicMonitorClient
+			.GetAllDeviceDataSourcesAsync(1765, null, default)
+			.ConfigureAwait(true);
 		deviceDataSources.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task DeviceDataSourceTests2()
 	{
-		var dataSource = await LogicMonitorClient.GetDataSourceByUniqueNameAsync("SSL_Certificates", default).ConfigureAwait(false);
+		var dataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
+			.ConfigureAwait(true);
 
 		// Get all windows devices in the datacenter
-		var devices = await LogicMonitorClient.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, default).ConfigureAwait(false);
+		var devices = await LogicMonitorClient
+			.GetDevicesByDeviceGroupFullPathAsync(DeviceGroupFullPath, true, default)
+			.ConfigureAwait(true);
 		devices.Should().NotBeNullOrEmpty();
 		// We have devices
 
@@ -29,7 +35,9 @@ public class DeviceDataSourceTests : TestWithOutput
 		{
 			if (dataSource != null)
 			{
-				var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default).ConfigureAwait(false);
+				var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient
+					.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+					.ConfigureAwait(true);
 				if (deviceDataSourceByDeviceIdAndDataSourceId is null)
 				{
 					continue;
@@ -47,12 +55,12 @@ public class DeviceDataSourceTests : TestWithOutput
 	{
 		var deviceDataSources = await LogicMonitorClient
 			.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var data = await LogicMonitorClient
 			.GetDeviceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, default)
-			.ConfigureAwait(false);
-		
+			.ConfigureAwait(true);
+
 		data.Should().NotBeNull();
 	}
 }

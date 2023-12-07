@@ -13,7 +13,7 @@ public class TopologyGroupTests : TestWithOutput
 	{
 		var items = await LogicMonitorClient
 			.GetAllAsync<TopologyGroup>(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
 	}
@@ -28,12 +28,12 @@ public class TopologyGroupTests : TestWithOutput
 				[
 					new Eq<TopologyGroup>(nameof(TopologyGroup.Name), TestName)
 				]
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingItem, cancellationToken: default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 
 		// Create it
@@ -46,12 +46,12 @@ public class TopologyGroupTests : TestWithOutput
 				},
 				default
 			)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		// Delete it again
 		await LogicMonitorClient
 			.DeleteAsync(newItem, cancellationToken: default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 
 	[Fact]
@@ -59,7 +59,7 @@ public class TopologyGroupTests : TestWithOutput
 	{
 		var topGroup = await LogicMonitorClient
 			.GetTopologyGroupAsync(1, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		topGroup.Should().NotBeNull();
 	}
@@ -69,7 +69,7 @@ public class TopologyGroupTests : TestWithOutput
 	{
 		var topologies = await LogicMonitorClient
 			.GetTopologiesFromGroupAsync(2, default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		topologies.Items.Should().NotBeNullOrEmpty();
 	}

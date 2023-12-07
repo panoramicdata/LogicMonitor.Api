@@ -15,12 +15,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var dataSourceUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		dataSourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -34,12 +34,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var eventSourceUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		eventSourceUpdates.Items.Should().NotBeNull();
 	}
@@ -53,12 +53,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var configSourceUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		configSourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -72,12 +72,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var propertySourceUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		propertySourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -91,12 +91,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var topologySourceUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.TopologySource, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		topologySourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -110,11 +110,11 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		_ = await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		//jobMonitorUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
 	}
@@ -128,11 +128,11 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		_ = await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		//appliesToUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
 	}
@@ -146,12 +146,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var snmpSysOidUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		snmpSysOidUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -165,12 +165,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var allUpdates =
 			await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.All, version.Version.Major, default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 
 		allUpdates.Total.Should().BePositive();
 	}
@@ -184,12 +184,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var dataSourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedNotInUse)
@@ -202,7 +202,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 					dataSourceToAudit.LocalId,
 					dataSourceToAudit.Version,
 					default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -215,12 +215,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var eventSourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
@@ -233,7 +233,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 					eventSourceToAudit.LocalId,
 					eventSourceToAudit.Version,
 					default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -246,12 +246,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var configSourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
@@ -265,7 +265,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 					configSourceToAudit.LocalId,
 					configSourceToAudit.Version,
 					default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -278,12 +278,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 	{
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var propertySourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
@@ -296,7 +296,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 					propertySourceToAudit.LocalId,
 					propertySourceToAudit.Version,
 					default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -311,12 +311,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var dataSourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -332,7 +332,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				version.Version.Major,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -347,12 +347,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var eventSourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -368,7 +368,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				version.Version.Major,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -383,12 +383,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var configSourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -404,7 +404,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				version.Version.Major,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -419,12 +419,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var propertySourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -440,7 +440,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				version.Version.Major,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -455,12 +455,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var topologySourceUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -476,7 +476,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				version.Version.Major,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -491,12 +491,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var jobMonitorUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -512,7 +512,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				default,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -527,12 +527,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var appliesToFunctionUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -548,7 +548,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				default,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 
@@ -563,12 +563,12 @@ public class LogicModuleUpdateTests : TestWithOutput
 
 		var version = await LogicMonitorClient
 			.GetVersionAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 
 		var snmpSysOidMapUpdates =
 			(await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
-				.ConfigureAwait(false))
+				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -587,7 +587,7 @@ public class LogicModuleUpdateTests : TestWithOutput
 				],
 				version.Version.Major,
 				default)
-				.ConfigureAwait(false);
+				.ConfigureAwait(true);
 		}
 	}
 }

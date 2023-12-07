@@ -42,9 +42,15 @@ public class NewAlertTests : TestWithOutput
 		};
 
 		// Act
-		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter, default).ConfigureAwait(false);
-		var sdtAlerts = await LogicMonitorClient.GetAllAsync(sdtFilter, default).ConfigureAwait(false);
-		var nonSdtAlerts = await LogicMonitorClient.GetAllAsync(nonSdtFilter, default).ConfigureAwait(false);
+		var allAlerts = await LogicMonitorClient
+			.GetAllAsync(allFilter, default)
+			.ConfigureAwait(true);
+		var sdtAlerts = await LogicMonitorClient
+			.GetAllAsync(sdtFilter, default)
+			.ConfigureAwait(true);
+		var nonSdtAlerts = await LogicMonitorClient
+			.GetAllAsync(nonSdtFilter, default)
+			.ConfigureAwait(true);
 
 		// Assert
 
@@ -68,7 +74,9 @@ public class NewAlertTests : TestWithOutput
 				]
 		};
 
-		var allAlerts = await LogicMonitorClient.GetAllAsync(allFilter, default).ConfigureAwait(false);
+		var allAlerts = await LogicMonitorClient
+			.GetAllAsync(allFilter, default)
+			.ConfigureAwait(true);
 
 		var unique = true;
 		foreach (var alert in allAlerts)
@@ -85,7 +93,8 @@ public class NewAlertTests : TestWithOutput
 	[Fact]
 	public async Task GetAlertsFilteredByDevice()
 	{
-		var device = await GetWindowsDeviceAsync(default).ConfigureAwait(false);
+		var device = await GetWindowsDeviceAsync(default)
+			.ConfigureAwait(true);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
 		{
 			var alertFilter = new Filter<Alert>
@@ -99,11 +108,11 @@ public class NewAlertTests : TestWithOutput
 			};
 
 			// Refetch each alert
-			foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter, default).ConfigureAwait(false))
+			foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter, default).ConfigureAwait(true))
 			{
 				var a = await LogicMonitorClient
 					.GetAlertAsync(alert.Id, default)
-					.ConfigureAwait(false);
+					.ConfigureAwait(true);
 				a.DetailMessage.Should().NotBeNull();
 			}
 		}
@@ -124,7 +133,9 @@ public class NewAlertTests : TestWithOutput
 		};
 
 		// Act
-		var alerts = await LogicMonitorClient.GetAllAsync(filter, default).ConfigureAwait(false);
+		var alerts = await LogicMonitorClient
+			.GetAllAsync(filter, default)
+			.ConfigureAwait(true);
 		alerts.Should().AllSatisfy(alert => severities.Contains(alert.Severity).Should().BeTrue());
 	}
 
@@ -133,10 +144,10 @@ public class NewAlertTests : TestWithOutput
 	{
 		var action = async () => await LogicMonitorClient
 					.GetJObjectAsync("alert/alerts/DS_NonExistent", default)
-					.ConfigureAwait(false);
+					.ConfigureAwait(true);
 		await action
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>()
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 	}
 }
