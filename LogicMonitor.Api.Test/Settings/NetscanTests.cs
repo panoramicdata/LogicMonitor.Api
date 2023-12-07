@@ -162,6 +162,6 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 		// Ids should all be distinct
 		var ids = netscans.Items.Select(nsp => nsp.Id);
 		netscans.Items.Should().HaveSameCount(ids);
-		netscans.Items.Count.Should().Be(expectedCount);
+		netscans.Items.Should().HaveCount(expectedCount);
 	}
 }

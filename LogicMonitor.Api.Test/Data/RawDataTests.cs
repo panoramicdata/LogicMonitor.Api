@@ -102,7 +102,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 
 		rawData.Should().NotBeNull();
 		rawData.TotalCount.Should().Be(deviceDataSourceInstances.Count);
-		rawData.InstanceFetchDataResponses.Count.Should().Be(deviceDataSourceInstances.Count);
+		rawData.InstanceFetchDataResponses.Should().HaveCount(deviceDataSourceInstances.Count);
 		rawData.InstanceFetchDataResponses
 			.Should()
 			.AllSatisfy(response => response.DataPoints.Count.Should().Be(dataSource.DataSourceDataPoints.Count));

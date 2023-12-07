@@ -555,7 +555,7 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iT
 	public void LevelDefaultsToError()
 	{
 		var alertFilter = new AlertFilter();
-		alertFilter.Levels.Count.Should().Be(2);
+		alertFilter.Levels.Should().HaveCount(2);
 		alertFilter.Levels[0].Should().Be(AlertLevel.Error);
 		alertFilter.Levels[1].Should().Be(AlertLevel.Critical);
 	}

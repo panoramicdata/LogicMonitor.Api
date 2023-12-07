@@ -345,7 +345,7 @@ public class DeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 		var devices = await LogicMonitorClient
 			.GetPageAsync(new Filter<Device> { Skip = 0, Take = numberToFetch }, default)
 			.ConfigureAwait(true);
-		devices.Items.Count.Should().Be(numberToFetch);
+		devices.Items.Should().HaveCount(numberToFetch);
 		devices.TotalCount.Should().NotBe(numberToFetch);
 		devices.TotalCount.Should().NotBe(0);
 	}
@@ -644,7 +644,7 @@ public class DeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 			.GetDeviceAlertsPageAsync(device.Id, 0, 100, default)
 			.ConfigureAwait(true);
 		alertsPage.Should().NotBeNull();
-		alertsPage.Items.Count.Should().Be(alertsPage.TotalCount);
+		alertsPage.Items.Should().HaveCount(alertsPage.TotalCount);
 	}
 
 	[Fact]

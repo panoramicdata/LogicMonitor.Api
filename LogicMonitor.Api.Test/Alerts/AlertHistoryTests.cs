@@ -17,7 +17,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
-		history.Histogram.Values.Count.Should().Be(25);
+		history.Histogram.Values.Should().HaveCount(25);
 	}
 
 	[Fact]
@@ -35,7 +35,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
-		history.Histogram.Values.Count.Should().Be(8);
+		history.Histogram.Values.Should().HaveCount(8);
 	}
 
 	[Fact]
@@ -53,7 +53,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
-		history.Histogram.Values.Count.Should().Be(31);
+		history.Histogram.Values.Should().HaveCount(31);
 	}
 
 	[Fact]
@@ -76,7 +76,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 			.ConfigureAwait(true);
 
 		history.Should().NotBeNull();
-		history.Histogram.Values.Count.Should().Be(25);
+		history.Histogram.Values.Should().HaveCount(25);
 	}
 
 	[Fact]

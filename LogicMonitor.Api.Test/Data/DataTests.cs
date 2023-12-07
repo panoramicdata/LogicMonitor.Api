@@ -41,7 +41,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 			.ConfigureAwait(true);
 
 		forecastGraphData.TrainingGraphData.Lines.Should().HaveCount(1);
-		forecastGraphData.ForecastedGraphData.Lines.Count.Should().Be(3);
+		forecastGraphData.ForecastedGraphData.Lines.Should().HaveCount(3);
 	}
 
 	[Fact]
@@ -283,7 +283,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 		var graphData = await LogicMonitorClient
 			.GetGraphDataAsync(deviceGraphDataRequest, default)
 			.ConfigureAwait(true);
-		graphData.TimeStamps.Count.Should().Be(62);
+		graphData.TimeStamps.Should().HaveCount(62);
 	}
 
 	[Fact]
