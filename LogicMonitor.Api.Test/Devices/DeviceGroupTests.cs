@@ -2,12 +2,8 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Devices;
 
-public class DeviceGroupTests : TestWithOutput
+public class DeviceGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public DeviceGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetDeviceGroupByFullPath()
 	{

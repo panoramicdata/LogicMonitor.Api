@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api;
 
-internal class LogicMonitorJsonReader : JsonTextReader
+internal class LogicMonitorJsonReader(TextReader reader) : JsonTextReader(reader)
 {
-	public LogicMonitorJsonReader(TextReader reader) : base(reader)
-	{
-	}
-
 	public override bool Read()
 	{
 		var hasToken = base.Read();

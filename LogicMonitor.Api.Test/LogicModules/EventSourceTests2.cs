@@ -2,12 +2,8 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test;
 
-public class EventSourceTests2 : TestWithOutput
+public class EventSourceTests2(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public EventSourceTests2(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetXml()
 	{

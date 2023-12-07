@@ -3,13 +3,9 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Websites;
 
-public class WebsiteTests : TestWithOutput
+public class WebsiteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string ExpectedAlertExpression = "< 90 60 30";
-
-	public WebsiteTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetAllWebsites()

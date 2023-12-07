@@ -3,22 +3,15 @@ namespace LogicMonitor.Api;
 /// <summary>
 /// A progress reporter
 /// </summary>
-public class ProgressReporter
+/// <remarks>
+/// Constructor
+/// </remarks>
+/// <param name="logger"></param>
+public class ProgressReporter(ILogger? logger)
 {
-	private readonly ILogger _logger;
-	private readonly Stopwatch _totalStopwatch;
-	private readonly Stopwatch _subTaskStopwatch;
-
-	/// <summary>
-	/// Constructor
-	/// </summary>
-	/// <param name="logger"></param>
-	public ProgressReporter(ILogger? logger)
-	{
-		_totalStopwatch = new Stopwatch();
-		_subTaskStopwatch = new Stopwatch();
-		_logger = logger ?? NullLogger.Instance;
-	}
+	private readonly ILogger _logger = logger ?? NullLogger.Instance;
+	private readonly Stopwatch _totalStopwatch = new Stopwatch();
+	private readonly Stopwatch _subTaskStopwatch = new Stopwatch();
 
 	/// <summary>
 	/// Start

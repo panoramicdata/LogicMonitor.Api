@@ -3,22 +3,18 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <summary>
 ///    DeviceGroup SDT creation DTO
 /// </summary>
-public class ResourceGroupScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+/// <remarks>
+///    Device
+/// </remarks>
+/// <param name="deviceGroupId"></param>
+public class ResourceGroupScheduledDownTimeCreationDto(int deviceGroupId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.ResourceGroup)
 {
-	/// <summary>
-	///    Device
-	/// </summary>
-	/// <param name="deviceGroupId"></param>
-	public ResourceGroupScheduledDownTimeCreationDto(int deviceGroupId) : base(ScheduledDownTimeType.ResourceGroup)
-	{
-		DeviceGroupId = deviceGroupId;
-	}
 
 	/// <summary>
 	/// The id of the device group that the SDT will be associated with
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int DeviceGroupId { get; set; } = deviceGroupId;
 
 	/// <summary>
 	/// The id of the datasource that this SDT will be associated with, for the specified group. dataSourceId 0 indicates all datasources

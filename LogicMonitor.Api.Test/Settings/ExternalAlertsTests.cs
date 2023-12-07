@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class ExternalAlertsTests : TestWithOutput
+public class ExternalAlertsTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public ExternalAlertsTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAll()
 	{

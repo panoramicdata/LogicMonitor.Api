@@ -1,12 +1,8 @@
 ﻿namespace LogicMonitor.Api.Test.Topologies;
 
-public class TopologyGroupTests : TestWithOutput
+public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string TestName = "Test Name";
-
-	public TopologyGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetAll()

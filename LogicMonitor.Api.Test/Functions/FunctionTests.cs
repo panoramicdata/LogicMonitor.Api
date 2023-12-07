@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Functions;
 
-public class FunctionTests : TestWithOutput
+public class FunctionTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public FunctionTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetApplications()
 	{

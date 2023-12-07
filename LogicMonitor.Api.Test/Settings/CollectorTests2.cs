@@ -3,13 +3,9 @@ using System.Data;
 namespace LogicMonitor.Api.Test;
 
 [Collection("CollectorRelated")]
-public class CollectorTests2
-	: TestWithOutput
+public class CollectorTests2(ITestOutputHelper iTestOutputHelper)
+		: TestWithOutput(iTestOutputHelper)
 {
-	public CollectorTests2(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{

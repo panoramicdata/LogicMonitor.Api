@@ -1,11 +1,7 @@
 ﻿namespace LogicMonitor.Api.Test.Devices;
 
-public class DeviceDataSourceInstanceTests : TestWithOutput
+public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{

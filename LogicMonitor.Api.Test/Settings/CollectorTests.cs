@@ -3,12 +3,8 @@ using LogicMonitor.Api.Test.Extensions;
 namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]
-public class CollectorTests : TestWithOutput
+public class CollectorTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public CollectorTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task ExecuteDebugCommand()
 	{

@@ -1,11 +1,7 @@
 ﻿namespace LogicMonitor.Api.Test.Settings;
 
-public class TimeTests : TestWithOutput
+public class TimeTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public TimeTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetTimeZoneSetting()
 	{

@@ -2,13 +2,9 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Dashboards;
 
-public class DashboardTests : TestWithOutput
+public class DashboardTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private static readonly DateTimeOffset UtcNow = DateTimeOffset.UtcNow;
-
-	public DashboardTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetBigNumberWidgetData_Succeeds()

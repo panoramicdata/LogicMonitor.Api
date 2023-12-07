@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class NewAlertTests : TestWithOutput
+public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public NewAlertTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	private static readonly DateTime EndDateTime = DateTime.UtcNow.Date;
 	private static readonly int StartDateTimeSeconds = EndDateTime.AddDays(-14).SecondsSinceTheEpoch();
 	private static readonly int EndDateTimeSeconds = EndDateTime.SecondsSinceTheEpoch();

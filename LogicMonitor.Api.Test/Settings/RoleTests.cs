@@ -2,13 +2,9 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Settings;
 
-public class RoleTests : TestWithOutput
+public class RoleTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string Value = "Unit Test Role";
-
-	public RoleTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetRoles()

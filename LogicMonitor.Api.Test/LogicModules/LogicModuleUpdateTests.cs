@@ -1,10 +1,7 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class LogicModuleUpdateTests : TestWithOutput
+public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	/// <summary>
 	/// Get DataSource updates

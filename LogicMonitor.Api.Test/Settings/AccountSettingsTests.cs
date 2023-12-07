@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class AccountSettingsTests : TestWithOutput
+public class AccountSettingsTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public AccountSettingsTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task Get()
 	{

@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class RecipientGroupTests : TestWithOutput
+public class RecipientGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public RecipientGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetRecipientGroupTests()
 	{

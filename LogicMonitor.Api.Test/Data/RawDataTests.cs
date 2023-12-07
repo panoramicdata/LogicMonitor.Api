@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Data;
 
-public class RawDataTests : TestWithOutput
+public class RawDataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public RawDataTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetRawData()
 	{

@@ -3,35 +3,28 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <summary>
 /// WebsiteGroup SDT creation DTO
 /// </summary>
-public class WebsiteGroupScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+/// <remarks>
+/// Constructor
+/// </remarks>
+/// <param name="websiteGroupId"></param>
+public class WebsiteGroupScheduledDownTimeCreationDto(int websiteGroupId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.WebsiteGroup)
 {
-	/// <summary>
-	/// Constructor
-	/// </summary>
-	/// <param name="websiteGroupId"></param>
-	public WebsiteGroupScheduledDownTimeCreationDto(int websiteGroupId) : base(ScheduledDownTimeType.WebsiteGroup)
-	{
-		WebsiteGroupId = websiteGroupId;
-	}
 
 	/// <summary>
 	/// The website group id
 	/// </summary>
 	[DataMember(Name = "websiteGroupId")]
-	public int WebsiteGroupId { get; set; }
+	public int WebsiteGroupId { get; set; } = websiteGroupId;
 }
 
 /// <summary>
 /// WebsiteGroup SDT creation DTO - deprecated
 /// </summary>
+/// <remarks>
+/// Constructor
+/// </remarks>
+/// <param name="websiteGroupId"></param>
 [Obsolete("Use WebsiteGroupScheduledDownTimeCreationDto instead")]
-public class WebsiteGroupIdScheduledDownTimeCreationDto : WebsiteGroupScheduledDownTimeCreationDto
+public class WebsiteGroupIdScheduledDownTimeCreationDto(int websiteGroupId) : WebsiteGroupScheduledDownTimeCreationDto(websiteGroupId)
 {
-	/// <summary>
-	/// Constructor
-	/// </summary>
-	/// <param name="websiteGroupId"></param>
-	public WebsiteGroupIdScheduledDownTimeCreationDto(int websiteGroupId) : base(websiteGroupId)
-	{
-	}
 }

@@ -1,11 +1,7 @@
 ﻿namespace LogicMonitor.Api.Test.Logging;
 
-public class PushMetricTests : TestWithOutput
+public class PushMetricTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public PushMetricTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task WriteLogAsync_Succeeds()
 	{

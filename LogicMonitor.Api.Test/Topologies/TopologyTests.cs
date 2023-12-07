@@ -1,11 +1,7 @@
 ﻿namespace LogicMonitor.Api.Test.Topologies;
 
-public class TopologyTests : TestWithOutput
+public class TopologyTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public TopologyTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAllTopologies()
 	{

@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class AppliesToFunctionTests : TestWithOutput
+public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task CreateUpdateAndDelete()
 	{

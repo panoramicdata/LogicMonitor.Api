@@ -1,12 +1,8 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class RoleGroupTests : TestWithOutput
+public class RoleGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string Value = "Unit Test Role Group";
-
-	public RoleGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetRoleGroups()

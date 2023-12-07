@@ -3,28 +3,23 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <summary>
 /// Website SDT creation DTO
 /// </summary>
-public class WebsiteCheckpointScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+/// <remarks>
+/// Constructor
+/// </remarks>
+/// <param name="websiteId">The website id</param>
+/// <param name="checkpointId">The checkpoint id</param>
+public class WebsiteCheckpointScheduledDownTimeCreationDto(int websiteId, int checkpointId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.Website)
 {
-	/// <summary>
-	/// Constructor
-	/// </summary>
-	/// <param name="websiteId">The website id</param>
-	/// <param name="checkpointId">The checkpoint id</param>
-	public WebsiteCheckpointScheduledDownTimeCreationDto(int websiteId, int checkpointId) : base(ScheduledDownTimeType.Website)
-	{
-		WebsiteId = websiteId;
-		CheckpointId = checkpointId;
-	}
 
 	/// <summary>
 	/// The website id
 	/// </summary>
 	[DataMember(Name = "websiteId")]
-	public int WebsiteId { get; set; }
+	public int WebsiteId { get; set; } = websiteId;
 
 	/// <summary>
 	/// The checkpoint id
 	/// </summary>
 	[DataMember(Name = "checkpointId")]
-	public int CheckpointId { get; set; }
+	public int CheckpointId { get; set; } = checkpointId;
 }

@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class UserTests : TestWithOutput
+public class UserTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public UserTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetUsers()
 	{

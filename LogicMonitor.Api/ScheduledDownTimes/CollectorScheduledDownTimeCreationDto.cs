@@ -3,20 +3,16 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <summary>
 ///    Collector SDT creation DTO
 /// </summary>
-public class CollectorScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
+/// <remarks>
+///    Constructor
+/// </remarks>
+/// <param name="collectorId"></param>
+public class CollectorScheduledDownTimeCreationDto(int collectorId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.Collector)
 {
-	/// <summary>
-	///    Constructor
-	/// </summary>
-	/// <param name="collectorId"></param>
-	public CollectorScheduledDownTimeCreationDto(int collectorId) : base(ScheduledDownTimeType.Collector)
-	{
-		CollectorId = collectorId;
-	}
 
 	/// <summary>
 	///    The collector id
 	/// </summary>
 	[DataMember(Name = "collectorId")]
-	public int CollectorId { get; set; }
+	public int CollectorId { get; set; } = collectorId;
 }

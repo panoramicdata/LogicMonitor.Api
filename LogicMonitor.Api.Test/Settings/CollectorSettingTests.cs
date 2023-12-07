@@ -1,12 +1,8 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class CollectorSettingTests
-	: TestWithOutput
+public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper)
+		: TestWithOutput(iTestOutputHelper)
 {
-	public CollectorSettingTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAllCollectorGroupSettings()
 	{

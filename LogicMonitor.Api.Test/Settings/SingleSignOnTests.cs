@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class SingleSignOnTests : TestWithOutput
+public class SingleSignOnTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public SingleSignOnTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetSingleSignOnData()
 	{

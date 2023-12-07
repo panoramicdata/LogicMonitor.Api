@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Statistics;
 
-public class StatisticsTests : TestWithOutput
+public class StatisticsTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public StatisticsTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task Statistics_GetVersion_Succeeds()
 	{

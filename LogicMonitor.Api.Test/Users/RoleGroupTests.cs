@@ -1,12 +1,8 @@
 ﻿namespace LogicMonitor.Api.Test.Users;
 
-public class RoleGroupTests : TestWithOutput
+public class RoleGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string TestName = "Test Name";
-
-	public RoleGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetAll()

@@ -2,12 +2,8 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Data;
 
-public class DataTests : TestWithOutput
+public class DataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public DataTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetForecastGraphData()
 	{

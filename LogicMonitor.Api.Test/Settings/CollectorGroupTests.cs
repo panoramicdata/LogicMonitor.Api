@@ -1,14 +1,10 @@
 namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]
-public class CollectorGroupTests : TestWithOutput
+public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string TestName = "ApiTest";
 	private const string TestDescription = "ApiTest Description";
-
-	public CollectorGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetAllCollectorGroups()

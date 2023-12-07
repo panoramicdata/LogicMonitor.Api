@@ -1,11 +1,7 @@
 ﻿namespace LogicMonitor.Api.Test.Settings;
 
-public class SysOidsTests : TestWithOutput
+public class SysOidsTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public SysOidsTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAll()
 	{

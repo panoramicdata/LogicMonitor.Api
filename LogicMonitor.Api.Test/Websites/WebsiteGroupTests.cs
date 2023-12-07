@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Websites;
 
-public class WebsiteGroupTests : TestWithOutput
+public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public WebsiteGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task SetWebsiteGroupCustomProperty()
 	{

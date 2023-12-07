@@ -1,12 +1,8 @@
 // Older, now deprecated methods are still tested here
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class EventSourceTests : TestWithOutput
+public class EventSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public EventSourceTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetDeviceGroupEventSources()
 	{

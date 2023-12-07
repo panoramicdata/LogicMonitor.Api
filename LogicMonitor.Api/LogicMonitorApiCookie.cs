@@ -1,13 +1,7 @@
 namespace LogicMonitor.Api;
 
-internal class LogicMonitorApiCookie
+internal class LogicMonitorApiCookie(string text)
 {
-	public LogicMonitorApiCookie(string text)
-	{
-		Text = text;
-		CreateDateTimeUtc = DateTime.UtcNow;
-	}
-
-	public string Text { get; }
-	public DateTime CreateDateTimeUtc { get; }
+	public string Text { get; } = text;
+	public DateTime CreateDateTimeUtc { get; } = DateTime.UtcNow;
 }

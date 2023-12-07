@@ -1,12 +1,8 @@
 namespace LogicMonitor.Api.Test.Users;
 
-public class UserGroupTests : TestWithOutput
+public class UserGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private const string TestName = "Test Name";
-
-	public UserGroupTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetAll()

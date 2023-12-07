@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class AlertRulesTests : TestWithOutput
+public class AlertRulesTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public AlertRulesTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	private static async Task GetAlertRule(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 	{
 		var alertRule = (await portalClient.GetAlertRuleListAsync(new(), default).ConfigureAwait(true)).Items.SingleOrDefault(ar => ar.Name == alertRuleName)

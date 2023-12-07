@@ -1,12 +1,8 @@
 ﻿namespace LogicMonitor.Api.Test.EventLogs;
-public class GetFilteredAuditEventTests : TestWithOutput
+public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	private readonly DateTime endDateTimeUtc = DateTime.UtcNow;
 	private readonly DateTime startDateTimeUtc = DateTime.UtcNow.AddHours(-1);
-
-	public GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	[Fact]
 	public async Task GetUsernameFilteredEvents()

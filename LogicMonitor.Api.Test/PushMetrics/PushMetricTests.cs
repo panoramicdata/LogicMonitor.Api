@@ -2,12 +2,8 @@
 
 namespace LogicMonitor.Api.Test.PushMetrics;
 
-public class PushMetricTests : TestWithOutput
+public class PushMetricTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public PushMetricTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task PushMetric_Succeeds()
 	{

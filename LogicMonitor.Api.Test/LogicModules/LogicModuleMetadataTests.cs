@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class LogicModuleMetadataTests : TestWithOutput
+public class LogicModuleMetadataTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public LogicModuleMetadataTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetDataSourceMetadata()
 	{

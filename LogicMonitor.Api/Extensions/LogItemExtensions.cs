@@ -538,20 +538,13 @@ public static class LogItemExtensions
 		};
 	}
 
-	private class LogItemRegex
+	private class LogItemRegex(int id, AuditEventEntityType entityType, Regex regex)
 	{
-		public LogItemRegex(int id, AuditEventEntityType entityType, Regex regex)
-		{
-			Id = id;
-			EntityType = entityType;
-			Regex = regex;
-		}
+		public int Id { get; set; } = id;
 
-		public int Id { get; set; } = default!;
+		public AuditEventEntityType EntityType { get; set; } = entityType;
 
-		public AuditEventEntityType EntityType { get; set; } = default!;
-
-		public Regex Regex { get; set; } = default!;
+		public Regex Regex { get; set; } = regex;
 	}
 
 }

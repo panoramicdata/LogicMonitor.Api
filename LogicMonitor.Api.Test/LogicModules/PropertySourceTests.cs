@@ -1,11 +1,8 @@
 // Older, now deprecated methods are still tested here
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class PropertySourceTests : TestWithOutput
+public class PropertySourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public PropertySourceTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
 
 	/// <summary>
 	/// Get a PropertySource definition (which is JSON)

@@ -1,11 +1,7 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class ConfigSourceTests : TestWithOutput
+public class ConfigSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public ConfigSourceTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Obsolete("Tests obsolete items")]
 	[Fact]
 	public async Task GetXml()

@@ -2,12 +2,8 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test;
 
-public class ConfigSourceTests2 : TestWithOutput
+public class ConfigSourceTests2(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public ConfigSourceTests2(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public async Task GetAllConfigSources()
 	{

@@ -1,10 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.EventLogs;
-public class GetEventLogTests : TestWithOutput
+public class GetEventLogTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public GetEventLogTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	[Fact]
 	public void ValidateRegexes()
 		=> LogItemExtensions.ValidateRegexes();

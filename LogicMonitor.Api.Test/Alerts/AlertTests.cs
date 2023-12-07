@@ -2,12 +2,8 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class AlertTests : TestWithOutput
+public class AlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
-	public AlertTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
-	{
-	}
-
 	private const string TestNoteComment = "Test Note";
 	private static readonly DateTime EndDateTime = DateTime.UtcNow.Date;
 	private static readonly int StartDateTimeSeconds = EndDateTime.AddDays(-7).SecondsSinceTheEpoch();
