@@ -123,7 +123,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 			websiteGroup.StopMonitoring.Should().BeFalse();
 			websiteGroup.FullPath.Should().Be("Test Name");
 			websiteGroup.ParentId.Should().Be(1);
-			websiteGroup.CustomProperties.Should().BeEquivalentTo(new List<EntityProperty> { new EntityProperty { Name = "name", Value = "value" } });
+			websiteGroup.CustomProperties.Should().BeEquivalentTo(new List<EntityProperty> { new() { Name = "name", Value = "value" } });
 		}
 		finally
 		{
