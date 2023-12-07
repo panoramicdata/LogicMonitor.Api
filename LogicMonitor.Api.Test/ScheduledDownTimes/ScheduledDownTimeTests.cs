@@ -12,7 +12,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper) : TestW
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceSDT"),
 					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
 				]
-		}, default).ConfigureAwait(false);
+		}, default).ConfigureAwait(true);
 		Assert.All(sdts, sdt => Assert.False(sdt.IsEffective));
 	}
 

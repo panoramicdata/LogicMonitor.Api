@@ -53,7 +53,9 @@ public class NetscanGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 	[Fact]
 	public async Task CanGetNetscanGroups()
 	{
-		var allNetscanGroups = await LogicMonitorClient.GetAllAsync<NetscanGroup>(default).ConfigureAwait(false);
+		var allNetscanGroups = await LogicMonitorClient
+			.GetAllAsync<NetscanGroup>(default)
+			.ConfigureAwait(true);
 		allNetscanGroups.Should().NotBeNull();
 		allNetscanGroups.Should().NotBeNullOrEmpty();
 		var ids = allNetscanGroups.Select(nspg => nspg.Id);

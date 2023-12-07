@@ -164,7 +164,7 @@ public class FlowTests : TestWithOutput
 	public async Task GetPorts()
 	{
 		var device = await GetNetflowDeviceAsync(default)
-			.ConfigureAwait(false);
+			.ConfigureAwait(true);
 		var flowPorts = await LogicMonitorClient.GetFlowPortsPageAsync(new FlowPortsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,

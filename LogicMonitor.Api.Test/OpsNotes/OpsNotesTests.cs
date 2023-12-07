@@ -19,7 +19,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 		}, default)
 		.ConfigureAwait(true);
 
-		await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(false);
+		await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(true);
 
 		var allOpsNotes = await LogicMonitorClient
 			.GetAllAsync<OpsNote>(default)
