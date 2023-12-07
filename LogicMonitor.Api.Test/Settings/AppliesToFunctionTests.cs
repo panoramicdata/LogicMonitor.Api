@@ -51,12 +51,14 @@ public class AppliesToFunctionTests : TestWithOutput
 				foundATF = atf;
 			}
 		}
+
 		if (found)
 		{
 			await LogicMonitorClient
 				.DeleteAsync($"setting/functions/{foundATF.Id}", default)
 				.ConfigureAwait(true);
 		}
+
 		found.Should().BeTrue();
 		foundATF.Description.Should().Be("LornaTest");
 	}

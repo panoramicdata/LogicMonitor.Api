@@ -45,6 +45,7 @@ public class CollectorTests2
 			{
 				fullGroup = collectorGroup;
 			}
+
 			i++;
 		}
 
