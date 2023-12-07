@@ -37,10 +37,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 	[InlineData(typeof(DeviceGroupOpsNoteScopeCreationDto))]
 	public async Task AddRemoveOpsNote(Type t)
 	{
-		if (t is null)
-		{
-			throw new ArgumentNullException(nameof(t));
-		}
+		ArgumentNullException.ThrowIfNull(t);
 
 		var device = await LogicMonitorClient
 			.GetAsync<Device>(WindowsDeviceId, default)
