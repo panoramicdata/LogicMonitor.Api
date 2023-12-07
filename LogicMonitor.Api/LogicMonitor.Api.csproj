@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>GetDeviceDataSourceInstanceGroupsAsync now returns all relevant groups rather than a limit of 50</PackageReleaseNotes>
+		<PackageReleaseNotes>Improved models.  Breaking change: fixed naming of SDT to Sdt in properties throughout.</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>
