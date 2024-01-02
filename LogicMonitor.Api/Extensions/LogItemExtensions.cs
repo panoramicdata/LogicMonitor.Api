@@ -106,7 +106,7 @@ public static class LogItemExtensions
 			new(@"^Import DataSource from repository.  Change details : Change datasource : (?<logicModuleName>.+?), dsId=(?<logicModuleId>.+?){(?<datasourceContent>.+)}$", RegexOptions.Singleline)),
 		new(28,
 			AuditEventEntityType.DataSourceGraph,
-			new(@"""Action=(?<action>Add)""; ""Type=DataSourceGraph""; ""DataSourceName=(?<logicModuleName>.+?)""; ""Device=NA""; ""Description=Add datasource graph, graph=(?<graphName>.+)\((?<graphId>.+?)\), ""$", RegexOptions.Singleline)),
+			new(@"""Action=(?<action>Add|Update)""; ""Type=DataSourceGraph""; ""(LogicModuleName|DataSourceName)=(?<logicModuleName>.+?)""; ""Device=NA""; ""Description=Add datasource graph, graph=(?<graphName>.+)\((?<graphId>.+?)\), ""$", RegexOptions.Singleline)),
 		new(29,
 			AuditEventEntityType.None,
 			new(@"^(?<discardedEventAlert>An event alert was discarded for EventSource (?<logicModuleName>.+?) because it exceeded the rate limit of \d+ events per \d+ seconds. Adding filters to your EventSource may help reduce the number of alerts triggered\.)$", RegexOptions.Singleline)),
@@ -121,7 +121,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\) ,.+$", RegexOptions.Singleline)),
 		new(33,
 			AuditEventEntityType.DataSource,
-			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<logicModuleName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""(LogicModuleName|DataSourceName)=(?<logicModuleName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
 		new(34,
 			AuditEventEntityType.AlertNote,
 			new(@"^Note \((?<alertNote>.+?)\) added to \((?<alertId>.+?)\) by \((?<username>.+?)\).$", RegexOptions.Singleline)),
@@ -130,7 +130,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+?)ed device (?<resourceName>.+) \((?<resourceId>.+?)\)  via API token (?<apiTokenId>.+)$", RegexOptions.Singleline)),
 		new(36,
 			AuditEventEntityType.None,
-			new(@"^regular device total monthly metrics -> (?<monthlyMetrics>.+?)$")),
+			new(@"^(?<action>regular device total monthly metrics) -> (?<monthlyMetrics>.+?)$")),
 		new(37,
 			AuditEventEntityType.None,
 			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
@@ -244,7 +244,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+) (?<logicModuleType>.+)<(?<instanceName>.+)>\. ""ConfigSourceInstanceId=(?<instanceId>\d+)""; ""ConfigSourceName=(?<logicModuleName>.+)""; ""ConfigVersion=(?<logicModuleVersion>\d+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
 		new(74,
 			AuditEventEntityType.DataSource,
-			new(@"^(?<action>.+) (?<logicModuleType>.+)<(?<instanceName>.+)>\. ""DataSourceInstanceId=(?<instanceId>\d+)""; ""DataSourceName=(?<logicModuleName>.+)""; ""DataSourceVersion=(?<logicModuleVersion>\d+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+) (?<logicModuleType>.+)<(?<instanceName>.+)>\. ""DataSourceInstanceId=(?<instanceId>\d+)""; ""(LogicModuleName|DataSourceName)=(?<logicModuleName>.+)""; ""DataSourceVersion=(?<logicModuleVersion>\d+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
 		new(75,
 			AuditEventEntityType.Account,
 			new(@"^User\(name=(?<userName>.+), email=(?<userEmail>.+)\) (?<action>forgot password)$", RegexOptions.Singleline)),
@@ -271,8 +271,17 @@ public static class LogItemExtensions
 			new(@"^Schedule (?<action>collect now) for (?<logicModuleType>ConfigSource) instance<(?<instanceId>\d+)>\. ""ConfigSourceInstanceName=(?<instanceName>.+)""; ""ConfigSourceName=(?<logicModuleName>.+)""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)"";$", RegexOptions.Singleline)),
 		new(83,
 			AuditEventEntityType.Collector,
-			new(@"^(?<action>Add|Update|Delete) the collector (?<collectorId>\d+) \(hostname=(?<collectorName>.+), desc=(?<collectorDescription>.+)\)$", RegexOptions.Singleline))
-			];
+			new(@"^(?<action>Add|Update|Delete) the collector (?<collectorId>\d+) \(hostname=(?<collectorName>.+), desc=(?<collectorDescription>.+)\)$", RegexOptions.Singleline)),
+		new(84,
+			AuditEventEntityType.Device,
+			new(@"^Schedule (?<action>auto-discover poll request), deviceId=(?<resourceId>.+), collectorId=(?<collectorId>\d+), requestId=(?<requestId>\d+)$", RegexOptions.Singleline)),
+		new(85,
+			AuditEventEntityType.DataSource,
+			new(@"^""Action=(?<action>Add|Update)""; ""Type=DataSource""; ""LogicModuleName=(?<logicModuleName>.+)""; ""Device=NA""; (""LogicModuleId=(?<logicModuleId>\d+?)""; )?""Description=(?<description>.*)"";?$", RegexOptions.Singleline)),
+		new(86,
+			AuditEventEntityType.Device,
+			new(@"^""Action=(?<action>Schedule)""; ""Type=Device""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)""; ""Description=(?<description>.+)""$", RegexOptions.Singleline)),
+	];
 
 	/// <summary>
 	/// Converts a logItem to an AuditItem
@@ -371,6 +380,7 @@ public static class LogItemExtensions
 		auditEvent.ResourceHostname = GetGroupValueAsTypeOrNull<string>(match, "resourceHostname");
 		auditEvent.RemoteSessionType = GetGroupValueAsTypeOrNull<string>(match, "remoteSessionType");
 		auditEvent.RemoteSessionId = GetGroupValueAsStructOrNull<long>(match, "remoteSessionId");
+		auditEvent.RequestId = GetGroupValueAsStructOrNull<long>(match, "requestId");
 		auditEvent.RestrictSso = GetGroupValueAsStructOrNull<bool>(match, "restrictSso");
 		auditEvent.StartDownTime = GetGroupValueAsTypeOrNull<string>(match, "startDownTime");
 		auditEvent.UserRole = GetGroupValueAsTypeOrNull<string>(match, "userRole");
@@ -534,6 +544,9 @@ public static class LogItemExtensions
 			"RE-BALANCED" => AuditEventActionType.Rebalance,
 			"FORGOT PASSWORD" => AuditEventActionType.RequestPasswordReset,
 			"RUN" => AuditEventActionType.Run,
+			"AUTO-DISCOVER POLL REQUEST" => AuditEventActionType.AutoDiscoveryPollRequest,
+			"REGULAR DEVICE TOTAL MONTHLY METRICS" => AuditEventActionType.RegularDeviceTotalMonthlyMetrics,
+			"SCHEDULE" => AuditEventActionType.ScheduleActiveDiscovery,
 			_ => AuditEventActionType.None
 		};
 	}

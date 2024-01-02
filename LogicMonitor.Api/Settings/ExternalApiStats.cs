@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LogicMonitor.Api.Settings;
+﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
 /// External API statistic information
 /// </summary>
 [DataContract]
-    public class ExternalApiStats
-    {
+public class ExternalApiStats
+{
 	/// <summary>
 	/// Summary
 	/// </summary>
@@ -41,6 +37,12 @@ namespace LogicMonitor.Api.Settings;
 	public int TotalProcessedRequests { get; set; }
 
 	/// <summary>
+	/// Total rejected requests
+	/// </summary>
+	[DataMember(Name = "totalRejectedGetAPICount")]
+	public int TotalRejectedGetApiCount { get; set; }
+
+	/// <summary>
 	/// API
 	/// </summary>
 	[DataMember(Name = "api")]
@@ -57,4 +59,4 @@ namespace LogicMonitor.Api.Settings;
 	/// </summary>
 	[DataMember(Name = "tags")]
 	public List<string> Tags { get; set; } = [];
-    }
+}

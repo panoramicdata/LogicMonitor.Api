@@ -122,6 +122,24 @@ public class DataPointConfiguration : IdentifiedItem
 	public string GlobalAlertExpr { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The Global alert transition interval
+	/// </summary>
+	[DataMember(Name = "globalAlertTransitionInterval")]
+	public int GlobalAlertTransitionInterval { get; set; }
+
+	/// <summary>
+	///     The Global alert clear transition interval
+	/// </summary>
+	[DataMember(Name = "globalAlertClearTransitionInterval")]
+	public int GlobalAlertClearTransitionInterval { get; set; }
+
+	/// <summary>
+	///     The Global alert for no data
+	/// </summary>
+	[DataMember(Name = "globalAlertForNoData")]
+	public int GlobalAlertForNoData { get; set; }
+
+	/// <summary>
 	///     Whether to enable anomaly alert generation globally
 	/// </summary>
 	///

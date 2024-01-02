@@ -98,5 +98,20 @@ public enum AuditEventActionType
 	/// <summary>
 	/// Collect Now
 	/// </summary>
-	CollectNow
+	CollectNow,
+
+	/// <summary>
+	/// Auto-discovery Poll Request
+	/// </summary>
+	AutoDiscoveryPollRequest,
+
+	/// <summary>
+	/// Regular Device Total Monthly Metrics
+	/// </summary>
+	RegularDeviceTotalMonthlyMetrics,
+
+	/// <summary>
+	/// Schedule Active Discovery
+	/// </summary>
+	ScheduleActiveDiscovery
 }

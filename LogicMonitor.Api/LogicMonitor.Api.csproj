@@ -27,7 +27,14 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Improved models.  Breaking change: fixed naming of SDT to Sdt in properties throughout.</PackageReleaseNotes>
+		<PackageReleaseNotes>
+			DataPointConfiguration.GlobalAlertTransitionInterval
+			DataPointConfiguration.GlobalAlertClearTransitionInterval
+			DataPointConfiguration.GlobalAlertForNoData
+			Added missing HttpIntegration fields
+			Added Missing Audit log processing
+			GetExternalApi fixes
+		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>

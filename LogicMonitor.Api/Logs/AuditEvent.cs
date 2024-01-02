@@ -267,4 +267,9 @@ public class AuditEvent
 	/// Collector Group Id
 	/// </summary>
 	public int? CollectorGroupId { get; internal set; }
+
+	/// <summary>
+	/// RequestId
+	/// </summary>
+	public long? RequestId { get; internal set; }
 }
