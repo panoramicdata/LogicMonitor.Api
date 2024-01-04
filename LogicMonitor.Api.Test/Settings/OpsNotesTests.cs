@@ -25,6 +25,6 @@ public class OpsNoteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 		}, default).ConfigureAwait(true);
 
 		// Text should be set
-		allOpsNotesTags.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
+		allOpsNotesTags.Should().AllSatisfy(on => on.Name.Should().NotBeNullOrWhiteSpace());
 	}
 }

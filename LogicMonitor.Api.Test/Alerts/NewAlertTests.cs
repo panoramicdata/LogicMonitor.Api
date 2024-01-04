@@ -132,7 +132,7 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 		var alerts = await LogicMonitorClient
 			.GetAllAsync(filter, default)
 			.ConfigureAwait(true);
-		alerts.Should().AllSatisfy(alert => severities.Contains(alert.Severity).Should().BeTrue());
+		alerts.Should().AllSatisfy(alert => severities.Should().Contain(alert.Severity));
 	}
 
 	[Fact]
