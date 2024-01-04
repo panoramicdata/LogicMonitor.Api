@@ -21,7 +21,8 @@ public partial class LogicMonitorClient
 	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdtsAsync(
 		int deviceGroupId,
 		CancellationToken cancellationToken)
-	=> await GetBySubUrlAsync<HistorySdtCollection>($"device/groups/{deviceGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
+	=> await GetAllAsync<ScheduledDownTimeHistory>($"device/groups/{deviceGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
+	//=> await GetBySubUrlAsync<HistorySdtCollection>($"device/groups/{deviceGroupId}/historysdts", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Gets history SDTs for a Device Data Source
