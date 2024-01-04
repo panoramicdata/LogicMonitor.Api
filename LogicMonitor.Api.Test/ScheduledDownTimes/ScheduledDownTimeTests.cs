@@ -58,7 +58,6 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper) : TestW
 			// Clean up the effects of the test
 			if (createdSdt is not null)
 			{
-
 				await LogicMonitorClient
 					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
 					.ConfigureAwait(true);

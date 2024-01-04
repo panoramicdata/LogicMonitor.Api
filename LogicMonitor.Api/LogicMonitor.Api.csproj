@@ -27,14 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>
-			DataPointConfiguration.GlobalAlertTransitionInterval
-			DataPointConfiguration.GlobalAlertClearTransitionInterval
-			DataPointConfiguration.GlobalAlertForNoData
-			Added missing HttpIntegration fields
-			Added Missing Audit log processing
-			GetExternalApi fixes
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Updated LogicMonitorClient_HistorySdts to use GetAllAsync which returns ALL the relevant SDTs rather than just a subset.</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>
