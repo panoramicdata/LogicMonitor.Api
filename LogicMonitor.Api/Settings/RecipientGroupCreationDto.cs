@@ -10,7 +10,7 @@ public class RecipientGroupCreationDto : CreationDto<RecipientGroup>
 	/// The group name
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string GroupName { get; set; } = string.Empty;
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The LogicMonitor Description

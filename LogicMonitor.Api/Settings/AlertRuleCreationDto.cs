@@ -13,6 +13,12 @@ public class AlertRuleCreationDto : CreationDto<AlertRule>
 	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
+	///    The LogicMonitor Description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; } = string.Empty;
+
+	/// <summary>
 	/// The priority
 	/// </summary>
 	[DataMember(Name = "priority")]

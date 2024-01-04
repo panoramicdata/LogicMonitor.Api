@@ -12,6 +12,12 @@ public class EscalationChainCreationDto : CreationDto<EscalationChain>
 	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
+	///    The LogicMonitor Description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; } = string.Empty;
+
+	/// <summary>
 	/// Whether throttling is enabled
 	/// </summary>
 	[DataMember(Name = "enableThrottling")]

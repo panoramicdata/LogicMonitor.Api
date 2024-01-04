@@ -10,7 +10,7 @@ public class RecipientGroup : DescribedItem, IHasEndpoint
 	/// The group name
 	/// </summary>
 	[DataMember(Name = "groupName")]
-	public string GroupName { get; set; } = string.Empty;
+	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The recipients
