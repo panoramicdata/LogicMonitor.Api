@@ -17,7 +17,7 @@ public partial class LogicMonitorClient
 	///     Gets history SDTs for a Device Group
 	/// </summary>
 	/// <param name="deviceGroupId">The Device Group ID</param>
-	/// <param name="cancellationToken">The CancellationToken</param>
+	/// <param name="cancellationToken">The Cancellation Token</param>
 	public async Task<HistorySdtCollection> GetDeviceGroupHistorySdtsAsync(
 		int deviceGroupId,
 		CancellationToken cancellationToken)
