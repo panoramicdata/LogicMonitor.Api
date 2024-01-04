@@ -1,11 +1,17 @@
-namespace LogicMonitor.Api.Settings;
+﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
-/// A LogicMonitor Alert Rule
+/// A LogicMonitor alert rule creation DTO
 /// </summary>
 [DataContract]
-public class AlertRule : NamedItem, IHasEndpoint
+public class AlertRuleCreationDto : CreationDto<AlertRule>
 {
+	/// <summary>
+	///    The LogicMonitor Name
+	/// </summary>
+	[DataMember(Name = "name")]
+	public string Name { get; set; } = string.Empty;
+
 	/// <summary>
 	/// The priority
 	/// </summary>
@@ -89,9 +95,4 @@ public class AlertRule : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "suppressAlertAckSdt")]
 	public bool SuppressAlertAckSdt { get; set; }
-
-	/// <summary>
-	///    The endpoint
-	/// </summary>
-	public string Endpoint() => "setting/alert/rules";
 }
