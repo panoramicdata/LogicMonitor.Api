@@ -15,7 +15,7 @@ public class RecipientGroupTests(ITestOutputHelper iTestOutputHelper) : TestWith
 			var refetchedRole = await LogicMonitorClient
 				.GetAsync<RecipientGroup>(recipientGroup.Id, default)
 				.ConfigureAwait(true);
-			refetchedRole.GroupName.Should().Be(recipientGroup.GroupName);
+			refetchedRole.Name.Should().Be(recipientGroup.Name);
 		}
 	}
 }
