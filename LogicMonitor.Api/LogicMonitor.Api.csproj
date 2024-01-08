@@ -27,10 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>
-			New: Added variaous CreationDto classes.
-			Breaking Change: RecipientGroup.GroupName -> RecipientGroup.Name.
-		</PackageReleaseNotes>
+		<PackageReleaseNotes>Fixed broken GetAllDeviceDataSourceInstanceConfigsAsync method.</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>
