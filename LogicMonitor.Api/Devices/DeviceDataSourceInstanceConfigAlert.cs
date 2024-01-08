@@ -4,7 +4,7 @@
 /// DeviceDataSourceInstanceConfigAlert
 /// </summary>
 [DataContract]
-public class DeviceDataSourceInstanceConfigAlert : IdentifiedItem
+public class DeviceDataSourceInstanceConfigAlert : StringIdentifiedItem
 {
 	/// <summary>
 	/// Alert level, 0 - alert is cleared, 2 - warn alert, 3 - error alert, 4 - critical alert
