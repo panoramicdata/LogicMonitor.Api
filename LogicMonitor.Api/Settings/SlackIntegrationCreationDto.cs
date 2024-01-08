@@ -29,7 +29,7 @@ public class SlackIntegrationCreationDto : IntegrationCreationDto<SlackIntegrati
 	///     The update UserName
 	/// </summary>
 	[DataMember(Name = "updateUsername")]
-	public string UpdateUserName { get; set; } = string.Empty;
+	public string UpdateUsername { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The clearMethod
@@ -72,12 +72,6 @@ public class SlackIntegrationCreationDto : IntegrationCreationDto<SlackIntegrati
 	/// </summary>
 	[DataMember(Name = "username")]
 	public string Username { get; set; } = string.Empty;
-
-	/// <summary>
-	///     The updateUername
-	/// </summary>
-	[DataMember(Name = "updateUername")]
-	public string UpdateUername { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The clearUsername
