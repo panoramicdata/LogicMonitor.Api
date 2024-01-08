@@ -1,11 +1,18 @@
-namespace LogicMonitor.Api.Settings;
+﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
-///     An AutoTask integration
+/// AutoTask Integration Creation Dto
 /// </summary>
 [DataContract]
-public class AutoTaskIntegration : HttpIntegration
+public class AutoTaskIntegrationCreationDto : IntegrationCreationDto<AutoTaskIntegration>
 {
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	public AutoTaskIntegrationCreationDto() : base("autotask")
+	{
+	}
+
 	/// <summary>
 	/// The zone
 	/// </summary>

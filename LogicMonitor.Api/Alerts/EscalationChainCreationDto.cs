@@ -1,10 +1,22 @@
-namespace LogicMonitor.Api.Alerts;
+﻿namespace LogicMonitor.Api.Alerts;
 
 /// <summary>
-/// An Escalation chain
+/// An Escalation chain creation DTO
 /// </summary>
-public class EscalationChain : NamedItem, IHasEndpoint
+public class EscalationChainCreationDto : CreationDto<EscalationChain>
 {
+	/// <summary>
+	///    The LogicMonitor Name
+	/// </summary>
+	[DataMember(Name = "name")]
+	public string Name { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The LogicMonitor Description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; } = string.Empty;
+
 	/// <summary>
 	/// Whether throttling is enabled
 	/// </summary>
@@ -52,7 +64,4 @@ public class EscalationChain : NamedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "destinations")]
 	public List<Destination> Destinations { get; set; } = [];
-
-	/// <inheritdoc />
-	public string Endpoint() => "setting/alert/chains";
 }

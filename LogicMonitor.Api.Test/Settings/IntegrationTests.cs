@@ -10,7 +10,7 @@ public class IntegrationTests(ITestOutputHelper iTestOutputHelper) : TestWithOut
 			.ConfigureAwait(true);
 
 		// Text should be set
-		integrations.Should().AllSatisfy(on => string.IsNullOrWhiteSpace(on.Name).Should().BeFalse());
+		integrations.Should().AllSatisfy(on => on.Name.Should().NotBeNullOrWhiteSpace());
 	}
 
 	[Fact]

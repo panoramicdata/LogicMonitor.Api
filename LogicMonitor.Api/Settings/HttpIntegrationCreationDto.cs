@@ -1,11 +1,25 @@
-namespace LogicMonitor.Api.Settings;
+﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
-///     An HTTP integration
+/// HTTP Integration Creation Dto
 /// </summary>
 [DataContract]
-public class HttpIntegration : Integration
+public class HttpIntegrationCreationDto : IntegrationCreationDto<HttpIntegration>
 {
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	public HttpIntegrationCreationDto() : base("http")
+	{
+	}
+
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	internal HttpIntegrationCreationDto(string type) : base(type)
+	{
+	}
+
 	/// <summary>
 	///     The acknowledgement Headers
 	/// </summary>
