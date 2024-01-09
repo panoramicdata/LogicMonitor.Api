@@ -3,7 +3,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
-		<Copyright>Copyright © Panoramic Data Limited 2011-2023</Copyright>
+		<Copyright>Copyright © Panoramic Data Limited 2011-2024</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageIcon>Icon.png</PackageIcon>
@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Fixed broken GetAllDeviceDataSourceInstanceConfigsAsync method.</PackageReleaseNotes>
+		<PackageReleaseNotes>Removed backup functionality.</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>

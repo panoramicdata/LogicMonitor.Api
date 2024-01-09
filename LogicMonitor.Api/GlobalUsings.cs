@@ -1,6 +1,5 @@
 ﻿global using LogicMonitor.Api.Alerts;
 global using LogicMonitor.Api.Attributes;
-global using LogicMonitor.Api.Backup;
 global using LogicMonitor.Api.Collectors;
 global using LogicMonitor.Api.Converters;
 global using LogicMonitor.Api.Dashboards;
