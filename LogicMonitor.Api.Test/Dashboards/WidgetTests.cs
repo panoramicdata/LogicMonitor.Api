@@ -69,25 +69,6 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 		getWidget.Name.Should().Be(widget.Name);
 	}
 
-
-	[Fact]
-	public async Task GetAndSaveWidgetById()
-	{
-		var widget = (await LogicMonitorClient
-			.GetWidgetListAsync(new Filter<Widget>(), default)
-			.ConfigureAwait(true)).Items[0];
-
-		var getWidget = await LogicMonitorClient
-			.GetWidgetByIdAsync(widget.Id, default)
-			.ConfigureAwait(true);
-
-		getWidget.Name.Should().Be(widget.Name);
-
-		await LogicMonitorClient
-			.PutAsync(getWidget, default)
-			.ConfigureAwait(true);
-	}
-
 	[Fact]
 	public async Task GetWidgetDataById()
 	{

@@ -7,7 +7,7 @@
 public class TextWidget : Widget, IWidget
 {
 	/// <summary>
-	/// The Html
+	/// The Html.  Maximum length 409,600 characters.
 	/// </summary>
 	[DataMember(Name = "content")]
 	public string Html { get; set; } = string.Empty;
