@@ -4,7 +4,7 @@
 /// A LogicMonitor alert rule creation DTO
 /// </summary>
 [DataContract]
-public class AlertRuleCreationDto : CreationDto<AlertRule>
+public class AlertRuleCreationDto : CreationDto<AlertRule>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    The LogicMonitor Name

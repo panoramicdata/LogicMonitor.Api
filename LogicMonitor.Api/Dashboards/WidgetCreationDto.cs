@@ -5,7 +5,7 @@ namespace LogicMonitor.Api.Dashboards;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [DataContract]
-public abstract class WidgetCreationDto<T> : CreationDto<T> where T : Widget
+public abstract class WidgetCreationDto<T> : CreationDto<T>, IHasName, IHasDescription where T : Widget
 {
 	/// <summary>
 	///     The refresh periodicity in minutes (as a string)

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// An AppliesTo Function creation DTO
 /// </summary>
 [DataContract]
-public class AppliesToFunctionCreationDto : CreationDto<AppliesToFunction>
+public class AppliesToFunctionCreationDto : CreationDto<AppliesToFunction>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// The name

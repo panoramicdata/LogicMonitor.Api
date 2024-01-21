@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Users;
 /// Role creation DTO
 /// </summary>
 [DataContract]
-public class RoleCreationDto : CreationDto<Role>
+public class RoleCreationDto : CreationDto<Role>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// Name

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Websites;
 ///    A Website creation DTO
 /// </summary>
 [DataContract]
-public class WebsiteCreationDto : CreationDto<Website>
+public class WebsiteCreationDto : CreationDto<Website>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    The website group id

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Collectors;
 ///     A LogicMonitor Collector Group creation DTO
 /// </summary>
 [DataContract]
-public class CollectorGroupCreationDto : CreationDto<CollectorGroup>
+public class CollectorGroupCreationDto : CreationDto<CollectorGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	///     The name

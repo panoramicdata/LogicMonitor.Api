@@ -4,7 +4,7 @@
 ///    A dashboard group creation dto
 /// </summary>
 [DataContract]
-public class DashboardGroupCreationDto : CreationDto<DashboardGroup>
+public class DashboardGroupCreationDto : CreationDto<DashboardGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    The Parent Group Id

@@ -27,7 +27,7 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
 		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>Removed backup functionality.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added IHasName and IHasDescription to NamedItem and DescribedItem. Updated CreationDtos to use these new Interfaces.</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
 	</PropertyGroup>

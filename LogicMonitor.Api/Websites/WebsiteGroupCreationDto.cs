@@ -4,7 +4,7 @@
 /// A ServiceGroup creation DTO
 /// </summary>
 [DataContract]
-public class WebsiteGroupCreationDto : CreationDto<WebsiteGroup>
+public class WebsiteGroupCreationDto : CreationDto<WebsiteGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// User permission

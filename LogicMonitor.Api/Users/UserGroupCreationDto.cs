@@ -4,7 +4,7 @@
 /// RoleGroup creation DTO
 /// </summary>
 [DataContract]
-public class UserGroupCreationDto : CreationDto<UserGroup>
+public class UserGroupCreationDto : CreationDto<UserGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// Name

@@ -4,7 +4,7 @@
 ///    A Netscan Policy
 /// </summary>
 [DataContract]
-public class NetscanGroupCreationDto : CreationDto<NetscanGroup>
+public class NetscanGroupCreationDto : CreationDto<NetscanGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    Name
