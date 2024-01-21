@@ -9,7 +9,7 @@ public class EmailIntegrationCreationDto : IntegrationCreationDto<EmailIntegrati
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	public EmailIntegrationCreationDto() : base("http")
+	public EmailIntegrationCreationDto() : base("email")
 	{
 	}
 	/// <summary>
