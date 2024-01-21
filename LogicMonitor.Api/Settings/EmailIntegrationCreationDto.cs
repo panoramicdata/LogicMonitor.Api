@@ -4,7 +4,7 @@
 /// Email Integration Creation Dto
 /// </summary>
 [DataContract]
-public class EmailIntegrationCreationDto : IntegrationCreationDto<EmailIntegration>
+public class EmailIntegrationCreationDto : IntegrationCreationDto<EmailIntegration>, IHasDescription
 {
 	/// <summary>
 	/// Constructor
@@ -35,4 +35,10 @@ public class EmailIntegrationCreationDto : IntegrationCreationDto<EmailIntegrati
 	/// </summary>
 	[DataMember(Name = "body")]
 	public string Body { get; set; } = string.Empty;
+
+	/// <summary>
+	///    The description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; } = string.Empty;
 }
