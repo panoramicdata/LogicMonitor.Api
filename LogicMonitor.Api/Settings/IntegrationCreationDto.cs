@@ -8,6 +8,7 @@
 ///   Constructor
 /// </remarks>
 /// <param name="type">The integration type</param>
+[DataContract]
 public abstract class IntegrationCreationDto<T>(string type)
 	: CreationDto<Integration>, IHasName where T : Integration
 {

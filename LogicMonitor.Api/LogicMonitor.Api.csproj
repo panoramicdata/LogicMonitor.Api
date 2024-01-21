@@ -31,6 +31,7 @@
 			Added IHasName and IHasDescription to NamedItem and DescribedItem.
 			Updated CreationDtos to use these new Interfaces.
 			Corrected type for with EmailIntegrationCreationDto.
+			Fixed missing DataContract on IntegrationCreationDto.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
