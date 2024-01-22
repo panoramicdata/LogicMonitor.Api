@@ -5,7 +5,7 @@ public class SingleSignOnTests(ITestOutputHelper iTestOutputHelper) : TestWithOu
 	[Fact]
 	public async Task GetSingleSignOnData()
 	{
-		var allOpsNotes = await LogicMonitorClient.GetAsync<SingleSignOn>(default).ConfigureAwait(false);
+		var allOpsNotes = await LogicMonitorClient.GetAsync<SingleSignOn>(default);
 
 		// Text should be set
 		allOpsNotes.SamlVersion.Should().NotBeNullOrEmpty();

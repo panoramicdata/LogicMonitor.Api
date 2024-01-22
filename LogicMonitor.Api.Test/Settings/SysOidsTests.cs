@@ -5,7 +5,7 @@ public class SysOidsTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 	[Fact]
 	public async Task GetAll()
 	{
-		var snmpSysOidMaps = await LogicMonitorClient.GetAllAsync<SnmpSysOidMap>(default).ConfigureAwait(false);
+		var snmpSysOidMaps = await LogicMonitorClient.GetAllAsync<SnmpSysOidMap>(default);
 		snmpSysOidMaps.Should().NotBeNull();
 		snmpSysOidMaps.Should().AllSatisfy(snmpSysOidMap => snmpSysOidMap.Oid.Should().NotBeNull());
 		snmpSysOidMaps.Should().AllSatisfy(snmpSysOidMap => snmpSysOidMap.Categories.Should().NotBeNull());

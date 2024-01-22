@@ -19,7 +19,7 @@ public class LogItemTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 				Property = nameof(LogItem.HappenedOnTimeStampUtc),
 				Direction = OrderDirection.Asc
 			}
-		}, default).ConfigureAwait(false);
+		}, default);
 
 		// Make sure that some are returned
 		(accessLogItems.Count > 0).Should().BeTrue();
@@ -42,7 +42,7 @@ public class LogItemTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 				take,
 				DateTime.UtcNow.AddDays(-2),
 				DateTime.UtcNow,
-				LogFilterSortOrder.HappenedOnAsc), default).ConfigureAwait(false);
+				LogFilterSortOrder.HappenedOnAsc), default);
 
 		// Make sure that some are returned
 		accessLogItems.Should().NotBeNullOrEmpty();

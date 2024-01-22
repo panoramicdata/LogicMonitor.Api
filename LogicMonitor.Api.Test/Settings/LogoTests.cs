@@ -7,7 +7,7 @@ public class LogoTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 	{
 		foreach (var imageType in Enum.GetValues(typeof(ImageType)).Cast<ImageType>())
 		{
-			var buffer = await LogicMonitorClient.GetImageByteArrayAsync(imageType, default).ConfigureAwait(false);
+			var buffer = await LogicMonitorClient.GetImageByteArrayAsync(imageType, default);
 			var image = SixLabors.ImageSharp.Image.Load(buffer);
 			image.Width.Should().BePositive();
 		}
