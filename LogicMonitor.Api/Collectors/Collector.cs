@@ -512,4 +512,10 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The subUrl for setting by id
 	/// </summary>
 	public string Endpoint() => "setting/collector/collectors";
+
+	/// <summary>
+	/// Whether syslog logging is enabled for this collector
+	/// </summary>
+	[DataMember(Name = "isLmlogsSyslogEnabled")]
+	public bool isLmLogsSyslogEnabled { get; set; }
 }

@@ -88,4 +88,19 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper) : TestWithOutpu
 
 		collector.Should().NotBeNull();
 	}
+
+	[Fact]
+	public async Task AcknowledgeCollectorDownAsync_CallWithValidCollectorId_DoesNotThrowException()
+	{
+		var action = async () => await LogicMonitorClient
+			.AcknowledgeCollectorDownAsync(CollectorId, new() { Comment = "This collector exists solely for testing" }, CancellationToken.None);
+
+		await action.Should().NotThrowAsync();
+
+		var collector = await LogicMonitorClient
+			.GetAsync<Collector>(CollectorId, CancellationToken.None);
+
+		collector.Should().NotBeNull();
+		collector.Status.Should().Be(0);
+	}
 }
