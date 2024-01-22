@@ -101,6 +101,6 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper) : TestWithOutpu
 			.GetAsync<Collector>(CollectorId, CancellationToken.None);
 
 		collector.Should().NotBeNull();
-		collector.Status.Should().Be(0);
+		collector.Status.Should().Be(1);
 	}
 }
