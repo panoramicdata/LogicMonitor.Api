@@ -287,6 +287,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool IsLmLogsEnabled { get; set; }
 
 	/// <summary>
+	/// Whether LM Logs is enabled for syslog
+	/// </summary>
+	[DataMember(Name = "isLmlogsSyslogEnabled")]
+	public bool IsLmLogsSyslogEnabled { get; set; }
+
+	/// <summary>
 	///     Last sent notification on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[DataMember(Name = "lastSentNotificationOnLocal")]
@@ -512,10 +518,4 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The subUrl for setting by id
 	/// </summary>
 	public string Endpoint() => "setting/collector/collectors";
-
-	/// <summary>
-	/// Whether syslog logging is enabled for this collector
-	/// </summary>
-	[DataMember(Name = "isLmlogsSyslogEnabled")]
-	public bool isLmLogsSyslogEnabled { get; set; }
 }
