@@ -19,3 +19,8 @@ using System.Diagnostics.CodeAnalysis;
 	Scope = "namespaceanddescendants",
 	Target = "~N:LogicMonitor.Api.Test")
 ]
+[assembly: SuppressMessage(
+	"Reliability",
+	"CA2007:Consider calling ConfigureAwait on the awaited task",
+	Justification = "ConfigureAwait is no longer recommended in XUnit tests", Scope = "module")
+]

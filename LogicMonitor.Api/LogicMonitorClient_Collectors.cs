@@ -130,4 +130,19 @@ public partial class LogicMonitorClient
 			$"setting/collector/groups/{id}",
 			body,
 			cancellationToken).ConfigureAwait(false);
+
+	/// <summary>
+	/// Acknowledge that a collector is down
+	/// </summary>
+	/// <param name="id">The collector id</param>
+	/// <param name="body">The body</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task AcknowledgeCollectorDownAsync(
+		int id,
+		CollectorDownAcknowledgement body,
+		CancellationToken cancellationToken)
+		=> await PostAsync<CollectorDownAcknowledgement, object>(
+			body,
+			$"setting/collector/collectors/{id}/ackdown",
+			cancellationToken).ConfigureAwait(false);
 }

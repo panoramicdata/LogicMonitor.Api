@@ -287,6 +287,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool IsLmLogsEnabled { get; set; }
 
 	/// <summary>
+	/// Whether LM Logs is enabled for syslog
+	/// </summary>
+	[DataMember(Name = "isLmlogsSyslogEnabled")]
+	public bool IsLmLogsSyslogEnabled { get; set; }
+
+	/// <summary>
 	///     Last sent notification on local (human-readable acknowledgement DateTime as a string)
 	/// </summary>
 	[DataMember(Name = "lastSentNotificationOnLocal")]
