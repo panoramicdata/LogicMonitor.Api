@@ -3,6 +3,7 @@
 /// <summary>
 /// An Escalation chain creation DTO
 /// </summary>
+[DataContract]
 public class EscalationChainCreationDto
 	: CreationDto<EscalationChain>, IHasName, IHasDescription
 {
