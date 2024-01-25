@@ -3,7 +3,7 @@ namespace LogicMonitor.Api;
 /// <summary>
 ///    A described item
 /// </summary>
-public abstract class DescribedItem : IdentifiedItem
+public abstract class DescribedItem : IdentifiedItem, IHasDescription
 {
 	/// <summary>
 	///    The LogicMonitor Description

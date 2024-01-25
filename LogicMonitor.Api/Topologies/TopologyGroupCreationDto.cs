@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Topologies;
 /// TopologyGroup creation DTO
 /// </summary>
 [DataContract]
-public class TopologyGroupCreationDto : CreationDto<TopologyGroup>
+public class TopologyGroupCreationDto : CreationDto<TopologyGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// Name

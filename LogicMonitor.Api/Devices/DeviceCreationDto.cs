@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Devices;
 ///    A Device (also known as a Host)
 /// </summary>
 [DataContract]
-public class DeviceCreationDto : CreationDto<Device>
+public class DeviceCreationDto : CreationDto<Device>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    A comma-separated list of device group ids

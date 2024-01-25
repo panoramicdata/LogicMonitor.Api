@@ -4,7 +4,7 @@ namespace LogicMonitor.Api;
 ///    LogicMonitor named item
 /// </summary>
 [DataContract]
-public abstract class NamedItem : DescribedItem
+public abstract class NamedItem : DescribedItem, IHasName
 {
 	/// <summary>
 	///    The LogicMonitor Name

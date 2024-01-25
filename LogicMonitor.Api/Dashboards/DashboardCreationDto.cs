@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Dashboards;
 ///    A dashboard creation dto
 /// </summary>
 [DataContract]
-public class DashboardCreationDto : CreationDto<Dashboard>
+public class DashboardCreationDto : CreationDto<Dashboard>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// Owner

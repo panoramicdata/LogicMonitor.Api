@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Collectors;
 ///     A LogicMonitor Collector
 /// </summary>
 [DataContract]
-public class CollectorCreationDto : CreationDto<Collector>
+public class CollectorCreationDto : CreationDto<Collector>, IHasDescription
 {
 	/// <summary>
 	///     The Collector's description

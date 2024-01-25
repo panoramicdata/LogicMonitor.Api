@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 ///    A ReportGroup creation DTO
 /// </summary>
 [DataContract]
-public class ReportGroupCreationDto : CreationDto<ReportGroup>
+public class ReportGroupCreationDto : CreationDto<ReportGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    The name

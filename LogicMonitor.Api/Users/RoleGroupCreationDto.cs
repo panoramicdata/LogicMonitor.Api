@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Users;
 /// RoleGroup creation DTO
 /// </summary>
 [DataContract]
-public class RoleGroupCreationDto : CreationDto<RoleGroup>
+public class RoleGroupCreationDto : CreationDto<RoleGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// Name

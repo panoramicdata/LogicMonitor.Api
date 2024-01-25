@@ -3,7 +3,9 @@
 /// <summary>
 /// An Escalation chain creation DTO
 /// </summary>
-public class EscalationChainCreationDto : CreationDto<EscalationChain>
+[DataContract]
+public class EscalationChainCreationDto
+	: CreationDto<EscalationChain>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    The LogicMonitor Name

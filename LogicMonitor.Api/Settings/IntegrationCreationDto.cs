@@ -8,7 +8,9 @@
 ///   Constructor
 /// </remarks>
 /// <param name="type">The integration type</param>
-public abstract class IntegrationCreationDto<T>(string type) : CreationDto<Integration> where T : Integration
+[DataContract]
+public abstract class IntegrationCreationDto<T>(string type)
+	: CreationDto<Integration>, IHasName where T : Integration
 {
 	/// <summary>
 	///    The LogicMonitor Name

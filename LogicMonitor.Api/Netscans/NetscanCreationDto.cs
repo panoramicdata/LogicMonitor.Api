@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Netscans;
 ///    A class for crating NetscanPolicies
 /// </summary>
 [DataContract]
-public class NetscanCreationDto : CreationDto<Netscan>
+public class NetscanCreationDto : CreationDto<Netscan>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    Constructor

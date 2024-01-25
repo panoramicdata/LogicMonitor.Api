@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Devices;
 ///    A device group creation dto
 /// </summary>
 [DataContract]
-public class DeviceGroupCreationDto : CreationDto<DeviceGroup>
+public class DeviceGroupCreationDto : CreationDto<DeviceGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	///    The Parent Group Id as a string

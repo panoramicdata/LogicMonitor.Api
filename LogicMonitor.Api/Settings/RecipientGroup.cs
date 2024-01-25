@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Settings;
 /// An external alert destination
 /// </summary>
 [DataContract]
-public class RecipientGroup : DescribedItem, IHasEndpoint
+public class RecipientGroup : DescribedItem, IHasEndpoint, IHasName
 {
 	/// <summary>
 	/// The group name

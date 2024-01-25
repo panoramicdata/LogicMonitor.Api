@@ -4,7 +4,7 @@
 /// An external alert destination
 /// </summary>
 [DataContract]
-public class RecipientGroupCreationDto : CreationDto<RecipientGroup>
+public class RecipientGroupCreationDto : CreationDto<RecipientGroup>, IHasName, IHasDescription
 {
 	/// <summary>
 	/// The group name

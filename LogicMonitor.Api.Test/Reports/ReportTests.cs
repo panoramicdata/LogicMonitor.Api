@@ -22,6 +22,44 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 		reports.Should().NotBeNullOrEmpty();
 	}
 
+
+	[Fact]
+	public async Task RunReportById()
+	{
+		var response =
+			await LogicMonitorClient.RunReportById(156, default)
+			.ConfigureAwait(true);
+
+		response.Should().NotBeNull();
+		response.ResultUrl.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
+	public async Task CreateAndDeleteReport()
+	{
+		var sDate = DateTime.UtcNow.AddDays(-1);
+		var eDate = sDate.AddHours(1);
+
+		// Create it
+		var report =
+			await LogicMonitorClient.CreateAsync(new ReportCreationDto
+			{
+				Name = "Temporary Report 5 - can delete",
+				Description = "Temporary Report - can delete",
+				Format = "PDF",
+				Type = "Dashboard",
+				GroupId = 375,
+				DateRange = $"{sDate.ToString("yyyy-MM-dd HH:mm")} TO {eDate.ToString("yyyy-MM-dd HH:mm")}",
+				DashboardId = 205
+			},
+			default)
+			.ConfigureAwait(true);
+
+		report.Should().NotBeNull();
+
+		await LogicMonitorClient.DeleteAsync<ReportBase>(report.Id, default).ConfigureAwait(true);
+	}
+
 	[Fact]
 	public async Task CrudReportGroups()
 	{
