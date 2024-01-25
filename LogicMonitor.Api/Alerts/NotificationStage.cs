@@ -10,6 +10,7 @@ public class NotificationStage
 	/// The destination type
 	/// </summary>
 	[DataMember(Name = "type")]
+	[JsonConverter(typeof(StringEnumConverter))]
 	public NotificationStageType NotificationStageType { get; set; }
 
 	/// <summary>
