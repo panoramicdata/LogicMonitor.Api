@@ -349,4 +349,10 @@ public class HttpIntegrationCreationDto : IntegrationCreationDto<HttpIntegration
 	/// </summary>
 	[DataMember(Name = "updateOAuthScope")]
 	public string? UpdateOAuthScope { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Description
+	/// </summary>
+	[DataMember(Name = "description")]
+	public string Description { get; set; } = string.Empty;
 }

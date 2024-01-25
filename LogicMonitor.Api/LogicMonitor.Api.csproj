@@ -28,12 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Added IHasName and IHasDescription to NamedItem and DescribedItem.
-			Updated CreationDtos to use these new Interfaces.
-			Corrected type for with EmailIntegrationCreationDto.
-			Fixed missing DataContract on IntegrationCreationDto.
-			Added Description to EmailIntegrationCreationDto.
-			Added IHasName to RecipientGroup.
+			Added missing Description from HttpIntegrationCreationDto.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
