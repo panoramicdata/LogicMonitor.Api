@@ -37,10 +37,10 @@ public class SingleSignOn : IHasSingletonEndpoint
 	public bool Enabled { get; set; }
 
 	/// <summary>
-	///     Enable SLO status
+	///     Enable Single Log Out status
 	/// </summary>
 	[DataMember(Name = "enableSLO")]
-	public bool EnableSlo { get; set; }
+	public bool EnableSingleLogOut { get; set; }
 
 	/// <summary>
 	///     Restricted status
