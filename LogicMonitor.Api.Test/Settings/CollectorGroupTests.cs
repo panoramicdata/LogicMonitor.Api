@@ -36,9 +36,9 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper) : TestWith
 		var collectorGroups = await LogicMonitorClient.GetAllAsync(new Filter<CollectorGroup>
 		{
 			FilterItems =
-					[
-						new Eq<CollectorGroup>(nameof(CollectorGroup.Name), TestName)
-					]
+			[
+				new Eq<CollectorGroup>(nameof(CollectorGroup.Name), TestName)
+			]
 		}, default).ConfigureAwait(true);
 
 		foreach (var priorCollectorGroup in collectorGroups)

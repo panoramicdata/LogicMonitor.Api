@@ -21,9 +21,9 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithO
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<TopologyGroup>
 		{
 			FilterItems =
-				[
-					new Eq<TopologyGroup>(nameof(TopologyGroup.Name), TestName)
-				]
+			[
+				new Eq<TopologyGroup>(nameof(TopologyGroup.Name), TestName)
+			]
 		}, default).ConfigureAwait(true);
 		foreach (var existingItem in existingItems)
 		{

@@ -13,28 +13,28 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 		var allFilter = new Filter<Alert>
 		{
 			FilterItems =
-				[
-					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-				]
+			[
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+			]
 		};
 		var sdtFilter = new Filter<Alert>
 		{
 			FilterItems =
-				[
-					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-					new Eq<Alert>(nameof(Alert.InScheduledDownTime), true)
-				]
+			[
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Eq<Alert>(nameof(Alert.InScheduledDownTime), true)
+			]
 		};
 		var nonSdtFilter = new Filter<Alert>
 		{
 			FilterItems =
-				[
-					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-					new Eq<Alert>(nameof(Alert.InScheduledDownTime), false)
-				]
+			[
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Eq<Alert>(nameof(Alert.InScheduledDownTime), false)
+			]
 		};
 
 		// Act
@@ -64,10 +64,10 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 		var allFilter = new Filter<Alert>
 		{
 			FilterItems =
-				[
-					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-				]
+			[
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+			]
 		};
 
 		var allAlerts = await LogicMonitorClient
@@ -98,9 +98,9 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 				Skip = 0,
 				Take = 10,
 				FilterItems =
-					[
-						new Eq<Alert>(nameof(Alert.MonitorObjectName), device.DisplayName)
-					]
+				[
+					new Eq<Alert>(nameof(Alert.MonitorObjectName), device.DisplayName)
+				]
 			};
 
 			// Refetch each alert
@@ -121,11 +121,11 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 		var filter = new Filter<Alert>
 		{
 			FilterItems =
-				[
-					new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-					new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
-					new Eq<Alert>(nameof(Alert.Severity), severities)
-				]
+			[
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Eq<Alert>(nameof(Alert.Severity), severities)
+			]
 		};
 
 		// Act
@@ -139,8 +139,8 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput
 	public async Task GetNonExistentAlertAsJObject()
 	{
 		var action = async () => await LogicMonitorClient
-					.GetJObjectAsync("alert/alerts/DS_NonExistent", default)
-					.ConfigureAwait(true);
+			.GetJObjectAsync("alert/alerts/DS_NonExistent", default)
+			.ConfigureAwait(true);
 		await action
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>()

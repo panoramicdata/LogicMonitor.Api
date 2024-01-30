@@ -21,9 +21,9 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutpu
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<UserGroup>
 		{
 			FilterItems =
-				[
-					new Eq<UserGroup>(nameof(ReportGroup.Name), TestName)
-				]
+			[
+				new Eq<UserGroup>(nameof(ReportGroup.Name), TestName)
+			]
 		}, default).ConfigureAwait(true);
 		foreach (var existingItem in existingItems)
 		{

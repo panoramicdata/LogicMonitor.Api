@@ -44,9 +44,9 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper) 
 		{
 			Order = new Order<DeviceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(DeviceDataSourceInstance.DisplayName) },
 			FilterItems =
-				[
-					new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
-				]
+			[
+				new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
+			]
 		}, default).ConfigureAwait(true);
 
 		deviceDataSourceInstances.Should().AllSatisfy(dsi => dsi.StopMonitoring.Should().BeFalse());

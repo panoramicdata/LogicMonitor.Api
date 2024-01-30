@@ -29,10 +29,10 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iT
 		var closedItemsFilter = new Filter<Alert>
 		{
 			FilterItems =
-					[
-						new Eq<Alert>(nameof(Alert.IsCleared), "*"),
-						new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
-					],
+			[
+				new Eq<Alert>(nameof(Alert.IsCleared), "*"),
+				new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
+			],
 			Order = new Order<Alert>
 			{
 				Property = nameof(Alert.EndOnSeconds),
@@ -92,15 +92,15 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iT
 		var closedItemsFilter = new Filter<Alert>
 		{
 			FilterItems =
-					[
-						new Eq<Alert>(nameof(Alert.IsCleared), "*"),
-						new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
-					],
+			[
+				new Eq<Alert>(nameof(Alert.IsCleared), "*"),
+				new Gt<Alert>(nameof(Alert.EndOnSeconds), DaysAgoAsUnixSeconds(10)),
+			],
 			Properties =
-				[
-					nameof(Alert.EndOnSeconds),
-					nameof(Alert.Severity)
-				],
+			[
+				nameof(Alert.EndOnSeconds),
+				nameof(Alert.Severity)
+			],
 			Order = new Order<Alert>
 			{
 				Property = nameof(Alert.EndOnSeconds),
@@ -542,11 +542,11 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iT
 		var alerts = await LogicMonitorClient.GetAllAsync(new Filter<Alert>
 		{
 			FilterItems =
-				[
-					new FilterItem<Alert> { Property = nameof(Alert.StartOnSeconds), Operation = ">", Value = dateTimeOffset.ToUnixTimeSeconds()},
-					new FilterItem<Alert> { Property = nameof(Alert.InternalId), Operation=":", Value="LMS462482416" },
-					new FilterItem<Alert> { Property = nameof(Alert.IsCleared), Operation=":", Value="*" },
-				]
+			[
+				new FilterItem<Alert> { Property = nameof(Alert.StartOnSeconds), Operation = ">", Value = dateTimeOffset.ToUnixTimeSeconds() },
+				new FilterItem<Alert> { Property = nameof(Alert.InternalId), Operation = ":", Value = "LMS462482416" },
+				new FilterItem<Alert> { Property = nameof(Alert.IsCleared), Operation = ":", Value = "*" },
+			]
 		}, default).ConfigureAwait(true);
 		alerts.Should().NotBeNull();
 	}

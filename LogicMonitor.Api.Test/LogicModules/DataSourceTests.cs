@@ -335,16 +335,17 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 				Take = 1,
 				Properties =
 				[
-						nameof(DeviceDataSource.Id),
-						nameof(DeviceDataSource.DataSourceName)
+					nameof(DeviceDataSource.Id),
+					nameof(DeviceDataSource.DataSourceName)
 				],
 				FilterItems =
 				[
-						new FilterItem<DeviceDataSource> {
-							Property = nameof(DeviceDataSource.DataSourceName),
-							Operation = ":",
-							Value = "SSL_Certificates"
-						}
+					new FilterItem<DeviceDataSource>
+					{
+						Property = nameof(DeviceDataSource.DataSourceName),
+						Operation = ":",
+						Value = "SSL_Certificates"
+					}
 				]
 			}, default).ConfigureAwait(true);
 		var durationMs = stopwatch.ElapsedMilliseconds;

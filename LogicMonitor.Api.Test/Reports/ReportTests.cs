@@ -67,9 +67,9 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 		foreach (var existingReportGroup in await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup>
 		{
 			FilterItems =
-					[
-						new Eq<ReportGroup>(nameof(ReportGroup.Name), "Test Name")
-					]
+			[
+				new Eq<ReportGroup>(nameof(ReportGroup.Name), "Test Name")
+			]
 		}, default).ConfigureAwait(true)
 		)
 		{

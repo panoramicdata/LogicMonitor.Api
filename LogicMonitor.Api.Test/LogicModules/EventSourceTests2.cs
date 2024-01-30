@@ -116,9 +116,9 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper) : TestWithOu
 		var eventSources = await LogicMonitorClient.GetAllAsync(new Filter<EventSource>
 		{
 			FilterItems =
-				[
-					new Eq<EventSource>(nameof(EventSource.Group), groupName)
-				]
+			[
+				new Eq<EventSource>(nameof(EventSource.Group), groupName)
+			]
 		}, default).ConfigureAwait(true);
 
 		// Make sure that some are returned

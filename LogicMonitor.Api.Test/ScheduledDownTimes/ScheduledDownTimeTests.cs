@@ -8,10 +8,10 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper) : TestW
 		var sdts = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
 			FilterItems =
-				[
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceSDT"),
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
-				]
+			[
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceSDT"),
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
+			]
 		}, default).ConfigureAwait(true);
 		Assert.All(sdts, sdt => Assert.False(sdt.IsEffective));
 	}
@@ -368,10 +368,10 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper) : TestW
 		var filteredScheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
 			FilterItems =
-				[
-					new Eq<ScheduledDownTime>(nameof(Type), "DeviceSDT"),
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.DeviceId), deviceId!)
-				]
+			[
+				new Eq<ScheduledDownTime>(nameof(Type), "DeviceSDT"),
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.DeviceId), deviceId!)
+			]
 		}, default
 		).ConfigureAwait(true);
 		filteredScheduledDownTimes.Should().NotBeNull();

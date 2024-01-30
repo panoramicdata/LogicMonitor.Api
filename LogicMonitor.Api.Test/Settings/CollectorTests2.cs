@@ -156,7 +156,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper)
 			{
 				FilterItems =
 				[
-						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
+					new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
 				]
 			}, default
 			).ConfigureAwait(true))

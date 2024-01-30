@@ -78,7 +78,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper)
 			{
 				FilterItems =
 				[
-						new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
+					new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
 				]
 			}, default)
 			.ConfigureAwait(true);

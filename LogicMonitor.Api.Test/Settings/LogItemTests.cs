@@ -11,9 +11,9 @@ public class LogItemTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 		{
 			Take = 100,
 			FilterItems =
-				[
-					new Gt<LogItem>(nameof(LogItem.HappenedOnTimeStampUtc), DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeSeconds())
-				],
+			[
+				new Gt<LogItem>(nameof(LogItem.HappenedOnTimeStampUtc), DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeSeconds())
+			],
 			Order = new Order<LogItem>
 			{
 				Property = nameof(LogItem.HappenedOnTimeStampUtc),

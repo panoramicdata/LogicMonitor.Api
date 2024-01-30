@@ -21,9 +21,9 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutpu
 		var existingItems = await LogicMonitorClient.GetAllAsync(new Filter<RoleGroup>
 		{
 			FilterItems =
-				[
-					new Eq<RoleGroup>(nameof(RoleGroup.Name), TestName)
-				]
+			[
+				new Eq<RoleGroup>(nameof(RoleGroup.Name), TestName)
+			]
 		}, default).ConfigureAwait(true);
 		foreach (var existingItem in existingItems)
 		{

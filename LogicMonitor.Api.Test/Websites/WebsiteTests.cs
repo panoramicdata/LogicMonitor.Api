@@ -118,9 +118,9 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 		var oldWebsites = await LogicMonitorClient.GetAllAsync(new Filter<Website>
 		{
 			FilterItems =
-				[
-					new Eq<Website>(nameof(Website.Name), nameof(CrudWebsiteGroupsAndWebsites))
-				]
+			[
+				new Eq<Website>(nameof(Website.Name), nameof(CrudWebsiteGroupsAndWebsites))
+			]
 		}, default)
 			.ConfigureAwait(true);
 		foreach (var oldWebsite in oldWebsites)
