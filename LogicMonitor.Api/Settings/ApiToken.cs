@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Settings;
 /// API Token
 /// </summary>
 [DataContract]
-public class ApiToken : IdentifiedItem
+public class ApiToken : IdentifiedItem, IHasEndpoint
 {
 	/// <summary>
 	/// The access Id associated with the API Tokens
@@ -89,4 +89,7 @@ public class ApiToken : IdentifiedItem
 	/// </summary>
 	[IgnoreDataMember]
 	public DateTime? LastActionOnUtc => LastUsedOnSeconds.ToNullableDateTimeUtc();
+
+	/// <inheritdoc />
+	public string Endpoint() => "setting/admins/apitokens";
 }
