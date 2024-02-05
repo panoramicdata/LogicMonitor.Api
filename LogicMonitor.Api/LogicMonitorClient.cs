@@ -110,8 +110,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// Create a LogicMonitor client
 	/// </summary>
 	/// <param name="logicMonitorClientOptions">The options</param>
-	public LogicMonitorClient(
-		LogicMonitorClientOptions logicMonitorClientOptions)
+	public LogicMonitorClient(LogicMonitorClientOptions logicMonitorClientOptions)
 	{
 		// Set up the logger
 		_logger = logicMonitorClientOptions.Logger ?? new NullLogger<LogicMonitorClient>();
@@ -133,6 +132,11 @@ public partial class LogicMonitorClient : IDisposable
 		_client.DefaultRequestHeaders.Add("X-version", "3");
 		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
 		_client.Timeout = TimeSpan.FromSeconds(logicMonitorClientOptions.HttpClientTimeoutSeconds);
+	}
+
+	public LogicMonitorClient(LogicMonitorClientOptions logicMonitorClientOptions, HttpClient client) : this(logicMonitorClientOptions)
+	{
+		_client = client;
 	}
 
 	private static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
