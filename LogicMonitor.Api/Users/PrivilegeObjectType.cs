@@ -101,5 +101,11 @@ public enum PrivilegeObjectType
 	/// Dexda
 	/// </summary>
 	[DataMember(Name = "dexda")]
-	Dexda
+	Dexda,
+
+	/// <summary>
+	/// Module
+	/// </summary>
+	[DataMember(Name = "module")]
+	Module
 }

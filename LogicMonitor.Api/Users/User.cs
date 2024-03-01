@@ -211,6 +211,12 @@ public class User : IdentifiedItem, IHasEndpoint
 	public DateTime? LastActionOnUtc => LastActionOnSeconds.ToNullableDateTimeUtc();
 
 	/// <summary>
+	///    Whether they should be forced to logout immediately
+	/// </summary>
+	[DataMember(Name = "immediateForceLogout")]
+	public bool ImmediateForceLogout { get; set; }
+
+	/// <summary>
 	///    The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/admins";

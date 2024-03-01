@@ -53,5 +53,11 @@ public enum RolePrivilegeOperation
 	/// NoPrivilege
 	/// </summary>
 	[EnumMember(Value = "noprivilege")]
-	NoPrivilege
+	NoPrivilege,
+
+	/// <summary>
+	/// Install
+	/// </summary>
+	[EnumMember(Value = "install")]
+	Install
 }
