@@ -92,6 +92,27 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper)
 	}
 
 	[Fact]
+	public async Task RunGroovyDebugCommand()
+	{
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(default)
+			.ConfigureAwait(true);
+		var testCollector = collectors.Find(c => !c.IsDown);
+		testCollector.Should().NotBeNull();
+		var response = await LogicMonitorClient
+			.ExecuteDebugCommandAndWaitForResultAsync(
+				testCollector!.Id,
+				$"!groovy hostId={WindowsDeviceId}\nprintln \"Hello World\"",
+				10_000,
+				500,
+				default)
+			.ConfigureAwait(true);
+		response.Should().NotBeNull();
+		response ??= new();
+		Logger.LogInformation("{Output}", response.Output);
+	}
+
+	[Fact]
 	public async Task UpdateCollectorGroup()
 	{
 		var collectorGroup = (await LogicMonitorClient
