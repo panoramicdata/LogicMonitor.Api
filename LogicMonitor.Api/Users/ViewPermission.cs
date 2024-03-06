@@ -84,6 +84,12 @@ public class ViewPermission
 	[DataMember(Name = "Traces")]
 	public bool Traces { get; set; }
 
+	/// <summary>
+	/// Modules
+	/// </summary>
+	[DataMember(Name = "Modules")]
+	public bool Modules { get; set; }
+
 	/// <inheritdoc />
 	public override string ToString() =>
 		$"{nameof(Dashboards)}={Dashboards};" +
@@ -95,5 +101,6 @@ public class ViewPermission
 		$"{nameof(Alerts)}={Alerts};" +
 		$"{nameof(Maps)}={Maps};" +
 		$"{nameof(Logs)}={Logs};" +
-		$"{nameof(Traces)}={Traces};";
+		$"{nameof(Traces)}={Traces};" +
+		$"{nameof(Modules)}={Modules};";
 }
