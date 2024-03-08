@@ -384,7 +384,7 @@ public class DeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 		var treeNodeFreeSearchResultTypes =
 		Enum.GetValues(typeof(TreeNodeFreeSearchResultType))
 		.Cast<TreeNodeFreeSearchResultType>()
-		.Except(new[] { TreeNodeFreeSearchResultType.Unknown });
+		.Except([TreeNodeFreeSearchResultType.Unknown]);
 		var list = new List<TreeNodeFreeSearchResult>();
 		foreach (var treeNodeFreeSearchResultType in treeNodeFreeSearchResultTypes)
 		{

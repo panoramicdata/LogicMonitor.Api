@@ -14,12 +14,12 @@ public partial class LogicMonitorClient : IDisposable
 	private readonly HttpClient _client;
 
 	private static readonly JsonConverter[] JsonConverters =
-	{
+	[
 		new WidgetConverter(),
 		new WidgetDataConverter(),
 		new ReportConverter(),
 		new FlagsEnumConverter()
-	};
+	];
 
 	private readonly Cache<string, object> _cache;
 

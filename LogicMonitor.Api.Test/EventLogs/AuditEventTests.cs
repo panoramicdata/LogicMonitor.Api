@@ -119,8 +119,8 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 				ResourceNames = ["PDL-LM.logicmonitor.com"],
 				LogicModuleId = 112813425,
 				InstanceName = "NA",
-				DataSourceNewInstanceNames = new[] { "LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter" },
-				DataSourceNewInstanceIds = new[] { 263395102 }
+				DataSourceNewInstanceNames = ["LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter"],
+				DataSourceNewInstanceIds = [263395102]
 			}
 		);
 
@@ -140,7 +140,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 				LogicModuleId = 94545589,
 				LogicModuleName = "Critical Linux Processes-java",
 				InstanceName = "NA",
-				DataSourceDeletedInstanceIds = new[] { 263219849 }
+				DataSourceDeletedInstanceIds = [263219849]
 			}
 		);
 
@@ -159,10 +159,10 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 				ResourceNames = ["PDL-HAPROXY-TEST-02"],
 				InstanceName = "NA",
 				LogicModuleId = 111613364,
-				DataSourceNewInstanceIds = new[] { 263956258, 263956259 },
-				DataSourceNewInstanceNames = new[] { "HA Proxy Backend-ui_alpha_reportmagic", "HA Proxy Backend-pdl_app_jira_test_01" },
-				DataSourceDeletedInstanceIds = new[] { 256832296 },
-				DataSourceDeletedInstanceNames = new[] { "HA Proxy Backend-uiv3_alpha_reportmagic" }
+				DataSourceNewInstanceIds = [263956258, 263956259],
+				DataSourceNewInstanceNames = ["HA Proxy Backend-ui_alpha_reportmagic", "HA Proxy Backend-pdl_app_jira_test_01"],
+				DataSourceDeletedInstanceIds = [256832296],
+				DataSourceDeletedInstanceNames = ["HA Proxy Backend-uiv3_alpha_reportmagic"]
 			}
 		);
 
@@ -181,10 +181,10 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 				ResourceNames = ["EU-W1:recoveryservices:pambackup"],
 				InstanceName = "NA",
 				LogicModuleId = 39016161,
-				DataSourceNewInstanceIds = new[] { 570930097, 570930098 },
-				DataSourceNewInstanceNames = new[] { "Microsoft_Azure_BackupJobStatus-xxx", "Microsoft_Azure_BackupJobStatus-yyy" },
-				DataSourceDeletedInstanceIds = new[] { 569154776, 569154777 },
-				DataSourceDeletedInstanceNames = new[] { "Microsoft_Azure_BackupJobStatus-aaa", "Microsoft_Azure_BackupJobStatus-bbb" }
+				DataSourceNewInstanceIds = [570930097, 570930098],
+				DataSourceNewInstanceNames = ["Microsoft_Azure_BackupJobStatus-xxx", "Microsoft_Azure_BackupJobStatus-yyy"],
+				DataSourceDeletedInstanceIds = [569154776, 569154777],
+				DataSourceDeletedInstanceNames = ["Microsoft_Azure_BackupJobStatus-aaa", "Microsoft_Azure_BackupJobStatus-bbb"]
 			}
 		);
 
