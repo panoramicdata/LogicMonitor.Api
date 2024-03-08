@@ -19,6 +19,24 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int ActiveAlertCount { get; set; }
 
 	/// <summary>
+	///     The number of PaaS resources
+	/// </summary>
+	[DataMember(Name = "numOfPaaSResources")]
+	public int PaasResourceCount { get; set; }
+
+	/// <summary>
+	///     The number of IaaS resources
+	/// </summary>
+	[DataMember(Name = "numOfIaaSResources")]
+	public int IaasResourceCount { get; set; }
+
+	/// <summary>
+	///     The number of IaaS resources
+	/// </summary>
+	[DataMember(Name = "numOfNonComputeResources")]
+	public int NonComputeResourceCount { get; set; }
+
+	/// <summary>
 	///     The number of serverless resources
 	/// </summary>
 	[DataMember(Name = "numOfServerlessResources")]
@@ -474,6 +492,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	public string WhiteList { get; set; } = string.Empty;
 
 	/// <summary>
+	///     AccountDomain Whitelist
+	/// </summary>
+	[DataMember(Name = "accountDomainWhiteList")]
+	public string AccountDomainWhiteList { get; set; } = string.Empty;
+
+	/// <summary>
 	///     User Suspend Days
 	/// </summary>
 	[DataMember(Name = "userSuspendDays")]
@@ -490,6 +514,18 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "numberOfWidgets")]
 	public int WidgetCount { get; set; }
+
+	/// <summary>
+	/// Whether collector debug is enabled
+	/// </summary>
+	[DataMember(Name = "enableCollectorDebug")]
+	public bool EnableCollectorDebug { get; set; }
+
+	/// <summary>
+	/// Whether test scripts are enabled
+	/// </summary>
+	[DataMember(Name = "enableTestScript")]
+	public bool EnableTestScript { get; set; }
 
 	/// <summary>
 	/// enableScriptsInTextWidget
@@ -514,6 +550,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	/// </summary>
 	[DataMember(Name = "maximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins")]
 	public int MaximumTimeToKeepTenantIdentifierPropertyTextBoxDisabledInMins { get; set; }
+
+	/// <summary>
+	/// TokenDisabledDays
+	/// </summary>
+	[DataMember(Name = "tokenDisabledDays")]
+	public int TokenDisabledDays { get; set; }
 
 	/// <summary>
 	///     The endpoint

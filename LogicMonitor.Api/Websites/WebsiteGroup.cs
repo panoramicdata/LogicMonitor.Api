@@ -44,6 +44,12 @@ public class WebsiteGroup : NamedItem, IHasEndpoint, IHasCustomProperties
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
+	///     The Alerting disabled on
+	/// </summary>
+	[DataMember(Name = "alertingDisabledOn")]
+	public object AlertingDisabledOn { get; set; } = new();
+
+	/// <summary>
 	/// The privilege operations of the user\u0027s role that made the API request.  The array can contain the values ack, sdt and/or threshold
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]

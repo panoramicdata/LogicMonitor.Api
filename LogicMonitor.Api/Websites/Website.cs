@@ -184,6 +184,12 @@ public class Website : NamedItem, IHasCustomProperties, IPatchable
 	public int AlertStatusPriority { get; set; }
 
 	/// <summary>
+	///     The Alerting disabled on
+	/// </summary>
+	[DataMember(Name = "alertingDisabledOn")]
+	public object AlertingDisabledOn { get; set; } = new();
+
+	/// <summary>
 	/// The count
 	/// </summary>
 	[DataMember(Name = "count")]
