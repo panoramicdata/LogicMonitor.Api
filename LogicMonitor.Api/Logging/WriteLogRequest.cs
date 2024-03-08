@@ -16,15 +16,6 @@ public class WriteLogRequest : Dictionary<string, object>
 	/// <summary>
 	/// Construct a regular deviceId WriteLogRequest
 	/// </summary>
-	/// <param name="resourceId"></param>
-	/// <param name="message"></param>
-	public WriteLogRequest(int resourceId, string message) : this(WriteLogLevel.Info, resourceId, message)
-	{
-	}
-
-	/// <summary>
-	/// Construct a regular deviceId WriteLogRequest
-	/// </summary>
 	/// <param name="level"></param>
 	/// <param name="resourceId"></param>
 	/// <param name="message"></param>
@@ -33,6 +24,21 @@ public class WriteLogRequest : Dictionary<string, object>
 		this["_lm.resourceId"] = new Dictionary<string, string>
 			{
 				{ "system.deviceId", resourceId.ToString(CultureInfo.InvariantCulture) }
+			};
+		this["message"] = GetPrefix(level) + message;
+	}
+
+	/// <summary>
+	/// Construct a regular deviceId WriteLogRequest
+	/// </summary>
+	/// <param name="level"></param>
+	/// <param name="resourceDisplayName"></param>
+	/// <param name="message"></param>
+	public WriteLogRequest(WriteLogLevel level, string resourceDisplayName, string message)
+	{
+		this["_lm.resourceId"] = new Dictionary<string, string>
+			{
+				{ "system.displayname", resourceDisplayName }
 			};
 		this["message"] = GetPrefix(level) + message;
 	}

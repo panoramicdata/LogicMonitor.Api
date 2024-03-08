@@ -30,28 +30,30 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///     Logs a single writeLogRequest at the specified level
 	/// </summary>
-	/// <param name="level"></param>
+	/// <param name="writeLogLevel"></param>
 	/// <param name="deviceId">The device id</param>
 	/// <param name="message">The message</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>The response</returns>
 	public Task<WriteLogResponse> WriteLogAsync(
-		WriteLogLevel level,
+		WriteLogLevel writeLogLevel,
 		int deviceId,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(level, deviceId, message) }, cancellationToken);
+		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, deviceId, message) }, cancellationToken);
 
 	/// <summary>
 	///     Logs a single writeLogRequest at the informational level
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
+	/// <param name="writeLogLevel"></param>
+	/// <param name="deviceDisplayName">The device id</param>
 	/// <param name="message">The message</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>The response</returns>
 	public Task<WriteLogResponse> WriteLogAsync(
-		int deviceId,
+		WriteLogLevel writeLogLevel,
+		string deviceDisplayName,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(deviceId, message) }, cancellationToken);
+		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, deviceDisplayName, message) }, cancellationToken);
 }

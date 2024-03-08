@@ -1,23 +1,29 @@
-﻿namespace LogicMonitor.Api.Test.Logging;
+﻿using LogicMonitor.Api.Logging;
 
-public class PushMetricTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+namespace LogicMonitor.Api.Test.Logging;
+
+public class LoggingTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
 {
 	[Fact]
-	public async Task WriteLogAsync_Succeeds()
+	public async Task WriteLogAsync_WithResourceId_Succeeds()
 	{
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WindowsDeviceId, "Test log message.", default)
+			.WriteLogAsync(WriteLogLevel.Info, WindowsDeviceId, "Test log message.", default)
 			.ConfigureAwait(true);
 		response.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetLogItems_Succeeds()
+	public async Task WriteLogAsync_WithResourceDisplayName_Succeeds()
 	{
-		var logItems = await LogicMonitorClient
-			.GetLogItemsAsync(default)
+		// Get the windows device display name from the WindowsDeviceId
+		var windowsDevice = await LogicMonitorClient
+			.GetAsync<Device>(WindowsDeviceId, default)
 			.ConfigureAwait(true);
 
-		logItems.Should().NotBeNull();
+		var response = await LogicMonitorClient
+			.WriteLogAsync(WriteLogLevel.Info, windowsDevice.DisplayName, "Test log message.", default)
+			.ConfigureAwait(true);
+		response.Should().NotBeNull();
 	}
 }
