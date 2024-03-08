@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Logging;
 
 /// <summary>
-/// A request to write to a log against a resource id
+/// A request to write to a log against a resource
 /// </summary>
 [DataContract]
 public class WriteLogRequest : Dictionary<string, object>
@@ -29,7 +29,7 @@ public class WriteLogRequest : Dictionary<string, object>
 	}
 
 	/// <summary>
-	/// Construct a regular deviceId WriteLogRequest
+	/// Construct a regular resourceDisplayName WriteLogRequest
 	/// </summary>
 	/// <param name="level"></param>
 	/// <param name="resourceDisplayName"></param>
@@ -40,6 +40,37 @@ public class WriteLogRequest : Dictionary<string, object>
 			{
 				{ "system.displayname", resourceDisplayName }
 			};
+		this["message"] = GetPrefix(level) + message;
+	}
+
+	/// <summary>
+	/// Construct a regular custom property WriteLogRequest
+	/// </summary>
+	/// <param name="level"></param>
+	/// <param name="customPropertyName"></param>
+	/// <param name="customPropertyValue"></param>
+	/// <param name="message"></param>
+	public WriteLogRequest(WriteLogLevel level, string customPropertyName, string customPropertyValue, string message)
+	{
+		this["_lm.resourceId"] = new Dictionary<string, string>
+			{
+				{ customPropertyName, customPropertyValue }
+			};
+		this["message"] = GetPrefix(level) + message;
+	}
+
+	/// <summary>
+	/// Construct a regular custom property WriteLogRequest
+	/// </summary>
+	/// <param name="level"></param>
+	/// <param name="propertyDictionary">
+	///		The property dictionary, the combination of which will be used to identify the resource.
+	///		This must be unique across the specified custom property values for the entire LM portal.
+	/// </param>
+	/// <param name="message"></param>
+	public WriteLogRequest(WriteLogLevel level, Dictionary<string, string> propertyDictionary, string message)
+	{
+		this["_lm.resourceId"] = propertyDictionary;
 		this["message"] = GetPrefix(level) + message;
 	}
 

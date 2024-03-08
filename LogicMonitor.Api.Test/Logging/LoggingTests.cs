@@ -8,7 +8,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 	public async Task WriteLogAsync_WithResourceId_Succeeds()
 	{
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WriteLogLevel.Info, WindowsDeviceId, "Test log message.", default)
+			.WriteLogAsync(WriteLogLevel.Info, WindowsDeviceId, "Test log message against resource id.", default)
 			.ConfigureAwait(true);
 		response.Should().NotBeNull();
 	}
@@ -22,7 +22,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 			.ConfigureAwait(true);
 
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WriteLogLevel.Info, windowsDevice.DisplayName, "Test log message.", default)
+			.WriteLogAsync(WriteLogLevel.Info, windowsDevice.DisplayName, "Test log message against resource display name.", default)
 			.ConfigureAwait(true);
 		response.Should().NotBeNull();
 	}
