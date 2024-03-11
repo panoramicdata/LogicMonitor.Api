@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			When the LogicMonitor API returns any HTTP status code (except 429 - too many requests) between 400 and 499, the client will return / fail immediately instead of retrying
+			Request headers now outputs "EMPTY" when there are none
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
