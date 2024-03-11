@@ -31,7 +31,7 @@ public static class LoggerExtensions
 
 				if (output.Length == 0)
 				{
-					output.Append("EMPTY");
+					return;
 				}
 
 				logger.LogDebug("{Guid}{HeaderType}{Headers}", guidPrefix, headerType, output.ToString());
