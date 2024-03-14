@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			When there are no headers in a request / response for logging HTTP headers, there is no debug log output in that case
+			Fixed broken GetLogicModuleUpdatesAsync function, was was broken due to changes in the API.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

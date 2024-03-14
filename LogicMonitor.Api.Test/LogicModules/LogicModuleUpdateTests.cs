@@ -10,13 +10,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleDataSourceUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var dataSourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, default)
 				.ConfigureAwait(true);
 
 		dataSourceUpdates.Items.Should().NotBeNullOrEmpty();
@@ -29,13 +25,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleEventSourceUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var eventSourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, default)
 				.ConfigureAwait(true);
 
 		eventSourceUpdates.Items.Should().NotBeNull();
@@ -48,13 +40,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleConfigSourceUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var configSourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, default)
 				.ConfigureAwait(true);
 
 		configSourceUpdates.Items.Should().NotBeNullOrEmpty();
@@ -67,13 +55,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModulePropertySourceUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var propertySourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
 				.ConfigureAwait(true);
 
 		propertySourceUpdates.Items.Should().NotBeNullOrEmpty();
@@ -86,13 +70,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleTopologySourceUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var topologySourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.TopologySource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.TopologySource, default)
 				.ConfigureAwait(true);
 
 		topologySourceUpdates.Items.Should().NotBeNullOrEmpty();
@@ -105,12 +85,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleJobMonitorUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		_ = await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
 				.ConfigureAwait(true);
 
 		//jobMonitorUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
@@ -128,7 +104,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 			.ConfigureAwait(true);
 
 		_ = await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, default)
 				.ConfigureAwait(true);
 
 		//appliesToUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
@@ -141,13 +117,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleSnmpSysOidUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var snmpSysOidUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, default)
 				.ConfigureAwait(true);
 
 		snmpSysOidUpdates.Items.Should().NotBeNullOrEmpty();
@@ -160,13 +132,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetAllLogicModuleUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var allUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.All, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.All, default)
 				.ConfigureAwait(true);
 
 		allUpdates.Total.Should().BePositive();
@@ -179,13 +147,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task AuditDataSource()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var dataSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -210,13 +174,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task AuditEventSource()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var eventSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource,  default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -241,13 +201,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task AuditConfigSource()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var configSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -273,13 +229,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task AuditPropertySource()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var propertySourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -306,13 +258,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.DataSource;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var dataSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType,  default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -325,9 +273,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				.ImportLogicModulesAsync(
 				logicModuleType,
 				[
-						dataSourceUpdates[0].Name
+					dataSourceUpdates[0].Name
 				],
-				version.Version.Major,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -342,13 +289,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.EventSource;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var eventSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -363,7 +306,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				[
 						eventSourceUpdates[0].Name
 				],
-				version.Version.Major,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -378,13 +320,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var configSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -399,7 +337,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				[
 						configSourceUpdates[0].Name
 				],
-				version.Version.Major,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -414,13 +351,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var propertySourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -435,7 +368,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				[
 						propertySourceUpdates[0].Name
 				],
-				version.Version.Major,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -450,13 +382,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var topologySourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -471,7 +399,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				[
 						topologySourceUpdates[0].Name
 				],
-				version.Version.Major,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -486,13 +413,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var jobMonitorUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -505,9 +428,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				.ImportLogicModulesAsync(
 				logicModuleType,
 				[
-						jobMonitorUpdates[0].Name
+					jobMonitorUpdates[0].Name
 				],
-				default,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -522,13 +444,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var appliesToFunctionUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -541,9 +459,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 				.ImportLogicModulesAsync(
 				logicModuleType,
 				[
-						appliesToFunctionUpdates[0].Name
+					appliesToFunctionUpdates[0].Name
 				],
-				default,
 				default)
 				.ConfigureAwait(true);
 		}
@@ -558,13 +475,9 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;
 
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		var snmpSysOidMapUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, version.Version.Major, default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -576,13 +489,12 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 			await LogicMonitorClient
 				.ImportSnmpSysOidMapAsync(
 				[
-						new SnmpSysOidMapImportItem
-						{
-							Id = snmpSysOidMapUpdates[0].LocalId,
-							Oid = snmpSysOidMapUpdates[0].Name
-						}
+					new SnmpSysOidMapImportItem
+					{
+						Id = snmpSysOidMapUpdates[0].LocalId,
+						Oid = snmpSysOidMapUpdates[0].Name
+					}
 				],
-				version.Version.Major,
 				default)
 				.ConfigureAwait(true);
 		}
