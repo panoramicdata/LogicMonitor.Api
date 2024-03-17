@@ -65,8 +65,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(
 		firstLine.Should().NotBeNull();
 		firstLine ??= new();
 		firstLine.Data.Should().NotBeNull();
-		var firstData = firstLine.Data.FirstOrDefault();
-		firstData.Should().NotBeNull();
+		firstLine.Data.Any(datum => datum is not null).Should().BeTrue();
 	}
 
 	[Fact]

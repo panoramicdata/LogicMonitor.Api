@@ -20,6 +20,8 @@ public abstract class TestWithOutput
 
 	protected int WindowsDeviceId { get; }
 
+	protected int ReportId { get; }
+
 	protected int SdtResourceGroupId { get; }
 
 	protected int WindowsDeviceLargeDeviceDataSourceId { get; }
@@ -38,6 +40,7 @@ public abstract class TestWithOutput
 		Logger = iTestOutputHelper.BuildLogger();
 
 		var testPortalConfig = new TestPortalConfig(Logger);
+		ExperimentalLogicMonitorClient = testPortalConfig.ExperimentalLogicMonitorClient;
 		LogicMonitorClient = testPortalConfig.LogicMonitorClient;
 		CollectorId = testPortalConfig.CollectorId;
 		WindowsDeviceId = testPortalConfig.WindowsDeviceId;
@@ -49,7 +52,7 @@ public abstract class TestWithOutput
 		DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
 		WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
 		ResourceGroupFullPath = testPortalConfig.ResourceGroupFullPath;
-		SdtResourceGroupId = testPortalConfig.SdtResourceGroupId;
+		ReportId = testPortalConfig.ReportId;
 		WebsiteName = testPortalConfig.WebsiteName;
 		SnmpDeviceId = testPortalConfig.SnmpDeviceId;
 		AllWidgetsDashboardId = testPortalConfig.AllWidgetsDashboardId;
@@ -66,7 +69,7 @@ public abstract class TestWithOutput
 	protected int StartEpoch { get; }
 
 	protected int EndEpoch { get; }
-
+	internal Api.Experimental.LogicMonitorClient ExperimentalLogicMonitorClient { get; }
 	protected LogicMonitorClient LogicMonitorClient { get; }
 
 	protected void AssertIsFast(int durationSeconds)

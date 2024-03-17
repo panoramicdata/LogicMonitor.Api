@@ -105,8 +105,12 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper) : TestW
 		websiteGroupHistorySdts.Should().NotBeNull();
 
 		// Website
+		var website = await LogicMonitorClient
+			.GetByNameAsync<Website>(WebsiteName, default)
+			.ConfigureAwait(true);
+		website.Should().NotBeNull();
 		var websiteHistorySdts =
-			await LogicMonitorClient.GetSdtHistoryByWebsiteIdAsync(350, new(), default)
+			await LogicMonitorClient.GetSdtHistoryByWebsiteIdAsync(website!.Id, new(), default)
 			.ConfigureAwait(true);
 		websiteHistorySdts.Should().NotBeNull();
 	}

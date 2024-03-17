@@ -33,6 +33,16 @@ internal sealed class TestPortalConfig
 		{
 			StrictPagingTotalChecking = true
 		};
+		ExperimentalLogicMonitorClient = new Api.Experimental.LogicMonitorClient(
+			new LogicMonitorClientOptions
+			{
+				Account = Configuration["Config:Account"] ?? "",
+				AccessId = Configuration["Config:AccessId"] ?? "",
+				AccessKey = Configuration["Config:AccessKey"] ?? "",
+				HttpClientTimeoutSeconds = clientTimeoutSeconds,
+				Logger = logger
+			}
+		);
 		SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"] ?? "0", CultureInfo.InvariantCulture);
 		NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"] ?? "0", CultureInfo.InvariantCulture);
 		WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"] ?? "0", CultureInfo.InvariantCulture);
@@ -40,6 +50,7 @@ internal sealed class TestPortalConfig
 		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "0", CultureInfo.InvariantCulture);
 		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "0", CultureInfo.InvariantCulture);
 		SdtResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "0", CultureInfo.InvariantCulture);
+		ReportId = int.Parse(Configuration["Config:ReportId"] ?? "0", CultureInfo.InvariantCulture);
 		TestDashboardId = int.Parse(Configuration["Config:TestDashboardId"] ?? "0", CultureInfo.InvariantCulture);
 		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"] ?? "";
 		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"] ?? "";
@@ -54,9 +65,13 @@ internal sealed class TestPortalConfig
 
 	public LogicMonitorClient LogicMonitorClient { get; }
 
+	public Api.Experimental.LogicMonitorClient ExperimentalLogicMonitorClient { get; }
+
 	public int NetflowDeviceId { get; }
 
 	public int SnmpDeviceId { get; }
+
+	public int ReportId { get; }
 
 	public int WindowsDeviceId { get; }
 

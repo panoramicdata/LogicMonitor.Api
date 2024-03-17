@@ -27,7 +27,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 	public async Task RunReportById()
 	{
 		var response =
-			await LogicMonitorClient.RunReportById(156, default)
+			await LogicMonitorClient.RunReportById(ReportId, default)
 			.ConfigureAwait(true);
 
 		response.Should().NotBeNull();
