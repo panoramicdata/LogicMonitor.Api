@@ -43,5 +43,25 @@ public enum Comparator
 	/// <summary>
 	/// Does not include
 	/// </summary>
-	NotIncludes
+	NotIncludes,
+
+	/// <summary>
+	/// Is null or empty
+	/// </summary>
+	IsNullOrEmpty,
+
+	/// <summary>
+	/// Is not null or empty
+	/// </summary>
+	IsNotNullOrEmpty,
+
+	/// <summary>
+	/// Is not null
+	/// </summary>
+	IsNotNull,
+
+	/// <summary>
+	/// Is null
+	/// </summary>
+	IsNull
 }
