@@ -221,6 +221,16 @@ public class DeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 	}
 
 	[Fact]
+	public async Task GetDeviceByNonExistentDeviceIdShouldFail()
+	{
+		// This should fail as the Device does not exist
+		LogicMonitorClient
+			.Invoking(async x => await LogicMonitorClient.GetAsync<Device>(12345678, default).ConfigureAwait(true))
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>();
+	}
+
+	[Fact]
 	public async Task GetDeviceByDisplayNameAsync()
 	{
 		var device = await GetWindowsDeviceAsync(default)

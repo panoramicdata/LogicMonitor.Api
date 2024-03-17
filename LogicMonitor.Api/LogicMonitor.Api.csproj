@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			First release against LM v201.
+			Fixed broken GetLogicModuleUpdatesAsync function, was was broken due to changes in the API.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

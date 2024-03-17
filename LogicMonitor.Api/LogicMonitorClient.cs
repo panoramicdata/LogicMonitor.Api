@@ -1008,65 +1008,66 @@ public partial class LogicMonitorClient : IDisposable
 			}
 
 			// Check the outer HTTP status code
-			if (!httpResponseMessage.IsSuccessStatusCode)
+			if (httpResponseMessage.IsSuccessStatusCode)
 			{
-				if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden)
-				{
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-					throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.Forbidden, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-				}
-
-				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
-				{
-					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-					{
-						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
-						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
-						continue;
-					}
-
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-					_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
-					_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}",
-						prefix,
-						++failureCount,
-						responseBody);
-					if (failureCount < AttemptCount)
-					{
-						_logger.LogDebug("{Prefix} Retrying..", prefix);
-						// Try again (after a short delay)
-						await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
-						continue;
-					}
-
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-				}
-				// We have been told to back off
-
-				// Check that all rate limit headers are present
-				var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-				var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-				var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-				// Wait for the full window
-				var delayMs = 1000 * xRateLimitWindowSeconds;
-
-				// Wait some time and try again
-				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
-					prefix,
-					rateLimitInformation,
-					delayMs);
-				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
-
-				// Try again
-				continue;
+				// Success - can be cached if permitted
+				break;
 			}
 
-			// Success - can be cached if permitted
-			break;
+			// NOT A SUCCESS :-(
+
+			var statusCode = (int)httpResponseMessage.StatusCode;
+			var tooManyRequests = statusCode == 429 && httpResponseMessage.ReasonPhrase.Equals("Too Many Requests", StringComparison.OrdinalIgnoreCase);
+
+			if (!tooManyRequests)
+			{
+				if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+				{
+					_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
+					await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+					continue;
+				}
+
+				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+				if (statusCode >= 400 && statusCode < 500)
+				{
+					// HTTP 400 - 499: do not retry EXCEPT when we have a 429 (too many requests)
+					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+				}
+
+				_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
+				_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}", prefix, ++failureCount, responseBody);
+				
+				if (failureCount < AttemptCount)
+				{
+					_logger.LogDebug("{Prefix} Retrying..", prefix);
+					// Try again (after a short delay)
+					await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
+					continue;
+				}
+
+				throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+			}
+			// We have been told to back off
+
+			// Check that all rate limit headers are present
+			var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
+			var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
+			var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
+
+			var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
+			// Wait for the full window
+			var delayMs = 1000 * xRateLimitWindowSeconds;
+
+			// Wait some time and try again
+			_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				prefix,
+				rateLimitInformation,
+				delayMs);
+			await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+
+			// Try again
 		}
 
 		// If this is a file response, return that

@@ -35,12 +35,10 @@ public partial class LogicMonitorClient
 	/// Get a list of LogicModule updates
 	/// </summary>
 	/// <param name="logicModuleType">The LogicModule type</param>
-	/// <param name="repositoryVersion">The LogicMonitor repository version</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>A LogicModuleUpdate collection</returns>
 	public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdatesAsync(
 		LogicModuleType logicModuleType,
-		int repositoryVersion,
 		CancellationToken cancellationToken)
 	{
 		var typeParameter = string.Empty;
@@ -76,7 +74,7 @@ public partial class LogicMonitorClient
 		return await PostAsync<LogicModuleUpdateCredential, LogicModuleUpdateCollection>(
 			new LogicModuleUpdateCredential
 			{
-				CoreServer = GetLogicModuleRepositoryUrl(repositoryVersion)
+				CoreServer = CoreServerName
 			},
 			$"setting/logicmodules/listcore{typeParameter}",
 			cancellationToken)
@@ -144,12 +142,10 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="logicModuleType">The LogicModule type (except SNMP SysOID Maps - for those use ImportSnmpSysOidMap)</param>
 	/// <param name="logicModuleNames">A list of LogicModule names</param>
-	/// <param name="repositoryVersion">The LogicMonitor repository version</param>
 	/// <param name="cancellationToken"></param>
 	public async Task ImportLogicModulesAsync(
 		LogicModuleType logicModuleType,
 		List<string> logicModuleNames,
-		int repositoryVersion,
 		CancellationToken cancellationToken)
 	{
 		var typeEndpoint = logicModuleType switch
@@ -166,7 +162,7 @@ public partial class LogicMonitorClient
 			// OK for Datasources, EventSources, ConfigSources, PropertySources, TopologySources, AppliesToFunctions
 			new LogicModuleImportObject
 			{
-				CoreServer = GetLogicModuleRepositoryUrl(repositoryVersion),
+				CoreServer = CoreServerName,
 				ImportDataSources = logicModuleNames
 			},
 			$"setting/{typeEndpoint}/importcore",
@@ -179,29 +175,21 @@ public partial class LogicMonitorClient
 	/// Import a LogicModule
 	/// </summary>
 	/// <param name="snmpSysOidMapImportItems">A list of LogicModule names</param>
-	/// <param name="repositoryVersion">The LogicMonitor Repository version</param>
 	/// <param name="cancellationToken"></param>
 	public async Task ImportSnmpSysOidMapAsync(
 		List<SnmpSysOidMapImportItem> snmpSysOidMapImportItems,
-		int repositoryVersion,
-		CancellationToken cancellationToken)
-	{
+		CancellationToken cancellationToken) =>
 		await PostAsync<SnmpSysOidMapImportObject, object>
 		(
 			new SnmpSysOidMapImportObject
 			{
-				CoreServer = GetLogicModuleRepositoryUrl(repositoryVersion),
+				CoreServer = CoreServerName,
 				ImportOids = snmpSysOidMapImportItems
 			},
 			"setting/oids/importcore",
 			cancellationToken
 		)
 		.ConfigureAwait(false);
-		return;
-	}
 
-	private static string GetLogicModuleRepositoryUrl(int repositoryVersion)
-		=> repositoryVersion <= 0
-		? throw new ArgumentOutOfRangeException(nameof(repositoryVersion), "LogicModule Repository Version expected to be greater than 0.")
-		: $"v{repositoryVersion}.core.logicmonitor.com";
+	private static string CoreServerName = "core.logicmonitor.com";
 }
