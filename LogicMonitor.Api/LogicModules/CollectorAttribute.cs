@@ -325,6 +325,12 @@ public class CollectorAttribute
 	public string Request { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The resource URL
+	/// </summary>
+	[DataMember(Name = "resourceUrl")]
+	public string ResourceUrl { get; set; } = string.Empty;
+
+	/// <summary>
 	///     The number of packets to send
 	/// </summary>
 	[DataMember(Name = "sendPkts")]

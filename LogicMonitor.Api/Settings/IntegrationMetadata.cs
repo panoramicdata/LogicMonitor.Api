@@ -25,6 +25,18 @@ public class IntegrationMetadata
 	public string? TargetLastPublishedVersion { get; set; }
 
 	/// <summary>
+	/// Origin name
+	/// </summary>
+	[DataMember(Name = "originName")]
+	public string? OriginName { get; set; }
+
+	/// <summary>
+	/// Origin name
+	/// </summary>
+	[DataMember(Name = "originLocator")]
+	public string? OriginLocator { get; set; }
+
+	/// <summary>
 	/// The metadata checksum for the LMModule content
 	/// </summary>
 	[DataMember(Name = "originChecksum")]
