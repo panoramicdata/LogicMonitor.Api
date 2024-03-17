@@ -49,6 +49,7 @@ internal sealed class TestPortalConfig
 		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"] ?? "0", CultureInfo.InvariantCulture);
 		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "0", CultureInfo.InvariantCulture);
 		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "0", CultureInfo.InvariantCulture);
+		DownCollectorId = int.Parse(Configuration["Config:DownCollectorId"] ?? "0", CultureInfo.InvariantCulture);
 		SdtResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "0", CultureInfo.InvariantCulture);
 		ReportId = int.Parse(Configuration["Config:ReportId"] ?? "0", CultureInfo.InvariantCulture);
 		TestDashboardId = int.Parse(Configuration["Config:TestDashboardId"] ?? "0", CultureInfo.InvariantCulture);
@@ -91,7 +92,9 @@ internal sealed class TestPortalConfig
 
 	public string WebsiteName { get; }
 
-	internal int CollectorId { get; }
+	public int DownCollectorId { get; }
+
+	public int CollectorId { get; }
 
 	public int SdtResourceGroupId { get; }
 

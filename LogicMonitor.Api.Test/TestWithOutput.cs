@@ -6,6 +6,8 @@ public abstract class TestWithOutput
 
 	protected int CollectorId { get; }
 
+	protected int DownCollectorId { get; }
+
 	protected string WebsiteGroupFullPath { get; }
 
 	protected string AlertRuleName { get; }
@@ -43,6 +45,7 @@ public abstract class TestWithOutput
 		ExperimentalLogicMonitorClient = testPortalConfig.ExperimentalLogicMonitorClient;
 		LogicMonitorClient = testPortalConfig.LogicMonitorClient;
 		CollectorId = testPortalConfig.CollectorId;
+		DownCollectorId = testPortalConfig.DownCollectorId;
 		WindowsDeviceId = testPortalConfig.WindowsDeviceId;
 		WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
 		ServiceDeviceId = testPortalConfig.ServiceDeviceId;

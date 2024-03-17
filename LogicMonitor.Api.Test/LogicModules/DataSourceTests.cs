@@ -359,10 +359,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 	[Fact]
 	public async Task GetDeviceDataSources()
 	{
-		var device = await LogicMonitorClient
-			.GetDeviceByDisplayNameAsync("PDL-LINUX-TEST-01", default)
-			.ConfigureAwait(true);
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, new Filter<DeviceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
@@ -381,19 +378,19 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 			// Refetch
 			var deviceDataSourceRefetch = await LogicMonitorClient
 				.GetDeviceDataSourceAsync(
-					device.Id,
+					WindowsDeviceId,
 					deviceDataSource.Id,
 					default)
 				.ConfigureAwait(true);
 
 			// Make sure they are the same
-			deviceDataSourceRefetch.DeviceId.Should().Be(device.Id);
+			deviceDataSourceRefetch.DeviceId.Should().Be(WindowsDeviceId);
 			deviceDataSourceRefetch.CreatedOnSeconds.Should().Be(deviceDataSource.CreatedOnSeconds);
 
 			// Get the instances
 			_ = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(
-					device.Id,
+					WindowsDeviceId,
 					deviceDataSource.Id,
 					new Filter<DeviceDataSourceInstance>
 					{
@@ -404,7 +401,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 
 			// Get the groups
 			var deviceDataSourceGroups = await LogicMonitorClient.GetDeviceDataSourceGroupsPageAsync(
-				device.Id,
+				WindowsDeviceId,
 				deviceDataSource.Id,
 				new Filter<DeviceDataSourceGroup>
 				{
@@ -417,7 +414,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 			foreach (var deviceDataSourceGroup in deviceDataSourceGroups.Items)
 			{
 				// Make sure they match
-				deviceDataSourceGroup.DeviceId.Should().Be(device.Id);
+				deviceDataSourceGroup.DeviceId.Should().Be(WindowsDeviceId);
 			}
 		}
 	}
