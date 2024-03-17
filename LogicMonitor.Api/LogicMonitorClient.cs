@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -135,10 +137,10 @@ public partial class LogicMonitorClient : IDisposable
 		_client.Timeout = TimeSpan.FromSeconds(logicMonitorClientOptions.HttpClientTimeoutSeconds);
 	}
 
-	private static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
+	internal static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
 	{
 		// Construct signature
-		using var hmac = new System.Security.Cryptography.HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) };
+		using var hmac = new HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) };
 		var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
 		var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
 		var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower(CultureInfo.InvariantCulture);
