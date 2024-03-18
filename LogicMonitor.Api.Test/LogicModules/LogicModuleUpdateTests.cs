@@ -99,10 +99,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleAppliesToUpdates()
 	{
-		var version = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
-
 		_ = await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, default)
 				.ConfigureAwait(true);
