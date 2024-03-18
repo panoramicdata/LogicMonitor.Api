@@ -143,7 +143,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one unaudited data source update and mark as audited
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't audit without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task AuditDataSource()
 	{
@@ -170,13 +170,13 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one unaudited event source update and mark as audited
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't audit without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task AuditEventSource()
 	{
 		var eventSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource,  default)
+				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -197,7 +197,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one unaudited config source update and mark as audited
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't audit without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task AuditConfigSource()
 	{
@@ -225,7 +225,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one unaudited property source update and mark as audited
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't audit without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task AuditPropertySource()
 	{
@@ -252,7 +252,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated Data Source and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportDataSource()
 	{
@@ -260,7 +260,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 
 		var dataSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType,  default)
+				.GetLogicModuleUpdatesAsync(logicModuleType, default)
 				.ConfigureAwait(true))
 			.Items
 			.Where(ds =>
@@ -283,7 +283,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated Event Source and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportEventSource()
 	{
@@ -314,7 +314,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated Config Source and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportConfigSource()
 	{
@@ -345,7 +345,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated Property Source and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportPropertySource()
 	{
@@ -376,7 +376,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated Topology Source and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportTopologySource()
 	{
@@ -407,7 +407,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated Job Monitor and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportJobMonitor()
 	{
@@ -438,7 +438,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated AppliesToFunction and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportAppliesToFunction()
 	{
@@ -469,7 +469,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestW
 	/// <summary>
 	/// Find one updated SNMP SysOID Map and import
 	/// </summary>
-	[Fact]
+	[Fact(Skip = "Don't update without understanding the implications")]
 	[Trait("Long Tests", "")]
 	public async Task ImportSnmpSysOidMap()
 	{
