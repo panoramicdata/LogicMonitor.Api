@@ -107,5 +107,11 @@ public enum PrivilegeObjectType
 	/// Module
 	/// </summary>
 	[DataMember(Name = "module")]
-	Module
+	Module,
+
+	/// <summary>
+	/// Cost Optimzsation
+	/// </summary>
+	[DataMember(Name = "costOptimization")]
+	CostOptimization
 }
