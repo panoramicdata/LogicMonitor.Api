@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Added missing LastAuthIp property to User. Added missing CostOptimization property to RolePrivilegeType. Added User Role test
+			Fixed some broken models for alert settings
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
