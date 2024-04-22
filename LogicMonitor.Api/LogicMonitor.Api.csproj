@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Authors>Panoramic Data Limited</Authors>
-		<PackageProjectUrl>http://www.panoramicdata.com/logicmonitor-api-nuget-package/</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
 		<Copyright>Copyright © Panoramic Data Limited 2011-2024</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
