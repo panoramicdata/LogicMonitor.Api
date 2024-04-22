@@ -36,4 +36,23 @@ public class InstanceGroupAlertThresholdInfo
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
 	public string AlertExpression { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The alert transition interval
+	/// </summary>
+	[DataMember(Name = "alertTransitionInterval")]
+	public string AlertTransitionInterval { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The alert clear transition interval
+	/// </summary>
+	[DataMember(Name = "alertClearTransitionInterval")]
+	public string AlertClearTransitionInterval { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The alert for no data value
+	/// </summary>
+	[DataMember(Name = "alertForNoData")]
+	public int AlertForNoData { get; set; }
+
 }

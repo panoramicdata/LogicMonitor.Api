@@ -205,7 +205,13 @@ public class DataPointConfiguration : IdentifiedItem
 	///     Parent Instance Group Alert Expression
 	/// </summary>
 	[DataMember(Name = "parentInstanceGroupAlertExpr")]
-	public string ParentInstanceGroupAlertExpression { get; set; } = string.Empty;
+	public InstanceGroupAlertThresholdInfo? ParentInstanceGroupAlertExpression { get; set; }
+
+	/// <summary>
+	///     Parent Resource Group Alert Expression
+	/// </summary>
+	[DataMember(Name = "parentResourceDataSourceAlertExpr")]
+	public object? ParentResourceDataSourceAlertExpr { get; set; }
 
 	/// <summary>
 	///     Alert for no data

@@ -217,6 +217,12 @@ public class User : IdentifiedItem, IHasEndpoint
 	public bool ImmediateForceLogout { get; set; }
 
 	/// <summary>
+	///    The last authorized IP address
+	/// </summary>
+	[DataMember(Name = "lastAuthIp")]
+	public string LastAuthIp { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/admins";

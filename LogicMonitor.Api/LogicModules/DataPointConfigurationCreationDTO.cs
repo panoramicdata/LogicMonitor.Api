@@ -52,5 +52,5 @@ public class DataPointConfigurationCreationDTO : IdentifiedItem
 	///     Parent Instance Group Alert Expression
 	/// </summary>
 	[DataMember(Name = "parentInstanceGroupAlertExpr")]
-	public string ParentInstanceGroupAlertExpression { get; set; } = string.Empty;
+	public InstanceGroupAlertThresholdInfo? ParentInstanceGroupAlertExpression { get; set; }
 }

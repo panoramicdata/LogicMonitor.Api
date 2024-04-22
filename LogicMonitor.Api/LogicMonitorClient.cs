@@ -467,7 +467,7 @@ public partial class LogicMonitorClient : IDisposable
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
-				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
+				if ((int)httpResponseMessage.StatusCode != 429)
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
@@ -870,7 +870,7 @@ public partial class LogicMonitorClient : IDisposable
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
-				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
+				if ((int)httpResponseMessage.StatusCode != 429)
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
@@ -1017,7 +1017,7 @@ public partial class LogicMonitorClient : IDisposable
 			// NOT A SUCCESS :-(
 
 			var statusCode = (int)httpResponseMessage.StatusCode;
-			var tooManyRequests = statusCode == 429 && httpResponseMessage.ReasonPhrase.Equals("Too Many Requests", StringComparison.OrdinalIgnoreCase);
+			var tooManyRequests = statusCode == 429;
 
 			if (!tooManyRequests)
 			{
@@ -1188,11 +1188,10 @@ public partial class LogicMonitorClient : IDisposable
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
 
-				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
+				if ((int)httpResponseMessage.StatusCode != 429)
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
-						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
 						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
 						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
 						continue;
@@ -1296,7 +1295,7 @@ public partial class LogicMonitorClient : IDisposable
 			// Check the outer HTTP status code
 			if (!httpResponseMessage.IsSuccessStatusCode)
 			{
-				if ((int)httpResponseMessage.StatusCode != 429 && httpResponseMessage.ReasonPhrase != "Too Many Requests")
+				if ((int)httpResponseMessage.StatusCode != 429)
 				{
 					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
 					{
