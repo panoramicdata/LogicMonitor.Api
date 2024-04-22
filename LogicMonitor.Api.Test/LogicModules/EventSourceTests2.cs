@@ -37,7 +37,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper) : TestWithOu
 			eventSourcesString += $"{eventSource.Name}\r\n";
 
 			var overviewGraphs = await LogicMonitorClient
-			.GetDataSourceOverviewGraphsPageAsync(eventSource.Id, new Filter<DataSourceOverviewGraph>(), default)
+			.GetDataSourceOverviewGraphsPageAsync(eventSource.Id, new Filter<DataSourceGraph>(), default)
 			.ConfigureAwait(true);
 
 			var testGraphs = await LogicMonitorClient

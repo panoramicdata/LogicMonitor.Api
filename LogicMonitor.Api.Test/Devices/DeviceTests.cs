@@ -262,7 +262,7 @@ public class DeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(i
 			.ConfigureAwait(true);
 		refresh.CreatedOnSeconds.Should().BePositive();
 		refresh.CreatedOnUtc.Should().NotBeNull();
-		refresh.CreatedOnUtc?.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
+		refresh.CreatedOnUtc.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
 	}
 
 	[Fact]

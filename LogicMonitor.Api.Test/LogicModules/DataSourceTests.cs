@@ -146,7 +146,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutp
 		foreach (var dataSource in dataSourcePage.Items)
 		{
 			var overviewGraphs = await LogicMonitorClient
-			.GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceOverviewGraph>(), default)
+			.GetDataSourceOverviewGraphsPageAsync(dataSource.Id, new Filter<DataSourceGraph>(), default)
 			.ConfigureAwait(true);
 
 			overviewGraphs.Should().NotBeNull();
