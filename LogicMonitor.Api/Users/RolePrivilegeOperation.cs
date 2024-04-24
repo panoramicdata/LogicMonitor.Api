@@ -59,5 +59,11 @@ public enum RolePrivilegeOperation
 	/// Install
 	/// </summary>
 	[EnumMember(Value = "install")]
-	Install
+	Install,
+
+	/// <summary>
+	/// Commit
+	/// </summary>
+	[EnumMember(Value = "commit")]
+	Commit
 }

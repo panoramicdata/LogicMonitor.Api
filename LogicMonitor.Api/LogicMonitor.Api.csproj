@@ -28,7 +28,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Fixed DataSourceGraph class name.  DataSourceOverviewGraph is still available, but is now deprecated.
+			Version 203 support added
+			Added "Commit" RolePrivilegeOperation.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
