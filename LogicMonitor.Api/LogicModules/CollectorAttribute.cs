@@ -106,7 +106,7 @@ public class CollectorAttribute
 	///     Check Type
 	/// </summary>
 	[DataMember(Name = "checkType")]
-	public CheckType CheckType { get; set; }
+	public CheckType? CheckType { get; set; }
 
 	/// <summary>
 	///     Configs
