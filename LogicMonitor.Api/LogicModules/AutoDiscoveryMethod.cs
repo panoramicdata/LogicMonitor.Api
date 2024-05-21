@@ -337,6 +337,12 @@ public class AutoDiscoveryMethod
 	public string DiscoveryType { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Resource URL
+	/// </summary>
+	[DataMember(Name = "resourceUrl")]
+	public string? ResourceUrl { get; set; }
+
+	/// <summary>
 	/// Zoom plan usage type
 	/// </summary>
 	[DataMember(Name = "zoomPlanUsageType")]

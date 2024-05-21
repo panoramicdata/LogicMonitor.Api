@@ -28,8 +28,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Version 203 support added
-			Added "Commit" RolePrivilegeOperation.
+			Version 204 support added
+			Added ApiToken.LastAuthenticatedIp.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

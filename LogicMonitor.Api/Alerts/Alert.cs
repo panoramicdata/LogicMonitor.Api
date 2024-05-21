@@ -37,6 +37,12 @@ public class Alert : IHasEndpoint
 	public string ActiveDiscoveryAlertDescription { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The alert group entity value
+	/// </summary>
+	[DataMember(Name = "alertGroupEntityValue")]
+	public string AlertGroupEntityValue { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The Alert type
 	/// </summary>
 	[DataMember(Name = "type")]
@@ -52,7 +58,7 @@ public class Alert : IHasEndpoint
 	/// Indicates dynamic threshold alert generation setting. expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertGeneration")]
-	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;	// STRING not a bool
+	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;    // STRING not a bool
 
 	/// <summary>
 	/// Indicates anomaly detection alert suppression setting, expression is comma separated\n0 denotes OFF, 1 denotes ON, -1 denotes INVALID\n1,0,1 \u003d   warn : ON     error: OFF   critical: ON\nEmpty value on this parameter means : 0,0,0

@@ -29,4 +29,10 @@ public class AppliesToResponse
 	/// </summary>
 	[DataMember(Name = "currentMatches")]
 	public List<AppliesToMatch> CurrentMatches { get; set; } = [];
+
+	/// <summary>
+	/// The warn message
+	/// </summary>
+	[DataMember(Name = "warnMessage")]
+	public string? WarnMessage { get; set; }
 }
