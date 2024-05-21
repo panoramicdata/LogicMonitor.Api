@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Users;
 ///    User logged event
 /// </summary>
 [DataContract]
-public class User : IdentifiedItem, IHasEndpoint, IPatchable
+public class User : IdentifiedItem, IHasEndpoint
 {
 	/// <summary>
 	///    Whether this user is for API use only
