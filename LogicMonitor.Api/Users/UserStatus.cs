@@ -3,6 +3,7 @@
 /// <summary>
 /// The users status
 /// </summary>
+[JsonConverter(typeof(StringEnumConverter))]
 public enum UserStatus
 {
 	/// <summary>
