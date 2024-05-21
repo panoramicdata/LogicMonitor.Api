@@ -61,6 +61,12 @@ public class ApiToken : IdentifiedItem, IHasEndpoint
 	public string? CreatedBy { get; set; }
 
 	/// <summary>
+	/// The last IP address for this user
+	/// </summary>
+	[DataMember(Name = "lastAuthIp")]
+	public string? LastAuthenticatedIp { get; set; }
+
+	/// <summary>
 	/// The epoch at which the API Tokens were created
 	/// </summary>
 	[DataMember(Name = "createdOn")]

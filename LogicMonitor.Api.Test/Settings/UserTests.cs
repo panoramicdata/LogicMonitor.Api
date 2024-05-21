@@ -13,7 +13,9 @@ public class UserTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTe
 
 		foreach (var user in users.Items)
 		{
-			var refetchedUser = await LogicMonitorClient.GetAsync<User>(user.Id, default).ConfigureAwait(true);
+			var refetchedUser = await LogicMonitorClient
+				.GetAsync<User>(user.Id, default)
+				.ConfigureAwait(true);
 			var roles = refetchedUser.Roles;
 			roles.Should().NotBeNullOrEmpty();
 			user.UserGroupIds.Should().NotBeNullOrEmpty();

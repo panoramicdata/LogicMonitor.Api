@@ -4,13 +4,13 @@ namespace LogicMonitor.Api.Users;
 ///    User logged event
 /// </summary>
 [DataContract]
-public class User : IdentifiedItem, IHasEndpoint
+public class User : IdentifiedItem, IHasEndpoint, IPatchable
 {
 	/// <summary>
 	///    Whether this user is for API use only
 	/// </summary>
 	[DataMember(Name = "apionly")]
-	public bool IsApinly { get; set; }
+	public bool IsApiOnly { get; set; }
 
 	/// <summary>
 	///    The roles assigned to this user
@@ -82,7 +82,7 @@ public class User : IdentifiedItem, IHasEndpoint
 	///    The status ("active" for users who can log in)
 	/// </summary>
 	[DataMember(Name = "status")]
-	public string Status { get; set; } = string.Empty;
+	public UserStatus Status { get; set; }
 
 	/// <summary>
 	///    The status ("active" for users who can log in)
