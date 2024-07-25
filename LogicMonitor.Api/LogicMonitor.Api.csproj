@@ -28,8 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Version 204 support added
-			Added ApiToken.LastAuthenticatedIp.
+			Add support for Device Status Widgets
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
