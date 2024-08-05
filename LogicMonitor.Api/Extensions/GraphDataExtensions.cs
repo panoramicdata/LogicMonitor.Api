@@ -42,7 +42,17 @@ public static class GraphDataExtensions
 		timestampsAndIndexes.Reverse();
 
 		// Remove timestamps from the data
-		graphData.TimeStamps.RemoveAll(timestamp => timestampsAndIndexes.Exists(ts => ts.Timestamp == timestamp));
+		foreach (var (Timestamp, Index) in timestampsAndIndexes)
+		{
+			if (graphData.TimeStamps[Index] == Timestamp)	// Should be the case as already calculated
+			{
+				graphData.TimeStamps.RemoveAt(Index);
+			}
+		}
+		
+		//NO: what can happen is that some timestamps are duplicated (crazy, right?) and this could remove e.g. 2 but
+		// then we only were removing 1 in the line data. That's not right as the data and timestamp counts MUST match
+		//graphData.TimeStamps.RemoveAll(timestamp => timestampsAndIndexes.Exists(ts => ts.Timestamp == timestamp));
 
 		// Remove line data at those indexes
 		foreach (var line in graphData.Lines)
@@ -50,7 +60,10 @@ public static class GraphDataExtensions
 			var lineData = line.Data.ToList();
 			foreach (var (_, Index) in timestampsAndIndexes)
 			{
-				lineData.RemoveAt(Index);
+				if (lineData.Count > Index)
+				{
+					lineData.RemoveAt(Index);
+				}
 			}
 			// Copy the data back
 			line.Data = lineData;
