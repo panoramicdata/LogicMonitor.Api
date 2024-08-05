@@ -12,9 +12,9 @@ public static class GraphDataExtensions
 	/// </summary>
 	/// <param name="graphData">The GraphData</param>
 	/// <returns>A list of timestamp indexes</returns>
-	private static List<(long Timestamp, int Index)> GetTimestampToRemove(this GraphData graphData)
+	private static List<int> GetTimestampToRemove(this GraphData graphData)
 	{
-		var timestampToRemove = new List<(long, int)>();
+		var timestampToRemove = new List<int>();
 		for (var index = 0; index < graphData.TimeStamps.Count; index++)
 		{
 			if (index == 0)
@@ -24,7 +24,7 @@ public static class GraphDataExtensions
 
 			if (graphData.TimeStamps[index - 1] >= (graphData.TimeStamps[index] - timeThreshold))
 			{
-				timestampToRemove.Add((graphData.TimeStamps[index - 1], index - 1));
+				timestampToRemove.Add(index - 1);
 			}
 		}
 
@@ -38,16 +38,13 @@ public static class GraphDataExtensions
 	public static void RemoveInvalidDataPoints(this GraphData graphData)
 	{
 		// Get invalid timestamps
-		var timestampsAndIndexes = graphData.GetTimestampToRemove();
-		timestampsAndIndexes.Reverse();
+		var timestampIndexes = graphData.GetTimestampToRemove();
+		timestampIndexes.Reverse();
 
 		// Remove timestamps from the data
-		foreach (var (Timestamp, Index) in timestampsAndIndexes)
+		foreach (var index in timestampIndexes)
 		{
-			if (graphData.TimeStamps[Index] == Timestamp)	// Should be the case as already calculated
-			{
-				graphData.TimeStamps.RemoveAt(Index);
-			}
+			graphData.TimeStamps.RemoveAt(index);
 		}
 		
 		//NO: what can happen is that some timestamps are duplicated (crazy, right?) and this could remove e.g. 2 but
@@ -58,11 +55,11 @@ public static class GraphDataExtensions
 		foreach (var line in graphData.Lines)
 		{
 			var lineData = line.Data.ToList();
-			foreach (var (_, Index) in timestampsAndIndexes)
+			foreach (var index in timestampIndexes)
 			{
-				if (lineData.Count > Index)
+				if (lineData.Count > index)
 				{
-					lineData.RemoveAt(Index);
+					lineData.RemoveAt(index);
 				}
 			}
 			// Copy the data back
