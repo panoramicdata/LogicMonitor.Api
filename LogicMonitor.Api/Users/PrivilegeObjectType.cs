@@ -110,8 +110,20 @@ public enum PrivilegeObjectType
 	Module,
 
 	/// <summary>
-	/// Cost Optimzsation
+	/// Cost Optimization
 	/// </summary>
 	[DataMember(Name = "costOptimization")]
-	CostOptimization
+	CostOptimization,
+
+	/// <summary>
+	/// Cost Optimization Recommendations
+	/// </summary>
+	[EnumMember(Value = "costOptimization.recommendations")]
+	CostOptimizationRecommendations,
+
+	/// <summary>
+	/// Cost Optimization Billing Account
+	/// </summary>
+	[EnumMember(Value = "costOptimization.billing.account")]
+	CostOptimizationBillingAccount
 }

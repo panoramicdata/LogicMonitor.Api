@@ -223,6 +223,12 @@ public class User : IdentifiedItem, IHasEndpoint
 	public string LastAuthIp { get; set; } = string.Empty;
 
 	/// <summary>
+	///    The User type
+	/// </summary>
+	[DataMember(Name = "userType")]
+	public string? UserType { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/admins";

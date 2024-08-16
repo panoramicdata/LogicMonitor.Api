@@ -13,6 +13,12 @@ public class ViewPermission
 	public bool Alerts { get; set; }
 
 	/// <summary>
+	/// Billing view permission
+	/// </summary>
+	[DataMember(Name = "Billing")]
+	public bool Billing { get; set; }
+
+	/// <summary>
 	/// BizService view permission
 	/// </summary>
 	[DataMember(Name = "BizService")]
@@ -92,15 +98,17 @@ public class ViewPermission
 
 	/// <inheritdoc />
 	public override string ToString() =>
+		$"{nameof(Alerts)}={Alerts};" +
+		$"{nameof(Billing)}={Billing};" +
+		$"{nameof(BizService)}={BizService};" +
 		$"{nameof(Dashboards)}={Dashboards};" +
+		$"{nameof(Devices)}={Devices};" +
+		$"{nameof(Logs)}={Logs};" +
+		$"{nameof(Maps)}={Maps};" +
+		$"{nameof(Modules)}={Modules};" +
 		$"{nameof(Recommendations)}={Recommendations};" +
 		$"{nameof(Reports)}={Reports};" +
-		$"{nameof(Websites)}={Websites};" +
 		$"{nameof(Settings)}={Settings};" +
-		$"{nameof(Devices)}={Devices};" +
-		$"{nameof(Alerts)}={Alerts};" +
-		$"{nameof(Maps)}={Maps};" +
-		$"{nameof(Logs)}={Logs};" +
 		$"{nameof(Traces)}={Traces};" +
-		$"{nameof(Modules)}={Modules};";
+		$"{nameof(Websites)}={Websites};";
 }
