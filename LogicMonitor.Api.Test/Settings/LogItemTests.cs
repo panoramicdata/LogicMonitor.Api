@@ -2,7 +2,7 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Settings;
 
-public class LogItemTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class LogItemTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task Get()

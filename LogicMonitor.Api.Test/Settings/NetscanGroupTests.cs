@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class NetscanGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class NetscanGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task CanCreateAndDeleteNetscanGroups()

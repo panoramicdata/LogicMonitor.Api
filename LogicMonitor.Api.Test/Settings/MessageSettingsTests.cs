@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class MessageSettingsTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class MessageSettingsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task Get()

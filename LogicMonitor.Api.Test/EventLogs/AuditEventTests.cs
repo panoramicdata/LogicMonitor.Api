@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.EventLogs;
 
-public class AuditEventTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string TestUsername = "test";
 	private const string TestIpAddress = "127.0.0.1";

@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Reports;
 
-public class ReportTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAllReportGroups()

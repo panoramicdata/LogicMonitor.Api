@@ -85,6 +85,18 @@ public class HttpIntegration : Integration
 	public string AckUsername { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The ack alert data type
+	/// </summary>
+	[DataMember(Name = "ackAlertDataType")]
+	public string AckAlertDataType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The alert data type
+	/// </summary>
+	[DataMember(Name = "alertDataType")]
+	public string AlertDataType { get; set; } = string.Empty;
+
+	/// <summary>
 	///     The clear Headers
 	/// </summary>
 	[DataMember(Name = "clearHeaders")]
@@ -282,6 +294,101 @@ public class HttpIntegration : Integration
 	[DataMember(Name = "updatePassword")]
 	public string UpdatePassword { get; set; } = string.Empty;
 
+	/// <summary>
+	///     The update data method
+	/// </summary>
+	[DataMember(Name = "updateDataMethod")]
+	public string UpdateDataMethod { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update data URL
+	/// </summary>
+	[DataMember(Name = "updateDataUrl")]
+	public string UpdateDataUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update data username
+	/// </summary>
+	[DataMember(Name = "updateDataUsername")]
+	public string UpdateDataUsername { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update data password
+	/// </summary>
+	[DataMember(Name = "updateDataPassword")]
+	public string UpdateDataPassword { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update data Payload
+	/// </summary>
+	[DataMember(Name = "updateDataPayload")]
+	public string UpdateDataPayload { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update data Payload format
+	/// </summary>
+	[DataMember(Name = "updateDataPayloadFormat")]
+	public string UpdateDataPayloadFormat { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update data Headers
+	/// </summary>
+	[DataMember(Name = "updateDataHeaders")]
+	public List<object> UpdateDataHeaders { get; set; } = [];
+
+	/// <summary>
+	///     The update data alert data type
+	/// </summary>
+	[DataMember(Name = "updateDataAlertDataType")]
+	public string UpdateDataAlertDataType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The update alert data type
+	/// </summary>
+	[DataMember(Name = "updateAlertDataType")]
+	public string UpdateAlertDataType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The clear alert data type
+	/// </summary>
+	[DataMember(Name = "clearAlertDataType")]
+	public string ClearAlertDataType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The UpdateData OAuth version
+	/// </summary>
+	[DataMember(Name = "updateDataOAuthVersion")]
+	public string? UpdateDataOAuthVersion { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The UpdateData OAuth grant type
+	/// </summary>
+	[DataMember(Name = "updateDataOAuthGrantType")]
+	public string? UpdateDataOAuthGrantType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The UpdateData OAuth access token Url
+	/// </summary>
+	[DataMember(Name = "updateDataOAuthAccessTokenUrl")]
+	public string? UpdateDataOAuthAccessTokenUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The UpdateData OAuth client id
+	/// </summary>
+	[DataMember(Name = "updateDataOAuthClientId")]
+	public string? UpdateDataOAuthClientId { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The UpdateData OAuth client secret
+	/// </summary>
+	[DataMember(Name = "updateDataOAuthClientSecret")]
+	public string? UpdateDataOAuthClientSecret { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The UpdateData OAuth scope
+	/// </summary>
+	[DataMember(Name = "updateDataOAuthScope")]
+	public string? UpdateDataOAuthScope { get; set; } = string.Empty;
 	/// <summary>
 	///     The update Payload
 	/// </summary>

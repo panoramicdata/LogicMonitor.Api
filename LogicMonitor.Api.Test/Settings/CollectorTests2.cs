@@ -1,10 +1,9 @@
 using System.Data;
 
-namespace LogicMonitor.Api.Test;
+namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]
-public class CollectorTests2(ITestOutputHelper iTestOutputHelper)
-		: TestWithOutput(iTestOutputHelper)
+public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAllCollectorGroups()
@@ -33,7 +32,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper)
 
 		var fullGroup = new CollectorGroup();
 		var collectorGroup = new CollectorGroup();
-		int i = 0;
+		var i = 0;
 		while (fullGroup.Id == 0)
 		{
 			collectorGroup = collectorGroups[i];
@@ -181,7 +180,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper)
 				]
 			}, default
 			).ConfigureAwait(true))
-			.Select(cv => (cv.MajorVersion * 1000) + cv.MinorVersion)
+			.Select(cv => cv.MajorVersion * 1000 + cv.MinorVersion)
 			.OrderByDescending(v => v)
 			.ToList();
 

@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Dashboards;
 
-public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string DashboardGroupName = "NugetTestDashboardGroup";
 

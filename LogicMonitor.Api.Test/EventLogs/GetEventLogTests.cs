@@ -1,5 +1,5 @@
 ﻿namespace LogicMonitor.Api.Test.EventLogs;
-public class GetEventLogTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class GetEventLogTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public void ValidateRegexes()

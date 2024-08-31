@@ -1,4 +1,4 @@
-namespace LogicMonitor.Api.LogicModules;
+namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
 /// WidgetToken

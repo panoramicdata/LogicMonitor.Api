@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.Users;
 
-public class RoleTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAll()

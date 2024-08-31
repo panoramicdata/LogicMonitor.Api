@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Settings;
 
-public class RoleTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string Value = "Unit Test Role";
 

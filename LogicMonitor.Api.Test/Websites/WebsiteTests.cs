@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Websites;
 
-public class WebsiteTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string ExpectedAlertExpression = "< 90 60 30";
 

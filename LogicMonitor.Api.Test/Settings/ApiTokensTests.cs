@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class ApiTokensTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class ApiTokensTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAllAsync_Succeeds()

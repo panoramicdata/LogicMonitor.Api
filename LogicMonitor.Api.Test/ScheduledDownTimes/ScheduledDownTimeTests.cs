@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.ScheduledDownTimes;
 
-public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetDeviceScheduledDownTimes()

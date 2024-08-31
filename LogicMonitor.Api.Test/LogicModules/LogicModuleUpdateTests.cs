@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 
 	/// <summary>

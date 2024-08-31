@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Dashboards;
 
-public class WidgetTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private static readonly DateTimeOffset UtcNow = DateTimeOffset.UtcNow;
 

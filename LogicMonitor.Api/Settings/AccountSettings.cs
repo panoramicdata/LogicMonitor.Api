@@ -7,6 +7,18 @@ namespace LogicMonitor.Api.Settings;
 public class AccountSettings : IHasSingletonEndpoint
 {
 	/// <summary>
+	///     Whether keep me signed in is enabled
+	/// </summary>
+	[DataMember(Name = "enableKeepMeSignedIn")]
+	public bool KeepMeSignedInIsEnabled { get; set; }
+
+	/// <summary>
+	///     The number of days to keep the user signed in
+	/// </summary>
+	[DataMember(Name = "keepMeSignedInConfigurableDays")]
+	public bool KeepMeSignedInConfigurableDays { get; set; }
+
+	/// <summary>
 	///     The number of committed containers
 	/// </summary>
 	[DataMember(Name = "numberOfCommittedContainer")]
@@ -360,10 +372,16 @@ public class AccountSettings : IHasSingletonEndpoint
 	public bool ReportsInLast24HoursCount { get; set; }
 
 	/// <summary>
-	///     Whether remote sessions are enabled
+	///     Whether to require two-factor authentication
 	/// </summary>
 	[DataMember(Name = "requireTwoFA")]
 	public bool RequireTwoFactorAuthentication { get; set; }
+
+	/// <summary>
+	///     Whether to require two-factor authentication for remote sessions
+	/// </summary>
+	[DataMember(Name = "requireTwoFAForRemoteSession")]
+	public bool RequireTwoFactorAuthenticationForRemoteSessions { get; set; }
 
 	/// <summary>
 	///     The SaaS device count

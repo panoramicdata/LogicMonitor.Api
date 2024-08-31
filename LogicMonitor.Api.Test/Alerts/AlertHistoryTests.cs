@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAlertHistory_Last24Hours_Returns24Items()

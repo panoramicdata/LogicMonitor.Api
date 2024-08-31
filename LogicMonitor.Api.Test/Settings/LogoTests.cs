@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class LogoTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class LogoTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task Logos()

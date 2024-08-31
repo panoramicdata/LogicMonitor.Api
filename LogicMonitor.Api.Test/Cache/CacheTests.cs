@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Cache;
 
-public class CacheTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task CacheTestFasterSecondTimeAround()

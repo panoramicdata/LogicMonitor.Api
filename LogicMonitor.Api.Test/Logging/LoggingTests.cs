@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Logging;
 
-public class LoggingTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task WriteLogAsync_WithResourceId_Succeeds()

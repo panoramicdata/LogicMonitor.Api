@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Settings;
 
-public class NetscanTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task CanGetNetscanById()

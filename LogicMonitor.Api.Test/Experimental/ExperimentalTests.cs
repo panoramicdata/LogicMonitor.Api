@@ -2,7 +2,7 @@
 
 namespace LogicMonitor.Api.Test.Experimental;
 
-public class ExperimentalTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class ExperimentalTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetDevices_Succeeds()

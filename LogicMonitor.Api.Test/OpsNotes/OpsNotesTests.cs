@@ -5,7 +5,7 @@ namespace LogicMonitor.Api.Test.OpsNotes;
 /// Tests here may fail if the user has never used OpsNotes before.
 /// !!!!!!
 /// </summary>
-public class OpsNotesTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetOpsNotes()

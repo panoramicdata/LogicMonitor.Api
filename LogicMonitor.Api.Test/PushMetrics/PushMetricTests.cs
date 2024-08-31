@@ -2,7 +2,7 @@
 
 namespace LogicMonitor.Api.Test.PushMetrics;
 
-public class PushMetricTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class PushMetricTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task PushMetric_Succeeds()

@@ -1,104 +1,44 @@
-using System.Configuration;
-using System.Globalization;
-
 namespace LogicMonitor.Api.Test;
 
 internal sealed class TestPortalConfig
 {
-	internal TestPortalConfig(ILogger logger)
-	{
-		var location = typeof(TestPortalConfig).GetTypeInfo().Assembly.Location;
-		var dirPath = Path.Combine(Path.GetDirectoryName(location) ?? "", "../../../..");
-		var builder = new ConfigurationBuilder()
-			.SetBasePath(dirPath)
-			.AddUserSecrets<TestPortalConfig>();
-		Configuration = builder.Build();
+	public string Account { get; set; }
 
-		var timeoutSetting = Configuration["Config:HttpClientTimeoutSeconds"] ?? "120";
-		if (!int.TryParse(timeoutSetting, out var clientTimeoutSeconds))
-		{
-			throw new ConfigurationErrorsException("Configuration setting HttpClientTimeoutSeconds is not an integer!");
-		}
+	public string AccessId { get; set; }
 
-		LogicMonitorClient = new LogicMonitorClient(
-			new LogicMonitorClientOptions
-			{
-				Account = Configuration["Config:Account"] ?? "",
-				AccessId = Configuration["Config:AccessId"] ?? "",
-				AccessKey = Configuration["Config:AccessKey"] ?? "",
-				HttpClientTimeoutSeconds = clientTimeoutSeconds,
-				Logger = logger
-			}
-		)
-		{
-			StrictPagingTotalChecking = true
-		};
-		ExperimentalLogicMonitorClient = new Api.Experimental.LogicMonitorClient(
-			new LogicMonitorClientOptions
-			{
-				Account = Configuration["Config:Account"] ?? "",
-				AccessId = Configuration["Config:AccessId"] ?? "",
-				AccessKey = Configuration["Config:AccessKey"] ?? "",
-				HttpClientTimeoutSeconds = clientTimeoutSeconds,
-				Logger = logger
-			}
-		);
-		SnmpDeviceId = int.Parse(Configuration["Config:SnmpDeviceId"] ?? "0", CultureInfo.InvariantCulture);
-		NetflowDeviceId = int.Parse(Configuration["Config:NetflowDeviceId"] ?? "0", CultureInfo.InvariantCulture);
-		WindowsDeviceId = int.Parse(Configuration["Config:WindowsDeviceId"] ?? "0", CultureInfo.InvariantCulture);
-		WindowsDeviceLargeDeviceDataSourceId = int.Parse(Configuration["Config:WindowsDeviceLargeDeviceDataSourceId"] ?? "0", CultureInfo.InvariantCulture);
-		ServiceDeviceId = int.Parse(Configuration["Config:ServiceDeviceId"] ?? "0", CultureInfo.InvariantCulture);
-		CollectorId = int.Parse(Configuration["Config:CollectorId"] ?? "0", CultureInfo.InvariantCulture);
-		DownCollectorId = int.Parse(Configuration["Config:DownCollectorId"] ?? "0", CultureInfo.InvariantCulture);
-		SdtResourceGroupId = int.Parse(Configuration["Config:SDTResourceGroupId"] ?? "0", CultureInfo.InvariantCulture);
-		ReportId = int.Parse(Configuration["Config:ReportId"] ?? "0", CultureInfo.InvariantCulture);
-		TestDashboardId = int.Parse(Configuration["Config:TestDashboardId"] ?? "0", CultureInfo.InvariantCulture);
-		WebsiteGroupFullPath = Configuration["Config:WebsiteGroupFullPath"] ?? "";
-		DeviceGroupFullPath = Configuration["Config:DeviceGroupFullPath"] ?? "";
-		ResourceGroupFullPath = Configuration["Config:ResourceGroupFullPath"] ?? "";
-		AllWidgetsDashboardId = int.Parse(Configuration["Config:AllWidgetsDashboardId"] ?? "0", CultureInfo.InvariantCulture);
-		AccountHasBillingInformation = bool.Parse(Configuration["Config:AccountHasBillingInformation"] ?? "false");
-		WebsiteName = Configuration["Config:WebsiteName"] ?? "";
-		AlertRuleName = Configuration["Config:AlertRuleName"] ?? "";
-	}
-
-	public static IConfigurationRoot? Configuration { get; set; }
-
-	public LogicMonitorClient LogicMonitorClient { get; }
-
-	public Api.Experimental.LogicMonitorClient ExperimentalLogicMonitorClient { get; }
+	public string AccessKey { get; set; }
 
 	public int NetflowDeviceId { get; }
 
-	public int SnmpDeviceId { get; }
+	public int SnmpDeviceId { get; set; }
 
-	public int ReportId { get; }
+	public int ReportId { get; set; }
 
-	public int WindowsDeviceId { get; }
+	public int WindowsDeviceId { get; set; }
 
-	public int WindowsDeviceLargeDeviceDataSourceId { get; }
+	public int WindowsDeviceLargeDeviceDataSourceId { get; set; }
 
-	public int ServiceDeviceId { get; }
+	public int ServiceDeviceId { get; set; }
 
-	public bool AccountHasBillingInformation { get; }
+	public bool AccountHasBillingInformation { get; set; }
 
-	public int AllWidgetsDashboardId { get; }
+	public int AllWidgetsDashboardId { get; set; }
 
-	public string WebsiteGroupFullPath { get; }
+	public string WebsiteGroupFullPath { get; set; }
 
-	public string DeviceGroupFullPath { get; }
+	public string DeviceGroupFullPath { get; set; }
 
-	public string ResourceGroupFullPath { get; }
+	public string ResourceGroupFullPath { get; set; }
 
-	public string WebsiteName { get; }
+	public string WebsiteName { get; set; }
 
-	public int DownCollectorId { get; }
+	public int DownCollectorId { get; set; }
 
-	public int CollectorId { get; }
+	public int CollectorId { get; set; }
 
-	public int SdtResourceGroupId { get; }
+	public int SdtResourceGroupId { get; set; }
 
-	public string AlertRuleName { get; }
+	public string AlertRuleName { get; set; }
 
-	public int TestDashboardId { get; }
+	public int TestDashboardId { get; set; }
 }

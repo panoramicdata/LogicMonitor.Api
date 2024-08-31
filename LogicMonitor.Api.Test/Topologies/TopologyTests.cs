@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.Topologies;
 
-public class TopologyTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class TopologyTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAllTopologies()

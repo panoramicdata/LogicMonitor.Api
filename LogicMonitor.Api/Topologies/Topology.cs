@@ -24,6 +24,11 @@ public class Topology : NamedItem, IHasEndpoint
 	[DataMember(Name = "groupId")]
 	public int GroupId { get; set; }
 
+	/// <summary>
+	///    The group by
+	/// </summary>
+	[DataMember(Name = "groupBy")]
+	public object? GroupBy { get; set; }
 
 	/// <summary>
 	///    The hidden vertices

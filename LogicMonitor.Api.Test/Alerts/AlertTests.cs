@@ -2,7 +2,7 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class AlertTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string TestNoteComment = "Test Note";
 	private static readonly DateTime EndDateTime = DateTime.UtcNow.Date;

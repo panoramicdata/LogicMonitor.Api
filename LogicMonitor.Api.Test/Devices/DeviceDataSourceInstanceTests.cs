@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.Devices;
 
-public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()

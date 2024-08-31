@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.RecycleBin;
 
-public class RecycleBinTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class RecycleBinTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAllRecycleBinItems()

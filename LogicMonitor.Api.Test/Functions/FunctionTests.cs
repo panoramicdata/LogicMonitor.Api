@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Functions;
 
-public class FunctionTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class FunctionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetApplications()

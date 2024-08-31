@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Test.Netflow;
 
 public class FlowTests : TestWithOutput
 {
-	public FlowTests(ITestOutputHelper iTestOutputHelper) : base(iTestOutputHelper)
+	public FlowTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : base(iTestOutputHelper, fixture)
 	{
 		var endDateTime = DateTime.Today;
 		_startDateTimeSeconds = endDateTime.AddDays(-1);

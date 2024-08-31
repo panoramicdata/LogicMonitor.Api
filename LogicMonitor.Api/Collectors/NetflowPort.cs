@@ -1,4 +1,4 @@
-namespace LogicMonitor.Api.Flows;
+namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
 /// A flow port

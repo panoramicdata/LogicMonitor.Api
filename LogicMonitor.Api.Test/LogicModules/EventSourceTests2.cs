@@ -1,8 +1,8 @@
 using LogicMonitor.Api.Test.Extensions;
 
-namespace LogicMonitor.Api.Test;
+namespace LogicMonitor.Api.Test.LogicModules;
 
-public class EventSourceTests2(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetXml()

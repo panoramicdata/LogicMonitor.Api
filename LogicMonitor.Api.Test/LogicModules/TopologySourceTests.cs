@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class TopologySourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class TopologySourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public Task BasicTopologySourceTest() =>

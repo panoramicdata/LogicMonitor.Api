@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.Settings;
 
-public class UserGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string Value = "Unit Test User Group";
 

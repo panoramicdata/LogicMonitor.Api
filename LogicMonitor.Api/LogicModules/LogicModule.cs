@@ -14,6 +14,18 @@ public abstract class LogicModule : NamedItem
 	public string Checksum { get; set; } = string.Empty;
 
 	/// <summary>
+	///		The access group Ids
+	/// </summary>
+	[DataMember(Name = "accessGroupIds")]
+	public List<int> AccessGroupIds { get; set; } = new();
+
+	/// <summary>
+	///		The access groups
+	/// </summary>
+	[DataMember(Name = "accessGroups")]
+	public List<AccessGroup> AccessGroups { get; set; } = new();
+
+	/// <summary>
 	/// The lineage Id of the LMModule
 	/// </summary>
 	[DataMember(Name = "lineageId")]

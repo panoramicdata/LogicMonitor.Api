@@ -2,7 +2,7 @@
 
 namespace LogicMonitor.Api.Test.Converters;
 
-public class DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public void ReadJson_DataIsThreeValidDoubles_DeserializesCorrectly()

@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Devices;
 
-public class DeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class DeviceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetDevicesByDeviceGroupRecursive()

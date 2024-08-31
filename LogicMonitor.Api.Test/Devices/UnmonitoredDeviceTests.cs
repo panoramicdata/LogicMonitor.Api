@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Devices;
 
-public class UnmonitoredDeviceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class UnmonitoredDeviceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetUnmonitoredDevices()

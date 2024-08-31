@@ -85,6 +85,18 @@ public class Alert : IHasEndpoint
 	public int EndOnSeconds { get; set; }
 
 	/// <summary>
+	///    The number of seconds since the Epoch when the alert state started
+	/// </summary>
+	[DataMember(Name = "alertExternalTicketUrl")]
+	public AlertExternalTicketUrl ExternalTicketUrl { get; set; } = null!;
+
+	/// <summary>
+	///    The log metadata
+	/// </summary>
+	[DataMember(Name = "logMetaData")]
+	public object? LogMetadata { get; set; }
+
+	/// <summary>
 	///    The DateTime that the Alert state was acknowledged as text
 	/// </summary>
 	[DataMember(Name = "acked")]

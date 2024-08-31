@@ -1,7 +1,7 @@
 // Older, now deprecated methods are still tested here
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class PropertySourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class PropertySourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 
 	/// <summary>

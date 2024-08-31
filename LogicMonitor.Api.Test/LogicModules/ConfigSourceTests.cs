@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class ConfigSourceTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class ConfigSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Obsolete("Tests obsolete items")]
 	[Fact]

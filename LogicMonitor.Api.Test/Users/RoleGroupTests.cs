@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.Users;
 
-public class RoleGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string TestName = "Test Name";
 

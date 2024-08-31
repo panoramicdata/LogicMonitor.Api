@@ -1,6 +1,6 @@
 ﻿namespace LogicMonitor.Api.Test.Topologies;
 
-public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	private const string TestName = "Test Name";
 

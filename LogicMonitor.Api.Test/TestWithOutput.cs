@@ -1,6 +1,9 @@
+using Xunit.Microsoft.DependencyInjection.Abstracts;
+
 namespace LogicMonitor.Api.Test;
 
-public abstract class TestWithOutput
+[CollectionDefinition("Dependency Injection")]
+public abstract class TestWithOutput : TestBed<Fixture>
 {
 	protected ILogger Logger { get; }
 
@@ -37,13 +40,35 @@ public abstract class TestWithOutput
 	protected bool AccountHasBillingInformation { get; }
 	protected int TestDashboardId { get; }
 
-	protected TestWithOutput(ITestOutputHelper iTestOutputHelper)
+	protected TestWithOutput(ITestOutputHelper testOutputHelper, Fixture fixture) : base(testOutputHelper, fixture)
 	{
-		Logger = iTestOutputHelper.BuildLogger();
+		ArgumentNullException.ThrowIfNull(testOutputHelper, nameof(testOutputHelper));
+		ArgumentNullException.ThrowIfNull(fixture, nameof(fixture));
 
-		var testPortalConfig = new TestPortalConfig(Logger);
-		ExperimentalLogicMonitorClient = testPortalConfig.ExperimentalLogicMonitorClient;
-		LogicMonitorClient = testPortalConfig.LogicMonitorClient;
+		// Logger
+		var loggerFactory = fixture.GetService<ILoggerFactory>(testOutputHelper) ?? throw new InvalidOperationException("LoggerFactory is null");
+		Logger = loggerFactory.CreateLogger(GetType());
+
+		// TestPortalConfig
+		var testPortalConfig = fixture.GetService<TestPortalConfig>(testOutputHelper) ?? throw new InvalidOperationException("TestPortalConfig is null");
+
+		ExperimentalLogicMonitorClient = new Api.Experimental.LogicMonitorClient(
+		new LogicMonitorClientOptions
+		{
+			Account = testPortalConfig.Account,
+			AccessId = testPortalConfig.AccessId,
+			AccessKey = testPortalConfig.AccessKey,
+			Logger = Logger
+		});
+
+		LogicMonitorClient = new LogicMonitorClient(new LogicMonitorClientOptions
+		{
+			Account = testPortalConfig.Account,
+			AccessId = testPortalConfig.AccessId,
+			AccessKey = testPortalConfig.AccessKey,
+			Logger = Logger
+		});
+
 		CollectorId = testPortalConfig.CollectorId;
 		DownCollectorId = testPortalConfig.DownCollectorId;
 		WindowsDeviceId = testPortalConfig.WindowsDeviceId;

@@ -73,6 +73,12 @@ public class AutoDiscoveryMethod
 	public string ClusterDimension { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The instance path
+	/// </summary>
+	[DataMember(Name = "instancePath")]
+	public string? InstancePath { get; set; }
+
+	/// <summary>
 	/// The period
 	/// </summary>
 	[DataMember(Name = "period")]
@@ -419,4 +425,33 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "azureTagKeys")]
 	public string AzureTagKeys { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Value Attribute
+	/// </summary>
+	[DataMember(Name = "valueAttribute")]
+	public string? ValueAttribute { get; set; } = string.Empty;
+
+	/// Value Attribute
+	/// </summary>
+	[DataMember(Name = "value2Attribute")]
+	public string? Value2Attribute { get; set; } = string.Empty;
+
+	/// <summary>
+	/// aliasAttribute
+	/// </summary>
+	[DataMember(Name = "aliasAttribute")]
+	public string AliasAttribute { get; set; } = string.Empty;
+
+	/// <summary>
+	/// descriptionAttribute
+	/// </summary>
+	[DataMember(Name = "descriptionAttribute")]
+	public string DescriptionAttribute { get; set; } = string.Empty;
+
+	/// <summary>
+	/// propertyAttributes
+	/// </summary>
+	[DataMember(Name = "propertyAttributes")]
+	public string PropertyAttributes { get; set; } = string.Empty;
 }

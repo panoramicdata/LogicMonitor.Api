@@ -1,6 +1,6 @@
-namespace LogicMonitor.Api.Test.Settings;
+namespace LogicMonitor.Api.Test.Version;
 
-public class PortalVersionTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class PortalVersionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetPortalVersion()

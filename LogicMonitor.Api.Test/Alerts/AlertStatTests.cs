@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class AlertStatTests(ITestOutputHelper iTestOutputHelper) : TestWithOutput(iTestOutputHelper)
+public class AlertStatTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
 	public async Task GetAlertStat()
