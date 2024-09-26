@@ -19,6 +19,24 @@ public class ParentDeviceGroupAlertExpression
 	public int DeviceGroupId { get; set; }
 
 	/// <summary>
+	///     The Alert transition interval
+	/// </summary>
+	[DataMember(Name = "alertTransitionInterval")]
+	public int AlertTransitionInterval { get; set; }
+
+	/// <summary>
+	///     The Alert clear transition interval
+	/// </summary>
+	[DataMember(Name = "alertClearTransitionInterval")]
+	public int AlertClearTransitionInterval { get; set; }
+
+	/// <summary>
+	///     Whether to alert for no data
+	/// </summary>
+	[DataMember(Name = "alertForNoData")]
+	public int AlertForNoData { get; set; }
+
+	/// <summary>
 	///     The alert expression
 	/// </summary>
 	[DataMember(Name = "alertExpr")]
