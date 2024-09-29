@@ -20,7 +20,7 @@ using LogicMonitor.Api;
 
 [...]
 
-public static async Task GetAllDevices(ILogger logger, CancellationToken cancellationToken)
+public static async Task GetAllResources(ILogger logger, CancellationToken cancellationToken)
 {
 	using var logicMonitorClient = new LogicMonitorClient(
 		new LogicMonitorClientOptions
