@@ -578,21 +578,20 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId"></param>
 	/// <param name="resourceDataSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DeviceDataSourceInstanceGroup>> GetDeviceDataSourceInstanceGroupsAsync(
+	public Task<List<DeviceDataSourceInstanceGroup>> GetDeviceDataSourceInstanceGroupsAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		CancellationToken cancellationToken)
-		=> await GetAllAsync(
-				filter: new Filter<DeviceDataSourceInstanceGroup>
-				{
-					FilterItems =
-					[
-						new Eq<DeviceDataSourceInstanceGroup>(nameof(DeviceDataSourceInstanceGroup.DeviceDataSourceId), resourceDataSourceId)
-					]
-				},
-				subUrl: $"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/groups/",
-				cancellationToken)
-			.ConfigureAwait(false);
+		=> GetAllAsync(
+			filter: new Filter<DeviceDataSourceInstanceGroup>
+			{
+				FilterItems =
+				[
+					new Eq<DeviceDataSourceInstanceGroup>(nameof(DeviceDataSourceInstanceGroup.DeviceDataSourceId), resourceDataSourceId)
+				]
+			},
+			subUrl: $"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/groups/",
+			cancellationToken);
 
 	// DO NOT use this one - it only appears to return 50 items!
 	//=> (await GetBySubUrlAsync<Page<DeviceDataSourceInstanceGroup>>(
@@ -743,14 +742,40 @@ public partial class LogicMonitorClient
 	/// <param name="resourceDataSourceInstanceId">The ResourceDataSourceInstance id</param>
 	/// <param name="dataPointId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataPointConfiguration> GetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+	public Task<DataPointConfiguration> GetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		int resourceDataSourceInstanceId,
 		int dataPointId,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<DataPointConfiguration>(
+		=> GetBySubUrlAsync<DataPointConfiguration>(
 			$"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="resourceDataSourceId"></param>
+	/// <param name="resourceDataSourceInstanceId"></param>
+	/// <param name="dataPointId"></param>
+	/// <param name="dataPointConfiguration"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use SetResourceDataSourceInstanceDataPointConfigurationAsync instead", true)]
+	public Task SetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		int dataPointId,
+		DataPointConfiguration dataPointConfiguration,
+		CancellationToken cancellationToken)
+		=> SetResourceDataSourceInstanceDataPointConfigurationAsync(
+			resourceId,
+			resourceDataSourceId,
+			resourceDataSourceInstanceId,
+			dataPointId,
+			dataPointConfiguration,
 			cancellationToken);
 
 	/// <summary>
@@ -762,15 +787,15 @@ public partial class LogicMonitorClient
 	/// <param name="dataPointId">The DataPoint Id</param>
 	/// <param name="dataPointConfiguration"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetSingleDeviceDataSourceInstanceDataPointConfigurationAsync(
+	public Task SetResourceDataSourceInstanceDataPointConfigurationAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		int resourceDataSourceInstanceId,
 		int dataPointId,
 		DataPointConfiguration dataPointConfiguration,
 		CancellationToken cancellationToken)
-		=> await PutAsync($"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/alertsettings/{dataPointId}",
-			dataPointConfiguration, cancellationToken).ConfigureAwait(false);
+		=> PutAsync($"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/alertsettings/{dataPointId}",
+			dataPointConfiguration, cancellationToken);
 
 	/// <summary>
 	///     Update a DataPointConfiguration
@@ -781,17 +806,17 @@ public partial class LogicMonitorClient
 	/// <param name="dataPointConfiguration">The DataPointConfiguration</param>
 	/// <param name="dataPointId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task UpdateDataPointConfigurationAsync(
+	public Task UpdateDataPointConfigurationAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		int resourceDataSourceInstanceId,
 		int dataPointId,
 		DataPointConfigurationCreationDTO dataPointConfiguration,
 		CancellationToken cancellationToken)
-		=> await PutAsync(
+		=> PutAsync(
 			$"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/alertsettings/{dataPointId}",
 			dataPointConfiguration,
-			cancellationToken).ConfigureAwait(false);
+			cancellationToken);
 
 	/// <summary>
 	/// Obsolete
@@ -880,8 +905,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="filter"></param>
 	[Obsolete("Use GetAllAsync<DataSource> instead.", true)]
-	public async Task<Page<DataSource>> GetDatasourceListAsync(Filter<DataSource> filter)
-		=> await GetDataSourceListAsync(filter, CancellationToken.None);
+	public Task<Page<DataSource>> GetDatasourceListAsync(Filter<DataSource> filter)
+		=> GetDataSourceListAsync(filter, CancellationToken.None);
 
 	/// <summary>
 	/// get DataSource list
@@ -912,9 +937,9 @@ public partial class LogicMonitorClient
 	/// <param name="id"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<DataSourceUpdateReason>> GetDataSourceUpdateReasonAsync(
+	public Task<Page<DataSourceUpdateReason>> GetDataSourceUpdateReasonAsync(
 		int id,
 		Filter<DataSourceUpdateReason> filter,
 		CancellationToken cancellationToken)
-		=> await GetPageAsync(filter, $"setting/datasources/{id}/updatereasons", cancellationToken);
+		=> GetPageAsync(filter, $"setting/datasources/{id}/updatereasons", cancellationToken);
 }

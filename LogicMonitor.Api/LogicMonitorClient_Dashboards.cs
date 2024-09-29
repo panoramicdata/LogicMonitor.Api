@@ -137,10 +137,10 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="widget">The widget to save</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Widget> SaveNewWidgetAsync(
+	public Task<Widget> SaveNewWidgetAsync(
 		IWidget widget,
 		CancellationToken cancellationToken)
-		=> await PostAsync<IWidget, Widget>(widget, $"dashboard/widgets", cancellationToken);
+		=> PostAsync<IWidget, Widget>(widget, $"dashboard/widgets", cancellationToken);
 
 	/// <summary>
 	///     Delete a dashboard group and all child dashboard groups and their dashboards
@@ -181,34 +181,34 @@ public partial class LogicMonitorClient
 	/// <param name="id">The widget id</param>
 	/// <param name="body">The body</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task PatchWidgetByIdAsync(
+	public Task PatchWidgetByIdAsync(
 		int id,
 		Widget body,
 		CancellationToken cancellationToken)
-		=> await PutAsync(
+		=> PutAsync(
 			$"dashboard/widgets/{id}",
 			body,
-			cancellationToken).ConfigureAwait(false);
+			cancellationToken);
 
 	/// <summary>
 	/// get widget by id (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
 	/// </summary>
 	/// <param name="id">The Widget ID</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Widget> GetWidgetByIdAsync(
+	public Task<Widget> GetWidgetByIdAsync(
 		int id,
 		CancellationToken cancellationToken)
-		=> await GetAsync<Widget>(id, cancellationToken).ConfigureAwait(false);
+		=> GetAsync<Widget>(id, cancellationToken);
 
 	/// <summary>
 	/// get widget list (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
 	/// </summary>
 	/// <param name="cancellationToken"></param>
 	/// <param name="filter"></param>
-	public async Task<Page<Widget>> GetWidgetListAsync(
+	public Task<Page<Widget>> GetWidgetListAsync(
 		Filter<Widget> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync($"dashboard/widgets", filter, cancellationToken);
+		=> FilteredGetAsync($"dashboard/widgets", filter, cancellationToken);
 
 	/// <summary>
 	/// get widget data (Based upon widget type the response may contain additional attributes. Please refer models corresponding to specific widget type at the bottom of this page to check the attributes)
@@ -218,22 +218,22 @@ public partial class LogicMonitorClient
 	/// <param name="start"></param>
 	/// <param name="end"></param>
 	/// <param name="format"></param>
-	public async Task<WidgetData> GetWidgetDataByIdAsync(
+	public Task<WidgetData> GetWidgetDataByIdAsync(
 		int id,
 		CancellationToken cancellationToken,
 		int? start = null,
 		int? end = null,
 		string format = ""
 		)
-		=> await GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{id}/data?start={start}&end={end}&format={format}", cancellationToken);
+		=> GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{id}/data?start={start}&end={end}&format={format}", cancellationToken);
 
 	/// <summary>
 	/// delete widget
 	/// </summary>
 	///	<param name="id"></param>
 	///	<param name="cancellationToken"></param>
-	public async Task DeleteWidgetAsync(
+	public Task DeleteWidgetAsync(
 		int id,
 		CancellationToken cancellationToken)
-		=> await DeleteAsync($"dashboard/widgets/{id}", cancellationToken);
+		=> DeleteAsync($"dashboard/widgets/{id}", cancellationToken);
 }

@@ -1120,10 +1120,11 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="id">The Resource id</param>
 	/// <param name="filter"></param>
-	public async Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
+	[Obsolete("Use GetDeviceInstanceListAsync(int, Filter<ResourceDataSourceInstance>, CancellationToken) instead", true)]
+	public Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
 		Filter<ResourceDataSourceInstance> filter)
-		=> await GetDeviceInstanceListAsync(id, filter, CancellationToken.None);
+		=> GetDeviceInstanceListAsync(id, filter, CancellationToken.None);
 
 	/// <summary>
 	/// get device instance list
@@ -1131,11 +1132,11 @@ public partial class LogicMonitorClient
 	/// <param name="id">The Resource id</param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
+	public Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
 		Filter<ResourceDataSourceInstance> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync($"device/devices/{id}/instances", filter, cancellationToken);
+		=> FilteredGetAsync($"device/devices/{id}/instances", filter, cancellationToken);
 
 	/// <summary>
 	/// get top talkers graph
@@ -1340,8 +1341,8 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// Get AWS external id
 	/// </summary>
-	public async Task<AwsExternalId> GetExternalIdAsync(CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<AwsExternalId>($"aws/externalId", cancellationToken);
+	public Task<AwsExternalId> GetExternalIdAsync(CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<AwsExternalId>($"aws/externalId", cancellationToken);
 
 	/// <summary>
 	/// Obsolete

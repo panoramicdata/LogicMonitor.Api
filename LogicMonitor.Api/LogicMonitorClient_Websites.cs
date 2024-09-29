@@ -370,11 +370,11 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	/// get a list of SDTs for a website
+	/// Get a list of SDTs for a Website
 	/// </summary>
-	public async Task<Page<ScheduledDownTime>> GetWebsiteSdtListAsync(
+	public Task<Page<ScheduledDownTime>> GetWebsiteSdtListAsync(
 		int websiteId,
 		Filter<ScheduledDownTime> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync($"website/websites/{websiteId}/sdts", filter, cancellationToken);
+		=> FilteredGetAsync($"website/websites/{websiteId}/sdts", filter, cancellationToken);
 }

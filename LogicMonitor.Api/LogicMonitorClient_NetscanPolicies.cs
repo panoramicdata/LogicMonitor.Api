@@ -23,8 +23,8 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// Add a new netscan
 	/// </summary>
-	public async Task<Netscan> AddNetscanAsync(
+	public Task<Netscan> AddNetscanAsync(
 		NetscanCreationDto body,
 		CancellationToken cancellationToken)
-		=> await PostAsync<NetscanCreationDto, Netscan>(body, $"setting/netscans", cancellationToken);
+		=> PostAsync<NetscanCreationDto, Netscan>(body, $"setting/netscans", cancellationToken);
 }

@@ -27,14 +27,14 @@ public partial class LogicMonitorClient
 	/// <param name="collectorDownloadType">The collector download type</param>
 	/// <param name="collectorSize">The Collector size</param>
 	/// <param name="collectorVersion">The collector version (e.g. 26001 for 26.001)</param>
-	public async Task DownloadCollectorAsync(
+	public Task DownloadCollectorAsync(
 		int collectorId,
 		FileInfo fileInfo,
 		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,
 		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
 		CollectorSize collectorSize = CollectorSize.Small,
 		int? collectorVersion = null)
-		=> await DownloadCollectorAsync(collectorId, fileInfo, collectorPlatformAndArchitecture,
+		=> DownloadCollectorAsync(collectorId, fileInfo, collectorPlatformAndArchitecture,
 			CancellationToken.None, collectorDownloadType, collectorSize, collectorVersion);
 
 	/// <summary>
@@ -106,14 +106,14 @@ public partial class LogicMonitorClient
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task UpdateCollectorByIdAsync(
+	public Task UpdateCollectorByIdAsync(
 		int id,
 		Collector body,
 		CancellationToken cancellationToken)
-		=> await PutAsync(
+		=> PutAsync(
 			$"setting/collector/collectors/{id}",
 			body,
-			cancellationToken).ConfigureAwait(false);
+			cancellationToken);
 
 	/// <summary>
 	/// update collector group
@@ -121,14 +121,14 @@ public partial class LogicMonitorClient
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task UpdateCollectorGroupByIdAsync(
+	public Task UpdateCollectorGroupByIdAsync(
 		int id,
 		CollectorGroup body,
 		CancellationToken cancellationToken)
-		=> await PutAsync(
+		=> PutAsync(
 			$"setting/collector/groups/{id}",
 			body,
-			cancellationToken).ConfigureAwait(false);
+			cancellationToken);
 
 	/// <summary>
 	/// Acknowledge that a collector is down
@@ -136,12 +136,12 @@ public partial class LogicMonitorClient
 	/// <param name="id">The collector id</param>
 	/// <param name="body">The body</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task AcknowledgeCollectorDownAsync(
+	public Task AcknowledgeCollectorDownAsync(
 		int id,
 		CollectorDownAcknowledgement body,
 		CancellationToken cancellationToken)
-		=> await PostAsync<CollectorDownAcknowledgement, object>(
+		=> PostAsync<CollectorDownAcknowledgement, object>(
 			body,
 			$"setting/collector/collectors/{id}/ackdown",
-			cancellationToken).ConfigureAwait(false);
+			cancellationToken);
 }

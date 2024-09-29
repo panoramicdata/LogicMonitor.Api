@@ -193,9 +193,9 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId"></param>
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<DeviceDataSourceData> GetDeviceDataSourceDataAsync(
+	public Task<DeviceDataSourceData> GetDeviceDataSourceDataAsync(
 		int resourceId,
 		int id,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{resourceId}/devicedatasources/{id}/data", cancellationToken);
+		=> GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{resourceId}/devicedatasources/{id}/data", cancellationToken);
 }

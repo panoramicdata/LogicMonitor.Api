@@ -87,13 +87,12 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<DataSource> AuditDataSourceAsync(int dataSourceId, long auditVersion, CancellationToken cancellationToken)
-		=> await PostAsync<LogicModuleUpdateVersion, DataSource>
+	public Task<DataSource> AuditDataSourceAsync(int dataSourceId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, DataSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
 			$"setting/datasources/{dataSourceId}/audit", cancellationToken
-		)
-		.ConfigureAwait(false);
+		);
 
 	/// <summary>
 	/// Mark an EventSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
@@ -101,13 +100,12 @@ public partial class LogicMonitorClient
 	/// <param name="eventSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<EventSource> AuditEventSourceAsync(int eventSourceId, long auditVersion, CancellationToken cancellationToken)
-		=> await PostAsync<LogicModuleUpdateVersion, EventSource>
+	public Task<EventSource> AuditEventSourceAsync(int eventSourceId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, EventSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
 			$"setting/eventsources/{eventSourceId}/audit", cancellationToken
-		)
-		.ConfigureAwait(false);
+		);
 
 	/// <summary>
 	/// Mark a ConfigSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
@@ -115,13 +113,12 @@ public partial class LogicMonitorClient
 	/// <param name="configSourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<ConfigSource> AuditConfigSourceAsync(int configSourceId, long auditVersion, CancellationToken cancellationToken)
-		=> await PostAsync<LogicModuleUpdateVersion, ConfigSource>
+	public Task<ConfigSource> AuditConfigSourceAsync(int configSourceId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, ConfigSource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
 			$"setting/configsources/{configSourceId}/audit", cancellationToken
-		)
-		.ConfigureAwait(false);
+		);
 
 	/// <summary>
 	/// Mark a PropertySource (from the repository) as audited. Find the version via GetLogicModuleUpdates
@@ -129,13 +126,12 @@ public partial class LogicMonitorClient
 	/// <param name="propertySourceId"></param>
 	/// <param name="auditVersion"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<PropertySource> AuditPropertySourceAsync(int propertySourceId, long auditVersion, CancellationToken cancellationToken)
-		=> await PostAsync<LogicModuleUpdateVersion, PropertySource>
+	public Task<PropertySource> AuditPropertySourceAsync(int propertySourceId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, PropertySource>
 		(
 			new LogicModuleUpdateVersion { Version = auditVersion },
 			$"setting/propertyrules/{propertySourceId}/audit", cancellationToken
-		)
-		.ConfigureAwait(false);
+		);
 
 	/// <summary>
 	/// Import a LogicModule
