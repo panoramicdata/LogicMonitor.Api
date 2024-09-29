@@ -4,9 +4,12 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 {
 	private static async Task GetAlertRule(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 	{
-		var alertRule = (await portalClient.GetAlertRuleListAsync(new(), default).ConfigureAwait(true)).Items.SingleOrDefault(ar => ar.Name == alertRuleName)
-			?? throw new ArgumentException($"No alert rule found with name {alertRuleName}");
+		var alertRules = await portalClient
+				.GetAllAsync<AlertRule>(default)
+				.ConfigureAwait(true);
 
+		var alertRule = alertRules.SingleOrDefault(ar => ar.Name == alertRuleName);
+		alertRule.Should().NotBeNull();
 		alertRule.SuppressAlertClear = !enableAlertClear;
 	}
 
@@ -24,12 +27,12 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetAlertRules()
 	{
 		var alertRules = await LogicMonitorClient
-			.GetAlertRuleListAsync(new(), default)
+			.GetAllAsync<AlertRule>(default)
 			.ConfigureAwait(true);
-		alertRules.Items.Should().NotBeNullOrEmpty();
+		alertRules.Should().NotBeNullOrEmpty();
 
 		// Get each one individually and check everything matches
-		foreach (var alertRule in alertRules.Items)
+		foreach (var alertRule in alertRules)
 		{
 			// Save it
 			await LogicMonitorClient
@@ -37,7 +40,7 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				.ConfigureAwait(true);
 
 			var refetchedAlertRule = await LogicMonitorClient
-				.GetAlertRuleAsync(alertRule.Id, new Filter<AlertRule>(), default)
+				.GetAsync<AlertRule>(alertRule.Id, default)
 				.ConfigureAwait(true);
 			refetchedAlertRule.Id.Should().Be(alertRule.Id);
 			// Other tests?
@@ -50,12 +53,12 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public async Task AddAndDeleteAlertRule()
 	{
-		var newRule = new AlertRule()
+		var newRule = new AlertRuleCreationDto()
 		{
 			DataPoint = "*",
 			DataSourceInstanceName = "*",
 			Devices = ["Test Device"],
-			DeviceGroups = ["Test Groups"],
+			ResourceGroups = ["Test Groups"],
 			EscalationChainId = 67,
 			SendAnomalySuppressedAlert = false,
 			Priority = 100,
@@ -67,17 +70,16 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		};
 
 		await LogicMonitorClient
-			.AddAlertRuleAsync(newRule, default)
+			.CreateAsync(newRule, default)
 			.ConfigureAwait(true);
 
 		var alertRules = await LogicMonitorClient
-			.GetAlertRuleListAsync(new Filter<AlertRule>(), default)
+			.GetAllAsync<AlertRule>(default)
 			.ConfigureAwait(true);
-
 		var found = false;
 		var createdAlert = new AlertRule();
 
-		foreach (var alertRule in alertRules.Items)
+		foreach (var alertRule in alertRules)
 		{
 			if (alertRule.Name.Equals("LornaTest", StringComparison.Ordinal))
 			{
@@ -90,7 +92,7 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		if (found)
 		{
 			await LogicMonitorClient
-				.DeleteAlertRuleAsync(createdAlert.Id, default)
+				.DeleteAsync<AlertRule>(createdAlert.Id, default)
 				.ConfigureAwait(true);
 		}
 

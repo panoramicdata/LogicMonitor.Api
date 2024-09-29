@@ -37,7 +37,6 @@ global using System.Diagnostics.CodeAnalysis;
 global using System.Drawing;
 global using System.Globalization;
 global using System.IO;
-global using System.IO.Compression;
 global using System.Linq;
 global using System.Net;
 global using System.Net.Http;

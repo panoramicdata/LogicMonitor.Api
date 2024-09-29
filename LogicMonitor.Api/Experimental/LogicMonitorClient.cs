@@ -2,7 +2,7 @@
 
 internal class LogicMonitorClient : IDisposable
 {
-	private bool disposedValue;
+	private bool _disposedValue;
 	private readonly HttpClient _httpClient;
 
 	internal LogicMonitorClient(LogicMonitorClientOptions options)
@@ -59,7 +59,7 @@ internal class LogicMonitorClient : IDisposable
 
 	protected virtual void Dispose(bool disposing)
 	{
-		if (!disposedValue)
+		if (!_disposedValue)
 		{
 			if (disposing)
 			{
@@ -68,7 +68,7 @@ internal class LogicMonitorClient : IDisposable
 
 			// TODO: free unmanaged resources (unmanaged objects) and override finalizer
 			// TODO: set large fields to null
-			disposedValue = true;
+			_disposedValue = true;
 		}
 	}
 

@@ -86,25 +86,28 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	[Fact]
 	public async Task GetAdmins()
 	{
-		var admins = await LogicMonitorClient
-			.GetAdminListAsync()
+		var users = await LogicMonitorClient
+			.GetAllAsync<User>(CancellationToken.None)
 			.ConfigureAwait(true);
 
-		admins.Items.Should().NotBeEmpty();
+		users.Should().NotBeEmpty();
 	}
 
 	[Fact]
 	public async Task GetApiTokens()
 	{
-		var admins = await LogicMonitorClient
-			.GetAdminListAsync()
+		var users = await LogicMonitorClient
+			.GetAllAsync<User>(CancellationToken.None)
 			.ConfigureAwait(true);
 
 		var tokens = await LogicMonitorClient
-			.GetApiTokensAsync(admins.Items[0].Id, new Filter<ApiToken>(), default)
+			.GetAllAsync(new Filter<ApiToken>
+			{
+				FilterItems = [new Eq<ApiToken>(nameof(ApiToken.UserId), users.First().Id)]
+			}, default)
 			.ConfigureAwait(true);
 
-		tokens.Items.Should().NotBeEmpty();
+		tokens.Should().NotBeEmpty();
 
 		var allTokens = await LogicMonitorClient
 			.GetApiTokenListAsync(new Filter<ApiToken>(), default)

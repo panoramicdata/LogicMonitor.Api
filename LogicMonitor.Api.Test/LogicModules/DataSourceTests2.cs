@@ -6,8 +6,8 @@ public class DataSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtu
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
 		var dataSources = await LogicMonitorClient
-			.GetDatasourceListAsync(new())
+			.GetAllAsync<DataSource>(default)
 			.ConfigureAwait(true);
-		dataSources.Items.Should().NotBeNullOrEmpty();
+		dataSources.Should().NotBeNullOrEmpty();
 	}
 }

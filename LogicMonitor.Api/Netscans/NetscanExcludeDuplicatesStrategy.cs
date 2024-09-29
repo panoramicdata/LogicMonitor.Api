@@ -16,23 +16,51 @@ public enum NetscanExcludeDuplicatesStrategy
 	///    MatchingAnyMonitoredDevices
 	/// </summary>
 	[EnumMember(Value = "1")]
-	MatchingAnyMonitoredDevices = 1,
+	MatchingAnyMonitoredResources = 1,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore]
+	[Obsolete("Use MatchingAnyMonitoredResource instead", true)]
+	MatchingAnyMonitoredDevices = MatchingAnyMonitoredResources,
 
 	/// <summary>
 	///    MatchingDevicesAlreadyDiscoveredByThisPolicy
 	/// </summary>
 	[EnumMember(Value = "2")]
-	MatchingDevicesAlreadyDiscoveredByThisPolicy = 2,
+	MatchingResourcesAlreadyDiscoveredByThisPolicy = 2,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore]
+	[Obsolete("Use MatchingResourcesInSpecifiedResourceGroups instead", true)]
+	MatchingDevicesAlreadyDiscoveredByThisPolicy = MatchingResourcesAlreadyDiscoveredByThisPolicy,
 
 	/// <summary>
 	///    MatchingDevicesInSpecifiedDeviceGroups
 	/// </summary>
 	[EnumMember(Value = "3")]
-	MatchingDevicesInSpecifiedDeviceGroups = 3,
+	MatchingResourcesInSpecifiedResourceGroups = 3,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore]
+	[Obsolete("Use MatchingResourcesInSpecifiedResourceGroups instead", true)]
+	MatchingDevicesInSpecifiedDeviceGroups = MatchingResourcesInSpecifiedResourceGroups,
 
 	/// <summary>
 	///    MatchingDevicesCurrentlyAssignedToSpecifiedollectors
 	/// </summary>
 	[EnumMember(Value = "4")]
-	MatchingDevicesCurrentlyAssignedToSpecifiedCollectors = 4
+	MatchingResourcesCurrentlyAssignedToSpecifiedCollectors = 4,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore]
+	[Obsolete("Use MatchingResourcesCurrentlyAssignedToSpecifiedCollectors instead", true)]
+	MatchingDevicesCurrentlyAssignedToSpecifiedCollectors = MatchingResourcesCurrentlyAssignedToSpecifiedCollectors,
 }

@@ -1,11 +1,17 @@
 namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// A DeviceDataSourceInstance
+/// Obsolete
+/// </summary>
+[Obsolete("Use ResourceDataSourceInstance instead", true)]
+public class DeviceDataSourceInstance : ResourceDataSourceInstance;
+
+/// <summary>
+/// A Resource DataSource Instance
 /// </summary>
 [SantabaReadOnly]
 [DataContract]
-public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
+public class ResourceDataSourceInstance : NamedItem, IHasCustomProperties
 {
 	/// <summary>
 	/// The alert status
@@ -44,10 +50,17 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public bool StopMonitoring { get; set; }
 
 	/// <summary>
-	/// The id of the unique device-datasource the instance is associated with
+	/// The id of the unique Resource-datasource the instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
+	public int ResourceDataSourceId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceId instead", true)]
+	public int DeviceDataSourceId => ResourceDataSourceId;
 
 	/// <summary>
 	/// The instance alias. This is the descriptive name of the instance, and should be unique for the device/datasource combination
@@ -99,16 +112,30 @@ public class DeviceDataSourceInstance : NamedItem, IHasCustomProperties
 	public string DataSourceType { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The display name of the device the datasource instance is associated with
+	/// The display name of the Resource the DataSource Instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The id of the device the datasource instance is associated with
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceDisplayName instead", true)]
+	public string DeviceDisplayName => ResourceDisplayName;
+
+	/// <summary>
+	/// The id of the Resource the DataSource Instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int? DeviceId { get; set; }
+	public int? ResourceId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceId instead", true)]
+	public int? DeviceId => ResourceId;
 
 	/// <summary>
 	/// Whether or not alerting is disabled for the instance

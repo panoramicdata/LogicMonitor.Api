@@ -7,8 +7,8 @@ internal class OpsNoteScopeConverter : JsonCreationConverter<OpsNoteScope>
 		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
-			"device" => new DeviceOpsNoteScope(),
-			"devicegroup" => new DeviceGroupOpsNoteScope(),
+			"device" => new ResourceOpsNoteScope(),
+			"devicegroup" => new ResourceGroupOpsNoteScope(),
 			"website" => new WebsiteOpsNoteScope(),
 			"websitegroup" => new WebsiteGroupOpsNoteScope(),
 			"groupall" => new AllGroupOpsNoteScope(),

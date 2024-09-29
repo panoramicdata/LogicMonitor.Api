@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Xunit.Microsoft.DependencyInjection.Abstracts;
 
 namespace LogicMonitor.Api.Test;
@@ -38,6 +39,7 @@ public abstract class TestWithOutput : TestBed<Fixture>
 	protected int AllWidgetsDashboardId { get; }
 
 	protected bool AccountHasBillingInformation { get; }
+
 	protected int TestDashboardId { get; }
 
 	protected TestWithOutput(ITestOutputHelper testOutputHelper, Fixture fixture) : base(testOutputHelper, fixture)
@@ -50,7 +52,11 @@ public abstract class TestWithOutput : TestBed<Fixture>
 		Logger = loggerFactory.CreateLogger(GetType());
 
 		// TestPortalConfig
-		var testPortalConfig = fixture.GetService<TestPortalConfig>(testOutputHelper) ?? throw new InvalidOperationException("TestPortalConfig is null");
+		var testPortalConfigOptions = fixture
+			.GetService<IOptions<TestPortalConfig>>(testOutputHelper)
+			?? throw new InvalidOperationException("TestPortalConfig is null");
+
+		var testPortalConfig = testPortalConfigOptions.Value;
 
 		ExperimentalLogicMonitorClient = new Api.Experimental.LogicMonitorClient(
 		new LogicMonitorClientOptions
@@ -106,17 +112,17 @@ public abstract class TestWithOutput : TestBed<Fixture>
 	protected static long DaysAgoAsUnixSeconds(int days)
 		=> DateTimeOffset.UtcNow.AddDays(-days).ToUnixTimeSeconds();
 
-	internal Task<Device> GetNetflowDeviceAsync(CancellationToken cancellationToken)
-		=> LogicMonitorClient.GetAsync<Device>(NetflowDeviceId, cancellationToken);
+	internal Task<Resource> GetNetflowDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Resource>(NetflowDeviceId, cancellationToken);
 
-	protected Task<Device> GetServiceDeviceAsync(CancellationToken cancellationToken)
-		=> LogicMonitorClient.GetAsync<Device>(ServiceDeviceId, cancellationToken);
+	protected Task<Resource> GetServiceDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Resource>(ServiceDeviceId, cancellationToken);
 
-	protected Task<Device> GetWindowsDeviceAsync(CancellationToken cancellationToken)
-		=> LogicMonitorClient.GetAsync<Device>(WindowsDeviceId, cancellationToken);
+	protected Task<Resource> GetWindowsDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Resource>(WindowsDeviceId, cancellationToken);
 
-	protected Task<Device> GetSnmpDeviceAsync(CancellationToken cancellationToken)
-		=> LogicMonitorClient.GetAsync<Device>(SnmpDeviceId, cancellationToken);
+	protected Task<Resource> GetSnmpDeviceAsync(CancellationToken cancellationToken)
+		=> LogicMonitorClient.GetAsync<Resource>(SnmpDeviceId, cancellationToken);
 
 	protected Task<Dashboard> GetAllWidgetsDashboardAsync(CancellationToken cancellationToken)
 		=> LogicMonitorClient.GetAsync<Dashboard>(AllWidgetsDashboardId, cancellationToken);

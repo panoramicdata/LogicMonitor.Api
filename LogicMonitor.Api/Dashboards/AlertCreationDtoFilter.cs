@@ -13,7 +13,7 @@ public class AlertCreationDtoFilter
 	public string Acked { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device group
+	/// The Group
 	/// </summary>
 	[DataMember(Name = "group")]
 	public string Group { get; set; } = string.Empty;
@@ -22,7 +22,14 @@ public class AlertCreationDtoFilter
 	/// The device display name
 	/// </summary>
 	[DataMember(Name = "host")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceDisplayName", true)]
+	public string DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	/// The data point

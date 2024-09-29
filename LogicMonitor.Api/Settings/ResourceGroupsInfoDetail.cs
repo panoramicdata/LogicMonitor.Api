@@ -1,19 +1,19 @@
 ﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
-///     Device groups info detail
+///     ResourceGroups info detail
 /// </summary>
 [DataContract]
-public class DeviceGroupInfoDetail
+public class ResourceGroupsInfoDetail
 {
 	/// <summary>
-	///     The device groups info
+	///     The ResourceGroup count
 	/// </summary>
 	[DataMember(Name = "size")]
 	public int Count { get; set; }
 
 	/// <summary>
-	///     The property count
+	///     The Resource Group property count
 	/// </summary>
 	[DataMember(Name = "props")]
 	public int PropertyCount { get; set; }

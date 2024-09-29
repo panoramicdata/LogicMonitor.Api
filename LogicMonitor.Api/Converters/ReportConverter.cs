@@ -19,7 +19,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 			"alert trends" => new AlertTrendsReport(),
 			"audit log" => new AuditLogReport(),
 			"host cpu" => new ServerCpuReport(),
-			"host group inventory" => new DeviceGroupInventoryReport(),
+			"host group inventory" => new ResourceGroupInventoryReport(),
 			"host inventory" => new DeviceInventoryReport(),
 			"host metric trends" => new DeviceMetricTrendsReport(),
 			"interfaces bandwidth" => new InterfBandwidthReport(),

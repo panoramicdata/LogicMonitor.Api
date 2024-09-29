@@ -1,5 +1,8 @@
 ﻿namespace LogicMonitor.Api.LogicModules;
 
+/// <summary>
+/// An access group
+/// </summary>
 [DataContract]
 public class AccessGroup
 {

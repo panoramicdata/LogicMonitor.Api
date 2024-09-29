@@ -9,13 +9,13 @@ public partial class LogicMonitorClient : IDisposable
 {
 	#region Fields
 
-	private static readonly HttpMethod PatchHttpMethod = new("PATCH");
+	private static readonly HttpMethod _patchHttpMethod = new("PATCH");
 
 	private readonly HttpClientHandler _handler;
 
 	private readonly HttpClient _client;
 
-	private static readonly JsonConverter[] JsonConverters =
+	private static readonly JsonConverter[] _jsonConverters =
 	[
 		new WidgetConverter(),
 		new WidgetDataConverter(),
@@ -63,7 +63,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	public bool UseCache { get; set; }
 
-	private int attemptCount = 5;
+	private int _attemptCount = 5;
 
 	private readonly ILogger _logger;
 
@@ -81,7 +81,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	public int AttemptCount
 	{
-		get => attemptCount;
+		get => _attemptCount;
 		set
 		{
 			if (value < 1)
@@ -89,7 +89,7 @@ public partial class LogicMonitorClient : IDisposable
 				throw new ArgumentOutOfRangeException(nameof(value), "Must be >= 1.");
 			}
 
-			attemptCount = value;
+			_attemptCount = value;
 		}
 	}
 
@@ -644,24 +644,24 @@ public partial class LogicMonitorClient : IDisposable
 	/// <summary>
 	///     Deletes a DeviceDataSourceInstance
 	/// </summary>
-	/// <param name="deviceDataSourceInstance">The DeviceDataSourceInstance to delete</param>
+	/// <param name="resourceDataSourceInstance">The resourceDataSourceInstance to delete</param>
 	/// <param name="hardDelete">Whether to hard delete.</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	public virtual async Task DeleteAsync(
-		DeviceDataSourceInstance deviceDataSourceInstance,
+		ResourceDataSourceInstance resourceDataSourceInstance,
 		bool hardDelete,
 		CancellationToken cancellationToken)
-		=> await DeleteAsync($"device/devices/{deviceDataSourceInstance.DeviceId}/devicedatasources/{deviceDataSourceInstance.DeviceDataSourceId}/instances/{deviceDataSourceInstance.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
+		=> await DeleteAsync($"device/devices/{resourceDataSourceInstance.ResourceId}/devicedatasources/{resourceDataSourceInstance.ResourceDataSourceId}/instances/{resourceDataSourceInstance.Id}{(!hardDelete ? "?deleteHard=false" : string.Empty)}", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Hard deletes a DeviceDataSourceInstance
 	/// </summary>
-	/// <param name="deviceDataSourceInstance">The DeviceDataSourceInstance to delete</param>
+	/// <param name="resourceDataSourceInstance">The resourceDataSourceInstance to delete</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	public virtual async Task DeleteAsync(
-		DeviceDataSourceInstance deviceDataSourceInstance,
+		ResourceDataSourceInstance resourceDataSourceInstance,
 		CancellationToken cancellationToken)
-		=> await DeleteAsync($"device/devices/{deviceDataSourceInstance.DeviceId}/devicedatasources/{deviceDataSourceInstance.DeviceDataSourceId}/instances/{deviceDataSourceInstance.Id}", cancellationToken).ConfigureAwait(false);
+		=> await DeleteAsync($"device/devices/{resourceDataSourceInstance.ResourceId}/devicedatasources/{resourceDataSourceInstance.ResourceDataSourceId}/instances/{resourceDataSourceInstance.Id}", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Create an item
@@ -712,7 +712,7 @@ public partial class LogicMonitorClient : IDisposable
 		return valueInt;
 	}
 
-	private string RequestUri(string subUrl) => subUrl == "log/ingest" || subUrl == "metric/ingest"
+	private string RequestUri(string subUrl) => subUrl is "log/ingest" or "metric/ingest"
 		? $"https://{AccountName}.logicmonitor.com/rest/{subUrl}"
 		: $"https://{AccountName}.logicmonitor.com/santaba/rest/{subUrl}";
 
@@ -1030,7 +1030,7 @@ public partial class LogicMonitorClient : IDisposable
 
 				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-				if (statusCode >= 400 && statusCode < 500)
+				if (statusCode is >= 400 and < 500)
 				{
 					// HTTP 400 - 499: do not retry EXCEPT when we have a 429 (too many requests)
 					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
@@ -1038,7 +1038,7 @@ public partial class LogicMonitorClient : IDisposable
 
 				_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
 				_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}", prefix, ++failureCount, responseBody);
-				
+
 				if (failureCount < AttemptCount)
 				{
 					_logger.LogDebug("{Prefix} Retrying..", prefix);
@@ -1121,7 +1121,7 @@ public partial class LogicMonitorClient : IDisposable
 		_logger.LogTrace("RESPONSE:\r\n\r\n{Data}:", portalResponse.Data?.ToString());
 		try
 		{
-			deserializedObject = portalResponse.GetObject(JsonConverters);
+			deserializedObject = portalResponse.GetObject(_jsonConverters);
 		}
 		catch (DeserializationException e)
 		{
@@ -1152,10 +1152,10 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	/// <typeparam name="TIn">The posted object type</typeparam>
 	/// <typeparam name="TOut">The returned object type</typeparam>
-	/// <param name="obj">The posted object </param>
+	/// <param name="postedObject">The posted object </param>
 	/// <param name="subUrl">The endpoint</param>
 	/// <param name="cancellationToken">An optional CancellationToken</param>
-	public async Task<TOut> PostAsync<TIn, TOut>(TIn obj, string subUrl, CancellationToken cancellationToken) where TOut : new()
+	public async Task<TOut> PostAsync<TIn, TOut>(TIn postedObject, string subUrl, CancellationToken cancellationToken) where TOut : new()
 	{
 		if (subUrl is null)
 		{
@@ -1167,7 +1167,7 @@ public partial class LogicMonitorClient : IDisposable
 		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
 		// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
-		var data = JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+		var data = JsonConvert.SerializeObject(postedObject, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
@@ -1374,7 +1374,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <exception cref="LogicMonitorApiException"></exception>
 	public async Task PatchAsync(string subUrl, Dictionary<string, object> fieldsToUpdate, CancellationToken cancellationToken)
 	{
-		var prefix = GetPrefix(PatchHttpMethod);
+		var prefix = GetPrefix(_patchHttpMethod);
 		var jsonString = JsonConvert.SerializeObject(fieldsToUpdate);
 
 		_logger.LogDebug("{Prefix}", prefix);
@@ -1384,7 +1384,7 @@ public partial class LogicMonitorClient : IDisposable
 			using (var content = new StringContent(jsonString, Encoding.UTF8, "application/json"))
 			{
 				var patchSpec = $"?patchFields={string.Join(",", fieldsToUpdate.Keys)}";
-				using var requestMessage = new HttpRequestMessage(PatchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content };
+				using var requestMessage = new HttpRequestMessage(_patchHttpMethod, RequestUri(subUrl) + patchSpec) { Content = content };
 				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
 			}
 

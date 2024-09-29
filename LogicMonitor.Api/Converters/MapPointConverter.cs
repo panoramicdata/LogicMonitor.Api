@@ -7,8 +7,8 @@ internal class MapPointConverter : JsonCreationConverter<MapPoint>
 		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
-			"device" => new DeviceMapPoint(),
-			"group" => new DeviceGroupMapPoint(),
+			"device" => new ResourceMapPoint(),
+			"group" => new ResourceGroupMapPoint(),
 			_ => throw new NotSupportedException($"MapPointConverter.cs needs updating to include {type}."),
 		};
 	}

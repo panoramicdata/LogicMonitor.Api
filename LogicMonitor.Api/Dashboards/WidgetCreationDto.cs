@@ -29,13 +29,13 @@ public abstract class WidgetCreationDto<T> : CreationDto<T>, IHasName, IHasDescr
 	///     The dashboard Id as a string
 	/// </summary>
 	[DataMember(Name = "dashboardId")]
-	[Obsolete("Use DashboardId instead.  This property is for serialization/deserialization only.")]
+	[Obsolete("Use DashboardId instead.  This property is for serialization/deserialization only.", false)]
 	public string DashboardIdString { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The dashboard Id
 	/// </summary>
-	[JsonIgnore]
+	[JsonIgnore, IgnoreDataMember]
 	public int DashboardId
 	{
 #pragma warning disable CS0618 // Type or member is obsolete

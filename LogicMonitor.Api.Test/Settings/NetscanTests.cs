@@ -33,7 +33,7 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 		const string name = "LogicMonitor.Api UnitTest CreateNetscan";
 		const string description = "Description 1";
-		const int credentialsDeviceGroupId = 0;
+		const int credentialsResourceGroupId = 0;
 		const string netscanScheduleCron = "01 00 * * *";
 		const NetscanMethod netscanMethod = NetscanMethod.Icmp;
 		const NetscanScheduleType netscanScheduleType = NetscanScheduleType.Daily;
@@ -45,8 +45,8 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		const string subnetScanRange = "10.9.9.0/24";
 		const string excludedIpAddresses = "10.9.9.1, 10.9.9.2";
 		const string ddrChangeName = "##REVERSEDNS##";
-		const NetscanExcludeDuplicatesStrategy duplicatesStrategyType = NetscanExcludeDuplicatesStrategy.MatchingAnyMonitoredDevices;
-		const int assignmentDeviceGroupId = 1;
+		const NetscanExcludeDuplicatesStrategy duplicatesStrategyType = NetscanExcludeDuplicatesStrategy.MatchingAnyMonitoredResources;
+		const int assignmentResourceGroupId = 1;
 		const bool assignmentDisableAlerting = false;
 		const NetscanInclusionType assignmentInclusionType = NetscanInclusionType.Include;
 		var netscanCreationDto = new NetscanCreationDto
@@ -56,7 +56,7 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
 			Credentials = new NetscanCredentials
 			{
-				DeviceGroupId = credentialsDeviceGroupId,
+				ResourceGroupId = credentialsResourceGroupId,
 				Custom = credentialsCustom
 			},
 			Method = netscanMethod,
@@ -79,7 +79,7 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 					[
 						new NetscanAssignment
 						{
-							DeviceGroupId = assignmentDeviceGroupId,
+							ResourceGroupId = assignmentResourceGroupId,
 							DisableAlerting = assignmentDisableAlerting,
 							InclusionType = assignmentInclusionType,
 						}

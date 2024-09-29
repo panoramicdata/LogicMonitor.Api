@@ -30,17 +30,17 @@ public class Line
 
 	private static int HexToInt(char h)
 	{
-		if (h >= '0' && h <= '9')
+		if (h is >= '0' and <= '9')
 		{
 			return h - '0';
 		}
 
-		if (h >= 'a' && h <= 'f')
+		if (h is >= 'a' and <= 'f')
 		{
 			return h - 'a' + 10;
 		}
 
-		if (h >= 'A' && h <= 'F')
+		if (h is >= 'A' and <= 'F')
 		{
 			return h - 'A' + 10;
 		}

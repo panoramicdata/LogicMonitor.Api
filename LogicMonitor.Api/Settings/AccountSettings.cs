@@ -193,7 +193,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int DashboardCount { get; set; }
 
 	/// <summary>
-	///     The Datasource Instance count
+	///     The DataSource Instance count
 	/// </summary>
 	[DataMember(Name = "numberOfDatasourceInstances")]
 	public int DataSourceInstanceCount { get; set; }
@@ -216,29 +216,67 @@ public class AccountSettings : IHasSingletonEndpoint
 	[DataMember(Name = "numberOfDevices")]
 	public int DeviceCount { get; set; }
 
-	///// <summary>
-	/////     The device group count
-	///// </summary>
-	//[DataMember(Name = "numOfDeviceFolders")]
-	//public int DeviceGroupCount { get; set; }
+	/// <summary>
+	///     The Service count that triggers a warning
+	/// </summary>
+	[DataMember(Name = "numOfServicesWarningLimit")]
+	public int ServiceWarningLimit { get; set; }
 
 	/// <summary>
-	///     The device group count that should not be exceeded
+	///     The Service count that should not be exceeded
+	/// </summary>
+	[DataMember(Name = "numOfServicesErrorLimit")]
+	public int ServiceErrorLimit { get; set; }
+
+	/// <summary>
+	///     The AlertRule count that triggers a warning
+	/// </summary>
+	[DataMember(Name = "numOfAlertRulesWarningLimit")]
+	public int AlertRuleWarningLimit { get; set; }
+
+	/// <summary>
+	///     The AlertRule count that should not be exceeded
+	/// </summary>
+	[DataMember(Name = "numOfAlertRulesErrorLimit")]
+	public int AlertRuleErrorLimit { get; set; }
+
+	/// <summary>
+	///     The ResourceGroup count that should not be exceeded
 	/// </summary>
 	[DataMember(Name = "hostGroupWarningLimit")]
-	public int DeviceGroupWarningLimit { get; set; }
+	public int ResourceGroupWarningLimit { get; set; }
 
 	/// <summary>
-	///     The device group count that must should not be exceeded
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupWarningLimit", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int DeviceGroupWarningLimit => ResourceGroupWarningLimit;
+
+	/// <summary>
+	///     The ResourceGroup count that must should not be exceeded
 	/// </summary>
 	[DataMember(Name = "hostGroupErrorLimit")]
-	public int DeviceGroupErrorLimit { get; set; }
+	public int ResourceGroupErrorLimit { get; set; }
 
 	/// <summary>
-	///     The device groups info
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupErrorLimit", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int DeviceGroupErrorLimit => ResourceGroupErrorLimit;
+
+	/// <summary>
+	///     The ResourceGroups info
 	/// </summary>
 	[DataMember(Name = "hostGroupsInfo")]
-	public DeviceGroupsInfo DeviceGroupsInfo { get; set; } = new();
+	public ResourceGroupsInfo ResourceGroupsInfo { get; set; } = new();
+
+	/// <summary>
+	///     The ResourceGroups info
+	/// </summary>
+	[Obsolete("Use ResourceGroupsInfo", true)]
+	public ResourceGroupsInfo DeviceGroupsInfo => ResourceGroupsInfo;
 
 	/// <summary>
 	///     The dynamic threshold count
@@ -336,7 +374,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	public PaymentInformation PaymentInformation { get; set; } = new();
 
 	/// <summary>
-	///     The per-datasource instance count
+	///     The per-DataSource instance count
 	/// </summary>
 	[DataMember(Name = "numberOfInstancesPerDS")]
 	public Dictionary<string, int> PerDataSourceInstanceCount { get; set; } = [];
@@ -474,7 +512,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int TerminatedPaasDeviceCount { get; set; }
 
 	/// <summary>
-	///     Timezone as text
+	///     Time Zone as text
 	/// </summary>
 	[DataMember(Name = "timezone")]
 	public string TimeZone { get; set; } = string.Empty;
@@ -504,13 +542,13 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int WebsiteGroupErrorLimit { get; set; }
 
 	/// <summary>
-	///     IP Whitelist
+	///     IP WhiteList
 	/// </summary>
 	[DataMember(Name = "whiteList")]
 	public string WhiteList { get; set; } = string.Empty;
 
 	/// <summary>
-	///     AccountDomain Whitelist
+	///     AccountDomain WhiteList
 	/// </summary>
 	[DataMember(Name = "accountDomainWhiteList")]
 	public string AccountDomainWhiteList { get; set; } = string.Empty;

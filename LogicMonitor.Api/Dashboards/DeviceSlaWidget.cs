@@ -28,7 +28,7 @@ public class DeviceSlaWidget : Widget, IWidget
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<DeviceSlaWidgetMetric> Metrics { get; set; } = [];
+	public List<ResourceSlaWidgetMetric> Metrics { get; set; } = [];
 
 	/// <summary>
 	/// The daysInWeek

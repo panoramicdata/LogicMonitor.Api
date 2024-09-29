@@ -1,15 +1,10 @@
 ﻿namespace LogicMonitor.Api.Collectors;
 
 /// <summary>
-/// PaaSMongoDbCollectorAttribute
+/// PaaS MongoDb Collector Attribute
 /// </summary>
 
 [DataContract]
-public class PaaSMongoDbCollectorAttribute : CollectorAttribute
+public class PaasMongoDbCollectorAttribute : CollectorAttribute
 {
-	/// <summary>
-	/// Period
-	/// </summary>
-	[DataMember(Name = "resourceUrl")]
-	public string ResourceUrl { get; set; } = string.Empty;
 }

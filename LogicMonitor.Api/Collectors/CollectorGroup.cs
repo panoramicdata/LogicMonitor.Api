@@ -49,22 +49,43 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public string AutoBalanceStrategy { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Autobalance device count threshold
+	///    Auto-balance device count threshold
 	/// </summary>
 	[DataMember(Name = "autoBalanceDeviceCountThreshold")]
-	public int AutoBalanceDeviceCountThrehsold { get; set; }
+	public int AutoBalanceDeviceCountThreshold { get; set; }
+
+	/// <summary>
+	/// Obsolete: Use AutoBalanceDeviceCountThreshold instead
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use AutoBalanceDeviceCountThreshold instead", true)]
+	public int AutoBalanceDeviceCountThrehsold => AutoBalanceDeviceCountThreshold;
 
 	/// <summary>
 	/// threshold for instance count strategy to check if a collector has high load
 	/// </summary>
 	[DataMember(Name = "autoBalanceInstanceCountThreshold")]
-	public int AutoBalanceInstanceCountThrehsold { get; set; }
+	public int AutoBalanceInstanceCountThreshold { get; set; }
 
 	/// <summary>
-	///    Whether the version mismatches
+	/// Obsolete: Use AutoBalanceInstanceCountThreshold instead
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use AutoBalanceDeviceCountThreshold instead", true)]
+	public int AutoBalanceInstanceCountThrehsold => AutoBalanceInstanceCountThreshold;
+
+	/// <summary>
+	///    Whether the versions mismatch
 	/// </summary>
 	[DataMember(Name = "mismatchVerison")]
-	public bool MismatchVerison { get; set; }
+	public bool VersionsMismatch { get; set; }
+
+	/// <summary>
+	/// Obsolete: Use VersionsMismatch instead
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use VersionsMismatch instead", true)]
+	public bool MismatchVerison => VersionsMismatch;
 
 	/// <summary>
 	/// the platform limitation

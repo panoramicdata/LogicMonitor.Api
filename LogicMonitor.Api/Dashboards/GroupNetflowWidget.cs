@@ -19,16 +19,29 @@ public class GroupNetflowWidget : Widget, IWidget
 	public string QosType { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The device group Id
+	/// The ResourceGroup id
 	/// </summary>
-	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	[DataMember(Name = "hostGroupId")]
+	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	///     The device group name
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupId", true)]
+	public int DeviceGroupId => ResourceGroupId;
+
+	/// <summary>
+	///     The ResourceGroup name
 	/// </summary>
 	[DataMember(Name = "deviceGroupName")]
-	public string DeviceGroupName { get; set; } = string.Empty;
+	public string ResourceGroupName { get; set; } = string.Empty;
+
+	/// <summary>
+	///	Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupName", true)]
+	public string DeviceGroupName => ResourceGroupName;
 
 	/// <summary>
 	///     The row filters

@@ -8,16 +8,16 @@ public class ExperimentalTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	public async Task GetDevices_Succeeds()
 	{
 		var devices = await ExperimentalLogicMonitorClient
-			.GetAsync(new LogicMonitorRequest<Device>
+			.GetAsync(new LogicMonitorRequest<Resource>
 			{
 				Skip = 1,
 				Take = 1,
-				Properties = [nameof(Device.Id), nameof(Device.Name)],
-				Filter = new AdvancedFilter<Device>(
+				Properties = [nameof(Resource.Id), nameof(Resource.Name)],
+				Filter = new AdvancedFilter<Resource>(
 					[
-						new FilterItem<Device>
+						new FilterItem<Resource>
 						{
-							Property = nameof(Device.DisplayName),
+							Property = nameof(Resource.DisplayName),
 							Comparator = Comparator.Includes,
 							Value = "test"
 						}

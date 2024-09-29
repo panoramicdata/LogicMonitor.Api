@@ -14,7 +14,7 @@ public class Flow
 
 	/// <summary>
 	/// Device Display Name. This is only populated when the request is
-	/// for a Device Group's flow, not when for a Device's flow
+	/// for a ResourceGroup's flow, not when for a Device's flow
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string DisplayName { get; set; } = string.Empty;

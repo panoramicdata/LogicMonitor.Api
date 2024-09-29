@@ -22,14 +22,26 @@ public partial class LogicMonitorClient
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/eventsources/{eventSourceId}?format=xml", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
-	///     Gets a list of EventSources that apply to a device group
+	///     Gets a list of EventSources that apply to a ResourceGroup
 	/// </summary>
-	/// <param name="deviceGroupId">The device group Id</param>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<DeviceGroupEventSource>> GetAllDeviceGroupEventSourcesAsync(
-		int deviceGroupId,
+	public Task<List<ResourceGroupEventSource>> GetAllResourceGroupEventSourcesAsync(
+		int resourceGroupId,
 		CancellationToken cancellationToken)
-		=> GetAllAsync<DeviceGroupEventSource>($"device/groups/{deviceGroupId}/eventsources", cancellationToken);
+		=> GetAllAsync<ResourceGroupEventSource>($"device/groups/{resourceGroupId}/eventsources", cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetAllResourceGroupEventSourcesAsync instead", true)]
+	public Task<List<ResourceGroupEventSource>> GetAllDeviceGroupEventSourcesAsync(
+		int resourceGroupId,
+		CancellationToken cancellationToken)
+		=> GetAllResourceGroupEventSourcesAsync(resourceGroupId, cancellationToken);
 
 	/// <summary>
 	///     Gets a EventSource by name

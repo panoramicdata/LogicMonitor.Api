@@ -1,11 +1,18 @@
 namespace LogicMonitor.Api.Devices;
 
 /// <summary>
-///     A device group type
+///	Obsolete
+///	</summary>
+[Obsolete("Use ResourceGroupType instead", true)]
+public enum DeviceGroupType;
+
+/// <summary>
+///     A ResourceGroup type
 /// </summary>
 [DataContract]
 [JsonConverter(typeof(TolerantStringEnumConverter))]
-public enum DeviceGroupType
+public enum ResourceGroupType
+
 {
 	/// <summary>
 	///     Unknown
@@ -783,13 +790,13 @@ public enum DeviceGroupType
 	LogPipeLineGroup = 128,
 
 	/// <summary>
-	///     Occasionally, LogicMonitor returns "2001" as the device group type.  It is believed that this is a bug in LogicMonitor.
+	///     Occasionally, LogicMonitor returns "2001" as the ResourceGroup type.  It is believed that this is a bug in LogicMonitor.
 	///     This entry provides a workaround.
 	/// </summary>
 	Unknown2001 = 2001,
 
 	/// <summary>
-	///     Occasionally, LogicMonitor returns "2003" as the device group type.  It is believed that this is a bug in LogicMonitor.
+	///     Occasionally, LogicMonitor returns "2003" as the ResourceGroup type.  It is believed that this is a bug in LogicMonitor.
 	///     This entry provides a workaround.
 	/// </summary>
 	Unknown2003 = 2003

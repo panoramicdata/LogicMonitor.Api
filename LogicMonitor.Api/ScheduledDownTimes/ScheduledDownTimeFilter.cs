@@ -38,14 +38,28 @@ public class ScheduledDownTimeFilter
 	public ScheduledDownTimeType? Type { get; set; }
 
 	/// <summary>
-	/// The DeviceId (only works for Type=Device)
+	/// The ResourceId (only works for Type=Device)
 	/// </summary>
-	public int? DeviceId { get; set; }
+	public int? ResourceId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceId instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int? DeviceId => ResourceId;
 
 	/// <summary>
 	/// The DeviceId (only works for Type=DeviceGroup)
 	/// </summary>
-	public int? DeviceGroupId { get; set; }
+	public int? ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupId instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int? DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// The DeviceDataSourceInstanceId (only works for Type=DeviceDataSourceInstance)
@@ -96,13 +110,13 @@ public class ScheduledDownTimeFilter
 		}
 
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.IsEffective), IsEffective);
-		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DeviceGroupId), DeviceGroupId);
+		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.ResourceGroupId), ResourceGroupId);
 		if (Type is not null)
 		{
 			filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.Type), $"{Type}SDT");
 		}
 
-		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DeviceId), DeviceId);
+		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.ResourceId), ResourceId);
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DataSourceInstanceId), DataSourceInstanceId);
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.DataSourceInstanceGroupId), DataSourceInstanceGroupId);
 		filter.AppendFilterItemIfNotNull(nameof(ScheduledDownTime.CollectorId), CollectorId);

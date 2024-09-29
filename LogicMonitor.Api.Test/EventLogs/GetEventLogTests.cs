@@ -2,7 +2,7 @@
 public class GetEventLogTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
-	public void ValidateRegexes()
+	public void RegexValidation_Succeeds()
 		=> LogItemExtensions.ValidateRegexes();
 
 	[Fact]
@@ -41,8 +41,8 @@ public class GetEventLogTests(ITestOutputHelper iTestOutputHelper, Fixture fixtu
 					auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
 					auditEvent.ActionType.Should().NotBe(AuditEventActionType.None);
 
-					if (auditEvent.ActionType != AuditEventActionType.Login
-						&& auditEvent.ActionType != AuditEventActionType.GeneralApi)
+					if (auditEvent.ActionType is not AuditEventActionType.Login
+						and not AuditEventActionType.GeneralApi)
 					{
 						auditEvent.EntityType.Should().NotBe(AuditEventEntityType.None);
 					}

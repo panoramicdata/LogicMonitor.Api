@@ -67,8 +67,15 @@ public class CollectorCreationDto : CreationDto<Collector>, IHasDescription
 	public int NextRecipient { get; set; }
 
 	/// <summary>
-	///     The specified collector device group id
+	///     The specified Collector ResourceGroup Id
 	/// </summary>
 	[DataMember(Name = "specifiedCollectorDeviceGroupId")]
-	public int SpecifiedCollectorDeviceGroupId { get; set; } = 1;
+	public int SpecifiedCollectorResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use SpecifiedCollectorResourceGroupId", true)]
+	public int SpecifiedCollectorDeviceGroupId => SpecifiedCollectorResourceGroupId;
 }

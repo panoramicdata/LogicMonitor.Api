@@ -2,20 +2,20 @@ namespace LogicMonitor.Api.Test.Dashboards;
 
 public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
-	private static readonly DateTimeOffset UtcNow = DateTimeOffset.UtcNow;
+	private static readonly DateTimeOffset _utcNow = DateTimeOffset.UtcNow;
 
 	[Fact]
 	public async Task GetBigNumberWidgetData_Succeeds()
 	{
 		// Multi-number
 		var widgetData = await LogicMonitorClient
-			.GetWidgetDataAsync(626, UtcNow.AddDays(-30), UtcNow, default)
+			.GetWidgetDataAsync(626, _utcNow.AddDays(-30), _utcNow, default)
 			.ConfigureAwait(true);
 		widgetData.Should().NotBeNull();
 
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
-			.GetWidgetDataAsync(627, UtcNow.AddDays(-30), UtcNow, default)
+			.GetWidgetDataAsync(627, _utcNow.AddDays(-30), _utcNow, default)
 			.ConfigureAwait(true);
 		widgetData2.Should().NotBeNull();
 	}

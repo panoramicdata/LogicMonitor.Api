@@ -24,3 +24,36 @@ using System.Diagnostics.CodeAnalysis;
 	"CA2007:Consider calling ConfigureAwait on the awaited task",
 	Justification = "ConfigureAwait is no longer recommended in XUnit tests", Scope = "module")
 ]
+
+#region Analyzer bug: https://github.com/fluentassertions/fluentassertions.analyzers/issues/383
+
+[assembly: SuppressMessage(
+	"FluentAssertionTips",
+	"FAA0001:Simplify Assertion",
+	Justification = "Analyzer bug",
+	Scope = "member",
+	Target = "~M:LogicMonitor.Api.Test.Alerts.AlertTests.GetAlerts_SdtsMatchRequest~System.Threading.Tasks.Task")
+]
+[assembly: SuppressMessage(
+	"FluentAssertionTips",
+	"FAA0001:Simplify Assertion",
+	Justification = "Analyzer bug",
+	Scope = "member",
+	Target = "~M:LogicMonitor.Api.Test.Alerts.AlertTests.SdtFilter_Works~System.Threading.Tasks.Task")
+]
+[assembly: SuppressMessage(
+	"FluentAssertionTips",
+	"FAA0001:Simplify Assertion",
+	Justification = "Analyzer bug",
+	Scope = "member",
+	Target = "~M:LogicMonitor.Api.Test.Alerts.NewAlertTests.GetAlerts_SdtsMatchRequest~System.Threading.Tasks.Task")
+]
+[assembly: SuppressMessage(
+	"FluentAssertionTips",
+	"FAA0001:Simplify Assertion",
+	Justification = "Analyzer bug",
+	Scope = "member",
+	Target = "~M:LogicMonitor.Api.Test.Data.RawDataTests.FetchInstanceData~System.Threading.Tasks.Task")
+]
+
+#endregion

@@ -33,9 +33,9 @@ public class DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper, Fixtu
 		var result = JsonConvert.DeserializeObject<CustomGraphWidgetDataLine>(json);
 
 		result.Should().NotBeNull();
-		result!.Data.Should().HaveElementAt(0, 1.25);
-		result!.Data.Should().HaveElementAt(1, 1.205);
-		result!.Data.Should().HaveElementAt(2, 1.2005);
+		result.Data.Should().HaveElementAt(0, 1.25);
+		result.Data.Should().HaveElementAt(1, 1.205);
+		result.Data.Should().HaveElementAt(2, 1.2005);
 	}
 
 	[Fact]
@@ -68,10 +68,10 @@ public class DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper, Fixtu
 		var result = JsonConvert.DeserializeObject<CustomGraphWidgetDataLine>(json);
 
 		result.Should().NotBeNull();
-		result!.Data.Should().HaveElementAt(0, 1.25);
-		result!.Data.Should().HaveElementAt(1, 1.205);
-		result!.Data.Should().HaveElementAt(2, 1.2005);
-		result!.Data.Should().HaveElementAt(3, double.MinValue);
+		result.Data.Should().HaveElementAt(0, 1.25);
+		result.Data.Should().HaveElementAt(1, 1.205);
+		result.Data.Should().HaveElementAt(2, 1.2005);
+		result.Data.Should().HaveElementAt(3, double.MinValue);
 	}
 
 	[Fact]
@@ -104,9 +104,9 @@ public class DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper, Fixtu
 		var result = JsonConvert.DeserializeObject<CustomGraphWidgetDataLine>(json);
 
 		result.Should().NotBeNull();
-		result!.Data.Should().HaveElementAt(0, double.MinValue);
-		result!.Data.Should().HaveElementAt(1, double.MinValue);
-		result!.Data.Should().HaveElementAt(2, double.MinValue);
-		result!.Data.Should().HaveElementAt(3, double.MinValue);
+		result.Data.Should().HaveElementAt(0, double.MinValue);
+		result.Data.Should().HaveElementAt(1, double.MinValue);
+		result.Data.Should().HaveElementAt(2, double.MinValue);
+		result.Data.Should().HaveElementAt(3, double.MinValue);
 	}
 }

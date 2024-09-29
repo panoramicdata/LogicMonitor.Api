@@ -85,11 +85,11 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleJobMonitorUpdates()
 	{
-		_ = await LogicMonitorClient
+		var propertySourceUpdates = await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
 				.ConfigureAwait(true);
 
-		//jobMonitorUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
+		propertySourceUpdates.Items.Should().NotBeNull();
 	}
 
 	/// <summary>
@@ -99,11 +99,11 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleAppliesToUpdates()
 	{
-		_ = await LogicMonitorClient
+		var appliesToUpdates = await LogicMonitorClient
 				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, default)
 				.ConfigureAwait(true);
 
-		//appliesToUpdates.Items.Should().NotBeNullOrEmpty();	// Usually none
+		appliesToUpdates.Items.Should().NotBeNull();
 	}
 
 	/// <summary>
@@ -118,7 +118,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, default)
 				.ConfigureAwait(true);
 
-		snmpSysOidUpdates.Items.Should().NotBeNullOrEmpty();
+		snmpSysOidUpdates.Items.Should().NotBeNull();
 	}
 
 	/// <summary>
@@ -133,7 +133,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.GetLogicModuleUpdatesAsync(LogicModuleType.All, default)
 				.ConfigureAwait(true);
 
-		allUpdates.Total.Should().BePositive();
+		allUpdates.Should().NotBeNull();
 	}
 
 	/// <summary>

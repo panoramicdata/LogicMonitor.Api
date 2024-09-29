@@ -191,5 +191,5 @@ public partial class LogicMonitorClient
 		)
 		.ConfigureAwait(false);
 
-	private static string CoreServerName = "core.logicmonitor.com";
+	private const string CoreServerName = "core.logicmonitor.com";
 }

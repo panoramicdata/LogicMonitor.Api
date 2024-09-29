@@ -7,7 +7,7 @@
 public class DeviceDataSourceInstanceAlertSetting
 {
 	/// <summary>
-	/// The global alert expression for this datapoint
+	/// The global alert expression for this DataPoint
 	/// </summary>
 	[DataMember(Name = "globalAlertExpr")]
 	public string GlobalAlertExpr { get; set; } = string.Empty;
@@ -19,13 +19,13 @@ public class DeviceDataSourceInstanceAlertSetting
 	public InstanceGroupAlertThresholdInfo ParentInstanceGroupAlertExpr { get; set; } = new();
 
 	/// <summary>
-	/// Whether or not alerting will be disabled for the datapoint
+	/// Whether or not alerting will be disabled for the DataPoint
 	/// </summary>
 	[DataMember(Name = "disableAlerting")]
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
-	/// The description of the datapoint the alert settings apply to
+	/// The description of the DataPoint the alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataPointDescription")]
 	public string DataPointDescription { get; set; } = string.Empty;
@@ -43,19 +43,19 @@ public class DeviceDataSourceInstanceAlertSetting
 	public string EnableAnomalyAlertGeneration { get; set; } = string.Empty;    // STRING not a bool
 
 	/// <summary>
-	/// The group full path lists who disable alert for this datapoint on devicegroup level
+	/// The group full path lists who disable alert for this DataPoint on ResourceGroup level
 	/// </summary>
 	[DataMember(Name = "disableDpAlertHostGroups")]
 	public string DisableDpAlertHostGroups { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The name of the datapoint the alert settings apply to
+	/// The name of the DataPoint the alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataPointName")]
 	public string DataPointName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The id of the Datapoint alert settings apply to
+	/// The id of the DataPoint alert settings apply to
 	/// </summary>
 	[DataMember(Name = "dataPointId")]
 	public int DataPointId { get; set; }
@@ -64,19 +64,32 @@ public class DeviceDataSourceInstanceAlertSetting
 	/// The global enable anomaly alert suppression
 	/// </summary>
 	[DataMember(Name = "globalEnableAnomalyAlertSuppression")]
-	public string GlobalEnableAnomalyAlertSuppression { get; set; } = string.Empty;		// STRING not a bool e.g. "1,1,1"
+	public string GlobalEnableAnomalyAlertSuppression { get; set; } = string.Empty;     // STRING not a bool e.g. "1,1,1"
 
 	/// <summary>
-	/// The ID of the device group
+	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// The full path of the device group
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupId", true)]
+	public int DeviceGroupId => ResourceGroupId;
+
+	/// <summary>
+	/// The full path of the ResourceGroup
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string ResourceGroupFullPath { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupFullPath", true)]
+	public string DeviceGroupFullPath => ResourceGroupFullPath;
 
 	/// <summary>
 	/// The interval of alert transition
@@ -133,13 +146,20 @@ public class DeviceDataSourceInstanceAlertSetting
 	public string WarnAdAdvSetting { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Device group alert expression list base on the priority. The first is the highest priority and effected on this instance
+	/// ResourceGroup alert expressions, based on the priority. The first is the highest priority and effected on this instance
 	/// </summary>
 	[DataMember(Name = "parentDeviceGroupAlertExprList")]
-	public DeviceGroupAlertThresholdInfo ParentDeviceGroupAlertExprList { get; set; } = new();
+	public ResourceGroupAlertThresholdInfo ParentResourceGroupAlertExpressions { get; set; } = new();
 
 	/// <summary>
-	/// The datapoint is effected alert disabled by which group
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupName instead", true)]
+	public ResourceGroupAlertThresholdInfo ParentDeviceGroupAlertExprList => ParentResourceGroupAlertExpressions;
+
+	/// <summary>
+	/// The DataPoint is effected alert disabled by which group
 	/// </summary>
 	[DataMember(Name = "alertingDisabledOn")]
 	public string AlertingDisabledOn { get; set; } = string.Empty;

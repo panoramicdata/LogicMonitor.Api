@@ -227,7 +227,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool Ea { get; set; }
 
 	/// <summary>
-	///     Enable failback
+	///     Enable fail back
 	/// </summary>
 	[DataMember(Name = "enableFailBack")]
 	public bool EnableFailBack { get; set; }
@@ -332,7 +332,14 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The one-time downgrade information
 	/// </summary>
 	[DataMember(Name = "onetimeDowngradeInfo")]
-	public string OnetimeDowngradeInfo { get; set; } = string.Empty;
+	public string OneTimeDowngradeInfo { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use OneTimeDowngradeInfo", true)]
+	public string OnetimeDowngradeInfo => OneTimeDowngradeInfo;
 
 	/// <summary>
 	///     One time upgrade info
@@ -401,10 +408,17 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public string Size { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The specified collector DeviceGroupId
+	///     The specified Collector ResourceGroup Id
 	/// </summary>
 	[DataMember(Name = "specifiedCollectorDeviceGroupId")]
-	public int SpecifiedCollectorDeviceGroupId { get; set; }
+	public int SpecifiedCollectorResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use SpecifiedCollectorResourceGroupId", true)]
+	public int SpecifiedCollectorDeviceGroupId => SpecifiedCollectorResourceGroupId;
 
 	/// <summary>
 	///     Status

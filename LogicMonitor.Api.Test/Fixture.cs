@@ -6,17 +6,21 @@ namespace LogicMonitor.Api.Test;
 
 public class Fixture : TestBedFixture
 {
-	private IConfigurationRoot _configuration;
+	private IConfigurationRoot? _configuration;
 
-	protected override void AddServices(IServiceCollection services, IConfiguration? configuration)
-		=> services
+	protected override void AddServices(
+		IServiceCollection services,
+		IConfiguration? configuration)
+	{
+		if (_configuration is null)
+		{
+			throw new InvalidOperationException("Configuration is null");
+		}
+
+		services
 			.AddScoped<CancellationTokenSource>()
-			.AddScoped(x =>
-				{
-					var testPortalConfig = new TestPortalConfig();
-					_configuration.GetSection("Config").Bind(testPortalConfig);
-					return testPortalConfig;
-				});
+			.Configure<TestPortalConfig>(_configuration.GetSection("Config"));
+	}
 
 	protected override ValueTask DisposeAsyncCore()
 		=> default;

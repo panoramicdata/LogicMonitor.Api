@@ -7,10 +7,17 @@ namespace LogicMonitor.Api.Netscans;
 public class RestNMapNetscanPolicyCredential
 {
 	/// <summary>
-	/// The ID of the device group that credentials should be inherited from, for this scan
+	/// The ID of the ResourceGroup that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupId instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// Custom credentials that should be used for this scan
@@ -19,10 +26,17 @@ public class RestNMapNetscanPolicyCredential
 	public object? Custom { get; set; }
 
 	/// <summary>
-	/// The name of the device group that credentials should be inherited from, for this scan
+	/// The name of the ResourceGroup that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceGroupName")]
-	public string? DeviceGroupName { get; set; }
+	public string? ResourceGroupName { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupName instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public string? DeviceGroupName => ResourceGroupName;
 
 	/// <summary>
 	/// The ID of the device that credentials should be inherited from, for this scan

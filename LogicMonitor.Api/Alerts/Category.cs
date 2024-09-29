@@ -7,10 +7,17 @@
 public class Category : NamedItem
 {
 	/// <summary>
-	/// The device group id
+	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "hostGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupId", true)]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// The DataSource id

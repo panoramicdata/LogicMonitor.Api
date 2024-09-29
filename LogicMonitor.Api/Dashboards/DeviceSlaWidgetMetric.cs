@@ -1,68 +1,7 @@
 ﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-///     A Device SLA widget metric
+///	Obsolete
 /// </summary>
-[DataContract]
-public class DeviceSlaWidgetMetric
-{
-	/// <summary>
-	/// The groupName
-	/// </summary>
-	[DataMember(Name = "groupName")]
-	public string DeviceGroupName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The deviceName
-	/// </summary>
-	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The dataSourceId
-	/// </summary>
-	[DataMember(Name = "dataSourceId")]
-	public int DataSourceId { get; set; }
-
-	/// <summary>
-	/// The dataSourceFullName
-	/// </summary>
-	[DataMember(Name = "dataSourceFullName")]
-	public string DataSourceFullName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The instances
-	/// </summary>
-	[DataMember(Name = "instances")]
-	public string DataSourceInstances { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The metric
-	/// </summary>
-	[DataMember(Name = "metric")]
-	public string Metric { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The threshold
-	/// </summary>
-	[DataMember(Name = "threshold")]
-	public string Threshold { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The unit label
-	/// </summary>
-	[DataMember(Name = "unitLabel")]
-	public string UnitLabel { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The bottom label
-	/// </summary>
-	[DataMember(Name = "bottomLabel")]
-	public string BottomLabel { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The exclusionSDTType
-	/// </summary>
-	[DataMember(Name = "exclusionSDTType")]
-	public string ExclusionSdtType { get; set; } = string.Empty;
-}
+[Obsolete("Use ResourceSlaWidgetMetric instead", true)]
+public class DeviceSlaWidgetMetric : ResourceSlaWidgetMetric;

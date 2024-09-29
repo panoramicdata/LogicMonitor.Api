@@ -286,7 +286,7 @@ public partial class LogicMonitorClient
 			});
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
-			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
+			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
 			foreach (var alert in (await GetWebsiteAlertsByIdNormalAsync(websiteId, individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
@@ -376,5 +376,5 @@ public partial class LogicMonitorClient
 		int websiteId,
 		Filter<ScheduledDownTime> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync<ScheduledDownTime>($"website/websites/{websiteId}/sdts", filter, cancellationToken);
+		=> await FilteredGetAsync($"website/websites/{websiteId}/sdts", filter, cancellationToken);
 }

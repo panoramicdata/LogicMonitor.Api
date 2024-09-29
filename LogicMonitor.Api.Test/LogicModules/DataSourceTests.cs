@@ -11,38 +11,38 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.GetByNameAsync<DataSource>("Ping", default)
 			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
-		dataSource!.Id.Should().NotBe(0);
+		dataSource.Id.Should().NotBe(0);
 	}
 
 	[Fact]
 	public async Task GetDeviceGroupDataSources()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default)
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, default)
 			.ConfigureAwait(true);
 		deviceGroup.Should().NotBeNull();
 
-		var deviceGroupDataSources = await LogicMonitorClient
-			.GetAllDeviceGroupDataSourcesAsync(deviceGroup.Id, default)
+		var resourceGroupDataSources = await LogicMonitorClient
+			.GetAllResourceGroupDataSourcesAsync(deviceGroup.Id, default)
 			.ConfigureAwait(true);
-		deviceGroupDataSources.Should().NotBeNullOrEmpty();
+		resourceGroupDataSources.Should().NotBeNullOrEmpty();
 
 		var deviceGroupDataSource = await LogicMonitorClient
-			.GetDeviceGroupDataSourceByIdAsync(deviceGroup.Id, deviceGroupDataSources[0].DataSourceId, default)
+			.GetResourceGroupDataSourceByIdAsync(deviceGroup.Id, resourceGroupDataSources[0].DataSourceId, default)
 			.ConfigureAwait(true);
 
-		deviceGroupDataSources[0].DataSourceName.Should().Be(deviceGroupDataSource.DataSourceName);
+		resourceGroupDataSources[0].DataSourceName.Should().Be(deviceGroupDataSource.DataSourceName);
 	}
 
 	[Fact]
 	public async Task GetDeviceGroupDeviceDataSourceInstances()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default)
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, default)
 			.ConfigureAwait(true);
 		deviceGroup.Should().NotBeNull();
 		deviceGroup.Id.Should().NotBe(0);
-		// We have the device group
+		// We have the ResourceGroup
 
 		// Determine the DataSources
 		var pingDataSource = await LogicMonitorClient
@@ -57,11 +57,11 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 
 		var dataSourcesIds = new List<int>
 		{
-			pingDataSource!.Id,
-			dnsDataSource!.Id,
+			pingDataSource.Id,
+			dnsDataSource.Id,
 		};
 
-		var deviceDataSourceInstances = await LogicMonitorClient
+		var resourceDataSourceInstances = await LogicMonitorClient
 			.GetInstancesAsync(
 				LogicModuleType.DataSource,
 				deviceGroup.Id,
@@ -72,23 +72,26 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				cancellationToken: default)
 			.ConfigureAwait(true);
 
-		deviceDataSourceInstances.Should().NotBeNull();
-		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
+		resourceDataSourceInstances.Should().NotBeNull();
+		resourceDataSourceInstances.Should().NotBeNullOrEmpty();
 
 		var sum = 0;
-		foreach (var deviceDataSourceInstance in deviceDataSourceInstances)
+		foreach (var resourceDataSourceInstance in resourceDataSourceInstances)
 		{
-			if (deviceDataSourceInstance.DeviceId is not null && deviceDataSourceInstance.DataSourceId is not null)
+			if (resourceDataSourceInstance.ResourceId is not null && resourceDataSourceInstance.DataSourceId is not null)
 			{
 				var refetchedDeviceDataSourceInstanceCount = (await LogicMonitorClient
-					 .GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(deviceDataSourceInstance.DeviceId.Value, deviceDataSourceInstance.DataSourceId.Value, default)
+					 .GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
+						resourceDataSourceInstance.ResourceId.Value,
+						resourceDataSourceInstance.DataSourceId.Value,
+						default)
 					 .ConfigureAwait(true)).InstanceCount;
 				refetchedDeviceDataSourceInstanceCount.Should().NotBe(0);
 				sum += refetchedDeviceDataSourceInstanceCount;
 			}
 		}
 
-		sum.Should().Be(deviceDataSourceInstances.Count);
+		sum.Should().Be(resourceDataSourceInstances.Count);
 	}
 
 	[Fact]
@@ -175,18 +178,18 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetDataPointThresholdDetailsForDeviceDataSourceInstance()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(true);
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance> { Skip = 0, Take = 10 }, default)
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance> { Skip = 0, Take = 10 }, default)
 			.ConfigureAwait(true);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(425, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
+			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(WindowsDeviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
 			.ConfigureAwait(true);
 		var dataPointConfiguration = dataPointDetails.Items[0];
 		dataPointConfiguration.Should().NotBeNull();
@@ -238,7 +241,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		dataSource ??= new();
 
 		var deviceDataSource = await portalClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
 			.ConfigureAwait(true);
 		deviceDataSource.Should().NotBeNull();
 
@@ -246,11 +249,11 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.GetAllDeviceDataSourceInstancesAsync(
 				device.Id,
 				deviceDataSource.Id,
-				new Filter<DeviceDataSourceInstance>
+				new Filter<ResourceDataSourceInstance>
 				{
 					Skip = 0,
 					Take = 10,
-					Properties = [nameof(DeviceDataSourceInstance.Id)]
+					Properties = [nameof(ResourceDataSourceInstance.Id)]
 				}, default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstances.Should().NotBeNull();
@@ -258,7 +261,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		{
 			deviceDataSourceInstance.Should().NotBeNull();
 			var deviceDataSourceInstanceRefetch = await portalClient
-				.GetDeviceDataSourceInstanceAsync(
+				.GetResourceDataSourceInstanceAsync(
 					device.Id,
 					deviceDataSource.Id,
 					deviceDataSourceInstance.Id,
@@ -292,13 +295,13 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					device.Id,
 					deviceDataSource.Id,
 					deviceDataSourceInstanceGroup.Id,
-					new Filter<DeviceDataSourceInstance>
+					new Filter<ResourceDataSourceInstance>
 					{
 						Skip = 0,
 						Take = 300,
 						Properties =
 						[
-								nameof(DeviceDataSourceInstance.Id)
+								nameof(ResourceDataSourceInstance.Id)
 						]
 					}, default)
 				.ConfigureAwait(true);
@@ -313,13 +316,13 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	}
 
 	[Fact]
-	public async Task TestDeviceGroupAlertSettings()
+	public async Task TestResourceGroupAlertSettings()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(DeviceGroupFullPath, default)
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, default)
 			.ConfigureAwait(true);
 		var items = await LogicMonitorClient
-			.GetDeviceGroupDataPointConfigurationAsync(deviceGroup.Id, 3, default)
+			.GetResourceGroupDataPointConfigurationAsync(deviceGroup.Id, 3, default)
 			.ConfigureAwait(true);
 		items.Should().NotBeNull();
 	}
@@ -392,7 +395,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				.GetAllDeviceDataSourceInstancesAsync(
 					WindowsDeviceId,
 					deviceDataSource.Id,
-					new Filter<DeviceDataSourceInstance>
+					new Filter<ResourceDataSourceInstance>
 					{
 						Skip = 0,
 						Take = 300
@@ -407,7 +410,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				{
 					Skip = 0,
 					Take = 300,
-					Properties = [nameof(DeviceDataSourceInstance.Id), nameof(DeviceDataSourceInstance.DeviceId)]
+					Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.ResourceId)]
 				}, default).ConfigureAwait(true);
 
 			// Check any that come back
@@ -436,10 +439,10 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		}, default).ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<DeviceDataSourceInstance>()
+			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
-				Properties = [nameof(DeviceDataSourceInstance.Id)]
+				Properties = [nameof(ResourceDataSourceInstance.Id)]
 			}, default)
 			.ConfigureAwait(true);
 
@@ -503,7 +506,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.ConfigureAwait(true);
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(1765, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(1765, dataSource.Id, default)
 			.ConfigureAwait(true);
 		deviceDataSource.DeviceId.Should().Be(1765);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);

@@ -7,10 +7,17 @@ namespace LogicMonitor.Api.Netscans;
 public class NetscanCredentials
 {
 	/// <summary>
-	/// The ID of the device group that credentials should be inherited from, for this scan
+	/// The ID of the ResourceGroup that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupId instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// Custom credentials that should be used for this scan
@@ -19,22 +26,43 @@ public class NetscanCredentials
 	public object? Custom { get; set; }
 
 	/// <summary>
-	/// The name of the device group that credentials should be inherited from, for this scan
+	/// The name of the ResourceGroup that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceGroupName")]
-	public string? DeviceGroupName { get; set; }
+	public string? ResourceGroupName { get; set; }
 
 	/// <summary>
-	/// The ID of the device that credentials should be inherited from, for this scan
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupName instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public string? DeviceGroupName => ResourceGroupName;
+
+	/// <summary>
+	/// The ID of the Resource that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The name of the device that credentials should be inherited from, for this scan
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceId instead", true)]
+	public int DeviceId => ResourceId;
+
+	/// <summary>
+	/// The display name of the Resource that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string? DeviceName { get; set; }
+	public string? ResourceDisplayName { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupName instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public string? DeviceName => ResourceDisplayName;
 
 	/// <summary>
 	/// snmpV3Credentials

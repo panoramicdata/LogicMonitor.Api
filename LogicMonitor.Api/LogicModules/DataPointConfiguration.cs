@@ -79,16 +79,30 @@ public class DataPointConfiguration : IdentifiedItem
 	public int DataSourceInstanceId { get; set; }
 
 	/// <summary>
-	///     The DeviceGroup Full Path
+	///     The ResourceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The DeviceGroup Full Path
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupFullPath instead", true)]
+	public string DeviceGroupFullPath => ResourceGroupFullPath;
+
+	/// <summary>
+	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupId", true)]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	///     Whether alerting is disabled
@@ -97,10 +111,18 @@ public class DataPointConfiguration : IdentifiedItem
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
-	///     Whether to disable DataPoint Alert HostGroups
+	///     Whether to disable DataPoint Alert ResourceGroups
 	/// </summary>
 	[DataMember(Name = "disableDpAlertHostGroups")]
-	public object DisableDpAlertHostGroups { get; set; } = new();
+	public object DisableDataPointAlertResourceGroups { get; set; } = new();
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use DisableDataPointAlertResourceGroups", true)]
+	public object DisableDpAlertHostGroups => DisableDataPointAlertResourceGroups;
+
 
 	/// <summary>
 	///     Whether to enable anomaly alert generation
@@ -114,6 +136,30 @@ public class DataPointConfiguration : IdentifiedItem
 	///
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
 	public string EnableAnomalyAlertSuppression { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
+
+	/// <summary>
+	///     Whether global ad adv setting is enabled
+	/// </summary>
+	[DataMember(Name = "globalAdAdvSettingEnabled")]
+	public bool IsGlobalAdAdvSettingEnabled { get; set; }
+
+	/// <summary>
+	///     The global warn Ad adv setting
+	/// </summary>
+	[DataMember(Name = "globalWarnAdAdvSetting")]
+	public string GlobalWarnActiveDiscoveryAdvancedSetting { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The global error Ad adv setting
+	/// </summary>
+	[DataMember(Name = "globalErrorAdAdvSetting")]
+	public string GlobalErrorActiveDiscoveryAdvancedSetting { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The global critical Ad adv setting
+	/// </summary>
+	[DataMember(Name = "globalCriticalAdAdvSetting")]
+	public string GlobalCriticalActiveDiscoveryAdvancedSetting { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Global alert expression

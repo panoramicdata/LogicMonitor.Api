@@ -10,7 +10,7 @@ public static class LogItemExtensions
 	{
 		// Check that no two Regex have the same id
 		var regexIds = new HashSet<int>();
-		foreach (var regex in Regexs)
+		foreach (var regex in _regexs)
 		{
 			if (!regexIds.Add(regex.Id))
 			{
@@ -21,7 +21,7 @@ public static class LogItemExtensions
 
 	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
 
-	private static readonly List<LogItemRegex> Regexs =
+	private static readonly List<LogItemRegex> _regexs =
 	[
 		new(01,
 			AuditEventEntityType.Device,
@@ -34,7 +34,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>Add|Fetch|Update) host<(?<resourceId>\d+), (?<resourceName>.+?)> \(monitored by collector <(?<collectorId>[-\d]+), (?<collectorName>.+?)>\), (?<additionalInfo>.*?), ( via API token (?<apiTokenId>.+))?$", RegexOptions.Singleline)),
 		new(14,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>Add)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
+			new(@"^(?<action>Add)ed ResourceGroup (?<resourceGroupName>.+) \((?<resourceGroupId>\d+)\)  via API token (?<apiTokenId>.+?)..$", RegexOptions.Singleline)),
 		new(04,
 			AuditEventEntityType.Device,
 			new(@"^(?<action>Add)ed device (?<resourceName>.+) \((?<resourceId>\d+)\)  via API token (?<apiTokenId>[^{]+?)(?<additionalInfo>.*?)$", RegexOptions.Singleline)),
@@ -64,7 +64,7 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=SDT""; ""Device=(?<resourceName>.+?)""; ""InstanceId=(?<instanceId>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
 		new(13,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+?).Nothing has been changed. via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
+			new(@"^(?<action>Update) the ResourceGroup (?<resourceGroupName>.+?).Nothing has been changed. via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(15,
 			AuditEventEntityType.DataSource,
 			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""DataSourceName=(?<logicModuleName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?) \((?<resourceName>.+?)\)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
@@ -118,7 +118,7 @@ public static class LogItemExtensions
 			new(@"^""Action=(?<action>.+?)""; ""Type=SDT""; ""Description=(?<description>.+?)""; ?""DeviceDatasourceInstanceName=(?<instanceName>.+?)""; ?""DeviceDataSourceInstanceId=(?<instanceId>.+?)""; ?""DeviceName=(?<resourceName>.+?)""; ?""DeviceId=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(32,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>.+?)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\) ,.+$", RegexOptions.Singleline)),
+			new(@"^(?<action>.+?)ed ResourceGroup (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\) ,.+$", RegexOptions.Singleline)),
 		new(33,
 			AuditEventEntityType.DataSource,
 			new(@"^""Action=(?<action>Add)""; ""Type=DataSource""; ""(LogicModuleName|DataSourceName)=(?<logicModuleName>.+?)""; ""DeviceName=(?<resourceDisplayName>.+?)""; ""DeviceId=(?<resourceId>\d+?)""; ""Description=(?<dataSourceDescription>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""DeviceDataSourceId=(?<deviceDataSourceId>\d+?)""$", RegexOptions.Singleline)),
@@ -148,10 +148,10 @@ public static class LogItemExtensions
 			new(@"^Schedule data-collection poll request, hostId=(?<hostId>.+?), agentId=(?<agentId>.+?), requestId=(?<requestId>.+?)$", RegexOptions.Singleline)),
 		new(42,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\), (?<actionTwo>Delet)ed device (?<resourceName>.+?) \(.+?\) \((?<resourceId>.+?)\)$", RegexOptions.Singleline)),
+			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed ResourceGroup (?<resourceGroupName>.+?) \((?<resourceGroupId>.+?)\), (?<actionTwo>Delet)ed device (?<resourceName>.+?) \(.+?\) \((?<resourceId>.+?)\)$", RegexOptions.Singleline)),
 		new(43,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed device group (?<resourceGroupName>.+) \((?<resourceGroupId>.+?)\)$", RegexOptions.Singleline)),
+			new(@"^ via API token (?<apiTokenId>[^{]+?), (?<action>Delet)ed ResourceGroup (?<resourceGroupName>.+) \((?<resourceGroupId>.+?)\)$", RegexOptions.Singleline)),
 		new(44,
 			AuditEventEntityType.Account,
 			new(@"^(?<userName>.+?) (?<login>Could not log into the system) - Authentication failed \.$", RegexOptions.Singleline)),
@@ -211,7 +211,7 @@ public static class LogItemExtensions
 			new(@"""Action=(?<action>.+?)""; ""Type=AppliesToFunction""; ""LogicModuleName=(?<resourceName>.+?)""; ""Device=.+?""; ""LogicModuleId=(?<resourceId>.+?)""; ""Description=(?<description>.+?)"";", RegexOptions.Singleline)),
 		new(63,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^(?<action>Update) the device group (?<resourceGroupName>.+).  \{\n\[\n.+?\n\]\n\}.+$", RegexOptions.Singleline)),
+			new(@"^(?<action>Update) the ResourceGroup (?<resourceGroupName>.+).  \{\n\[\n.+?\n\]\n\}.+$", RegexOptions.Singleline)),
 		new(64,
 			AuditEventEntityType.Account,
 			new(@"^(?<action>.+?) a new account (?<userName>.+) \((?<userRole>.+?)\)$", RegexOptions.Singleline)),
@@ -501,7 +501,7 @@ public static class LogItemExtensions
 	}
 
 	private static (LogItemRegex? LogItemRegex, Match? Match) GetMatchFromDescription(string description)
-		=> Regexs
+		=> _regexs
 			.Select(entry => (LogItemRegex: entry, Match: entry.Regex.Match(description)))
 			.FirstOrDefault(entry => entry.Match.Success);
 

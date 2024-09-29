@@ -49,13 +49,13 @@ public class DataSource : LogicModule, IHasEndpoint
 	public int? AutoDiscoveryIntervalMinutes { get; set; }
 
 	/// <summary>
-	///     The AutoDiscovery Linux commnd line
+	///     The AutoDiscovery Linux command line
 	/// </summary>
 	[DataMember(Name = "wildcard_linuxcmdline")]
 	public string AutoDiscoveryLinuxCmdLine { get; set; } = string.Empty;
 
 	/// <summary>
-	///     Wildcard linux command line
+	///     Wildcard Linux command line
 	/// </summary>
 	[DataMember(Name = "wildcard_linuxscript")]
 	public string AutoDiscoveryLinuxScript { get; set; } = string.Empty;
@@ -73,7 +73,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	public string AutoDiscoveryWindowsScript { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The  method to collect data: snmp|ping|exs|webpage|wmi|cim|datadump|dns|ipmi|jdbb|script|udp|tcp|xen
+	/// The method to collect data.
 	/// </summary>
 	[DataMember(Name = "collectMethod")]
 	public string CollectionMethod { get; set; } = string.Empty;
@@ -175,7 +175,7 @@ public class DataSource : LogicModule, IHasEndpoint
 	public string Technology { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Use Wildvalue as Unique identifier in case of multiinstance datasource: true|false
+	/// Use Wildvalue as Unique identifier in case of multi-instance datasource: true|false
 	/// </summary>
 	[DataMember(Name = "useWildValueAsUUID")]
 	public bool UseWildValueAsUuid { get; set; }

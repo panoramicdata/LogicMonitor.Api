@@ -1,9 +1,7 @@
 namespace LogicMonitor.Api.OpsNotes;
 
 /// <summary>
-/// A device group ops note scope
+/// Obsolete
 /// </summary>
-[DataContract]
-public class DeviceGroupOpsNoteScope : OpsNoteScope
-{
-}
+[Obsolete("Use ResourceGroupOpsNoteScope instead", true)]
+public class DeviceGroupOpsNoteScope : ResourceGroupOpsNoteScope;

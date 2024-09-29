@@ -6,15 +6,8 @@ public static class EnumerableExtensions
 
 	private static bool HasDuplicates<T>(this IEnumerable<T> subjects, IEqualityComparer<T> comparer)
 	{
-		if (subjects is null)
-		{
-			throw new ArgumentNullException(nameof(subjects));
-		}
-
-		if (comparer is null)
-		{
-			throw new ArgumentNullException(nameof(comparer));
-		}
+		ArgumentNullException.ThrowIfNull(subjects);
+		ArgumentNullException.ThrowIfNull(comparer);
 
 		var set = new HashSet<T>(comparer);
 		return subjects.Any(s => !set.Add(s));

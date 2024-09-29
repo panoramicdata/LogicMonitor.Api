@@ -19,16 +19,28 @@ public class AlertRule : NamedItem, IHasEndpoint
 	public string LevelString { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device filter
+	/// The Resource filter
 	/// </summary>
 	[DataMember(Name = "devices")]
-	public List<string> Devices { get; set; } = [];
+	public List<string> Resources { get; set; } = [];
 
 	/// <summary>
-	/// The device group filter
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use Resources", true)]
+	public List<string> Devices => Resources;
+
+	/// <summary>
+	/// The ResourceGroup filter
 	/// </summary>
 	[DataMember(Name = "deviceGroups")]
-	public List<string> DeviceGroups { get; set; } = [];
+	public List<string> ResourceGroups { get; set; } = [];
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use Resources", true)]
+	public List<string> DeviceGroups => ResourceGroups;
 
 	/// <summary>
 	/// The affected DataSource name filter

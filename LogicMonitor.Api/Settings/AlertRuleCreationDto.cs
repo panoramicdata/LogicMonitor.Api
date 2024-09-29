@@ -37,10 +37,17 @@ public class AlertRuleCreationDto : CreationDto<AlertRule>, IHasName, IHasDescri
 	public List<string> Devices { get; set; } = [];
 
 	/// <summary>
-	/// The device group filter
+	/// The ResourceGroup filter
 	/// </summary>
 	[DataMember(Name = "deviceGroups")]
-	public List<string> DeviceGroups { get; set; } = [];
+	public List<string> ResourceGroups { get; set; } = [];
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroups instead", true)]
+	public List<string> DeviceGroups => ResourceGroups;
 
 	/// <summary>
 	/// The affected DataSource name filter
@@ -55,7 +62,7 @@ public class AlertRuleCreationDto : CreationDto<AlertRule>, IHasName, IHasDescri
 	public string DataSourceInstanceName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The datapoint filter
+	/// The DataPoint filter
 	/// </summary>
 	[DataMember(Name = "datapoint")]
 	public string DataPoint { get; set; } = string.Empty;

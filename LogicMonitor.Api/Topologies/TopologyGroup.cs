@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api.Topologies;
 
 /// <summary>
-///    A device group
+///    A ResourceGroup
 /// </summary>
 [DataContract]
 public class TopologyGroup : NamedItem, IHasEndpoint, IPatchable

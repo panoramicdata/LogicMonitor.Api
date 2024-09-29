@@ -37,10 +37,17 @@ public class NetscanAssignment
 	public string? TagKey { get; set; }
 
 	/// <summary>
-	/// The ID of the group that discovered devices should be added into
+	/// The ID of the ResourceGroup that discovered Resources should be added into
 	/// </summary>
 	[DataMember(Name = "group")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupId instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// Type

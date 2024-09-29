@@ -51,8 +51,8 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }, default).ConfigureAwait(true)).SingleOrDefault();
 		dashboardGroup ??= new();
-		var deviceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DeviceGroup> { Take = 1 }, default).ConfigureAwait(true)).SingleOrDefault();
-		deviceGroup ??= new();
+		var resourceGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ResourceGroup> { Take = 1 }, default).ConfigureAwait(true)).SingleOrDefault();
+		resourceGroup ??= new();
 		var websiteGroup = (await LogicMonitorClient.GetAllAsync(new Filter<WebsiteGroup> { Take = 1 }, default).ConfigureAwait(true)).SingleOrDefault();
 		websiteGroup ??= new();
 		var reportGroup = (await LogicMonitorClient.GetAllAsync(new Filter<ReportGroup> { Take = 1 }, default).ConfigureAwait(true)).SingleOrDefault();
@@ -75,8 +75,8 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 					},
 					new RolePrivilege
 					{
-						ObjectType = PrivilegeObjectType.DeviceGroup,
-						ObjectId = deviceGroup.Id.ToString(CultureInfo.InvariantCulture),
+						ObjectType = PrivilegeObjectType.ResourceGroup,
+						ObjectId = resourceGroup.Id.ToString(CultureInfo.InvariantCulture),
 						Operation = RolePrivilegeOperation.Read
 					},
 					new RolePrivilege
@@ -99,7 +99,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 					},
 					new RolePrivilege
 					{
-						ObjectType = PrivilegeObjectType.DeviceDashboard,
+						ObjectType = PrivilegeObjectType.ResourceDashboard,
 						Operation = RolePrivilegeOperation.Read
 					},
 					new RolePrivilege

@@ -524,7 +524,7 @@ public enum CollectionMethod
 	SaasOffice365ServiceHealth = 201,
 
 	/// <summary>
-	/// SASS Salesforce instance status
+	/// SASS SalesForce instance status
 	/// </summary>
 	[EnumMember(Value = "saassalesforceinstancestatus")]
 	SaasSalesforceInstanceStatus = 202,

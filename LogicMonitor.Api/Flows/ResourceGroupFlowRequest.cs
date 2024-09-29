@@ -3,12 +3,12 @@ namespace LogicMonitor.Api.Flows;
 /// <summary>
 /// A flow request (abstract)
 /// </summary>
-public abstract class DeviceGroupFlowRequest : TimeBasedRequest
+public abstract class ResourceGroupFlowRequest : TimeBasedRequest
 {
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	protected DeviceGroupFlowRequest()
+	protected ResourceGroupFlowRequest()
 	{
 		SortDirection = SortDirection.Descending;
 		Take = 100;
@@ -16,9 +16,16 @@ public abstract class DeviceGroupFlowRequest : TimeBasedRequest
 	}
 
 	/// <summary>
-	/// The id of the flow Device Group
+	/// The ResourceGroup id
 	/// </summary>
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupId", true)]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// The QoS type

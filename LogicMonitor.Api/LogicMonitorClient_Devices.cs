@@ -5,54 +5,74 @@ namespace LogicMonitor.Api;
 /// </summary>
 public partial class LogicMonitorClient
 {
-	private async Task<List<DeviceGroup>> GetAllSubDeviceGroups(int deviceGroupId, CancellationToken cancellationToken)
+	private async Task<List<ResourceGroup>> GetAllSubResourceGroups(
+		int resourceGroupId,
+		CancellationToken cancellationToken)
 	{
-		var allDeviceGroups = new List<DeviceGroup>();
+		var allResourceGroups = new List<ResourceGroup>();
 
-		var deviceGroups =
+		var resourceGroups =
 			await GetAllAsync(
-				new Filter<DeviceGroup>
+				new Filter<ResourceGroup>
 				{
 					FilterItems =
 					[
-						new Eq<DeviceGroup>(nameof(DeviceGroup.ParentId), deviceGroupId)
+						new Eq<ResourceGroup>(nameof(ResourceGroup.ParentId), resourceGroupId)
 					]
 				},
 				cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 
-		if (deviceGroups.Count != 0)
+		if (resourceGroups.Count != 0)
 		{
-			foreach (var deviceGroup in deviceGroups)
+			foreach (var resourceGroup in resourceGroups)
 			{
-				allDeviceGroups.Add(deviceGroup);
-				allDeviceGroups.AddRange(await GetAllSubDeviceGroups(deviceGroup.Id, cancellationToken).ConfigureAwait(false));
+				allResourceGroups.Add(resourceGroup);
+				allResourceGroups.AddRange(await GetAllSubResourceGroups(resourceGroup.Id, cancellationToken).ConfigureAwait(false));
 			}
 		}
 
-		return allDeviceGroups;
+		return allResourceGroups;
 	}
 
 	/// <summary>
-	///     Gets devices by HostName
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceName">The Device HostName</param>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetAllSubResourceGroups instead", true)]
+	private Task<List<ResourceGroup>> GetAllSubDeviceGroups(
+		int resourceGroupId,
+		CancellationToken cancellationToken)
+		=> GetAllSubResourceGroups(resourceGroupId, cancellationToken);
+
+	/// <summary>
+	///     Gets Resources by HostName
+	/// </summary>
+	/// <param name="hostName">The Resource HostName</param>
 	/// <param name="maxResultCount">Max result count.  May not exceed 100</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<Device>> GetDevicesByHostNameAsync(string deviceName, int maxResultCount, CancellationToken cancellationToken)
-		=> (await GetDevicesByNameAsync(deviceName, maxResultCount, cancellationToken).ConfigureAwait(false)).Where(d => string.Equals(d.Name, deviceName, StringComparison.OrdinalIgnoreCase)).ToList();
+	public async Task<List<Resource>> GetDevicesByHostNameAsync(string hostName, int maxResultCount, CancellationToken cancellationToken)
+		=> (await GetResourcesByNameAsync(
+			hostName,
+			maxResultCount,
+			cancellationToken).ConfigureAwait(false))
+			.Where(d => string.Equals(d.Name, hostName, StringComparison.OrdinalIgnoreCase)).ToList();
 
 	/// <summary>
 	///     Gets device by DisplayName
 	/// </summary>
 	/// <param name="displayName">The Device DisplayName</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Device> GetDeviceByDisplayNameAsync(string displayName, CancellationToken cancellationToken)
-		=> (await GetAllAsync(new Filter<Device>
+	public async Task<Resource> GetResourceByDisplayNameAsync(
+		string displayName,
+		CancellationToken cancellationToken)
+		=> (await GetAllAsync(new Filter<Resource>
 		{
 			FilterItems =
 				[
-						new Eq<Device>(nameof(Device.DisplayName), (displayName ?? throw new ArgumentNullException(nameof(displayName)))
+						new Eq<Resource>(nameof(Resource.DisplayName), (displayName ?? throw new ArgumentNullException(nameof(displayName)))
 							.EscapeSlashes()
 							.EscapePlusCharacter())
 				]
@@ -61,24 +81,37 @@ public partial class LogicMonitorClient
 			   .SingleOrDefault();
 
 	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use GetResourceByDisplayNameAsync instead", true)]
+	public Task<Resource> GetDeviceByDisplayNameAsync(
+		string displayName,
+		CancellationToken cancellationToken) => GetResourceByDisplayNameAsync
+			(displayName, cancellationToken);
+
+	/// <summary>
 	///     Get device properties, in the following order:
 	///     - Custom
 	///     - Auto
 	///     - System
 	///     - Inherit
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
+	/// <param name="resourceId">The Resource Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<EntityProperty>> GetDevicePropertiesAsync(int deviceId, CancellationToken cancellationToken)
-		=> GetAllAsync<EntityProperty>($"device/devices/{deviceId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetDevicePropertiesAsync(
+		int resourceId,
+		CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"device/devices/{resourceId}/properties", cancellationToken);
 
 	/// <summary>
-	/// schedule active discovery for a device
+	/// Schedule active discovery for a Resource
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
+	/// <param name="resourceId">The Resource Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task ScheduleActiveDiscovery(int deviceId, CancellationToken cancellationToken)
-		=> await PostAsync<object, object>(new object(), $"device/devices/{deviceId}/scheduleAutoDiscovery", cancellationToken).ConfigureAwait(false);
+	public async Task ScheduleActiveDiscovery(
+		int resourceId,
+		CancellationToken cancellationToken)
+		=> await PostAsync<object, object>(new object(), $"device/devices/{resourceId}/scheduleAutoDiscovery", cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
 	///     Get device alerts
@@ -151,9 +184,34 @@ public partial class LogicMonitorClient
 			);
 
 	/// <summary>
-	///     Set single deviceGroup property
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceGroupId">The DeviceGroup Id</param>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="name"></param>
+	/// <param name="value"></param>
+	/// <param name="mode"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use SetResourceGroupCustomPropertyAsync instead", true)]
+	public Task SetDeviceGroupCustomPropertyAsync(
+		int resourceGroupId,
+		string name,
+		string? value,
+		SetPropertyMode mode,
+		CancellationToken cancellationToken)
+		=> SetResourceGroupCustomPropertyAsync
+		(
+			resourceGroupId,
+			name,
+			value,
+			mode,
+			cancellationToken
+		);
+
+	/// <summary>
+	///     Set single ResourceGroup property
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
 	/// <param name="name">The property name</param>
 	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.</param>
 	/// <param name="mode">How to set the property.
@@ -163,15 +221,15 @@ public partial class LogicMonitorClient
 	/// If you know that the property is NOT already set and you want to set the value, use Create.
 	/// </param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task SetDeviceGroupCustomPropertyAsync(
-		int deviceGroupId,
+	public Task SetResourceGroupCustomPropertyAsync(
+		int resourceGroupId,
 		string name,
 		string? value,
 		SetPropertyMode mode,
 		CancellationToken cancellationToken)
 	=>
 		SetCustomPropertyAsync(
-			deviceGroupId,
+			resourceGroupId,
 			name,
 			value,
 			mode,
@@ -179,63 +237,117 @@ public partial class LogicMonitorClient
 			cancellationToken);
 
 	/// <summary>
-	///     Gets devices
+	/// Obsolete
 	/// </summary>
-	/// <param name="filter">The device filter</param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourcesPageAsync instead", true)]
+	public Task<Page<Resource>> GetDevicesPageAsync(
+		Filter<Resource> filter,
+		CancellationToken cancellationToken)
+		=> GetResourcesPageAsync(filter, cancellationToken);
+
+	/// <summary>
+	///     Gets Resources
+	/// </summary>
+	/// <param name="filter">The Resource filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<Device>> GetDevicesPageAsync(Filter<Device> filter, CancellationToken cancellationToken)
+	public Task<Page<Resource>> GetResourcesPageAsync(
+		Filter<Resource> filter,
+		CancellationToken cancellationToken)
 	{
 		if (filter is not null && filter.Order is null)
 		{
-			filter.Order = new Order<Device> { Property = nameof(Device.Id), Direction = OrderDirection.Asc };
+			filter.Order = new Order<Resource> { Property = nameof(Resource.Id), Direction = OrderDirection.Asc };
 		}
 
-		return GetBySubUrlAsync<Page<Device>>($"device/devices?{filter}", cancellationToken);
+		return GetBySubUrlAsync<Page<Resource>>($"device/devices?{filter}", cancellationToken);
 	}
 
 	/// <summary>
-	///     Gets devices by DeviceGroup Id
+	///     Gets Resources by ResourceGroup Id
 	/// </summary>
-	/// <param name="deviceGroupId"></param>
+	/// <param name="resourceGroupId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<Device>> GetDevicesByDeviceGroupIdAsync(int deviceGroupId, Filter<Device>? filter, CancellationToken cancellationToken)
-		=> await GetAllAsync(filter, $"device/groups/{deviceGroupId}/devices", cancellationToken).ConfigureAwait(false);
+	public Task<List<Resource>> GetResourcesByResourceGroupIdAsync(
+		int resourceGroupId,
+		Filter<Resource>? filter,
+		CancellationToken cancellationToken)
+		=> GetAllAsync(filter, $"device/groups/{resourceGroupId}/devices", cancellationToken);
 
 	/// <summary>
-	///     Gets devices by DeviceGroup full path
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceGroupFullPaths">The FullPath(es) of the DeviceGroup(s), semicolon separated.</param>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourcesByResourceGroupIdAsync instead", true)]
+	public Task<List<Resource>> GetDevicesByDeviceGroupIdAsync(
+		int resourceGroupId,
+		Filter<Resource>? filter,
+		CancellationToken cancellationToken)
+		=> GetResourcesByResourceGroupIdAsync(
+			resourceGroupId,
+			filter,
+			cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceGroupFullPaths"></param>
+	/// <param name="recurse"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourcesByResourceGroupFullPathAsync instead", true)]
+	public Task<List<Resource>> GetDevicesByDeviceGroupFullPathAsync(
+		string resourceGroupFullPaths,
+		bool recurse,
+		CancellationToken cancellationToken)
+		=> GetResourcesByResourceGroupFullPathAsync(
+			resourceGroupFullPaths,
+			recurse,
+			cancellationToken);
+
+	/// <summary>
+	///     Gets Resources by ResourceGroup full path
+	/// </summary>
+	/// <param name="resourceGroupFullPaths">The FullPath(es) of the ResourceGroup(s), semicolon separated.</param>
 	/// <param name="recurse">If true, finds devices in child groups also.</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>A list of Devices</returns>
-	public async Task<List<Device>> GetDevicesByDeviceGroupFullPathAsync(string deviceGroupFullPaths, bool recurse, CancellationToken cancellationToken)
+	public async Task<List<Resource>> GetResourcesByResourceGroupFullPathAsync(
+		string resourceGroupFullPaths,
+		bool recurse,
+		CancellationToken cancellationToken)
 	{
-		var devices = new List<Device>();
+		var resources = new List<Resource>();
 
-		foreach (var searchDeviceGroupName in deviceGroupFullPaths.Split(';').Select(path => path.TrimStart()).ToList())
+		foreach (var searchResourceGroupName in resourceGroupFullPaths.Split(';').Select(path => path.TrimStart()).ToList())
 		{
-			// Make sure the Device Group exists
-			if (await GetDeviceGroupByFullPathAsync(searchDeviceGroupName, cancellationToken).ConfigureAwait(false)
-				is DeviceGroup checkedDeviceGroup)
+			// Make sure the ResourceGroup exists
+			if (await GetResourceGroupByFullPathAsync(searchResourceGroupName, cancellationToken).ConfigureAwait(false)
+				is ResourceGroup checkedResourceGroup)
 			{
-				List<DeviceGroup> deviceGroups;
+				List<ResourceGroup> resourceGroups;
 
 				// The root
-				if (checkedDeviceGroup.Id == 1)
+				if (checkedResourceGroup.Id == 1)
 				{
-					deviceGroups =
+					resourceGroups =
 						recurse
-							// All Device Groups
-							? await GetAllAsync<DeviceGroup>(cancellationToken: cancellationToken)
+							// All ResourceGroups
+							? await GetAllAsync<ResourceGroup>(cancellationToken: cancellationToken)
 								.ConfigureAwait(false)
 							// Only the root
 							: await GetAllAsync(
-								new Filter<DeviceGroup>
+								new Filter<ResourceGroup>
 								{
 									FilterItems =
 									[
-										new Eq<DeviceGroup>(nameof(DeviceGroup.Id), 1)
+										new Eq<ResourceGroup>(nameof(ResourceGroup.Id), 1)
 									]
 								},
 								cancellationToken: cancellationToken)
@@ -245,17 +357,17 @@ public partial class LogicMonitorClient
 				{
 					if (recurse)
 					{
-						if (!checkedDeviceGroup.FullPath.Contains('(') &&
-							!checkedDeviceGroup.FullPath.Contains(')') &&
-							!checkedDeviceGroup.FullPath.Contains('|'))
+						if (!checkedResourceGroup.FullPath.Contains('(') &&
+							!checkedResourceGroup.FullPath.Contains(')') &&
+							!checkedResourceGroup.FullPath.Contains('|'))
 						{
-							deviceGroups =
+							resourceGroups =
 								await GetAllAsync(
-									new Filter<DeviceGroup>
+									new Filter<ResourceGroup>
 									{
 										FilterItems =
 										[
-											new Includes<DeviceGroup>(nameof(DeviceGroup.FullPath), checkedDeviceGroup.FullPath)
+											new Includes<ResourceGroup>(nameof(ResourceGroup.FullPath), checkedResourceGroup.FullPath)
 										]
 									},
 									cancellationToken: cancellationToken)
@@ -264,18 +376,21 @@ public partial class LogicMonitorClient
 						else
 						{
 							// LM API Includes filter (~) cannot handle parentheses and pipes
-							deviceGroups = await GetAllSubDeviceGroups(checkedDeviceGroup.Id, cancellationToken).ConfigureAwait(false);
+							resourceGroups = await GetAllSubResourceGroups(
+								checkedResourceGroup.Id,
+								cancellationToken)
+								.ConfigureAwait(false);
 						}
 					}
 					else
 					{
-						deviceGroups =
+						resourceGroups =
 							await GetAllAsync(
-								new Filter<DeviceGroup>
+								new Filter<ResourceGroup>
 								{
 									FilterItems =
 									[
-											new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), searchDeviceGroupName)
+											new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), searchResourceGroupName)
 									]
 								},
 								cancellationToken: cancellationToken)
@@ -284,121 +399,225 @@ public partial class LogicMonitorClient
 				}
 
 				// Ensure the one we actually found is included
-				if (!deviceGroups.Exists(dg => dg.Id == checkedDeviceGroup.Id))
+				if (!resourceGroups.Exists(dg => dg.Id == checkedResourceGroup.Id))
 				{
-					deviceGroups.Add(checkedDeviceGroup);
+					resourceGroups.Add(checkedResourceGroup);
 				}
 
-				if (recurse && checkedDeviceGroup.Id != 1)
+				if (recurse && checkedResourceGroup.Id != 1)
 				{
 					// Filter out the ones where the full path did not START with the searched-for group, as we could
-					// only use a Includes<DeviceGroup> filter and not a StartsWith (there isn't one!)
-					deviceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchDeviceGroupName, StringComparison.Ordinal));
+					// only use a Includes<ResourceGroup> filter and not a StartsWith (there isn't one!)
+					resourceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchResourceGroupName, StringComparison.Ordinal));
 				}
 
 				// Get the Devices
-				foreach (var deviceGroup in deviceGroups)
+				foreach (var resourceGroup in resourceGroups)
 				{
-					devices.AddRange(await GetDevicesByDeviceGroupIdAsync(deviceGroup.Id, null, cancellationToken).ConfigureAwait(false));
+					var resourceGroupResources = await GetResourcesByResourceGroupIdAsync(
+						resourceGroup.Id,
+						null,
+						cancellationToken
+						).ConfigureAwait(false);
+
+					resources.AddRange(resourceGroupResources);
 				}
 			}
 		}
 
-		return devices
+		return resources
 			.DistinctBy(d => d.Id)
 			.ToList();
 	}
 
 	/// <summary>
-	///     Get devices by associated datasource
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use GetResourcesAndInstancesAssociatedWithDataSourceByIdPageAsync instead", true)]
+	public Task<Page<ResourceWithDataSourceInstanceInformation>> GetDevicesAndInstancesAssociatedWithDataSourceByIdPageAsync(
+		int dataSourceId,
+		Filter<ResourceWithDataSourceInstanceInformation> filter,
+		CancellationToken cancellationToken)
+		=> GetResourcesAndInstancesAssociatedWithDataSourceByIdPageAsync(
+			dataSourceId,
+			filter,
+			cancellationToken);
+
+	/// <summary>
+	///     Get Resources by associated DataSource
 	/// </summary>
 	/// <param name="dataSourceId">The DataSource Id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DeviceWithDataSourceInstanceInformation>> GetDevicesAndInstancesAssociatedWithDataSourceByIdPageAsync(int dataSourceId, Filter<DeviceWithDataSourceInstanceInformation> filter, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DeviceWithDataSourceInstanceInformation>>($"setting/datasources/{dataSourceId}/devices?{filter}", cancellationToken);
+	public Task<Page<ResourceWithDataSourceInstanceInformation>> GetResourcesAndInstancesAssociatedWithDataSourceByIdPageAsync(
+		int dataSourceId,
+		Filter<ResourceWithDataSourceInstanceInformation> filter,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<ResourceWithDataSourceInstanceInformation>>($"setting/datasources/{dataSourceId}/devices?{filter}", cancellationToken);
 
 	/// <summary>
-	///     Get devices by name
+	/// Obsolete
+	/// </summary>
+	/// <param name="searchString"></param>
+	/// <param name="maxResultCount"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourcesByNameAsync instead", true)]
+	public Task<List<Resource>> GetDevicesByNameAsync(
+		string searchString,
+		int maxResultCount,
+		CancellationToken cancellationToken)
+		=> GetResourcesByNameAsync(searchString, maxResultCount, cancellationToken);
+
+	/// <summary>
+	///     Get Resources by name
 	/// </summary>
 	/// <param name="searchString">The search string</param>
 	/// <param name="maxResultCount">Max result count.  May not exceed 100</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <exception cref="ArgumentNullException"></exception>
-	public async Task<List<Device>> GetDevicesByNameAsync(string searchString, int maxResultCount, CancellationToken cancellationToken)
+	public async Task<List<Resource>> GetResourcesByNameAsync(
+		string searchString,
+		int maxResultCount,
+		CancellationToken cancellationToken)
 	{
 		if (searchString is null)
 		{
 			throw new ArgumentNullException(nameof(searchString));
 		}
 
-		var treeNodeFreeSearchResults = await TreeNodeFreeSearchAsync(searchString, maxResultCount, cancellationToken, TreeNodeFreeSearchResultType.Device).ConfigureAwait(false);
-		var deviceList = new List<Device>();
-		foreach (var deviceResult in treeNodeFreeSearchResults)
+		var treeNodeFreeSearchResults = await TreeNodeFreeSearchAsync(
+			searchString,
+			maxResultCount,
+			cancellationToken,
+			TreeNodeFreeSearchResultType.Resource
+			)
+			.ConfigureAwait(false);
+
+		var resources = new List<Resource>();
+		foreach (var resourceResult in treeNodeFreeSearchResults)
 		{
-			deviceList.Add(await GetAsync<Device>(deviceResult.EntityId, cancellationToken).ConfigureAwait(false));
+			resources.Add(await GetAsync<Resource>(resourceResult.EntityId, cancellationToken).ConfigureAwait(false));
 		}
 
-		return deviceList;
+		return resources;
 	}
 
 	/// <summary>
-	///     Gets devices by DeviceGroup full path
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceGroupFullPath"></param>
+	/// <param name="resourceGroupFullPath"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourcesByResourceGroupFullPathAsync instead", true)]
+	public Task<ResourceGroup> GetDeviceGroupByFullPathAsync(
+		string resourceGroupFullPath,
+		CancellationToken cancellationToken)
+		=> GetResourceGroupByFullPathAsync(resourceGroupFullPath, cancellationToken);
+
+	/// <summary>
+	///     Gets Resources by ResourceGroup full path
+	/// </summary>
+	/// <param name="resourceGroupFullPath"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DeviceGroup> GetDeviceGroupByFullPathAsync(string deviceGroupFullPath, CancellationToken cancellationToken)
+	public async Task<ResourceGroup> GetResourceGroupByFullPathAsync(
+		string resourceGroupFullPath,
+		CancellationToken cancellationToken)
 	{
-		if (string.IsNullOrWhiteSpace(deviceGroupFullPath) || deviceGroupFullPath == "/")
+		if (string.IsNullOrWhiteSpace(resourceGroupFullPath) || resourceGroupFullPath == "/")
 		{
-			return await GetAsync<DeviceGroup>(1, cancellationToken).ConfigureAwait(false);
+			return await GetAsync<ResourceGroup>(1, cancellationToken).ConfigureAwait(false);
 		}
 
 		// This may actually return more than one, as LogicMonitor does not correctly handle brackets in some cases.
-		var allDeviceGroups = await GetAllAsync(new Filter<DeviceGroup>
+		var allResourceGroups = await GetAllAsync(new Filter<ResourceGroup>
 		{
 			FilterItems =
 			[
-				new Eq<DeviceGroup>(nameof(DeviceGroup.FullPath), deviceGroupFullPath.EscapePlusCharacter().EscapeParens())
+				new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), resourceGroupFullPath.EscapePlusCharacter().EscapeParens())
 			]
 		},
 		cancellationToken: cancellationToken)
 		.ConfigureAwait(false);
 
-		return allDeviceGroups.SingleOrDefault(dg => dg.FullPath == deviceGroupFullPath);
+		return allResourceGroups
+			.SingleOrDefault(dg => dg.FullPath == resourceGroupFullPath);
 	}
 
 	/// <summary>
-	///     Gets device Group properties
+	///     Gets ResourceGroup properties
 	/// </summary>
-	/// <param name="deviceGroupId"></param>
+	/// <param name="resourceGroupId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<EntityProperty>> GetDeviceGroupPropertiesAsync(int deviceGroupId, CancellationToken cancellationToken)
-		=> await GetAllAsync<EntityProperty>($"device/groups/{deviceGroupId}/properties", cancellationToken);
+	public Task<List<EntityProperty>> GetResourceGroupPropertiesAsync(
+		int resourceGroupId,
+		CancellationToken cancellationToken)
+		=> GetAllAsync<EntityProperty>($"device/groups/{resourceGroupId}/properties", cancellationToken);
 
 	/// <summary>
-	/// Get device group property by name
+	/// Obsolete
 	/// </summary>
-	/// <param name="gid"></param>
-	/// <param name="name"></param>
+	/// <param name="resourceGroupId"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<EntityProperty> GetDeviceGroupPropertiesByNameAsync(
-		int gid,
-		string name,
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupPropertiesAsync instead", true)]
+	public Task<List<EntityProperty>> GetDeviceGroupPropertiesAsync(
+		int resourceGroupId,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<EntityProperty>($"device/groups/{gid}/properties/{name}", cancellationToken);
+		=> GetResourceGroupPropertiesAsync(resourceGroupId, cancellationToken);
 
 	/// <summary>
-	/// Delete device group property
+	/// Obsolete
 	/// </summary>
-	/// <param name="gid"></param>
+	/// <param name="resourceGroupId"></param>
 	/// <param name="name"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task DeleteDeviceGroupPropertyAsync(
-		int gid,
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupPropertiesByNameAsync instead", true)]
+	public Task<EntityProperty> GetDeviceGroupPropertiesByNameAsync(
+		int resourceGroupId,
 		string name,
 		CancellationToken cancellationToken)
-		=> await DeleteAsync($"device/groups/{gid}/properties/{name}", cancellationToken);
+		=> GetResourceGroupPropertiesByNameAsync(resourceGroupId, name, cancellationToken);
+
+	/// <summary>
+	/// Get ResourceGroup property by name
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="name"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<EntityProperty> GetResourceGroupPropertiesByNameAsync(
+		int resourceGroupId,
+		string name,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<EntityProperty>($"device/groups/{resourceGroupId}/properties/{name}", cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="name"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use DeleteResourceGroupPropertyAsync instead", true)]
+	public Task DeleteDeviceGroupPropertyAsync(
+		int resourceGroupId,
+		string name,
+		CancellationToken cancellationToken)
+		=> DeleteResourceGroupPropertyAsync(resourceGroupId, name, cancellationToken);
+
+
+	/// <summary>
+	/// Delete ResourceGroup property
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="name"></param>
+	/// <param name="cancellationToken"></param>
+	public Task DeleteResourceGroupPropertyAsync(
+		int resourceGroupId,
+		string name,
+		CancellationToken cancellationToken)
+		=> DeleteAsync($"device/groups/{resourceGroupId}/properties/{name}", cancellationToken);
 
 	/// <summary>
 	///     Tree node free search
@@ -406,11 +625,11 @@ public partial class LogicMonitorClient
 	/// <param name="searchText"></param>
 	/// <param name="maxResultCount"></param>
 	/// <param name="treeNodeFreeSearchResultType"></param>
-	public async Task<List<TreeNodeFreeSearchResult>> TreeNodeFreeSearchAsync(
+	public Task<List<TreeNodeFreeSearchResult>> TreeNodeFreeSearchAsync(
 		string searchText,
 		int maxResultCount,
 		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
-		=> await TreeNodeFreeSearchAsync(searchText, maxResultCount, CancellationToken.None, treeNodeFreeSearchResultType);
+		=> TreeNodeFreeSearchAsync(searchText, maxResultCount, CancellationToken.None, treeNodeFreeSearchResultType);
 
 	/// <summary>
 	///     Tree node free search
@@ -434,7 +653,7 @@ public partial class LogicMonitorClient
 		{
 			TreeNodeFreeSearchResultType.DeviceDataSourceInstance => "i:",
 			TreeNodeFreeSearchResultType.DeviceDataSource => "ds:",
-			TreeNodeFreeSearchResultType.Device => "d:",
+			TreeNodeFreeSearchResultType.Resource => "d:",
 			TreeNodeFreeSearchResultType.DeviceGroup => "g:",
 			null => string.Empty,
 			_ => throw new ArgumentException($"Unexpected value {treeNodeFreeSearchResultType}", nameof(treeNodeFreeSearchResultType)),
@@ -450,22 +669,38 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	///     Gets the full device tree
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceGroupId">The device group id</param>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetFullResourceTreeAsync instead", true)]
+	public Task<ResourceGroup> GetFullDeviceTreeAsync(
+	int resourceGroupId = -1,
+	CancellationToken cancellationToken = default)
+		=> GetFullResourceTreeAsync(
+			resourceGroupId,
+			cancellationToken);
+
+	/// <summary>
+	///     Gets the full Resource tree
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DeviceGroup> GetFullDeviceTreeAsync(int deviceGroupId = -1, CancellationToken cancellationToken = default)
+	public async Task<ResourceGroup> GetFullResourceTreeAsync(
+		int resourceGroupId = -1,
+		CancellationToken cancellationToken = default)
 	{
-		var allDeviceGroups = await GetAllAsync<DeviceGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
-		var requestedRootGroup = allDeviceGroups.SingleOrDefault(g => g.Id == deviceGroupId) ?? new DeviceGroup { Name = "Root", Id = -1 };
-		if (deviceGroupId != requestedRootGroup.Id)
+		var allResourceGroups = await GetAllAsync<ResourceGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
+		var requestedRootGroup = allResourceGroups.SingleOrDefault(g => g.Id == resourceGroupId) ?? new ResourceGroup { Name = "Root", Id = -1 };
+		if (resourceGroupId != requestedRootGroup.Id)
 		{
-			throw new ArgumentOutOfRangeException($"No deviceGroup found with id {deviceGroupId}");
+			throw new ArgumentOutOfRangeException($"No ResourceGroup found with id {resourceGroupId}");
 		}
 
-		foreach (var deviceGroup in allDeviceGroups)
+		foreach (var resourceGroup in allResourceGroups)
 		{
-			var parentGroup = allDeviceGroups.SingleOrDefault(g => g.Id == deviceGroup.ParentId) ?? (deviceGroupId == -1 ? requestedRootGroup : null);
+			var parentGroup = allResourceGroups.SingleOrDefault(g => g.Id == resourceGroup.ParentId) ?? (resourceGroupId == -1 ? requestedRootGroup : null);
 			if (parentGroup is null)
 			{
 				continue;
@@ -473,35 +708,38 @@ public partial class LogicMonitorClient
 
 			if (parentGroup.SubGroups is null)
 			{
-				parentGroup.SubGroups = [deviceGroup];
+				parentGroup.SubGroups = [resourceGroup];
 			}
 			else
 			{
-				parentGroup.SubGroups.Add(deviceGroup);
+				parentGroup.SubGroups.Add(resourceGroup);
 			}
 
-			var detailedDeviceGroup = await GetAsync<DeviceGroup>(deviceGroup.Id, cancellationToken).ConfigureAwait(false);
+			var detailedResourceGroup = await GetAsync<ResourceGroup>(
+				resourceGroup.Id,
+				cancellationToken)
+				.ConfigureAwait(false);
 
-			deviceGroup.AlertStatus = detailedDeviceGroup.AlertStatus;
+			resourceGroup.AlertStatus = detailedResourceGroup.AlertStatus;
 		}
 
-		foreach (var device in await GetAllAsync<Device>(cancellationToken: cancellationToken).ConfigureAwait(false))
+		foreach (var resource in await GetAllAsync<Resource>(cancellationToken: cancellationToken).ConfigureAwait(false))
 		{
-			foreach (var deviceGroup in device
-				.DeviceGroupIdsString
+			foreach (var resourceGroup in resource
+				.ResourceGroupIdsString
 				.Split(',')
 				.Select(int.Parse)
-				.Select(dgId => allDeviceGroups.SingleOrDefault(g => g.Id == dgId)))
+				.Select(dgId => allResourceGroups.SingleOrDefault(g => g.Id == dgId)))
 			{
 				// Avoids a race condition
-				if (deviceGroup is null)
+				if (resourceGroup is null)
 				{
 					continue;
 				}
 
-				deviceGroup.Devices ??= [];
-				deviceGroup.Devices.Add(device);
-				deviceGroup.DeviceCount = deviceGroup.Devices.Count;
+				resourceGroup.Resources ??= [];
+				resourceGroup.Resources.Add(resource);
+				resourceGroup.DeviceCount = resourceGroup.Resources.Count;
 			}
 		}
 
@@ -514,7 +752,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceId">The device id</param>
 	/// <param name="deviceProcessServiceTaskType">The process/service type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DeviceDataSourceInstance>> GetMonitoredDeviceProcessesAsync(
+	public async Task<List<ResourceDataSourceInstance>> GetMonitoredDeviceProcessesAsync(
 		int deviceId,
 		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
@@ -544,7 +782,7 @@ public partial class LogicMonitorClient
 		return await GetAllDeviceDataSourceInstancesAsync(
 			deviceId,
 			deviceDataSources.Single().Id,
-			new Filter<DeviceDataSourceInstance>(),
+			new Filter<ResourceDataSourceInstance>(),
 			cancellationToken
 		)
 		.ConfigureAwait(false);
@@ -639,7 +877,7 @@ public partial class LogicMonitorClient
 			cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	/// Sets alert thresholds for an entire device datasource instance group
+	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
 	/// </summary>
 	/// <param name="deviceId">The device id</param>
 	/// <param name="deviceDataSourceId">The DeviceDataSource id</param>
@@ -664,17 +902,17 @@ public partial class LogicMonitorClient
 			}, cancellationToken).ConfigureAwait(false);
 
 	/// <summary>
-	/// Sets alert thresholds for an entire device datasource instance group
+	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
 	/// </summary>
-	/// <param name="deviceGroupId">The device id</param>
+	/// <param name="resourceGroupId">The device id</param>
 	/// <param name="dataSourceId">The DeviceDataSource id</param>
 	/// <param name="dataPointId">The DataPoint Id</param>
 	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
 	/// <param name="alertExpressionNote">A note explaining the threshold</param>
 	/// <param name="disableAlerting">Disable alerting</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetDeviceGroupDataSourceDataPointThresholdsAsync(
-		int deviceGroupId,
+	public async Task SetResourceGroupDataSourceDataPointThresholdsAsync(
+		int resourceGroupId,
 		int dataSourceId,
 		int dataPointId,
 		string alertExpression,
@@ -683,31 +921,31 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken)
 	{
 		// Need to get the existing Alert config, modify it and then PUT it back
-		var url = $"device/groups/{deviceGroupId}/datasources/{dataSourceId}/alertsettings";
+		var url = $"device/groups/{resourceGroupId}/datasources/{dataSourceId}/alertsettings";
 
-		var dataPointConfigurationCollection = await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{deviceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false);
+		var dataPointConfigurationCollection = await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{resourceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false);
 
 		var changeMade = false;
 
-		foreach (var dpConfig in dataPointConfigurationCollection.Items)
+		foreach (var dataPointConfiguration in dataPointConfigurationCollection.Items)
 		{
-			if (dpConfig.DataPointId == dataPointId)
+			if (dataPointConfiguration.DataPointId == dataPointId)
 			{
-				if (alertExpression is not null && dpConfig.AlertExpression != alertExpression)
+				if (alertExpression is not null && dataPointConfiguration.AlertExpression != alertExpression)
 				{
-					dpConfig.AlertExpression = alertExpression;
+					dataPointConfiguration.AlertExpression = alertExpression;
 					changeMade = true;
 				}
 
-				if (alertExpressionNote is not null && dpConfig.AlertExpressionNote != alertExpressionNote)
+				if (alertExpressionNote is not null && dataPointConfiguration.AlertExpressionNote != alertExpressionNote)
 				{
-					dpConfig.AlertExpressionNote = alertExpressionNote;
+					dataPointConfiguration.AlertExpressionNote = alertExpressionNote;
 					changeMade = true;
 				}
 
-				if (disableAlerting.HasValue && dpConfig.DisableAlerting != disableAlerting)
+				if (disableAlerting.HasValue && dataPointConfiguration.DisableAlerting != disableAlerting)
 				{
-					dpConfig.DisableAlerting = disableAlerting.Value;
+					dataPointConfiguration.DisableAlerting = disableAlerting.Value;
 					changeMade = true;
 				}
 			}
@@ -720,25 +958,68 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="dataSourceId"></param>
+	/// <param name="dataPointId"></param>
+	/// <param name="alertExpression"></param>
+	/// <param name="alertExpressionNote"></param>
+	/// <param name="disableAlerting"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use SetResourceGroupDataSourceDataPointThresholdsAsync instead", true)]
+	public Task SetDeviceGroupDataSourceDataPointThresholdsAsync(
+	int resourceGroupId,
+	int dataSourceId,
+	int dataPointId,
+	string alertExpression,
+	string alertExpressionNote,
+	bool? disableAlerting,
+	CancellationToken cancellationToken)
+	=> SetResourceGroupDataSourceDataPointThresholdsAsync(
+		resourceGroupId,
+		dataSourceId,
+		dataPointId,
+		alertExpression,
+		alertExpressionNote,
+		disableAlerting,
+		cancellationToken);
+
+	/// <summary>
 	///     Gets a list of DataPointThresholdDetails
 	/// </summary>
-	/// <param name="deviceGroupId">The device group Id</param>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
 	/// <param name="dataSourceId">The dataSource Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DataPointConfiguration>> GetDeviceGroupDataPointConfigurationAsync(
-		int deviceGroupId,
+	public async Task<List<DataPointConfiguration>> GetResourceGroupDataPointConfigurationAsync(
+		int resourceGroupId,
 		int dataSourceId,
 		CancellationToken cancellationToken)
-		=> (await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{deviceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false)).Items;
+		=> (await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{resourceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false)).Items;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="dataSourceId"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupDataPointConfigurationAsync instead", true)]
+	public Task<List<DataPointConfiguration>> GetDeviceGroupDataPointConfigurationAsync(
+		int resourceGroupId,
+		int dataSourceId,
+		CancellationToken cancellationToken)
+		=> GetResourceGroupDataPointConfigurationAsync(resourceGroupId, dataSourceId, cancellationToken);
 
 	/// <summary>
 	/// get device instance list
 	/// </summary>
 	/// <param name="id">The device id</param>
 	/// <param name="filter"></param>
-	public async Task<Page<DeviceDataSourceInstance>> GetDeviceInstanceListAsync(
+	public async Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
-		Filter<DeviceDataSourceInstance> filter)
+		Filter<ResourceDataSourceInstance> filter)
 		=> await GetDeviceInstanceListAsync(id, filter, CancellationToken.None);
 
 	/// <summary>
@@ -747,11 +1028,11 @@ public partial class LogicMonitorClient
 	/// <param name="id">The device id</param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Page<DeviceDataSourceInstance>> GetDeviceInstanceListAsync(
+	public async Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
-		Filter<DeviceDataSourceInstance> filter,
+		Filter<ResourceDataSourceInstance> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync<DeviceDataSourceInstance>($"device/devices/{id}/instances", filter, cancellationToken);
+		=> await FilteredGetAsync($"device/devices/{id}/instances", filter, cancellationToken);
 
 	/// <summary>
 	/// get top talkers graph
@@ -835,7 +1116,7 @@ public partial class LogicMonitorClient
 			});
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
-			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
+			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
 			foreach (var alert in (await GetDeviceAlertsByIdNormalAsync(deviceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
@@ -925,21 +1206,35 @@ public partial class LogicMonitorClient
 		=> await GetBySubUrlAsync<AwsExternalId>($"aws/externalId", cancellationToken);
 
 	/// <summary>
-	/// Get device group SDTs
+	/// Obsolete
 	/// </summary>
 	/// <param name="id"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<ScheduledDownTime>> GetDeviceGroupSdtsAsync(
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupSdtsAsync instead", true)]
+	public Task<Page<ScheduledDownTime>> GetDeviceGroupSdtsAsync(
 		int id,
 		Filter<ScheduledDownTime> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync<ScheduledDownTime>($"device/groups/{id}/sdts", filter, cancellationToken);
+		=> GetResourceGroupSdtsAsync(id, filter, cancellationToken);
 
 	/// <summary>
-	/// Get device group alerts
+	/// Get ResourceGroup SDTs
 	/// </summary>
 	/// <param name="id"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<ScheduledDownTime>> GetResourceGroupSdtsAsync(
+		int id,
+		Filter<ScheduledDownTime> filter,
+		CancellationToken cancellationToken)
+		=> FilteredGetAsync($"device/groups/{id}/sdts", filter, cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
 	/// <param name="customColumns"></param>
 	/// <param name="needMessage"></param>
 	/// <param name="fields"></param>
@@ -947,8 +1242,10 @@ public partial class LogicMonitorClient
 	/// <param name="offset"></param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<Alert>> GetDeviceGroupAlertsAsync(
-		int id,
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupAlertsAsync instead", true)]
+	public Task<Page<Alert>> GetDeviceGroupAlertsAsync(
+		int resourceGroupId,
 		string customColumns = "",
 		bool needMessage = false,
 		string fields = "",
@@ -956,15 +1253,57 @@ public partial class LogicMonitorClient
 		int offset = 0,
 		string filter = "",
 		CancellationToken cancellationToken = default)
-		=> await GetBySubUrlAsync<Page<Alert>>($"device/groups/{id}/alerts?customColumns={customColumns}&needMessage={needMessage}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
+		=> GetResourceGroupAlertsAsync(
+			resourceGroupId,
+			customColumns,
+			needMessage,
+			fields,
+			size,
+			offset,
+			filter,
+			cancellationToken);
+
+	/// <summary>
+	/// Get ResourceGroup alerts
+	/// </summary>
+	/// <param name="resourceGroupId"></param>
+	/// <param name="customColumns"></param>
+	/// <param name="needMessage"></param>
+	/// <param name="fields"></param>
+	/// <param name="size"></param>
+	/// <param name="offset"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<Alert>> GetResourceGroupAlertsAsync(
+		int resourceGroupId,
+		string customColumns = "",
+		bool needMessage = false,
+		string fields = "",
+		int size = 50,
+		int offset = 0,
+		string filter = "",
+		CancellationToken cancellationToken = default)
+		=> GetBySubUrlAsync<Page<Alert>>($"device/groups/{resourceGroupId}/alerts?customColumns={customColumns}&needMessage={needMessage}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetUnmonitoredResourceAsync instead", true)]
+	public Task<Page<UnmonitoredResource>> GetUnmonitoredDeviceAsync(
+	Filter<UnmonitoredResource> filter,
+	CancellationToken cancellationToken)
+		=> GetUnmonitoredResourcesAsync(filter, cancellationToken);
 
 	/// <summary>
 	/// Get unmonitored device list
 	/// </summary>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<Page<UnmonitoredDevice>> GetUnmonitoredDeviceAsync(
-		Filter<UnmonitoredDevice> filter,
+	public Task<Page<UnmonitoredResource>> GetUnmonitoredResourcesAsync(
+		Filter<UnmonitoredResource> filter,
 		CancellationToken cancellationToken)
-		=> await FilteredGetAsync<UnmonitoredDevice>($"device/unmonitoreddevices", filter, cancellationToken);
+		=> FilteredGetAsync($"device/unmonitoreddevices", filter, cancellationToken);
 }

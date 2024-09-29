@@ -7,10 +7,17 @@ namespace LogicMonitor.Api.Dashboards;
 public class DeviceNocWidgetItem
 {
 	/// <summary>
-	/// The DeviceGroup Full Path
+	///     The ResourceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string ResourceGroupFullPath { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupFullPath instead", true)]
+	public string DeviceGroupFullPath => ResourceGroupFullPath;
 
 	/// <summary>
 	/// The Device display name

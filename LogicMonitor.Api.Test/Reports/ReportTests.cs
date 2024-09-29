@@ -49,7 +49,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 				Format = "PDF",
 				Type = "Dashboard",
 				GroupId = 375,
-				DateRange = $"{sDate.ToString("yyyy-MM-dd HH:mm")} TO {eDate.ToString("yyyy-MM-dd HH:mm")}",
+				DateRange = $"{sDate:yyyy-MM-dd HH:mm} TO {eDate:yyyy-MM-dd HH:mm}",
 				DashboardId = 205
 			},
 			default)

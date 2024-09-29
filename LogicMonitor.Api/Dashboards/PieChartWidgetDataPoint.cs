@@ -7,16 +7,30 @@
 public class PieChartWidgetDataPoint
 {
 	/// <summary>
-	/// The deviceGroupFullPath
+	///     The ResourceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The deviceDisplay Name
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupFullPath instead", true)]
+	public string DeviceGroupFullPath => ResourceGroupFullPath;
+
+	/// <summary>
+	/// The Resource Display Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceDisplayName instead", true)]
+	public string DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	/// The dataSourceFullName

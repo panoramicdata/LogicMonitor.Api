@@ -5,49 +5,49 @@ namespace LogicMonitor.Api.Extensions;
 /// </summary>
 internal static class DateTimeExtensions
 {
-	private static readonly DateTime TheEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+	private static readonly DateTime _theEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970
 	/// </summary>
 	/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
 	public static DateTime ToDateTimeUtc(this long secondsSinceTheEpoch)
-		=> TheEpoch.AddSeconds(secondsSinceTheEpoch);
+		=> _theEpoch.AddSeconds(secondsSinceTheEpoch);
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970
 	/// </summary>
 	/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
 	public static DateTime ToDateTimeUtc(this int secondsSinceTheEpoch)
-		=> TheEpoch.AddSeconds(secondsSinceTheEpoch);
+		=> _theEpoch.AddSeconds(secondsSinceTheEpoch);
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970 or null if zero
 	/// </summary>
 	/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
 	public static DateTime? ToNullableDateTimeUtc(this int secondsSinceTheEpoch)
-		=> secondsSinceTheEpoch == 0 ? (DateTime?)null : secondsSinceTheEpoch.ToDateTimeUtc();
+		=> secondsSinceTheEpoch == 0 ? null : secondsSinceTheEpoch.ToDateTimeUtc();
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970
 	/// </summary>
 	/// <param name="msSinceTheEpoch">the number of seconds since the Epoch</param>
 	public static DateTime ToDateTimeUtcFromMs(this long msSinceTheEpoch)
-		=> TheEpoch.AddMilliseconds(msSinceTheEpoch);
+		=> _theEpoch.AddMilliseconds(msSinceTheEpoch);
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970 or null if zero
 	/// </summary>
 	/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
 	public static DateTime? ToNullableDateTimeUtc(this long secondsSinceTheEpoch)
-		=> secondsSinceTheEpoch == 0 ? (DateTime?)null : secondsSinceTheEpoch.ToDateTimeUtc();
+		=> secondsSinceTheEpoch == 0 ? null : secondsSinceTheEpoch.ToDateTimeUtc();
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970
 	/// </summary>
 	/// <param name="dateTime">The DateTime</param>
 	public static int SecondsSinceTheEpoch(this DateTime dateTime)
-		=> (int)(dateTime - TheEpoch).TotalSeconds;
+		=> (int)(dateTime - _theEpoch).TotalSeconds;
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970

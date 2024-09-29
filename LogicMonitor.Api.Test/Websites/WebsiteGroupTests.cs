@@ -5,8 +5,8 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	[Fact]
 	public async Task SetWebsiteGroupCustomProperty()
 	{
-		// Create a device group for testing purposes
-		const string testWebsiteGroupName = "Property Test Device Group";
+		// Create a ResourceGroup for testing purposes
+		const string testWebsiteGroupName = "Property Test ResourceGroup";
 		var existingWebsiteGroup = await LogicMonitorClient
 			.GetWebsiteGroupByFullPathAsync(testWebsiteGroupName, default)
 			.ConfigureAwait(true);
@@ -17,7 +17,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 				.ConfigureAwait(true);
 		}
 
-		var deviceGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
+		var websiteGroup = await LogicMonitorClient.CreateAsync(new WebsiteGroupCreationDto
 		{
 			ParentId = "1",
 			Name = testWebsiteGroupName
@@ -29,69 +29,69 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set it to an expected value
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value1)
 			.ConfigureAwait(true);
 		var deviceProperties = await LogicMonitorClient
-			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, default)
 			.ConfigureAwait(true);
 		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Set it to a different value
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value2)
 			.ConfigureAwait(true);
-		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Set it to null (delete it)
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 
 		// This should fail as there is nothing to delete
-		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(true)).ConfigureAwait(true);
+		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Delete).ConfigureAwait(true)).ConfigureAwait(true);
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
-		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(true)).ConfigureAwait(true);
+		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Update).ConfigureAwait(true)).ConfigureAwait(true);
 		updateException.Should().BeOfType<InvalidOperationException>();
 
-		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(true)).ConfigureAwait(true);
+		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Create).ConfigureAwait(true)).ConfigureAwait(true);
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value1, SetPropertyMode.Create)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value1, SetPropertyMode.Create)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Update one without checking
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, value2, SetPropertyMode.Update)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value2, SetPropertyMode.Update)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Delete one without checking
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(deviceGroup.Id, propertyName, null, SetPropertyMode.Delete)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Delete)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetWebsiteGroupPropertiesAsync(deviceGroup.Id, default)
+			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);

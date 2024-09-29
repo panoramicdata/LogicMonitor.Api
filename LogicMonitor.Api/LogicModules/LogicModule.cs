@@ -17,13 +17,13 @@ public abstract class LogicModule : NamedItem
 	///		The access group Ids
 	/// </summary>
 	[DataMember(Name = "accessGroupIds")]
-	public List<int> AccessGroupIds { get; set; } = new();
+	public List<int> AccessGroupIds { get; set; } = [];
 
 	/// <summary>
 	///		The access groups
 	/// </summary>
 	[DataMember(Name = "accessGroups")]
-	public List<AccessGroup> AccessGroups { get; set; } = new();
+	public List<AccessGroup> AccessGroups { get; set; } = [];
 
 	/// <summary>
 	/// The lineage Id of the LMModule

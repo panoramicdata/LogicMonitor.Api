@@ -34,13 +34,13 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[InlineData(typeof(DeviceOpsNoteScopeCreationDto))]
 	[InlineData(typeof(WebsiteOpsNoteScopeCreationDto))]
 	[InlineData(typeof(WebsiteGroupOpsNoteScopeCreationDto))]
-	[InlineData(typeof(DeviceGroupOpsNoteScopeCreationDto))]
+	[InlineData(typeof(ResourceGroupOpsNoteScopeCreationDto))]
 	public async Task AddRemoveOpsNote(Type t)
 	{
 		ArgumentNullException.ThrowIfNull(t);
 
 		var device = await LogicMonitorClient
-			.GetAsync<Device>(WindowsDeviceId, default)
+			.GetAsync<Resource>(WindowsDeviceId, default)
 			.ConfigureAwait(true);
 
 		var website = await LogicMonitorClient
@@ -60,7 +60,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				t.Name switch
 				{
 					nameof(DeviceOpsNoteScopeCreationDto) => new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id},
-					nameof(DeviceGroupOpsNoteScopeCreationDto) => new DeviceGroupOpsNoteScopeCreationDto {DeviceGroupId = device.DeviceGroupIdsString.Split(',').Select(int.Parse).First()},
+					nameof(ResourceGroupOpsNoteScopeCreationDto) => new ResourceGroupOpsNoteScopeCreationDto {ResourceGroupId = device.ResourceGroupIdsString.Split(',').Select(int.Parse).First()},
 					nameof(WebsiteOpsNoteScopeCreationDto) => new WebsiteOpsNoteScopeCreationDto {WebsitesId = website.Id},
 					nameof(WebsiteGroupOpsNoteScopeCreationDto) => new WebsiteGroupOpsNoteScopeCreationDto {WebsiteGroupId = website.GroupId},
 					_ => throw new NotSupportedException($"Unexpected type {t.Name}")

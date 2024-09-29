@@ -10,13 +10,25 @@ public class JobMonitorWidget : Widget, IWidget
 	///     The device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The device group display name
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceDisplayName", true)]
+	public string DeviceDisplayName => ResourceDisplayName;
+
+	/// <summary>
+	///     The ResourceGroup display name
 	/// </summary>
 	[DataMember(Name = "groupDisplayName")]
-	public string DeviceGroupDisplayName { get; set; } = string.Empty;
+	public string ResourceGroupDisplayName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupDisplayName", true)]
+	public string DeviceGroupDisplayName => ResourceGroupDisplayName;
 
 	/// <summary>
 	///     The batch job name

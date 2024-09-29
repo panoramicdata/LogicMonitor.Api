@@ -1,20 +1,27 @@
 namespace LogicMonitor.Api.ScheduledDownTimes;
 
 /// <summary>
-///    DeviceGroup SDT creation DTO
+///    ResourceGroup SDT creation DTO
 /// </summary>
 /// <remarks>
 ///    Device
 /// </remarks>
-/// <param name="deviceGroupId"></param>
-public class ResourceGroupScheduledDownTimeCreationDto(int deviceGroupId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.ResourceGroup)
+/// <param name="resourceGroupId"></param>
+public class ResourceGroupScheduledDownTimeCreationDto(int resourceGroupId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.ResourceGroup)
 {
 
 	/// <summary>
-	/// The id of the device group that the SDT will be associated with
+	/// The id of the ResourceGroup that the SDT will be associated with
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; } = deviceGroupId;
+	public int ResourceGroupId { get; set; } = resourceGroupId;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupId instead", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// The id of the datasource that this SDT will be associated with, for the specified group. dataSourceId 0 indicates all datasources
@@ -29,8 +36,15 @@ public class ResourceGroupScheduledDownTimeCreationDto(int deviceGroupId) : Sche
 	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The full path of the device group that this SDT will be associated with
+	/// The full path of the ResourceGroup that this SDT will be associated with
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string ResourceGroupFullPath { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupFullPath instead", true)]
+	public string DeviceGroupFullPath => ResourceGroupFullPath;
 }

@@ -3,17 +3,19 @@ namespace LogicMonitor.Api.Test.ScheduledDownTimes;
 public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
-	public async Task GetDeviceScheduledDownTimes()
+	public async Task GetResourceScheduledDownTimes()
 	{
 		var sdts = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
 			FilterItems =
 			[
-				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "DeviceSDT"),
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), ScheduledDownTimeType.Resource),
 				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.IsEffective), false),
 			]
 		}, default).ConfigureAwait(true);
-		Assert.All(sdts, sdt => Assert.False(sdt.IsEffective));
+		sdts.Should().NotBeNull();
+		sdts.Should().AllSatisfy(sdt => sdt.Type.Should().Be(ScheduledDownTimeType.Resource));
+		sdts.Should().AllSatisfy(sdt => sdt.IsEffective.Should().BeFalse());
 	}
 
 	[Fact]
@@ -70,11 +72,11 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		// Device
 		var testsdts =
-			await LogicMonitorClient.GetDeviceHistorySdtsAsync(1053, default)
+			await LogicMonitorClient.GetResourceHistorySdtsAsync(1053, default)
 			.ConfigureAwait(true);
 		testsdts.Should().NotBeNull();
 
-		// Device Group - currently throws a permission denied error
+		// ResourceGroup - currently throws a permission denied error
 		//var _deviceGroupHistorySdts =
 		//	await LogicMonitorClient.GetDeviceGroupHistorySdts(1516, default)
 		//	.ConfigureAwait(true);
@@ -82,7 +84,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Device
 		var deviceHistorySdts =
-			await LogicMonitorClient.GetDeviceHistorySdtsAsync(1765, default)
+			await LogicMonitorClient.GetResourceHistorySdtsAsync(1765, default)
 			.ConfigureAwait(true);
 		deviceHistorySdts.Should().NotBeNull();
 
@@ -110,7 +112,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.ConfigureAwait(true);
 		website.Should().NotBeNull();
 		var websiteHistorySdts =
-			await LogicMonitorClient.GetSdtHistoryByWebsiteIdAsync(website!.Id, new(), default)
+			await LogicMonitorClient.GetSdtHistoryByWebsiteIdAsync(website.Id, new(), default)
 			.ConfigureAwait(true);
 		websiteHistorySdts.Should().NotBeNull();
 	}
@@ -136,14 +138,14 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.CreateAsync(sdtCreationDto, default)
 				.ConfigureAwait(true);
 			createdSdt.Comment.Should().Be(initialComment);
-			createdSdt.DeviceId.Should().Be(deviceId);
+			createdSdt.ResourceId.Should().Be(deviceId);
 
 			// Check the re-fetched SDT looks right
 			var refetchSdt = await LogicMonitorClient
 				.GetAsync<ScheduledDownTime>(createdSdt.Id, default)
 				.ConfigureAwait(true);
 			refetchSdt.Comment.Should().Be(initialComment);
-			refetchSdt.DeviceId.Should().Be(deviceId);
+			refetchSdt.ResourceId.Should().Be(deviceId);
 
 			// Update
 			const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteADeviceSdt new comment";
@@ -157,7 +159,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.GetAsync<ScheduledDownTime>(createdSdt.Id, default)
 				.ConfigureAwait(true);
 			refetchSdt.Comment.Should().Be(newComment);
-			refetchSdt.DeviceId.Should().Be(deviceId);
+			refetchSdt.ResourceId.Should().Be(deviceId);
 
 			// Get all scheduled downtimes (we have created one, so at least that one should be there)
 			var scheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
@@ -177,7 +179,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 					.GetAsync<ScheduledDownTime>(sdt.Id, default)
 					.ConfigureAwait(true);
 				refetchedSdt.Id.Should().Be(sdt.Id);
-				refetchedSdt.DeviceId.Should().Be(sdt.DeviceId);
+				refetchedSdt.ResourceId.Should().Be(sdt.ResourceId);
 				refetchedSdt.Comment.Should().Be(sdt.Comment);
 			}
 		}
@@ -283,7 +285,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.SingleOrDefault();
 		collector.Should().NotBeNull();
 		const string initialComment = "LogicMonitor.Api unit tests - AddAndDeleteACollectorSdt initial comment";
-		var collectorId = collector!.Id;
+		var collectorId = collector.Id;
 		var sdtCreationDto = new CollectorScheduledDownTimeCreationDto(collectorId)
 		{
 			Comment = initialComment,
@@ -341,7 +343,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 					.GetAsync<ScheduledDownTime>(sdt.Id, default)
 					.ConfigureAwait(true);
 				refetchedSdt.Id.Should().Be(sdt.Id);
-				refetchedSdt.DeviceId.Should().Be(sdt.DeviceId);
+				refetchedSdt.ResourceId.Should().Be(sdt.ResourceId);
 				refetchedSdt.Comment.Should().Be(sdt.Comment);
 			}
 		}
@@ -367,14 +369,14 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var deviceScheduledDownTime = allScheduledDownTimes.Find(sdt => sdt.Type == ScheduledDownTimeType.Resource);
 		deviceScheduledDownTime.Should().NotBeNull();
-		var deviceId = deviceScheduledDownTime!.DeviceId;
+		var resourceId = deviceScheduledDownTime.ResourceId;
 
 		var filteredScheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
 		{
 			FilterItems =
 			[
 				new Eq<ScheduledDownTime>(nameof(Type), "DeviceSDT"),
-				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.DeviceId), deviceId!)
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.ResourceId), resourceId!)
 			]
 		}, default
 		).ConfigureAwait(true);
@@ -387,7 +389,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.GetAsync<ScheduledDownTime>(sdt.Id, default)
 				.ConfigureAwait(true);
 			refetchedSdt.Id.Should().Be(sdt.Id);
-			refetchedSdt.DeviceId.Should().Be(deviceId);
+			refetchedSdt.ResourceId.Should().Be(resourceId);
 			refetchedSdt.Comment.Should().Be(sdt.Comment);
 		}
 	}
@@ -395,11 +397,11 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 	[Fact]
 	public async Task CreatePingDataSourceSdtOnEmptyDeviceGroup()
 	{
-		const string deviceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
+		const string resourceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
 
 		// Ensure DeviceGroup is NOT present
 		var resourceGroup = await LogicMonitorClient
-			.GetDeviceGroupByFullPathAsync(deviceGroupName, default)
+			.GetResourceGroupByFullPathAsync(resourceGroupName, default)
 			.ConfigureAwait(true);
 
 		if (resourceGroup is not null)
@@ -411,10 +413,10 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Create DeviceGroup
 		resourceGroup = await LogicMonitorClient
-			.CreateAsync(new DeviceGroupCreationDto
+			.CreateAsync(new ResourceGroupCreationDto
 			{
 				ParentId = "1",
-				Name = deviceGroupName
+				Name = resourceGroupName
 			}, default)
 			.ConfigureAwait(true);
 
@@ -438,7 +440,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
 			EndDateTimeEpochMs = DateTime.UtcNow.AddMinutes(10).MillisecondsSinceTheEpoch(),
 			RecurrenceType = ScheduledDownTimeRecurrenceType.OneTime,
-			DataSourceId = dataSource!.Id,
+			DataSourceId = dataSource.Id,
 			DataSourceName = dataSource.Name
 		};
 
@@ -462,7 +464,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			}
 		}
 
-		// Remove the device group
+		// Remove the ResourceGroup
 		await LogicMonitorClient
 			.DeleteAsync(resourceGroup, cancellationToken: default)
 			.ConfigureAwait(true);
@@ -484,7 +486,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.Single();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
 
 		var deviceDataSourceInstance = (await LogicMonitorClient
@@ -524,17 +526,17 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupSDTs()
+	public async Task GetResourceGroupSdts()
 	{
 		var groupSDTsList = await LogicMonitorClient
-			.GetDeviceGroupHistorySdtsAsync(1950, default)
+			.GetResourceGroupHistorySdtsAsync(1950, default)
 			.ConfigureAwait(true);
 
 		groupSDTsList.Should().NotBeEmpty();
 	}
 
 	[Fact]
-	public async Task GetHistoricWebsiteGroupSDT()
+	public async Task GetHistoricWebsiteGroupSdt()
 	{
 		var websiteGroupId = 1;
 

@@ -127,14 +127,14 @@ internal class PortalResponse<T> where T : new()
 		}
 
 		var dataString = Data.ToString();
-		converters ??= Array.Empty<JsonConverter>();
+		converters ??= [];
 		try
 		{
 			var deserializedObject = JsonConvert.DeserializeObject<T>(dataString, new JsonSerializerSettings
 			{
 #if DEBUG
-					MissingMemberHandling = MissingMemberHandling.Error,
-					ContractResolver = new RequireObjectPropertiesContractResolver(),
+				MissingMemberHandling = MissingMemberHandling.Error,
+				ContractResolver = new RequireObjectPropertiesContractResolver(),
 #endif
 				TypeNameHandling = TypeNameHandling.Auto,
 				Converters = converters

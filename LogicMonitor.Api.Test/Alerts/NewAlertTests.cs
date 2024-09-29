@@ -2,9 +2,9 @@ namespace LogicMonitor.Api.Test.Alerts;
 
 public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
-	private static readonly DateTime EndDateTime = DateTime.UtcNow.Date;
-	private static readonly int StartDateTimeSeconds = EndDateTime.AddDays(-14).SecondsSinceTheEpoch();
-	private static readonly int EndDateTimeSeconds = EndDateTime.SecondsSinceTheEpoch();
+	private static readonly DateTime _endDateTime = DateTime.UtcNow.Date;
+	private static readonly int _startDateTimeSeconds = _endDateTime.AddDays(-14).SecondsSinceTheEpoch();
+	private static readonly int _endDateTimeSeconds = _endDateTime.SecondsSinceTheEpoch();
 
 	[Fact]
 	public async Task GetAlerts_SdtsMatchRequest()
@@ -14,16 +14,16 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		{
 			FilterItems =
 			[
-				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), _startDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), _endDateTimeSeconds),
 			]
 		};
 		var sdtFilter = new Filter<Alert>
 		{
 			FilterItems =
 			[
-				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), _startDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), _endDateTimeSeconds),
 				new Eq<Alert>(nameof(Alert.InScheduledDownTime), true)
 			]
 		};
@@ -31,8 +31,8 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		{
 			FilterItems =
 			[
-				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), _startDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), _endDateTimeSeconds),
 				new Eq<Alert>(nameof(Alert.InScheduledDownTime), false)
 			]
 		};
@@ -54,8 +54,8 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
 		// Alerts have the expected SDT status
-		Assert.All(sdtAlerts, a => Assert.True(a.InScheduledDownTime));
-		Assert.All(nonSdtAlerts, a => Assert.False(a.InScheduledDownTime));
+		sdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeTrue());
+		nonSdtAlerts.Should().AllSatisfy(a => a.InScheduledDownTime.Should().BeFalse());
 	}
 
 	[Fact]
@@ -65,8 +65,8 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		{
 			FilterItems =
 			[
-				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), _startDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), _endDateTimeSeconds),
 			]
 		};
 
@@ -122,8 +122,8 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		{
 			FilterItems =
 			[
-				new Gt<Alert>(nameof(Alert.StartOnSeconds), StartDateTimeSeconds),
-				new Lt<Alert>(nameof(Alert.StartOnSeconds), EndDateTimeSeconds),
+				new Gt<Alert>(nameof(Alert.StartOnSeconds), _startDateTimeSeconds),
+				new Lt<Alert>(nameof(Alert.StartOnSeconds), _endDateTimeSeconds),
 				new Eq<Alert>(nameof(Alert.Severity), severities)
 			]
 		};

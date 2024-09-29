@@ -32,9 +32,9 @@ public static async Task GetAllDevices(ILogger logger, CancellationToken cancell
 		}
 	);
 
-	var devices = await logicMonitorClient
-		.GetAllAsync<Device>(cancellationToken)
+	var resources = await logicMonitorClient
+		.GetAllAsync<Resource>(cancellationToken)
 		.ConfigureAwait(false);
 
-	Console.WriteLine($"Device Count: {devices.Count}");
+	Console.WriteLine($"Resource Count: {resources.Count}");
 }

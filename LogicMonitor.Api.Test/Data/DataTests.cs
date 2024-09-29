@@ -8,22 +8,26 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	public async Task GetForecastGraphData()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
+
 		var dataSourceGraphs = await LogicMonitorClient
-			.GetDataSourceGraphsAsync(dataSource!.Id, default)
+			.GetDataSourceGraphsAsync(dataSource.Id, default)
 			.ConfigureAwait(true);
+
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
+
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(
-				425,
+				WindowsDeviceId,
 				deviceDataSource.Id,
 				new(),
 				cancellationToken: default)
 			.ConfigureAwait(true);
+
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataSourceGraph = dataSourceGraphs[0];
 		var virtualDataPoint = dataSourceGraph.DataPoints[0];
@@ -56,7 +60,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
 			.ConfigureAwait(true);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstanceGroups = await LogicMonitorClient
@@ -125,9 +129,9 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var netflowDevice = await GetNetflowDeviceAsync(default).ConfigureAwait(true);
 
 		// Create the request
-		var request = new NetflowDeviceGroupGraphDataRequest
+		var request = new NetflowResourceGroupGraphDataRequest
 		{
-			DeviceGroupId = int.Parse(netflowDevice.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
+			ResourceGroupId = int.Parse(netflowDevice.ResourceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
 			StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
 			EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
 			TimePeriod = TimePeriod.Zoom
@@ -149,20 +153,20 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
 
 		var dataSourceGraph = await LogicMonitorClient
-			.GetDataSourceGraphByNameAsync(dataSource!.Id, "Certificate Validity", default)
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Capacity Detail", default)
 			.ConfigureAwait(true);
 		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default)
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
 		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
 		{
@@ -189,23 +193,23 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 
 		var dataSourceGraph = await LogicMonitorClient
-			.GetDataSourceGraphByNameAsync(dataSource.Id, "Certificate Validity", default)
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Capacity Detail", default)
 			.ConfigureAwait(true);
 		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(425, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default)
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -255,12 +259,12 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(427, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(427, deviceDataSource.Id, new Filter<DeviceDataSourceInstance>(), default)
+			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -320,28 +324,33 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	}
 
 	[Fact]
-	public async Task GetDeviceDataSourceInstancesFromDev()
+	public async Task GetDeviceDataSourceInstances()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
 			.ConfigureAwait(true);
 		dataSource.Should().NotBeNull();
-		dataSource ??= new();
+
 		var deviceDataSource = await LogicMonitorClient
-			.GetDeviceDataSourceByDeviceIdAndDataSourceIdAsync(425, dataSource.Id, default)
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
+				WindowsDeviceId,
+				dataSource.Id,
+				default)
 			.ConfigureAwait(true);
+		deviceDataSource.Should().NotBeNull();
+
 		var deviceDataSourceInstances = await LogicMonitorClient
 				.GetAllDeviceDataSourceInstancesAsync(
-					425,
+					WindowsDeviceId,
 					deviceDataSource.Id,
-					new Filter<DeviceDataSourceInstance>
+					new Filter<ResourceDataSourceInstance>
 					{
 						Take = 300,
 						ExtraFilters =
 						[
-								new Eq<DeviceDataSourceInstance>(nameof(DeviceDataSourceInstance.StopMonitoring), false)
+								new Eq<ResourceDataSourceInstance>(nameof(ResourceDataSourceInstance.StopMonitoring), false)
 						],
-						Order = new Order<DeviceDataSourceInstance> { Property = nameof(DeviceDataSourceInstance.Name), Direction = OrderDirection.Asc }
+						Order = new Order<ResourceDataSourceInstance> { Property = nameof(ResourceDataSourceInstance.Name), Direction = OrderDirection.Asc }
 					}, default).ConfigureAwait(true);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -356,7 +365,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		dataSource.Should().NotBeNull();
 
 		var updateReasons = await LogicMonitorClient
-			.GetDataSourceUpdateReasonAsync(dataSource!.Id, new Filter<DataSourceUpdateReason>(), default)
+			.GetDataSourceUpdateReasonAsync(dataSource.Id, new Filter<DataSourceUpdateReason>(), default)
 			.ConfigureAwait(true);
 
 		updateReasons.Should().NotBeNull();

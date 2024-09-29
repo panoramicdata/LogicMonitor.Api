@@ -19,7 +19,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	{
 		// Get the windows device display name from the WindowsDeviceId
 		var windowsDevice = await LogicMonitorClient
-			.GetAsync<Device>(WindowsDeviceId, default)
+			.GetAsync<Resource>(WindowsDeviceId, default)
 			.ConfigureAwait(true);
 
 		var response = await LogicMonitorClient
@@ -52,7 +52,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	{
 		// Get the windows device display name from the WindowsDeviceId
 		var windowsDevice = await LogicMonitorClient
-			.GetAsync<Device>(WindowsDeviceId, default)
+			.GetAsync<Resource>(WindowsDeviceId, default)
 			.ConfigureAwait(true);
 
 		// Get the device custom properties

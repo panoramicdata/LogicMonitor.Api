@@ -65,7 +65,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		firstLine.Should().NotBeNull();
 		firstLine ??= new();
 		firstLine.Data.Should().NotBeNull();
-		firstLine.Data.Any(datum => datum is not null).Should().BeTrue();
+		firstLine.Data.Should().Contain(datum => datum.HasValue);
 	}
 
 	[Fact]

@@ -43,6 +43,12 @@ public class AutoDiscoveryConfiguration
 	public int ScheduleIntervalSeconds { get; set; }
 
 	/// <summary>
+	/// The number of days to show deleted instances
+	/// </summary>
+	[DataMember(Name = "showDeletedInstanceDays")]
+	public int ShowDeletedInstanceDays { get; set; }
+
+	/// <summary>
 	/// method used to do auto discovery instance
 	/// </summary>
 	[DataMember(Name = "method")]

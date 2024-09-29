@@ -16,15 +16,3 @@ public class WebsiteGroupScheduledDownTimeCreationDto(int websiteGroupId) : Sche
 	[DataMember(Name = "websiteGroupId")]
 	public int WebsiteGroupId { get; set; } = websiteGroupId;
 }
-
-/// <summary>
-/// WebsiteGroup SDT creation DTO - deprecated
-/// </summary>
-/// <remarks>
-/// Constructor
-/// </remarks>
-/// <param name="websiteGroupId"></param>
-[Obsolete("Use WebsiteGroupScheduledDownTimeCreationDto instead")]
-public class WebsiteGroupIdScheduledDownTimeCreationDto(int websiteGroupId) : WebsiteGroupScheduledDownTimeCreationDto(websiteGroupId)
-{
-}

@@ -1,10 +1,10 @@
 namespace LogicMonitor.Api.Devices;
 
 /// <summary>
-/// A Device DataSource instance
+/// A Resource DataSource instance
 /// </summary>
 [DataContract(Name = "deviceDataSourceInstance")]
-public class DeviceDataSourceInstanceSummary : NamedItem
+public class ResourceDataSourceInstanceSummary : NamedItem
 {
 	/// <summary>
 	/// The alias

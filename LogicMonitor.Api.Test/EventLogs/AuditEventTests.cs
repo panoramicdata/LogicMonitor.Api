@@ -86,8 +86,8 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		int expectedResourceId,
 		string expectedResourceName,
 		int? expectedCollectorId,
-		string expectedCollectorName,
-		string expectedTokenId)
+		string? expectedCollectorName,
+		string? expectedTokenId)
 		=> AssertToAuditEventSucceeds(
 			message,
 			new()
@@ -191,7 +191,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceGroup_NothingChanged_Success()
 		=> AssertToAuditEventSucceeds(
-			"Update the device group PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-TEST.Nothing has been changed. via API token TOKENID",
+			"Update the ResourceGroup PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-TEST.Nothing has been changed. via API token TOKENID",
 			new()
 			{
 				MatchedRegExId = 13,
@@ -206,7 +206,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Added_DeviceGroup_Success()
 		=> AssertToAuditEventSucceeds(
-			"Added device group Path1/Path2/Path3 (6686)  via API token TOKENID, ",
+			"Added ResourceGroup Path1/Path2/Path3 (6686)  via API token TOKENID, ",
 			new()
 			{
 				MatchedRegExId = 14,
@@ -530,12 +530,12 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 
 	[Theory]
 	[InlineData(
-		@"Added device group Integration Testing/Test (6704) , ",
+		@"Added ResourceGroup Integration Testing/Test (6704) , ",
 		"Integration Testing/Test",
 		6704
 		)]
 	[InlineData(
-		"Added device group BLAH (1234) ,  appliesTo=join(system.staticgroups,\",\")=~\"WOO\" && system.azure.tag.application == \"Azure virtual desktop\" && system.displayname =~ \"YAY\" ,add hosts total=6 ,hosts list :  host(id=1, name=AAA (BBB)) , host(id=2, name=CCC (DDD)) , host(id=3, name=EEE (FFF)) , host(id=4, name=GGG (HHH)) , host(id=5, name=III (JJJ)) , host(id=6, name=KKK (LLL))",
+		"Added ResourceGroup BLAH (1234) ,  appliesTo=join(system.staticgroups,\",\")=~\"WOO\" && system.azure.tag.application == \"Azure virtual desktop\" && system.displayname =~ \"YAY\" ,add hosts total=6 ,hosts list :  host(id=1, name=AAA (BBB)) , host(id=2, name=CCC (DDD)) , host(id=3, name=EEE (FFF)) , host(id=4, name=GGG (HHH)) , host(id=5, name=III (JJJ)) , host(id=6, name=KKK (LLL))",
 		"BLAH",
 		1234
 		)]
@@ -863,7 +863,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		"clive.down",
 		true,
 		4)]
-	public void LmSupportLogin_Success(
+	public void SupportLogin_Success(
 		string logItemMessage,
 		string expectedUserName,
 		bool expectedRestrictSso,

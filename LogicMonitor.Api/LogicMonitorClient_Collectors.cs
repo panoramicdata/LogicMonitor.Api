@@ -95,11 +95,10 @@ public partial class LogicMonitorClient
 		Filter<CollectorVersion> filter,
 		CancellationToken cancellationToken
 	)
-		=> (await GetBySubUrlAsync<Page<CollectorVersion>>($"setting/collector/collectors/versions?{filter}", cancellationToken).ConfigureAwait(false))
+		=> [.. (await GetBySubUrlAsync<Page<CollectorVersion>>($"setting/collector/collectors/versions?{filter}", cancellationToken).ConfigureAwait(false))
 		.Items
 		.OrderByDescending(cv => cv.MajorVersion)
-		.ThenByDescending(cv => cv.MinorVersion)
-		.ToList();
+		.ThenByDescending(cv => cv.MinorVersion)];
 
 	/// <summary>
 	/// update collector

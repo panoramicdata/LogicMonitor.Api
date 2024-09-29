@@ -55,7 +55,7 @@ public partial class LogicMonitorClient
 		Filter<DashboardGroup> filter,
 		CancellationToken cancellationToken
 	)
-		=> FilteredGetAsync<DashboardGroup>(
+		=> FilteredGetAsync(
 			$"dashboard/groups/{parentDashboardGroupId}/groups",
 			filter,
 			cancellationToken);
@@ -71,7 +71,7 @@ public partial class LogicMonitorClient
 		Filter<Dashboard> filter,
 		CancellationToken cancellationToken
 	)
-		=> FilteredGetAsync<Dashboard>(
+		=> FilteredGetAsync(
 			$"dashboard/groups/{parentDashboardGroupId}/dashboards",
 			filter,
 			cancellationToken

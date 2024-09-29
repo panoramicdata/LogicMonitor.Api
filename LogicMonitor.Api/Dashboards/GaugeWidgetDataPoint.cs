@@ -7,10 +7,17 @@ namespace LogicMonitor.Api.Dashboards;
 public class GaugeWidgetDataPoint
 {
 	/// <summary>
-	///     The deviceGroupFullPath
+	///     The ResourceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
-	public string DeviceGroupFullPath { get; set; } = string.Empty;
+	public string ResourceGroupFullPath { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupFullPath instead", true)]
+	public string DeviceGroupFullPath => ResourceGroupFullPath;
 
 	/// <summary>
 	///     The deviceDisplayName

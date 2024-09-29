@@ -17,7 +17,7 @@ public partial class LogicMonitorClient
 		};
 
 	private async Task<byte[]> DownloadImage(string subUrl, CancellationToken cancellationToken)
-		=> (await GetAsync<List<byte>>(true, subUrl, cancellationToken).ConfigureAwait(false)).ToArray();
+		=> [.. (await GetAsync<List<byte>>(true, subUrl, cancellationToken).ConfigureAwait(false))];
 
 	private async Task DownloadFile(string subUrl, FileInfo fileInfo, CancellationToken cancellationToken)
 	{

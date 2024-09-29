@@ -73,6 +73,12 @@ public class Alert : IHasEndpoint
 	public string InternalId { get; set; } = string.Empty;
 
 	/// <summary>
+	///    The log partition
+	/// </summary>
+	[DataMember(Name = "logPartition")]
+	public string LogPartition { get; set; } = string.Empty;
+
+	/// <summary>
 	///    The number of seconds since the Epoch when the alert state started
 	/// </summary>
 	[DataMember(Name = "startEpoch")]
@@ -232,7 +238,7 @@ public class Alert : IHasEndpoint
 	///    The monitor object's groups
 	/// </summary>
 	[DataMember(Name = "monitorObjectGroups")]
-	public List<DeviceGroup> MonitorObjectGroups { get; set; } = [];
+	public List<ResourceGroup> MonitorObjectGroups { get; set; } = [];
 
 	/// <summary>
 	///    The resource id

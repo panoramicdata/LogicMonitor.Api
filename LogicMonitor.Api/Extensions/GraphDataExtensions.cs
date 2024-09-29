@@ -5,7 +5,7 @@
 /// </summary>
 public static class GraphDataExtensions
 {
-	private static readonly long timeThreshold = 2_000;
+	private static readonly long _timeThreshold = 2_000;
 
 	/// <summary>
 	/// Removes invalid LogicMonitor data
@@ -22,7 +22,7 @@ public static class GraphDataExtensions
 				continue;
 			}
 
-			if (graphData.TimeStamps[index - 1] >= (graphData.TimeStamps[index] - timeThreshold))
+			if (graphData.TimeStamps[index - 1] >= (graphData.TimeStamps[index] - _timeThreshold))
 			{
 				timestampToRemove.Add(index - 1);
 			}
@@ -46,7 +46,7 @@ public static class GraphDataExtensions
 		{
 			graphData.TimeStamps.RemoveAt(index);
 		}
-		
+
 		//NO: what can happen is that some timestamps are duplicated (crazy, right?) and this could remove e.g. 2 but
 		// then we only were removing 1 in the line data. That's not right as the data and timestamp counts MUST match
 		//graphData.TimeStamps.RemoveAll(timestamp => timestampsAndIndexes.Exists(ts => ts.Timestamp == timestamp));

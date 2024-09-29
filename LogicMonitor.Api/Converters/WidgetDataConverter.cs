@@ -8,7 +8,7 @@ internal class WidgetDataConverter : JsonCreationConverter<WidgetData>
 	protected override WidgetData Create(Type objectType, JObject jObject)
 	{
 		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant()
-			?? throw new ArgumentNullException("type", "Type not available for discrimination!");
+			?? throw new ArgumentNullException(nameof(objectType), "Type not available for discrimination!");
 		return type switch
 		{
 			"bignumber" => new WidgetData(),

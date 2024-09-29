@@ -3,7 +3,7 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 	private const int AlertsMaxTake = 300;
-	private readonly Random randomGenerator = new();
+	private readonly Random _randomGenerator = new();
 
 	/// <summary>
 	///     Gets a list of alerts.
@@ -63,7 +63,7 @@ public partial class LogicMonitorClient
 			});
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
-			await Task.Delay(randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
+			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
 			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);
@@ -97,7 +97,7 @@ public partial class LogicMonitorClient
 			var alertTypesAreOnlyWebsite = alertTypesOrNull?.All(alertType => alertType == AlertType.Website) ?? false;
 			correctedAlertFilter.MonitorObjectName = alertTypesAreOnlyWebsite
 				? (await GetAsync<Website>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).Name
-				: (await GetAsync<Device>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).DisplayName;
+				: (await GetAsync<Resource>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).DisplayName;
 		}
 
 		// If take is specified, do only that chunk.

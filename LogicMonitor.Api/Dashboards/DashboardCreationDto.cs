@@ -31,10 +31,17 @@ public class DashboardCreationDto : CreationDto<Dashboard>, IHasName, IHasDescri
 	public string Description { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Whether or not the dashboard is sharable. This value will always be true unless the dashboard is a private dashboard
+	/// Whether or not the dashboard is shareable. This value will always be true unless the dashboard is a private dashboard
 	/// </summary>
 	[DataMember(Name = "sharable")]
-	public bool Sharable { get; set; }
+	public bool Shareable { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use Shareable", true)]
+	public bool Sharable => Shareable;
 
 	/// <summary>
 	/// Information about widget configuration used by the UI

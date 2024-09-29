@@ -36,11 +36,11 @@ public class FlowTests : TestWithOutput
 		var device = await GetNetflowDeviceAsync(default);
 
 		var flowApplications = await LogicMonitorClient
-			.GetDeviceGroupFlowApplicationsPageAsync(
-				new DeviceGroupFlowApplicationsRequest
+			.GetResourceGroupFlowApplicationsPageAsync(
+				new ResourceGroupFlowApplicationsRequest
 				{
 					TimePeriod = TimePeriod.Zoom,
-					DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
+					ResourceGroupId = int.Parse(device.ResourceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
 					SortDirection = SortDirection.Ascending,
 					SortFlowField = FlowField.Usage,
 					Take = 100,
@@ -61,10 +61,10 @@ public class FlowTests : TestWithOutput
 	{
 		var device = await GetNetflowDeviceAsync(default);
 
-		var flowBandwidths = await LogicMonitorClient.GetDeviceGroupFlowBandwidthsPageAsync(new DeviceGroupFlowBandwidthsRequest
+		var flowBandwidths = await LogicMonitorClient.GetResourceGroupFlowBandwidthsPageAsync(new ResourceGroupFlowBandwidthsRequest
 		{
 			TimePeriod = TimePeriod.Zoom,
-			DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
+			ResourceGroupId = int.Parse(device.ResourceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
 			SortDirection = SortDirection.Ascending,
 			SortFlowField = FlowField.Usage,
 			Take = 100,
@@ -83,10 +83,10 @@ public class FlowTests : TestWithOutput
 	{
 		var device = await GetNetflowDeviceAsync(default);
 
-		var flows = await LogicMonitorClient.GetDeviceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
+		var flows = await LogicMonitorClient.GetResourceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
 		{
 			TimePeriod = TimePeriod.Zoom,
-			DeviceGroupId = int.Parse(device.DeviceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
+			ResourceGroupId = int.Parse(device.ResourceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
 			SortDirection = SortDirection.Ascending,
 			SortFlowField = FlowField.Usage,
 			Take = 100,

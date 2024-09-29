@@ -19,10 +19,17 @@ public enum TreeNodeFreeSearchResultType
 	DeviceGroup = 1,
 
 	/// <summary>
-	/// Device
+	/// Resource
 	/// </summary>
 	[EnumMember(Value = "device")]
-	Device = 2,
+	Resource = 2,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore]
+	[Obsolete("Use Resource instead", true)]
+	Device = Resource,
 
 	/// <summary>
 	/// DeviceDataSource

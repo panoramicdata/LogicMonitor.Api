@@ -19,10 +19,17 @@ public class AlertWidgetFilter
 	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The device group display name
+	///     The group display name
 	/// </summary>
 	[DataMember(Name = "group")]
-	public string DeviceGroupDisplayName { get; set; } = string.Empty;
+	public string ResourceGroupDisplayName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[Obsolete("Use ResourceGroupDisplayName", true)]
+	[JsonIgnore, IgnoreDataMember]
+	public string DeviceGroupDisplayName => ResourceGroupDisplayName;
 
 	/// <summary>
 	///     The datasource name

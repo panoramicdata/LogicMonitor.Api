@@ -31,11 +31,10 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.ConfigureAwait(true);
 
 		var fullGroup = new CollectorGroup();
-		var collectorGroup = new CollectorGroup();
 		var i = 0;
 		while (fullGroup.Id == 0)
 		{
-			collectorGroup = collectorGroups[i];
+			var collectorGroup = collectorGroups[i];
 			if (collectorGroup.CollectorCount > 0)
 			{
 				fullGroup = collectorGroup;
@@ -79,7 +78,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
 			.ExecuteDebugCommandAndWaitForResultAsync(
-				testCollector!.Id,
+				testCollector.Id,
 				"!ping 8.8.8.8",
 				10_000,
 				500,
@@ -100,7 +99,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
 			.ExecuteDebugCommandAndWaitForResultAsync(
-				testCollector!.Id,
+				testCollector.Id,
 				$"!groovy hostId={WindowsDeviceId}\nprintln \"Hello World\"",
 				10_000,
 				500,
@@ -128,6 +127,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var updatedGroup = (await LogicMonitorClient
 			.GetAllAsync<CollectorGroup>(default)
 			.ConfigureAwait(true))[1];
+		updatedGroup.Should().NotBeNull();
 
 		var updatedDesc = collectorGroup.Description;
 		collectorGroup.Description = defaultDesc;
@@ -156,6 +156,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var updatedGroup = (await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
 			.ConfigureAwait(true))[1];
+		updatedGroup.Should().NotBeNull();
 
 		var updatedDesc = collector.Description;
 		collector.Description = defaultDesc;

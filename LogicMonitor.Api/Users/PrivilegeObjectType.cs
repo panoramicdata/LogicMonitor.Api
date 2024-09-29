@@ -20,9 +20,16 @@ public enum PrivilegeObjectType
 	DashboardGroup,
 
 	/// <summary>
-	/// DeviceGroup
+	/// ResourceGroup
 	/// </summary>
 	[EnumMember(Value = "host_group")]
+	ResourceGroup,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroup instead", true)]
 	DeviceGroup,
 
 	/// <summary>
@@ -59,6 +66,13 @@ public enum PrivilegeObjectType
 	/// DeviceDashboard
 	/// </summary>
 	[EnumMember(Value = "deviceDashboard")]
+	ResourceDashboard,
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceDashboard instead", true)]
 	DeviceDashboard,
 
 	/// <summary>

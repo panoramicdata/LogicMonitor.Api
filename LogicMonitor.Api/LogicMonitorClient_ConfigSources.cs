@@ -10,7 +10,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="configSourceName"></param>
 	/// <param name="cancellationToken"></param>
-	[Obsolete("Use GetByNameAsync<ConfigSource> instead")]
+	[Obsolete("Use GetByNameAsync<ConfigSource> instead", true)]
 	public Task<ConfigSource?> GetConfigSourceByNameAsync(string configSourceName, CancellationToken cancellationToken)
 		=> GetByNameAsync<ConfigSource>(configSourceName, cancellationToken);
 

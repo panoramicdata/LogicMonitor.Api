@@ -497,7 +497,7 @@
 				},
 				"specifiedCollectorDeviceGroupId": {
 					"format": "int32",
-					"description": "The device group id when create a new collector device",
+					"description": "The ResourceGroup id when create a new collector device",
 					"type": "integer",
 					"example": 0.0
 				},
@@ -853,7 +853,7 @@
 			"properties": {
 				"deviceGroupId": {
 					"format": "int32",
-					"description": "The ID of the device group that credentials should be inherited from, for this scan",
+					"description": "The ID of the ResourceGroup that credentials should be inherited from, for this scan",
 					"type": "integer",
 					"example": 1.0
 				},
@@ -867,7 +867,7 @@
 					"example": "[{\"snmp.community\":\"test\"}]"
 				},
 				"deviceGroupName": {
-					"description": "The name of the device group that credentials should be inherited from, for this scan",
+					"description": "The name of the ResourceGroup that credentials should be inherited from, for this scan",
 					"type": "string",
 					"example": "Network Devices"
 				}
@@ -1107,7 +1107,7 @@
 							"type": "string"
 						},
 						"alertLevel": {
-							"description": "Warn | Error | Critical. The minimum severity of the alert statuses you’d like to evaluate for the specified devices and device groups",
+							"description": "Warn | Error | Critical. The minimum severity of the alert statuses you’d like to evaluate for the specified devices and ResourceGroups",
 							"type": "string"
 						},
 						"alertRule": {
@@ -1795,7 +1795,7 @@
 				},
 				"deviceGroupId": {
 					"format": "int32",
-					"description": "The ID of the Device Group for the DataSource",
+					"description": "The ID of the ResourceGroup for the DataSource",
 					"readOnly": true,
 					"type": "integer"
 				},
@@ -3112,7 +3112,7 @@
 					"type": "object",
 					"properties": {
 						"groupDisplayName": {
-							"description": "The display name of the device group in LogicMonitor that the batchjob is running on",
+							"description": "The display name of the ResourceGroup in LogicMonitor that the batchjob is running on",
 							"type": "string"
 						},
 						"batchJobId": {
@@ -4877,7 +4877,7 @@
 			"properties": {
 				"deviceGroupId": {
 					"format": "int32",
-					"description": "The ID of the device group that credentials should be inherited from, for this scan",
+					"description": "The ID of the ResourceGroup that credentials should be inherited from, for this scan",
 					"type": "integer",
 					"example": 1.0
 				},
@@ -4888,7 +4888,7 @@
 					"example": "[{\"snmp.community\":\"test\"}]"
 				},
 				"deviceGroupName": {
-					"description": "The name of the device group that credentials should be inherited from, for this scan",
+					"description": "The name of the ResourceGroup that credentials should be inherited from, for this scan",
 					"type": "string",
 					"example": "Network Devices"
 				}
@@ -5761,7 +5761,7 @@
 							"type": "string"
 						},
 						"metrics": {
-							"description": "The metrics (datapoints) that should be used to compute the SLA, where each service should include groupName (can be *), deviceName (can be *), dataSourceId or dataSourceFullName, instances (can be *), metric (datapoint), threshold, and exclusionSDTType (empty string means SDT periods will not be excluded, \"group\" means SDT periods at the device group level will be excluded, and \"device\" means SDT periods at the device level will be excluded)",
+							"description": "The metrics (datapoints) that should be used to compute the SLA, where each service should include groupName (can be *), deviceName (can be *), dataSourceId or dataSourceFullName, instances (can be *), metric (datapoint), threshold, and exclusionSDTType (empty string means SDT periods will not be excluded, \"group\" means SDT periods at the ResourceGroup level will be excluded, and \"device\" means SDT periods at the device level will be excluded)",
 							"type": "array",
 							"items": { "$ref": "#/definitions/SlaMetric" }
 						},
@@ -6121,7 +6121,7 @@
 					"readOnly": true,
 					"type": "array",
 					"items": { "type": "string" },
-					"example": "Devices, Device Groups"
+					"example": "Devices, ResourceGroups"
 				}
 			}
 		},
@@ -6222,7 +6222,7 @@
 				},
 				"deviceGroups": {
 					"uniqueItems": true,
-					"description": "The device groups and service groups the alert rule is configured to match",
+					"description": "The ResourceGroups and service groups the alert rule is configured to match",
 					"type": "array",
 					"items": { "type": "string" },
 					"example": "[ \"Devices by Type\"]"
@@ -6397,7 +6397,7 @@
 				"name": {
 					"description": "This is the name of the parent group of devices, if there is one established",
 					"type": "string",
-					"example": "Default Device Group"
+					"example": "Default ResourceGroup"
 				},
 				"type": {
 					"readOnly": true,
@@ -6944,7 +6944,7 @@
 						},
 						"deviceGroupId": {
 							"format": "int32",
-							"description": "The id of the device group that the SDT will be associated with",
+							"description": "The id of the ResourceGroup that the SDT will be associated with",
 							"type": "integer"
 						},
 						"dataSourceName": {
@@ -6952,7 +6952,7 @@
 							"type": "string"
 						},
 						"deviceGroupFullPath": {
-							"description": "The full path of the device group that this SDT will be associated with",
+							"description": "The full path of the ResourceGroup that this SDT will be associated with",
 							"type": "string"
 						}
 					}
@@ -7231,7 +7231,7 @@
 				"name": {
 					"description": "The name of the dashboard",
 					"type": "string",
-					"example": "Default Device Group"
+					"example": "Default ResourceGroup"
 				},
 				"id": {
 					"format": "int32",
@@ -9827,17 +9827,17 @@
 			"type": "object",
 			"properties": {
 				"fullPath": {
-					"description": "The full path of the device group (i.e. if the group \u0027Dev\u0027 is under a parent group named \u0027Production\u0027, the fullPath would be \u0027Production/Dev\u0027",
+					"description": "The full path of the ResourceGroup (i.e. if the group \u0027Dev\u0027 is under a parent group named \u0027Production\u0027, the fullPath would be \u0027Production/Dev\u0027",
 					"readOnly": true,
 					"type": "string"
 				},
 				"groupType": {
-					"description": "The type of device group: normal and dynamic device groups will have groupType\u003dNormal, and AWS groups will have a groupType value of AWS/SERVICE (e.g. AWS/S3)",
+					"description": "The type of ResourceGroup: normal and dynamic ResourceGroups will have groupType\u003dNormal, and AWS groups will have a groupType value of AWS/SERVICE (e.g. AWS/S3)",
 					"readOnly": true,
 					"type": "string"
 				},
 				"userPermission": {
-					"description": "The permissions for the device group that are granted to the user that made this API request",
+					"description": "The permissions for the ResourceGroup that are granted to the user that made this API request",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -9846,7 +9846,7 @@
 					"type": "string"
 				},
 				"description": {
-					"description": "The description of the device group",
+					"description": "The description of the ResourceGroup",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -9862,30 +9862,30 @@
 				},
 				"numOfHosts": {
 					"format": "int32",
-					"description": "The number of total devices, including both AWS and normal devices, that belong to this device group (includes normal devices in sub groups)",
+					"description": "The number of total devices, including both AWS and normal devices, that belong to this ResourceGroup (includes normal devices in sub groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"name": {
-					"description": "The name of the device group",
+					"description": "The name of the ResourceGroup",
 					"readOnly": true,
 					"type": "string"
 				},
 				"numOfDirectSubGroups": {
 					"format": "int64",
-					"description": "The number of sub-groups that belong only to this device group (doesn\u0027t include groups under sub-groups)",
+					"description": "The number of sub-groups that belong only to this ResourceGroup (doesn\u0027t include groups under sub-groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"numOfDirectDevices": {
 					"format": "int64",
-					"description": "The number of AWS and normal devices that belong only to this device group (doesn\u0027t include devices in sub-groups)",
+					"description": "The number of AWS and normal devices that belong only to this ResourceGroup (doesn\u0027t include devices in sub-groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"id": {
 					"format": "int32",
-					"description": "The id of the device group",
+					"description": "The id of the ResourceGroup",
 					"readOnly": true,
 					"type": "integer"
 				},
@@ -9908,23 +9908,23 @@
 			"required": [ "name" ],
 			"properties": {
 				"fullPath": {
-					"description": "The full path of the device group (i.e. if the group \u0027Dev\u0027 is under a parent group named \u0027Production\u0027, the fullPath would be \u0027Production/Dev\u0027",
+					"description": "The full path of the ResourceGroup (i.e. if the group \u0027Dev\u0027 is under a parent group named \u0027Production\u0027, the fullPath would be \u0027Production/Dev\u0027",
 					"readOnly": true,
 					"type": "string"
 				},
 				"groupType": {
-					"description": "The type of device group: normal and dynamic device groups will have groupType\u003dNormal, and AWS groups will have a groupType value of AWS/SERVICE (e.g. AWS/S3)",
+					"description": "The type of ResourceGroup: normal and dynamic ResourceGroups will have groupType\u003dNormal, and AWS groups will have a groupType value of AWS/SERVICE (e.g. AWS/S3)",
 					"type": "string",
 					"example": "Normal"
 				},
 				"numOfAWSDevices": {
 					"format": "int64",
-					"description": "The number of AWS devices that belong to this device group (includes AWS devices in sub groups)",
+					"description": "The number of AWS devices that belong to this ResourceGroup (includes AWS devices in sub groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"description": {
-					"description": "The description of the device group",
+					"description": "The description of the ResourceGroup",
 					"type": "string",
 					"example": "Linux Servers"
 				},
@@ -9940,7 +9940,7 @@
 					"type": "integer"
 				},
 				"disableAlerting": {
-					"description": "Indicates whether alerting is disabled (true) or enabled (false) for this device group",
+					"description": "Indicates whether alerting is disabled (true) or enabled (false) for this ResourceGroup",
 					"type": "boolean",
 					"example": true
 				},
@@ -9951,29 +9951,29 @@
 				},
 				"createdOn": {
 					"format": "int64",
-					"description": "The time, in epoch seconds format, that the device group was created",
+					"description": "The time, in epoch seconds format, that the ResourceGroup was created",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"hasNetflowEnabledDevices": {
-					"description": "Whether if any Netflow enabled devices in this device group",
+					"description": "Whether if any Netflow enabled devices in this ResourceGroup",
 					"readOnly": true,
 					"type": "boolean"
 				},
 				"numOfAzureDevices": {
 					"format": "int64",
-					"description": "The number of Azure devices that belong to this device group (includes Azure devices in sub groups)",
+					"description": "The number of Azure devices that belong to this ResourceGroup (includes Azure devices in sub groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"defaultCollectorDescription": {
-					"description": "The description of the default collector assigned to the device group",
+					"description": "The description of the default collector assigned to the ResourceGroup",
 					"readOnly": true,
 					"type": "string"
 				},
 				"defaultCollectorId": {
 					"format": "int32",
-					"description": "The Id of the default collector assigned to the device group",
+					"description": "The Id of the default collector assigned to the ResourceGroup",
 					"type": "integer",
 					"example": 1.0
 				},
@@ -9988,30 +9988,30 @@
 				},
 				"numOfDirectSubGroups": {
 					"format": "int64",
-					"description": "The number of sub-groups that belong only to this device group (doesn\u0027t include groups under sub-groups)",
+					"description": "The number of sub-groups that belong only to this ResourceGroup (doesn\u0027t include groups under sub-groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"subGroups": {
-					"description": "The child device groups within this device group",
+					"description": "The child ResourceGroups within this ResourceGroup",
 					"readOnly": true,
 					"type": "array",
 					"items": { "$ref": "#/definitions/DeviceGroupData" }
 				},
 				"numOfDirectDevices": {
 					"format": "int64",
-					"description": "The number of AWS and normal devices that belong only to this device group (doesn\u0027t include devices in sub-groups)",
+					"description": "The number of AWS and normal devices that belong only to this ResourceGroup (doesn\u0027t include devices in sub-groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"id": {
 					"format": "int32",
-					"description": "The id of the device group",
+					"description": "The id of the ResourceGroup",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"enableNetflow": {
-					"description": "Indicates whether Netflow is enabled (true) or disabled (false) for the device group, the default value is true",
+					"description": "Indicates whether Netflow is enabled (true) or disabled (false) for the ResourceGroup, the default value is true",
 					"type": "boolean",
 					"example": "true"
 				},
@@ -10022,12 +10022,12 @@
 					"type": "integer"
 				},
 				"effectiveAlertEnabled": {
-					"description": "Whether or not alerting is effectively disabled for this device group (alerting may be disabled at a higher level, e.g. parent group)",
+					"description": "Whether or not alerting is effectively disabled for this ResourceGroup (alerting may be disabled at a higher level, e.g. parent group)",
 					"readOnly": true,
 					"type": "boolean"
 				},
 				"userPermission": {
-					"description": "The permissions for the device group that are granted to the user that made this API request",
+					"description": "The permissions for the ResourceGroup that are granted to the user that made this API request",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -10036,7 +10036,7 @@
 					"type": "string"
 				},
 				"groupStatus": {
-					"description": "normal | dead \nThe status of this device group, where possible statuses are normal and dead. A group with a status of dead may indicate that one or more devices are dead within the group",
+					"description": "normal | dead \nThe status of this ResourceGroup, where possible statuses are normal and dead. A group with a status of dead may indicate that one or more devices are dead within the group",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -10052,7 +10052,7 @@
 				},
 				"parentId": {
 					"format": "int32",
-					"description": "The id of the parent group for this device group (the root device group has an Id of 1)",
+					"description": "The id of the parent group for this ResourceGroup (the root ResourceGroup has an Id of 1)",
 					"type": "integer",
 					"example": 1.0
 				},
@@ -10063,18 +10063,18 @@
 					"type": "integer"
 				},
 				"customProperties": {
-					"description": "The properties associated with this device group",
+					"description": "The properties associated with this ResourceGroup",
 					"type": "array",
 					"items": { "$ref": "#/definitions/NameAndValue" }
 				},
 				"numOfHosts": {
 					"format": "int64",
-					"description": "The number of total devices, including both AWS and normal devices, that belong to this device group (includes normal devices in sub groups)",
+					"description": "The number of total devices, including both AWS and normal devices, that belong to this ResourceGroup (includes normal devices in sub groups)",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"name": {
-					"description": "The name of the device group",
+					"description": "The name of the ResourceGroup",
 					"type": "string",
 					"example": "Linux Servers"
 				},
@@ -10974,7 +10974,7 @@
 					"type": "string"
 				},
 				"deviceGroupFullPath": {
-					"description": "The full path of the device group associated with the map point. This may be the group the map point represents, or the group of the device that the map point represents",
+					"description": "The full path of the ResourceGroup associated with the map point. This may be the group the map point represents, or the group of the device that the map point represents",
 					"type": "string"
 				},
 				"deviceDisplayName": {
@@ -11298,7 +11298,7 @@
 				},
 				"specifiedCollectorDeviceGroupId": {
 					"format": "int32",
-					"description": "The device group id when create a new collector device",
+					"description": "The ResourceGroup id when create a new collector device",
 					"type": "integer",
 					"example": 0.0
 				},
@@ -11752,12 +11752,12 @@
 				},
 				"deviceGroupId": {
 					"format": "int32",
-					"description": "The ID of the device group",
+					"description": "The ID of the ResourceGroup",
 					"readOnly": true,
 					"type": "integer"
 				},
 				"parentDeviceGroupAlertExprList": {
-					"description": "Device group alert expression list base on the priority. The first is the highest priority and effected on this instance",
+					"description": "ResourceGroup alert expression list base on the priority. The first is the highest priority and effected on this instance",
 					"readOnly": true,
 					"type": "array",
 					"items": { "$ref": "#/definitions/DeviceGroupAlertThresholdInfo" }
@@ -11779,7 +11779,7 @@
 					"type": "string"
 				},
 				"deviceGroupFullPath": {
-					"description": "The full path of the device group",
+					"description": "The full path of the ResourceGroup",
 					"readOnly": true,
 					"type": "string"
 				},
@@ -12148,7 +12148,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config": {
@@ -13000,7 +13000,7 @@
 		},
 		"/device/groups/{deviceGroupId}/datasources": {
 			"get": {
-				"summary": "get device group datasource list",
+				"summary": "get ResourceGroup datasource list",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -13060,7 +13060,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/setting/accesslogs/{id}": {
@@ -13458,12 +13458,12 @@
 					}
 				},
 				"parameters": [],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/device/groups/{gid}/properties": {
 			"post": {
-				"summary": "add device group property",
+				"summary": "add ResourceGroup property",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -13495,11 +13495,11 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get device group properties",
+				"summary": "get ResourceGroup properties",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -13553,7 +13553,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/report/reports": {
@@ -14799,7 +14799,7 @@
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get a list of cluster alert configurations for a device group",
+				"summary": "get a list of cluster alert configurations for a ResourceGroup",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -14857,7 +14857,7 @@
 		},
 		"/device/groups/{id}": {
 			"patch": {
-				"summary": "update device group",
+				"summary": "update ResourceGroup",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -14895,11 +14895,11 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get device group",
+				"summary": "get ResourceGroup",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -14930,10 +14930,10 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			},
 			"delete": {
-				"summary": "delete device group",
+				"summary": "delete ResourceGroup",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -14972,10 +14972,10 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			},
 			"put": {
-				"summary": "update device group",
+				"summary": "update ResourceGroup",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -15013,7 +15013,7 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			}
 		},
@@ -16665,7 +16665,7 @@
 		},
 		"/device/groups": {
 			"post": {
-				"summary": "add device group",
+				"summary": "add ResourceGroup",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -16688,11 +16688,11 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get device group list",
+				"summary": "get ResourceGroup list",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -16737,7 +16737,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/setting/functions": {
@@ -17583,7 +17583,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/setting/admins/{adminId}/apitokens/{apitokenId}": {
@@ -18008,7 +18008,7 @@
 		},
 		"/device/groups/{deviceGroupId}/datasources/{dsId}/alertsettings": {
 			"patch": {
-				"summary": "update device group datasource alert setting",
+				"summary": "update ResourceGroup datasource alert setting",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -18051,7 +18051,7 @@
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get device group datasource alert setting ",
+				"summary": "get ResourceGroup datasource alert setting ",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -18093,7 +18093,7 @@
 				"tags": [ "Thresholds" ]
 			},
 			"put": {
-				"summary": "update device group datasource alert setting",
+				"summary": "update ResourceGroup datasource alert setting",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -18999,7 +18999,7 @@
 		},
 		"/device/groups/{gid}/properties/{name}": {
 			"patch": {
-				"summary": "update device group property",
+				"summary": "update ResourceGroup property",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -19038,11 +19038,11 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get device group property by name",
+				"summary": "get ResourceGroup property by name",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -19081,10 +19081,10 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			},
 			"delete": {
-				"summary": "delete device group property",
+				"summary": "delete ResourceGroup property",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -19117,10 +19117,10 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			},
 			"put": {
-				"summary": "update device group property",
+				"summary": "update ResourceGroup property",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -19159,7 +19159,7 @@
 						"required": true
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			}
 		},
@@ -19943,7 +19943,7 @@
 		},
 		"/device/groups/{deviceGroupId}/datasources/{id}": {
 			"patch": {
-				"summary": "update device group datasource",
+				"summary": "update ResourceGroup datasource",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -19982,11 +19982,11 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			},
 			"get": {
-				"summary": "get device group datasource",
+				"summary": "get ResourceGroup datasource",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -20025,10 +20025,10 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			},
 			"put": {
-				"summary": "update device group datasource",
+				"summary": "update ResourceGroup datasource",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -20067,7 +20067,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ],
+				"tags": [ "ResourceGroups" ],
 				"consumes": [ "application/json" ]
 			}
 		},
@@ -20157,7 +20157,7 @@
 		},
 		"/device/groups/{id}/sdts": {
 			"get": {
-				"summary": "get device group SDTs",
+				"summary": "get ResourceGroup SDTs",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -20210,7 +20210,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/device/groups/{deviceGroupId}/clusterAlertConf/{id}": {
@@ -20375,7 +20375,7 @@
 		},
 		"/device/groups/{id}/alerts": {
 			"get": {
-				"summary": "get device group alerts",
+				"summary": "get ResourceGroup alerts",
 				"security": [ { "LMv1": [] } ],
 				"produces": [ "application/json" ],
 				"description": "",
@@ -20441,7 +20441,7 @@
 						"required": false
 					}
 				],
-				"tags": [ "Device Groups" ]
+				"tags": [ "ResourceGroups" ]
 			}
 		},
 		"/dashboard/widgets/{id}/data": {
@@ -22536,7 +22536,7 @@
 		{ "name": "Datasource Instances" },
 		{ "name": "Datasources" },
 		{ "name": "Debug" },
-		{ "name": "Device Groups" },
+		{ "name": "ResourceGroups" },
 		{ "name": "Devices" },
 		{ "name": "DNSMappings" },
 		{ "name": "Escalation Chains" },

@@ -20,7 +20,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetPageAsync<CollectorGroup>(new Filter<CollectorGroup>(), $"setting/collector/groups", default)
+			.GetPageAsync(new Filter<CollectorGroup>(), $"setting/collector/groups", default)
 			.ConfigureAwait(true);
 		collectorGroups.Items.Should().NotBeNullOrEmpty();
 		collectorGroups.Items.Should().NotContain(cg => cg.Id == 0);

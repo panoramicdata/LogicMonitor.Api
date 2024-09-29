@@ -1,44 +1,44 @@
 namespace LogicMonitor.Api.Test;
 
-internal sealed class TestPortalConfig
+public sealed class TestPortalConfig
 {
-	public string Account { get; set; }
+	public required string Account { get; init; }
 
-	public string AccessId { get; set; }
+	public required string AccessId { get; init; }
 
-	public string AccessKey { get; set; }
+	public required string AccessKey { get; init; }
 
-	public int NetflowDeviceId { get; }
+	public required int NetflowDeviceId { get; init; }
 
-	public int SnmpDeviceId { get; set; }
+	public required int SnmpDeviceId { get; init; }
 
-	public int ReportId { get; set; }
+	public required int ReportId { get; init; }
 
-	public int WindowsDeviceId { get; set; }
+	public required int WindowsDeviceId { get; init; }
 
-	public int WindowsDeviceLargeDeviceDataSourceId { get; set; }
+	public required int WindowsDeviceLargeDeviceDataSourceId { get; init; }
 
-	public int ServiceDeviceId { get; set; }
+	public required int ServiceDeviceId { get; init; }
 
-	public bool AccountHasBillingInformation { get; set; }
+	public required bool AccountHasBillingInformation { get; init; }
 
-	public int AllWidgetsDashboardId { get; set; }
+	public required int AllWidgetsDashboardId { get; init; }
 
-	public string WebsiteGroupFullPath { get; set; }
+	public required string WebsiteGroupFullPath { get; init; }
 
-	public string DeviceGroupFullPath { get; set; }
+	public required string DeviceGroupFullPath { get; init; }
 
-	public string ResourceGroupFullPath { get; set; }
+	public required string ResourceGroupFullPath { get; init; }
 
-	public string WebsiteName { get; set; }
+	public required string WebsiteName { get; init; }
 
-	public int DownCollectorId { get; set; }
+	public required int DownCollectorId { get; init; }
 
-	public int CollectorId { get; set; }
+	public required int CollectorId { get; init; }
 
-	public int SdtResourceGroupId { get; set; }
+	public required int SdtResourceGroupId { get; init; }
 
-	public string AlertRuleName { get; set; }
+	public required string AlertRuleName { get; init; }
 
-	public int TestDashboardId { get; set; }
+	public required int TestDashboardId { get; init; }
 }

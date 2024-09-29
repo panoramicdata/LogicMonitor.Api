@@ -1,14 +1,14 @@
 ﻿namespace LogicMonitor.Api.Test.EventLogs;
 public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
-	private readonly DateTime endDateTimeUtc = DateTime.UtcNow;
-	private readonly DateTime startDateTimeUtc = DateTime.UtcNow.AddHours(-1);
+	private readonly DateTime _endDateTimeUtc = DateTime.UtcNow;
+	private readonly DateTime _startDateTimeUtc = DateTime.UtcNow.AddHours(-1);
 
 	[Fact]
 	public async Task GetUsernameFilteredEvents()
 	{
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), default)
+			.GetLogItemsAsync(new LogFilter(0, 300, _startDateTimeUtc, _endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), default)
 			.ConfigureAwait(true);
 
 		unfilteredLogItems.Count.Should().BePositive();
@@ -17,8 +17,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			.GetLogItemsAsync(new LogFilter(
 				0,
 				300,
-				startDateTimeUtc,
-				endDateTimeUtc,
+				_startDateTimeUtc,
+				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AActiveDiscovery\"" },
 			default
@@ -31,8 +31,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			.GetLogItemsAsync(new LogFilter(
 				0,
 				300,
-				startDateTimeUtc,
-				endDateTimeUtc,
+				_startDateTimeUtc,
+				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AAppliesTo\"" },
 			default
@@ -45,8 +45,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			.GetLogItemsAsync(new LogFilter(
 				0,
 				filteredLogItemsSystemAppliesToCount + filteredLogItemsSystemActiveDiscoveryCount,
-				startDateTimeUtc,
-				endDateTimeUtc,
+				_startDateTimeUtc,
+				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" },
 			default
@@ -65,7 +65,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 	public async Task GetTextFilteredEvents()
 	{
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
+			.GetLogItemsAsync(new LogFilter(0, 300, _startDateTimeUtc, _endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
 			default
 			)
 			.ConfigureAwait(true);
@@ -78,8 +78,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			.GetLogItemsAsync(new LogFilter(
 				0,
 				300,
-				startDateTimeUtc,
-				endDateTimeUtc,
+				_startDateTimeUtc,
+				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnDesc)
 			{ TextFilter = "\"* AND NOT *health*\"" },
 			default
@@ -92,8 +92,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			.GetLogItemsAsync(new LogFilter(
 				0,
 				300,
-				startDateTimeUtc,
-				endDateTimeUtc,
+				_startDateTimeUtc,
+				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnDesc)
 			{ TextFilter = "\"*health*\"" },
 			default

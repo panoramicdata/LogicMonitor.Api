@@ -85,10 +85,16 @@ public class User : IdentifiedItem, IHasEndpoint
 	public UserStatus Status { get; set; }
 
 	/// <summary>
-	///    The status ("active" for users who can log in)
+	///    The last time the user logged in in seconds since the Epoch
 	/// </summary>
 	[DataMember(Name = "lastLoginOn")]
 	public long LastLoginOnSeconds { get; set; }
+
+	/// <summary>
+	///    The last time the user accessed the system in seconds since the Epoch
+	/// </summary>
+	[DataMember(Name = "lastAccessOn")]
+	public long LastAccessOnSeconds { get; set; }
 
 	/// <summary>
 	///    The note

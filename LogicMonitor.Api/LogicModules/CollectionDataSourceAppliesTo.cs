@@ -25,10 +25,17 @@ public class CollectionDataSourceAppliesTo : IdentifiedItem
 	public string DataSourceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The deviceGroupId
+	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
-	public int DeviceGroupId { get; set; }
+	public int ResourceGroupId { get; set; }
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[JsonIgnore, IgnoreDataMember]
+	[Obsolete("Use ResourceGroupId", true)]
+	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// The stopMonitoringstopMonitoring

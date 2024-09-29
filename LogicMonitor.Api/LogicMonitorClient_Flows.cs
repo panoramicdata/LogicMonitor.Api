@@ -52,30 +52,74 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken
 		) => GetBySubUrlAsync<Page<NetFlowRecord>>($"device/devices/{id}/flows", cancellationToken);
 
-	#region Device Group flows
+	#region ResourceGroup flows
 
 	/// <summary>
-	///  Get Flows for a Device Group using a FlowRequest
+	/// Obsolete
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(DeviceGroupFlowRequest flowRequest, CancellationToken cancellationToken)
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupFlowsPageAsync instead", true)]
+	public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(
+		ResourceGroupFlowRequest flowRequest,
+		CancellationToken cancellationToken)
+		=> GetResourceGroupFlowsPageAsync(
+			flowRequest,
+			cancellationToken);
+
+	/// <summary>
+	///  Get Flows for a ResourceGroup using a FlowRequest
+	/// </summary>
+	/// <param name="flowRequest"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<Flow>> GetResourceGroupFlowsPageAsync(
+		ResourceGroupFlowRequest flowRequest,
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
-	/// Get a Device Group's application flows. This only ever appears to return 10 items
+	/// Obsolete
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<FlowApplication>> GetDeviceGroupFlowApplicationsPageAsync(DeviceGroupFlowApplicationsRequest flowRequest, CancellationToken cancellationToken)
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupFlowApplicationsPageAsync instead", true)]
+	public Task<Page<FlowApplication>> GetDeviceGroupFlowApplicationsPageAsync(
+		ResourceGroupFlowApplicationsRequest flowRequest,
+		CancellationToken cancellationToken)
+		=> GetResourceGroupFlowApplicationsPageAsync(flowRequest, cancellationToken);
+
+	/// <summary>
+	/// Get a ResourceGroup's application flows. This only ever appears to return 10 items
+	/// </summary>
+	/// <param name="flowRequest"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<FlowApplication>> GetResourceGroupFlowApplicationsPageAsync(
+		ResourceGroupFlowApplicationsRequest flowRequest,
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowApplication>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
-	/// Get a Device Group's bandwidth flows. This only ever appears to return 1 item
+	/// Obsolete
 	/// </summary>
 	/// <param name="flowRequest"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<Page<NetflowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(DeviceGroupFlowBandwidthsRequest flowRequest, CancellationToken cancellationToken)
+	/// <returns></returns>
+	[Obsolete("Use GetResourceGroupFlowBandwidthsPageAsync instead", true)]
+	public Task<Page<NetflowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(
+		ResourceGroupFlowBandwidthsRequest flowRequest,
+		CancellationToken cancellationToken)
+		=> GetResourceGroupFlowBandwidthsPageAsync(flowRequest, cancellationToken);
+
+	/// <summary>
+	/// Get a ResourceGroup's bandwidth flows. This only ever appears to return 1 item
+	/// </summary>
+	/// <param name="flowRequest"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<Page<NetflowBandwidth>> GetResourceGroupFlowBandwidthsPageAsync(
+		ResourceGroupFlowBandwidthsRequest flowRequest,
+		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<NetflowBandwidth>>(flowRequest.GetQueryString(), cancellationToken);
 
 	#endregion
