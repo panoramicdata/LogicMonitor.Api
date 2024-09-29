@@ -18,13 +18,13 @@ namespace LogicMonitor.Api.Dashboards;
 public class NormalGraphWidgetCreationDto : WidgetCreationDto<NGraphWidget>
 {
 	/// <summary>
-	/// The device Id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
 	public int DeviceId { get; set; }
 
 	/// <summary>
-	/// The device Id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "dsiId")]
 	public int DeviceDataSourceInstanceId { get; set; }

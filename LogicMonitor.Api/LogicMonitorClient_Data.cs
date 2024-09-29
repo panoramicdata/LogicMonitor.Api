@@ -71,7 +71,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///     Gets a Device OverviewGraph By Name
 	/// </summary>
-	/// <param name="resourceId">The device Id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="resourceDataSourceId">The device dataSource Id</param>
 	/// <param name="name">The overview graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
@@ -87,8 +87,8 @@ public partial class LogicMonitorClient
 	///     Get Raw data (the last measurements, up to a maximum of ten)
 	/// </summary>
 	/// <param name="resourceId">The Resource id</param>
-	/// <param name="resourceDataSourceId">The device data source id</param>
-	/// <param name="resourceDataSourceInstanceId">The device data source instance id</param>
+	/// <param name="resourceDataSourceId">The ResourceDataSource id</param>
+	/// <param name="resourceDataSourceInstanceId">The ResourceDataSource instance id</param>
 	/// <param name="startDateTimeUtc"></param>
 	/// <param name="endDateTimeUtc"></param>
 	/// <param name="cancellationToken">The cancellation token</param>

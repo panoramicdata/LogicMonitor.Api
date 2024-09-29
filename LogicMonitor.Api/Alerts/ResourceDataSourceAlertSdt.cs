@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Alerts;
 
 /// <summary>
-/// A device data source SDT
+/// A ResourceDataSource SDT
 /// </summary>
 [DataContract]
 public class ResourceDataSourceAlertSdt : AlertSdt

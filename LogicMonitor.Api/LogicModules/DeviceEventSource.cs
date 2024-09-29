@@ -54,7 +54,7 @@ public class DeviceEventSource : IdentifiedItem
 	public string EventSourceName { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The device Id
+	///    The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }

@@ -13,7 +13,7 @@ public class NGraphWidget : GraphWidget
 	public int DataSourceInstanceId { get; set; }
 
 	/// <summary>
-	/// The device Id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
 	public int DeviceId { get; set; }

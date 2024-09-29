@@ -6,13 +6,13 @@ namespace LogicMonitor.Api.Dashboards;
 public class OverviewGraphWidgetCreationDto : WidgetCreationDto<OverviewGraphWidget>
 {
 	/// <summary>
-	///     The device Id
+	///     The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
 	public int DeviceId { get; set; }
 
 	/// <summary>
-	///     The device Id
+	///     The Resource id
 	/// </summary>
 	[DataMember(Name = "dsigId")]
 	public int DeviceDataSourceInstanceGroupId { get; set; }

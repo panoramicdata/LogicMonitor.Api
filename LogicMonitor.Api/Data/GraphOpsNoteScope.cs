@@ -39,7 +39,7 @@ public class GraphOpsNoteScope
 	public int DeviceGroupIds => ResourceGroupIds;
 
 	/// <summary>
-	/// The device Id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }

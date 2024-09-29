@@ -38,7 +38,7 @@ public class DeviceDataSourceScheduledDownTimeCreationDto : ScheduledDownTimeCre
 	public int DeviceId { get; set; }
 
 	/// <summary>
-	///    The device data source id
+	///    The ResourceDataSource id
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
 	public int? DeviceDataSourceId { get; set; }

@@ -139,7 +139,7 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, 
 			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
 			.ConfigureAwait(true);
 
 		config.Items.Should().NotBeEmpty();
@@ -169,7 +169,7 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, 
 			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
 			.ConfigureAwait(true);
 
 		var configId = config.Items[0].Id;
@@ -191,7 +191,7 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, 
 			.ConfigureAwait(true);
 
 		var refetchedConfig = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
 			.ConfigureAwait(true);
 
 		updateConfig.DisableAlerting = prevSetting;

@@ -778,7 +778,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		deviceDataSourceInstance.Should().NotBeNull();
 
 		var config = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(
 				device.Id,
 				deviceDataSource.Id,
 				deviceDataSourceInstance.Id,

@@ -108,7 +108,7 @@ public class DeviceDataSource : IdentifiedItem
 	public List<DataSourceGraph> DataSourceGraphs { get; set; } = [];
 
 	/// <summary>
-	///    The device Id
+	///    The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }

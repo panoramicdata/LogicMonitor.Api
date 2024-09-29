@@ -189,7 +189,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.ConfigureAwait(true);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataPointDetails = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceDataPointConfigurationAsync(WindowsDeviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(WindowsDeviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
 			.ConfigureAwait(true);
 		var dataPointConfiguration = dataPointDetails.Items[0];
 		dataPointConfiguration.Should().NotBeNull();

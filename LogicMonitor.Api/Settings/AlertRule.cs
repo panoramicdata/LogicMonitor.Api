@@ -49,7 +49,7 @@ public class AlertRule : NamedItem, IHasEndpoint
 	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The data source instance name filter
+	/// The ResourceDataSourceInstance name filter
 	/// </summary>
 	[DataMember(Name = "instance")]
 	public string DataSourceInstanceName { get; set; } = string.Empty;

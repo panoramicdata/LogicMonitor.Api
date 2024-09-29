@@ -4522,7 +4522,7 @@
 				},
 				"deviceId": {
 					"format": "int32",
-					"description": "The device Id",
+					"description": "The Resource id",
 					"readOnly": true,
 					"type": "integer"
 				}
