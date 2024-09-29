@@ -128,14 +128,14 @@ public class ResourceDataSourceInstance : NamedItem, IHasCustomProperties
 	/// The id of the Resource the DataSource Instance is associated with
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int? ResourceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// Obsolete
 	/// </summary>
 	[JsonIgnore, IgnoreDataMember]
 	[Obsolete("Use ResourceId instead", true)]
-	public int? DeviceId => ResourceId;
+	public int DeviceId => ResourceId;
 
 	/// <summary>
 	/// Whether or not alerting is disabled for the instance
