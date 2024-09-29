@@ -8,22 +8,26 @@ public class DeviceDataSourceInstanceScheduledDownTimeCreationDto : ScheduledDow
 	/// <summary>
 	///    Device
 	/// </summary>
-	/// <param name="deviceId"></param>
+	/// <param name="resourceId"></param>
 	/// <param name="dataSourceInstanceId"></param>
-	public DeviceDataSourceInstanceScheduledDownTimeCreationDto(int deviceId, int dataSourceInstanceId) : base(ScheduledDownTimeType.DeviceDataSourceInstance)
+	public DeviceDataSourceInstanceScheduledDownTimeCreationDto(
+		int resourceId,
+		int dataSourceInstanceId) : base(ScheduledDownTimeType.DeviceDataSourceInstance)
 	{
-		DeviceId = deviceId;
+		DeviceId = resourceId;
 		DataSourceInstanceId = dataSourceInstanceId;
 	}
 
 	/// <summary>
 	///    Device
 	/// </summary>
-	/// <param name="deviceId"></param>
+	/// <param name="resourceId"></param>
 	/// <param name="dataSourceInstanceName"></param>
-	public DeviceDataSourceInstanceScheduledDownTimeCreationDto(int deviceId, string dataSourceInstanceName) : base(ScheduledDownTimeType.DeviceDataSourceInstance)
+	public DeviceDataSourceInstanceScheduledDownTimeCreationDto(
+		int resourceId,
+		string dataSourceInstanceName) : base(ScheduledDownTimeType.DeviceDataSourceInstance)
 	{
-		DeviceId = deviceId;
+		DeviceId = resourceId;
 		DataSourceInstanceName = dataSourceInstanceName;
 	}
 

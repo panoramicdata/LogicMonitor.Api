@@ -29,11 +29,14 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///    Gets a device's flow information
 	/// </summary>
-	/// <param name="deviceId"></param>
+	/// <param name="resourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(int deviceId, Filter<FlowInterface> filter, CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{deviceId}/interfaces?{filter}", cancellationToken);
+	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(
+		int resourceId,
+		Filter<FlowInterface> filter,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<FlowInterface>>($"device/devices/{resourceId}/interfaces?{filter}", cancellationToken);
 
 	/// <summary>
 	/// get netflow flows

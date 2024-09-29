@@ -7,7 +7,7 @@ namespace LogicMonitor.Api.Dashboards;
 public class OverviewGraphWidget : GraphWidget
 {
 	/// <summary>
-	/// The device id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
 	public int DeviceId { get; set; }

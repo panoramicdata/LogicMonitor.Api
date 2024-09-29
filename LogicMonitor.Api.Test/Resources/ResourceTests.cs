@@ -478,7 +478,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Set it to an expected value
 		await LogicMonitorClient
-			.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, default)
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, value1, default)
 			.ConfigureAwait(true);
 		var deviceProperties = await LogicMonitorClient
 			.GetDevicePropertiesAsync(device.Id, default)
@@ -488,7 +488,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Set it to a different value
 		await LogicMonitorClient
-			.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, default)
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, value2, default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
 			.GetDevicePropertiesAsync(device.Id, default)
@@ -498,7 +498,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Set it to null (delete it)
 		await LogicMonitorClient
-			.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: default)
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
 			.GetDevicePropertiesAsync(device.Id, default)
@@ -508,7 +508,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// This should fail as there is nothing to delete
 		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient
-				.SetDeviceCustomPropertyAsync(
+				.SetResourceCustomPropertyAsync(
 					device.Id,
 					propertyName,
 					null,
@@ -518,15 +518,35 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.ConfigureAwait(true);
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
-		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Update, default).ConfigureAwait(true)).ConfigureAwait(true);
+		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient
+			.SetResourceCustomPropertyAsync(
+				device.Id,
+				propertyName,
+				null,
+				SetPropertyMode.Update,
+				default).ConfigureAwait(true)
+			).ConfigureAwait(true);
 		updateException.Should().BeOfType<InvalidOperationException>();
 
-		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Create, default).ConfigureAwait(true)).ConfigureAwait(true);
+		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient
+			.SetResourceCustomPropertyAsync(
+				device.Id,
+				propertyName,
+				null,
+				SetPropertyMode.Create,
+				default)
+				.ConfigureAwait(true))
+			.ConfigureAwait(true);
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
 		await LogicMonitorClient
-			.SetDeviceCustomPropertyAsync(device.Id, propertyName, value1, SetPropertyMode.Create, cancellationToken: default)
+			.SetResourceCustomPropertyAsync(
+				device.Id,
+				propertyName,
+				value1,
+				SetPropertyMode.Create,
+				cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
 			.GetDevicePropertiesAsync(device.Id, default)
@@ -536,7 +556,12 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Update one without checking
 		await LogicMonitorClient
-			.SetDeviceCustomPropertyAsync(device.Id, propertyName, value2, SetPropertyMode.Update, cancellationToken: default)
+			.SetResourceCustomPropertyAsync(
+				device.Id,
+				propertyName,
+				value2,
+				SetPropertyMode.Update,
+				cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
 			.GetDevicePropertiesAsync(device.Id, default)
@@ -546,7 +571,12 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Delete one without checking
 		await LogicMonitorClient
-			.SetDeviceCustomPropertyAsync(device.Id, propertyName, null, SetPropertyMode.Delete, cancellationToken: default)
+			.SetResourceCustomPropertyAsync(
+				device.Id,
+				propertyName,
+				null,
+				SetPropertyMode.Delete,
+				cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
 			.GetDevicePropertiesAsync(device.Id, default)
@@ -656,7 +686,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(true);
 		var alertsPage = await LogicMonitorClient
-			.GetDeviceAlertsPageAsync(device.Id, 0, 100, default)
+			.GetResourceAlertsPageAsync(device.Id, 0, 100, default)
 			.ConfigureAwait(true);
 		alertsPage.Should().NotBeNull();
 		alertsPage.Items.Should().HaveCount(alertsPage.TotalCount);
@@ -684,7 +714,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Get the Alerts
 		var allAlerts = await LogicMonitorClient
-			.GetDeviceAlertsByIdAsync(device.Id, alertFilter, default)
+			.GetResourceAlertsByIdAsync(device.Id, alertFilter, default)
 			.ConfigureAwait(true);
 		allAlerts.Should().NotBeNull();
 	}
@@ -721,7 +751,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
-			.GetDeviceDataPointConfigurationsAsync(device.Id, default)
+			.GetResourceDataPointConfigurationsAsync(device.Id, default)
 			.ConfigureAwait(true);
 
 		config.Should().NotBeEmpty();

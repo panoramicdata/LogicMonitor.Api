@@ -47,27 +47,27 @@ public partial class LogicMonitorClient
 	///     Gets history SDTs for a Device Data Source
 	/// </summary>
 	/// <param name="resourceId">The Device ID</param>
-	/// <param name="deviceDataSourceId">The Device Data Source ID</param>
+	/// <param name="resourceDataSourceId">The Device Data Source ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public Task<List<ScheduledDownTimeHistory>> GetDeviceDataSourceHistorySdtsAsync(
 		int resourceId,
-		int deviceDataSourceId,
+		int resourceDataSourceId,
 		CancellationToken cancellationToken)
-	=> GetAllAsync<ScheduledDownTimeHistory>($"device/devices/{resourceId}/devicedatasources/{deviceDataSourceId}/historysdts", cancellationToken);
+	=> GetAllAsync<ScheduledDownTimeHistory>($"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/historysdts", cancellationToken);
 
 	/// <summary>
 	///     Gets history SDTs for a Device Data Source Instance
 	/// </summary>
-	/// <param name="deviceId">The Device ID</param>
-	/// <param name="deviceDataSourceId">The Device Data Source ID</param>
-	/// <param name="deviceDataSourceInstanceId">The Device Data Source Instance ID</param>
+	/// <param name="resourceId">The Device ID</param>
+	/// <param name="resourceDataSourceId">The Device Data Source ID</param>
+	/// <param name="resourceDataSourceInstanceId">The Device Data Source Instance ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public Task<List<ScheduledDownTimeHistory>> GetDeviceDataSourceInstanceHistorySdtsAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
 		CancellationToken cancellationToken)
-	=> GetAllAsync<ScheduledDownTimeHistory>($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/historysdts", cancellationToken);
+	=> GetAllAsync<ScheduledDownTimeHistory>($"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/historysdts", cancellationToken);
 
 	/// <summary>
 	/// Get a list of SDTs for a website group (Response may contain extra fields depending upon the type of SDT)

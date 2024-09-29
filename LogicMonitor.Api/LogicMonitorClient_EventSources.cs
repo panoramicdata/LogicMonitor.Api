@@ -57,50 +57,52 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// Gets a page of device EventSources
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<DeviceEventSource>> GetDeviceEventSourcesPageAsync(
-		int deviceId,
+		int resourceId,
 		Filter<DeviceEventSource> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DeviceEventSource>>($"device/devices/{deviceId}/deviceeventsources?{filter}", cancellationToken);
+		=> GetBySubUrlAsync<Page<DeviceEventSource>>($"device/devices/{resourceId}/deviceeventsources?{filter}", cancellationToken);
 
 	/// <summary>
 	///     Gets the deviceEventSource
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceEventSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<DeviceEventSource> GetDeviceEventSourceAsync(
-		int deviceId,
+		int resourceId,
 		int deviceEventSourceId,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<DeviceEventSource>($"device/devices/{deviceId}/deviceeventsources/{deviceEventSourceId}", cancellationToken);
+		=> GetBySubUrlAsync<DeviceEventSource>($"device/devices/{resourceId}/deviceeventsources/{deviceEventSourceId}", cancellationToken);
 
 	/// <summary>
 	///     Gets a page of device EventSource groups
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceEventSourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<Page<DeviceEventSourceGroup>> GetDeviceEventSourceGroupsPageAsync(
-		int deviceId,
+		int resourceId,
 		int deviceEventSourceId,
 		Filter<DeviceEventSourceGroup> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DeviceEventSourceGroup>>($"device/devices/{deviceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
+		=> GetBySubUrlAsync<Page<DeviceEventSourceGroup>>($"device/devices/{resourceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
 
 	/// <summary>
 	///     Gets a device event source
 	/// </summary>
-	/// <param name="deviceId"></param>
+	/// <param name="resourceId"></param>
 	/// <param name="eventSourceId"></param>
-	public async Task<DeviceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(int deviceId, int eventSourceId)
+	public async Task<DeviceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(
+		int resourceId,
+		int eventSourceId)
 	{
 		// TODO - Make this use a search field
-		var page = await GetDeviceEventSourcesPageAsync(deviceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
+		var page = await GetDeviceEventSourcesPageAsync(resourceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
 		return page.Items.SingleOrDefault(deviceEventSource => deviceEventSource.EventSourceId == eventSourceId);
 	}
 

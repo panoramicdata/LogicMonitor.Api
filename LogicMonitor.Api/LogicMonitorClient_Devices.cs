@@ -108,29 +108,66 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="resourceId">The Resource Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task ScheduleActiveDiscovery(
+	public Task ScheduleActiveDiscovery(
 		int resourceId,
 		CancellationToken cancellationToken)
-		=> await PostAsync<object, object>(new object(), $"device/devices/{resourceId}/scheduleAutoDiscovery", cancellationToken).ConfigureAwait(false);
+		=> PostAsync<object, object>(
+			new object(),
+			$"device/devices/{resourceId}/scheduleAutoDiscovery",
+			cancellationToken);
 
 	/// <summary>
-	///     Get device alerts
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
-	/// <param name="skip">The number to skip</param>
-	/// <param name="take">The number to take</param>
-	/// <param name="cancellationToken">The cancellation token</param>
+	/// <param name="resourceId"></param>
+	/// <param name="skip"></param>
+	/// <param name="take"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourceAlertsPageAsync instead", true)]
 	public Task<Page<Alert>> GetDeviceAlertsPageAsync(
-		int deviceId,
+		int resourceId,
 		int skip,
 		int take,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<Alert>>($"device/devices/{deviceId}/alerts?size={take}&offset={skip}", cancellationToken);
+		=> GetResourceAlertsPageAsync(resourceId, skip, take, cancellationToken);
 
 	/// <summary>
-	///     Set single device property
+	///     Get Resource alerts
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="skip">The number to skip</param>
+	/// <param name="take">The number to take</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<Page<Alert>> GetResourceAlertsPageAsync(
+		int resourceId,
+		int skip,
+		int take,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Page<Alert>>($"device/devices/{resourceId}/alerts?size={take}&offset={skip}", cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="name"></param>
+	/// <param name="value"></param>
+	/// <param name="mode"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use SetResourceCustomPropertyAsync instead", true)]
+	public Task SetDeviceCustomPropertyAsync(
+		int resourceId,
+		string name,
+		string? value,
+		SetPropertyMode mode,
+		CancellationToken cancellationToken)
+		=> SetResourceCustomPropertyAsync(resourceId, name, value, mode, cancellationToken);
+
+	/// <summary>
+	///     Set single resource property
+	/// </summary>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="name">The property name</param>
 	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.</param>
 	/// <param name="mode">How to set the property.
@@ -140,15 +177,15 @@ public partial class LogicMonitorClient
 	/// If you know that the property is NOT already set and you want to set the value, use Create.
 	/// </param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task SetDeviceCustomPropertyAsync(
-		int deviceId,
+	public Task SetResourceCustomPropertyAsync(
+		int resourceId,
 		string name,
 		string? value,
 		SetPropertyMode mode,
 		CancellationToken cancellationToken)
 	=>
 		SetCustomPropertyAsync(
-			deviceId,
+			resourceId,
 			name,
 			value,
 			mode,
@@ -157,25 +194,36 @@ public partial class LogicMonitorClient
 			);
 
 	/// <summary>
-	///     Set single device property, using automatic mode
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceId">The Device Id</param>
-	/// <param name="name">The property name</param>
-	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.
-	/// If you are unsure, use CreateOrUpdate (the default).  As this checks to see if the property is set first, this option is slower.
-	/// If you know that the property is already set and you want to change the value, use Update.
-	/// If you know that the property is already set and you want to delete the value, use Delete (value must also be set to null).
-	/// If you know that the property is NOT already set and you want to set the value, use Create.
-	/// </param>
-	/// <param name="cancellationToken">The cancellation token</param>
+	/// <param name="resourceId"></param>
+	/// <param name="name"></param>
+	/// <param name="value"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use SetResourceCustomPropertyAsync instead", true)]
 	public Task SetDeviceCustomPropertyAsync(
-		int deviceId,
+		int resourceId,
 		string name,
 		string? value,
 		CancellationToken cancellationToken)
-	=>
-		SetCustomPropertyAsync(
-			deviceId,
+		=> SetResourceCustomPropertyAsync(resourceId, name, value, cancellationToken);
+
+	/// <summary>
+	///     Set single Resource property, using automatic mode
+	/// </summary>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="name">The property name</param>
+	/// <param name="value">The property value.  If set to null and the property exists, it will be removed.
+	/// </param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetResourceCustomPropertyAsync(
+		int resourceId,
+		string name,
+		string? value,
+		CancellationToken cancellationToken)
+		=> SetCustomPropertyAsync(
+			resourceId,
 			name,
 			value,
 			SetPropertyMode.Automatic,
@@ -747,13 +795,13 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	///     Gets a list of processes being monitored for a device
+	///     Gets a list of processes being monitored for a Resource
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceProcessServiceTaskType">The process/service type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<ResourceDataSourceInstance>> GetMonitoredDeviceProcessesAsync(
-		int deviceId,
+		int resourceId,
 		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
 	{
@@ -772,7 +820,7 @@ public partial class LogicMonitorClient
 					new Eq<DeviceDataSource>(nameof(DeviceDataSource.DataSourceType), "DS")
 				]
 		};
-		var deviceDataSources = await GetAllAsync(filter, $"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false);
+		var deviceDataSources = await GetAllAsync(filter, $"device/devices/{resourceId}/devicedatasources", cancellationToken).ConfigureAwait(false);
 
 		if (deviceDataSources.Count != 1)
 		{
@@ -780,7 +828,7 @@ public partial class LogicMonitorClient
 		}
 
 		return await GetAllDeviceDataSourceInstancesAsync(
-			deviceId,
+			resourceId,
 			deviceDataSources.Single().Id,
 			new Filter<ResourceDataSourceInstance>(),
 			cancellationToken
@@ -791,19 +839,19 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///     Initiates a task to fetch the list of current running processes on a device
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="deviceProcessServiceTaskType">The device process/service task type</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="resourceProcessServiceTaskType">The device process/service task type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<DeviceProcessServiceTask> GetProcessServiceTaskForDeviceAsync(
-		int deviceId,
-		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
+		int resourceId,
+		DeviceProcessServiceTaskType resourceProcessServiceTaskType,
 		CancellationToken cancellationToken)
 		=> PostAsync<DeviceProcessServiceTask, DeviceProcessServiceTask>(
 			new DeviceProcessServiceTask
 			{
-				Type = deviceProcessServiceTaskType
+				Type = resourceProcessServiceTaskType
 			},
-			$"device/devices/{deviceId}/fetchProcessServiceTask",
+			$"device/devices/{resourceId}/fetchProcessServiceTask",
 			cancellationToken
 		);
 
@@ -826,18 +874,18 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///     Fetches a task result
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="taskId">The task id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The task results</returns>
 	public async Task<Page<DeviceProcess>> GetProcessServiceTaskResultsAsync(
-		int deviceId,
+		int resourceId,
 		int taskId,
 		CancellationToken cancellationToken)
 	{
 		while (true)
 		{
-			var jObject = await GetBySubUrlAsync<JObject>($"device/devices/{deviceId}/fetchProcessServiceTask/{taskId}", cancellationToken).ConfigureAwait(false);
+			var jObject = await GetBySubUrlAsync<JObject>($"device/devices/{resourceId}/fetchProcessServiceTask/{taskId}", cancellationToken).ConfigureAwait(false);
 			var error = jObject.ToObject<ProcessServiceTaskResultError>();
 			if (error is not null && error.ErrorMessage is null && jObject is not null)
 			{
@@ -850,61 +898,116 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="deviceProcessServiceTaskType"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourceProcessesAsync instead", true)]
+	public Task<Page<DeviceProcess>> GetDeviceProcessesAsync(
+		int resourceId,
+		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
+		CancellationToken cancellationToken)
+		=> GetResourceProcessesAsync(resourceId, deviceProcessServiceTaskType, cancellationToken);
+
+	/// <summary>
 	///     Gets currently-running device processes
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceProcessServiceTaskType">The process/service type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Page<DeviceProcess>> GetDeviceProcessesAsync(
-		int deviceId,
+	public async Task<Page<DeviceProcess>> GetResourceProcessesAsync(
+		int resourceId,
 		DeviceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
 	{
-		var task = await GetProcessServiceTaskForDeviceAsync(deviceId, deviceProcessServiceTaskType, cancellationToken).ConfigureAwait(false);
-		return await GetProcessServiceTaskResultsAsync(deviceId, task.TaskId, cancellationToken).ConfigureAwait(false);
+		var task = await GetProcessServiceTaskForDeviceAsync(resourceId, deviceProcessServiceTaskType, cancellationToken).ConfigureAwait(false);
+		return await GetProcessServiceTaskResultsAsync(resourceId, task.TaskId, cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>
-	/// Gets a Device's DataPointConfigurations
+	/// Obsolete
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
+	/// <param name="resourceId"></param>
 	/// <param name="cancellationToken"></param>
-	public async Task<List<DataPointConfiguration>> GetDeviceDataPointConfigurationsAsync(
-		int deviceId,
+	/// <returns></returns>
+	[Obsolete("Use GetResourceDataPointConfigurationsAsync instead", true)]
+	public Task<List<DataPointConfiguration>> GetDeviceDataPointConfigurationsAsync(
+		int resourceId,
 		CancellationToken cancellationToken)
-		=> await GetAllAsync<DataPointConfiguration>(
-			$"device/devices/{deviceId}/alertsettings",
-			cancellationToken).ConfigureAwait(false);
+		=> GetResourceDataPointConfigurationsAsync(resourceId, cancellationToken);
 
 	/// <summary>
-	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
+	/// Gets a Resource's DataPointConfigurations
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="deviceDataSourceId">The DeviceDataSource id</param>
-	/// <param name="deviceDataSourceInstanceGroupId">The deviceDataSource Instance Group Id (0 == default)</param>
-	/// <param name="dataPointId">The DataPoint Id</param>
-	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
-	/// <param name="alertExpressionNote">A note explaining the threshold</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task SetDeviceDataSourceInstanceGroupDataPointThresholdsAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceGroupId,
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="cancellationToken"></param>
+	public Task<List<DataPointConfiguration>> GetResourceDataPointConfigurationsAsync(
+		int resourceId,
+		CancellationToken cancellationToken)
+		=> GetAllAsync<DataPointConfiguration>(
+			$"device/devices/{resourceId}/alertsettings",
+			cancellationToken);
+
+	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="resourceDataSourceId"></param>
+	/// <param name="resourceDataSourceInstanceGroupId"></param>
+	/// <param name="dataPointId"></param>
+	/// <param name="alertExpression"></param>
+	/// <param name="alertExpressionNote"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use SetResourceDataSourceInstanceGroupDataPointThresholdsAsync instead", true)]
+	public Task SetDeviceDataSourceInstanceGroupDataPointThresholdsAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceGroupId,
 		int dataPointId,
 		string alertExpression,
 		string alertExpressionNote,
 		CancellationToken cancellationToken)
-		=> await PutAsync($"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/groups/{deviceDataSourceInstanceGroupId}/datapoints/{dataPointId}/alertconfig",
-			new ThresholdSpecification
-			{
-				AlertExpression = alertExpression,
-				AlertExpressionNote = alertExpressionNote
-			}, cancellationToken).ConfigureAwait(false);
+		=> SetResourceDataSourceInstanceGroupDataPointThresholdsAsync(
+			resourceId,
+			resourceDataSourceId,
+			resourceDataSourceInstanceGroupId,
+			dataPointId,
+			alertExpression,
+			alertExpressionNote,
+			cancellationToken);
 
 	/// <summary>
 	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
 	/// </summary>
-	/// <param name="resourceGroupId">The device id</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="resourceDataSourceId">The DeviceDataSource id</param>
+	/// <param name="resourceDataSourceInstanceGroupId">The deviceDataSource Instance Group Id (0 == default)</param>
+	/// <param name="dataPointId">The DataPoint Id</param>
+	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
+	/// <param name="alertExpressionNote">A note explaining the threshold</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetResourceDataSourceInstanceGroupDataPointThresholdsAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceGroupId,
+		int dataPointId,
+		string alertExpression,
+		string alertExpressionNote,
+		CancellationToken cancellationToken)
+		=> PutAsync($"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/groups/{resourceDataSourceInstanceGroupId}/datapoints/{dataPointId}/alertconfig",
+			new ThresholdSpecification
+			{
+				AlertExpression = alertExpression,
+				AlertExpressionNote = alertExpressionNote
+			}, cancellationToken);
+
+	/// <summary>
+	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The Resource id</param>
 	/// <param name="dataSourceId">The DeviceDataSource id</param>
 	/// <param name="dataPointId">The DataPoint Id</param>
 	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
@@ -1015,7 +1118,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get device instance list
 	/// </summary>
-	/// <param name="id">The device id</param>
+	/// <param name="id">The Resource id</param>
 	/// <param name="filter"></param>
 	public async Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
 		int id,
@@ -1025,7 +1128,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get device instance list
 	/// </summary>
-	/// <param name="id">The device id</param>
+	/// <param name="id">The Resource id</param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
@@ -1042,14 +1145,28 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken) => GetBySubUrlAsync<CustomGraphWidgetData>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="filter"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourceAlertsByIdAsync instead", true)]
+	public Task<List<Alert>> GetDeviceAlertsByIdAsync(
+		int resourceId,
+		AlertFilter filter,
+		CancellationToken cancellationToken)
+		=> GetResourceAlertsByIdAsync(resourceId, filter, cancellationToken);
+
+	/// <summary>
 	/// Get Alerts for a Device by ID
 	/// </summary>
-	/// <param name="deviceId">The Device ID</param>
+	/// <param name="resourceId">The Device ID</param>
 	/// <param name="filter">The Alert Filter</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	/// <returns>A List of Alerts</returns>
-	public async Task<List<Alert>> GetDeviceAlertsByIdAsync(
-		int deviceId,
+	public async Task<List<Alert>> GetResourceAlertsByIdAsync(
+		int resourceId,
 		AlertFilter filter,
 		CancellationToken cancellationToken)
 	{
@@ -1057,13 +1174,18 @@ public partial class LogicMonitorClient
 		filter.RemoveMonitorObjectReferences();
 
 		var (alerts, limitReached) = await
-			GetDeviceAlertsByIdNormalAsync(deviceId, filter, false, cancellationToken)
+			GetDeviceAlertsByIdNormalAsync(resourceId, filter, false, cancellationToken)
 			.ConfigureAwait(false);
 
 		if (limitReached)
 		{
 			// Fall back to the chunked method
-			alerts = await GetDeviceAlertsByIdChunkedAsync(deviceId, filter, TimeSpan.FromHours(24), cancellationToken).ConfigureAwait(false);
+			alerts = await GetResourceAlertsByIdChunkedAsync(
+				resourceId,
+				filter,
+				TimeSpan.FromHours(24),
+				cancellationToken)
+				.ConfigureAwait(false);
 		}
 
 		if (filter?.IsCleared == true)
@@ -1080,14 +1202,30 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
+	/// Obsolete
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="filter"></param>
+	/// <param name="chunkSize"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	[Obsolete("Use GetResourceAlertsByIdChunkedAsync instead", true)]
+	internal Task<List<Alert>> GetDeviceAlertsByIdChunkedAsync(
+		int resourceId,
+		AlertFilter filter,
+		TimeSpan chunkSize,
+		CancellationToken cancellationToken)
+		=> GetResourceAlertsByIdChunkedAsync(resourceId, filter, chunkSize, cancellationToken);
+
+	/// <summary>
 	///     This version of the call requests hourly chunks
 	/// </summary>
-	/// <param name="deviceId">The Device ID</param>
+	/// <param name="resourceId">The Device ID</param>
 	/// <param name="filter"></param>
 	/// <param name="chunkSize">The chunk size (TimeSpan)</param>
 	/// <param name="cancellationToken"></param>
-	internal async Task<List<Alert>> GetDeviceAlertsByIdChunkedAsync(
-		int deviceId,
+	internal async Task<List<Alert>> GetResourceAlertsByIdChunkedAsync(
+		int resourceId,
 		AlertFilter filter,
 		TimeSpan chunkSize,
 		CancellationToken cancellationToken)
@@ -1114,14 +1252,14 @@ public partial class LogicMonitorClient
 				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
 				return newAlertFilter;
 			});
-		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
+		await Task.WhenAll(alertFilterList.Select((Func<AlertFilter, Task>)(async individualAlertFilter =>
 		{
 			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetDeviceAlertsByIdNormalAsync(deviceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetDeviceAlertsByIdNormalAsync((int)resourceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
 			{
-				allAlerts.Add(alert);
+				allAlerts.Add((Alert)alert);
 			}
-		})).ConfigureAwait(false);
+		}))).ConfigureAwait(false);
 
 		filter.StartEpochIsAfter = originalStartEpochIsAfter;
 		filter.StartEpochIsBefore = originalStartEpochIsBefore;
@@ -1132,13 +1270,13 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///		Get device alerts with an alert filter (not all properties in the filter are used)
 	/// </summary>
-	/// <param name="deviceId">The Device ID</param>
+	/// <param name="resourceId">The Device ID</param>
 	/// <param name="filter">An AlertFilter</param>
 	/// <param name="calledFromChunked"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	/// <returns>A List of Alerts and whether the limit was reached</returns>
 	internal async Task<(List<Alert> alerts, bool limitReached)> GetDeviceAlertsByIdNormalAsync(
-		int deviceId,
+		int resourceId,
 		AlertFilter filter,
 		bool calledFromChunked,
 		CancellationToken cancellationToken)
@@ -1170,7 +1308,7 @@ public partial class LogicMonitorClient
 		var allAlerts = new List<Alert>();
 		do
 		{
-			var page = await GetBySubUrlAsync<Page<Alert>>($"device/devices/{deviceId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
+			var page = await GetBySubUrlAsync<Page<Alert>>($"device/devices/{resourceId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
 
 			allAlerts.AddRange(page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id)).ToList());
 

@@ -25,7 +25,7 @@ public class NetflowWidget : Widget, IWidget
 	public string DeviceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }

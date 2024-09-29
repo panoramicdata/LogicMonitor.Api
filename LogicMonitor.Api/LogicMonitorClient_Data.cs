@@ -53,87 +53,107 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///     Get overview graphs
 	/// </summary>
-	/// <param name="deviceId"></param>
-	/// <param name="deviceDataSourceId"></param>
+	/// <param name="resourceId"></param>
+	/// <param name="resourceDataSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DataSourceGraph>> GetDeviceOverviewGraphsAsync(int deviceId, int deviceDataSourceId, CancellationToken cancellationToken)
+	public async Task<List<DataSourceGraph>> GetDeviceOverviewGraphsAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		CancellationToken cancellationToken)
 	{
-		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{deviceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
-		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == deviceDataSourceId)
-			?? throw new ArgumentException($"No datasource on device {deviceId} with deviceDataSourceId {deviceDataSourceId}.",
-				nameof(deviceDataSourceId));
+		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{resourceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
+		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == resourceDataSourceId)
+			?? throw new ArgumentException($"No datasource on device {resourceId} with deviceDataSourceId {resourceDataSourceId}.",
+				nameof(resourceDataSourceId));
 		return filteredDeviceDataSource.OverviewGraphs;
 	}
 
 	/// <summary>
 	///     Gets a Device OverviewGraph By Name
 	/// </summary>
-	/// <param name="deviceId">The device Id</param>
-	/// <param name="deviceDataSourceId">The device dataSource Id</param>
+	/// <param name="resourceId">The device Id</param>
+	/// <param name="resourceDataSourceId">The device dataSource Id</param>
 	/// <param name="name">The overview graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDeviceOverviewGraphByNameAsync(int deviceId, int deviceDataSourceId, string name, CancellationToken cancellationToken)
-		=> (await GetDeviceOverviewGraphsAsync(deviceId, deviceDataSourceId, cancellationToken).ConfigureAwait(false))
+	public async Task<DataSourceGraph> GetDeviceOverviewGraphByNameAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		string name,
+		CancellationToken cancellationToken)
+		=> (await GetDeviceOverviewGraphsAsync(resourceId, resourceDataSourceId, cancellationToken).ConfigureAwait(false))
 			.SingleOrDefault(g => g.Name == name);
 
 	/// <summary>
 	///     Get Raw data (the last measurements, up to a maximum of ten)
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="deviceDataSourceId">The device data source id</param>
-	/// <param name="deviceDataSourceInstanceId">The device data source instance id</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="resourceDataSourceId">The device data source id</param>
+	/// <param name="resourceDataSourceInstanceId">The device data source instance id</param>
 	/// <param name="startDateTimeUtc"></param>
 	/// <param name="endDateTimeUtc"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public Task<RawDataSet> GetRawDataSetAsync(
-		int deviceId,
-		int deviceDataSourceId,
-		int deviceDataSourceInstanceId,
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
 		DateTime? startDateTimeUtc,
 		DateTime? endDateTimeUtc,
 		CancellationToken cancellationToken
 		)
 	{
 		var timeConstraint = startDateTimeUtc.HasValue && endDateTimeUtc.HasValue ? $"?start={startDateTimeUtc.Value.SecondsSinceTheEpoch()}&end={endDateTimeUtc.Value.SecondsSinceTheEpoch()}" : null;
-		return GetAsync<RawDataSet>(false, $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data{timeConstraint}", cancellationToken);
+		return GetAsync<RawDataSet>(false, $"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/data{timeConstraint}", cancellationToken);
 	}
 
 	/// <summary>
 	/// Polls now for data via the collector
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="deviceDataSourceId">The device datasource id</param>
-	/// <param name="deviceDataSourceInstanceId">The device datasource instance id</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="resourceDataSourceId">The Resource datasource id</param>
+	/// <param name="resourceDataSourceInstanceId">The Resource datasource instance id</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
 	/// <returns>An object with information on what to poll for to get results</returns>
-	public Task<PollNowRequest> GetPollNowRequestAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken)
-		=> PostAsync<EmptyRequest, PollNowRequest>(new EmptyRequest(), $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data/pollnow", cancellationToken);
+	public Task<PollNowRequest> GetPollNowRequestAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		CancellationToken cancellationToken)
+		=> PostAsync<EmptyRequest, PollNowRequest>(new EmptyRequest(), $"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/data/pollnow", cancellationToken);
 
 	/// <summary>
 	/// Polls now for data via the collector
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="deviceDataSourceId">The device datasource id</param>
-	/// <param name="deviceDataSourceInstanceId">The device datasource instance id</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="resourceDataSourceId">The device datasource id</param>
+	/// <param name="resourceDataSourceInstanceId">The device datasource instance id</param>
 	/// <param name="requestId">The request id</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
-	public Task<PollNowResponse> GetPollNowResponseAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, long requestId, CancellationToken cancellationToken)
-		=> GetAsync<PollNowResponse>(false, $"device/devices/{deviceId}/devicedatasources/{deviceDataSourceId}/instances/{deviceDataSourceInstanceId}/data/pollnow/{requestId}", cancellationToken);
+	public Task<PollNowResponse> GetPollNowResponseAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		long requestId,
+		CancellationToken cancellationToken)
+		=> GetAsync<PollNowResponse>(false, $"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/data/pollnow/{requestId}", cancellationToken);
 
 	/// <summary>
 	/// Polls now for data via the collector
 	/// </summary>
-	/// <param name="deviceId">The device id</param>
-	/// <param name="deviceDataSourceId">The device datasource id</param>
-	/// <param name="deviceDataSourceInstanceId">The device datasource instance id</param>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="resourceDataSourceId">The device datasource id</param>
+	/// <param name="resourceDataSourceInstanceId">The device datasource instance id</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
-	public async Task<PollNowResponse> PollNowAsync(int deviceId, int deviceDataSourceId, int deviceDataSourceInstanceId, CancellationToken cancellationToken)
+	public async Task<PollNowResponse> PollNowAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		CancellationToken cancellationToken)
 	{
-		var pollNowRequest = await GetPollNowRequestAsync(deviceId, deviceDataSourceId, deviceDataSourceInstanceId, cancellationToken).ConfigureAwait(false);
+		var pollNowRequest = await GetPollNowRequestAsync(resourceId, resourceDataSourceId, resourceDataSourceInstanceId, cancellationToken).ConfigureAwait(false);
 
 		while (true)
 		{
-			var pollNowResponse = await GetPollNowResponseAsync(deviceId, deviceDataSourceId, deviceDataSourceInstanceId, pollNowRequest.RequestId, cancellationToken).ConfigureAwait(false);
+			var pollNowResponse = await GetPollNowResponseAsync(resourceId, resourceDataSourceId, resourceDataSourceInstanceId, pollNowRequest.RequestId, cancellationToken).ConfigureAwait(false);
 
 			if (pollNowResponse.RequestStatus == PollNowStatus.Done)
 			{
@@ -146,15 +166,15 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	/// Fetch data across mutliple instances
+	/// Fetch data across multiple instances
 	/// </summary>
-	/// <param name="deviceDataSourceInstanceIds">The list of DeviceSataSourceInstance ids</param>
+	/// <param name="resourceDataSourceInstanceIds">The list of DeviceSataSourceInstance ids</param>
 	/// <param name="start">The start</param>
 	/// <param name="end">The start</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
 	/// <returns>The FetchDataResponse</returns>
 	public async Task<FetchDataResponse> GetFetchDataResponseAsync(
-		List<int> deviceDataSourceInstanceIds,
+		List<int> resourceDataSourceInstanceIds,
 		DateTimeOffset start,
 		DateTimeOffset end,
 		CancellationToken cancellationToken)
@@ -162,20 +182,20 @@ public partial class LogicMonitorClient
 		var startDateTimeUtcTimestamp = start.ToUnixTimeSeconds();
 		var endDateTimeUtcTimestamp = end.ToUnixTimeSeconds();
 		return await PostAsync<FetchDataRequest, FetchDataResponse>(
-			new FetchDataRequest { InstanceIds = string.Join(",", deviceDataSourceInstanceIds) },
+			new FetchDataRequest { InstanceIds = string.Join(",", resourceDataSourceInstanceIds) },
 			$"device/instances/datafetch?start={startDateTimeUtcTimestamp}&end={endDateTimeUtcTimestamp}",
 			cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>
-	/// Get device datasource data
+	/// Get Resource DataSource data
 	/// </summary>
-	/// <param name="deviceId"></param>
+	/// <param name="resourceId"></param>
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
 	public async Task<DeviceDataSourceData> GetDeviceDataSourceDataAsync(
-		int deviceId,
+		int resourceId,
 		int id,
 		CancellationToken cancellationToken)
-		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{deviceId}/devicedatasources/{id}/data", cancellationToken);
+		=> await GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{resourceId}/devicedatasources/{id}/data", cancellationToken);
 }

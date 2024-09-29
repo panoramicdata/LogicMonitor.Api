@@ -6,15 +6,14 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 /// <remarks>
 ///    Device
 /// </remarks>
-/// <param name="deviceId"></param>
-public class ResourceScheduledDownTimeCreationDto(int deviceId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.Resource)
+/// <param name="resourceId"></param>
+public class ResourceScheduledDownTimeCreationDto(int resourceId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.Resource)
 {
-
 	/// <summary>
 	/// The id of the device that the SDT will be associated with
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; } = deviceId;
+	public int DeviceId { get; set; } = resourceId;
 
 	/// <summary>
 	/// The name of the device that this SDT will be associated with

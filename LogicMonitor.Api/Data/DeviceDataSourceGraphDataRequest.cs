@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Data;
 
 /// <summary>
-///    A request for device graph data for a devicedatasource
+///    A request for device graph data for a Resourcedatasource
 /// </summary>
 public class DeviceDataSourceGraphDataRequest : GraphDataRequest
 {
@@ -16,7 +16,7 @@ public class DeviceDataSourceGraphDataRequest : GraphDataRequest
 	public int? OverviewGraphId { get; set; }
 
 	/// <summary>
-	///  The Device Id
+	///  The Resource id
 	/// </summary>
 	public int? DeviceId { get; set; }
 

@@ -56,6 +56,7 @@ Cognito
 color
 configsources
 Datacenter
+datafetch
 datapoint
 datapoints
 Datapump
@@ -129,6 +130,7 @@ Otel
 Paas
 pagerduty
 perfmon
+pollnow
 pushmodules
 recurse
 recursing

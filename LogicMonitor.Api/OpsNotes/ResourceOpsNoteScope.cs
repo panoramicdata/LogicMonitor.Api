@@ -7,7 +7,7 @@
 public class ResourceOpsNoteScope : OpsNoteScope
 {
 	/// <summary>
-	/// The device id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }

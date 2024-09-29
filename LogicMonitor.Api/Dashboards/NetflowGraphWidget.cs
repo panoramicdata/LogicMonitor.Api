@@ -18,7 +18,7 @@ public class NetflowGraphWidget : Widget, IWidget
 	public int InterfaceIndex { get; set; }
 
 	/// <summary>
-	/// The device id
+	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int DeviceId { get; set; }

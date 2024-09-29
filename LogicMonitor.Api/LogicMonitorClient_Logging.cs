@@ -31,16 +31,16 @@ public partial class LogicMonitorClient
 	///     Logs a single writeLogRequest
 	/// </summary>
 	/// <param name="writeLogLevel"></param>
-	/// <param name="deviceId">The device id</param>
+	/// <param name="resourceId">The Resource id</param>
 	/// <param name="message">The message</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>The response</returns>
 	public Task<WriteLogResponse> WriteLogAsync(
 		WriteLogLevel writeLogLevel,
-		int deviceId,
+		int resourceId,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, deviceId, message) }, cancellationToken);
+		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, resourceId, message) }, cancellationToken);
 
 	/// <summary>
 	///     Logs a single writeLogRequest

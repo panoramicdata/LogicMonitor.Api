@@ -809,7 +809,7 @@
 				},
 				"collectorDeviceId": {
 					"format": "int32",
-					"description": "The device id of the collector device",
+					"description": "The Resource id of the collector device",
 					"readOnly": true,
 					"type": "integer"
 				},
@@ -16264,7 +16264,7 @@
 				},
 				"collectorDeviceId": {
 					"format": "int32",
-					"description": "The device id of the collector device",
+					"description": "The Resource id of the collector device",
 					"readOnly": true,
 					"type": "integer"
 				},
@@ -17725,7 +17725,7 @@
 		},
 		"/device/devices/{id}/scheduleAutoDiscovery": {
 			"post": {
-				"summary": "schedule active discovery for a device",
+				"summary": "schedule active discovery for a Resource",
 				"security": [
 					{
 						"LMv1": [
@@ -19308,7 +19308,7 @@
 		},
 		"/device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/alertsettings": {
 			"get": {
-				"summary": "get a list of alert settings for a device datasource instance",
+				"summary": "get a list of alert settings for a Resource datasource instance",
 				"security": [
 					{
 						"LMv1": [
@@ -21922,7 +21922,7 @@
 		},
 		"/device/devices/{id}/sdts": {
 			"get": {
-				"summary": "get SDTs for a device",
+				"summary": "get SDTs for a Resource",
 				"security": [
 					{
 						"LMv1": [
@@ -26406,7 +26406,7 @@
 		},
 		"/device/devices/{deviceId}/devicedatasources/{hdsId}/instances/{instanceId}/config/configCollection": {
 			"post": {
-				"summary": "collect a config for a device",
+				"summary": "collect a config for a Resource",
 				"security": [
 					{
 						"LMv1": [

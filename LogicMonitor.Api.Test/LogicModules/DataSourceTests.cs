@@ -101,7 +101,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(true);
 		var windowsServices = await LogicMonitorClient
-			.GetDeviceProcessesAsync(device.Id, DeviceProcessServiceTaskType.WindowsService, default)
+			.GetResourceProcessesAsync(device.Id, DeviceProcessServiceTaskType.WindowsService, default)
 			.ConfigureAwait(true);
 		windowsServices.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNull();
