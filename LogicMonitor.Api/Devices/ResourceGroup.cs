@@ -260,7 +260,7 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// Obsolete
 	/// </summary>
 	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use DirectResourceCount", true)]
+	[Obsolete("Use DirectResourceCount instead", true)]
 	public long DirectDeviceCount => DirectResourceCount;
 
 	/// <summary>

@@ -4,6 +4,4 @@ namespace LogicMonitor.Api.Devices;
 /// Obsolete
 /// </summary>
 [Obsolete("Use Resource instead", true)]
-public class Device : Resource
-{
-}
+public class Device : Resource;

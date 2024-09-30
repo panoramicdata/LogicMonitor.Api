@@ -142,7 +142,7 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, 
 			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
 			.ConfigureAwait(true);
 
-		config.Items.Should().NotBeEmpty();
+		config.Should().NotBeEmpty();
 	}
 
 	[Fact]
@@ -172,18 +172,18 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, 
 			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
 			.ConfigureAwait(true);
 
-		var configId = config.Items[0].Id;
-		var prevSetting = config.Items[0].DisableAlerting;
+		var configId = config[0].Id;
+		var prevSetting = config[0].DisableAlerting;
 		var updateConfig = new DataPointConfigurationCreationDTO()
 		{
-			AlertExpression = config.Items[0].AlertExpression,
-			AlertExpressionNote = config.Items[0].AlertExpressionNote,
+			AlertExpression = config[0].AlertExpression,
+			AlertExpressionNote = config[0].AlertExpressionNote,
 			DisableAlerting = !prevSetting,
-			IsActiveDiscoveryAdvancedSettingEnabled = config.Items[0].IsActiveDiscoveryAdvancedSettingEnabled,
-			WarnActiveDiscoveryAdvancedSetting = config.Items[0].WarnActiveDiscoveryAdvancedSetting,
-			ErrorActiveDiscoveryAdvancedSetting = config.Items[0].ErrorActiveDiscoveryAdvancedSetting,
-			CriticalActiveDiscoveryAdvancedSetting = config.Items[0].CriticalActiveDiscoveryAdvancedSetting,
-			ParentInstanceGroupAlertExpression = config.Items[0].ParentInstanceGroupAlertExpression
+			IsActiveDiscoveryAdvancedSettingEnabled = config[0].IsActiveDiscoveryAdvancedSettingEnabled,
+			WarnActiveDiscoveryAdvancedSetting = config[0].WarnActiveDiscoveryAdvancedSetting,
+			ErrorActiveDiscoveryAdvancedSetting = config[0].ErrorActiveDiscoveryAdvancedSetting,
+			CriticalActiveDiscoveryAdvancedSetting = config[0].CriticalActiveDiscoveryAdvancedSetting,
+			ParentInstanceGroupAlertExpression = config[0].ParentInstanceGroupAlertExpression
 		};
 
 		await LogicMonitorClient
@@ -200,7 +200,7 @@ public class DeviceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, 
 			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
 			.ConfigureAwait(true);
 
-		foreach (var dataPointConfig in refetchedConfig.Items)
+		foreach (var dataPointConfig in refetchedConfig)
 		{
 			if (dataPointConfig.Id == configId)
 			{

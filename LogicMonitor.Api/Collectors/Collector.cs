@@ -357,7 +357,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The OTEL version
 	/// </summary>
 	[DataMember(Name = "otelVersion")]
-	public string OtelVerison { get; set; } = string.Empty;
+	public string OtelVersion { get; set; } = string.Empty;
 
 	/// <summary>
 	///     Platform

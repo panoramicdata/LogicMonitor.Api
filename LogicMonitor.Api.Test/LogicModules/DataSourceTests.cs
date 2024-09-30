@@ -78,11 +78,11 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var sum = 0;
 		foreach (var resourceDataSourceInstance in resourceDataSourceInstances)
 		{
-			if (resourceDataSourceInstance.ResourceId is not null && resourceDataSourceInstance.DataSourceId is not null)
+			if (resourceDataSourceInstance.DataSourceId is not null)
 			{
 				var refetchedDeviceDataSourceInstanceCount = (await LogicMonitorClient
 					 .GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
-						resourceDataSourceInstance.ResourceId.Value,
+						resourceDataSourceInstance.ResourceId,
 						resourceDataSourceInstance.DataSourceId.Value,
 						default)
 					 .ConfigureAwait(true)).InstanceCount;
@@ -191,7 +191,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var dataPointDetails = await LogicMonitorClient
 			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(WindowsDeviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, default)
 			.ConfigureAwait(true);
-		var dataPointConfiguration = dataPointDetails.Items[0];
+		var dataPointConfiguration = dataPointDetails[0];
 		dataPointConfiguration.Should().NotBeNull();
 		dataPointConfiguration.GlobalAlertExpr.Should().NotBeNull();
 	}
