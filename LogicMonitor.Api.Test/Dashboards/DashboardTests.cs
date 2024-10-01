@@ -209,7 +209,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		websiteOverallStatusWidget.Should().NotBeNull();
 
 		// Device SLA widget
-		var deviceSlaStatusWidget = widgets.OfType<DeviceSlaWidget>().FirstOrDefault();
+		var deviceSlaStatusWidget = widgets.OfType<ResourceSlaWidget>().FirstOrDefault();
 		deviceSlaStatusWidget.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics.Should().NotBeNullOrEmpty();

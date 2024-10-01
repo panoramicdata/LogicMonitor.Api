@@ -25,6 +25,12 @@ public class ResourceDataSourceAlertSdt : AlertSdt
 	public int ResourceDataSourceId { get; set; }
 
 	/// <summary>
+	/// The Resource DataSource ID again for some reason
+	/// </summary>
+	[DataMember(Name = "hdsId")]
+	public int ResourceDataSourceId2 { get; set; }
+
+	/// <summary>
 	/// The Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]

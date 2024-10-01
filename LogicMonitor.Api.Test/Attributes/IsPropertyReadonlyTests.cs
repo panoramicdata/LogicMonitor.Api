@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Resources;
+
 namespace LogicMonitor.Api.Test.Attributes;
 
 public class IsPropertyReadonlyTests

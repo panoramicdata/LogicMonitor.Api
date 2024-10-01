@@ -1,22 +1,7 @@
-namespace LogicMonitor.Api.OpsNotes;
+﻿namespace LogicMonitor.Api.OpsNotes;
 
 /// <summary>
-/// A device Ops Note Scope creation DTO
+/// Obsolete
 /// </summary>
-[DataContract]
-public class DeviceOpsNoteScopeCreationDto : OpsNoteScopeCreationDto
-{
-	/// <summary>
-	/// Constructor
-	/// </summary>
-	public DeviceOpsNoteScopeCreationDto()
-	{
-		Type = "device";
-	}
-
-	/// <summary>
-	/// The Resource id
-	/// </summary>
-	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
-}
+[Obsolete("Use ResourceOpsNoteScopeCreationDto", true)]
+public class DeviceOpsNoteScopeCreationDto : ResourceOpsNoteScopeCreationDto;

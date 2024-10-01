@@ -1,26 +1,7 @@
 ﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-/// A Device Status Widget
+/// Obsolete
 /// </summary>
-[DataContract]
-public class DeviceStatusWidget : Widget, IWidget
-{
-	/// <summary>
-	/// The Device ID
-	/// </summary>
-	[DataMember(Name = "deviceId")]
-	public string DeviceId { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The Device Display Name
-	/// </summary>
-	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// The Display Settings
-	/// </summary>
-	[DataMember(Name = "displaySettings")]
-	public DisplaySettings DisplaySettings { get; set; } = new();
-}
+[Obsolete("Use ResourceStatusWidget instead", true)]
+public class DeviceStatusWidget : ResourceStatusWidget;

@@ -1,3 +1,4 @@
+using LogicMonitor.Api.ResourceProcesses;
 using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.LogicModules;
@@ -101,7 +102,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(true);
 		var windowsServices = await LogicMonitorClient
-			.GetResourceProcessesAsync(device.Id, DeviceProcessServiceTaskType.WindowsService, default)
+			.GetResourceProcessesAsync(device.Id, ResourceProcessServiceTaskType.WindowsService, default)
 			.ConfigureAwait(true);
 		windowsServices.Should().NotBeNull();
 		windowsServices.Items.Should().NotBeNull();
@@ -112,7 +113,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetMonitoredWinService()
 	{
 		var windowsServices = await LogicMonitorClient
-			.GetMonitoredDeviceProcessesAsync(29, DeviceProcessServiceTaskType.WindowsService, default)
+			.GetMonitoredDeviceProcessesAsync(29, ResourceProcessServiceTaskType.WindowsService, default)
 			.ConfigureAwait(true);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
@@ -333,19 +334,19 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var stopwatch = Stopwatch.StartNew();
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(
 			425,
-			new Filter<DeviceDataSource>
+			new Filter<ResourceDataSource>
 			{
 				Take = 1,
 				Properties =
 				[
-					nameof(DeviceDataSource.Id),
-					nameof(DeviceDataSource.DataSourceName)
+					nameof(ResourceDataSource.Id),
+					nameof(ResourceDataSource.DataSourceName)
 				],
 				FilterItems =
 				[
-					new FilterItem<DeviceDataSource>
+					new FilterItem<ResourceDataSource>
 					{
-						Property = nameof(DeviceDataSource.DataSourceName),
+						Property = nameof(ResourceDataSource.DataSourceName),
 						Operation = ":",
 						Value = "SSL_Certificates"
 					}
@@ -362,14 +363,14 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public async Task GetDeviceDataSources()
 	{
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, new Filter<DeviceDataSource>
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(WindowsDeviceId, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
 			Properties =
 				[
-					nameof(DeviceDataSource.Id),
-					nameof(DeviceDataSource.CreatedOnSeconds),
+					nameof(ResourceDataSource.Id),
+					nameof(ResourceDataSource.CreatedOnSeconds),
 				]
 		}, default).ConfigureAwait(true);
 
@@ -378,7 +379,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 
 		foreach (var deviceDataSource in deviceDataSources)
 		{
-			// Refetch
+			// Re-fetch
 			var deviceDataSourceRefetch = await LogicMonitorClient
 				.GetDeviceDataSourceAsync(
 					WindowsDeviceId,
@@ -406,7 +407,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			var deviceDataSourceGroups = await LogicMonitorClient.GetDeviceDataSourceGroupsPageAsync(
 				WindowsDeviceId,
 				deviceDataSource.Id,
-				new Filter<DeviceDataSourceGroup>
+				new Filter<ResourceDataSourceGroup>
 				{
 					Skip = 0,
 					Take = 300,
@@ -417,7 +418,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			foreach (var deviceDataSourceGroup in deviceDataSourceGroups.Items)
 			{
 				// Make sure they match
-				deviceDataSourceGroup.DeviceId.Should().Be(WindowsDeviceId);
+				deviceDataSourceGroup.ResourceId.Should().Be(WindowsDeviceId);
 			}
 		}
 	}
@@ -428,13 +429,13 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(true);
 
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<DeviceDataSource>
+		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
 			Take = 1,
 			Properties =
 				[
-					nameof(DeviceDataSource.Id),
+					nameof(ResourceDataSource.Id),
 				]
 		}, default).ConfigureAwait(true);
 

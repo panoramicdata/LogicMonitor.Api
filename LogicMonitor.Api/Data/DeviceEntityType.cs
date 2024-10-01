@@ -1,22 +1,7 @@
 ﻿namespace LogicMonitor.Api.Data;
 
 /// <summary>
-/// The device entity type
+/// Obsolete
 /// </summary>
-public enum DeviceEntityType
-{
-	/// <summary>
-	/// Unknown
-	/// </summary>
-	Unknown = 0,
-
-	/// <summary>
-	/// DataSource instance
-	/// </summary>
-	DataSourceInstance = 1,
-
-	/// <summary>
-	/// The DataSource
-	/// </summary>
-	DataSource = 2
-}
+[Obsolete("Use ResourceEntityType instead", true)]
+public enum DeviceEntityType;

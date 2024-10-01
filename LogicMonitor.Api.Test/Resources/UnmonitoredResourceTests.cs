@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Resources;
+
 namespace LogicMonitor.Api.Test.Resources;
 
 public class UnmonitoredResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)

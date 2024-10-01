@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Resources;
 using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Resources;
@@ -611,11 +612,11 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		var device = await GetWindowsDeviceAsync(default)
 			.ConfigureAwait(true);
-		device.DeviceType.Should().Be(DeviceType.Regular);
+		device.DeviceType.Should().Be(ResourceType.Regular);
 
 		device = await GetServiceDeviceAsync(default)
 			.ConfigureAwait(true);
-		device.DeviceType.Should().Be(DeviceType.Service);
+		device.DeviceType.Should().Be(ResourceType.Service);
 
 		// TODO - AWS and Azure
 	}

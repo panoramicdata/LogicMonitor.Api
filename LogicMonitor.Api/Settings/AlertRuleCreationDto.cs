@@ -89,7 +89,7 @@ public class AlertRuleCreationDto : CreationDto<AlertRule>, IHasName, IHasDescri
 	/// The resource property filters list
 	/// </summary>
 	[DataMember(Name = "resourceProperties")]
-	public List<DeviceProperty> ResourceProperties { get; set; } = [];
+	public List<ResourceProperty> ResourceProperties { get; set; } = [];
 
 	/// <summary>
 	///  send anomaly suppressed alert

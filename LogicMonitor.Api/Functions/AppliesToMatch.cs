@@ -7,19 +7,19 @@
 public class AppliesToMatch
 {
 	/// <summary>
-	///     The type (e.g. Device / Website)
+	///     The monitored object type (e.g. Resource / Website)
 	/// </summary>
 	[DataMember(Name = "type")]
 	public MonitoredObjectType Type { get; set; }
 
 	/// <summary>
-	///     The id
+	///     The Resource/Website id
 	/// </summary>
 	[DataMember(Name = "id")]
 	public int Id { get; set; }
 
 	/// <summary>
-	///     The name
+	///     The Resource/Website display name
 	/// </summary>
 	[DataMember(Name = "name")]
 	public string Name { get; set; } = string.Empty;

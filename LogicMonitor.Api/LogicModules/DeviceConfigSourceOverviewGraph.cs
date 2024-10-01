@@ -1,9 +1,7 @@
 ﻿namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// A device config source overview graph
+/// Obsolete
 /// </summary>
-[DataContract]
-public class DeviceConfigSourceOverviewGraph
-{
-}
+[Obsolete("Use ResourceConfigSourceOverviewGraph instead", true)]
+public class DeviceConfigSourceOverviewGraph : ResourceConfigSourceOverviewGraph;

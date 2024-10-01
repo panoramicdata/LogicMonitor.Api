@@ -61,7 +61,7 @@ public partial class LogicMonitorClient
 		int resourceDataSourceId,
 		CancellationToken cancellationToken)
 	{
-		var deviceDataSources = (await GetBySubUrlAsync<Page<DeviceDataSource>>($"device/devices/{resourceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
+		var deviceDataSources = (await GetBySubUrlAsync<Page<ResourceDataSource>>($"device/devices/{resourceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
 		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == resourceDataSourceId)
 			?? throw new ArgumentException($"No datasource on device {resourceId} with deviceDataSourceId {resourceDataSourceId}.",
 				nameof(resourceDataSourceId));
@@ -193,9 +193,9 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId"></param>
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<DeviceDataSourceData> GetDeviceDataSourceDataAsync(
+	public Task<ResourceDataSourceData> GetDeviceDataSourceDataAsync(
 		int resourceId,
 		int id,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<DeviceDataSourceData>($"device/devices/{resourceId}/devicedatasources/{id}/data", cancellationToken);
+		=> GetBySubUrlAsync<ResourceDataSourceData>($"device/devices/{resourceId}/devicedatasources/{id}/data", cancellationToken);
 }

@@ -69,9 +69,11 @@ deleteinactive
 deserialization
 Deserializes
 Dev
+devicedatasourceinstances
 devicedatasources
 devicegroup
 Dexda
+Diff
 dns
 doesn
 Dp
@@ -111,6 +113,7 @@ Json
 Kinesis
 Kubernetes
 linuxcmdline
+linuxprocess
 linuxscript
 listcore
 lite
@@ -118,6 +121,7 @@ Lm
 logicmodules
 Memcached
 Mongo
+Msg
 namespaceanddescendants
 netapp
 Netflow
@@ -170,6 +174,7 @@ Syslog
 tcp
 timestamp
 timezone
+Tz
 Unc
 unmonitoreddevices
 updatereasons
@@ -182,7 +187,9 @@ websitegroup
 wildcard
 Wildvalue
 wincmdline
+winprocess
 winscript
+winservice
 wmi
 Xen
 xml

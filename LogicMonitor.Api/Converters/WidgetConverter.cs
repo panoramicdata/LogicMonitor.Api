@@ -10,8 +10,8 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 			"alert" => new AlertWidget(),
 			"bignumber" => new BigNumberWidget(),
 			"cgraph" => new CustomGraphWidget(),
-			"devicenoc" => new DeviceNocWidget(),
-			"devicesla" => new DeviceSlaWidget(),
+			"devicenoc" => new ResourceNocWidget(),
+			"devicesla" => new ResourceSlaWidget(),
 			"flash" => new FlashWidget(),
 			"gauge" => new GaugeWidget(),
 			"gmap" => new GoogleMapWidget(),
@@ -34,7 +34,7 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 			"netflowgraph" => new NetflowGraphWidget(),
 			"groupnetflow" => new GroupNetflowWidget(),
 			"dynamictable" => new DynamicTableWidget(),
-			"devicestatus" => new DeviceStatusWidget(),
+			"devicestatus" => new ResourceStatusWidget(),
 			_ => throw new NotSupportedException($"WidgetConverter.cs needs updating to include {type} widgets."),
 		};
 	}

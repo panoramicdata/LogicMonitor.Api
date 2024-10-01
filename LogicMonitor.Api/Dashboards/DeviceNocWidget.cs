@@ -1,14 +1,7 @@
 ﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-///     A Device NOC widget
+/// Obsolete
 /// </summary>
-[DataContract]
-public class DeviceNocWidget : NocWidget, IWidget
-{
-	/// <summary>
-	///     The Items
-	/// </summary>
-	[DataMember(Name = "items")]
-	public new List<DeviceNocWidgetItem> Items { get; set; } = [];
-}
+[Obsolete("Use ResourceNocWidget instead", true)]
+public class DeviceNocWidget : ResourceNocWidget;

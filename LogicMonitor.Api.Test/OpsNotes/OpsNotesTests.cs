@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Resources;
+
 namespace LogicMonitor.Api.Test.OpsNotes;
 
 /// <summary>
@@ -31,7 +33,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Theory]
-	[InlineData(typeof(DeviceOpsNoteScopeCreationDto))]
+	[InlineData(typeof(ResourceOpsNoteScopeCreationDto))]
 	[InlineData(typeof(WebsiteOpsNoteScopeCreationDto))]
 	[InlineData(typeof(WebsiteGroupOpsNoteScopeCreationDto))]
 	[InlineData(typeof(ResourceGroupOpsNoteScopeCreationDto))]
@@ -59,7 +61,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			[
 				t.Name switch
 				{
-					nameof(DeviceOpsNoteScopeCreationDto) => new DeviceOpsNoteScopeCreationDto {DeviceId = device.Id},
+					nameof(ResourceOpsNoteScopeCreationDto) => new ResourceOpsNoteScopeCreationDto {ResourceId = device.Id},
 					nameof(ResourceGroupOpsNoteScopeCreationDto) => new ResourceGroupOpsNoteScopeCreationDto {ResourceGroupId = device.ResourceGroupIdsString.Split(',').Select(int.Parse).First()},
 					nameof(WebsiteOpsNoteScopeCreationDto) => new WebsiteOpsNoteScopeCreationDto {WebsitesId = website.Id},
 					nameof(WebsiteGroupOpsNoteScopeCreationDto) => new WebsiteGroupOpsNoteScopeCreationDto {WebsiteGroupId = website.GroupId},

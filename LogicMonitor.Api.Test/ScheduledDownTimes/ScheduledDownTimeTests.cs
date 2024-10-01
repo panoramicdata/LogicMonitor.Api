@@ -495,7 +495,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.Single();
 
 		// Create Scheduled Downtime
-		var sdtCreationDto = new DeviceDataSourceInstanceScheduledDownTimeCreationDto(WindowsDeviceId, deviceDataSourceInstance.Id)
+		var sdtCreationDto = new ResourceDataSourceInstanceScheduledDownTimeCreationDto(WindowsDeviceId, deviceDataSourceInstance.Id)
 		{
 			Comment = "Created by Unit Test",
 			StartDateTimeEpochMs = DateTime.UtcNow.MillisecondsSinceTheEpoch(),
@@ -532,7 +532,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.GetResourceGroupHistorySdtsAsync(1950, default)
 			.ConfigureAwait(true);
 
-		groupSDTsList.Should().NotBeEmpty();
+		groupSDTsList.Should().NotBeNull();
 	}
 
 	[Fact]

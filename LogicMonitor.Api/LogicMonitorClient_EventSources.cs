@@ -1,3 +1,5 @@
+using LogicMonitor.Api.Resources;
+
 namespace LogicMonitor.Api;
 
 /// <summary>
@@ -60,11 +62,11 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DeviceEventSource>> GetDeviceEventSourcesPageAsync(
+	public Task<Page<ResourceEventSource>> GetDeviceEventSourcesPageAsync(
 		int resourceId,
-		Filter<DeviceEventSource> filter,
+		Filter<ResourceEventSource> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DeviceEventSource>>($"device/devices/{resourceId}/deviceeventsources?{filter}", cancellationToken);
+		=> GetBySubUrlAsync<Page<ResourceEventSource>>($"device/devices/{resourceId}/deviceeventsources?{filter}", cancellationToken);
 
 	/// <summary>
 	///     Gets the deviceEventSource
@@ -72,11 +74,11 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceEventSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<DeviceEventSource> GetDeviceEventSourceAsync(
+	public Task<ResourceEventSource> GetDeviceEventSourceAsync(
 		int resourceId,
 		int deviceEventSourceId,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<DeviceEventSource>($"device/devices/{resourceId}/deviceeventsources/{deviceEventSourceId}", cancellationToken);
+		=> GetBySubUrlAsync<ResourceEventSource>($"device/devices/{resourceId}/deviceeventsources/{deviceEventSourceId}", cancellationToken);
 
 	/// <summary>
 	///     Gets a page of device EventSource groups
@@ -85,24 +87,24 @@ public partial class LogicMonitorClient
 	/// <param name="deviceEventSourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<DeviceEventSourceGroup>> GetDeviceEventSourceGroupsPageAsync(
+	public Task<Page<ResourceEventSourceGroup>> GetDeviceEventSourceGroupsPageAsync(
 		int resourceId,
 		int deviceEventSourceId,
-		Filter<DeviceEventSourceGroup> filter,
+		Filter<ResourceEventSourceGroup> filter,
 		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<DeviceEventSourceGroup>>($"device/devices/{resourceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
+		=> GetBySubUrlAsync<Page<ResourceEventSourceGroup>>($"device/devices/{resourceId}/deviceEventSources/{deviceEventSourceId}/groups?{filter}", cancellationToken);
 
 	/// <summary>
 	///     Gets a device event source
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="eventSourceId"></param>
-	public async Task<DeviceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(
+	public async Task<ResourceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(
 		int resourceId,
 		int eventSourceId)
 	{
 		// TODO - Make this use a search field
-		var page = await GetDeviceEventSourcesPageAsync(resourceId, new Filter<DeviceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
+		var page = await GetDeviceEventSourcesPageAsync(resourceId, new Filter<ResourceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
 		return page.Items.SingleOrDefault(deviceEventSource => deviceEventSource.EventSourceId == eventSourceId);
 	}
 

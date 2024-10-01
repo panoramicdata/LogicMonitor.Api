@@ -80,7 +80,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.ConfigureAwait(true);
 		overviewGraph.Should().NotBeNull();
 
-		var graphDataRequest = new DeviceDataSourceGraphDataRequest
+		var graphDataRequest = new ResourceDataSourceGraphDataRequest
 		{
 			DataSourceInstanceGroupId = deviceDataSourceInstanceGroup.Id,
 			OverviewGraphId = overviewGraph.Id,
@@ -109,7 +109,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.ConfigureAwait(true);
 		_ = await LogicMonitorClient.GetGraphDataAsync(new NetflowGraphDataRequest
 		{
-			DeviceId = netflowDevice.Id,
+			ResourceId = netflowDevice.Id,
 			StartDateTime = new DateTime(utcNow.Year, utcNow.Month, 1).AddMonths(-1),
 			EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
 			NetflowFilter = new NetflowFilters(),
@@ -168,7 +168,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
-		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
+		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
 			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
 			DataSourceGraphId = dataSourceGraph.Id,
@@ -214,7 +214,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 
-		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
+		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
 			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
 			DataSourceGraphId = dataSourceGraph.Id,
@@ -272,7 +272,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var startDateTime = new DateTime(2023, 7, 12, 10, 0, 0, DateTimeKind.Utc);
 		var endDateTime = startDateTime.AddHours(1);
 
-		var deviceGraphDataRequest = new DeviceDataSourceInstanceGraphDataRequest
+		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
 			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
 			DataSourceGraphId = dataSourceGraph.Id,
