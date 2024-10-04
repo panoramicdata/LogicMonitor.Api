@@ -340,7 +340,7 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The role privilege operations for the ResourceGroup that are granted to the user that made this API request
 	/// </summary>
 	[DataMember(Name = "rolePrivileges")]
-	public List<RolePrivilege> RolePrivileges { get; set; } = [];
+	public List<RolePrivilegeOperation> RolePrivileges { get; set; } = [];
 
 	/// <summary>
 	/// The result returned by the transaction that tests the SaaS credentials associated with the Saas group

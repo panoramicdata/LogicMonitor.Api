@@ -30,6 +30,14 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	}
 
 	[Fact]
+	public async Task GetAllCollectorGroupsWithSubUrl()
+	{
+		var collectorGroups = await LogicMonitorClient
+			.GetAllAsync<JObject>($"setting/collector/groups", default);
+		collectorGroups.Should().NotBeNullOrEmpty();
+	}
+
+	[Fact]
 	public async Task CrudCollectorGroup()
 	{
 		// Try to get this item
