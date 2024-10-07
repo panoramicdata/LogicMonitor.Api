@@ -1,6 +1,3 @@
-using LogicMonitor.Api.ResourceProcesses;
-using LogicMonitor.Api.Resources;
-
 namespace LogicMonitor.Api;
 
 /// <summary>

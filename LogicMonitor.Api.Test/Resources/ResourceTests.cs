@@ -1,4 +1,3 @@
-using LogicMonitor.Api.Resources;
 using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Resources;

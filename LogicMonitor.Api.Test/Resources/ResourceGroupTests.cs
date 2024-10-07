@@ -1,4 +1,3 @@
-using LogicMonitor.Api.Resources;
 using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Resources;

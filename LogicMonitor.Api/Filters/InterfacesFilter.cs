@@ -1,6 +1,4 @@
-﻿using LogicMonitor.Api.Resources;
-
-namespace LogicMonitor.Api.Filters;
+﻿namespace LogicMonitor.Api.Filters;
 
 /// <summary>
 /// Interfaces Filter

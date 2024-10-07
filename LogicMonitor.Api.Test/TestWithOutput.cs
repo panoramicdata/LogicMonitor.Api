@@ -1,4 +1,3 @@
-using LogicMonitor.Api.Resources;
 using Microsoft.Extensions.Options;
 using Xunit.Microsoft.DependencyInjection.Abstracts;
 

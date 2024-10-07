@@ -1,5 +1,4 @@
 ﻿using LogicMonitor.Api.Experimental;
-using LogicMonitor.Api.Resources;
 
 namespace LogicMonitor.Api.Test.Experimental;
 

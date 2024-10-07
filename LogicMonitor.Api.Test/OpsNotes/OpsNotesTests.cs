@@ -1,5 +1,3 @@
-using LogicMonitor.Api.Resources;
-
 namespace LogicMonitor.Api.Test.OpsNotes;
 
 /// <summary>
