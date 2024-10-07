@@ -142,13 +142,6 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public long DeletedTimeInMs { get; set; }
 
 	/// <summary>
-	///    The deleted time in ms
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use DeletedTimeinMs instead", true)]
-	public long DeletedTimeinMs => DeletedTimeInMs;
-
-	/// <summary>
 	///    The device type
 	/// </summary>
 	[SantabaReadOnly]

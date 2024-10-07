@@ -335,13 +335,6 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public string OneTimeDowngradeInfo { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use OneTimeDowngradeInfo", true)]
-	public string OnetimeDowngradeInfo => OneTimeDowngradeInfo;
-
-	/// <summary>
 	///     One time upgrade info
 	/// </summary>
 	[DataMember(Name = "onetimeUpgradeInfo")]
