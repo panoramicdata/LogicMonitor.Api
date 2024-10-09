@@ -28,8 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Version 211 support
-			Some older approaches, class names and misspelt property names have been made obsolete; if your code is affected, obsolescence messages will guide you.
+			Added missing members for ZuoraInvoiceDetails (payment / settings endpoint)
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
