@@ -341,19 +341,19 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     monthlyPerDeviceMetrics
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetrics")]
-	public int MonthlyPerDeviceMetrics { get; set; }
+	public long MonthlyPerDeviceMetrics { get; set; }						// Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
 	///     monthlyPerDeviceMetricsQuotaErrorLimit
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetricsQuotaErrorLimit")]
-	public int MonthlyPerDeviceMetricsQuotaErrorLimit { get; set; }
+	public long MonthlyPerDeviceMetricsQuotaErrorLimit { get; set; }        // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
 	///     monthlyPerDeviceMetricsQuotaWarningLimit
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetricsQuotaWarningLimit")]
-	public int MonthlyPerDeviceMetricsQuotaWarningLimit { get; set; }
+	public long MonthlyPerDeviceMetricsQuotaWarningLimit { get; set; }      // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
 	///     The PaaS device count
