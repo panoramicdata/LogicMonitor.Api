@@ -44,8 +44,8 @@ public abstract class TestWithOutput : TestBed<Fixture>
 
 	protected TestWithOutput(ITestOutputHelper testOutputHelper, Fixture fixture) : base(testOutputHelper, fixture)
 	{
-		ArgumentNullException.ThrowIfNull(testOutputHelper, nameof(testOutputHelper));
-		ArgumentNullException.ThrowIfNull(fixture, nameof(fixture));
+		ArgumentNullException.ThrowIfNull(testOutputHelper);
+		ArgumentNullException.ThrowIfNull(fixture);
 
 		// Logger
 		var loggerFactory = fixture.GetService<ILoggerFactory>(testOutputHelper) ?? throw new InvalidOperationException("LoggerFactory is null");

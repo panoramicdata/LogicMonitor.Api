@@ -16,7 +16,7 @@ public class PaymentInformation
 	/// The CardExpiryMonth
 	/// </summary>
 	[DataMember(Name = "cardExpMonth")]
-	public int CardExpiryMonth { get; set; }
+	public int? CardExpiryMonth { get; set; }
 
 	/// <summary>
 	/// The CardMaskNumber
@@ -46,7 +46,7 @@ public class PaymentInformation
 	/// The UpdatedDate
 	/// </summary>
 	[DataMember(Name = "updatedDate")]
-	public int UpdatedDate { get; set; }
+	public string? UpdatedDate { get; set; }
 
 	/// <summary>
 	/// The AccountCrmId
@@ -82,7 +82,7 @@ public class PaymentInformation
 	/// The CardExpiryYear
 	/// </summary>
 	[DataMember(Name = "cardExpYear")]
-	public int CardExpiryYear { get; set; }
+	public int? CardExpiryYear { get; set; }
 
 	/// <summary>
 	/// The AccountBillingEmail
@@ -139,7 +139,50 @@ public class PaymentInformation
 	public string CreditCardState { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Email		/// </summary>
+	/// The Email		
+	/// </summary>
 	[DataMember(Name = "email")]
 	public string Email { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The account billing contact ID
+	/// </summary>
+	[DataMember(Name = "accountBillingContactId")]
+	public string AccountBillingContactId { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The ach account name
+	/// </summary>
+	[DataMember(Name = "achAccountName")]
+	public string AchAccountName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The ach Aba code
+	/// </summary>
+	[DataMember(Name = "achAbaCode")]
+	public string AchAbaCode { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The account number
+	/// </summary>
+	[DataMember(Name = "accountNumber")]
+	public string AccountNumber { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The ach bank name
+	/// </summary>
+	[DataMember(Name = "achBankName")]
+	public string AchBankName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The ach account number mask
+	/// </summary>
+	[DataMember(Name = "achAccountNumberMask")]
+	public string AchAccountNumberMask { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Striped customer ID
+	/// </summary>
+	[DataMember(Name = "stripeCustomerId")]
+	public string StripeCustomerId { get; set; } = string.Empty;
 }
