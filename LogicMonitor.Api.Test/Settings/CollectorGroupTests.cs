@@ -32,9 +32,45 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	[Fact]
 	public async Task GetAllCollectorGroupsWithSubUrl()
 	{
+		// Create a large number of CollectorGroups, all called "GetAllCollectorGroupsWithSubUrl_N" where N is a number
+		var collectorGroupNames = Enumerable.Range(1, 100)
+			.Select(i => $"GetAllCollectorGroupsWithSubUrl_{i}")
+			.ToList();
+
+		foreach (var collectorGroupName in collectorGroupNames)
+		{
+			await LogicMonitorClient.CreateAsync(new CollectorGroupCreationDto
+			{
+				Name = collectorGroupName,
+				Description = "Description"
+			}, default).ConfigureAwait(true);
+		}
+
 		var collectorGroups = await LogicMonitorClient
 			.GetAllAsync<JObject>($"setting/collector/groups", default);
 		collectorGroups.Should().NotBeNullOrEmpty();
+
+		// All should have the name property set
+		foreach (var collectorGroup in collectorGroups)
+		{
+			collectorGroup["name"].Should().NotBeNull();
+			collectorGroup["id"].Should().NotBeNull();
+		}
+
+		// Ensure that all the CollectorGroups we created are in the list
+		var idsToDelete = new List<int>();
+		foreach (var collectorGroupName in collectorGroupNames)
+		{
+			var collectorGroup = collectorGroups.FirstOrDefault(cg => cg["name"]!.Value<string>() == collectorGroupName);
+			collectorGroup.Should().NotBeNull();
+			idsToDelete.Add(collectorGroup["id"]!.Value<int>());
+		}
+
+		// Delete all the CollectorGroups we created
+		foreach (var idToDelete in idsToDelete)
+		{
+			await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{idToDelete}", default).ConfigureAwait(true);
+		}
 	}
 
 	[Fact]
