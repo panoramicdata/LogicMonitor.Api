@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Added missing members for ZuoraInvoiceDetails (payment / settings endpoint)
+			Changed Resource.RolePrivileges to be a List<string>
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

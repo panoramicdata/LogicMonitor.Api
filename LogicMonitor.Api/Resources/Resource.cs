@@ -476,7 +476,7 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "rolePrivileges")]
-	public List<RolePrivilege> RolePrivileges { get; set; } = [];
+	public List<string> RolePrivileges { get; set; } = [];
 
 	/// <summary>
 	///    User Permission
