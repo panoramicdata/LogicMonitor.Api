@@ -309,6 +309,12 @@ public static class LogItemExtensions
 				AuditEventOriginatorType.User,
 		};
 
+		// DataSource imports have a LOT of text.  Skip these for now.
+		if (logItem.Description.StartsWith("Import DataSource", StringComparison.Ordinal))
+		{
+			return auditEvent;
+		}
+
 		// Interpret the description field
 		var entityTypeMatch = GetMatchFromDescription(logItem.Description);
 		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)
