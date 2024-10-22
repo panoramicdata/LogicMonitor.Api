@@ -31,6 +31,12 @@ public class EventSource : LogicModule, IHasEndpoint
 	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The column instance name
+	/// </summary>
+	[DataMember(Name = "columnInstanceName")]
+	public string? ColumnInstanceName { get; set; }
+
+	/// <summary>
 	/// The Technical Notes for the LMModule
 	/// </summary>
 	[DataMember(Name = "technology")]
@@ -125,6 +131,12 @@ public class EventSource : LogicModule, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "num")]
 	public int? Number { get; set; }
+
+	/// <summary>
+	/// The query
+	/// </summary>
+	[DataMember(Name = "query")]
+	public string? Query { get; set; }
 
 	/// <summary>
 	/// The EventSource schedule

@@ -110,8 +110,14 @@ public enum EventSourceType : byte
 	AzureResourceHealthEvent = 16,
 
 	/// <summary>
-	///    Azure resource health event
+	///    Azure log analytics workspaces event
 	/// </summary>
 	[EnumMember(Value = "azureloganalyticsworkspacesevent")]
-	AzureLogAnalyticsWorkspacesEvent = 17
+	AzureLogAnalyticsWorkspacesEvent = 17,
+
+	/// <summary>
+	///    Aws Organizational Health
+	/// </summary>
+	[EnumMember(Value = "awsorganizationalhealth")]
+	AwsOrganizationalHealth = 18
 }
