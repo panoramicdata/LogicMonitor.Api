@@ -31,7 +31,7 @@
 		<PackageReference Include="Xunit.Microsoft.DependencyInjection" Version="8.2.2" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
-		<PackageReference Include="xunit.analyzers" Version="1.16.0">
+		<PackageReference Include="xunit.analyzers" Version="1.17.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
