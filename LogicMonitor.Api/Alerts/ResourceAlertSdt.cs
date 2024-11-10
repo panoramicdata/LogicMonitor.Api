@@ -11,11 +11,4 @@ public class ResourceAlertSdt : AlertSdt
 	/// </summary>
 	[DataMember(Name = "hostId")]
 	public int ResourceId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceId => ResourceId;
 }

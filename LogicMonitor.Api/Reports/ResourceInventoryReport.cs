@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A host inventory report
 /// </summary>
 [DataContract]
-public class DeviceInventoryReport : ReportBase
+public class ResourceInventoryReport : ReportBase
 {
 	/// <summary>
 	/// The hostsVal

@@ -390,31 +390,6 @@ public partial class LogicMonitorClient : IDisposable
 	}
 
 	/// <summary>
-	///     Gets the current portal version
-	/// </summary>
-	/// <returns>The portal version</returns>
-	/// <exception cref="FormatException">Thrown if the portal version cannot be determined</exception>
-	[Obsolete("Use GetVersionAsync() or GetVersionAsync(\"<accountName>\") instead.", true)]
-	public async Task<int> GetPortalVersionAsync()
-	{
-		using var versionHttpClient = new HttpClient
-		{
-			BaseAddress = new Uri($"https://{AccountName}.logicmonitor.com/"),
-			Timeout = TimeOut
-		};
-		var response = await versionHttpClient.GetAsync("").ConfigureAwait(false);
-		var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-		var versionRegex = new Regex("sbui(?<version>\\d+)-");
-		var match = versionRegex.Match(responseText);
-		if (match.Success)
-		{
-			return int.Parse(match.Groups["version"].Value, CultureInfo.InvariantCulture);
-		}
-
-		throw new FormatException("Could not determine the portal version.");
-	}
-
-	/// <summary>
 	///     Update an identified item
 	/// </summary>
 	/// <param name="item">The object to update</param>
@@ -634,7 +609,7 @@ public partial class LogicMonitorClient : IDisposable
 		=> DeleteAsync($"{new T().Endpoint()}/{id}", cancellationToken);
 
 	/// <summary>
-	///     Deletes a DeviceDataSourceInstance
+	///     Deletes a Resource DataSource Instance
 	/// </summary>
 	/// <param name="resourceDataSourceInstance">The resourceDataSourceInstance to delete</param>
 	/// <param name="hardDelete">Whether to hard delete.</param>
@@ -648,7 +623,7 @@ public partial class LogicMonitorClient : IDisposable
 			cancellationToken);
 
 	/// <summary>
-	///     Hard deletes a DeviceDataSourceInstance
+	///     Hard deletes a ResourceDataSourceInstance
 	/// </summary>
 	/// <param name="resourceDataSourceInstance">The resourceDataSourceInstance to delete</param>
 	/// <param name="cancellationToken">The optional cancellation token</param>

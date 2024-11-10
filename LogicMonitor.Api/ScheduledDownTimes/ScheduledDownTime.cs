@@ -73,24 +73,10 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? ResourceDataSourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceDataSourceId", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int? DeviceDataSourceId => ResourceDataSourceId;
-
-	/// <summary>
 	///    DeviceEventSourceId
 	/// </summary>
 	[DataMember(Name = "deviceEventSourceId")]
 	public int? ResourceEventSourceId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceEventSourceId", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int? DeviceEventSourceId => ResourceEventSourceId;
 
 	/// <summary>
 	///    Resource Id
@@ -99,23 +85,10 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? ResourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceId", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int? DeviceId => ResourceId;
-
-	/// <summary>
 	///    Device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string? ResourceDisplayName { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceDisplayName", true)]
-	public string? DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	///    DataSource name
@@ -178,24 +151,10 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int? DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	///    The DeviceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
 	public string? ResourceGroupFullPath { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public string? DeviceGroupFullPath => ResourceGroupFullPath;
 
 	/// <summary>
 	///    The Website Group Id

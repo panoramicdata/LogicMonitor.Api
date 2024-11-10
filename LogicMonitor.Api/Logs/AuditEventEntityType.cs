@@ -13,12 +13,12 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Device
 	/// </summary>
-	Device,
+	Resource,
 
 	/// <summary>
 	/// Device DataSource Instance
 	/// </summary>
-	DeviceDataSourceInstance,
+	ResourceDataSourceInstance,
 
 	/// <summary>
 	/// Scheduled Down Time

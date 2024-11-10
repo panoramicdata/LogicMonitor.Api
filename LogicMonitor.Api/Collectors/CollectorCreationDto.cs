@@ -49,16 +49,16 @@ public class CollectorCreationDto : CreationDto<Collector>, IHasDescription
 	public int CollectorGroupId { get; set; } = 1;
 
 	/// <summary>
-	///     Whether or not the device the Collector is installed on is enabled for fail over
+	///     Whether or not the Resource the Collector is installed on is enabled for fail over
 	/// </summary>
 	[DataMember(Name = "enableFailOverOnCollectorDevice")]
-	public bool? EnableFailOverOnCollectorDevice { get; set; } // TODO - use the AutomaticUpgradeInfo class
+	public bool? EnableFailOverOnCollectorResource { get; set; } // TODO - use the AutomaticUpgradeInfo class
 
 	/// <summary>
-	///     Whether or not the device the Collector is installed on should be automatically added into monitoring
+	///     Whether or not the Resource the Collector is installed on should be automatically added into monitoring
 	/// </summary>
 	[DataMember(Name = "needAutoCreateCollectorDevice")]
-	public bool? NeedAutoCreateCollectorDevice { get; set; } = true;
+	public bool? NeedAutoCreateCollectorResource { get; set; } = true;
 
 	/// <summary>
 	///     The next recipient (leave as 0)
@@ -71,11 +71,4 @@ public class CollectorCreationDto : CreationDto<Collector>, IHasDescription
 	/// </summary>
 	[DataMember(Name = "specifiedCollectorDeviceGroupId")]
 	public int SpecifiedCollectorResourceGroupId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use SpecifiedCollectorResourceGroupId", true)]
-	public int SpecifiedCollectorDeviceGroupId => SpecifiedCollectorResourceGroupId;
 }

@@ -85,24 +85,10 @@ public class DataPointConfiguration : IdentifiedItem
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
-
-	/// <summary>
 	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
 	public int ResourceGroupId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	///     Whether alerting is disabled
@@ -115,14 +101,6 @@ public class DataPointConfiguration : IdentifiedItem
 	/// </summary>
 	[DataMember(Name = "disableDpAlertHostGroups")]
 	public object DisableDataPointAlertResourceGroups { get; set; } = new();
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use DisableDataPointAlertResourceGroups", true)]
-	public object DisableDpAlertHostGroups => DisableDataPointAlertResourceGroups;
-
 
 	/// <summary>
 	///     Whether to enable anomaly alert generation
@@ -206,10 +184,10 @@ public class DataPointConfiguration : IdentifiedItem
 	public bool? IsActiveDiscoveryAdvancedSettingEnabled { get; set; }
 
 	/// <summary>
-	///     The parent DeviceGroup Alert Expression List
+	///     The parent ResourceGroup Alert Expression List
 	/// </summary>
 	[DataMember(Name = "parentDeviceGroupAlertExprList")]
-	public List<ParentDeviceGroupAlertExpression> ParentDeviceGroupAlertExprList { get; set; } = [];
+	public List<ParentResourceGroupAlertExpression> ParentResourceGroupAlertExprList { get; set; } = [];
 
 	/// <summary>
 	///     The warn active discovery advanced setting

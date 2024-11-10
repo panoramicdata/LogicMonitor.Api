@@ -16,7 +16,7 @@ public class NGraphWidget : GraphWidget
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// The graph Id
@@ -34,7 +34,7 @@ public class NGraphWidget : GraphWidget
 	/// The device name
 	/// </summary>
 	[DataMember(Name = "hostName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The datasource name

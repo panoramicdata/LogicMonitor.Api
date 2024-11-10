@@ -7,16 +7,16 @@ namespace LogicMonitor.Api.LogicModules;
 public class ResourceEventSourceGroup : NamedItem
 {
 	/// <summary>
-	///    deviceId
+	///    Resource Id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	///    deviceDisplayName
+	///    Resource DisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    createOn
@@ -85,8 +85,8 @@ public class ResourceEventSourceGroup : NamedItem
 	public int DisabledInstanceCount { get; set; }
 
 	/// <summary>
-	///    deviceEventSourceId
+	///    Resource EventSourceId
 	/// </summary>
 	[DataMember(Name = "deviceEventSourceId")]
-	public int DeviceEventSourceId { get; set; }
+	public int ResourceEventSourceId { get; set; }
 }

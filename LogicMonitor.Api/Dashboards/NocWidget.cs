@@ -13,16 +13,16 @@ public class NocWidget : Widget, IWidget
 	public AlertLevel AlertLevel { get; set; }
 
 	/// <summary>
-	/// The device type
+	/// The Resource type
 	/// </summary>
 	[DataMember(Name = "hostsType")]
-	public string DeviceType { get; set; } = string.Empty;
+	public string ResourceType { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device type
+	/// The Resources
 	/// </summary>
 	[DataMember(Name = "hosts")]
-	public string Devices { get; set; } = string.Empty;
+	public string Resources { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Items

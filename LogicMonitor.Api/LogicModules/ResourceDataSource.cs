@@ -111,19 +111,19 @@ public class ResourceDataSource : IdentifiedItem
 	///    The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	///    The device name
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The device display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The group name
@@ -210,5 +210,5 @@ public class ResourceDataSource : IdentifiedItem
 	public string SdtAt { get; set; } = string.Empty;
 
 	/// <inheritdoc />
-	public override string ToString() => $"{Id}: {DataSourceName} ({DataSourceId}) on device {DeviceDisplayName} ({DeviceId})";
+	public override string ToString() => $"{Id}: {DataSourceName} ({DataSourceId}) on device {ResourceDisplayName} ({ResourceId})";
 }

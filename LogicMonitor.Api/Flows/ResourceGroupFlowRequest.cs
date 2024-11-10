@@ -21,13 +21,6 @@ public abstract class ResourceGroupFlowRequest : TimeBasedRequest
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// The QoS type
 	/// </summary>
 	public string QosType { get; set; } = string.Empty;

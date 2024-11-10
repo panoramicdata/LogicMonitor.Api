@@ -19,10 +19,10 @@ public class NetflowFilters
 	public string QosType { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device interfaces
+	/// The Resource interfaces
 	/// </summary>
 	[DataMember(Name = "deviceInterfaces")]
-	public List<InterfacesFilter> DeviceInterfaces { get; set; } = [];
+	public List<InterfacesFilter> ResourceInterfaces { get; set; } = [];
 
 	/// <summary>
 	/// The ports
@@ -43,10 +43,10 @@ public class NetflowFilters
 	public string IpVersion { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Netflow filter netflowDevices expression
+	/// Netflow filter netflow Resources expression
 	/// </summary>
 	[DataMember(Name = "netflowDevices")]
-	public List<NetflowDeviceInfo> NetflowDevices { get; set; } = [];
+	public List<NetflowResourceInfo> NetflowResources { get; set; } = [];
 
 	/// <summary>
 	/// The top

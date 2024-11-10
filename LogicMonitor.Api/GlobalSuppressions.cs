@@ -31,6 +31,7 @@
 	Justification = "More effort than the benefits gained",
 	Scope = "namespaceanddescendants",
 	Target = "~N:LogicMonitor.Api")]
+
 [assembly: SuppressMessage(
 	"Naming",
 	"CA1711:Identifiers should not have incorrect suffix",
@@ -41,40 +42,5 @@
 	"VSSpell001:Spell Check",
 	Justification = "Temporary for typo fix",
 	Scope = "member",
-	Target = "~P:LogicMonitor.Api.Devices.Resource.DeletedTimeinMs")
-]
-[assembly: SuppressMessage(
-	"Naming",
-	"VSSpell001:Spell Check",
-	Justification = "Temporary for typo fix",
-	Scope = "member",
-	Target = "~P:LogicMonitor.Api.Collectors.CollectorGroup.AutoBalanceDeviceCountThrehsold")
-]
-[assembly: SuppressMessage(
-	"Naming",
-	"VSSpell001:Spell Check",
-	Justification = "Temporary for typo fix",
-	Scope = "member",
-	Target = "~P:LogicMonitor.Api.Collectors.CollectorGroup.AutoBalanceInstanceCountThrehsold")
-]
-[assembly: SuppressMessage(
-	"Naming",
-	"VSSpell001:Spell Check",
-	Justification = "Temporary for typo fix",
-	Scope = "member",
 	Target = "~P:LogicMonitor.Api.Collectors.CollectorGroup.MismatchVerison")
-]
-[assembly: SuppressMessage(
-	"Naming",
-	"VSSpell001:Spell Check",
-	Justification = "Temporary for typo fix",
-	Scope = "member",
-	Target = "~P:LogicMonitor.Api.Collectors.Collector.OnetimeDowngradeInfo")
-]
-[assembly: SuppressMessage(
-	"Naming",
-	"VSSpell001:Spell Check",
-	Justification = "Temporary for typo fix",
-	Scope = "member",
-	Target = "~P:LogicMonitor.Api.Collectors.Collector.OtelVerison")
 ]

@@ -43,13 +43,6 @@ public class NetscanAssignment
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// Type
 	/// </summary>
 	[DataMember(Name = "type")]

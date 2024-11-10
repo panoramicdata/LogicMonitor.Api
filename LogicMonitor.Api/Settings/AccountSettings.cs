@@ -247,36 +247,16 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int ResourceGroupWarningLimit { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupWarningLimit", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int DeviceGroupWarningLimit => ResourceGroupWarningLimit;
-
-	/// <summary>
 	///     The ResourceGroup count that must should not be exceeded
 	/// </summary>
 	[DataMember(Name = "hostGroupErrorLimit")]
 	public int ResourceGroupErrorLimit { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupErrorLimit", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int DeviceGroupErrorLimit => ResourceGroupErrorLimit;
-
-	/// <summary>
 	///     The ResourceGroups info
 	/// </summary>
 	[DataMember(Name = "hostGroupsInfo")]
 	public ResourceGroupsInfo ResourceGroupsInfo { get; set; } = new();
-
-	/// <summary>
-	///     The ResourceGroups info
-	/// </summary>
-	[Obsolete("Use ResourceGroupsInfo", true)]
-	public ResourceGroupsInfo DeviceGroupsInfo => ResourceGroupsInfo;
 
 	/// <summary>
 	///     The dynamic threshold count
@@ -341,7 +321,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     monthlyPerDeviceMetrics
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetrics")]
-	public long MonthlyPerDeviceMetrics { get; set; }						// Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
+	public long MonthlyPerDeviceMetrics { get; set; }                       // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
 	///     monthlyPerDeviceMetricsQuotaErrorLimit

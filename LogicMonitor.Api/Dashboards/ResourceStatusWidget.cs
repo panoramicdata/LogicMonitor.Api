@@ -1,22 +1,22 @@
 ﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-/// A Device Status Widget
+/// A Resource Status Widget
 /// </summary>
 [DataContract]
 public class ResourceStatusWidget : Widget, IWidget
 {
 	/// <summary>
-	/// The Device ID
+	/// The Resource ID
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public string DeviceId { get; set; } = string.Empty;
+	public string ResourceId { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Device Display Name
+	/// The Resource Display Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Display Settings

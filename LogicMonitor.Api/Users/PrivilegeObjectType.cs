@@ -26,13 +26,6 @@ public enum PrivilegeObjectType
 	ResourceGroup,
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroup instead", true)]
-	DeviceGroup,
-
-	/// <summary>
 	/// Help
 	/// </summary>
 	[EnumMember(Value = "help")]
@@ -67,13 +60,6 @@ public enum PrivilegeObjectType
 	/// </summary>
 	[EnumMember(Value = "deviceDashboard")]
 	ResourceDashboard,
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceDashboard instead", true)]
-	DeviceDashboard,
 
 	/// <summary>
 	/// ConfigNeedDeviceManagePermission

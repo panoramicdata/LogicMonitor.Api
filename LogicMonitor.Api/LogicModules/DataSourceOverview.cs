@@ -13,103 +13,103 @@ public class DataSourceOverview : NamedItem
 	public int GroupId { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The DisplayName
 	/// </summary>
 	[DataMember(Name = "displayName")]
 	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The group Id
+	/// The Alias
 	/// </summary>
 	[DataMember(Name = "alias")]
 	public string Alias { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The group Id
+	/// The Info
 	/// </summary>
 	[DataMember(Name = "info")]
 	public string Info { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The group Id
+	/// The LockDescription
 	/// </summary>
 	[DataMember(Name = "lockDescription")]
 	public bool LockDescription { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The Resource Id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The Resource description
 	/// </summary>
 	[DataMember(Name = "deviceDescription")]
-	public string DeviceDescription { get; set; } = string.Empty;
+	public string ResourceDescription { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The group Id
+	/// The DataSourceId
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
 	public int DataSourceId { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The ResourceDataSourceId
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
+	public int ResourceDataSourceId { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The WildValue
 	/// </summary>
 	[DataMember(Name = "wildValue")]
 	public string WildValue { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The group Id
+	/// The WildValue2
 	/// </summary>
 	[DataMember(Name = "wildValue2")]
 	public string WildValue2 { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The group Id
+	/// The DisableAlerting
 	/// </summary>
 	[DataMember(Name = "disableAlerting")]
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The HasAlertDisabledDataPoints
 	/// </summary>
 	[DataMember(Name = "hasAlertDisabledDataPoints")]
 	public bool HasAlertDisabledDataPoints { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The StopMonitoring
 	/// </summary>
 	[DataMember(Name = "stopMonitoring")]
 	public bool StopMonitoring { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The AlertStatus
 	/// </summary>
 	[DataMember(Name = "alertStatus")]
 	public AlertStatus AlertStatus { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The SdtStatus
 	/// </summary>
 	[DataMember(Name = "sdtStatus")]
 	public SdtStatus SdtStatus { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The AlertDisableStatus
 	/// </summary>
 	[DataMember(Name = "alertDisableStatus")]
 	public AlertDisableStatus AlertDisableStatus { get; set; }
 
 	/// <summary>
-	/// The group Id
+	/// The SdtAt
 	/// </summary>
 	[DataMember(Name = "sdtAt")]
 	public string SdtAt { get; set; } = string.Empty;

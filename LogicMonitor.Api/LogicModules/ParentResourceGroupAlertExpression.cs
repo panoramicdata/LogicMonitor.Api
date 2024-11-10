@@ -4,7 +4,7 @@
 /// A ParentDeviceGroupAlertExpression
 /// </summary>
 [DataContract]
-public class ParentDeviceGroupAlertExpression
+public class ParentResourceGroupAlertExpression
 {
 	/// <summary>
 	///     The ResourceGroup full path
@@ -13,24 +13,10 @@ public class ParentDeviceGroupAlertExpression
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
-
-	/// <summary>
 	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "groupId")]
 	public int ResourceGroupId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	///     The Alert transition interval

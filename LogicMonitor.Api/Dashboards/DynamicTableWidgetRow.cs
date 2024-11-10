@@ -25,8 +25,8 @@ public class DynamicTableWidgetRow
 	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The Device display name
+	///     The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 }

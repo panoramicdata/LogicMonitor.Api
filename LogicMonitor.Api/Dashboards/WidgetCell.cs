@@ -7,10 +7,10 @@
 public class WidgetCell
 {
 	/// <summary>
-	/// Device Display Name
+	/// Resource Display Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Value

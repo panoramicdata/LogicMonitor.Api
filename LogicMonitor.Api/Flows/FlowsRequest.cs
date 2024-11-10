@@ -13,5 +13,5 @@ public class FlowsRequest : FlowRequest
 	/// <summary>
 	/// IRequest Gets Query String
 	/// </summary>
-	public override string GetQueryString() => $"device/devices/{DeviceId}/flows?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}&netflowFilter={NetflowFilter.AsUrlEncodedString()}&size={Take}&offset={Skip}";
+	public override string GetQueryString() => $"device/devices/{ResourceId}/flows?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}&netflowFilter={NetflowFilter.AsUrlEncodedString()}&size={Take}&offset={Skip}";
 }

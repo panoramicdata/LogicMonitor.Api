@@ -81,21 +81,6 @@ public partial class LogicMonitorClient
 		=> PutAsync($"setting/alert/rules/{alertRule.Id}?data=%5Bobject+Object%5D", alertRule, cancellationToken);
 
 	/// <summary>
-	/// get user list
-	/// </summary>
-	[Obsolete("Use GetAllAsync<User> instead", true)]
-	public Task<Page<User>> GetAdminListAsync()
-		=> GetBySubUrlAsync<Page<User>>($"setting/admins", CancellationToken.None);
-
-	/// <summary>
-	/// get user list
-	/// </summary>
-	/// <param name="cancellationToken"></param>
-	[Obsolete("Use GetAllAsync<User> instead", true)]
-	public Task<Page<User>> GetAdminListAsync(CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<User>>($"setting/admins", cancellationToken);
-
-	/// <summary>
 	/// get integration audit logs list
 	/// </summary>
 	public Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync()
@@ -110,52 +95,6 @@ public partial class LogicMonitorClient
 		=> GetBySubUrlAsync<Page<IntegrationAuditLog>>($"setting/integrations/auditlogs", cancellationToken);
 
 	/// <summary>
-	/// get alert rule by id
-	/// </summary>
-	/// <param name="id">The alert rule id</param>
-	/// <param name="filter"></param>
-	/// <param name="cancellationToken"></param>
-	[Obsolete("Use GetAsync<AlertRule> instead", true)]
-	public Task<AlertRule> GetAlertRuleAsync(
-		int id,
-		Filter<AlertRule> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<AlertRule>($"setting/alert/rules/{id}?{filter}", cancellationToken);
-
-	/// <summary>
-	/// delete alert rule
-	/// </summary>
-	/// <param name="id">The alert rule id</param>
-	/// <param name="cancellationToken"></param>
-	[Obsolete("Use DeleteAsync<AlertRule> instead", true)]
-	public Task DeleteAlertRuleAsync(
-		int id,
-		CancellationToken cancellationToken)
-		=> DeleteAsync($"setting/alert/rules/{id}", cancellationToken);
-
-	/// <summary>
-	/// add alert rule
-	/// </summary>
-	/// <param name="body">The rule to be added</param>
-	/// <param name="cancellationToken"></param>
-	[Obsolete("Use CreateAsync<AlertRule> instead", true)]
-	public Task<AlertRule> AddAlertRuleAsync(
-		AlertRule body,
-		CancellationToken cancellationToken)
-		=> PostAsync<AlertRule, AlertRule>(body, $"setting/alert/rules", cancellationToken);
-
-	/// <summary>
-	/// get alert rule list
-	/// </summary>
-	/// <param name="filter"></param>
-	/// <param name="cancellationToken"></param>
-	[Obsolete("Use GetAllAsync<AlertRule> instead", true)]
-	public Task<Page<AlertRule>> GetAlertRuleListAsync(
-		Filter<AlertRule> filter,
-		CancellationToken cancellationToken)
-		=> FilteredGetAsync($"setting/alert/rules", filter, cancellationToken);
-
-	/// <summary>
 	/// Add API tokens for a user
 	/// </summary>
 	/// <param name="adminId">The admin id of the user</param>
@@ -168,18 +107,6 @@ public partial class LogicMonitorClient
 		string? type,
 		CancellationToken cancellationToken)
 		=> await PostAsync<ApiToken, ApiToken>(body, $"setting/admins/{adminId}/apitokens?type={type}", cancellationToken);
-
-	/// <summary>
-	/// Get API tokens for a user
-	/// </summary>
-	[Obsolete("Use GetAllAsync<ApiToken>(Filter<ApiToken>, CancellationToken) instead", true)]
-	public Task<Page<ApiToken>> GetApiTokensAsync(
-		int adminId,
-		Filter<ApiToken> filter,
-		CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<ApiToken>>
-		($"setting/admins/{adminId}/apitokens?{filter}",
-			cancellationToken);
 
 	/// <summary>
 	/// Get a list of API tokens across users

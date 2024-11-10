@@ -16,23 +16,9 @@ public enum ScheduledDownTimeEntityType
 	Resource = 1,
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore]
-	[Obsolete("Use Resource instead", true)]
-	Device = Resource,
-
-	/// <summary>
 	/// ResourceGroup
 	/// </summary>
 	ResourceGroup = 2,
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore]
-	[Obsolete("Use ResourceGroup instead", true)]
-	DeviceGroup = ResourceGroup,
 
 	/// <summary>
 	/// DataSourceInstance

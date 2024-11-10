@@ -6,15 +6,6 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 	/// <summary>
-	///    Gets a ConfigSource by name
-	/// </summary>
-	/// <param name="configSourceName"></param>
-	/// <param name="cancellationToken"></param>
-	[Obsolete("Use GetByNameAsync<ConfigSource> instead", true)]
-	public Task<ConfigSource?> GetConfigSourceByNameAsync(string configSourceName, CancellationToken cancellationToken)
-		=> GetByNameAsync<ConfigSource>(configSourceName, cancellationToken);
-
-	/// <summary>
 	///     Gets the XML for a ConfigSource.
 	/// </summary>
 	/// <param name="configSourceId">The ConfigSource id</param>

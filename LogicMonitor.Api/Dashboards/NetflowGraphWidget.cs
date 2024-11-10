@@ -21,13 +21,13 @@ public class NetflowGraphWidget : Widget, IWidget
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The device name
+	/// The Resource name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The row filters

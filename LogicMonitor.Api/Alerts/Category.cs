@@ -13,13 +13,6 @@ public class Category : NamedItem
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// The DataSource id
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]

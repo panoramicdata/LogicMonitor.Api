@@ -13,23 +13,16 @@ public class AlertWidgetFilter
 	public string Anomaly { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Displayed alerts must be associated with devices that meet this filter criteria. Glob is accepted, and * and an empty string both indicate all devices
+	/// Displayed alerts must be associated with Resources that meet this filter criteria. Glob is accepted, and * and an empty string both indicate all Resources
 	/// </summary>
 	[DataMember(Name = "host")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The group display name
 	/// </summary>
 	[DataMember(Name = "group")]
 	public string ResourceGroupDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupDisplayName", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public string DeviceGroupDisplayName => ResourceGroupDisplayName;
 
 	/// <summary>
 	///     The datasource name

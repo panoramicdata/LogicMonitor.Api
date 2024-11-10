@@ -32,15 +32,8 @@ public class GraphOpsNoteScope
 	public int ResourceGroupIds { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupIds", true)]
-	public int DeviceGroupIds => ResourceGroupIds;
-
-	/// <summary>
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 }

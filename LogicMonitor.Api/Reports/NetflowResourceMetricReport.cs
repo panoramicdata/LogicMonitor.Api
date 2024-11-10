@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A NetflowDeviceMetric report
 /// </summary>
 [DataContract]
-public class NetflowDeviceMetricReport : DateRangeReport
+public class NetflowResourceMetricReport : DateRangeReport
 {
 	/// <summary>
 	/// The hosts value

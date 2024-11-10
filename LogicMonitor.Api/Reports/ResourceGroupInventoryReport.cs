@@ -13,13 +13,6 @@ public class ResourceGroupInventoryReport : ReportBase
 	public string ResourceGroups { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroups instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public string? DeviceGroups => ResourceGroups;
-
-	/// <summary>
 	/// Whether to include sub groups
 	/// </summary>
 	[DataMember(Name = "includeSubGroups")]

@@ -79,7 +79,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		gaugeWidget.Should().NotBeNull();
 		gaugeWidget.DataPoint.Should().NotBeNull();
 		gaugeWidget.DataPoint.ResourceGroupFullPath.Should().NotBeNull();
-		gaugeWidget.DataPoint.DeviceDisplayName.Should().NotBeNull();
+		gaugeWidget.DataPoint.ResourceDisplayName.Should().NotBeNull();
 		gaugeWidget.DataPoint.DataSourceFullName.Should().NotBeNull();
 		gaugeWidget.DataPoint.DataSourceId.Should().NotBe(0);
 		gaugeWidget.DataPoint.DataSourceInstanceName.Should().NotBeNull();
@@ -108,9 +108,9 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		customGraphWidget.GraphInfo.DataPoints[0].AggregateFunction.Should().NotBeNull();
 		customGraphWidget.GraphInfo.DataPoints[0].DataSourceId.Should().NotBe(0);
 		customGraphWidget.GraphInfo.DataPoints[0].DataSourceFullName.Should().NotBeNull();
-		customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.Should().NotBeNull();
-		customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.Value.Should().NotBeNull();
-		customGraphWidget.GraphInfo.DataPoints[0].DeviceDisplayName.IsGlob.Should().BeTrue();
+		customGraphWidget.GraphInfo.DataPoints[0].ResourceDisplayName.Should().NotBeNull();
+		customGraphWidget.GraphInfo.DataPoints[0].ResourceDisplayName.Value.Should().NotBeNull();
+		customGraphWidget.GraphInfo.DataPoints[0].ResourceDisplayName.IsGlob.Should().BeTrue();
 		customGraphWidget.GraphInfo.DataPoints[0].ResourceGroupFullPath.Value.Should().NotBeNull();
 		customGraphWidget.GraphInfo.DataPoints[0].ResourceGroupFullPath.IsGlob.Should().BeTrue();
 		customGraphWidget.GraphInfo.DataPoints[0].DataSourceInstanceName.Value.Should().NotBeNull();

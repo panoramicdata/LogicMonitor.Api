@@ -55,13 +55,6 @@ public class ResourceGroupData : NamedItem
 	public int ResourceCount { get; set; }
 
 	/// <summary>
-	///	Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceCount", true)]
-	public int NumOfHosts => ResourceCount;
-
-	/// <summary>
 	/// The number of sub-groups that belong only to this ResourceGroup (doesn\u0027t include groups under sub-groups)
 	/// </summary>
 	[DataMember(Name = "numOfDirectSubGroups")]
@@ -72,13 +65,6 @@ public class ResourceGroupData : NamedItem
 	/// </summary>
 	[DataMember(Name = "numOfDirectDevices")]
 	public string DirectResourceCount { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use DirectResourceCount", true)]
-	public string NumOfDirectDevices => DirectResourceCount;
 
 	/// <summary>
 	/// The number of instances in each Azure region (only applies to Azure groups)

@@ -43,13 +43,6 @@ public class AlertRuleCreationDto : CreationDto<AlertRule>, IHasName, IHasDescri
 	public List<string> ResourceGroups { get; set; } = [];
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroups instead", true)]
-	public List<string> DeviceGroups => ResourceGroups;
-
-	/// <summary>
 	/// The affected DataSource name filter
 	/// </summary>
 	[DataMember(Name = "datasource")]

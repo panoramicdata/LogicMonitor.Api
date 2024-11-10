@@ -22,7 +22,7 @@ public enum WidgetType
 	/// Noc widget
 	/// </summary>
 	[EnumMember(Value = "deviceNOC")]
-	DeviceNoc,
+	ResourceNoc,
 
 	/// <summary>
 	/// Complex graph widget

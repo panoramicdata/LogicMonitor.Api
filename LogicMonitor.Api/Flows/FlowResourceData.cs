@@ -1,5 +1,5 @@
 namespace LogicMonitor.Api.Flows;
 
-internal class FlowDeviceData
+internal class FlowResourceData
 {
 }

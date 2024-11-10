@@ -25,16 +25,16 @@ public class TableWidgetRow
 	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The deviceId
+	///     The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	///     The deviceDisplayName
+	///     The Resource DisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The DataSourceInstances

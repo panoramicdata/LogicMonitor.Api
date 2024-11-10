@@ -1,14 +1,6 @@
 ﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
-/// DeviceGroups Info
-/// </summary>
-[Obsolete("Use ResourceGroupsInfo instead", true)]
-public class DeviceGroupsInfo : ResourceGroupsInfo
-{
-}
-
-/// <summary>
 /// ResourceGroups Info
 /// </summary>
 [DataContract]

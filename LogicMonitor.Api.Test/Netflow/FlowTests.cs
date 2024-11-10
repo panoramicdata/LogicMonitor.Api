@@ -21,7 +21,7 @@ public class FlowTests : TestWithOutput
 			.GetFlowApplicationsPageAsync(
 				new FlowApplicationsRequest
 				{
-					DeviceId = NetflowDeviceId
+					ResourceId = NetflowDeviceId
 				},
 				default
 			);
@@ -83,7 +83,7 @@ public class FlowTests : TestWithOutput
 	{
 		var device = await GetNetflowDeviceAsync(default);
 
-		var flows = await LogicMonitorClient.GetResourceGroupFlowsPageAsync(new DeviceGroupFlowsRequest
+		var flows = await LogicMonitorClient.GetResourceGroupFlowsPageAsync(new ResourceGroupFlowsRequest
 		{
 			TimePeriod = TimePeriod.Zoom,
 			ResourceGroupId = int.Parse(device.ResourceGroupIdsString.Split(",")[0], CultureInfo.InvariantCulture),
@@ -106,7 +106,7 @@ public class FlowTests : TestWithOutput
 		var flowEndpoints = await LogicMonitorClient.GetFlowApplicationsPageAsync(new FlowApplicationsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
-			DeviceId = NetflowDeviceId
+			ResourceId = NetflowDeviceId
 		}, default);
 
 		// Make sure that some are returned
@@ -122,7 +122,7 @@ public class FlowTests : TestWithOutput
 		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
-			DeviceId = NetflowDeviceId
+			ResourceId = NetflowDeviceId
 		}, default);
 
 		// Make sure that some are returned
@@ -138,7 +138,7 @@ public class FlowTests : TestWithOutput
 		var flowPorts = await LogicMonitorClient.GetFlowPortsPageAsync(new FlowPortsRequest
 		{
 			TimePeriod = TimePeriod.OneDay,
-			DeviceId = NetflowDeviceId
+			ResourceId = NetflowDeviceId
 		}, default);
 
 		// Make sure that some are returned
@@ -153,7 +153,7 @@ public class FlowTests : TestWithOutput
 	{
 		var flows = await LogicMonitorClient.GetFlowsPageAsync(new FlowsRequest
 		{
-			DeviceId = NetflowDeviceId,
+			ResourceId = NetflowDeviceId,
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = _startDateTimeSeconds,
 			EndDateTime = _endDateTimeSeconds

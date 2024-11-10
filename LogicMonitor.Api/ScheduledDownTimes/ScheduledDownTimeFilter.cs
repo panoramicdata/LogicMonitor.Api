@@ -43,23 +43,9 @@ public class ScheduledDownTimeFilter
 	public int? ResourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int? DeviceId => ResourceId;
-
-	/// <summary>
 	/// The DeviceId (only works for Type=DeviceGroup)
 	/// </summary>
 	public int? ResourceGroupId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int? DeviceGroupId => ResourceGroupId;
 
 	/// <summary>
 	/// The DeviceDataSourceInstanceId (only works for Type=DeviceDataSourceInstance)

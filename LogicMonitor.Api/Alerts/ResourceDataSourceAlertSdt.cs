@@ -31,28 +31,14 @@ public class ResourceDataSourceAlertSdt : AlertSdt
 	public int ResourceDataSourceId2 { get; set; }
 
 	/// <summary>
-	/// The Device display name
+	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string ResourceDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceDisplayName instead", true)]
-	public string DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	/// The Resource ID
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int ResourceId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceId => ResourceId;
 }

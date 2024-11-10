@@ -56,31 +56,31 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId"></param>
 	/// <param name="resourceDataSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<DataSourceGraph>> GetDeviceOverviewGraphsAsync(
+	public async Task<List<DataSourceGraph>> GetResourceOverviewGraphsAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		CancellationToken cancellationToken)
 	{
 		var deviceDataSources = (await GetBySubUrlAsync<Page<ResourceDataSource>>($"device/devices/{resourceId}/devicedatasources", cancellationToken).ConfigureAwait(false)).Items;
-		var filteredDeviceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == resourceDataSourceId)
+		var filteredResourceDataSource = deviceDataSources.SingleOrDefault(dds => dds.Id == resourceDataSourceId)
 			?? throw new ArgumentException($"No datasource on device {resourceId} with deviceDataSourceId {resourceDataSourceId}.",
 				nameof(resourceDataSourceId));
-		return filteredDeviceDataSource.OverviewGraphs;
+		return filteredResourceDataSource.OverviewGraphs;
 	}
 
 	/// <summary>
-	///     Gets a Device OverviewGraph By Name
+	///     Gets a Resource OverviewGraph By Name
 	/// </summary>
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="resourceDataSourceId">The device dataSource Id</param>
 	/// <param name="name">The overview graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDeviceOverviewGraphByNameAsync(
+	public async Task<DataSourceGraph> GetResourceOverviewGraphByNameAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		string name,
 		CancellationToken cancellationToken)
-		=> (await GetDeviceOverviewGraphsAsync(resourceId, resourceDataSourceId, cancellationToken).ConfigureAwait(false))
+		=> (await GetResourceOverviewGraphsAsync(resourceId, resourceDataSourceId, cancellationToken).ConfigureAwait(false))
 			.SingleOrDefault(g => g.Name == name);
 
 	/// <summary>
@@ -168,7 +168,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// Fetch data across multiple instances
 	/// </summary>
-	/// <param name="resourceDataSourceInstanceIds">The list of DeviceSataSourceInstance ids</param>
+	/// <param name="resourceDataSourceInstanceIds">The list of Resource DataSource Instance ids</param>
 	/// <param name="start">The start</param>
 	/// <param name="end">The start</param>
 	/// <param name="cancellationToken">The optional CancellationToken</param>
@@ -193,7 +193,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId"></param>
 	/// <param name="id"></param>
 	/// <param name="cancellationToken"></param>
-	public Task<ResourceDataSourceData> GetDeviceDataSourceDataAsync(
+	public Task<ResourceDataSourceData> GetResourceDataSourceDataAsync(
 		int resourceId,
 		int id,
 		CancellationToken cancellationToken)

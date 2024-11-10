@@ -55,22 +55,22 @@ public class ResourceDataSourceInstanceConfig : StringIdentifiedItem
 	public List<ResourceDataSourceInstanceConfigDiff> DeltaConfig { get; set; } = [];
 
 	/// <summary>
-	/// device datasource id
+	/// Resource datasource id
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
+	public int ResourceDataSourceId { get; set; }
 
 	/// <summary>
-	/// device display name
+	/// Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// device id
+	/// Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int? DeviceId { get; set; }
+	public int? ResourceId { get; set; }
 
 	/// <summary>
 	/// advanceDiffChecker

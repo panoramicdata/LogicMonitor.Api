@@ -50,7 +50,7 @@ public class ResourceNocWidgetCreationDto : WidgetCreationDto<NocWidget>
 	public NocWidgetDisplayColumnCount DisplayColumnCount { get; set; } = (NocWidgetDisplayColumnCount)1;
 
 	/// <summary>
-	///     The Device NOC widget items
+	///     The Resource NOC widget items
 	/// </summary>
 	[DataMember(Name = "items")]
 	public List<ResourceNocWidgetItem> Items { get; set; } = [];

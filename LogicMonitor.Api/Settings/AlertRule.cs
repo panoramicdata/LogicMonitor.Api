@@ -25,22 +25,10 @@ public class AlertRule : NamedItem, IHasEndpoint
 	public List<string> Resources { get; set; } = [];
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use Resources", true)]
-	public List<string> Devices => Resources;
-
-	/// <summary>
 	/// The ResourceGroup filter
 	/// </summary>
 	[DataMember(Name = "deviceGroups")]
 	public List<string> ResourceGroups { get; set; } = [];
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use Resources", true)]
-	public List<string> DeviceGroups => ResourceGroups;
 
 	/// <summary>
 	/// The affected DataSource name filter

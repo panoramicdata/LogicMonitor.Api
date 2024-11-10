@@ -228,13 +228,6 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public ResourceGroupType ResourceGroupType { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupType", true)]
-	public ResourceGroupType DeviceGroupType => ResourceGroupType;
-
-	/// <summary>
 	///    The Devices in this DeviceGroup.
 	///    This information does not always come from the API, so you may need to populate it yourself.
 	/// </summary>
@@ -243,25 +236,11 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public List<Resource> Resources { get; set; } = [];
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use Resources", true)]
-	public List<Resource> Devices => Resources;
-
-	/// <summary>
 	/// The number of AWS and normal Resources that belong only to this ResourceGroup (doesn\u0027t include devices in sub-groups)
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "numOfDirectDevices")]
 	public long DirectResourceCount { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use DirectResourceCount instead", true)]
-	public long DirectDeviceCount => DirectResourceCount;
 
 	/// <summary>
 	/// The number of sub-groups that belong only to this ResourceGroup (doesn\u0027t include groups under sub-groups)

@@ -13,15 +13,6 @@ public partial class LogicMonitorClient
 	=> GetAllAsync<ScheduledDownTimeHistory>($"device/devices/{resourceId}/historysdts", cancellationToken);
 
 	/// <summary>
-	///	Obsolete
-	///	</summary>
-	[Obsolete("Use GetResourceHistorySdtsAsync instead", true)]
-	public Task<List<ScheduledDownTimeHistory>> GetDeviceHistorySdtsAsync(
-		int resourceId,
-		CancellationToken cancellationToken)
-		=> GetResourceHistorySdtsAsync(resourceId, cancellationToken);
-
-	/// <summary>
 	///     Gets history SDTs for a ResourceGroup
 	/// </summary>
 	/// <param name="resourceGroupId">The ResourceGroup ID</param>
@@ -32,21 +23,9 @@ public partial class LogicMonitorClient
 	=> GetAllAsync<ScheduledDownTimeHistory>($"device/groups/{resourceGroupId}/historysdts", cancellationToken);
 
 	/// <summary>
-	/// Obsolete
+	///     Gets history SDTs for a Resource Data Source
 	/// </summary>
-	/// <param name="resourceGroupId"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	[Obsolete("Use GetResourceGroupHistorySdtsAsync instead", true)]
-	public Task<List<ScheduledDownTimeHistory>> GetDeviceGroupHistorySdtsAsync(
-		int resourceGroupId,
-		CancellationToken cancellationToken)
-		=> GetResourceGroupHistorySdtsAsync(resourceGroupId, cancellationToken);
-
-	/// <summary>
-	///     Gets history SDTs for a Device Data Source
-	/// </summary>
-	/// <param name="resourceId">The Device ID</param>
+	/// <param name="resourceId">The Resource ID</param>
 	/// <param name="resourceDataSourceId">The Device Data Source ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public Task<List<ScheduledDownTimeHistory>> GetDeviceDataSourceHistorySdtsAsync(
@@ -56,11 +35,11 @@ public partial class LogicMonitorClient
 	=> GetAllAsync<ScheduledDownTimeHistory>($"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/historysdts", cancellationToken);
 
 	/// <summary>
-	///     Gets history SDTs for a Device Data Source Instance
+	///     Gets history SDTs for a Resource Data Source Instance
 	/// </summary>
-	/// <param name="resourceId">The Device ID</param>
-	/// <param name="resourceDataSourceId">The Device Data Source ID</param>
-	/// <param name="resourceDataSourceInstanceId">The Device Data Source Instance ID</param>
+	/// <param name="resourceId">The Resource ID</param>
+	/// <param name="resourceDataSourceId">The Resource Data Source ID</param>
+	/// <param name="resourceDataSourceInstanceId">The Resource Data Source Instance ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	public Task<List<ScheduledDownTimeHistory>> GetDeviceDataSourceInstanceHistorySdtsAsync(
 		int resourceId,

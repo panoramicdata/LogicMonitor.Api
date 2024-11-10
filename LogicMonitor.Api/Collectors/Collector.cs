@@ -136,11 +136,11 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public string DownloadUrl { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The collector device id
+	///     The collector Resource id
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "collectorDeviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	///     The encoded config data
@@ -218,7 +218,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Number of hosts
 	/// </summary>
 	[DataMember(Name = "numberOfHosts")]
-	public int DeviceCount { get; set; }
+	public int ResourceCount { get; set; }
 
 	/// <summary>
 	///     Whether it is Early Access
@@ -236,7 +236,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     Enable failover on collector device
 	/// </summary>
 	[DataMember(Name = "enableFailOverOnCollectorDevice")]
-	public bool EnableFailOverOnCollectorDevice { get; set; }
+	public bool EnableFailOverOnCollectorResource { get; set; }
 
 	/// <summary>
 	///     The escalation chain
@@ -251,10 +251,10 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int EscalationChainId { get; set; }
 
 	/// <summary>
-	///     Whether it has a fail-over device
+	///     Whether it has a fail-over Resource
 	/// </summary>
 	[DataMember(Name = "hasFailOverDevice")]
-	public bool HasFailOverDevice { get; set; }
+	public bool HasFailOverResource { get; set; }
 
 	/// <summary>
 	///     Hostname
@@ -305,10 +305,10 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int LastSentNotificationOnTimeStampUtc { get; set; }
 
 	/// <summary>
-	///     Whether it needs AutoCreateCollectorDevice
+	///     Whether it needs AutoCreateCollectorResource
 	/// </summary>
 	[DataMember(Name = "needAutoCreateCollectorDevice")]
-	public bool NeedAutoCreateCollectorDevice { get; set; }
+	public bool NeedAutoCreateCollectorResource { get; set; }
 
 	/// <summary>
 	///     Netscan version
@@ -407,13 +407,6 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int SpecifiedCollectorResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use SpecifiedCollectorResourceGroupId", true)]
-	public int SpecifiedCollectorDeviceGroupId => SpecifiedCollectorResourceGroupId;
-
-	/// <summary>
 	///     Status
 	/// </summary>
 	[DataMember(Name = "status")]
@@ -477,7 +470,7 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     User visible hosts number
 	/// </summary>
 	[DataMember(Name = "userVisibleHostsNum")]
-	public int UserVisibleDeviceCount { get; set; }
+	public int UserVisibleResourceCount { get; set; }
 
 	/// <summary>
 	///     User visible Website number

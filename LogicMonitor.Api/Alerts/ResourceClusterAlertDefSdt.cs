@@ -13,17 +13,10 @@ public class ResourceClusterAlertDefSdt : AlertSdt
 	public string DataSourceName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Device Cluster Alert Def ID
+	/// The Resource Cluster Alert Def ID
 	/// </summary>
 	[DataMember(Name = "deviceClusterAlertDefId")]
 	public int ResourceClusterAlertDefId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceClusterAlertDefId", true)]
-	public int DeviceClusterAlertDefId => ResourceClusterAlertDefId;
 
 	/// <summary>
 	/// The ResourceGroup full path
@@ -32,22 +25,8 @@ public class ResourceClusterAlertDefSdt : AlertSdt
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
-
-	/// <summary>
 	/// The ResourceGroup ID
 	/// </summary>
 	[DataMember(Name = "deviceGroupId")]
 	public int ResourceGroupId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
 }

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A host metric trends report
 /// </summary>
 [DataContract]
-public class DeviceMetricTrendsReport : DateRangeReport
+public class ResourceMetricTrendsReport : DateRangeReport
 {
 	/// <summary>
 	/// The hostsVal

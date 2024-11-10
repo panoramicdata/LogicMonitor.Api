@@ -19,16 +19,16 @@ public class NetflowWidget : Widget, IWidget
 	public int InterfaceIndex { get; set; }
 
 	/// <summary>
-	/// The device display name
+	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// The data type
@@ -58,7 +58,7 @@ public class NetflowWidget : Widget, IWidget
 	/// The device name
 	/// </summary>
 	[DataMember(Name = "hostName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceHostName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The interface name

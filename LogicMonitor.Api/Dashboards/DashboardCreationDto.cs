@@ -37,13 +37,6 @@ public class DashboardCreationDto : CreationDto<Dashboard>, IHasName, IHasDescri
 	public bool Shareable { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use Shareable", true)]
-	public bool Sharable => Shareable;
-
-	/// <summary>
 	/// Information about widget configuration used by the UI
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]

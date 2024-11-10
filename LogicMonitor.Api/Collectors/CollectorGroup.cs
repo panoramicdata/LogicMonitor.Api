@@ -52,14 +52,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	///    Auto-balance device count threshold
 	/// </summary>
 	[DataMember(Name = "autoBalanceDeviceCountThreshold")]
-	public int AutoBalanceDeviceCountThreshold { get; set; }
-
-	/// <summary>
-	/// Obsolete: Use AutoBalanceDeviceCountThreshold instead
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use AutoBalanceDeviceCountThreshold instead", true)]
-	public int AutoBalanceDeviceCountThrehsold => AutoBalanceDeviceCountThreshold;
+	public int AutoBalanceResourceCountThreshold { get; set; }
 
 	/// <summary>
 	/// threshold for instance count strategy to check if a collector has high load
@@ -68,24 +61,10 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public int AutoBalanceInstanceCountThreshold { get; set; }
 
 	/// <summary>
-	/// Obsolete: Use AutoBalanceInstanceCountThreshold instead
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use AutoBalanceDeviceCountThreshold instead", true)]
-	public int AutoBalanceInstanceCountThrehsold => AutoBalanceInstanceCountThreshold;
-
-	/// <summary>
 	///    Whether the versions mismatch
 	/// </summary>
 	[DataMember(Name = "mismatchVerison")]
 	public bool VersionsMismatch { get; set; }
-
-	/// <summary>
-	/// Obsolete: Use VersionsMismatch instead
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use VersionsMismatch instead", true)]
-	public bool MismatchVerison => VersionsMismatch;
 
 	/// <summary>
 	/// the platform limitation
@@ -103,7 +82,7 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	/// The number of hosts that belong to the group
 	/// </summary>
 	[DataMember(Name = "numOfHosts")]
-	public long DeviceCount { get; set; }
+	public long ResourceCount { get; set; }
 
 	/// <summary>
 	/// specifies if the version of all collectors in group is same

@@ -13,24 +13,10 @@ public class PieChartWidgetDataPoint
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
-
-	/// <summary>
 	/// The Resource Display Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string ResourceDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceDisplayName instead", true)]
-	public string DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	/// The dataSourceFullName

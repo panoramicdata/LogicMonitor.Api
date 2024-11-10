@@ -21,13 +21,13 @@ public class NormalGraphWidgetCreationDto : WidgetCreationDto<NGraphWidget>
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The Resource id
+	/// The ResourceDataSourceInstanceId
 	/// </summary>
 	[DataMember(Name = "dsiId")]
-	public int DeviceDataSourceInstanceId { get; set; }
+	public int ResourceDataSourceInstanceId { get; set; }
 
 	/// <summary>
 	/// The graph Id

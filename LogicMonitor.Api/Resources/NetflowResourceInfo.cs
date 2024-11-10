@@ -5,7 +5,7 @@
 /// </summary>
 
 [DataContract]
-public class NetflowDeviceInfo : IdentifiedItem
+public class NetflowResourceInfo : IdentifiedItem
 {
 	/// <summary>
 	/// deleted

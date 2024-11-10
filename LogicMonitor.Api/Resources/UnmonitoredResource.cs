@@ -97,13 +97,6 @@ public class UnmonitoredResource : IdentifiedItem, IHasEndpoint
 	public string ResourceType { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceType", true)]
-	public string DeviceType => ResourceType;
-
-	/// <summary>
 	///    Whether collector id
 	/// </summary>
 	[DataMember(Name = "collectorId")]
@@ -120,13 +113,6 @@ public class UnmonitoredResource : IdentifiedItem, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "deviceStatus")]
 	public string ResourceStatus { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceStatus", true)]
-	public string DeviceStatus => ResourceStatus;
 
 	/// <summary>
 	///    The manufacturer

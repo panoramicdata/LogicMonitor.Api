@@ -9,13 +9,13 @@ public class OverviewGraphWidgetCreationDto : WidgetCreationDto<OverviewGraphWid
 	///     The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	///     The Resource id
+	///     The ResourceDataSourceInstanceGroupId
 	/// </summary>
 	[DataMember(Name = "dsigId")]
-	public int DeviceDataSourceInstanceGroupId { get; set; }
+	public int ResourceDataSourceInstanceGroupId { get; set; }
 
 	/// <summary>
 	///     The overview graph Id

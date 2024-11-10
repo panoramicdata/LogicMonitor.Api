@@ -37,13 +37,6 @@ public class ResourceGroupDataSource
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// Whether to stop monitoring
 	/// </summary>
 	[DataMember(Name = "stopMonitoring")]

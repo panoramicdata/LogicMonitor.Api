@@ -19,7 +19,7 @@ public abstract class FlowRequest : TimeBasedRequest
 	/// <summary>
 	/// The id of the flow device
 	/// </summary>
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// The netflow filter

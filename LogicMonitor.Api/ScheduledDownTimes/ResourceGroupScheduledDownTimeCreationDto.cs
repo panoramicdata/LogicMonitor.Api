@@ -17,13 +17,6 @@ public class ResourceGroupScheduledDownTimeCreationDto(int resourceGroupId) : Sc
 	public int ResourceGroupId { get; set; } = resourceGroupId;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// The id of the datasource that this SDT will be associated with, for the specified group. dataSourceId 0 indicates all datasources
 	/// </summary>
 	[DataMember(Name = "dataSourceId")]
@@ -40,11 +33,4 @@ public class ResourceGroupScheduledDownTimeCreationDto(int resourceGroupId) : Sc
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
 }

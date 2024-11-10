@@ -18,14 +18,14 @@ public class ResourceDataSourceGraphDataRequest : GraphDataRequest
 	/// <summary>
 	///  The Resource id
 	/// </summary>
-	public int? DeviceId { get; set; }
+	public int? ResourceId { get; set; }
 
 	/// <summary>
 	/// The Datasource Id
 	/// </summary>
-	public int DeviceDataSourceId { get; set; }
+	public int ResourceDataSourceId { get; set; }
 
-	internal override string SubUrl => $"device/devices/{DeviceId}/devicedatasources/{DeviceDataSourceId}/groups/{DataSourceInstanceGroupId}/graphs/{OverviewGraphId}/data?{TimePart}";
+	internal override string SubUrl => $"device/devices/{ResourceId}/devicedatasources/{ResourceDataSourceId}/groups/{DataSourceInstanceGroupId}/graphs/{OverviewGraphId}/data?{TimePart}";
 
 	/// <inheritdoc />
 	public override void Validate()

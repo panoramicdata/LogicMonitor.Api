@@ -13,13 +13,6 @@ public class NetflowGraphDataRequest : GraphDataRequest
 	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceId", true)]
-	public int DeviceId => ResourceId;
-
-	/// <summary>
 	/// The Netflow Filter
 	/// </summary>
 	public NetflowFilters NetflowFilter { get; set; } = new NetflowFilters();
@@ -31,7 +24,7 @@ public class NetflowGraphDataRequest : GraphDataRequest
 	{
 		if (ResourceId == 0)
 		{
-			throw new ArgumentException("NetflowDeviceId must be specified");
+			throw new ArgumentException("ResourceId must be specified");
 		}
 
 		if (NetflowFilter is null)

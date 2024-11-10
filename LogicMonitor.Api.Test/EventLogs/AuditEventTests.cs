@@ -14,7 +14,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			{
 				MatchedRegExId = 01,
 				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.Device,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Failure,
 				ResourceIds = [0],
 				ResourceNames = ["ReportMagic alpha-Scheduler"]
@@ -29,7 +29,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			{
 				MatchedRegExId = 11,
 				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				Description = "Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; ",
 				ResourceNames = ["NA"]
@@ -44,7 +44,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			{
 				MatchedRegExId = 6,
 				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceNames = ["NA"],
 				ResourceIds = [3271],
@@ -94,7 +94,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			{
 				MatchedRegExId = expectedRegexId,
 				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.Device,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [expectedResourceId],
 				ResourceNames = [expectedResourceName],
@@ -113,7 +113,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				MatchedRegExId = 8,
 				ActionType = AuditEventActionType.Update,
 				CollectorId = 249,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [2781],
 				ResourceNames = ["PDL-LM.logicmonitor.com"],
@@ -133,7 +133,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				MatchedRegExId = 7,
 				ActionType = AuditEventActionType.Update,
 				CollectorId = 249,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [1525],
 				ResourceNames = ["PDL-K8S-TEST-03"],
@@ -153,7 +153,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				MatchedRegExId = 9,
 				ActionType = AuditEventActionType.Update,
 				CollectorId = 249,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [2365],
 				ResourceNames = ["PDL-HAPROXY-TEST-02"],
@@ -175,7 +175,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				MatchedRegExId = 9,
 				ActionType = AuditEventActionType.Update,
 				CollectorId = -2,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [2571],
 				ResourceNames = ["EU-W1:recoveryservices:pambackup"],
@@ -310,7 +310,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				ResourceIds = [8443],
 				ResourceNames = ["argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876"],
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Device,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -335,7 +335,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
 				],
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Device,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -352,7 +352,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				InstanceName = "Google",
 				WildValue = "https://google.com",
 				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -402,7 +402,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					"EU-W1:i-0070bf1c74503d8ed"
 				],
 				ActionType = AuditEventActionType.Delete,
-				EntityType = AuditEventEntityType.Device,
+				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -658,7 +658,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		MatchedRegExId = 68,
 		ActionType = AuditEventActionType.RequestRemoteSession,
-		EntityType = AuditEventEntityType.Device,
+		EntityType = AuditEventEntityType.Resource,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ResourceHostname = expectedResourceHostname,
 		RemoteSessionType = expectedRemoteSessionType
@@ -806,7 +806,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		MatchedRegExId = 77,
 		ActionType = AuditEventActionType.Update,
-		EntityType = AuditEventEntityType.DeviceDataSourceInstance,
+		EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ResourceNames = [expectedResourceName],
 		InstanceName = expectedInstanceName,
@@ -841,7 +841,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	new()
 	{
 		MatchedRegExId = 78,
-		EntityType = AuditEventEntityType.Device,
+		EntityType = AuditEventEntityType.Resource,
 		OutcomeType = AuditEventOutcomeType.Success,
 		ActionType = expectedActionType,
 		RemoteSessionType = expectedRemoteSessionType,

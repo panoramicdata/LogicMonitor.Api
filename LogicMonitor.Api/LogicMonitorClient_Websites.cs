@@ -6,15 +6,6 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 	/// <summary>
-	///    Gets a website group by Id.
-	/// </summary>
-	/// <param name="websiteGroupId">The parent website group id.  The root website group is 1.</param>
-	/// <param name="cancellationToken">An optional cancellation token</param>
-	[Obsolete("Use GetAsync<WebsiteGroup> instead", true)]
-	public Task<WebsiteGroup> GetWebsiteGroupByIdAsync(int websiteGroupId, CancellationToken cancellationToken)
-		=> GetAsync<WebsiteGroup>(websiteGroupId, cancellationToken);
-
-	/// <summary>
 	///    Gets a website group by full path.
 	///    Returns null if not found.
 	/// </summary>

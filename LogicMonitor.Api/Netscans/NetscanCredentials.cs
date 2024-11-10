@@ -13,13 +13,6 @@ public class NetscanCredentials
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// Custom credentials that should be used for this scan
 	/// </summary>
 	[DataMember(Name = "custom")]
@@ -32,37 +25,16 @@ public class NetscanCredentials
 	public string? ResourceGroupName { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupName instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public string? DeviceGroupName => ResourceGroupName;
-
-	/// <summary>
 	/// The ID of the Resource that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceId => ResourceId;
-
-	/// <summary>
 	/// The display name of the Resource that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceName")]
 	public string? ResourceDisplayName { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupName instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public string? DeviceName => ResourceDisplayName;
 
 	/// <summary>
 	/// snmpV3Credentials

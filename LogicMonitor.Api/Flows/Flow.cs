@@ -13,11 +13,11 @@ public class Flow
 	public string DataType { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Device Display Name. This is only populated when the request is
-	/// for a ResourceGroup's flow, not when for a Device's flow
+	/// Resource Display Name. This is only populated when the request is
+	/// for a ResourceGroup's flow, not when for a Resource's flow
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Source IP address

@@ -387,7 +387,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				.ConfigureAwait(true);
 
 			// Make sure they are the same
-			deviceDataSourceRefetch.DeviceId.Should().Be(WindowsDeviceId);
+			deviceDataSourceRefetch.ResourceId.Should().Be(WindowsDeviceId);
 			deviceDataSourceRefetch.CreatedOnSeconds.Should().Be(deviceDataSource.CreatedOnSeconds);
 
 			// Get the instances
@@ -508,7 +508,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		var deviceDataSource = await LogicMonitorClient
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(1765, dataSource.Id, default)
 			.ConfigureAwait(true);
-		deviceDataSource.DeviceId.Should().Be(1765);
+		deviceDataSource.ResourceId.Should().Be(1765);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);
 	}
 

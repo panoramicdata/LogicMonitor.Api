@@ -3,7 +3,7 @@ namespace LogicMonitor.Api.Flows;
 /// <summary>
 /// A request for flow data for a ResourceGroup
 /// </summary>
-public class DeviceGroupFlowsRequest : ResourceGroupFlowRequest
+public class ResourceGroupFlowsRequest : ResourceGroupFlowRequest
 {
 	/// <summary>
 	/// The flow field to sort by

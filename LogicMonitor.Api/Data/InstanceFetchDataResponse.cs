@@ -7,10 +7,10 @@ namespace LogicMonitor.Api.Data;
 public class InstanceFetchDataResponse
 {
 	/// <summary>
-	/// DeviceDataSourceInstanceId
+	/// ResourceDataSourceInstanceId
 	/// </summary>
 	[DataMember(Name = "instanceId")]
-	public string DeviceDataSourceInstanceId { get; set; } = string.Empty;
+	public string ResourceDataSourceInstanceId { get; set; } = string.Empty;
 
 	/// <summary>
 	/// Error message

@@ -6,14 +6,6 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 	/// <summary>
-	///     Gets a list of all EventSources.
-	/// </summary>
-	/// <param name="filter">The filter</param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	[Obsolete("Use GetAllAsync(Filter<EventSource>) instead.")]
-	public Task<List<EventSource>> GetEventSourcesAsync(Filter<EventSource> filter, CancellationToken cancellationToken) => throw new NotSupportedException();
-
-	/// <summary>
 	///     Gets the XML for an EventSource.
 	/// </summary>
 	/// <param name="eventSourceId">The EventSource id</param>
@@ -30,29 +22,6 @@ public partial class LogicMonitorClient
 		int resourceGroupId,
 		CancellationToken cancellationToken)
 		=> GetAllAsync<ResourceGroupEventSource>($"device/groups/{resourceGroupId}/eventsources", cancellationToken);
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	/// <param name="resourceGroupId"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	[Obsolete("Use GetAllResourceGroupEventSourcesAsync instead", true)]
-	public Task<List<ResourceGroupEventSource>> GetAllDeviceGroupEventSourcesAsync(
-		int resourceGroupId,
-		CancellationToken cancellationToken)
-		=> GetAllResourceGroupEventSourcesAsync(resourceGroupId, cancellationToken);
-
-	/// <summary>
-	///     Gets a EventSource by name
-	/// </summary>
-	/// <param name="eventSourceName"></param>
-	/// <param name="cancellationToken">The cancellation token</param>
-	[Obsolete("Use GetByNameAsync<EventSource> instead", true)]
-	public Task<EventSource> GetEventSourceByNameAsync(
-		string eventSourceName,
-		CancellationToken cancellationToken)
-		=> throw new NotSupportedException();
 
 	/// <summary>
 	/// Gets a page of device EventSources

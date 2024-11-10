@@ -14,7 +14,7 @@ internal static class AlertTypeExtensions
 		AlertType.DataSource => "dataSourceAlert",
 		AlertType.EventSource => "eventAlert",
 		AlertType.Website => "websiteAlert",
-		AlertType.DeviceCluster => "hostClusterAlert",
+		AlertType.ResourceCluster => "hostClusterAlert",
 		AlertType.BatchJob => "batchJobAlert",
 		AlertType.CollectorDown => "agentDownAlert",
 		AlertType.CollectorFailover => "agentFailoverAlert",

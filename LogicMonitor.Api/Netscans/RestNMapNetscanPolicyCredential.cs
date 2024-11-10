@@ -13,13 +13,6 @@ public class RestNMapNetscanPolicyCredential
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupId instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// Custom credentials that should be used for this scan
 	/// </summary>
 	[DataMember(Name = "custom")]
@@ -32,21 +25,14 @@ public class RestNMapNetscanPolicyCredential
 	public string? ResourceGroupName { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupName instead", true)]
-	[JsonIgnore, IgnoreDataMember]
-	public string? DeviceGroupName => ResourceGroupName;
-
-	/// <summary>
 	/// The ID of the device that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// The name of the device that credentials should be inherited from, for this scan
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string? DeviceName { get; set; }
+	public string? ResourceName { get; set; }
 }

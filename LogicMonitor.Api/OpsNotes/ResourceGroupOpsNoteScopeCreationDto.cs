@@ -19,11 +19,4 @@ public class ResourceGroupOpsNoteScopeCreationDto : OpsNoteScopeCreationDto
 	/// </summary>
 	[DataMember(Name = "groupId")]
 	public int ResourceGroupId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
 }

@@ -57,13 +57,13 @@ public class ResourceEventSource : IdentifiedItem
 	///    The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	///    The device display name
+	///    The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	///    The group name
@@ -102,5 +102,5 @@ public class ResourceEventSource : IdentifiedItem
 	public string SdtAt { get; set; } = string.Empty;
 
 	/// <inheritdoc />
-	public override string ToString() => $"{Id}: {EventSourceName} ({EventSourceId}) on device {DeviceDisplayName} ({DeviceId})";
+	public override string ToString() => $"{Id}: {EventSourceName} ({EventSourceId}) on device {ResourceDisplayName} ({ResourceId})";
 }

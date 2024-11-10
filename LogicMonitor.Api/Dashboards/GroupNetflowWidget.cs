@@ -25,23 +25,10 @@ public class GroupNetflowWidget : Widget, IWidget
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	///     The ResourceGroup name
 	/// </summary>
 	[DataMember(Name = "deviceGroupName")]
 	public string ResourceGroupName { get; set; } = string.Empty;
-
-	/// <summary>
-	///	Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupName", true)]
-	public string DeviceGroupName => ResourceGroupName;
 
 	/// <summary>
 	///     The row filters

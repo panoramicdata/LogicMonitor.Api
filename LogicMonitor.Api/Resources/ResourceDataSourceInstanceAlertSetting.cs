@@ -73,23 +73,10 @@ public class ResourceDataSourceInstanceAlertSetting
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// The full path of the ResourceGroup
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceGroupFullPath", true)]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
 
 	/// <summary>
 	/// The interval of alert transition
@@ -150,13 +137,6 @@ public class ResourceDataSourceInstanceAlertSetting
 	/// </summary>
 	[DataMember(Name = "parentDeviceGroupAlertExprList")]
 	public ResourceGroupAlertThresholdInfo ParentResourceGroupAlertExpressions { get; set; } = new();
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupName instead", true)]
-	public ResourceGroupAlertThresholdInfo ParentDeviceGroupAlertExprList => ParentResourceGroupAlertExpressions;
 
 	/// <summary>
 	/// The DataPoint is effected alert disabled by which group

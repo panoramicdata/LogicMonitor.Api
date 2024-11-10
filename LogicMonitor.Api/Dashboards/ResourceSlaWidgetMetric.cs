@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Dashboards;
 
 /// <summary>
-///     A Device SLA widget metric
+///     A Resource SLA widget metric
 /// </summary>
 [DataContract]
 public class ResourceSlaWidgetMetric
@@ -13,24 +13,10 @@ public class ResourceSlaWidgetMetric
 	public string ResourceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupName instead", true)]
-	public string DeviceGroupName => ResourceGroupName;
-
-	/// <summary>
 	/// The Resource name
 	/// </summary>
 	[DataMember(Name = "deviceName")]
 	public string ResourceDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceDisplayName instead", true)]
-	public string DeviceName => ResourceDisplayName;
 
 	/// <summary>
 	/// The dataSourceId

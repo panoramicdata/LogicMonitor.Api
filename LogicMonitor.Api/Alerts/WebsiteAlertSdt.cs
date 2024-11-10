@@ -10,5 +10,5 @@ public class WebsiteAlertSdt : AlertSdt
 	/// The website id
 	/// </summary>
 	[DataMember(Name = "websiteId")]
-	public int DeviceId { get; set; }
+	public int WebsiteId { get; set; }
 }

@@ -58,20 +58,6 @@ public partial class LogicMonitorClient
 	#region ResourceGroup flows
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	/// <param name="flowRequest"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	[Obsolete("Use GetResourceGroupFlowsPageAsync instead", true)]
-	public Task<Page<Flow>> GetDeviceGroupFlowsPageAsync(
-		ResourceGroupFlowRequest flowRequest,
-		CancellationToken cancellationToken)
-		=> GetResourceGroupFlowsPageAsync(
-			flowRequest,
-			cancellationToken);
-
-	/// <summary>
 	///  Get Flows for a ResourceGroup using a FlowRequest
 	/// </summary>
 	/// <param name="flowRequest"></param>
@@ -82,18 +68,6 @@ public partial class LogicMonitorClient
 		=> GetBySubUrlAsync<Page<Flow>>(flowRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	/// <param name="flowRequest"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	[Obsolete("Use GetResourceGroupFlowApplicationsPageAsync instead", true)]
-	public Task<Page<FlowApplication>> GetDeviceGroupFlowApplicationsPageAsync(
-		ResourceGroupFlowApplicationsRequest flowRequest,
-		CancellationToken cancellationToken)
-		=> GetResourceGroupFlowApplicationsPageAsync(flowRequest, cancellationToken);
-
-	/// <summary>
 	/// Get a ResourceGroup's application flows. This only ever appears to return 10 items
 	/// </summary>
 	/// <param name="flowRequest"></param>
@@ -102,18 +76,6 @@ public partial class LogicMonitorClient
 		ResourceGroupFlowApplicationsRequest flowRequest,
 		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<FlowApplication>>(flowRequest.GetQueryString(), cancellationToken);
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	/// <param name="flowRequest"></param>
-	/// <param name="cancellationToken"></param>
-	/// <returns></returns>
-	[Obsolete("Use GetResourceGroupFlowBandwidthsPageAsync instead", true)]
-	public Task<Page<NetflowBandwidth>> GetDeviceGroupFlowBandwidthsPageAsync(
-		ResourceGroupFlowBandwidthsRequest flowRequest,
-		CancellationToken cancellationToken)
-		=> GetResourceGroupFlowBandwidthsPageAsync(flowRequest, cancellationToken);
 
 	/// <summary>
 	/// Get a ResourceGroup's bandwidth flows. This only ever appears to return 1 item

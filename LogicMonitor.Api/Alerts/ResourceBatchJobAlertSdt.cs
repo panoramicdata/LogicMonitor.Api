@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Alerts;
 
 /// <summary>
-/// A Device Batch Job SDT
+/// A Resource Batch Job SDT
 /// </summary>
 [DataContract]
 public class ResourceBatchJobAlertSdt : AlertSdt
@@ -19,35 +19,14 @@ public class ResourceBatchJobAlertSdt : AlertSdt
 	public int ResourceBatchJobId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceBatchJobId instead", true)]
-	public int DeviceBatchJobId => ResourceBatchJobId;
-
-	/// <summary>
 	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceDisplayName instead", true)]
-	public string DeviceDisplayName => ResourceDisplayName;
-
-	/// <summary>
-	/// The Device ID
+	/// The Resource ID
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int ResourceId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceId => ResourceId;
 }

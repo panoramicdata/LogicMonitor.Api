@@ -8,14 +8,14 @@
 public class InterfacesFilter
 {
 	/// <summary>
-	/// interfaceTypes
+	/// interface Types
 	/// </summary>
 	[DataMember(Name = "interfaceTypes")]
 	public List<InterfaceType> InterfaceTypes { get; set; } = [];
 
 	/// <summary>
-	/// interfaceTypes
+	/// Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 }

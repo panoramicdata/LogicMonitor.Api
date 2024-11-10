@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// A DeviceDataSourceInstanceGroup
+/// A Resource DataSource Instance Group
 /// </summary>
 [DataContract]
 public class ResourceDataSourceInstanceGroup : NamedItem
@@ -37,22 +37,22 @@ public class ResourceDataSourceInstanceGroup : NamedItem
 	public long CreatedOnUtcSeconds { get; set; }
 
 	/// <summary>
-	/// The id of associated device
+	/// The id of associated Resource
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The display name of the device
+	/// The display name of the Resource
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device datasource id
+	/// The Resource datasource id
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
+	public int ResourceDataSourceId { get; set; }
 
 	/// <summary>
 	///    groupsDisabledThisSource

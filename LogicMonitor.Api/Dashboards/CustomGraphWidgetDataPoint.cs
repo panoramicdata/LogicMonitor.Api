@@ -58,20 +58,13 @@ public class CustomGraphWidgetDataPoint : IdentifiedItem
 	/// The deviceDisplay Name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public StringSpecification DeviceDisplayName { get; set; } = new();
+	public StringSpecification ResourceDisplayName { get; set; } = new();
 
 	/// <summary>
 	/// The ResourceGroup Full Path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
 	public StringSpecification ResourceGroupFullPath { get; set; } = new();
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public StringSpecification DeviceGroupFullPath => ResourceGroupFullPath;
 
 	/// <summary>
 	/// The instanceName

@@ -10,7 +10,7 @@ public class FlowApplicationsRequest : SortedFlowRequest
 	/// </summary>
 	public override string GetQueryString()
 		=>
-		$"device/devices/{DeviceId}/topTalkers" +
+		$"device/devices/{ResourceId}/topTalkers" +
 		$"?sort={(SortDirection == SortDirection.Ascending ? string.Empty : "-") + SortFlowField.ToString().ToLowerInvariant()}" +
 		$"&netflowFilter={NetflowFilter.AsUrlEncodedString()}" +
 		$"&size={Take}&offset={Skip}" +

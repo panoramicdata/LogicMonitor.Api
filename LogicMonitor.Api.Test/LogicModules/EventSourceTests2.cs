@@ -89,7 +89,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 				.ConfigureAwait(true);
 
 			// Make sure they are the same
-			deviceDataSourceRefetch.DeviceId.Should().Be(device.Id);
+			deviceDataSourceRefetch.ResourceId.Should().Be(device.Id);
 		}
 	}
 

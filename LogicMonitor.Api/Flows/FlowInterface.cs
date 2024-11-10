@@ -19,7 +19,7 @@ public class FlowInterface
 	public DateTime LastDataDateTimeUtc => LastDataDateTimeUtcSeconds.ToDateTimeUtc();
 
 	/// <summary>
-	/// The index of the interface on the device with ID DeviceId.
+	/// The index of the interface on the device with ID Resource Id.
 	/// </summary>
 	[DataMember(Name = "index")]
 	public int Index { get; set; }

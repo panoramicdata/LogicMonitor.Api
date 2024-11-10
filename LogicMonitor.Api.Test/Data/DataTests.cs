@@ -76,7 +76,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		deviceDataSourceInstanceGroupRefetch.Name.Should().Be(deviceDataSourceInstanceGroup.Name);
 
 		var overviewGraph = await LogicMonitorClient
-			.GetDeviceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets", default)
+			.GetResourceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets", default)
 			.ConfigureAwait(true);
 		overviewGraph.Should().NotBeNull();
 
@@ -84,8 +84,8 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		{
 			DataSourceInstanceGroupId = deviceDataSourceInstanceGroup.Id,
 			OverviewGraphId = overviewGraph.Id,
-			DeviceId = device.Id,
-			DeviceDataSourceId = deviceDataSource.Id,
+			ResourceId = device.Id,
+			ResourceDataSourceId = deviceDataSource.Id,
 			StartDateTime = DateTime.UtcNow.FirstDayOfLastMonth(),
 			EndDateTime = DateTime.UtcNow.LastDayOfLastMonth(),
 			TimePeriod = TimePeriod.Zoom,
@@ -170,7 +170,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.ConfigureAwait(true);
 		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
-			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
+			ResourceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
 			DataSourceGraphId = dataSourceGraph.Id,
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = startDateTime,
@@ -216,7 +216,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
-			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
+			ResourceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
 			DataSourceGraphId = dataSourceGraph.Id,
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = startDateTime,
@@ -274,7 +274,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
-			DeviceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
+			ResourceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
 			DataSourceGraphId = dataSourceGraph.Id,
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = startDateTime,

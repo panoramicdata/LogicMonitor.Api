@@ -31,10 +31,10 @@ public enum AlertType
 	Website = 3,
 
 	/// <summary>
-	///    Host cluster alert
+	///    Resource cluster alert
 	/// </summary>
 	[EnumMember(Value = "hostClusterAlert")]
-	DeviceCluster = 4,
+	ResourceCluster = 4,
 
 	/// <summary>
 	///    Batch job alert

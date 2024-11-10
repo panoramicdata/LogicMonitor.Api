@@ -201,13 +201,6 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public string ResourceGroupIdsString { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public string DeviceGroupIdsString => ResourceGroupIdsString;
-
-	/// <summary>
 	///    The device status
 	/// </summary>
 	[SantabaReadOnly]

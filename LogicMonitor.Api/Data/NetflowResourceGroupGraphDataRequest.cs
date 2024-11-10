@@ -11,13 +11,6 @@ public class NetflowResourceGroupGraphDataRequest : GraphDataRequest
 	[DataMember(Name = "hostGroupId")]
 	public int ResourceGroupId { get; set; }
 
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
 	internal override string SubUrl => $"device/groups/{ResourceGroupId}/netflow/graphs/bandwidth_octets_both/data?{TimePart}&qosType=all&rowFilters={HttpUtility.UrlEncode("[]")}";
 
 	/// <inheritdoc />
@@ -25,7 +18,7 @@ public class NetflowResourceGroupGraphDataRequest : GraphDataRequest
 	{
 		if (ResourceGroupId == 0)
 		{
-			throw new ArgumentException("NetflowDeviceId must be specified");
+			throw new ArgumentException($"{nameof(ResourceGroupId)} must be specified");
 		}
 
 		ValidateInternal();

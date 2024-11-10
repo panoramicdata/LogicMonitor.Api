@@ -37,24 +37,10 @@ public class RestGraphData : IdentifiedItem
 	public int EndTimeZoneOffset { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use EndTzOffset", true)]
-	public int EndTzOffset => EndTimeZoneOffset;
-
-	/// <summary>
 	///    The start time zone offset
 	/// </summary>
 	[DataMember(Name = "startTZOffset")]
 	public int StartTimeZoneOffset { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use StartTzOffset", true)]
-	public int StartTzOffset => StartTimeZoneOffset;
 
 	/// <summary>
 	///    The minimum y-axis value

@@ -1,26 +1,26 @@
 namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// The DataSource Device
+/// The DataSource Resource
 /// </summary>
 [DataContract]
-public class DataSourceDevice
+public class DataSourceResource
 {
 	/// <summary>
 	/// The deviceDataSourceId
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
-	public int DeviceDataSourceId { get; set; }
+	public int ResourceDataSourceId { get; set; }
 
 	/// <summary>
 	/// The DataSource Id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The deviceDisplayName
+	/// The Resource DisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 }

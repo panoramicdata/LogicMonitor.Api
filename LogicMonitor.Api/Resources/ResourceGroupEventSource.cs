@@ -19,13 +19,6 @@ public class ResourceGroupEventSource
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// Whether to stop monitoring
 	/// </summary>
 	[DataMember(Name = "stopMonitoring")]
@@ -53,7 +46,7 @@ public class ResourceGroupEventSource
 	/// List of devices
 	/// </summary>
 	[DataMember(Name = "EventSourceDeviceList")]
-	public List<EventSourceDevice> EventSourceDevices { get; set; } = [];
+	public List<EventSourceResource> EventSourceDevices { get; set; } = [];
 
 	/// <summary>
 	/// The EventSourceDisplayName

@@ -54,7 +54,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 			.ConfigureAwait(true);
 
 		var data = await LogicMonitorClient
-			.GetDeviceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, default)
+			.GetResourceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, default)
 			.ConfigureAwait(true);
 
 		data.Should().NotBeNull();

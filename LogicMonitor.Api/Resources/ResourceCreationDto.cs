@@ -13,13 +13,6 @@ public class ResourceCreationDto : CreationDto<Resource>, IHasName, IHasDescript
 	public string ResourceGroupIds { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupIds", true)]
-	public string DeviceGroupIds => ResourceGroupIds;
-
-	/// <summary>
 	///    The device name
 	/// </summary>
 	[DataMember(Name = "name")]

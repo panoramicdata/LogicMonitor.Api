@@ -63,17 +63,17 @@ public class AlertFilter
 	public string? InstanceId { get; set; }
 
 	/// <summary>
-	///    The Device or Website name
+	///    The Resource or Website name
 	/// </summary>
 	public string? MonitorObjectName { get; set; }
 
 	/// <summary>
-	///    The Device or Website name
+	///    The Resource or Website ID
 	/// </summary>
 	public int? MonitorObjectId { get; set; }
 
 	/// <summary>
-	///    The Device or Website Group
+	///    The Resource or Website Group
 	/// </summary>
 	public List<string>? MonitorObjectGroupFullPaths { get; set; }
 
@@ -237,8 +237,8 @@ public class AlertFilter
 	}
 
 	/// <summary>
-	/// Remove any filter items that would specify a Device etc.
-	/// Required because some API calls (like /device/devices/{Device ID}/alerts
+	/// Remove any filter items that would specify a Resource etc.
+	/// Required because some API calls (like /device/devices/{Resource ID}/alerts
 	/// ALREADY have a device ID in the URL, and so it should NOT be set again!
 	/// </summary>
 	public void RemoveMonitorObjectReferences()

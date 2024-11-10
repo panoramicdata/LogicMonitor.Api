@@ -10,7 +10,7 @@ public class OverviewGraphWidget : GraphWidget
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "hId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// The datasource id
@@ -37,10 +37,10 @@ public class OverviewGraphWidget : GraphWidget
 	public string DataSourceInstanceGroupName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device name
+	/// The Resource name
 	/// </summary>
 	[DataMember(Name = "hostName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The graph id

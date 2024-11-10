@@ -31,13 +31,6 @@ public class CollectionDataSourceAppliesTo : IdentifiedItem
 	public int ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupId", true)]
-	public int DeviceGroupId => ResourceGroupId;
-
-	/// <summary>
 	/// The stopMonitoringstopMonitoring
 	/// </summary>
 	[DataMember(Name = "stopMonitoring")]
@@ -53,11 +46,11 @@ public class CollectionDataSourceAppliesTo : IdentifiedItem
 	/// The DataSource Id
 	/// </summary>
 	[DataMember(Name = "dataSourceDeviceList")]
-	public List<DataSourceDevice> DataSourceDevices { get; set; } = [];
+	public List<DataSourceResource> DataSourceResources { get; set; } = [];
 
 	/// <summary>
 	/// Returns a string that represents the current object.
 	/// </summary>
 	public override string ToString()
-		=> $"{DataSourceDisplayName} ({DataSourceId}) with {DataSourceDevices?.Count.ToString(CultureInfo.InvariantCulture) ?? "0"} devices";
+		=> $"{DataSourceDisplayName} ({DataSourceId}) with {DataSourceResources?.Count.ToString(CultureInfo.InvariantCulture) ?? "0"} devices";
 }

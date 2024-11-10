@@ -13,10 +13,10 @@ public class NetflowBandwidth : NetflowDataBase
 	public string DisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// deviceId
+	/// Resource Id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	/// Send in MBytes

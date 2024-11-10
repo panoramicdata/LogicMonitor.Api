@@ -19,24 +19,10 @@ public enum NetscanExcludeDuplicatesStrategy
 	MatchingAnyMonitoredResources = 1,
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore]
-	[Obsolete("Use MatchingAnyMonitoredResource instead", true)]
-	MatchingAnyMonitoredDevices = MatchingAnyMonitoredResources,
-
-	/// <summary>
 	///    MatchingDevicesAlreadyDiscoveredByThisPolicy
 	/// </summary>
 	[EnumMember(Value = "2")]
 	MatchingResourcesAlreadyDiscoveredByThisPolicy = 2,
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore]
-	[Obsolete("Use MatchingResourcesInSpecifiedResourceGroups instead", true)]
-	MatchingDevicesAlreadyDiscoveredByThisPolicy = MatchingResourcesAlreadyDiscoveredByThisPolicy,
 
 	/// <summary>
 	///    MatchingDevicesInSpecifiedDeviceGroups
@@ -45,22 +31,8 @@ public enum NetscanExcludeDuplicatesStrategy
 	MatchingResourcesInSpecifiedResourceGroups = 3,
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore]
-	[Obsolete("Use MatchingResourcesInSpecifiedResourceGroups instead", true)]
-	MatchingDevicesInSpecifiedDeviceGroups = MatchingResourcesInSpecifiedResourceGroups,
-
-	/// <summary>
 	///    MatchingDevicesCurrentlyAssignedToSpecifiedollectors
 	/// </summary>
 	[EnumMember(Value = "4")]
 	MatchingResourcesCurrentlyAssignedToSpecifiedCollectors = 4,
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore]
-	[Obsolete("Use MatchingResourcesCurrentlyAssignedToSpecifiedCollectors instead", true)]
-	MatchingDevicesCurrentlyAssignedToSpecifiedCollectors = MatchingResourcesCurrentlyAssignedToSpecifiedCollectors,
 }

@@ -7,17 +7,10 @@
 public class ResourceEventSourceAlertSdt : AlertSdt
 {
 	/// <summary>
-	/// The Device display name
+	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string ResourceDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceDisplayName instead", true)]
-	public string DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	/// The Resource EventSource ID
@@ -26,24 +19,10 @@ public class ResourceEventSourceAlertSdt : AlertSdt
 	public int ResourceEventSourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceEventSourceId instead", true)]
-	public int DeviceEventSourceId => ResourceEventSourceId;
-
-	/// <summary>
 	/// The Resource ID
 	/// </summary>
 	[DataMember(Name = "deviceId")]
 	public int ResourceId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceId => ResourceId;
 
 	/// <summary>
 	/// The EventSource name

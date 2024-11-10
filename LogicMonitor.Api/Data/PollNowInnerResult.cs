@@ -36,13 +36,6 @@ public class PollNowInnerResult
 	[DataMember(Name = "errMsg")]
 	public string ErrorMessage { get; set; } = string.Empty;
 
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ErrMessage", true)]
-	public string ErrMsg => ErrorMessage;
-
 	/// <inheritdoc />
 	public override string ToString() => $"{Name}: {Value} ({ErrorMessage})";
 }

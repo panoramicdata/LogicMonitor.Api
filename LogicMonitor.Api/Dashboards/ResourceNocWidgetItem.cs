@@ -13,17 +13,10 @@ public class ResourceNocWidgetItem
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[JsonIgnore, IgnoreDataMember]
-	[Obsolete("Use ResourceGroupFullPath instead", true)]
-	public string DeviceGroupFullPath => ResourceGroupFullPath;
-
-	/// <summary>
-	/// The Device display name
+	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The DataSource display name

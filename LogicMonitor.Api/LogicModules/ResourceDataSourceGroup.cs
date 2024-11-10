@@ -13,22 +13,10 @@ public class ResourceDataSourceGroup : NamedItem
 	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceId => ResourceId;
-
-	/// <summary>
 	///    Resource DisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string ResourceDisplayName { get; set; } = string.Empty;
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceId instead", true)]
-	public string DeviceDisplayName => ResourceDisplayName;
 
 	/// <summary>
 	///    createOn
@@ -101,10 +89,4 @@ public class ResourceDataSourceGroup : NamedItem
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
 	public int ResourceDataSourceId { get; set; }
-
-	/// <summary>
-	/// Obsolete
-	/// </summary>
-	[Obsolete("Use ResourceId instead", true)]
-	public int DeviceDataSourceId => ResourceDataSourceId;
 }

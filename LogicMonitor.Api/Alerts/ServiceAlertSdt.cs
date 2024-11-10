@@ -7,14 +7,14 @@
 public class ServiceAlertSdt : AlertSdt
 {
 	/// <summary>
-	/// The Collector description
+	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The Collector description
+	/// The Resource Id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 }
