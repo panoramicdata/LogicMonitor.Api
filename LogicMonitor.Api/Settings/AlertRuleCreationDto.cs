@@ -31,10 +31,10 @@ public class AlertRuleCreationDto : CreationDto<AlertRule>, IHasName, IHasDescri
 	public string LevelString { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device filter
+	/// The Resource filter
 	/// </summary>
 	[DataMember(Name = "devices")]
-	public List<string> Devices { get; set; } = [];
+	public List<string> Resources { get; set; } = [];
 
 	/// <summary>
 	/// The ResourceGroup filter

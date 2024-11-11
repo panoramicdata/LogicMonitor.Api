@@ -198,7 +198,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetAllDeviceInstances()
 	{
 		var deviceInstances = await LogicMonitorClient
-			.GetDeviceInstanceListAsync(WindowsDeviceId, new Filter<ResourceDataSourceInstance>
+			.GetResourceInstanceListAsync(WindowsDeviceId, new Filter<ResourceDataSourceInstance>
 			{
 				Properties =
 				[
@@ -236,7 +236,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceByDisplayNameAsync()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var device2 = await LogicMonitorClient
 			.GetResourceByDisplayNameAsync(device.DisplayName, default)
@@ -247,10 +247,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceByHostName()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var devices = await LogicMonitorClient
-			.GetDevicesByHostNameAsync(device.Name, 100, default)
+			.GetResourcesByHostNameAsync(device.Name, 100, default)
 			.ConfigureAwait(true);
 
 		// Possibly all 127.0.0.1
@@ -260,7 +260,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task DateTimeSetCorrectly()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var refresh = await LogicMonitorClient
 			.GetAsync<Resource>(device.Id, default)
@@ -273,7 +273,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task SerialisationIgnoredProperties()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		device.Should().NotBeNull();
 		var jObject = JObject.FromObject(device);
@@ -284,10 +284,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDevicePropertiesContainsExpected()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		deviceProperties.Should().Contain(dp => dp.Name == "location");
 		deviceProperties.Should().Contain(dp => dp.Type == PropertyType.Auto);
@@ -416,7 +416,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task UpdateDeviceProperty()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 
 		// Remove any called "test"
@@ -440,7 +440,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.ConfigureAwait(true);
 
 		// Re-fetch the device
-		device = await GetWindowsDeviceAsync(default)
+		device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 
 		// Make sure that there is now one called "test"
@@ -460,7 +460,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.ConfigureAwait(true);
 
 		// Re-fetch the properties
-		device = await GetWindowsDeviceAsync(default)
+		device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 
 		// Make sure that there are none called "test"
@@ -470,7 +470,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task SetDeviceCustomProperty()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		const string propertyName = "blah";
 		const string value1 = "test1";
@@ -481,7 +481,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.SetResourceCustomPropertyAsync(device.Id, propertyName, value1, default)
 			.ConfigureAwait(true);
 		var deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
@@ -491,7 +491,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.SetResourceCustomPropertyAsync(device.Id, propertyName, value2, default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
@@ -501,7 +501,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
@@ -549,7 +549,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
@@ -564,7 +564,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
@@ -579,7 +579,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				cancellationToken: default)
 			.ConfigureAwait(true);
 		deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(device.Id, default)
+			.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
@@ -588,9 +588,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceCustomProperties()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
-		var deviceProperties = await LogicMonitorClient.GetDevicePropertiesAsync(device.Id, default)
+		var deviceProperties = await LogicMonitorClient.GetResourcePropertiesAsync(device.Id, default)
 			.ConfigureAwait(true);
 		deviceProperties.Should().NotBeNullOrEmpty();
 	}
@@ -598,7 +598,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceUsingSubUrl()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var deviceRefetch = await LogicMonitorClient
 			.GetAllAsync<JObject>($"device/devices?filter=id:{device.Id}&fields=inheritedProperties", default)
@@ -609,13 +609,13 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDifferentDeviceTypes()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
-		device.DeviceType.Should().Be(ResourceType.Regular);
+		device.ResourceType.Should().Be(ResourceType.Regular);
 
 		device = await GetServiceDeviceAsync(default)
 			.ConfigureAwait(true);
-		device.DeviceType.Should().Be(ResourceType.Service);
+		device.ResourceType.Should().Be(ResourceType.Service);
 
 		// TODO - AWS and Azure
 	}
@@ -627,7 +627,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		{
 			FilterItems =
 			[
-				new Eq<Resource>(nameof(Resource.DeviceStatus), "dead")
+				new Eq<Resource>(nameof(Resource.ResourceStatus), "dead")
 			]
 		}, default).ConfigureAwait(true);
 		deviceList.Should().NotBeNull();
@@ -683,7 +683,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceAlertsPageAsync()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var alertsPage = await LogicMonitorClient
 			.GetResourceAlertsPageAsync(device.Id, 0, 100, default)
@@ -708,7 +708,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		};
 
 		// Get the Device
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		device.Should().NotBeNull();
 
@@ -722,14 +722,14 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task PatchDeviceAsync()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var oldDescription = device.Description;
 		var newDescription = Guid.NewGuid().ToString();
 		await LogicMonitorClient
 			.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }, default)
 			.ConfigureAwait(true);
-		var updatedDevice = await GetWindowsDeviceAsync(default)
+		var updatedDevice = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		updatedDevice.Description.Should().Be(newDescription);
 		await LogicMonitorClient
@@ -747,7 +747,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Trait("Long Tests", "")]
 	public async Task GetDeviceAlertSettings()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
@@ -760,7 +760,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceDataSourceInstanceDataPointConfigurationAsync()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 
 		var dataSource = await LogicMonitorClient

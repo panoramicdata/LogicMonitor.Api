@@ -50,22 +50,22 @@ public enum PrivilegeObjectType
 	Setting,
 
 	/// <summary>
-	/// Setting
+	/// Remote session
 	/// </summary>
 	[EnumMember(Value = "remoteSession")]
 	RemoteSession,
 
 	/// <summary>
-	/// DeviceDashboard
+	/// Resource Dashboard
 	/// </summary>
 	[EnumMember(Value = "deviceDashboard")]
 	ResourceDashboard,
 
 	/// <summary>
-	/// ConfigNeedDeviceManagePermission
+	/// ConfigNeedResourceManagePermission
 	/// </summary>
 	[EnumMember(Value = "configNeedDeviceManagePermission")]
-	ConfigNeedDeviceManagePermission,
+	ConfigNeedResourceManagePermission,
 
 	/// <summary>
 	/// Map

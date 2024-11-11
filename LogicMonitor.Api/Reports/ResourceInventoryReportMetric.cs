@@ -1,10 +1,11 @@
 namespace LogicMonitor.Api.Reports;
 
 /// <summary>
-/// A HostInventoryReportMetric
+/// A ResourceInventoryReportMetric
 /// </summary>
 [DataContract]
-public class DeviceInventoryReportMetric
+public class ResourceInventoryReportMetric
+
 {
 	/// <summary>
 	/// The item type

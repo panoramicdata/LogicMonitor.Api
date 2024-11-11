@@ -46,7 +46,7 @@ public class ResourceMetricTrendsReport : DateRangeReport
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
-	public List<DeviceMetricTrendsReportMetric> Metrics { get; set; } = [];
+	public List<ResourceMetricTrendsReportMetric> Metrics { get; set; } = [];
 
 	/// <summary>
 	/// The columns

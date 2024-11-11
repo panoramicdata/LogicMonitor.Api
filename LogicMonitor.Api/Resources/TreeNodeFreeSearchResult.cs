@@ -49,10 +49,10 @@ public class TreeNodeFreeSearchResult
 	public string ExtraValue { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device count
+	/// The Resource count
 	/// </summary>
 	[DataMember(Name = "numOfHosts")]
-	public string DeviceCount { get; set; } = string.Empty;
+	public string ResourceCount { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ToString override

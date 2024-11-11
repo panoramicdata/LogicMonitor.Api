@@ -94,7 +94,7 @@ public class Netscan : NamedItem, IExecutable
 	/// The Discovered device rules
 	/// </summary>
 	[DataMember(Name = "ddr")]
-	public DiscoveredDeviceRule? DiscoveredDeviceRule { get; set; }
+	public DiscoveredResourceRule? DiscoveredResourceRule { get; set; }
 
 	/// <summary>
 	/// The credentials to be used for the scan

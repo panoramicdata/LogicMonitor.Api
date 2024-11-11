@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.LogicModules;
 
 /// <summary>
-/// A ParentDeviceGroupAlertExpression
+/// A Parent ResourceGroup Alert Expression
 /// </summary>
 [DataContract]
 public class ParentResourceGroupAlertExpression

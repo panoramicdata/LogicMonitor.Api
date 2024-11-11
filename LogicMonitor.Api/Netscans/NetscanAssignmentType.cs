@@ -18,27 +18,27 @@ public enum NetscanAssignmentType
 	All = 1,
 
 	/// <summary>
-	///    Cisco devices
+	///    Cisco Resource
 	/// </summary>
 	Cisco = 2,
 
 	/// <summary>
-	///    Linux devices
+	///    Linux Resource
 	/// </summary>
 	Linux = 3,
 
 	/// <summary>
-	///    NetApp devices
+	///    NetApp Resource
 	/// </summary>
 	NetApp = 4,
 
 	/// <summary>
-	///    Windows devices
+	///    Windows Resource
 	/// </summary>
 	Windows = 5,
 
 	/// <summary>
-	///    Devices specified using a query string
+	///    Resources specified using a query string
 	/// </summary>
 	Custom = 6
 }

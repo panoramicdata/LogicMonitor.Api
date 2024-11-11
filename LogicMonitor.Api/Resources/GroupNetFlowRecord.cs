@@ -56,10 +56,10 @@ public class GroupNetFlowRecord : NetflowDataBase
 	public int SrcPort { get; set; }
 
 	/// <summary>
-	/// deviceDisplayName
+	/// Resource DisplayName
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// ifInDisplayName

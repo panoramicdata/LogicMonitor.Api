@@ -69,10 +69,10 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	[Fact]
 	public async Task GetDeviceEventSources()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var deviceEventSources = await LogicMonitorClient
-			.GetDeviceEventSourcesPageAsync(
+			.GetResourceEventSourcesPageAsync(
 				device.Id,
 				new Filter<ResourceEventSource> { Skip = 0, Take = 300 },
 				default)
@@ -85,7 +85,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		{
 			// Refetch
 			var deviceDataSourceRefetch = await LogicMonitorClient
-				.GetDeviceEventSourceAsync(device.Id, deviceEventSource.Id, default)
+				.GetResourceEventSourceAsync(device.Id, deviceEventSource.Id, default)
 				.ConfigureAwait(true);
 
 			// Make sure they are the same
@@ -97,13 +97,13 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	public async Task GetDeviceEventSourceByIdAsync()
 	{
 		var eventsources = await LogicMonitorClient
-			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<ResourceEventSource>(), default)
+			.GetResourceEventSourcesPageAsync(WindowsDeviceId, new Filter<ResourceEventSource>(), default)
 			.ConfigureAwait(true);
 
 		var specificEventSource = eventsources.Items[0];
 
 		var refetchedEventSource = await LogicMonitorClient
-			.GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(WindowsDeviceId, specificEventSource.EventSourceId)
+			.GetResourceEventSourceByResourceIdAndEventSourceIdAsync(WindowsDeviceId, specificEventSource.EventSourceId)
 			.ConfigureAwait(true);
 
 		refetchedEventSource.Should().Be(specificEventSource);
@@ -137,13 +137,13 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	public async Task GetEventSourceGroupsAsync()
 	{
 		var eventSource = await LogicMonitorClient
-			.GetDeviceEventSourcesPageAsync(WindowsDeviceId, new Filter<ResourceEventSource>(), default)
+			.GetResourceEventSourcesPageAsync(WindowsDeviceId, new Filter<ResourceEventSource>(), default)
 			.ConfigureAwait(true);
 
 		eventSource.Items.Should().NotBeNullOrEmpty();
 
 		var groups = await LogicMonitorClient
-			.GetDeviceEventSourceGroupsPageAsync(WindowsDeviceId, eventSource.Items[0].EventSourceId, new Filter<ResourceEventSourceGroup>(), default)
+			.GetResourceEventSourceGroupsPageAsync(WindowsDeviceId, eventSource.Items[0].EventSourceId, new Filter<ResourceEventSourceGroup>(), default)
 			.ConfigureAwait(true);
 		groups.Should().NotBeNull();
 	}

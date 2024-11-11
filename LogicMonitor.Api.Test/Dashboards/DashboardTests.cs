@@ -144,7 +144,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		deviceMapPoint.ResourceDisplayName.Should().NotBeNull();
 		deviceMapPoint.HasLocation.Should().BeTrue();
 
-		// Device and Website NOC widgets (now combined)
+		// Resource and Website NOC widgets (now combined)
 		var nocWidgets = widgets.OfType<NocWidget>().ToList();
 		nocWidgets.Should().HaveCount(2);
 		var deviceNocWidget = nocWidgets[0];
@@ -208,7 +208,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		var websiteOverallStatusWidget = widgets.OfType<WebsiteOverallStatusWidget>().SingleOrDefault();
 		websiteOverallStatusWidget.Should().NotBeNull();
 
-		// Device SLA widget
+		// Resource SLA widget
 		var deviceSlaStatusWidget = widgets.OfType<ResourceSlaWidget>().FirstOrDefault();
 		deviceSlaStatusWidget.Should().NotBeNull();
 		deviceSlaStatusWidget.Metrics.Should().NotBeNull();

@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api.Reports;
 
 /// <summary>
-/// A NetflowDeviceMetric report
+/// A Netflow Resource Metric report
 /// </summary>
 [DataContract]
 public class NetflowResourceMetricReport : DateRangeReport

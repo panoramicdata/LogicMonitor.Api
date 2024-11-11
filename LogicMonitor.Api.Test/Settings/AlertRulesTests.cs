@@ -57,7 +57,7 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		{
 			DataPoint = "*",
 			DataSourceInstanceName = "*",
-			Devices = ["Test Device"],
+			Resources = ["Test Device"],
 			ResourceGroups = ["Test Groups"],
 			EscalationChainId = 67,
 			SendAnomalySuppressedAlert = false,

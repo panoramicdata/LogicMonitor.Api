@@ -11,12 +11,12 @@ public enum AuditEventEntityType
 	None,
 
 	/// <summary>
-	/// Device
+	/// Resource
 	/// </summary>
 	Resource,
 
 	/// <summary>
-	/// Device DataSource Instance
+	/// Resource DataSource Instance
 	/// </summary>
 	ResourceDataSourceInstance,
 

@@ -551,7 +551,7 @@ public static class LogItemExtensions
 			"FORGOT PASSWORD" => AuditEventActionType.RequestPasswordReset,
 			"RUN" => AuditEventActionType.Run,
 			"AUTO-DISCOVER POLL REQUEST" => AuditEventActionType.AutoDiscoveryPollRequest,
-			"REGULAR DEVICE TOTAL MONTHLY METRICS" => AuditEventActionType.RegularDeviceTotalMonthlyMetrics,
+			"REGULAR DEVICE TOTAL MONTHLY METRICS" => AuditEventActionType.RegularResourceTotalMonthlyMetrics,
 			"SCHEDULE" => AuditEventActionType.ScheduleActiveDiscovery,
 			_ => AuditEventActionType.None
 		};

@@ -1,10 +1,11 @@
 namespace LogicMonitor.Api.Netscans;
 
 /// <summary>
-///    The Netscan discovered device rules
+///    The Netscan discovered Resource rules
+///    (was DDR - discovered device rule)
 /// </summary>
 [DataContract]
-public class DiscoveredDeviceRule
+public class DiscoveredResourceRule
 {
 	/// <summary>
 	/// The assignment

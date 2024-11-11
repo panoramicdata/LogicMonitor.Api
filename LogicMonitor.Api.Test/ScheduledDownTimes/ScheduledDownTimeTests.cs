@@ -90,13 +90,13 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Device Data Source
 		var deviceDataSourceHistorySdts =
-			await LogicMonitorClient.GetDeviceDataSourceHistorySdtsAsync(1765, 98562, default)
+			await LogicMonitorClient.GetResourceDataSourceHistorySdtsAsync(1765, 98562, default)
 			.ConfigureAwait(true);
 		deviceDataSourceHistorySdts.Should().NotBeNull();
 
 		// Device Data Source Instance
 		var deviceDataSourceInstanceHistorySdts =
-			await LogicMonitorClient.GetDeviceDataSourceInstanceHistorySdtsAsync(1765, 98562, 244662832, default)
+			await LogicMonitorClient.GetResourceDataSourceInstanceHistorySdtsAsync(1765, 98562, 244662832, default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstanceHistorySdts.Should().NotBeNull();
 

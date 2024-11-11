@@ -106,9 +106,9 @@ public enum AuditEventActionType
 	AutoDiscoveryPollRequest,
 
 	/// <summary>
-	/// Regular Device Total Monthly Metrics
+	/// Regular Resource Total Monthly Metrics
 	/// </summary>
-	RegularDeviceTotalMonthlyMetrics,
+	RegularResourceTotalMonthlyMetrics,
 
 	/// <summary>
 	/// Schedule Active Discovery

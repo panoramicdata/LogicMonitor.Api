@@ -33,7 +33,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	{
 		// Get the device custom properties
 		var deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(WindowsDeviceId, default)
+			.GetResourcePropertiesAsync(WindowsDeviceId, default)
 			.ConfigureAwait(true);
 
 		// Get the cmdb.id
@@ -57,7 +57,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 		// Get the device custom properties
 		var deviceProperties = await LogicMonitorClient
-			.GetDevicePropertiesAsync(WindowsDeviceId, default)
+			.GetResourcePropertiesAsync(WindowsDeviceId, default)
 			.ConfigureAwait(true);
 
 		// Get the cmdb.id

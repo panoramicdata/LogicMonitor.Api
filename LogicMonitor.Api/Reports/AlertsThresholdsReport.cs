@@ -13,10 +13,10 @@ public class AlertsThresholdsReport : ReportBase
 	public string GroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device display name
+	/// The Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
-	public string DeviceDisplayName { get; set; } = string.Empty;
+	public string ResourceDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSourceInstanceName

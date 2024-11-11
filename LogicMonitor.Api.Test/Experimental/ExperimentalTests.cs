@@ -5,7 +5,7 @@ namespace LogicMonitor.Api.Test.Experimental;
 public class ExperimentalTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
 {
 	[Fact]
-	public async Task GetDevices_Succeeds()
+	public async Task GetResources_Succeeds()
 	{
 		var devices = await ExperimentalLogicMonitorClient
 			.GetAsync(new LogicMonitorRequest<Resource>

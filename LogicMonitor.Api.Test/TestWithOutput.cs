@@ -118,10 +118,10 @@ public abstract class TestWithOutput : TestBed<Fixture>
 	protected Task<Resource> GetServiceDeviceAsync(CancellationToken cancellationToken)
 		=> LogicMonitorClient.GetAsync<Resource>(ServiceDeviceId, cancellationToken);
 
-	protected Task<Resource> GetWindowsDeviceAsync(CancellationToken cancellationToken)
+	protected Task<Resource> GetWindowsResourceAsync(CancellationToken cancellationToken)
 		=> LogicMonitorClient.GetAsync<Resource>(WindowsDeviceId, cancellationToken);
 
-	protected Task<Resource> GetSnmpDeviceAsync(CancellationToken cancellationToken)
+	protected Task<Resource> GetSnmpResourceAsync(CancellationToken cancellationToken)
 		=> LogicMonitorClient.GetAsync<Resource>(SnmpDeviceId, cancellationToken);
 
 	protected Task<Dashboard> GetAllWidgetsDashboardAsync(CancellationToken cancellationToken)

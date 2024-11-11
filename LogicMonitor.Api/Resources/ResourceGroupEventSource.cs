@@ -46,7 +46,7 @@ public class ResourceGroupEventSource
 	/// List of devices
 	/// </summary>
 	[DataMember(Name = "EventSourceDeviceList")]
-	public List<EventSourceResource> EventSourceDevices { get; set; } = [];
+	public List<EventSourceResource> EventSourceResources { get; set; } = [];
 
 	/// <summary>
 	/// The EventSourceDisplayName

@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Resources;
 
 /// <summary>
-/// DeviceGroupDataSourceDataPointConfig
+/// ResourceGroupDataSourceDataPointConfig
 /// </summary>
 public class ResourceGroupDataSourceDataPointConfig
 {

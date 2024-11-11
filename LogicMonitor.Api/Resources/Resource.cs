@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Resources;
 
 /// <summary>
-///    Resource (previously Device or Host, but now a more generic term)
+///    Resource
 /// </summary>
 [DataContract]
 public class Resource : NamedItem, IHasCustomProperties, IPatchable
@@ -146,7 +146,7 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "deviceType")]
-	public ResourceType DeviceType { get; set; }
+	public ResourceType ResourceType { get; set; }
 
 	/// <summary>
 	///    Whether alerting is effectively enabled
@@ -201,11 +201,11 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public string ResourceGroupIdsString { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The device status
+	///    The Resource status
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "hostStatus")]
-	public Level DeviceStatus { get; set; }
+	public Level ResourceStatus { get; set; }
 
 	/// <summary>
 	///    Inherited properties
@@ -336,10 +336,10 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public string PreferredCollectorGroupName { get; set; } = string.Empty;
 
 	/// <summary>
-	///    The ID of the related device
+	///    The ID of the related Resource
 	/// </summary>
 	[DataMember(Name = "relatedDeviceId")]
-	public int RelatedDeviceId { get; set; }
+	public int RelatedResourceId { get; set; }
 
 	/// <summary>
 	///    The AWS test result

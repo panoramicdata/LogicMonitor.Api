@@ -75,10 +75,10 @@ public class NetscanCreationDto : CreationDto<Netscan>, IHasName, IHasDescriptio
 	public string ExcludedIpAddresses { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Discovered device rule
+	///    Discovered Resource rule
 	/// </summary>
 	[DataMember(Name = "ddr")]
-	public DiscoveredDeviceRule DiscoveredDeviceRule { get; set; } = new();
+	public DiscoveredResourceRule DiscoveredResourceRule { get; set; } = new();
 
 	/// <summary>
 	///    IP addresses to exclude

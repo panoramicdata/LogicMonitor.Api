@@ -11,7 +11,7 @@ public enum ScheduledDownTimeEntityType
 	Unknown = 0,
 
 	/// <summary>
-	/// Device
+	/// Resource
 	/// </summary>
 	Resource = 1,
 

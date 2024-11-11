@@ -1,10 +1,10 @@
 ﻿namespace LogicMonitor.Api.Settings;
 
 /// <summary>
-/// KubernetesDeviceStats
+/// Kubernetes Resource Stats
 /// </summary>
 [DataContract]
-public class KubernetesDeviceStats
+public class KubernetesResourceStats
 {
 	/// <summary>
 	/// Storage Class count

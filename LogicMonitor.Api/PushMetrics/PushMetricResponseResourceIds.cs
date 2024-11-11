@@ -10,5 +10,5 @@ public class PushMetricResponseResourceIds
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "system.deviceId")]
-	public string DeviceId { get; set; } = string.Empty;
+	public string ResourceId { get; set; } = string.Empty;
 }

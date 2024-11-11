@@ -104,7 +104,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 					},
 					new RolePrivilege
 					{
-						ObjectType = PrivilegeObjectType.ConfigNeedDeviceManagePermission,
+						ObjectType = PrivilegeObjectType.ConfigNeedResourceManagePermission,
 						ObjectId = "",
 						Operation = RolePrivilegeOperation.Write
 					},

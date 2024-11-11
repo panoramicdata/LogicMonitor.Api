@@ -3,7 +3,7 @@ using LogicMonitor.Api.Hierarchy;
 namespace LogicMonitor.Api;
 
 /// <summary>
-///     Device Portal interaction
+///     Resource Portal interaction
 /// </summary>
 public partial class LogicMonitorClient
 {

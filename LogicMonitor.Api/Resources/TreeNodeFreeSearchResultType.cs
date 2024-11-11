@@ -7,16 +7,16 @@ namespace LogicMonitor.Api.Resources;
 public enum TreeNodeFreeSearchResultType
 {
 	/// <summary>
-	/// Unknown Device Type
+	/// Unknown Resource Type
 	/// </summary>
 	[EnumMember(Value = "Unknown")]
 	Unknown = 0,
 
 	/// <summary>
-	/// DeviceGroup
+	/// ResourceGroup
 	/// </summary>
 	[EnumMember(Value = "deviceGroup")]
-	DeviceGroup = 1,
+	ResourceGroup = 1,
 
 	/// <summary>
 	/// Resource
@@ -25,14 +25,14 @@ public enum TreeNodeFreeSearchResultType
 	Resource = 2,
 
 	/// <summary>
-	/// DeviceDataSource
+	/// ResourceDataSource
 	/// </summary>
 	[EnumMember(Value = "deviceDataSource")]
-	DeviceDataSource = 3,
+	ResourceDataSource = 3,
 
 	/// <summary>
-	/// DeviceDataSourceInstance
+	/// ResourceDataSourceInstance
 	/// </summary>
 	[EnumMember(Value = "deviceDataSourceInstance")]
-	DeviceDataSourceInstance = 4,
+	ResourceDataSourceInstance = 4,
 }

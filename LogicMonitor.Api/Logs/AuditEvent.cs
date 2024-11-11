@@ -158,9 +158,9 @@ public class AuditEvent
 	public string? PropertyName { get; internal set; }
 
 	/// <summary>
-	/// The DeviceDataSource Id
+	/// The ResourceDataSource Id
 	/// </summary>
-	public int? DeviceDataSourceId { get; internal set; }
+	public int? ResourceDataSourceId { get; internal set; }
 
 	/// <summary>
 	/// The Id of the regex that resulted in the translation from the LogItem
@@ -179,7 +179,7 @@ public class AuditEvent
 	public string? Time { get; internal set; }
 
 	/// <summary>
-	/// The WildValue - available when a DeviceDataSourceInstance was added without Ids
+	/// The WildValue - available when a ResourceDataSourceInstance was added without Ids
 	/// </summary>
 	public string? WildValue { get; internal set; }
 

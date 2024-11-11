@@ -10,13 +10,13 @@ public class AlertSlaReport : DateRangeReport
 	/// The hostsVal
 	/// </summary>
 	[DataMember(Name = "hostsVal")]
-	public string DevicesValue { get; set; } = string.Empty;
+	public string ResourcesValue { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The hostsValType
 	/// </summary>
 	[DataMember(Name = "hostsValType")]
-	public string DevicesValueType { get; set; } = string.Empty;
+	public string ResourcesValueType { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The dataSource

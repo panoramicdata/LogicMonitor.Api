@@ -26,46 +26,46 @@ public enum ScheduledDownTimeType
 	Resource,
 
 	/// <summary>
-	/// Device Batch Job
+	/// Resource Batch Job
 	/// </summary>
 	[EnumMember(Value = "DeviceBatchJobSDT")]
-	DeviceBatchJob,
+	ResourceBatchJob,
 
 	/// <summary>
-	/// Device Cluster Alert Def
+	/// Resource Cluster Alert Def
 	/// </summary>
 	[EnumMember(Value = "DeviceClusterAlertDefSDT")]
-	DeviceClusterAlertDefSdt,
+	ResourceClusterAlertDefSdt,
 
 	/// <summary>
-	/// Device Data Source
+	/// Resource Data Source
 	/// </summary>
 	[EnumMember(Value = "DeviceDataSourceSDT")]
-	DeviceDataSource,
+	ResourceDataSource,
 
 	/// <summary>
-	/// Device Data Source Instance Group
+	/// Resource Data Source Instance Group
 	/// </summary>
 	[EnumMember(Value = "DeviceDataSourceInstanceGroupSDT")]
-	DeviceDataSourceInstanceGroup,
+	ResourceDataSourceInstanceGroup,
 
 	/// <summary>
-	/// Device Data Source Instance
+	/// Resource Data Source Instance
 	/// </summary>
 	[EnumMember(Value = "DeviceDataSourceInstanceSDT")]
-	DeviceDataSourceInstance,
+	ResourceDataSourceInstance,
 
 	/// <summary>
-	/// Device Event Source
+	/// Resource Event Source
 	/// </summary>
 	[EnumMember(Value = "DeviceEventSourceSDT")]
-	DeviceEventSource,
+	ResourceEventSource,
 
 	/// <summary>
-	/// Device Log Pipe Line Resource
+	/// Resource Log Pipe Line Resource
 	/// </summary>
 	[EnumMember(Value = "DeviceLogPipeLineResourceSDT")]
-	DeviceLogPipeLineResourceSDT,
+	ResourceLogPipeLineResourceSDT,
 
 	/// <summary>
 	/// Resource Group

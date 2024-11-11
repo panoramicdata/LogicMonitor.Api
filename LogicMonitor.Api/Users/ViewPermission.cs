@@ -31,10 +31,10 @@ public class ViewPermission
 	public bool Dashboards { get; set; }
 
 	/// <summary>
-	/// Devices view permission
+	/// Resources view permission
 	/// </summary>
 	[DataMember(Name = "Resources")]
-	public bool Devices { get; set; }
+	public bool Resources { get; set; }
 
 	/// <summary>
 	/// Logs view permission
@@ -102,7 +102,7 @@ public class ViewPermission
 		$"{nameof(Billing)}={Billing};" +
 		$"{nameof(BizService)}={BizService};" +
 		$"{nameof(Dashboards)}={Dashboards};" +
-		$"{nameof(Devices)}={Devices};" +
+		$"{nameof(Resources)}={Resources};" +
 		$"{nameof(Logs)}={Logs};" +
 		$"{nameof(Maps)}={Maps};" +
 		$"{nameof(Modules)}={Modules};" +

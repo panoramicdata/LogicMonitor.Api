@@ -13,10 +13,10 @@ public class SlaReportMetric
 	public string GroupName { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The device name
+	/// The Resource name
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceName { get; set; } = string.Empty;
 
 	/// <summary>
 	/// The data source id

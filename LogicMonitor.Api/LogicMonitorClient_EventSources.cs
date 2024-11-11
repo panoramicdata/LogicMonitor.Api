@@ -29,7 +29,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<ResourceEventSource>> GetDeviceEventSourcesPageAsync(
+	public Task<Page<ResourceEventSource>> GetResourceEventSourcesPageAsync(
 		int resourceId,
 		Filter<ResourceEventSource> filter,
 		CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceEventSourceId"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<ResourceEventSource> GetDeviceEventSourceAsync(
+	public Task<ResourceEventSource> GetResourceEventSourceAsync(
 		int resourceId,
 		int deviceEventSourceId,
 		CancellationToken cancellationToken)
@@ -54,7 +54,7 @@ public partial class LogicMonitorClient
 	/// <param name="deviceEventSourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<ResourceEventSourceGroup>> GetDeviceEventSourceGroupsPageAsync(
+	public Task<Page<ResourceEventSourceGroup>> GetResourceEventSourceGroupsPageAsync(
 		int resourceId,
 		int deviceEventSourceId,
 		Filter<ResourceEventSourceGroup> filter,
@@ -66,12 +66,12 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="eventSourceId"></param>
-	public async Task<ResourceEventSource> GetDeviceEventSourceByDeviceIdAndEventSourceIdAsync(
+	public async Task<ResourceEventSource> GetResourceEventSourceByResourceIdAndEventSourceIdAsync(
 		int resourceId,
 		int eventSourceId)
 	{
 		// TODO - Make this use a search field
-		var page = await GetDeviceEventSourcesPageAsync(resourceId, new Filter<ResourceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
+		var page = await GetResourceEventSourcesPageAsync(resourceId, new Filter<ResourceEventSource> { Skip = 0, Take = 300 }, default).ConfigureAwait(false);
 		return page.Items.SingleOrDefault(deviceEventSource => deviceEventSource.EventSourceId == eventSourceId);
 	}
 

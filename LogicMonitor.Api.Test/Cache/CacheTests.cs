@@ -13,13 +13,13 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(true);
 
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
+		var firstResource = await GetWindowsResourceAsync(default).ConfigureAwait(true);
 
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 		stopwatch.Restart();
 
-		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
+		var secondResource = await GetWindowsResourceAsync(default).ConfigureAwait(true);
 
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -31,7 +31,7 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		secondDuration.Should().BeLessThan(TimeSpan.FromMilliseconds(100));
 
 		// The devices should be identical
-		secondDevice.DisplayName.Should().Be(firstDevice.DisplayName);
+		secondResource.DisplayName.Should().Be(firstResource.DisplayName);
 	}
 
 	[Fact]
@@ -48,7 +48,7 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 
 		// Fetch a result
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
+		var firstDevice = await GetWindowsResourceAsync(default).ConfigureAwait(true);
 		firstDevice.Should().NotBeNull();
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
@@ -58,7 +58,7 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 
 		// Re-fetch a result
 		stopwatch.Restart();
-		var secondDevice = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
+		var secondDevice = await GetWindowsResourceAsync(default).ConfigureAwait(true);
 		secondDevice.Should().NotBeNull();
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -78,7 +78,7 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		for (var n = 0; n < 1000; n++)
 		{
 			var innerStopwatch = Stopwatch.StartNew();
-			_ = await GetWindowsDeviceAsync(default).ConfigureAwait(true);
+			_ = await GetWindowsResourceAsync(default).ConfigureAwait(true);
 			Logger.LogInformation("Run {RunIndex}: {Milliseconds}ms", n, innerStopwatch.ElapsedMilliseconds);
 		}
 

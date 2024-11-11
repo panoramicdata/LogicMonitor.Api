@@ -167,7 +167,7 @@ public class FlowTests : TestWithOutput
 	public async Task GetDeviceFlowInformation()
 	{
 		var interfaces = await LogicMonitorClient
-			.GetDeviceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), default);
+			.GetResourceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), default);
 		interfaces.Items.Should().NotBeNullOrEmpty();
 	}
 }

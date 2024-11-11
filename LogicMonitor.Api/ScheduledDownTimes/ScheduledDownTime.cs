@@ -67,13 +67,13 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? DataSourceId { get; set; }
 
 	/// <summary>
-	///    DeviceDataSourceId
+	///    Resource DataSourceId
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
 	public int? ResourceDataSourceId { get; set; }
 
 	/// <summary>
-	///    DeviceEventSourceId
+	///    Resource EventSourceId
 	/// </summary>
 	[DataMember(Name = "deviceEventSourceId")]
 	public int? ResourceEventSourceId { get; set; }
@@ -85,7 +85,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? ResourceId { get; set; }
 
 	/// <summary>
-	///    Device display name
+	///    Resource display name
 	/// </summary>
 	[DataMember(Name = "deviceDisplayName")]
 	public string? ResourceDisplayName { get; set; }
@@ -139,7 +139,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? DataSourceInstanceGroupId { get; set; }
 
 	/// <summary>
-	///    The deviceDataSourceInstanceGroup Name
+	///    The Resource DataSourceInstanceGroup Name
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceInstanceGroupName")]
 	public string? DataSourceInstanceGroupName { get; set; }
@@ -151,7 +151,7 @@ public class ScheduledDownTime : StringIdentifiedItem, IHasEndpoint
 	public int? ResourceGroupId { get; set; }
 
 	/// <summary>
-	///    The DeviceGroup full path
+	///    The ResourceGroup full path
 	/// </summary>
 	[DataMember(Name = "deviceGroupFullPath")]
 	public string? ResourceGroupFullPath { get; set; }

@@ -13,10 +13,10 @@ public enum TopologyResourceType
 	Undiscovered,
 
 	/// <summary>
-	/// Device
+	/// Resource
 	/// </summary>
 	[EnumMember(Value = "device")]
-	Device,
+	Resource,
 
 	/// <summary>
 	/// Instance

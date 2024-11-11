@@ -87,9 +87,9 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetAlertsFilteredByDevice()
+	public async Task GetAlertsFilteredByResource()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
 		{

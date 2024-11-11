@@ -73,7 +73,7 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
 			SubnetScanRange = subnetScanRange,
 			ExcludedIpAddresses = excludedIpAddresses,
-			DiscoveredDeviceRule = new DiscoveredDeviceRule
+			DiscoveredDeviceRule = new DiscoveredResourceRule
 			{
 				Assignment =
 					[

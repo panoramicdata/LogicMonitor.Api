@@ -9,7 +9,7 @@ public class AccountSettingsTests(ITestOutputHelper iTestOutputHelper, Fixture f
 			.GetAsync<AccountSettings>(default)
 			.ConfigureAwait(true);
 		accountSettings.Should().NotBeNull();
-		(accountSettings.DeviceCount > 0).Should().BeTrue();
+		(accountSettings.ResourceCount > 0).Should().BeTrue();
 	}
 
 	[Fact]

@@ -38,22 +38,22 @@ public class ScheduledDownTimeFilter
 	public ScheduledDownTimeType? Type { get; set; }
 
 	/// <summary>
-	/// The ResourceId (only works for Type=Device)
+	/// The ResourceId (only works for Type=Resource)
 	/// </summary>
 	public int? ResourceId { get; set; }
 
 	/// <summary>
-	/// The DeviceId (only works for Type=DeviceGroup)
+	/// The ResourceId (only works for Type=ResourceGroup)
 	/// </summary>
 	public int? ResourceGroupId { get; set; }
 
 	/// <summary>
-	/// The DeviceDataSourceInstanceId (only works for Type=DeviceDataSourceInstance)
+	/// The ResourceDataSourceInstanceId (only works for Type=ResourceDataSourceInstance)
 	/// </summary>
 	public int? DataSourceInstanceId { get; set; }
 
 	/// <summary>
-	/// The DataSourceInstanceGroup Id (only works for Type=DeviceDataSourceInstanceGroup)
+	/// The DataSourceInstanceGroup Id (only works for Type=ResourceDataSourceInstanceGroup)
 	/// </summary>
 	public int? DataSourceInstanceGroupId { get; set; }
 

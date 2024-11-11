@@ -33,5 +33,5 @@ public class ResourceGroupInventoryReport : ReportBase
 	/// <summary>
 	/// The metrics
 	/// </summary>
-	public List<DeviceInventoryReportMetric> Metrics { get; set; } = [];
+	public List<ResourceInventoryReportMetric> Metrics { get; set; } = [];
 }

@@ -6,36 +6,36 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 public class ResourceDataSourceInstanceScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 {
 	/// <summary>
-	///    Device
+	///    Resource
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="dataSourceInstanceId"></param>
 	public ResourceDataSourceInstanceScheduledDownTimeCreationDto(
 		int resourceId,
-		int dataSourceInstanceId) : base(ScheduledDownTimeType.DeviceDataSourceInstance)
+		int dataSourceInstanceId) : base(ScheduledDownTimeType.ResourceDataSourceInstance)
 	{
-		DeviceId = resourceId;
+		ResourceId = resourceId;
 		DataSourceInstanceId = dataSourceInstanceId;
 	}
 
 	/// <summary>
-	///    Device
+	///    Resource
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="dataSourceInstanceName"></param>
 	public ResourceDataSourceInstanceScheduledDownTimeCreationDto(
 		int resourceId,
-		string dataSourceInstanceName) : base(ScheduledDownTimeType.DeviceDataSourceInstance)
+		string dataSourceInstanceName) : base(ScheduledDownTimeType.ResourceDataSourceInstance)
 	{
-		DeviceId = resourceId;
+		ResourceId = resourceId;
 		DataSourceInstanceName = dataSourceInstanceName;
 	}
 
 	/// <summary>
-	///    The Device id
+	///    The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	///    The data source id

@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Reports;
 /// A HostMetricTrendsReportMetric
 /// </summary>
 [DataContract]
-public class DeviceMetricTrendsReportMetric
+public class ResourceMetricTrendsReportMetric
 {
 	/// <summary>
 	/// The consolidation function

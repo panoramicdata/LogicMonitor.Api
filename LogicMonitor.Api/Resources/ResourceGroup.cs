@@ -80,11 +80,11 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public int DefaultAgentId { get; set; }
 
 	/// <summary>
-	/// The number of AWS devices that belong to this ResourceGroup (includes AWS devices in sub groups)
+	/// The number of AWS Resource that belong to this ResourceGroup (includes AWS devices in sub groups)
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "numOfAWSDevices")]
-	public int AwsDeviceCount { get; set; }
+	public int AwsResourceCount { get; set; }
 
 	/// <summary>
 	/// The number of instances in each AWS region (only applies to AWS groups)
@@ -112,7 +112,7 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "numOfAzureDevices")]
-	public int AzureDeviceCount { get; set; }
+	public int AzureResourceCount { get; set; }
 
 	/// <summary>
 	/// The number of instances in each Azure region (only applies to Azure groups)
@@ -136,11 +136,11 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public long AzureTestResultCode { get; set; }
 
 	/// <summary>
-	///    GCP Device count
+	///    GCP Resource count
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "numOfGcpDevices")]
-	public int GcpDeviceCount { get; set; }
+	public int GcpResourceCount { get; set; }
 
 	/// <summary>
 	///    GCP regions info
@@ -196,11 +196,11 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public List<EntityProperty> CustomProperties { get; set; } = [];
 
 	/// <summary>
-	/// The number of total devices, including both AWS and normal devices, that belong to this ResourceGroup (includes normal devices in sub groups)
+	/// The number of total Resource, including both AWS and normal Resource, that belong to this ResourceGroup (includes normal devices in sub groups)
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "numOfHosts")]
-	public long DeviceCount { get; set; }
+	public long ResourceCount { get; set; }
 
 	/// <summary>
 	/// The collector group id of the default collector assigned to the ResourceGroup
@@ -228,7 +228,7 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public ResourceGroupType ResourceGroupType { get; set; }
 
 	/// <summary>
-	///    The Devices in this DeviceGroup.
+	///    The Resource in this ResourceGroup.
 	///    This information does not always come from the API, so you may need to populate it yourself.
 	/// </summary>
 	[SantabaReadOnly]
@@ -294,7 +294,7 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The number of kubernetes devices that belong to this ResourceGroup (includes Kubernetes devices in sub groups)
 	/// </summary>
 	[DataMember(Name = "numOfKubernetesDevices")]
-	public int KubernetesDeviceCount { get; set; }
+	public int KubernetesResource0Count { get; set; }
 
 	/// <summary>
 	///     The Alerting disabled on

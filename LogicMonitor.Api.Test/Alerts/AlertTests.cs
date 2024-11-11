@@ -203,9 +203,9 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 	}
 
 	[Fact]
-	public async Task GetAlertsFilteredByDevice()
+	public async Task GetAlertsFilteredByResource()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var startUtcIsBefore = new DateTime(2018, 1, 1);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
@@ -233,9 +233,9 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 	}
 
 	[Fact]
-	public async Task GetAlertsFilteredByDeviceRest()
+	public async Task GetAlertsFilteredByResourceRest()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var resourceGroupFullPathFilter = new List<string> { "Collectors*" };
 		const string dataSourceNameFilter = "Volume Usage-";

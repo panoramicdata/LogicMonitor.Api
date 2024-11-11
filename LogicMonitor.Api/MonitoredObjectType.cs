@@ -14,10 +14,10 @@ public enum MonitoredObjectType
 	Unknown = 0,
 
 	/// <summary>
-	/// A device
+	/// A Resource
 	/// </summary>
 	[EnumMember(Value = "device")]
-	Device = 1,
+	Resource = 1,
 
 	/// <summary>
 	/// A website

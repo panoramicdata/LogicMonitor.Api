@@ -1,7 +1,7 @@
 ﻿namespace LogicMonitor.Api.Resources;
 
 /// <summary>
-/// Device Property
+/// Resource Property
 /// </summary>
 
 [DataContract]

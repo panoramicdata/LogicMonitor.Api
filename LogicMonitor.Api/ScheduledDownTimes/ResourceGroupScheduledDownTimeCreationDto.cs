@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 ///    ResourceGroup SDT creation DTO
 /// </summary>
 /// <remarks>
-///    Device
+///    Resource
 /// </remarks>
 /// <param name="resourceGroupId"></param>
 public class ResourceGroupScheduledDownTimeCreationDto(int resourceGroupId) : ScheduledDownTimeCreationDto(ScheduledDownTimeType.ResourceGroup)

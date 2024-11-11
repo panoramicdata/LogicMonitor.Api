@@ -31,7 +31,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task OnlyMonitoredInstances()
 	{
-		var device = await GetSnmpDeviceAsync(default)
+		var device = await GetSnmpResourceAsync(default)
 			.ConfigureAwait(true);
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: default)
@@ -56,7 +56,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task AddDeviceDataSourceInstance()
 	{
-		var resource = await GetWindowsDeviceAsync(default)
+		var resource = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var resourceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
 		{
@@ -118,7 +118,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task GetDataPointConfiguration()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{
@@ -148,7 +148,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task UpdateDataPointConfig()
 	{
-		var device = await GetWindowsDeviceAsync(default)
+		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
 		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{

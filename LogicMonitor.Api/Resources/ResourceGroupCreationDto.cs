@@ -31,13 +31,13 @@ public class ResourceGroupCreationDto : CreationDto<ResourceGroup>, IHasName, IH
 	public bool DisableAlerting { get; set; }
 
 	/// <summary>
-	///    What the DeviceGroup applies to
+	///    What the ResourceGroup applies to
 	/// </summary>
 	[DataMember(Name = "appliesTo")]
 	public string AppliesTo { get; set; } = string.Empty;
 
 	/// <summary>
-	///    Custom DeviceGroup properties
+	///    Custom ResourceGroup properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]
 	public List<EntityProperty> CustomProperties { get; set; } = [];

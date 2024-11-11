@@ -6,42 +6,42 @@ namespace LogicMonitor.Api.ScheduledDownTimes;
 public class ResourceEventSourceScheduledDownTimeCreationDto : ScheduledDownTimeCreationDto
 {
 	/// <summary>
-	///    Device
+	///    Resource
 	/// </summary>
 	/// <param name="resourceId"></param>
-	/// <param name="deviceEventSourceId">DeviceEventSource Id</param>
+	/// <param name="deviceEventSourceId">Resource EventSource Id</param>
 	public ResourceEventSourceScheduledDownTimeCreationDto(
 		int resourceId,
-		int deviceEventSourceId) : base(ScheduledDownTimeType.DeviceEventSource)
+		int deviceEventSourceId) : base(ScheduledDownTimeType.ResourceEventSource)
 	{
-		DeviceId = resourceId;
-		DeviceEventSourceId = deviceEventSourceId;
+		ResourceId = resourceId;
+		ResourceEventSourceId = deviceEventSourceId;
 	}
 
 	/// <summary>
-	///    Device
+	///    Resource
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="deviceEventSourceId"></param>
 	public ResourceEventSourceScheduledDownTimeCreationDto(
 		int resourceId,
-		string deviceEventSourceId) : base(ScheduledDownTimeType.DeviceEventSource)
+		string deviceEventSourceId) : base(ScheduledDownTimeType.ResourceEventSource)
 	{
-		DeviceId = resourceId;
+		ResourceId = resourceId;
 		EventSourceName = deviceEventSourceId;
 	}
 
 	/// <summary>
-	///    The Device id
+	///    The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
 	///    The ResourceDataSource id
 	/// </summary>
 	[DataMember(Name = "deviceDataSourceId")]
-	public int? DeviceEventSourceId { get; set; }
+	public int? ResourceEventSourceId { get; set; }
 
 	/// <summary>
 	///    The EventSource name

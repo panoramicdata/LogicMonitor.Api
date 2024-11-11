@@ -21,7 +21,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.ConfigureAwait(true);
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(
+			.GetAllResourceDataSourceInstancesAsync(
 				WindowsDeviceId,
 				deviceDataSource.Id,
 				new(),
@@ -51,7 +51,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	[Fact]
 	public async Task GetOverviewGraphData()
 	{
-		var device = await GetSnmpDeviceAsync(default)
+		var device = await GetSnmpResourceAsync(default)
 			.ConfigureAwait(true);
 		device.Should().NotBeNull();
 		var dataSource = await LogicMonitorClient
@@ -64,13 +64,13 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.ConfigureAwait(true);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstanceGroups = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id, default)
+			.GetResourceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id, default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstanceGroups.Should().NotBeNull();
 		deviceDataSourceInstanceGroups.Should().NotBeNullOrEmpty();
 		var deviceDataSourceInstanceGroup = deviceDataSourceInstanceGroups.Skip(2).First();
 		var deviceDataSourceInstanceGroupRefetch = await LogicMonitorClient
-			.GetDeviceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name, default)
+			.GetResourceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name, default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstanceGroupRefetch.Should().NotBeNull();
 		deviceDataSourceInstanceGroupRefetch.Name.Should().Be(deviceDataSourceInstanceGroup.Name);
@@ -162,11 +162,11 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.ConfigureAwait(true);
 		dataSourceGraph.Should().NotBeNull();
 
-		var deviceDataSource = await LogicMonitorClient
+		var resourceDataSource = await LogicMonitorClient
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
 			.ConfigureAwait(true);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, resourceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
 		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
@@ -209,7 +209,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -264,7 +264,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
 			.ConfigureAwait(true);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -340,7 +340,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-				.GetAllDeviceDataSourceInstancesAsync(
+				.GetAllResourceDataSourceInstancesAsync(
 					WindowsDeviceId,
 					deviceDataSource.Id,
 					new Filter<ResourceDataSourceInstance>

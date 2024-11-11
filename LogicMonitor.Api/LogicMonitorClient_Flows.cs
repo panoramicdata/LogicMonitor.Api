@@ -27,12 +27,12 @@ public partial class LogicMonitorClient
 		=> GetBySubUrlAsync<Page<FlowApplication>>(flowApplicationsRequest.GetQueryString(), cancellationToken);
 
 	/// <summary>
-	///    Gets a device's flow information
+	///    Gets a Resource's flow information
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="filter">The filter</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<FlowInterface>> GetDeviceFlowInterfacesPageAsync(
+	public Task<Page<FlowInterface>> GetResourceFlowInterfacesPageAsync(
 		int resourceId,
 		Filter<FlowInterface> filter,
 		CancellationToken cancellationToken)

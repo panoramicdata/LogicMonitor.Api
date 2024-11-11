@@ -13,25 +13,25 @@ public enum NetscanExcludeDuplicatesStrategy
 	Unknown = 0,
 
 	/// <summary>
-	///    MatchingAnyMonitoredDevices
+	///    MatchingAnyMonitoredResources
 	/// </summary>
 	[EnumMember(Value = "1")]
 	MatchingAnyMonitoredResources = 1,
 
 	/// <summary>
-	///    MatchingDevicesAlreadyDiscoveredByThisPolicy
+	///    MatchingResourcesAlreadyDiscoveredByThisPolicy
 	/// </summary>
 	[EnumMember(Value = "2")]
 	MatchingResourcesAlreadyDiscoveredByThisPolicy = 2,
 
 	/// <summary>
-	///    MatchingDevicesInSpecifiedDeviceGroups
+	///    MatchingResourcesInSpecifiedResourceGroups
 	/// </summary>
 	[EnumMember(Value = "3")]
 	MatchingResourcesInSpecifiedResourceGroups = 3,
 
 	/// <summary>
-	///    MatchingDevicesCurrentlyAssignedToSpecifiedollectors
+	///    MatchingResourceCurrentlyAssignedToSpecifiedollectors
 	/// </summary>
 	[EnumMember(Value = "4")]
 	MatchingResourcesCurrentlyAssignedToSpecifiedCollectors = 4,

@@ -106,13 +106,13 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     The number of committed devices
 	/// </summary>
 	[DataMember(Name = "numberOfCommittedDevices")]
-	public int CommittedDeviceCount { get; set; }
+	public int CommittedResourceCount { get; set; }
 
 	/// <summary>
 	///     The number of committed config devices
 	/// </summary>
 	[DataMember(Name = "numberOfCommittedConfigDevices")]
-	public int CommittedConfigDeviceCount { get; set; }
+	public int CommittedConfigResourceCount { get; set; }
 
 	/// <summary>
 	///     The number of committed services
@@ -127,34 +127,34 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int CommittedWebsiteCount { get; set; }
 
 	/// <summary>
-	///     The current AWS device count
+	///     The current AWS devResourceice count
 	/// </summary>
 	[DataMember(Name = "numOfAWSDevices")]
-	public int AwsDeviceCount { get; set; }
+	public int AwsResourceCount { get; set; }
 
 	/// <summary>
-	///     The current Azure device count
+	///     The current Azure deResourcevice count
 	/// </summary>
 	[DataMember(Name = "numOfAzureDevices")]
-	public int AzureDeviceCount { get; set; }
+	public int AzureResourceCount { get; set; }
 
 	/// <summary>
-	///     Combined AWS Device count
+	///     Combined AWS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfCombinedAWSDevices")]
-	public int CombinedAwsDeviceCount { get; set; }
+	public int CombinedAwsResourceCount { get; set; }
 
 	/// <summary>
-	///     Combined Azure Device count
+	///     Combined Azure Resource count
 	/// </summary>
 	[DataMember(Name = "numOfCombinedAzureDevices")]
-	public int CombinedAzureDeviceCount { get; set; }
+	public int CombinedAzureResourceCount { get; set; }
 
 	/// <summary>
-	///     Combined GCP Device count
+	///     Combined GCP Resource count
 	/// </summary>
 	[DataMember(Name = "numOfCombinedGcpDevices")]
-	public int CombinedGcpDeviceCount { get; set; }
+	public int CombinedGcpResourceCount { get; set; }
 
 	/// <summary>
 	///     Company display name
@@ -163,10 +163,10 @@ public class AccountSettings : IHasSingletonEndpoint
 	public string CompanyDisplayName { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The current ConfigSource device count
+	///     The current ConfigSource Resource count
 	/// </summary>
 	[DataMember(Name = "numOfConfigSourceDevices")]
-	public int ConfigSourceDeviceCount { get; set; }
+	public int ConfigSourceResourceCount { get; set; }
 
 	/// <summary>
 	///     The data point count
@@ -214,7 +214,7 @@ public class AccountSettings : IHasSingletonEndpoint
 	///     The current device count
 	/// </summary>
 	[DataMember(Name = "numberOfDevices")]
-	public int DeviceCount { get; set; }
+	public int ResourceCount { get; set; }
 
 	/// <summary>
 	///     The Service count that triggers a warning
@@ -276,22 +276,22 @@ public class AccountSettings : IHasSingletonEndpoint
 	[DataMember(Name = "enableRemoteSession")]
 	public bool EnableRemoteSession { get; set; }
 
-	/// <summary>GCP Device count
+	/// <summary>GCP Resource count
 	/// </summary>
 	[DataMember(Name = "numOfGcpDevices")]
-	public int GcpDeviceCount { get; set; }
+	public int GcpResourceCount { get; set; }
 
 	/// <summary>
-	/// numOfMongoDBAtlasDevices
+	/// numOfMongoDBAtlas Resources
 	/// </summary>
 	[DataMember(Name = "numOfMongoDBAtlasDevices")]
-	public int MongoDbAtlasDeviceCount { get; set; }
+	public int MongoDbAtlasResourceCount { get; set; }
 
 	/// <summary>
-	/// numberOfCommittedCloudDevices
+	/// numberOfCommittedCloud Resource
 	/// </summary>
 	[DataMember(Name = "numberOfCommittedCloudDevices")]
-	public int CommittedCloudDeviceCount { get; set; }
+	public int CommittedCloudResourceCount { get; set; }
 
 	/// <summary>
 	/// The account balance in USD
@@ -300,43 +300,43 @@ public class AccountSettings : IHasSingletonEndpoint
 	public InvoiceDetails InvoiceDetails { get; set; } = new();
 
 	/// <summary>
-	/// Kubernetes device stats
+	/// Kubernetes Resource stats
 	/// </summary>
 	[DataMember(Name = "kubernetesDevices")]
-	public KubernetesDeviceStats KubernetesDeviceStats { get; set; } = new();
+	public KubernetesResourceStats KubernetesResourceStats { get; set; } = new();
 
 	/// <summary>
-	///     The Kubernetes device count
+	///     The Kubernetes Resource count
 	/// </summary>
 	[DataMember(Name = "numberOfKubernetesDevices")]
-	public int KubernetesDeviceCount { get; set; }
+	public int KubernetesResourceCount { get; set; }
 
 	/// <summary>
-	///     Light Device count
+	///     Light Resource count
 	/// </summary>
 	[DataMember(Name = "numberOfLightDevices")]
-	public int LightDeviceCount { get; set; }
+	public int LightResourceCount { get; set; }
 
 	/// <summary>
-	///     monthlyPerDeviceMetrics
+	///     monthlyPerResourceMetrics
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetrics")]
-	public long MonthlyPerDeviceMetrics { get; set; }                       // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
+	public long MonthlyPerResourceMetrics { get; set; }                       // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
-	///     monthlyPerDeviceMetricsQuotaErrorLimit
+	///     monthlyPerResourceMetricsQuotaErrorLimit
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetricsQuotaErrorLimit")]
-	public long MonthlyPerDeviceMetricsQuotaErrorLimit { get; set; }        // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
+	public long MonthlyPerResourceMetricsQuotaErrorLimit { get; set; }        // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
-	///     monthlyPerDeviceMetricsQuotaWarningLimit
+	///     monthlyPerResourceMetricsQuotaWarningLimit
 	/// </summary>
 	[DataMember(Name = "monthlyPerDeviceMetricsQuotaWarningLimit")]
-	public long MonthlyPerDeviceMetricsQuotaWarningLimit { get; set; }      // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
+	public long MonthlyPerResourceMetricsQuotaWarningLimit { get; set; }      // Yes a LONG as some customers have e.g. 387,471,825,283 which is TOO BIG FOR AN INT!
 
 	/// <summary>
-	///     The PaaS device count
+	///     The PaaS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfPaasDevices")]
 	public int PaasDeviceCount { get; set; }
@@ -402,16 +402,16 @@ public class AccountSettings : IHasSingletonEndpoint
 	public bool RequireTwoFactorAuthenticationForRemoteSessions { get; set; }
 
 	/// <summary>
-	///     The SaaS device count
+	///     The SaaS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfSaasDevices")]
-	public int SaasDeviceCount { get; set; }
+	public int SaasResourceCount { get; set; }
 
 	/// <summary>
-	///     The SaaS lite device count
+	///     The SaaS lite Resource count
 	/// </summary>
 	[DataMember(Name = "numOfSaasLiteDevices")]
-	public int SaasLiteDeviceCount { get; set; }
+	public int SaasLiteResourceCount { get; set; }
 
 	/// <summary>
 	///     The saved map count
@@ -432,34 +432,34 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int SessionTimeoutSeconds { get; set; }
 
 	/// <summary>
-	///     Standard Device count
+	///     Standard Resource count
 	/// </summary>
 	[DataMember(Name = "numberOfStandardDevices")]
-	public int StandardDeviceCount { get; set; }
+	public int StandardResourceCount { get; set; }
 
 	/// <summary>
-	///     Stopped AWS Device count
+	///     Stopped AWS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfStoppedAWSDevices")]
-	public int StoppedAwsDeviceCount { get; set; }
+	public int StoppedAwsResourceCount { get; set; }
 
 	/// <summary>
-	///     Stopped Azure Device count
+	///     Stopped Azure Resource count
 	/// </summary>
 	[DataMember(Name = "numOfStoppedAzureDevices")]
-	public int StoppedAzureDeviceCount { get; set; }
+	public int StoppedAzureResourceCount { get; set; }
 
 	/// <summary>
-	///     Stopped GCP Device count
+	///     Stopped GCP Resource count
 	/// </summary>
 	[DataMember(Name = "numOfStoppedGcpDevices")]
-	public int StoppedGcpDeviceCount { get; set; }
+	public int StoppedGcpResourceCount { get; set; }
 
 	/// <summary>
-	///     The stopped PaaS device count
+	///     The stopped PaaS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfStoppedPaasDevices")]
-	public int StoppedPaasDeviceCount { get; set; }
+	public int StoppedPaasResourceCount { get; set; }
 
 	/// <summary>
 	///     The tenant identifier property name
@@ -468,28 +468,28 @@ public class AccountSettings : IHasSingletonEndpoint
 	public string TenantIdentifierPropertyName { get; set; } = string.Empty;
 
 	/// <summary>
-	///     Terminated AWS Device count
+	///     Terminated AWS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfTerminatedAWSDevices")]
-	public int TerminatedAwsDeviceCount { get; set; }
+	public int TerminatedAwsResourceCount { get; set; }
 
 	/// <summary>
-	///     Terminated Azure Device count
+	///     Terminated Azure Resource count
 	/// </summary>
 	[DataMember(Name = "numOfTerminatedAzureDevices")]
-	public int TerminatedAzureDeviceCount { get; set; }
+	public int TerminatedAzureResourceCount { get; set; }
 
 	/// <summary>
-	///     Terminated GCP Device count
+	///     Terminated GCP Resource count
 	/// </summary>
 	[DataMember(Name = "numOfTerminatedGcpCloudDevices")]
-	public int TerminatedGcpDeviceCount { get; set; }
+	public int TerminatedGcpResourceCount { get; set; }
 
 	/// <summary>
-	///     The terminated PaaS device count
+	///     The terminated PaaS Resource count
 	/// </summary>
 	[DataMember(Name = "numOfTerminatedPaasDevices")]
-	public int TerminatedPaasDeviceCount { get; set; }
+	public int TerminatedPaasResourceCount { get; set; }
 
 	/// <summary>
 	///     Time Zone as text

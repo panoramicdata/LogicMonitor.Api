@@ -26,9 +26,9 @@ public partial class LogicMonitorClient
 	///     Gets history SDTs for a Resource Data Source
 	/// </summary>
 	/// <param name="resourceId">The Resource ID</param>
-	/// <param name="resourceDataSourceId">The Device Data Source ID</param>
+	/// <param name="resourceDataSourceId">The Resource Data Source ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public Task<List<ScheduledDownTimeHistory>> GetDeviceDataSourceHistorySdtsAsync(
+	public Task<List<ScheduledDownTimeHistory>> GetResourceDataSourceHistorySdtsAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		CancellationToken cancellationToken)
@@ -41,7 +41,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceDataSourceId">The Resource Data Source ID</param>
 	/// <param name="resourceDataSourceInstanceId">The Resource Data Source Instance ID</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
-	public Task<List<ScheduledDownTimeHistory>> GetDeviceDataSourceInstanceHistorySdtsAsync(
+	public Task<List<ScheduledDownTimeHistory>> GetResourceDataSourceInstanceHistorySdtsAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		int resourceDataSourceInstanceId,

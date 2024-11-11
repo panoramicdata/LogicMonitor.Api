@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api;
 
 /// <summary>
-///     Device Portal interaction
+///     Resource Portal interaction
 /// </summary>
 public partial class LogicMonitorClient
 {
@@ -41,7 +41,8 @@ public partial class LogicMonitorClient
 	/// <param name="hostName">The Resource HostName</param>
 	/// <param name="maxResultCount">Max result count.  May not exceed 100</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<Resource>> GetDevicesByHostNameAsync(string hostName, int maxResultCount, CancellationToken cancellationToken)
+	public async Task<List<Resource>> GetResourcesByHostNameAsync
+	(string hostName, int maxResultCount, CancellationToken cancellationToken)
 		=> (await GetResourcesByNameAsync(
 			hostName,
 			maxResultCount,
@@ -49,9 +50,9 @@ public partial class LogicMonitorClient
 			.Where(d => string.Equals(d.Name, hostName, StringComparison.OrdinalIgnoreCase)).ToList();
 
 	/// <summary>
-	///     Gets device by DisplayName
+	///     Gets Resource by DisplayName
 	/// </summary>
-	/// <param name="displayName">The Device DisplayName</param>
+	/// <param name="displayName">The Resource DisplayName</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<Resource> GetResourceByDisplayNameAsync(
 		string displayName,
@@ -77,7 +78,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="resourceId">The Resource Id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<List<EntityProperty>> GetDevicePropertiesAsync(
+	public Task<List<EntityProperty>> GetResourcePropertiesAsync(
 		int resourceId,
 		CancellationToken cancellationToken)
 		=> GetAllAsync<EntityProperty>($"device/devices/{resourceId}/properties", cancellationToken);
@@ -223,7 +224,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceGroupFullPaths">The FullPath(es) of the ResourceGroup(s), semicolon separated.</param>
 	/// <param name="recurse">If true, finds devices in child groups also.</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	/// <returns>A list of Devices</returns>
+	/// <returns>A list of Resources</returns>
 	public async Task<List<Resource>> GetResourcesByResourceGroupFullPathAsync(
 		string resourceGroupFullPaths,
 		bool recurse,
@@ -317,7 +318,7 @@ public partial class LogicMonitorClient
 					resourceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchResourceGroupName, StringComparison.Ordinal));
 				}
 
-				// Get the Devices
+				// Get the Resource
 				foreach (var resourceGroup in resourceGroups)
 				{
 					var resourceGroupResources = await GetResourcesByResourceGroupIdAsync(
@@ -477,10 +478,10 @@ public partial class LogicMonitorClient
 
 		var modifier = treeNodeFreeSearchResultType switch
 		{
-			TreeNodeFreeSearchResultType.DeviceDataSourceInstance => "i:",
-			TreeNodeFreeSearchResultType.DeviceDataSource => "ds:",
+			TreeNodeFreeSearchResultType.ResourceDataSourceInstance => "i:",
+			TreeNodeFreeSearchResultType.ResourceDataSource => "ds:",
 			TreeNodeFreeSearchResultType.Resource => "d:",
-			TreeNodeFreeSearchResultType.DeviceGroup => "g:",
+			TreeNodeFreeSearchResultType.ResourceGroup => "g:",
 			null => string.Empty,
 			_ => throw new ArgumentException($"Unexpected value {treeNodeFreeSearchResultType}", nameof(treeNodeFreeSearchResultType)),
 		};
@@ -551,7 +552,7 @@ public partial class LogicMonitorClient
 
 				resourceGroup.Resources ??= [];
 				resourceGroup.Resources.Add(resource);
-				resourceGroup.DeviceCount = resourceGroup.Resources.Count;
+				resourceGroup.ResourceCount = resourceGroup.Resources.Count;
 			}
 		}
 
@@ -564,7 +565,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="deviceProcessServiceTaskType">The process/service type</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<List<ResourceDataSourceInstance>> GetMonitoredDeviceProcessesAsync(
+	public async Task<List<ResourceDataSourceInstance>> GetMonitoredResourceProcessesAsync(
 		int resourceId,
 		ResourceProcessServiceTaskType deviceProcessServiceTaskType,
 		CancellationToken cancellationToken)
@@ -591,7 +592,7 @@ public partial class LogicMonitorClient
 			return [];
 		}
 
-		return await GetAllDeviceDataSourceInstancesAsync(
+		return await GetAllResourceDataSourceInstancesAsync(
 			resourceId,
 			deviceDataSources.Single().Id,
 			new Filter<ResourceDataSourceInstance>(),
@@ -689,10 +690,10 @@ public partial class LogicMonitorClient
 			cancellationToken);
 
 	/// <summary>
-	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
+	/// Sets alert thresholds for an entire Resource DataSource Instance Group
 	/// </summary>
 	/// <param name="resourceId">The Resource id</param>
-	/// <param name="resourceDataSourceId">The DeviceDataSource id</param>
+	/// <param name="resourceDataSourceId">The Resource DataSource id</param>
 	/// <param name="resourceDataSourceInstanceGroupId">The deviceDataSource Instance Group Id (0 == default)</param>
 	/// <param name="dataPointId">The DataPoint Id</param>
 	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
@@ -714,10 +715,10 @@ public partial class LogicMonitorClient
 			}, cancellationToken);
 
 	/// <summary>
-	/// Sets alert thresholds for an entire DeviceDataSourceInstanceGroup
+	/// Sets alert thresholds for an entire Resource DataSource Instance Group
 	/// </summary>
 	/// <param name="resourceGroupId">The Resource id</param>
-	/// <param name="dataSourceId">The DeviceDataSource id</param>
+	/// <param name="dataSourceId">The DataSource id</param>
 	/// <param name="dataPointId">The DataPoint Id</param>
 	/// <param name="alertExpression">The alert expression (e.g. >= "90 90 90")</param>
 	/// <param name="alertExpressionNote">A note explaining the threshold</param>
@@ -782,12 +783,12 @@ public partial class LogicMonitorClient
 		=> (await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{resourceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false)).Items;
 
 	/// <summary>
-	/// get device instance list
+	/// get Resource instance list
 	/// </summary>
 	/// <param name="id">The Resource id</param>
 	/// <param name="filter"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public Task<Page<ResourceDataSourceInstance>> GetDeviceInstanceListAsync(
+	public Task<Page<ResourceDataSourceInstance>> GetResourceInstanceListAsync(
 		int id,
 		Filter<ResourceDataSourceInstance> filter,
 		CancellationToken cancellationToken)
@@ -801,9 +802,9 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken) => GetBySubUrlAsync<CustomGraphWidgetData>($"device/devices/{id}/topTalkersGraph", cancellationToken);
 
 	/// <summary>
-	/// Get Alerts for a Device by ID
+	/// Get Alerts for a Resource by ID
 	/// </summary>
-	/// <param name="resourceId">The Device ID</param>
+	/// <param name="resourceId">The Resource ID</param>
 	/// <param name="filter">The Alert Filter</param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	/// <returns>A List of Alerts</returns>
@@ -816,7 +817,7 @@ public partial class LogicMonitorClient
 		filter.RemoveMonitorObjectReferences();
 
 		var (alerts, limitReached) = await
-			GetDeviceAlertsByIdNormalAsync(resourceId, filter, false, cancellationToken)
+			GetResourceAlertsByIdNormalAsync(resourceId, filter, false, cancellationToken)
 			.ConfigureAwait(false);
 
 		if (limitReached)
@@ -846,7 +847,7 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///     This version of the call requests hourly chunks
 	/// </summary>
-	/// <param name="resourceId">The Device ID</param>
+	/// <param name="resourceId">The Resource ID</param>
 	/// <param name="filter"></param>
 	/// <param name="chunkSize">The chunk size (TimeSpan)</param>
 	/// <param name="cancellationToken"></param>
@@ -881,7 +882,7 @@ public partial class LogicMonitorClient
 		await Task.WhenAll(alertFilterList.Select((Func<AlertFilter, Task>)(async individualAlertFilter =>
 		{
 			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetDeviceAlertsByIdNormalAsync((int)resourceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetResourceAlertsByIdNormalAsync((int)resourceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add((Alert)alert);
 			}
@@ -896,12 +897,12 @@ public partial class LogicMonitorClient
 	/// <summary>
 	///		Get device alerts with an alert filter (not all properties in the filter are used)
 	/// </summary>
-	/// <param name="resourceId">The Device ID</param>
+	/// <param name="resourceId">The Resource ID</param>
 	/// <param name="filter">An AlertFilter</param>
 	/// <param name="calledFromChunked"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	/// <returns>A List of Alerts and whether the limit was reached</returns>
-	internal async Task<(List<Alert> alerts, bool limitReached)> GetDeviceAlertsByIdNormalAsync(
+	internal async Task<(List<Alert> alerts, bool limitReached)> GetResourceAlertsByIdNormalAsync(
 		int resourceId,
 		AlertFilter filter,
 		bool calledFromChunked,

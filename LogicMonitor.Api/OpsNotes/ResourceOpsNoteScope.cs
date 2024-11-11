@@ -10,11 +10,11 @@ public class ResourceOpsNoteScope : OpsNoteScope
 	/// The Resource id
 	/// </summary>
 	[DataMember(Name = "deviceId")]
-	public int DeviceId { get; set; }
+	public int ResourceId { get; set; }
 
 	/// <summary>
-	/// The device name
+	/// The Resource name
 	/// </summary>
 	[DataMember(Name = "deviceName")]
-	public string DeviceName { get; set; } = string.Empty;
+	public string ResourceName { get; set; } = string.Empty;
 }

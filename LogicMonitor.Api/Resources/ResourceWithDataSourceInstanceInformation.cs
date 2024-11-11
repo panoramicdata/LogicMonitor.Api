@@ -10,5 +10,5 @@ public class ResourceWithDataSourceInstanceInformation : Resource
 	/// The DataSourceInstance information
 	/// </summary>
 	[DataMember(Name = "instance")]
-	public List<ResourceDataSourceInstanceSummary> DeviceDataSourceInstances { get; set; } = [];
+	public List<ResourceDataSourceInstanceSummary> ResourceDataSourceInstances { get; set; } = [];
 }

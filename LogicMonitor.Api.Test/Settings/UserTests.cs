@@ -45,7 +45,7 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			{
 				Alerts = true,
 				Dashboards = true,
-				Devices = true,
+				Resources = true,
 				Reports = true,
 				Websites = true,
 				Settings = true
