@@ -294,7 +294,7 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// The number of kubernetes devices that belong to this ResourceGroup (includes Kubernetes devices in sub groups)
 	/// </summary>
 	[DataMember(Name = "numOfKubernetesDevices")]
-	public int KubernetesResource0Count { get; set; }
+	public int KubernetesResourceCount { get; set; }
 
 	/// <summary>
 	///     The Alerting disabled on
