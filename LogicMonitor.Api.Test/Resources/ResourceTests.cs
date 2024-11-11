@@ -771,7 +771,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default);
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, default)
+			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, default)
 			.ConfigureAwait(true);
 
 		var deviceDataSourceInstance = deviceDataSourceInstances.FirstOrDefault();

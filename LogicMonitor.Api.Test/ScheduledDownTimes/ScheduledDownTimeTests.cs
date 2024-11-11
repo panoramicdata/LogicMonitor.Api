@@ -490,7 +490,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.ConfigureAwait(true);
 
 		var deviceDataSourceInstance = (await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
 			.ConfigureAwait(true))
 			.Single();
 

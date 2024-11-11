@@ -6,7 +6,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
 		var deviceDataSources = await LogicMonitorClient
-			.GetAllDeviceDataSourcesAsync(1765, null, default)
+			.GetAllResourceDataSourcesAsync(1765, null, default)
 			.ConfigureAwait(true);
 		deviceDataSources.Should().NotBeNull();
 	}
@@ -50,7 +50,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	public async Task GetDeviceDatasourceData()
 	{
 		var deviceDataSources = await LogicMonitorClient
-			.GetAllDeviceDataSourcesAsync(WindowsDeviceId, null, default)
+			.GetAllResourceDataSourcesAsync(WindowsDeviceId, null, default)
 			.ConfigureAwait(true);
 
 		var data = await LogicMonitorClient

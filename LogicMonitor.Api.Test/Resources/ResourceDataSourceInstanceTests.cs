@@ -6,7 +6,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
 		var result = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default)
 			.ConfigureAwait(true);
 		result.Should().NotBeNull();
 	}
@@ -24,7 +24,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 			.ConfigureAwait(true);
 
 		_ = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
 			.ConfigureAwait(true);
 	}
 
@@ -41,7 +41,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		var deviceDataSource = await LogicMonitorClient
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: default)
 			.ConfigureAwait(true);
-		var resourceDataSourceInstances = await LogicMonitorClient.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>
+		var resourceDataSourceInstances = await LogicMonitorClient.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>
 		{
 			Order = new Order<ResourceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(ResourceDataSourceInstance.DisplayName) },
 			FilterItems =
@@ -58,7 +58,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	{
 		var resource = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
-		var resourceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
+		var resourceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
@@ -77,11 +77,11 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		};
 
 		await LogicMonitorClient
-			.AddDeviceDataSourceInstanceAsync(resource.Id, resourceDataSources[9].Id, newInstance, default)
+			.AddResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[9].Id, newInstance, default)
 			.ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(resource.Id, resourceDataSources[9].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[9].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
@@ -120,7 +120,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	{
 		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
+		var deviceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
@@ -131,7 +131,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		}, default).ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
@@ -150,7 +150,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	{
 		var device = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
-		var deviceDataSources = await LogicMonitorClient.GetAllDeviceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
+		var deviceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
@@ -161,7 +161,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		}, default).ConfigureAwait(true);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllDeviceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
