@@ -269,6 +269,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public bool InSdt { get; set; }
 
 	/// <summary>
+	///     Whether the collector is running as an admin account
+	/// </summary>
+	[DataMember(Name = "isAdminAccount")]
+	public bool IsAdminAccount { get; set; }
+
+	/// <summary>
 	///     Whether the collector is down
 	/// </summary>
 	[DataMember(Name = "isDown")]
