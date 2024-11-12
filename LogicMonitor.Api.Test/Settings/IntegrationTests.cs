@@ -17,7 +17,7 @@ public class IntegrationTests(ITestOutputHelper iTestOutputHelper, Fixture fixtu
 	public async Task GetIntegrationAuditLogs()
 	{
 		var auditLogs = await LogicMonitorClient
-			.GetIntegrationAuditLogsAsync()
+			.GetIntegrationAuditLogsAsync(default)
 			.ConfigureAwait(true);
 
 		auditLogs.Items.Should().NotBeEmpty();

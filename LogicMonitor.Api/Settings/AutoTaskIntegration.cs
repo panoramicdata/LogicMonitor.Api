@@ -9,6 +9,12 @@ public class AutoTaskIntegration : HttpIntegration
 	/// <summary>
 	/// The zone
 	/// </summary>
+	[DataMember(Name = "isRest")]
+	public bool IsRest { get; set; }
+
+	/// <summary>
+	/// The zone
+	/// </summary>
 	[DataMember(Name = "zone")]
 	public int Zone { get; set; }
 

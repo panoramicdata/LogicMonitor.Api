@@ -83,12 +83,6 @@ public partial class LogicMonitorClient
 	/// <summary>
 	/// get integration audit logs list
 	/// </summary>
-	public Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync()
-		=> GetIntegrationAuditLogsAsync(CancellationToken.None);
-
-	/// <summary>
-	/// get integration audit logs list
-	/// </summary>
 	/// <param name="cancellationToken"></param>
 	public Task<Page<IntegrationAuditLog>> GetIntegrationAuditLogsAsync(
 		CancellationToken cancellationToken)

@@ -14,6 +14,7 @@ internal class IntegrationsConverter : JsonCreationConverter<Integration>
 			"servicenow" => new ServiceNowIntegration(),
 			"email" => new EmailIntegration(),
 			"autotask" => new AutoTaskIntegration(),
+			"connectwise-2" => new ConnectwiseManageIntegration(),
 			"pagerduty" => new PagerDutyIntegration(),
 			"jsm" => new JiraServiceManagementIntegration(),
 			_ => throw new NotSupportedException($"{integration} deserialization not supported. IntegrationsConverter.cs needs updating."),
