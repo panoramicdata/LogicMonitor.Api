@@ -478,23 +478,12 @@ public static class LogItemExtensions
 
 		var stringValue = match.Groups[groupName].Value;
 
-		if (typeof(T) == typeof(string))
-		{
-			return stringValue is T t ? t : default;
-		}
-
-		if (typeof(T) == typeof(List<string>))
-		{
-			return stringValue
-				.Split(',')
-				.ToList() is T t ? t : default;
-		}
-
-		return typeof(T) == typeof(List<int>)
-			? stringValue
-				.Split(',')
-				.Select(int.Parse)
-				.ToList() is T t ? t : default
+		return typeof(T) == typeof(string)
+			? stringValue is T t ? t : default
+			: typeof(T) == typeof(List<string>)
+			? stringValue.Split(',').ToList() is T t2 ? t2 : default
+			: typeof(T) == typeof(List<int>)
+			? stringValue.Split(',').Select(int.Parse).ToList() is T t3 ? t3 : default
 			: throw new NotSupportedException($"Type {typeof(T)} is not supported");
 	}
 
