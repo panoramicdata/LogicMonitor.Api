@@ -452,21 +452,18 @@ public static class LogItemExtensions
 		if (typeof(T) == typeof(int))
 		{
 			var result = int.Parse(stringValue, CultureInfo.InvariantCulture);
-			return result is T t ? t : default;
+			return result is T t1 ? t1 : default;
 		}
 
 		if (typeof(T) == typeof(long))
 		{
 			var result = long.Parse(stringValue, CultureInfo.InvariantCulture);
-			return result is T t ? t : default;
+			return result is T t2 ? t2 : default;
 		}
 
-		if (typeof(T) == typeof(bool))
-		{
-			return bool.TryParse(stringValue, out var boolValue) ? boolValue is T t ? t : default : (T?)default;
-		}
-
-		throw new NotSupportedException($"Type {typeof(T)} is not supported");
+		return typeof(T) == typeof(bool)
+			? bool.TryParse(stringValue, out var boolValue) ? boolValue is T t3 ? t3 : default : (T?)default
+			: throw new NotSupportedException($"Type {typeof(T)} is not supported");
 	}
 
 	private static T? GetGroupValueAsTypeOrNull<T>(Match match, string groupName) where T : class
@@ -493,23 +490,13 @@ public static class LogItemExtensions
 			.FirstOrDefault(entry => entry.Match.Success);
 
 	private static AuditEventActionType GetAction(Match value)
-	{
-		if (value.Groups["scheduledHealthCheck"].Success)
-		{
-			return AuditEventActionType.ScheduledHealthCheckScript;
-		}
-
-		if (value.Groups["login"].Success)
-		{
-			return AuditEventActionType.Login;
-		}
-
-		if (value.Groups["discardedEventAlert"].Success)
-		{
-			return AuditEventActionType.DiscardedEventAlert;
-		}
-
-		return value.Groups["alertId"].Success
+		=> value.Groups["scheduledHealthCheck"].Success
+			? AuditEventActionType.ScheduledHealthCheckScript
+			: value.Groups["login"].Success
+			? AuditEventActionType.Login
+			: value.Groups["discardedEventAlert"].Success
+			? AuditEventActionType.DiscardedEventAlert
+			: value.Groups["alertId"].Success
 			? AuditEventActionType.Update
 			: value.Groups["action"].Value.ToUpperInvariant() switch
 			{
@@ -533,7 +520,6 @@ public static class LogItemExtensions
 				"SCHEDULE" => AuditEventActionType.ScheduleActiveDiscovery,
 				_ => AuditEventActionType.None
 			};
-	}
 
 	private class LogItemRegex(int id, AuditEventEntityType entityType, Regex regex)
 	{
