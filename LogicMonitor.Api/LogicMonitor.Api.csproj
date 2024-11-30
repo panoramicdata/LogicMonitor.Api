@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Lots of obsolete code removed.  Lots of changes from Device to Resource.
+			Version 213 support, including improved/new Widget DisplaySettings POCOs.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

@@ -77,4 +77,16 @@ public class DisplaySettings
 	/// </summary>
 	[DataMember(Name = "pageSize")]
 	public int PageSize { get; set; }
+
+	/// <summary>
+	/// Property columns - Too complex a structure to deserialize
+	/// </summary>
+	[DataMember(Name = "propertyColumns")]
+	public object? PropertyColumns { get; set; }
+
+	/// <summary>
+	/// Columns v4
+	/// </summary>
+	[DataMember(Name = "columnsV4")]
+	public List<ColumnV4> ColumnsV4 { get; set; } = [];
 }
