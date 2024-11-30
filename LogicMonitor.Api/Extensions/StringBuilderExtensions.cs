@@ -20,17 +20,13 @@ internal static class StringBuilderExtensions
 	internal static string UriEscape(this object value)
 	{
 		// If it's a list, return each item UrlEscaped, separated by "|"
-		if (value is IEnumerable<string> list)
-		{
-			return string.Join("|", list.Select(item => item.UriEscape()));
-		}
-
-		return Uri
+		return value is IEnumerable<string> list
+			? string.Join("|", list.Select(item => item.UriEscape()))
+			: Uri
 				.EscapeUriString(value.ToString())
 				.Replace("&", "%26")
 				.Replace(":", "%3A")
 				.Replace("/", "%2F")
-				.Replace(",", "%2C")
-			;
+				.Replace(",", "%2C");
 	}
 }

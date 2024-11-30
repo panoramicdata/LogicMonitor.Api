@@ -27,12 +27,7 @@ public partial class LogicMonitorClient
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
 
-		if (alertFilter.IsCleared == false)
-		{
-			return alerts.Where(a => !a.IsCleared).ToList();
-		}
-
-		return alerts;
+		return alertFilter.IsCleared == false ? alerts.Where(a => !a.IsCleared).ToList() : alerts;
 	}
 
 	/// <summary>

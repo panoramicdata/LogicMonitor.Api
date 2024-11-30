@@ -40,12 +40,7 @@ public class Line
 			return h - 'a' + 10;
 		}
 
-		if (h is >= 'A' and <= 'F')
-		{
-			return h - 'A' + 10;
-		}
-
-		throw new ArgumentOutOfRangeException(nameof(h));
+		return h is >= 'A' and <= 'F' ? h - 'A' + 10 : throw new ArgumentOutOfRangeException(nameof(h));
 	}
 
 	/// <summary>

@@ -23,12 +23,9 @@ public abstract class UndescribedNamedItem : IdentifiedItem
 			return false;
 		}
 
-		if (obj is not NamedItem logicMonitorNamedEntity)
-		{
-			return false;
-		}
-
-		return base.Equals(logicMonitorNamedEntity)
+		return obj is not NamedItem logicMonitorNamedEntity
+			? false
+			: base.Equals(logicMonitorNamedEntity)
 			&& logicMonitorNamedEntity is not null
 			&& logicMonitorNamedEntity.Name == Name;
 	}

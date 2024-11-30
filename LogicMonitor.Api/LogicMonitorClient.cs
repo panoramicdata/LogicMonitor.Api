@@ -1110,12 +1110,7 @@ public partial class LogicMonitorClient : IDisposable
 		}
 
 		// Return the result
-		if (deserializedObject is not null)
-		{
-			return deserializedObject;
-		}
-
-		return new();
+		return deserializedObject is not null ? deserializedObject : new();
 	}
 
 	/// <summary>
@@ -1216,12 +1211,7 @@ public partial class LogicMonitorClient : IDisposable
 		var deserializedObject = portalResponse.GetObject();
 
 		// Return
-		if (deserializedObject != null)
-		{
-			return deserializedObject;
-		}
-
-		return new();
+		return deserializedObject != null ? deserializedObject : new();
 	}
 
 	/// <summary>
@@ -1606,12 +1596,9 @@ public partial class LogicMonitorClient : IDisposable
 			propertyInfo = logicMonitorClassType.GetProperty(name);
 		}
 
-		if (propertyInfo is null)
-		{
-			throw new PropertyNotFoundException($"Could not find property on {logicMonitorClassType.Name} with name {name}.");
-		}
-
-		return Attribute.IsDefined(propertyInfo, typeof(SantabaReadOnly));
+		return propertyInfo is null
+			? throw new PropertyNotFoundException($"Could not find property on {logicMonitorClassType.Name} with name {name}.")
+			: Attribute.IsDefined(propertyInfo, typeof(SantabaReadOnly));
 	}
 
 	/// <summary>

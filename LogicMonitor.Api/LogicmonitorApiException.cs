@@ -111,12 +111,7 @@ public class LogicMonitorApiException : Exception
 			return false;
 		}
 
-		if (ReferenceEquals(this, obj))
-		{
-			return true;
-		}
-
-		return obj.GetType() == GetType() && Equals((LogicMonitorApiException)obj);
+		return ReferenceEquals(this, obj) ? true : obj.GetType() == GetType() && Equals((LogicMonitorApiException)obj);
 	}
 
 	/// <inheritdoc />

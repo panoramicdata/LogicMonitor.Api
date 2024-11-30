@@ -22,12 +22,7 @@ public static class AlertStatusExtensions
 			return AlertLevel.Error;
 		}
 
-		if (alertStatusString.Contains("Warn"))
-		{
-			return AlertLevel.Warning;
-		}
-
-		return null;
+		return alertStatusString.Contains("Warn") ? AlertLevel.Warning : null;
 	}
 
 	/// <summary>

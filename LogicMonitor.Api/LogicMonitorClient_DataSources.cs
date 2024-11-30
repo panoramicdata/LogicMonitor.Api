@@ -268,12 +268,9 @@ public partial class LogicMonitorClient
 			items.AddRange(itemsThisTime.Items);
 			if (itemsThisTime.Items.Count < filter.Take)
 			{
-				if (StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count)
-				{
-					throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}");
-				}
-
-				return items;
+				return StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count
+					?                   throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}")
+					: items;
 			}
 
 			filter.Skip += filter.Take;
@@ -312,12 +309,9 @@ public partial class LogicMonitorClient
 			items.AddRange(itemsThisTime.Items);
 			if (itemsThisTime.Items.Count < filter.Take)
 			{
-				if (StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count)
-				{
-					throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}");
-				}
-
-				return items;
+				return StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count
+					?                   throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}")
+					: items;
 			}
 
 			filter.Skip += filter.Take;

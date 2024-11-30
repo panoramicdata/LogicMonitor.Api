@@ -26,12 +26,9 @@ public abstract class TimeBasedRequest : IRequest
 	/// <exception cref="ArgumentException"></exception>
 	protected string GetTimePartialQueryString()
 	{
-		if (StartDateTime > EndDateTime)
-		{
-			throw new InvalidOperationException("StartDateTime must be before EndDateTime");
-		}
-
-		return TimePeriod switch
+		return StartDateTime > EndDateTime
+			?            throw new InvalidOperationException("StartDateTime must be before EndDateTime")
+			: TimePeriod switch
 		{
 			TimePeriod.Unknown => throw new ArgumentException("TimePeriod not set."),
 			TimePeriod.Zoom => $"&start={StartDateTime.SecondsSinceTheEpoch()}&end={EndDateTime.SecondsSinceTheEpoch()}",

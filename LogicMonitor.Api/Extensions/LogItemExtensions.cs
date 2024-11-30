@@ -463,12 +463,7 @@ public static class LogItemExtensions
 
 		if (typeof(T) == typeof(bool))
 		{
-			if (bool.TryParse(stringValue, out var boolValue))
-			{
-				return boolValue is T t ? t : default;
-			}
-
-			return default;
+			return bool.TryParse(stringValue, out var boolValue) ? boolValue is T t ? t : default : (T?)default;
 		}
 
 		throw new NotSupportedException($"Type {typeof(T)} is not supported");
@@ -495,15 +490,12 @@ public static class LogItemExtensions
 				.ToList() is T t ? t : default;
 		}
 
-		if (typeof(T) == typeof(List<int>))
-		{
-			return stringValue
+		return typeof(T) == typeof(List<int>)
+			? stringValue
 				.Split(',')
 				.Select(int.Parse)
-				.ToList() is T t ? t : default;
-		}
-
-		throw new NotSupportedException($"Type {typeof(T)} is not supported");
+				.ToList() is T t ? t : default
+			: throw new NotSupportedException($"Type {typeof(T)} is not supported");
 	}
 
 	private static (LogItemRegex? LogItemRegex, Match? Match) GetMatchFromDescription(string description)
@@ -528,33 +520,30 @@ public static class LogItemExtensions
 			return AuditEventActionType.DiscardedEventAlert;
 		}
 
-		if (value.Groups["alertId"].Success)
-		{
-			return AuditEventActionType.Update;
-		}
-
-		return value.Groups["action"].Value.ToUpperInvariant() switch
-		{
-			"ADD" or "CREATE" => AuditEventActionType.Create,
-			"COLLECT NOW" => AuditEventActionType.CollectNow,
-			"STARTED" => AuditEventActionType.Start,
-			"TERMINATED" => AuditEventActionType.End,
-			"FETCH" or "VIEW" => AuditEventActionType.Read,
-			"LOGIN" => AuditEventActionType.Login,
-			"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
-			"DELET" or "DELETE" => AuditEventActionType.Delete,
-			"ENABLE" => AuditEventActionType.Enable,
-			"DOWNLOAD" => AuditEventActionType.Download,
-			"DISABLE" => AuditEventActionType.Disable,
-			"REQUEST REMOTE" => AuditEventActionType.RequestRemoteSession,
-			"RE-BALANCED" => AuditEventActionType.Rebalance,
-			"FORGOT PASSWORD" => AuditEventActionType.RequestPasswordReset,
-			"RUN" => AuditEventActionType.Run,
-			"AUTO-DISCOVER POLL REQUEST" => AuditEventActionType.AutoDiscoveryPollRequest,
-			"REGULAR DEVICE TOTAL MONTHLY METRICS" => AuditEventActionType.RegularResourceTotalMonthlyMetrics,
-			"SCHEDULE" => AuditEventActionType.ScheduleActiveDiscovery,
-			_ => AuditEventActionType.None
-		};
+		return value.Groups["alertId"].Success
+			? AuditEventActionType.Update
+			: value.Groups["action"].Value.ToUpperInvariant() switch
+			{
+				"ADD" or "CREATE" => AuditEventActionType.Create,
+				"COLLECT NOW" => AuditEventActionType.CollectNow,
+				"STARTED" => AuditEventActionType.Start,
+				"TERMINATED" => AuditEventActionType.End,
+				"FETCH" or "VIEW" => AuditEventActionType.Read,
+				"LOGIN" => AuditEventActionType.Login,
+				"UPDAT" or "UPDATE" or "EDIT" => AuditEventActionType.Update,
+				"DELET" or "DELETE" => AuditEventActionType.Delete,
+				"ENABLE" => AuditEventActionType.Enable,
+				"DOWNLOAD" => AuditEventActionType.Download,
+				"DISABLE" => AuditEventActionType.Disable,
+				"REQUEST REMOTE" => AuditEventActionType.RequestRemoteSession,
+				"RE-BALANCED" => AuditEventActionType.Rebalance,
+				"FORGOT PASSWORD" => AuditEventActionType.RequestPasswordReset,
+				"RUN" => AuditEventActionType.Run,
+				"AUTO-DISCOVER POLL REQUEST" => AuditEventActionType.AutoDiscoveryPollRequest,
+				"REGULAR DEVICE TOTAL MONTHLY METRICS" => AuditEventActionType.RegularResourceTotalMonthlyMetrics,
+				"SCHEDULE" => AuditEventActionType.ScheduleActiveDiscovery,
+				_ => AuditEventActionType.None
+			};
 	}
 
 	private class LogItemRegex(int id, AuditEventEntityType entityType, Regex regex)

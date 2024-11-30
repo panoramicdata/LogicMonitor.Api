@@ -23,12 +23,7 @@ internal class DoubleOrNAConverter : JsonConverter<double>
 		}
 
 		var valueString = reader.Value.ToString();
-		if (double.TryParse(valueString, out var result))
-		{
-			return result;
-		}
-
-		return double.MinValue;
+		return double.TryParse(valueString, out var result) ? result : double.MinValue;
 	}
 
 	/// <summary>

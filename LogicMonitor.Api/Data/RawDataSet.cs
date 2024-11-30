@@ -39,12 +39,7 @@ public class RawDataSet
 				.Select(index => ValuesAsObjects[index]
 					.Select(valueAsObject =>
 						{
-							if (double.TryParse(valueAsObject.ToString(), out var valueAsDouble))
-							{
-								return valueAsDouble;
-							}
-
-							return (double?)null;
+							return double.TryParse(valueAsObject.ToString(), out var valueAsDouble) ? valueAsDouble : (double?)null;
 						}
 					)
 					.ToList()

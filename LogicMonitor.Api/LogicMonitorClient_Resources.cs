@@ -587,12 +587,9 @@ public partial class LogicMonitorClient
 		};
 		var deviceDataSources = await GetAllAsync(filter, $"device/devices/{resourceId}/devicedatasources", cancellationToken).ConfigureAwait(false);
 
-		if (deviceDataSources.Count != 1)
-		{
-			return [];
-		}
-
-		return await GetAllResourceDataSourceInstancesAsync(
+		return deviceDataSources.Count != 1
+			? ([])
+			: await GetAllResourceDataSourceInstancesAsync(
 			resourceId,
 			deviceDataSources.Single().Id,
 			new Filter<ResourceDataSourceInstance>(),
@@ -836,12 +833,7 @@ public partial class LogicMonitorClient
 			return alerts.Where(a => a.IsCleared).ToList();
 		}
 
-		if (filter?.IsCleared == false)
-		{
-			return alerts.Where(a => !a.IsCleared).ToList();
-		}
-
-		return alerts;
+		return filter?.IsCleared == false ? alerts.Where(a => !a.IsCleared).ToList() : alerts;
 	}
 
 	/// <summary>
