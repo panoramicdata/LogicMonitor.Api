@@ -144,13 +144,22 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 					.RecycleBinRestoreAsync([recycleBinItem.Id], default)
 					.ConfigureAwait(true);
 
-				// Get the recycle bin item and make sure it was restored correctly
+				// Make sure that it's no longer in the recycle bin
 				recycleBinItems = await logicMonitorClient
 					.GetAllAsync<RecycleBinItem>(default)
 					.ConfigureAwait(true);
 				recycleBinItem = recycleBinItems
 					.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
 				recycleBinItem.Should().BeNull();
+
+				// Get the resource again by Id
+				var restoredResource = await logicMonitorClient
+					.GetAsync<Resource>(deviceFromCreation.Id, default)
+					.ConfigureAwait(true);
+
+				// Check that it's the same
+				restoredResource.Should().NotBeNull();
+				restoredResource.DisplayName.Should().Be(deviceFromCreation.DisplayName);
 
 				// Do a regular hard delete
 				await logicMonitorClient
