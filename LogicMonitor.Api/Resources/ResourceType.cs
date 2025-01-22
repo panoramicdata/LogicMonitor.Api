@@ -12,17 +12,27 @@ public enum ResourceType
 	Regular = 0,
 
 	/// <summary>
-	/// Aws
+	/// Aws IaaS
 	/// </summary>
 	Aws = 2,
 
 	/// <summary>
-	/// Azure
+	/// Azure IaaS
 	/// </summary>
 	Azure = 4,
 
 	/// <summary>
 	/// Service
 	/// </summary>
-	Service = 6
+	Service = 6,
+
+	/// <summary>
+	/// PaaS
+	/// </summary>
+	PaaS = 8,
+
+	/// <summary>
+	/// Service
+	/// </summary>
+	SaaS = 10
 }
