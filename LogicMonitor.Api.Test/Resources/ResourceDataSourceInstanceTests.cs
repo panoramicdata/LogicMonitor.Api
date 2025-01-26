@@ -118,9 +118,9 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task GetDataPointConfiguration()
 	{
-		var device = await GetWindowsResourceAsync(default)
+		var resource = await GetWindowsResourceAsync(default)
 			.ConfigureAwait(true);
-		var deviceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
+		var resourceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
 			Take = 10,
@@ -130,8 +130,8 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				]
 		}, default).ConfigureAwait(true);
 
-		var datasourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
+		var resourceDataSourceInstances = await LogicMonitorClient
+			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
@@ -139,7 +139,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 			.ConfigureAwait(true);
 
 		var config = await LogicMonitorClient
-			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(resource.Id, resourceDataSources[0].Id, resourceDataSourceInstances[0].Id, default)
 			.ConfigureAwait(true);
 
 		config.Should().NotBeEmpty();
@@ -207,5 +207,94 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				dataPointConfig.DisableAlerting.Should().Be(!prevSetting);
 			}
 		}
+	}
+
+	[Fact]
+	public async Task SetResourceDataSourceInstanceCustomProperty()
+	{
+		var resource = await GetWindowsResourceAsync(default)
+			.ConfigureAwait(true);
+		var resourceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
+		{
+			Skip = 0,
+			Take = 10,
+			Properties =
+				[
+					nameof(ResourceDataSource.Id),
+				]
+		}, default).ConfigureAwait(true);
+
+		var datasourceInstances = await LogicMonitorClient
+			.GetAllResourceDataSourceInstancesAsync(
+				resource.Id,
+				resourceDataSources[0].Id,
+				new Filter<ResourceDataSourceInstance>()
+				{
+					Skip = 0,
+				}, default)
+			.ConfigureAwait(true);
+
+		var instance = datasourceInstances[0];
+
+		var customPropertyName = "test";
+
+		// Is it already set?
+		var customProperty = instance.CustomProperties.FirstOrDefault(cp => cp.Name == customPropertyName);
+		if (customProperty != null)
+		{
+			// Set it to "value1"
+			customProperty.Value = "value1";
+		}
+		else
+		{
+			instance.CustomProperties.Add(new EntityProperty
+			{
+				Name = customPropertyName,
+				Value = "value1"
+			});
+		}
+
+		// Update the instance
+		await LogicMonitorClient
+			.UpdateResourceDataSourceInstanceAsync(
+				resource.Id,
+				resourceDataSources[0].Id,
+				instance.Id,
+				instance,
+				default)
+			.ConfigureAwait(true);
+
+		// Re-fetch the instance
+		var refetchedInstance = await LogicMonitorClient
+			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, default)
+			.ConfigureAwait(true);
+
+		// Check that the custom property was set
+		customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
+		customProperty.Should().NotBeNull();
+		customProperty.Value.Should().Be("value1");
+
+		// Set it to something else
+		customProperty.Value = "value2";
+
+		// Update the instance
+		await LogicMonitorClient
+			.UpdateResourceDataSourceInstanceAsync(
+				resource.Id,
+				resourceDataSources[0].Id,
+				instance.Id,
+				refetchedInstance,
+				default)
+			.ConfigureAwait(true);
+
+		// Re-fetch the instance
+		refetchedInstance = await LogicMonitorClient
+			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, default)
+			.ConfigureAwait(true);
+
+		// Check that the custom property was set
+		customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
+		customProperty.Should().NotBeNull();
+		customProperty.Value.Should().Be("value2");
 	}
 }

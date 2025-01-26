@@ -3,7 +3,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
-		<Copyright>Copyright © Panoramic Data Limited 2011-2024</Copyright>
+		<Copyright>Copyright © Panoramic Data Limited 2011-2025</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageIcon>Icon.png</PackageIcon>
@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Version 213 support, including improved/new Widget DisplaySettings POCOs.
+			Version 216 support. Added LogicMonitorClient.UpdateResourceDataSourceInstanceAsync().
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

@@ -269,7 +269,7 @@ public partial class LogicMonitorClient
 			if (itemsThisTime.Items.Count < filter.Take)
 			{
 				return StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count
-					?                   throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}")
+					? throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}")
 					: items;
 			}
 
@@ -310,7 +310,7 @@ public partial class LogicMonitorClient
 			if (itemsThisTime.Items.Count < filter.Take)
 			{
 				return StrictPagingTotalChecking && itemsThisTime.TotalCount != items.Count
-					?                   throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}")
+					? throw new PagingException($"Mismatch between API declared total: {itemsThisTime.TotalCount} and received count: {items.Count}")
 					: items;
 			}
 
@@ -735,4 +735,26 @@ public partial class LogicMonitorClient
 		Filter<DataSourceUpdateReason> filter,
 		CancellationToken cancellationToken)
 		=> GetPageAsync(filter, $"setting/datasources/{id}/updatereasons", cancellationToken);
+
+	/// <summary>
+	/// Updates a ResourceDataSourceInstance
+	/// </summary>
+	/// <param name="resourceId"></param>
+	/// <param name="resourceDataSourceId"></param>
+	/// <param name="resourceDataSourceInstanceId"></param>
+	/// <param name="resourceDataSourceInstance"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public async Task UpdateResourceDataSourceInstanceAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		ResourceDataSourceInstance resourceDataSourceInstance,
+		CancellationToken cancellationToken)
+	{
+		await PutAsync(
+				$"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}",
+				resourceDataSourceInstance,
+				cancellationToken);
+	}
 }

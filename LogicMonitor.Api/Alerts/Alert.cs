@@ -43,6 +43,12 @@ public class Alert : IHasEndpoint
 	public string AlertGroupEntityValue { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The alert query
+	/// </summary>
+	[DataMember(Name = "alertQuery")]
+	public object? AlertQuery { get; set; }
+
+	/// <summary>
 	///    The Alert type
 	/// </summary>
 	[DataMember(Name = "type")]
