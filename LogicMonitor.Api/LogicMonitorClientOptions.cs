@@ -29,7 +29,7 @@ public class LogicMonitorClientOptions
 	/// <summary>
 	/// The maximum number of seconds to back off (wait) after receiving a 429 response (too many requests)
 	/// </summary>
-	public int MaximumBackOffSeconds { get; set; } = int.MaxValue;
+	public int MaximumBackOffSeconds { get; set; } = 300;
 
 	/// <summary>
 	/// An optional ILogger
