@@ -27,6 +27,11 @@ public class LogicMonitorClientOptions
 	public int HttpClientTimeoutSeconds { get; set; } = 60;
 
 	/// <summary>
+	/// The maximum number of seconds to back off (wait) after receiving a 429 response (too many requests)
+	/// </summary>
+	public int MaximumBackOffSeconds { get; set; } = int.MaxValue;
+
+	/// <summary>
 	/// An optional ILogger
 	/// </summary>
 	public ILogger? Logger { get; set; }
