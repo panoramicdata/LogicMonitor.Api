@@ -29,7 +29,10 @@ public partial class LogicMonitorClient : IDisposable
 
 	private readonly string _accessKey;
 
-	private readonly int _maximumBackOffSeconds;
+	/// <summary>
+	/// The maximum back off to use, in seconds, when a 429 response occurs
+	/// </summary>
+	public int MaximumBackOffSeconds { get; set; }
 
 	/// <summary>
 	///     The connected account name
@@ -138,7 +141,7 @@ public partial class LogicMonitorClient : IDisposable
 		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
 		_client.Timeout = TimeSpan.FromSeconds(logicMonitorClientOptions.HttpClientTimeoutSeconds);
 
-		_maximumBackOffSeconds = logicMonitorClientOptions.MaximumBackOffSeconds;
+		MaximumBackOffSeconds = logicMonitorClientOptions.MaximumBackOffSeconds;
 	}
 
 	internal static string GetSignature(string httpVerb, long epoch, string data, string resourcePath, string accessKey)
@@ -473,10 +476,10 @@ public partial class LogicMonitorClient : IDisposable
 				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
 				// Wait for the full window
 				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds >= _maximumBackOffSeconds)
+				if (xRateLimitWindowSeconds >= MaximumBackOffSeconds)
 				{
-					delayMs = 1000 * _maximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, _maximumBackOffSeconds);
+					delayMs = 1000 * MaximumBackOffSeconds;
+					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
 				}
 
 				// Wait some time and try again
@@ -877,10 +880,10 @@ public partial class LogicMonitorClient : IDisposable
 				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
 				// Wait for the full window
 				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds >= _maximumBackOffSeconds)
+				if (xRateLimitWindowSeconds >= MaximumBackOffSeconds)
 				{
-					delayMs = 1000 * _maximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, _maximumBackOffSeconds);
+					delayMs = 1000 * MaximumBackOffSeconds;
+					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
 				}
 
 				// Wait some time and try again
@@ -1044,10 +1047,10 @@ public partial class LogicMonitorClient : IDisposable
 			var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
 			// Wait for the full window
 			var delayMs = 1000 * xRateLimitWindowSeconds;
-			if (xRateLimitWindowSeconds >= _maximumBackOffSeconds)
+			if (xRateLimitWindowSeconds >= MaximumBackOffSeconds)
 			{
-				delayMs = 1000 * _maximumBackOffSeconds;
-				_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, _maximumBackOffSeconds);
+				delayMs = 1000 * MaximumBackOffSeconds;
+				_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
 			}
 
 			// Wait some time and try again
@@ -1199,10 +1202,10 @@ public partial class LogicMonitorClient : IDisposable
 				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
 				// Wait for the full window
 				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds >= _maximumBackOffSeconds)
+				if (xRateLimitWindowSeconds >= MaximumBackOffSeconds)
 				{
-					delayMs = 1000 * _maximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, _maximumBackOffSeconds);
+					delayMs = 1000 * MaximumBackOffSeconds;
+					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
 				}
 
 				// Wait some time and try again
@@ -1307,10 +1310,10 @@ public partial class LogicMonitorClient : IDisposable
 				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
 				// Wait for the full window
 				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds >= _maximumBackOffSeconds)
+				if (xRateLimitWindowSeconds >= MaximumBackOffSeconds)
 				{
-					delayMs = 1000 * _maximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, _maximumBackOffSeconds);
+					delayMs = 1000 * MaximumBackOffSeconds;
+					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
 				}
 
 				// Wait some time and try again
