@@ -143,29 +143,98 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task UpdateCollector()
 	{
 		var collector = (await LogicMonitorClient
+			.GetAllAsync<Collector>(default))
+			[0];
+
+		var collectorId = collector.Id;
+		var initialDescription = collector.Description;
+
+		var testPropertyName = "test-" + Guid.NewGuid().ToString();
+		var testDescription = "desc-" + Guid.NewGuid().ToString();
+
+		collector.Description = testDescription;
+		collector.CustomProperties.Add(new EntityProperty { Name = testPropertyName, Value = "test" });
+
+		// Update the collector
+		await LogicMonitorClient
+			.UpdateCollectorByIdAsync(collectorId, collector, default)
+			.ConfigureAwait(true);
+
+		var updatedCollector = await LogicMonitorClient
+			.GetAsync<Collector>(collectorId, default);
+		updatedCollector.Should().NotBeNull();
+
+		collector.Description.Should().Be(testDescription);
+		collector.CustomProperties.Should().Contain(cp => cp.Name == testPropertyName);
+
+		// Return to previous values
+		collector.Description = initialDescription;
+		collector.CustomProperties.Remove(collector.CustomProperties.Single(cp => cp.Name == testPropertyName));
+
+		await LogicMonitorClient
+			.UpdateCollectorByIdAsync(collector.Id, collector, default)
+			.ConfigureAwait(true);
+
+		// Check
+		collector = (await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
 			.ConfigureAwait(true))[0];
 
-		var defaultDesc = collector.Description;
-		collector.Description = "test desc";
+		collector.Description.Should().Be(initialDescription);
+		collector.CustomProperties.Should().NotContain(cp => cp.Name == testPropertyName);
+	}
+
+	[Fact]
+	public async Task UpdateCollector_WithUpdate()
+	{
+		var collector = (await LogicMonitorClient
+			.GetAllAsync<Collector>(default))
+			[0];
+
+		var collectorId = collector.Id;
+		var initialDescription = collector.Description;
+
+		var testPropertyName = "test-" + Guid.NewGuid().ToString();
+		var testDescription = "desc-" + Guid.NewGuid().ToString();
+
+		collector.Description = testDescription;
+		collector.CustomProperties.Add(new EntityProperty { Name = testPropertyName, Value = "test" });
+
+		// Update the collector
+		try
+		{
+			await LogicMonitorClient
+				.PutAsync(collector, default)
+				.ConfigureAwait(true);
+
+			var updatedCollector = await LogicMonitorClient
+				.GetAsync<Collector>(collectorId, default);
+			updatedCollector.Should().NotBeNull();
+
+			collector.Description.Should().Be(testDescription);
+			collector.CustomProperties.Should().Contain(cp => cp.Name == testPropertyName);
+		}
+		catch (Exception e)
+		{
+			Logger.LogError(e, "Error updating collector");
+			e.Should().BeNull(because: "We should not be here");
+		}
+
+		// Return to previous values
+		collector.Description = initialDescription;
+		collector.CustomProperties.Remove(collector.CustomProperties.Single(cp => cp.Name == testPropertyName));
 
 		await LogicMonitorClient
 			.UpdateCollectorByIdAsync(collector.Id, collector, default)
 			.ConfigureAwait(true);
 
-		var updatedGroup = (await LogicMonitorClient
+		// Check
+		collector = (await LogicMonitorClient
 			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true))[1];
-		updatedGroup.Should().NotBeNull();
+			.ConfigureAwait(true))[0];
 
-		var updatedDesc = collector.Description;
-		collector.Description = defaultDesc;
-
-		await LogicMonitorClient
-			.UpdateCollectorByIdAsync(collector.Id, collector, default)
-			.ConfigureAwait(true);
-
-		updatedDesc.Should().Be("test desc");
+		collector.Description.Should().Be(initialDescription);
+		collector.CustomProperties.Should().NotContain(cp => cp.Name == testPropertyName);
 	}
 
 	[Fact]
