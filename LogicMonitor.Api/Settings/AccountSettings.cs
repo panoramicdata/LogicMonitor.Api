@@ -594,6 +594,24 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int TokenDisabledDays { get; set; }
 
 	/// <summary>
+	/// LogNumOfPipelines 
+	/// </summary>
+	[DataMember(Name = "logNumOfPipelines")]
+	public int LogNumOfPipelines { get; set; }
+
+	/// <summary>
+	/// LogNumOfPartitions 
+	/// </summary>
+	[DataMember(Name = "logNumOfPartitions")]
+	public int LogNumOfPartitions { get; set; }
+
+	/// <summary>
+	/// LogNumOfAlertConditions 
+	/// </summary>
+	[DataMember(Name = "logNumOfAlertConditions")]
+	public int LogNumOfAlertConditions { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/companySetting";
