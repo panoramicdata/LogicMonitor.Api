@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Made MaximumBackOffSeconds default to 300 seconds (5 minutes).
+			Fixed ResourceDataSourceInstanceConfig.PollUtc as the timestamp is in ms.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

@@ -100,7 +100,7 @@ public class ResourceDataSourceInstanceConfig : StringIdentifiedItem
 	///    The pollTimestamp DateTime (UTC)
 	/// </summary>
 	[IgnoreDataMember]
-	public DateTime? PollUtc => PollTimestampUtc?.ToDateTimeUtc();
+	public DateTime? PollUtc => PollTimestampUtc?.ToDateTimeUtcFromMs();
 
 	/// <summary>
 	/// config version
