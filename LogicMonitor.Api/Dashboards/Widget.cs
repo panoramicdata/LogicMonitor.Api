@@ -140,6 +140,18 @@ public class Widget : NamedItem, IHasEndpoint, IWidget
 	protected virtual List<string> HandledParameters => ["interval", "timescale"];
 
 	/// <summary>
+	///     Whether this is a support custom property
+	/// </summary>
+	[DataMember(Name = "isSupportCustomProperty")]
+	public bool IsSupportCustomProperty { get; set; }
+
+	/// <summary>
+	///     Whether this is a support custom property (again?)
+	/// </summary>
+	[DataMember(Name = "supportCustomProperty")]
+	public bool SupportCustomProperty { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "dashboard/widgets";

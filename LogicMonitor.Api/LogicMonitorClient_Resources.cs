@@ -43,11 +43,11 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<List<Resource>> GetResourcesByHostNameAsync
 	(string hostName, int maxResultCount, CancellationToken cancellationToken)
-		=> (await GetResourcesByNameAsync(
+		=> [.. (await GetResourcesByNameAsync(
 			hostName,
 			maxResultCount,
 			cancellationToken).ConfigureAwait(false))
-			.Where(d => string.Equals(d.Name, hostName, StringComparison.OrdinalIgnoreCase)).ToList();
+			.Where(d => string.Equals(d.Name, hostName, StringComparison.OrdinalIgnoreCase))];
 
 	/// <summary>
 	///     Gets Resource by DisplayName
@@ -332,9 +332,7 @@ public partial class LogicMonitorClient
 			}
 		}
 
-		return resources
-			.DistinctBy(d => d.Id)
-			.ToList();
+		return [.. resources.DistinctBy(d => d.Id)];
 	}
 
 	/// <summary>
@@ -830,10 +828,10 @@ public partial class LogicMonitorClient
 
 		if (filter?.IsCleared == true)
 		{
-			return alerts.Where(a => a.IsCleared).ToList();
+			return [.. alerts.Where(a => a.IsCleared)];
 		}
 
-		return filter?.IsCleared == false ? alerts.Where(a => !a.IsCleared).ToList() : alerts;
+		return filter?.IsCleared == false ? [.. alerts.Where(a => !a.IsCleared)] : alerts;
 	}
 
 	/// <summary>
@@ -883,7 +881,7 @@ public partial class LogicMonitorClient
 		filter.StartEpochIsAfter = originalStartEpochIsAfter;
 		filter.StartEpochIsBefore = originalStartEpochIsBefore;
 
-		return allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue).ToList();
+		return [.. allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue)];
 	}
 
 	/// <summary>
@@ -929,7 +927,7 @@ public partial class LogicMonitorClient
 		{
 			var page = await GetBySubUrlAsync<Page<Alert>>($"device/devices/{resourceId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
 
-			allAlerts.AddRange(page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id)).ToList());
+			allAlerts.AddRange([.. page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id))]);
 
 			if (!calledFromChunked && allAlerts.Count >= 5000)
 			{

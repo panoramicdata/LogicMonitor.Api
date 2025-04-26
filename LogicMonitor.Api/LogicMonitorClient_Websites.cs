@@ -231,10 +231,10 @@ public partial class LogicMonitorClient
 
 		if (filter?.IsCleared == true)
 		{
-			return alerts.Where(a => a.IsCleared).ToList();
+			return [.. alerts.Where(a => a.IsCleared)];
 		}
 
-		return filter?.IsCleared == false ? alerts.Where(a => !a.IsCleared).ToList() : alerts;
+		return filter?.IsCleared == false ? [.. alerts.Where(a => !a.IsCleared)] : alerts;
 	}
 
 	/// <summary>
@@ -282,7 +282,7 @@ public partial class LogicMonitorClient
 		filter.StartEpochIsAfter = originalStartEpochIsAfter;
 		filter.StartEpochIsBefore = originalStartEpochIsBefore;
 
-		return allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue).ToList();
+		return [.. allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue)];
 	}
 
 	/// <summary>
@@ -328,7 +328,7 @@ public partial class LogicMonitorClient
 		{
 			var page = await GetBySubUrlAsync<Page<Alert>>($"website/websites/{websiteId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
 
-			allAlerts.AddRange(page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id)).ToList());
+			allAlerts.AddRange([.. page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id))]);
 
 			if (!calledFromChunked && allAlerts.Count >= 5000)
 			{

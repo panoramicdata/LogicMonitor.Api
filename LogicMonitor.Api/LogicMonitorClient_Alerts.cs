@@ -24,10 +24,10 @@ public partial class LogicMonitorClient
 
 		if (alertFilter.IsCleared == true)
 		{
-			return alerts.Where(a => a.IsCleared).ToList();
+			return [.. alerts.Where(a => a.IsCleared)];
 		}
 
-		return alertFilter.IsCleared == false ? alerts.Where(a => !a.IsCleared).ToList() : alerts;
+		return alertFilter.IsCleared == false ? [.. alerts.Where(a => !a.IsCleared)] : alerts;
 	}
 
 	/// <summary>
@@ -68,7 +68,7 @@ public partial class LogicMonitorClient
 		alertFilter.StartEpochIsAfter = originalStartEpochIsAfter;
 		alertFilter.StartEpochIsBefore = originalStartEpochIsBefore;
 
-		return allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue).ToList();
+		return [.. allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue)];
 	}
 
 	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(
@@ -122,7 +122,7 @@ public partial class LogicMonitorClient
 		do
 		{
 			var page = await FilteredGetAsync("alert/alerts", correctedAlertFilter.GetFilter(), cancellationToken).ConfigureAwait(false);
-			allAlerts.AddRange(page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id)).ToList());
+			allAlerts.AddRange([.. page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id))]);
 
 			if (!calledFromChunked && allAlerts.Count >= 5000)
 			{

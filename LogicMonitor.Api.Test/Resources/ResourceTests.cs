@@ -462,7 +462,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Clean up afterwards - remove the property
 		// Re-fetch the properties
-		device.CustomProperties = device.CustomProperties.Where(p => p.Name != testPropertyName).ToList();
+		device.CustomProperties = [.. device.CustomProperties.Where(p => p.Name != testPropertyName)];
 
 		// Update the device
 		await portalClient.PutAsync(device, default)

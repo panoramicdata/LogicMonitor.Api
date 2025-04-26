@@ -745,16 +745,13 @@ public partial class LogicMonitorClient
 	/// <param name="resourceDataSourceInstance"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public async Task UpdateResourceDataSourceInstanceAsync(
+	public Task UpdateResourceDataSourceInstanceAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		int resourceDataSourceInstanceId,
 		ResourceDataSourceInstance resourceDataSourceInstance,
-		CancellationToken cancellationToken)
-	{
-		await PutAsync(
+		CancellationToken cancellationToken) => PutAsync(
 				$"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}",
 				resourceDataSourceInstance,
 				cancellationToken);
-	}
 }

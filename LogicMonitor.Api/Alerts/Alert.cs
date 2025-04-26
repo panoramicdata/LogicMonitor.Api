@@ -13,6 +13,12 @@ public class Alert : IHasEndpoint
 	public string Id { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The clear expression
+	/// </summary>
+	[DataMember(Name = "clearExpr")]
+	public string? ClearExpression { get; set; }
+
+	/// <summary>
 	/// The dependency role
 	/// </summary>
 	[DataMember(Name = "dependencyRole")]
@@ -269,6 +275,12 @@ public class Alert : IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "resourceTemplateName")]
 	public string ResourceTemplateName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The session id
+	/// </summary>
+	[DataMember(Name = "sessionId")]
+	public int SessionId { get; set; }
 
 	/// <summary>
 	///    The instance id

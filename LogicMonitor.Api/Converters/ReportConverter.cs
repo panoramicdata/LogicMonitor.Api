@@ -22,7 +22,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 			"host group inventory" => new ResourceGroupInventoryReport(),
 			"host inventory" => new ResourceInventoryReport(),
 			"host metric trends" => new ResourceMetricTrendsReport(),
-			"interfaces bandwidth" => new InterfBandwidthReport(),
+			"interfaces bandwidth" => new InterfaceBandwidthReport(),
 			"netflow device metric" => new NetflowResourceMetricReport(),
 			"role" => new RoleReport(),
 			"service level agreement" => new SlaReport(),

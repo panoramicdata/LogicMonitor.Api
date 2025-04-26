@@ -90,7 +90,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 
 		var foundTest = false;
 		var testInstance = new ResourceDataSourceInstance();
-		foreach (ResourceDataSourceInstance instance in datasourceInstances)
+		foreach (var instance in datasourceInstances)
 		{
 			if (instance.DisplayName.Equals("lornaTest", StringComparison.Ordinal))
 			{

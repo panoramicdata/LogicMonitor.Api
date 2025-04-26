@@ -61,6 +61,12 @@ public class Topology : NamedItem, IHasEndpoint
 	public bool ShowAlertStatus { get; set; }
 
 	/// <summary>
+	///    Whether to show the edge status
+	/// </summary>
+	[DataMember(Name = "showEdgeStatus")]
+	public bool ShowEdgeStatus { get; set; }
+
+	/// <summary>
 	///    Whether to show the alert status
 	/// </summary>
 	[DataMember(Name = "showUndiscovered")]

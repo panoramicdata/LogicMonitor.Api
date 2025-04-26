@@ -612,6 +612,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int LogNumOfAlertConditions { get; set; }
 
 	/// <summary>
+	/// Widgets per dashboard 
+	/// </summary>
+	[DataMember(Name = "widgetsPerDashboard")]
+	public object? widgetsPerDashboard { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/companySetting";

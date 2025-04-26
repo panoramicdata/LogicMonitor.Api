@@ -68,7 +68,7 @@ public class Line
 	[IgnoreDataMember]
 	public List<double?> Data
 	{
-		get => DataInternal.Select(@object =>
+		get => [.. DataInternal.Select(@object =>
 			@object as double? == double.PositiveInfinity   // No, as object as double? is always null
 				? null
 				: (@object as string == "Infinity")
@@ -76,8 +76,8 @@ public class Line
 					: double.TryParse(@object.ToString(), out var result)
 						? result
 							: (double?)null
-		).ToList();
-		set => DataInternal = value.Select(v => v ?? (object)"No Data").ToList();
+		)];
+		set => DataInternal = [.. value.Select(v => v ?? (object)"No Data")];
 	}
 
 	/// <summary>

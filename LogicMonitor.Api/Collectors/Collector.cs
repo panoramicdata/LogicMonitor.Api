@@ -407,6 +407,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public string Size { get; set; } = string.Empty;
 
 	/// <summary>
+	///     SDT count
+	/// </summary>
+	[DataMember(Name = "numberOfSDTs")]
+	public int SdtCount { get; set; }
+
+	/// <summary>
 	///     The specified Collector ResourceGroup Id
 	/// </summary>
 	[DataMember(Name = "specifiedCollectorDeviceGroupId")]

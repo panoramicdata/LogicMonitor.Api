@@ -4,8 +4,14 @@ namespace LogicMonitor.Api.Reports;
 /// An interfaces bandwidth report
 /// </summary>
 [DataContract]
-public class InterfBandwidthReport : DateRangeReport
+public class InterfaceBandwidthReport : DateRangeReport
 {
+	/// <summary>
+	/// The data format
+	/// </summary>
+	[DataMember(Name = "dataFormat")]
+	public string DataFormat { get; set; } = string.Empty;
+
 	/// <summary>
 	/// The devices OR groups selected for the report, where multiple entities are separated by commas
 	/// </summary>
@@ -35,6 +41,13 @@ public class InterfBandwidthReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "metrics")]
 	public List<Metric> Metrics { get; set; } = [];
+
+
+	/// <summary>
+	/// The percentile
+	/// </summary>
+	[DataMember(Name = "percentile")]
+	public int Percentile { get; set; }
 
 	/// <summary>
 	/// true | false\nfalse: Metrics will be displayed for all selected devices or groups\ntrue: Metrics will only be displayed for the top ten device or groups

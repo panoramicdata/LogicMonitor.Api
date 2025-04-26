@@ -83,7 +83,7 @@ public partial class LogicMonitorClient
 				$"&filter={filter}",
 				cancellationToken
 				).ConfigureAwait(false)).Items;
-			allLogItems.AddRange(logItems.Where(item => !allLogItems.Select(li => li.Id).Contains(item.Id)).ToList());
+			allLogItems.AddRange([.. logItems.Where(item => !allLogItems.Select(li => li.Id).Contains(item.Id))]);
 			if (logItems.Count == 0)
 			{
 				break;

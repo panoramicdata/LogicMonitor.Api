@@ -34,7 +34,7 @@ public class RawDataSet
 	///    The data point values
 	/// </summary>
 	[IgnoreDataMember]
-	public List<List<double?>> Values => Enumerable
+	public List<List<double?>> Values => [.. Enumerable
 				.Range(0, ValuesAsObjects.Count)
 				.Select(index => ValuesAsObjects[index]
 					.Select(valueAsObject =>
@@ -43,8 +43,7 @@ public class RawDataSet
 						}
 					)
 					.ToList()
-				)
-				.ToList();
+				)];
 
 	/// <summary>
 	///    The next page parameters
