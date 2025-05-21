@@ -125,5 +125,17 @@ public enum PrivilegeObjectType
 	/// Cost Optimization Billing Account
 	/// </summary>
 	[EnumMember(Value = "costOptimization.billing.account")]
-	CostOptimizationBillingAccount
+	CostOptimizationBillingAccount,
+
+	/// <summary>
+	/// Cost Optimization Billing Management configuration
+	/// </summary>
+	[EnumMember(Value = "costOptimization.billing.management.configuration")]
+	CostOptimizationBillingManagementConfiguration,
+
+	/// <summary>
+	/// Diagnostic Source
+	/// </summary>
+	[EnumMember(Value = "diagnosticSource")]
+	DiagnosticSource
 }
