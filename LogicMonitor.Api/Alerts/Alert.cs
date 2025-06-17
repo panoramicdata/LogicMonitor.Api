@@ -193,7 +193,7 @@ public class Alert : IHasEndpoint
 	public int Severity { get; set; }
 
 	/// <summary>
-	///    The alert severity
+	///    Whether the alert is cleared or not
 	/// </summary>
 	[DataMember(Name = "cleared")]
 	public bool IsCleared { get; set; }
