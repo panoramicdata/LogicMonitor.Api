@@ -28,8 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Updates for Version 222.
-			Fixed PrivilegeObjectType.
+			Added the 'GetWebsiteCheckpointRawDataSet' client function.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

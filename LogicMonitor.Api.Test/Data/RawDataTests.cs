@@ -24,6 +24,93 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	}
 
 	[Fact]
+	public async Task GetWebsiteCheckpointRawData()
+	{
+		var website = await LogicMonitorClient
+			.GetByNameAsync<Website>(WebsiteName, default)
+			.ConfigureAwait(true);
+
+		website.Should().NotBeNull();
+
+		foreach (var checkpoint in website.Checkpoints ?? [])
+		{
+			var rawData =
+				await LogicMonitorClient
+				.GetWebsiteCheckpointRawDataSet(
+					new WebsiteCheckPointRawDataRequest
+					{
+						WebsiteCheckPointId = checkpoint.Id,
+						WebsiteId = website.Id,
+					},
+					default)
+				.ConfigureAwait(true);
+
+			rawData.Should().NotBeNull();
+			rawData.DataPoints.Should().NotBeEmpty();
+			rawData.UtcTimeStamps.Should().NotBeEmpty();
+		}
+
+		foreach (var checkpoint in website.Checkpoints ?? [])
+		{
+			var rawData =
+				await LogicMonitorClient
+				.GetWebsiteCheckpointRawDataSet(
+					new WebsiteCheckPointRawDataRequest
+					{
+						DataPointNames = ["sslDaysUntilExpiration"],
+						WebsiteCheckPointId = checkpoint.Id,
+						WebsiteId = website.Id,
+					},
+					default)
+				.ConfigureAwait(true);
+
+			rawData.Should().NotBeNull();
+			rawData.DataPoints.Should().NotBeEmpty();
+			rawData.DataPoints.Count().Should().Be(1);
+			rawData.UtcTimeStamps.Should().NotBeEmpty();
+
+			var rawData2 =
+				await LogicMonitorClient
+				.GetWebsiteCheckpointRawDataSet(
+					new WebsiteCheckPointRawDataRequest
+					{
+						DataPointNames = ["sslDaysUntilExpiration"],
+						TimePeriod = WebsiteCheckpointRawDataTimePeriod.TwoHours,
+						WebsiteCheckPointId = checkpoint.Id,
+						WebsiteId = website.Id,
+					},
+					default)
+				.ConfigureAwait(true);
+
+			rawData2.Should().NotBeNull();
+			rawData2.DataPoints.Should().NotBeEmpty();
+			rawData2.DataPoints.Count().Should().Be(1);
+			rawData2.UtcTimeStamps.Count().Should().BeGreaterThan(rawData.UtcTimeStamps.Count);
+			rawData2.UtcTimeStamps.Should().NotBeEmpty();
+
+			// Check there is only 1 timestamp / value for the aggregation type First
+			var rawData3 =
+				await LogicMonitorClient
+				.GetWebsiteCheckpointRawDataSet(
+					new WebsiteCheckPointRawDataRequest
+					{
+						Aggregation = WebsiteCheckpointRawDataAggregationType.First,
+						TimePeriod = WebsiteCheckpointRawDataTimePeriod.TwoHours,
+						WebsiteCheckPointId = checkpoint.Id,
+						WebsiteId = website.Id,
+					},
+					default)
+				.ConfigureAwait(true);
+
+			rawData3.Should().NotBeNull();
+			rawData3.DataPoints.Should().NotBeEmpty();
+			rawData3.UtcTimeStamps.Count().Should().Be(1);
+			rawData3.Values.Count().Should().Be(1);
+			rawData3.ValuesAsObjects.Count().Should().Be(1);
+		}
+	}
+
+	[Fact]
 	public async Task GetRawDataTimeConstrained()
 	{
 		var utcNow = DateTime.UtcNow;

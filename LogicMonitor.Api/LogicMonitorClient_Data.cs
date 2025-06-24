@@ -98,11 +98,23 @@ public partial class LogicMonitorClient
 		int resourceDataSourceInstanceId,
 		DateTime? startDateTimeUtc,
 		DateTime? endDateTimeUtc,
-		CancellationToken cancellationToken
-		)
+		CancellationToken cancellationToken)
 	{
 		var timeConstraint = startDateTimeUtc.HasValue && endDateTimeUtc.HasValue ? $"?start={startDateTimeUtc.Value.SecondsSinceTheEpoch()}&end={endDateTimeUtc.Value.SecondsSinceTheEpoch()}" : null;
 		return GetAsync<RawDataSet>(false, $"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}/data{timeConstraint}", cancellationToken);
+	}
+
+	/// <summary>
+	/// Gets the checkpoint raw data set for a website
+	/// </summary>
+	/// <param name="request">The request</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns></returns>
+	public Task<CheckpointRawDataSet> GetWebsiteCheckpointRawDataSet(
+		WebsiteCheckPointRawDataRequest request,
+		CancellationToken cancellationToken)
+	{
+		return GetAsync<CheckpointRawDataSet>(false, request.SubUrl, cancellationToken);
 	}
 
 	/// <summary>
