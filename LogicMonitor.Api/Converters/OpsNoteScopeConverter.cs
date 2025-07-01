@@ -12,7 +12,7 @@ internal class OpsNoteScopeConverter : JsonCreationConverter<OpsNoteScope>
 			"website" => new WebsiteOpsNoteScope(),
 			"websitegroup" => new WebsiteGroupOpsNoteScope(),
 			"groupall" => new AllGroupOpsNoteScope(),
-			_ => throw new NotSupportedException($"OpsNoteScopeConverter.cs needs updating to include {type}."),
+			_ => throw new NotSupportedException($"{nameof(OpsNoteScopeConverter)}.cs needs updating to include {type}."),
 		};
 	}
 

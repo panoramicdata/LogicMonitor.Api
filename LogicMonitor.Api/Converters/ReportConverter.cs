@@ -30,7 +30,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 			"website service overview" => new WebsiteOverviewReport(),
 			"website sla" => new WebsiteSlaReport(),
 			"word template" => new WordTemplateReport(),
-			_ => throw new NotSupportedException($"ReportConverter.cs needs updating to include {type} reports."),
+			_ => throw new NotSupportedException($"{nameof(ReportConverter)}.cs needs updating to include {type} reports."),
 		};
 	}
 

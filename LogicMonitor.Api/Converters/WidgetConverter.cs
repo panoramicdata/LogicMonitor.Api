@@ -35,7 +35,7 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 			"groupnetflow" => new GroupNetflowWidget(),
 			"dynamictable" => new DynamicTableWidget(),
 			"devicestatus" => new ResourceStatusWidget(),
-			_ => throw new NotSupportedException($"WidgetConverter.cs needs updating to include {type} widgets."),
+			_ => throw new NotSupportedException($"{nameof(WidgetConverter)}.cs needs updating to include {type} widgets."),
 		};
 	}
 

@@ -8,7 +8,7 @@ internal class AutomaticUpgradeInfoConverter : JsonCreationConverter<AutomaticUp
 		return type switch
 		{
 			"automatic upgrade" => new AutomaticUpgradeAutomaticUpgradeInfo(),
-			_ => throw new NotSupportedException($"AutomaticUpgradeInfoConverter.cs needs updating to include {type}.")
+			_ => throw new NotSupportedException($"{nameof(AutomaticUpgradeInfoConverter)}.cs needs updating to include include {type}.")
 		};
 	}
 

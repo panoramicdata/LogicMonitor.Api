@@ -9,7 +9,7 @@ internal class MapPointConverter : JsonCreationConverter<MapPoint>
 		{
 			"device" => new ResourceMapPoint(),
 			"group" => new ResourceGroupMapPoint(),
-			_ => throw new NotSupportedException($"MapPointConverter.cs needs updating to include {type}."),
+			_ => throw new NotSupportedException($"{nameof(MapPointConverter)}.cs needs updating to include {type}."),
 		};
 	}
 

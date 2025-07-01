@@ -22,7 +22,7 @@ internal class AlertSdtConverter : JsonCreationConverter<AlertSdt>
 			"WEBSITESDT" => new WebsiteAlertSdt(),
 			"WEBSITECHECKPOINTSDT" => new WebsiteCheckpointAlertSdt(),
 			"WEBSITEGROUPSDT" => new WebsiteGroupAlertSdt(),
-			_ => throw new NotSupportedException($"AlertSdtConverter.cs needs updating to include {type}."),
+			_ => throw new NotSupportedException($"{nameof(AlertSdtConverter)}.cs needs updating to include {type}."),
 		};
 	}
 
