@@ -1,4 +1,4 @@
-﻿global using FluentAssertions;
+﻿global using AwesomeAssertions;
 global using Humanizer;
 global using LogicMonitor.Api.Alerts;
 global using LogicMonitor.Api.Collectors;
