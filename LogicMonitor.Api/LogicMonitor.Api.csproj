@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Added the 'GetWebsiteCheckpointRawDataSet' client function.
+			Added the 'EnhancedScript' enum member to NetscanMethod.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
