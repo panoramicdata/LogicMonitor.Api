@@ -28,7 +28,10 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Nuget package updates.
+			1. Fixed broken test project
+			2. Added missing enum member WriteDebug for UserPermission (equivalent to 'write,debug' in the raw JSON from LogicMonitor)
+			3. Added missing property CalculatedThreshold for Collector (equivalent to 'calculatedThreshold' in the raw JSON from LogicMonitor)
+			4. Added missing property CalThreshold for Collector Group (equivalent to 'calThreshold' in the raw JSON from LogicMonitor)
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

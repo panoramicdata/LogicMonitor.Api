@@ -527,6 +527,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	public int InstanceCount { get; set; }
 
 	/// <summary>
+	/// The calculated threshold in auto-balanced Collector Groups
+	/// </summary>
+	[DataMember(Name = "calculatedThreshold")]
+	public int CalculatedThreshold { get; set; }
+
+	/// <summary>
 	///     The subUrl for setting by id
 	/// </summary>
 	public string Endpoint() => "setting/collector/collectors";

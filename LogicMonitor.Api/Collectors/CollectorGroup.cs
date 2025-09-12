@@ -55,10 +55,16 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public int AutoBalanceResourceCountThreshold { get; set; }
 
 	/// <summary>
-	/// threshold for instance count strategy to check if a collector has high load
+	/// tThreshold for instance count strategy to check if a collector has high load
 	/// </summary>
 	[DataMember(Name = "autoBalanceInstanceCountThreshold")]
 	public int AutoBalanceInstanceCountThreshold { get; set; }
+
+	/// <summary>
+	/// Threshold for CAL (what is that?)
+	/// </summary>
+	[DataMember(Name = "calThreshold")]
+	public int CalThreshold { get; set; }
 
 	/// <summary>
 	///    Whether the versions mismatch
