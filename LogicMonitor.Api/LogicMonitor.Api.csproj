@@ -28,10 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			1. Fixed broken test project
-			2. Added missing enum member WriteDebug for UserPermission (equivalent to 'write,debug' in the raw JSON from LogicMonitor)
-			3. Added missing property CalculatedThreshold for Collector (equivalent to 'calculatedThreshold' in the raw JSON from LogicMonitor)
-			4. Added missing property CalThreshold for Collector Group (equivalent to 'calThreshold' in the raw JSON from LogicMonitor)
+			Updated Microsoft .NET packages to 9.0.9
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
@@ -49,7 +46,7 @@
 		<Content Include="LogicMonitor.ico" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.7" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.9" />
 		<PackageReference Include="Nerdbank.GitVersioning" Version="3.7.115">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
