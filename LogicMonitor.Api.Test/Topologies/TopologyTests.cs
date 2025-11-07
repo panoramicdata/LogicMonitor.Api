@@ -25,7 +25,7 @@ public class TopologyTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 						ResourceId = resourceId,
 						Algorithm = TopologyAlgorithm.SecondDegreeAway,
 					},
-					default
+					CancellationToken
 				)
 				;
 			item.Should().NotBeNull();

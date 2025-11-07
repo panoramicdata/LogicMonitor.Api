@@ -7,13 +7,6 @@ namespace LogicMonitor.Api.Collectors;
 public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 {
 	/// <summary>
-	///     The calculated threshold
-	/// </summary>
-	[SantabaReadOnly]
-	[DataMember(Name = "calculatedThreshold")]
-	public string CalculatedThreshold { get; set; } = string.Empty;
-
-	/// <summary>
 	///     The collector down acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
@@ -532,6 +525,12 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// </summary>
 	[DataMember(Name = "numberOfInstances")]
 	public int InstanceCount { get; set; }
+
+	/// <summary>
+	/// The calculated threshold in auto-balanced Collector Groups
+	/// </summary>
+	[DataMember(Name = "calculatedThreshold")]
+	public int CalculatedThreshold { get; set; }
 
 	/// <summary>
 	///     The subUrl for setting by id

@@ -35,5 +35,11 @@ public enum NetscanMethod
 	///    Upload a script or csv to discover devices
 	/// </summary>
 	[EnumMember(Value = "script")]
-	Script = 4
+	Script = 4,
+
+	/// <summary>
+	///    Enhanced script discovery method
+	/// </summary>
+	[EnumMember(Value = "enhancedScript")]
+	EnhancedScript = 4
 }

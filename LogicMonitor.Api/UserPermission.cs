@@ -41,5 +41,11 @@ public enum UserPermission
 	///     Exec
 	/// </summary>
 	[EnumMember(Value = "exec")]
-	Execute
+	Execute,
+
+	/// <summary>
+	///		Write, Debug
+	/// </summary>
+	[EnumMember(Value = "write,debug")]
+	WriteDebug
 }
