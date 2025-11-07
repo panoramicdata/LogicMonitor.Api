@@ -1,6 +1,6 @@
-﻿namespace LogicMonitor.Api.Test.Users;
+namespace LogicMonitor.Api.Test.Users;
 
-public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string TestName = "Test Name";
 
@@ -8,8 +8,7 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<RoleGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<RoleGroup>(CancellationToken);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
 	}
@@ -24,12 +23,12 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 			[
 				new Eq<RoleGroup>(nameof(RoleGroup.Name), TestName)
 			]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingItem, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		// Create it
@@ -42,11 +41,11 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 				},
 				default
 			)
-			.ConfigureAwait(true);
+			;
 
 		// Delete it again
 		await LogicMonitorClient
 			.DeleteAsync(newItem, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 }

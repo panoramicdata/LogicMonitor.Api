@@ -5,7 +5,7 @@ namespace LogicMonitor.Api.Test.OpsNotes;
 /// Tests here may fail if the user has never used OpsNotes before.
 /// !!!!!!
 /// </summary>
-public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetOpsNotes()
@@ -16,14 +16,12 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			DateTimeUtcSeconds = DateTime.UtcNow.SecondsSinceTheEpoch(),
 			Note = $"LogicMonitor.Api.Test run on {DateTime.UtcNow}",
 			Tags = [new OpsNoteTagCreationDto { Name = "LogicMonitor.Api" }]
-		}, default)
-		.ConfigureAwait(true);
+		}, CancellationToken);
 
-		await Task.Delay(TimeSpan.FromSeconds(2)).ConfigureAwait(true);
+		await Task.Delay(TimeSpan.FromSeconds(2));
 
 		var allOpsNotes = await LogicMonitorClient
-			.GetAllAsync<OpsNote>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<OpsNote>(CancellationToken);
 
 		// Make sure that some are returned
 		allOpsNotes.Should().NotBeNullOrEmpty();
@@ -40,12 +38,10 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		ArgumentNullException.ThrowIfNull(t);
 
 		var device = await LogicMonitorClient
-			.GetAsync<Resource>(WindowsDeviceId, default)
-			.ConfigureAwait(true);
+			.GetAsync<Resource>(WindowsDeviceId, CancellationToken);
 
 		var website = await LogicMonitorClient
-			.GetByNameAsync<Website>(WebsiteName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<Website>(WebsiteName, CancellationToken);
 
 		website ??= new();
 
@@ -68,8 +64,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			]
 		};
 		var createdOpsNote = await LogicMonitorClient
-			.CreateAsync(opsNoteCreationDto, default)
-			.ConfigureAwait(true);
+			.CreateAsync(opsNoteCreationDto, CancellationToken);
 
 		// Ensure that this OpsNote has an ID set
 		createdOpsNote.Id.Should().NotBeNull();
@@ -77,12 +72,11 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Wait 2 seconds
 		await Task.Delay(5000)
-			.ConfigureAwait(true);
+			;
 
 		// Make sure the opsNote is now present when listing opsNotes and that all properties match
 		var refetchedOpsNote = await LogicMonitorClient
-			.GetAsync<OpsNote>(createdOpsNote.Id, default)
-			.ConfigureAwait(true);
+			.GetAsync<OpsNote>(createdOpsNote.Id, CancellationToken);
 		refetchedOpsNote.Should().NotBeNull();
 		refetchedOpsNote.Note.Should().Be(createdOpsNote.Note);
 		refetchedOpsNote.HappenOnUtc.SecondsSinceTheEpoch().Should().Be(utcNow);
@@ -91,17 +85,17 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		// Remove the test OpsNote - this takes some time
 		await LogicMonitorClient
 			.DeleteAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 
 		// Wait 2 seconds
 		await Task.Delay(2000)
-			.ConfigureAwait(true);
+			;
 
 		// Make sure that it is gone
-		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default).ConfigureAwait(true);
+		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default);
 		await operation
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>()
-			.ConfigureAwait(true);
+			;
 	}
 }

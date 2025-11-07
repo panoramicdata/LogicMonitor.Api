@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllCollectorGroupSettings()
 	{
 		var allCollectorGroupSettings = await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<CollectorGroup>(CancellationToken);
 		allCollectorGroupSettings.Should().NotBeNullOrEmpty();
 	}
 
@@ -15,8 +14,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 	public async Task GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		collectors.Should().NotBeNull();
 	}
 
@@ -24,8 +22,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 	public async Task GetAllCollectorsSettings()
 	{
 		var allCollectorSettings = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		allCollectorSettings.Should().NotBeNullOrEmpty();
 	}
 
@@ -33,11 +30,9 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 	public async Task GetCollectorGroupSettings()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<CollectorGroup>(CancellationToken);
 		var pulsantCollectorGroupSettings = await LogicMonitorClient
-			.GetAsync<CollectorGroup>(collectorGroups[0].Id, default)
-			.ConfigureAwait(true);
+			.GetAsync<CollectorGroup>(collectorGroups[0].Id, CancellationToken);
 		pulsantCollectorGroupSettings.Should().NotBeNull();
 	}
 
@@ -46,7 +41,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 	{
 		var collectorVersions = await LogicMonitorClient
 			.GetAllCollectorVersionsAsync(new(), cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
 		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.MajorVersion.Should().NotBe(0));
@@ -62,8 +57,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 				[
 						new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true)
 				]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
 		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.IsStable.Should().BeTrue());
@@ -79,8 +73,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 				[
 					new Eq<CollectorVersion>(nameof(CollectorVersion.Mandatory), true)
 				]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();
 		collectorVersions.Should().AllSatisfy(collectorVersion => collectorVersion.IsStable.Should().BeTrue());

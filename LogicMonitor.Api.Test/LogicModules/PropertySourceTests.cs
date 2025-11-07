@@ -1,7 +1,7 @@
 // Older, now deprecated methods are still tested here
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class PropertySourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class PropertySourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 
 	/// <summary>
@@ -11,12 +11,10 @@ public class PropertySourceTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetJson()
 	{
 		var propertySource = await LogicMonitorClient
-			.GetByNameAsync<PropertySource>("Test PropertySource", default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<PropertySource>("Test PropertySource", CancellationToken);
 		propertySource ??= new();
 		var json = await LogicMonitorClient
-			.GetPropertySourceJsonAsync(propertySource.Id, default)
-			.ConfigureAwait(true);
+			.GetPropertySourceJsonAsync(propertySource.Id, CancellationToken);
 
 		json.Should().NotBeNull();
 	}

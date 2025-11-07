@@ -1,7 +1,7 @@
 namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]
-public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string TestName = "ApiTest";
 	private const string TestDescription = "ApiTest Description";
@@ -10,8 +10,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<CollectorGroup>(CancellationToken);
 		collectorGroups.Should().NotBeNull();
 		collectorGroups.Should().NotBeNullOrEmpty();
 	}
@@ -20,8 +19,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetPageAsync(new Filter<CollectorGroup>(), $"setting/collector/groups", default)
-			.ConfigureAwait(true);
+			.GetPageAsync(new Filter<CollectorGroup>(), $"setting/collector/groups", CancellationToken);
 		collectorGroups.Items.Should().NotBeNullOrEmpty();
 		collectorGroups.Items.Should().NotContain(cg => cg.Id == 0);
 		collectorGroups.Items.Should().NotContain(cg => cg.Name == null);
@@ -43,11 +41,11 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 			{
 				Name = collectorGroupName,
 				Description = "Description"
-			}, default).ConfigureAwait(true);
+			}, CancellationToken);
 		}
 
 		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<JObject>($"setting/collector/groups", default);
+			.GetAllAsync<JObject>($"setting/collector/groups", CancellationToken);
 		collectorGroups.Should().NotBeNullOrEmpty();
 
 		// All should have the name property set
@@ -69,7 +67,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 		// Delete all the CollectorGroups we created
 		foreach (var idToDelete in idsToDelete)
 		{
-			await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{idToDelete}", default).ConfigureAwait(true);
+			await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{idToDelete}", CancellationToken);
 		}
 	}
 
@@ -83,13 +81,13 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 			[
 				new Eq<CollectorGroup>(nameof(CollectorGroup.Name), TestName)
 			]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		foreach (var priorCollectorGroup in collectorGroups)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(priorCollectorGroup, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 		// There are now none with this name
 
@@ -102,13 +100,12 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 				[
 					new EntityProperty { Name = "a", Value = "b" }
 				]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 		newCollectorGroup.Should().NotBeNull();
 		newCollectorGroup.Id.Should().NotBe(0);
 
 		var newCollectorGroupRefetch = await LogicMonitorClient
-			.GetAsync<CollectorGroup>(newCollectorGroup.Id, default)
-			.ConfigureAwait(true);
+			.GetAsync<CollectorGroup>(newCollectorGroup.Id, CancellationToken);
 		newCollectorGroupRefetch.Should().NotBeNull();
 		newCollectorGroupRefetch.Name.Should().NotBeNull();
 		newCollectorGroupRefetch.Description.Should().NotBeNull();
@@ -120,12 +117,11 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 
 		// Put
 		await LogicMonitorClient
-			.PutAsync(newCollectorGroupRefetch, default)
-			.ConfigureAwait(true);
+			.PutAsync(newCollectorGroupRefetch, CancellationToken);
 
 		// Delete
 		await LogicMonitorClient
 			.DeleteAsync(newCollectorGroupRefetch, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 }

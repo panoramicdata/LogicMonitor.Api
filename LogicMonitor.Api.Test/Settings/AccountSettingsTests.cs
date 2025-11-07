@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class AccountSettingsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class AccountSettingsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task Get()
 	{
 		var accountSettings = await LogicMonitorClient
-			.GetAsync<AccountSettings>(default)
-			.ConfigureAwait(true);
+			.GetAsync<AccountSettings>(CancellationToken);
 		accountSettings.Should().NotBeNull();
 		(accountSettings.ResourceCount > 0).Should().BeTrue();
 	}
@@ -22,8 +21,7 @@ public class AccountSettingsTests(ITestOutputHelper iTestOutputHelper, Fixture f
 		}
 
 		var billingInformation = await LogicMonitorClient
-			.GetAsync<BillingInformation>(default)
-			.ConfigureAwait(true);
+			.GetAsync<BillingInformation>(CancellationToken);
 
 		billingInformation.Should().NotBeNull();
 	}
@@ -32,8 +30,7 @@ public class AccountSettingsTests(ITestOutputHelper iTestOutputHelper, Fixture f
 	public async Task GetMetrics()
 	{
 		var metrics = await LogicMonitorClient
-			.GetMetricsAsync(default)
-			.ConfigureAwait(true);
+			.GetMetricsAsync(CancellationToken);
 		metrics.Should().NotBeNull();
 	}
 }

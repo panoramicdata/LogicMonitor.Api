@@ -1,13 +1,12 @@
-﻿namespace LogicMonitor.Api.Test.Topologies;
+namespace LogicMonitor.Api.Test.Topologies;
 
-public class TopologyTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class TopologyTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllTopologies()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<Topology>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Topology>(CancellationToken);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
 	}
@@ -28,7 +27,7 @@ public class TopologyTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 					},
 					default
 				)
-				.ConfigureAwait(true);
+				;
 			item.Should().NotBeNull();
 		}
 	}

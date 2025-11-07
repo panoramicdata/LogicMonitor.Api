@@ -3,7 +3,7 @@ using LogicMonitor.Api.Test.Extensions;
 namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]
-public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task ExecuteDebugCommand()
@@ -12,9 +12,9 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 			.ExecuteDebugCommandAsync(
 				CollectorId,
 				"!ping 8.8.8.8",
-				default
+				CancellationToken
 			)
-			.ConfigureAwait(true);
+			;
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -30,9 +30,9 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 				"!ping 8.8.8.8",
 				20000,
 				100,
-				default
+				CancellationToken
 			)
-			.ConfigureAwait(true);
+			;
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -45,8 +45,7 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetCollectors()
 	{
 		var collectors = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 
 		// Make sure that some are returned
 		collectors.Should().NotBeNullOrEmpty();
@@ -58,8 +57,7 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		foreach (var collector in collectors)
 		{
 			var refetchedCollector = await LogicMonitorClient
-				.GetAsync<Collector>(collector.Id, default)
-				.ConfigureAwait(true);
+				.GetAsync<Collector>(collector.Id, CancellationToken);
 			refetchedCollector.Should().NotBeNull();
 		}
 	}
@@ -68,13 +66,11 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetCollector()
 	{
 		var collectors = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		collectors.Should().NotBeNull();
 		collectors.Should().NotBeNullOrEmpty();
 		var refetchedCollector = await LogicMonitorClient
-			.GetAsync<Collector>(collectors[0].Id, default)
-			.ConfigureAwait(true);
+			.GetAsync<Collector>(collectors[0].Id, CancellationToken);
 
 		refetchedCollector.Should().NotBeNull();
 	}
@@ -83,8 +79,7 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task Get1Collector()
 	{
 		var collector = await LogicMonitorClient
-			.GetAsync<Collector>(CollectorId, default)
-			.ConfigureAwait(true);
+			.GetAsync<Collector>(CollectorId, CancellationToken);
 
 		collector.Should().NotBeNull();
 	}
@@ -93,13 +88,13 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task AcknowledgeCollectorDownAsync_CallWithValidCollectorId_DoesNotThrowException()
 	{
 		var collector = await LogicMonitorClient
-			.GetAsync<Collector>(DownCollectorId, CancellationToken.None);
+			.GetAsync<Collector>(DownCollectorId, CancellationToken);
 
 		collector.Should().NotBeNull();
 		collector.Status.Should().Be(1);
 
 		var action = async () => await LogicMonitorClient
-			.AcknowledgeCollectorDownAsync(DownCollectorId, new() { Comment = "This collector exists solely for testing" }, CancellationToken.None);
+			.AcknowledgeCollectorDownAsync(DownCollectorId, new() { Comment = "This collector exists solely for testing" }, CancellationToken);
 
 		await action.Should().NotThrowAsync();
 	}

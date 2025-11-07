@@ -1,16 +1,15 @@
-﻿using LogicMonitor.Api.Logging;
+using LogicMonitor.Api.Logging;
 using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Logging;
 
-public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task WriteLogAsync_WithResourceId_Succeeds()
 	{
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WriteLogLevel.Info, WindowsDeviceId, "Test log message against resource id.", default)
-			.ConfigureAwait(true);
+			.WriteLogAsync(WriteLogLevel.Info, WindowsDeviceId, "Test log message against resource id.", CancellationToken);
 		response.Should().NotBeNull();
 	}
 
@@ -19,12 +18,10 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	{
 		// Get the windows device display name from the WindowsDeviceId
 		var windowsDevice = await LogicMonitorClient
-			.GetAsync<Resource>(WindowsDeviceId, default)
-			.ConfigureAwait(true);
+			.GetAsync<Resource>(WindowsDeviceId, CancellationToken);
 
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WriteLogLevel.Info, windowsDevice.DisplayName, "Test log message against resource display name.", default)
-			.ConfigureAwait(true);
+			.WriteLogAsync(WriteLogLevel.Info, windowsDevice.DisplayName, "Test log message against resource display name.", CancellationToken);
 		response.Should().NotBeNull();
 	}
 
@@ -33,8 +30,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	{
 		// Get the device custom properties
 		var deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(WindowsDeviceId, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(WindowsDeviceId, CancellationToken);
 
 		// Get the cmdb.id
 		var cmdbId = deviceProperties
@@ -42,8 +38,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			?? throw new FormatException("For this unit test to work, a unique cmdb.id custom property should be configured");
 
 		var response = await LogicMonitorClient
-			.WriteLogAsync(WriteLogLevel.Info, "cmdb.id", cmdbId, "Test log message against resource cmdb.id custom property.", default)
-			.ConfigureAwait(true);
+			.WriteLogAsync(WriteLogLevel.Info, "cmdb.id", cmdbId, "Test log message against resource cmdb.id custom property.", CancellationToken);
 		response.Should().NotBeNull();
 	}
 
@@ -52,13 +47,11 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 	{
 		// Get the windows device display name from the WindowsDeviceId
 		var windowsDevice = await LogicMonitorClient
-			.GetAsync<Resource>(WindowsDeviceId, default)
-			.ConfigureAwait(true);
+			.GetAsync<Resource>(WindowsDeviceId, CancellationToken);
 
 		// Get the device custom properties
 		var deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(WindowsDeviceId, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(WindowsDeviceId, CancellationToken);
 
 		// Get the cmdb.id
 		var cmdbId = deviceProperties
@@ -72,8 +65,7 @@ public class LoggingTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 				{ "system.displayname", windowsDevice.DisplayName },
 				{ "cmdb.id", cmdbId },
 			},
-			"Test log message against a dictionary of resource id, displayname and cmdb.id custom property.", default)
-			.ConfigureAwait(true);
+			"Test log message against a dictionary of resource id, displayname and cmdb.id custom property.", CancellationToken);
 		response.Should().NotBeNull();
 	}
 }

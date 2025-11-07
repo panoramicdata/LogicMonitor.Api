@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class EscalationChainTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class EscalationChainTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAll()
 	{
 		var escalationChains = await LogicMonitorClient
-			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), default)
-			.ConfigureAwait(true);
+			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), CancellationToken);
 		escalationChains.Items.Should().NotBeNullOrEmpty();
 	}
 
@@ -15,12 +14,10 @@ public class EscalationChainTests(ITestOutputHelper iTestOutputHelper, Fixture f
 	public async Task GetEscalationChain()
 	{
 		var escalationChains = await LogicMonitorClient
-			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), default)
-			.ConfigureAwait(true);
+			.GetEscalationChainsPageAsync(new Filter<EscalationChain>(), CancellationToken);
 
 		var chain = await LogicMonitorClient
-			.GetEscalationChainAsync(escalationChains.Items[0].Id, default)
-			.ConfigureAwait(true);
+			.GetEscalationChainAsync(escalationChains.Items[0].Id, CancellationToken);
 
 		chain.Should().NotBeNull();
 	}

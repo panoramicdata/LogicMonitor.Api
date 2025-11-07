@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class ExternalAlertsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ExternalAlertsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllAsync()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<ExternalAlert>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<ExternalAlert>(CancellationToken);
 		items.Should().NotBeNull();
 	}
 
@@ -15,8 +14,7 @@ public class ExternalAlertsTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetExternalApiAsync()
 	{
 		var api = await LogicMonitorClient
-			.GetExternalApiAsync(default)
-			.ConfigureAwait(true);
+			.GetExternalApiAsync(CancellationToken);
 
 		api.Should().NotBeNull();
 	}

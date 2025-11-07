@@ -1,5 +1,5 @@
-﻿namespace LogicMonitor.Api.Test.EventLogs;
-public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+namespace LogicMonitor.Api.Test.EventLogs;
+public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private readonly DateTime _endDateTimeUtc = DateTime.UtcNow;
 	private readonly DateTime _startDateTimeUtc = DateTime.UtcNow.AddHours(-1);
@@ -8,8 +8,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 	public async Task GetUsernameFilteredEvents()
 	{
 		var unfilteredLogItems = await LogicMonitorClient
-			.GetLogItemsAsync(new LogFilter(0, 300, _startDateTimeUtc, _endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), default)
-			.ConfigureAwait(true);
+			.GetLogItemsAsync(new LogFilter(0, 300, _startDateTimeUtc, _endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), CancellationToken);
 
 		unfilteredLogItems.Count.Should().BePositive();
 
@@ -23,7 +22,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			{ UsernameFilter = "\"System%3AActiveDiscovery\"" },
 			default
 			)
-			.ConfigureAwait(true);
+			;
 
 		var filteredLogItemsSystemActiveDiscoveryCount = filteredLogItemsSystemActiveDiscovery.Count;
 
@@ -37,7 +36,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			{ UsernameFilter = "\"System%3AAppliesTo\"" },
 			default
 			)
-			.ConfigureAwait(true);
+			;
 
 		var filteredLogItemsSystemAppliesToCount = filteredLogItemsSystemAppliesTo.Count;
 
@@ -51,7 +50,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" },
 			default
 			)
-			.ConfigureAwait(true);
+			;
 
 		var filteredLogItemsSystemAppliesToAndSystemDiscoveryCount = filteredLogItemsSystemAppliesToAndSystemDiscovery.Count;
 
@@ -68,7 +67,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			.GetLogItemsAsync(new LogFilter(0, 300, _startDateTimeUtc, _endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
 			default
 			)
-			.ConfigureAwait(true);
+			;
 
 		var unfilteredLogItemsCount = unfilteredLogItems.Count;
 
@@ -84,7 +83,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			{ TextFilter = "\"* AND NOT *health*\"" },
 			default
 			)
-			.ConfigureAwait(true);
+			;
 
 		var filteredLogItemsHealthTextExcludedCount = filteredLogItemsHealthTextExcluded.Count;
 
@@ -98,7 +97,7 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 			{ TextFilter = "\"*health*\"" },
 			default
 			)
-			.ConfigureAwait(true);
+			;
 
 		var filteredLogItemsHealthTextIncludedCount = filteredLogItemsHealthTextIncluded.Count;
 

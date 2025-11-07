@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Dashboards;
 
-public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string DashboardGroupName = "NugetTestDashboardGroup";
 
@@ -9,13 +9,11 @@ public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	{
 		// Delete it if it already exists
 		var dashboardGroup = await LogicMonitorClient
-			.GetByNameAsync<DashboardGroup>(DashboardGroupName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<DashboardGroup>(DashboardGroupName, CancellationToken);
 		if (dashboardGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(dashboardGroup, default)
-				.ConfigureAwait(true);
+				.DeleteAsync(dashboardGroup, CancellationToken);
 		}
 
 		// Create it
@@ -36,13 +34,12 @@ public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 				]
 			},
 			default)
-			.ConfigureAwait(true);
+			;
 
 		dashboardGroup.Should().NotBeNull();
 
 		dashboardGroup = await LogicMonitorClient
-			.GetByNameAsync<DashboardGroup>(DashboardGroupName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<DashboardGroup>(DashboardGroupName, CancellationToken);
 
 		dashboardGroup.Should().NotBeNull();
 
@@ -52,20 +49,18 @@ public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 			.Contain(x => x.Name == "TestToken" && x.Value == "TestValue");
 
 		await LogicMonitorClient
-			.DeleteAsync(dashboardGroup, default)
-			.ConfigureAwait(true);
+			.DeleteAsync(dashboardGroup, CancellationToken);
 	}
 
 	[Fact]
 	public async Task GetDashboardGroupByFullPath()
 	{
 		var dashboardGroup = (await LogicMonitorClient
-			.GetAllAsync<DashboardGroup>(default)
-			.ConfigureAwait(true))[1];
+			.GetAllAsync<DashboardGroup>(CancellationToken)
+			)[1];
 
 		var dashboardGroupByPath = await LogicMonitorClient
-			.GetDashboardGroupByFullPathAsync(dashboardGroup.FullPath, default)
-			.ConfigureAwait(true);
+			.GetDashboardGroupByFullPathAsync(dashboardGroup.FullPath, CancellationToken);
 
 		dashboardGroupByPath.Should().NotBeNull();
 		dashboardGroupByPath.Id.Should().Be(dashboardGroup.Id);
@@ -75,12 +70,11 @@ public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetChildDashboardGroups()
 	{
 		var dashboardGroup = (await LogicMonitorClient
-			.GetAllAsync<DashboardGroup>(default)
-			.ConfigureAwait(true))[0];
+			.GetAllAsync<DashboardGroup>(CancellationToken)
+			)[0];
 
 		var dashboardChildren = await LogicMonitorClient
-			.GetChildDashboardGroupsAsync(dashboardGroup.Id, new Filter<DashboardGroup>(), default)
-			.ConfigureAwait(true);
+			.GetChildDashboardGroupsAsync(dashboardGroup.Id, new Filter<DashboardGroup>(), CancellationToken);
 
 		dashboardChildren.Items.Should().NotBeEmpty();
 	}
@@ -89,12 +83,11 @@ public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	public async Task GetChildDashboards()
 	{
 		var dashboardGroup = (await LogicMonitorClient
-			.GetAllAsync<DashboardGroup>(default)
-			.ConfigureAwait(true))[0];
+			.GetAllAsync<DashboardGroup>(CancellationToken)
+			)[0];
 
 		var children = await LogicMonitorClient
-			.GetChildDashboardsAsync(dashboardGroup.Id, new Filter<Dashboard>(), default)
-			.ConfigureAwait(true);
+			.GetChildDashboardsAsync(dashboardGroup.Id, new Filter<Dashboard>(), CancellationToken);
 
 		children.Items.Should().NotBeEmpty();
 	}

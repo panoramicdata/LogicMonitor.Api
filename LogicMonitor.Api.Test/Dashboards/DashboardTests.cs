@@ -2,15 +2,14 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Dashboards;
 
-public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task Clone()
 	{
 		// This one has all the different widget types on
 		var originalDashboard = await LogicMonitorClient
-			.GetByNameAsync<Dashboard>("All Widgets", default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<Dashboard>("All Widgets", CancellationToken);
 
 		originalDashboard ??= new();
 
@@ -21,11 +20,10 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 			DashboardGroupId = originalDashboard.DashboardGroupId,
 			//WidgetsConfig = originalDashboard.WidgetsConfig,
 			WidgetsOrder = originalDashboard.WidgetsOrder
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		var newDashboardRefetch = await LogicMonitorClient.
-			GetAsync<Dashboard>(newDashboard.Id, default)
-			.ConfigureAwait(true);
+			GetAsync<Dashboard>(newDashboard.Id, CancellationToken);
 
 		// Ensure that it is as expected
 		newDashboardRefetch.Should().NotBeNull();
@@ -33,7 +31,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		// Delete the clone
 		await LogicMonitorClient
 			.DeleteAsync(newDashboard, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 
 	[Fact]
@@ -41,11 +39,9 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	{
 		// This one has all the different widget types on
 		var dashboard = await LogicMonitorClient
-			.GetByNameAsync<Dashboard>("All Widgets", default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<Dashboard>("All Widgets", CancellationToken);
 		var widgets = await LogicMonitorClient
-			.GetWidgetsByDashboardNameAsync("All Widgets", default)
-			.ConfigureAwait(true);
+			.GetWidgetsByDashboardNameAsync("All Widgets", CancellationToken);
 		dashboard.Should().NotBeNull();
 		widgets.Should().NotBeNull();
 		widgets.Should().HaveCount(20); // There are 20 different types of widget
@@ -247,8 +243,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetDashboardsNoWidgets()
 	{
 		var dashboards = await LogicMonitorClient
-			.GetAllAsync<Dashboard>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Dashboard>(CancellationToken);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();
@@ -261,8 +256,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetDashboardsWithWidgets()
 	{
 		var dashboards = await LogicMonitorClient
-			.GetAllAsync<Dashboard>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Dashboard>(CancellationToken);
 
 		// Make sure that some are returned
 		dashboards.Should().NotBeEmpty();
@@ -275,8 +269,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task CreateAndDeleteDashboard()
 	{
 		var fetchedDashboards = await LogicMonitorClient
-			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
-			.ConfigureAwait(true);
+			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), CancellationToken);
 
 		var found = false;
 		var foundBoard = new Dashboard();
@@ -293,8 +286,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		if (found)
 		{
 			await LogicMonitorClient
-			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
-			.ConfigureAwait(true);
+			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", CancellationToken);
 		}
 
 		var newDashboard = new DashboardCreationDto()
@@ -309,12 +301,10 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		};
 
 		await LogicMonitorClient
-			.AddDashboardAsync(newDashboard, default)
-			.ConfigureAwait(true);
+			.AddDashboardAsync(newDashboard, CancellationToken);
 
 		var refetchedDashboards = await LogicMonitorClient
-			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), default)
-			.ConfigureAwait(true);
+			.GetChildDashboardsAsync(1, new Filter<Dashboard>(), CancellationToken);
 
 		found = false;
 		foundBoard = new Dashboard();
@@ -331,8 +321,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		if (found)
 		{
 			await LogicMonitorClient
-			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", default)
-			.ConfigureAwait(true);
+			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", CancellationToken);
 		}
 
 		found.Should().Be(true);

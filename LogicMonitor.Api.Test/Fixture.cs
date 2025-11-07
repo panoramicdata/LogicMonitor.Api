@@ -1,44 +1,44 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Xunit.Microsoft.DependencyInjection;
-using Xunit.Microsoft.DependencyInjection.Abstracts;
+using Microsoft.Extensions.Logging;
 
 namespace LogicMonitor.Api.Test;
 
-public class Fixture : TestBedFixture
+public class Fixture : IDisposable
 {
-	private IConfigurationRoot? _configuration;
+	private readonly ServiceProvider _serviceProvider;
+	private bool _disposed;
 
-	protected override void AddServices(
-		IServiceCollection services,
-		IConfiguration? configuration)
+	public Fixture()
 	{
-		if (_configuration is null)
-		{
-			throw new InvalidOperationException("Configuration is null");
-		}
+		// Load configuration
+		var configuration = new ConfigurationBuilder()
+			.SetBasePath(Directory.GetCurrentDirectory())
+			.AddUserSecrets<Fixture>()
+			.Build();
 
+		// Build service collection
+		var services = new ServiceCollection();
+		
 		services
+			.AddLogging(builder => builder.AddDebug().SetMinimumLevel(LogLevel.Debug))
 			.AddScoped<CancellationTokenSource>()
-			.Configure<TestPortalConfig>(_configuration.GetSection("Config"));
+			.Configure<TestPortalConfig>(configuration.GetSection("Config"));
+
+		_serviceProvider = services.BuildServiceProvider();
 	}
 
-	protected override ValueTask DisposeAsyncCore()
-		=> default;
+	public T GetService<T>() where T : notnull
+		=> _serviceProvider.GetRequiredService<T>();
 
-	protected override IEnumerable<TestAppSettings> GetTestAppSettings()
+	public void Dispose()
 	{
-		_configuration = new ConfigurationBuilder()
-			 .SetBasePath(Directory.GetCurrentDirectory())
-			 .AddUserSecrets<Fixture>()
-			 .Build();
+		if (_disposed)
+		{
+			return;
+		}
 
-		// This is not used
-		return [
-			new TestAppSettings
-			{
-				IsOptional = true,
-				Filename = null,
-			}
-		];
+		_serviceProvider?.Dispose();
+		_disposed = true;
+		GC.SuppressFinalize(this);
 	}
 }

@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAlertHistory_Last24Hours_Returns24Items()
@@ -13,8 +13,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Should().HaveCount(25);
@@ -31,8 +30,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Should().HaveCount(8);
@@ -49,8 +47,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Should().HaveCount(31);
@@ -72,15 +69,14 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Get alert history
 		var history = await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
 		history.Should().NotBeNull();
 		history.Histogram.Values.Should().HaveCount(25);
 	}
 
 	[Fact]
-	public async Task GetAlertHistory_Custom24HoursWithNoStartSpecified_ThrowsArgumentException()
+	public Task GetAlertHistory_Custom24HoursWithNoStartSpecified_ThrowsArgumentException()
 	{
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(1);
@@ -95,17 +91,15 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
-		await act
+		return act
 			.Should()
-			.ThrowAsync<ArgumentException>()
-			.ConfigureAwait(true);
+			.ThrowAsync<ArgumentException>();
 	}
 
 	[Fact]
-	public async Task GetAlertHistory_Custom24HoursWithNoEndSpecified_ThrowsArgumentException()
+	public Task GetAlertHistory_Custom24HoursWithNoEndSpecified_ThrowsArgumentException()
 	{
 		var start = DateTime.UtcNow.AddDays(-3);
 
@@ -119,17 +113,15 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
-		await act
+		return act
 			.Should()
-			.ThrowAsync<ArgumentException>()
-			.ConfigureAwait(true);
+			.ThrowAsync<ArgumentException>();
 	}
 
 	[Fact]
-	public async Task GetAlertHistory_Custom24HoursWithEndBeforeStart_ThrowsArgumentException()
+	public Task GetAlertHistory_Custom24HoursWithEndBeforeStart_ThrowsArgumentException()
 	{
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(-1);
@@ -144,12 +136,10 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set up to attempt retrieval that should throw exception
 		var act = async () => await LogicMonitorClient
-			.GetAlertHistoryAsync(request, default)
-			.ConfigureAwait(true);
+			.GetAlertHistoryAsync(request, CancellationToken);
 
-		await act
+		return act
 			.Should()
-			.ThrowAsync<ArgumentException>()
-			.ConfigureAwait(true);
+			.ThrowAsync<ArgumentException>();
 	}
 }

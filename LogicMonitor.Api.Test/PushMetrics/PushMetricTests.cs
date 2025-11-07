@@ -1,8 +1,8 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace LogicMonitor.Api.Test.PushMetrics;
 
-public class PushMetricTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class PushMetricTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task PushMetric_Succeeds()
@@ -44,7 +44,7 @@ public class PushMetricTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					}
 				]
 			}, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 		response.Should().NotBeNull();
 	}
 }

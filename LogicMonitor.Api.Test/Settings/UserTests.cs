@@ -1,21 +1,19 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetUsers()
 	{
 		var users = await LogicMonitorClient
-			.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, default)
-			.ConfigureAwait(true);
+			.GetPageAsync(new Filter<User> { Skip = 0, Take = 300 }, CancellationToken);
 		users.Should().NotBeNull();
 		users.Items.Should().NotBeNullOrEmpty();
 
 		foreach (var user in users.Items)
 		{
 			var refetchedUser = await LogicMonitorClient
-				.GetAsync<User>(user.Id, default)
-				.ConfigureAwait(true);
+				.GetAsync<User>(user.Id, CancellationToken);
 			var roles = refetchedUser.Roles;
 			roles.Should().NotBeNullOrEmpty();
 			user.UserGroupIds.Should().NotBeNullOrEmpty();
@@ -32,11 +30,11 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			[
 				new Eq<User>(nameof(User.UserName), "test")
 			]
-		}, default).ConfigureAwait(true))
+		}, CancellationToken))
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingUser, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		var userCreationDto = new UserCreationDto
@@ -74,21 +72,19 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		};
 
 		var user = await LogicMonitorClient
-			.CreateAsync(userCreationDto, default)
-			.ConfigureAwait(true);
+			.CreateAsync(userCreationDto, CancellationToken);
 
 		// Delete again
 		await LogicMonitorClient
 			.DeleteAsync(user, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 
 	[Fact]
 	public async Task GetAdmins()
 	{
 		var users = await LogicMonitorClient
-			.GetAllAsync<User>(CancellationToken.None)
-			.ConfigureAwait(true);
+			.GetAllAsync<User>(CancellationToken);
 
 		users.Should().NotBeEmpty();
 	}
@@ -97,21 +93,18 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	public async Task GetApiTokens()
 	{
 		var users = await LogicMonitorClient
-			.GetAllAsync<User>(CancellationToken.None)
-			.ConfigureAwait(true);
+			.GetAllAsync<User>(CancellationToken);
 
 		var tokens = await LogicMonitorClient
 			.GetAllAsync(new Filter<ApiToken>
 			{
 				FilterItems = [new Eq<ApiToken>(nameof(ApiToken.UserId), users.First().Id)]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 
 		tokens.Should().NotBeEmpty();
 
 		var allTokens = await LogicMonitorClient
-			.GetApiTokenListAsync(new Filter<ApiToken>(), default)
-			.ConfigureAwait(true);
+			.GetApiTokenListAsync(new Filter<ApiToken>(), CancellationToken);
 		allTokens.Items.Should().NotBeEmpty();
 	}
 }

@@ -1,13 +1,13 @@
-﻿namespace LogicMonitor.Api.Test.Resources;
+namespace LogicMonitor.Api.Test.Resources;
 
-public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
 		var result = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: CancellationToken)
+			;
 		result.Should().NotBeNull();
 	}
 
@@ -15,32 +15,30 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	public async Task GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", cancellationToken: default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", cancellationToken: CancellationToken)
+			;
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 
 		_ = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: CancellationToken)
+			;
 	}
 
 	[Fact]
 	public async Task OnlyMonitoredInstances()
 	{
-		var device = await GetSnmpResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetSnmpResourceAsync(CancellationToken);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: CancellationToken)
+			;
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: CancellationToken)
+			;
 		var resourceDataSourceInstances = await LogicMonitorClient.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>
 		{
 			Order = new Order<ResourceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(ResourceDataSourceInstance.DisplayName) },
@@ -48,7 +46,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 			[
 				new Eq<ResourceDataSourceInstance>(nameof(ResourceDataSourceInstance.StopMonitoring), false)
 			]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		resourceDataSourceInstances.Should().AllSatisfy(dsi => dsi.StopMonitoring.Should().BeFalse());
 	}
@@ -56,8 +54,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task AddDeviceDataSourceInstance()
 	{
-		var resource = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var resource = await GetWindowsResourceAsync(CancellationToken);
 		var resourceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
@@ -66,8 +63,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				[
 					nameof(ResourceDataSource.Id),
 				]
-		}, default)
-			.ConfigureAwait(true);
+		}, CancellationToken);
 
 		var newInstance = new ResourceDataSourceInstanceCreationDto()
 		{
@@ -77,16 +73,14 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		};
 
 		await LogicMonitorClient
-			.AddResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[9].Id, newInstance, default)
-			.ConfigureAwait(true);
+			.AddResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[9].Id, newInstance, CancellationToken);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[9].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 
 		var foundTest = false;
 		var testInstance = new ResourceDataSourceInstance();
@@ -108,8 +102,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 					ResourceDataSourceId = resourceDataSources[9].Id,
 					Id = testInstance.Id
 				},
-					default)
-				.ConfigureAwait(true);
+					CancellationToken);
 		}
 
 		foundTest.Should().BeTrue();
@@ -118,8 +111,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task GetDataPointConfiguration()
 	{
-		var resource = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var resource = await GetWindowsResourceAsync(CancellationToken);
 		var resourceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
@@ -128,19 +120,17 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				[
 					nameof(ResourceDataSource.Id),
 				]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		var resourceDataSourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 
 		var config = await LogicMonitorClient
-			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(resource.Id, resourceDataSources[0].Id, resourceDataSourceInstances[0].Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(resource.Id, resourceDataSources[0].Id, resourceDataSourceInstances[0].Id, CancellationToken);
 
 		config.Should().NotBeEmpty();
 	}
@@ -148,8 +138,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task UpdateDataPointConfig()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var deviceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
@@ -158,19 +147,17 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				[
 					nameof(ResourceDataSource.Id),
 				]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 
 		var config = await LogicMonitorClient
-			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, CancellationToken);
 
 		var configId = config[0].Id;
 		var prevSetting = config[0].DisableAlerting;
@@ -187,18 +174,15 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		};
 
 		await LogicMonitorClient
-			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
-			.ConfigureAwait(true);
+			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, CancellationToken);
 
 		var refetchedConfig = await LogicMonitorClient
-			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, CancellationToken);
 
 		updateConfig.DisableAlerting = prevSetting;
 
 		await LogicMonitorClient
-			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, default)
-			.ConfigureAwait(true);
+			.UpdateDataPointConfigurationAsync(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, configId, updateConfig, CancellationToken);
 
 		foreach (var dataPointConfig in refetchedConfig)
 		{
@@ -212,8 +196,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	[Fact]
 	public async Task SetResourceDataSourceInstanceCustomProperty()
 	{
-		var resource = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var resource = await GetWindowsResourceAsync(CancellationToken);
 		var resourceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(resource.Id, new Filter<ResourceDataSource>
 		{
 			Skip = 0,
@@ -222,7 +205,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				[
 					nameof(ResourceDataSource.Id),
 				]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		var datasourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(
@@ -231,8 +214,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				new Filter<ResourceDataSourceInstance>()
 				{
 					Skip = 0,
-				}, default)
-			.ConfigureAwait(true);
+				}, CancellationToken);
 
 		var instance = datasourceInstances[0];
 
@@ -261,13 +243,12 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				resourceDataSources[0].Id,
 				instance.Id,
 				instance,
-				default)
-			.ConfigureAwait(true);
+				CancellationToken)
+			;
 
 		// Re-fetch the instance
 		var refetchedInstance = await LogicMonitorClient
-			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, CancellationToken);
 
 		// Check that the custom property was set
 		customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
@@ -284,13 +265,12 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				resourceDataSources[0].Id,
 				instance.Id,
 				refetchedInstance,
-				default)
-			.ConfigureAwait(true);
+				CancellationToken)
+			;
 
 		// Re-fetch the instance
 		refetchedInstance = await LogicMonitorClient
-			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, CancellationToken);
 
 		// Check that the custom property was set
 		customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");

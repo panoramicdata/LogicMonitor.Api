@@ -1,6 +1,6 @@
-﻿namespace LogicMonitor.Api.Test.Topologies;
+namespace LogicMonitor.Api.Test.Topologies;
 
-public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string TestName = "Test Name";
 
@@ -8,8 +8,7 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<TopologyGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<TopologyGroup>(CancellationToken);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
 	}
@@ -24,12 +23,12 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 			[
 				new Eq<TopologyGroup>(nameof(TopologyGroup.Name), TestName)
 			]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingItem, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		// Create it
@@ -42,20 +41,19 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 				},
 				default
 			)
-			.ConfigureAwait(true);
+			;
 
 		// Delete it again
 		await LogicMonitorClient
 			.DeleteAsync(newItem, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 
 	[Fact]
 	public async Task GetTopologyGroup()
 	{
 		var topGroup = await LogicMonitorClient
-			.GetTopologyGroupAsync(1, default)
-			.ConfigureAwait(true);
+			.GetTopologyGroupAsync(1, CancellationToken);
 
 		topGroup.Should().NotBeNull();
 	}
@@ -64,8 +62,7 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task GetTopologiesFromGroup()
 	{
 		var topologies = await LogicMonitorClient
-			.GetTopologiesFromGroupAsync(2, default)
-			.ConfigureAwait(true);
+			.GetTopologiesFromGroupAsync(2, CancellationToken);
 
 		topologies.Items.Should().NotBeNullOrEmpty();
 	}

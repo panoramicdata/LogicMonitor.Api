@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Dashboards;
 
-public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private static readonly DateTimeOffset _utcNow = DateTimeOffset.UtcNow;
 
@@ -9,14 +9,12 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	{
 		// Multi-number
 		var widgetData = await LogicMonitorClient
-			.GetWidgetDataAsync(626, _utcNow.AddDays(-30), _utcNow, default)
-			.ConfigureAwait(true);
+			.GetWidgetDataAsync(626, _utcNow.AddDays(-30), _utcNow, CancellationToken);
 		widgetData.Should().NotBeNull();
 
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
-			.GetWidgetDataAsync(627, _utcNow.AddDays(-30), _utcNow, default)
-			.ConfigureAwait(true);
+			.GetWidgetDataAsync(627, _utcNow.AddDays(-30), _utcNow, CancellationToken);
 		widgetData2.Should().NotBeNull();
 	}
 
@@ -27,16 +25,14 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 
 		// Multi-number
 		var widgetData = await LogicMonitorClient
-			.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow, default)
-			.ConfigureAwait(true);
+			.GetWidgetDataAsync(631, utcNow.AddDays(-30), utcNow, CancellationToken);
 		widgetData.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNull();
 		widgetData.ResultList.Should().NotBeNullOrEmpty();
 
 		// Single-number
 		var widgetData2 = await LogicMonitorClient
-			.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow, default)
-			.ConfigureAwait(true);
+			.GetWidgetDataAsync(540, utcNow.AddDays(-30), utcNow, CancellationToken);
 		widgetData2.Should().NotBeNull();
 		widgetData2.Availability.Should().NotBe(0);
 		widgetData2.ResultList.Should().BeEmpty();
@@ -47,8 +43,7 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	{
 
 		var widgets = await LogicMonitorClient
-			.GetWidgetListAsync(new(), default)
-			.ConfigureAwait(true);
+			.GetWidgetListAsync(new(), CancellationToken);
 
 		widgets.Should().NotBeNull();
 
@@ -59,12 +54,10 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	public async Task GetWidgetById()
 	{
 		var widget = (await LogicMonitorClient
-			.GetWidgetListAsync(new Filter<Widget>(), default)
-			.ConfigureAwait(true)).Items[0];
+			.GetWidgetListAsync(new Filter<Widget>(), CancellationToken)).Items[0];
 
 		var getWidget = await LogicMonitorClient
-			.GetWidgetByIdAsync(widget.Id, default)
-			.ConfigureAwait(true);
+			.GetWidgetByIdAsync(widget.Id, CancellationToken);
 
 		getWidget.Name.Should().Be(widget.Name);
 	}
@@ -73,12 +66,10 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	public async Task GetWidgetDataById()
 	{
 		var widget = (await LogicMonitorClient
-			.GetWidgetListAsync(new Filter<Widget>(), default)
-			.ConfigureAwait(true)).Items[0];
+			.GetWidgetListAsync(new Filter<Widget>(), CancellationToken)).Items[0];
 
 		var widgetData = await LogicMonitorClient
-			.GetWidgetDataByIdAsync(widget.Id, default)
-			.ConfigureAwait(true);
+			.GetWidgetDataByIdAsync(widget.Id, CancellationToken);
 
 		widgetData.Should().NotBeNull();
 	}
@@ -104,12 +95,10 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		};
 
 		var createdWidget = await LogicMonitorClient
-			.SaveNewWidgetAsync(widget, default)
-			.ConfigureAwait(true);
+			.SaveNewWidgetAsync(widget, CancellationToken);
 
 		var getWidget = (HtmlWidget)await LogicMonitorClient
-			.GetWidgetByIdAsync(createdWidget.Id, default)
-			.ConfigureAwait(true);
+			.GetWidgetByIdAsync(createdWidget.Id, CancellationToken);
 
 		var patchedWidget = new HtmlWidget()
 		{
@@ -124,16 +113,13 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		};
 
 		await LogicMonitorClient
-			.PatchWidgetByIdAsync(getWidget.Id, patchedWidget, default)
-			.ConfigureAwait(true);
+			.PatchWidgetByIdAsync(getWidget.Id, patchedWidget, CancellationToken);
 
 		getWidget = (HtmlWidget)await LogicMonitorClient
-			.GetWidgetByIdAsync(createdWidget.Id, default)
-			.ConfigureAwait(true);
+			.GetWidgetByIdAsync(createdWidget.Id, CancellationToken);
 
 		await LogicMonitorClient
-			.DeleteWidgetAsync(createdWidget.Id, default)
-			.ConfigureAwait(true);
+			.DeleteWidgetAsync(createdWidget.Id, CancellationToken);
 
 		getWidget.Name.Should().Be("test");
 		getWidget.Description.Should().Be("Updated test widget");

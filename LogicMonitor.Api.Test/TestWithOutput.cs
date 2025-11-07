@@ -1,113 +1,81 @@
 using Microsoft.Extensions.Options;
-using Xunit.Microsoft.DependencyInjection.Abstracts;
 
 namespace LogicMonitor.Api.Test;
 
-[CollectionDefinition("Dependency Injection")]
-public abstract class TestWithOutput : TestBed<Fixture>
+public abstract class TestWithOutput(ITestOutputHelper testOutputHelper, Fixture fixture) : IDisposable
 {
-	protected ILogger Logger { get; }
+	protected ITestOutputHelper TestOutputHelper { get; } = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
+	protected Fixture Fixture { get; } = fixture ?? throw new ArgumentNullException(nameof(fixture));
+	protected ILogger Logger { get; } = CreateLogger(testOutputHelper);
 
-	protected int CollectorId { get; }
+	protected int CollectorId { get; } = GetConfig(fixture).CollectorId;
+	protected int DownCollectorId { get; } = GetConfig(fixture).DownCollectorId;
+	protected string WebsiteGroupFullPath { get; } = GetConfig(fixture).WebsiteGroupFullPath;
+	protected string AlertRuleName { get; } = GetConfig(fixture).AlertRuleName;
+	protected string WebsiteName { get; } = GetConfig(fixture).WebsiteName;
+	protected string DeviceGroupFullPath { get; } = GetConfig(fixture).DeviceGroupFullPath;
+	protected string ResourceGroupFullPath { get; } = GetConfig(fixture).ResourceGroupFullPath;
+	protected int ServiceDeviceId { get; } = GetConfig(fixture).ServiceDeviceId;
+	protected int WindowsDeviceId { get; } = GetConfig(fixture).WindowsDeviceId;
+	protected int ReportId { get; } = GetConfig(fixture).ReportId;
+	protected int SdtResourceGroupId { get; } = GetConfig(fixture).SdtResourceGroupId;
+	protected int WindowsDeviceLargeDeviceDataSourceId { get; } = GetConfig(fixture).WindowsDeviceLargeDeviceDataSourceId;
+	protected int NetflowDeviceId { get; } = GetConfig(fixture).NetflowDeviceId;
+	protected int SnmpDeviceId { get; } = GetConfig(fixture).SnmpDeviceId;
+	protected int AllWidgetsDashboardId { get; } = GetConfig(fixture).AllWidgetsDashboardId;
+	protected bool AccountHasBillingInformation { get; } = GetConfig(fixture).AccountHasBillingInformation;
+	protected int TestDashboardId { get; } = GetConfig(fixture).TestDashboardId;
 
-	protected int DownCollectorId { get; }
+	protected static CancellationToken CancellationToken => TestContext.Current.CancellationToken;
+	protected Stopwatch TestStopwatch { get; } = Stopwatch.StartNew();
+	protected int StartEpoch { get; } = DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch();
+	protected int EndEpoch { get; } = DateTime.UtcNow.SecondsSinceTheEpoch();
+	
+	internal Api.Experimental.LogicMonitorClient ExperimentalLogicMonitorClient { get; } = CreateExperimentalClient(fixture, CreateLogger(testOutputHelper));
+	protected LogicMonitorClient LogicMonitorClient { get; } = CreateClient(fixture, CreateLogger(testOutputHelper));
 
-	protected string WebsiteGroupFullPath { get; }
+	private static TestPortalConfig GetConfig(Fixture fixture)
+		=> fixture.GetService<IOptions<TestPortalConfig>>().Value;
 
-	protected string AlertRuleName { get; }
-
-	protected string WebsiteName { get; }
-
-	protected string DeviceGroupFullPath { get; }
-
-	protected string ResourceGroupFullPath { get; }
-
-	protected int ServiceDeviceId { get; }
-
-	protected int WindowsDeviceId { get; }
-
-	protected int ReportId { get; }
-
-	protected int SdtResourceGroupId { get; }
-
-	protected int WindowsDeviceLargeDeviceDataSourceId { get; }
-
-	protected int NetflowDeviceId { get; }
-
-	protected int SnmpDeviceId { get; }
-
-	protected int AllWidgetsDashboardId { get; }
-
-	protected bool AccountHasBillingInformation { get; }
-
-	protected int TestDashboardId { get; }
-
-	protected TestWithOutput(ITestOutputHelper testOutputHelper, Fixture fixture) : base(testOutputHelper, fixture)
+	private static ILogger CreateLogger(ITestOutputHelper testOutputHelper)
 	{
-		ArgumentNullException.ThrowIfNull(testOutputHelper);
-		ArgumentNullException.ThrowIfNull(fixture);
-
-		// Logger
-		var loggerFactory = fixture.GetService<ILoggerFactory>(testOutputHelper) ?? throw new InvalidOperationException("LoggerFactory is null");
-		Logger = loggerFactory.CreateLogger(GetType());
-
-		// TestPortalConfig
-		var testPortalConfigOptions = fixture
-			.GetService<IOptions<TestPortalConfig>>(testOutputHelper)
-			?? throw new InvalidOperationException("TestPortalConfig is null");
-
-		var testPortalConfig = testPortalConfigOptions.Value;
-
-		ExperimentalLogicMonitorClient = new Api.Experimental.LogicMonitorClient(
-		new LogicMonitorClientOptions
+		// Create a logger factory with XUnit output
+		var loggerFactory = LoggerFactory.Create(builder =>
 		{
-			Account = testPortalConfig.Account,
-			AccessId = testPortalConfig.AccessId,
-			AccessKey = testPortalConfig.AccessKey,
-			Logger = Logger
+			builder
+				.AddProvider(new XunitLoggerProvider(testOutputHelper))
+				.SetMinimumLevel(LogLevel.Debug);
 		});
 
-		LogicMonitorClient = new LogicMonitorClient(new LogicMonitorClientOptions
-		{
-			Account = testPortalConfig.Account,
-			AccessId = testPortalConfig.AccessId,
-			AccessKey = testPortalConfig.AccessKey,
-			Logger = Logger
-		});
-
-		CollectorId = testPortalConfig.CollectorId;
-		DownCollectorId = testPortalConfig.DownCollectorId;
-		WindowsDeviceId = testPortalConfig.WindowsDeviceId;
-		WindowsDeviceLargeDeviceDataSourceId = testPortalConfig.WindowsDeviceLargeDeviceDataSourceId;
-		ServiceDeviceId = testPortalConfig.ServiceDeviceId;
-		NetflowDeviceId = testPortalConfig.NetflowDeviceId;
-		SdtResourceGroupId = testPortalConfig.SdtResourceGroupId;
-		TestDashboardId = testPortalConfig.TestDashboardId;
-		DeviceGroupFullPath = testPortalConfig.DeviceGroupFullPath;
-		WebsiteGroupFullPath = testPortalConfig.WebsiteGroupFullPath;
-		ResourceGroupFullPath = testPortalConfig.ResourceGroupFullPath;
-		ReportId = testPortalConfig.ReportId;
-		WebsiteName = testPortalConfig.WebsiteName;
-		SnmpDeviceId = testPortalConfig.SnmpDeviceId;
-		AllWidgetsDashboardId = testPortalConfig.AllWidgetsDashboardId;
-		AccountHasBillingInformation = testPortalConfig.AccountHasBillingInformation;
-		AlertRuleName = testPortalConfig.AlertRuleName;
-		var nowUtc = DateTime.UtcNow;
-		StartEpoch = nowUtc.AddDays(-30).SecondsSinceTheEpoch();
-		EndEpoch = nowUtc.SecondsSinceTheEpoch();
-		Stopwatch = Stopwatch.StartNew();
+		return loggerFactory.CreateLogger("LogicMonitor.Api.Test");
 	}
 
-	private Stopwatch Stopwatch { get; }
+	private static Api.Experimental.LogicMonitorClient CreateExperimentalClient(Fixture fixture, ILogger logger)
+	{
+		var config = GetConfig(fixture);
+		return new Api.Experimental.LogicMonitorClient(new LogicMonitorClientOptions
+		{
+			Account = config.Account,
+			AccessId = config.AccessId,
+			AccessKey = config.AccessKey,
+			Logger = logger
+		});
+	}
 
-	protected int StartEpoch { get; }
-
-	protected int EndEpoch { get; }
-	internal Api.Experimental.LogicMonitorClient ExperimentalLogicMonitorClient { get; }
-	protected LogicMonitorClient LogicMonitorClient { get; }
+	private static LogicMonitorClient CreateClient(Fixture fixture, ILogger logger)
+	{
+		var config = GetConfig(fixture);
+		return new LogicMonitorClient(new LogicMonitorClientOptions
+		{
+			Account = config.Account,
+			AccessId = config.AccessId,
+			AccessKey = config.AccessKey,
+			Logger = logger
+		});
+	}
 
 	protected void AssertIsFast(int durationSeconds)
-		=> Stopwatch.ElapsedMilliseconds.Should().BeLessThan(durationSeconds * 1000);
+		=> TestStopwatch.ElapsedMilliseconds.Should().BeLessThan(durationSeconds * 1000);
 
 	protected static long DaysAgoAsUnixSeconds(int days)
 		=> DateTimeOffset.UtcNow.AddDays(-days).ToUnixTimeSeconds();
@@ -126,4 +94,11 @@ public abstract class TestWithOutput : TestBed<Fixture>
 
 	protected Task<Dashboard> GetAllWidgetsDashboardAsync(CancellationToken cancellationToken)
 		=> LogicMonitorClient.GetAsync<Dashboard>(AllWidgetsDashboardId, cancellationToken);
+
+	public virtual void Dispose()
+	{
+		LogicMonitorClient?.Dispose();
+		ExperimentalLogicMonitorClient?.Dispose();
+		GC.SuppressFinalize(this);
+	}
 }

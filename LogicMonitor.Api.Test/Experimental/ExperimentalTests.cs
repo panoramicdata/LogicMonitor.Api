@@ -1,8 +1,8 @@
-﻿using LogicMonitor.Api.Experimental;
+using LogicMonitor.Api.Experimental;
 
 namespace LogicMonitor.Api.Test.Experimental;
 
-public class ExperimentalTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ExperimentalTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetResources_Succeeds()
@@ -23,8 +23,7 @@ public class ExperimentalTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 						}
 					]
 				)
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 
 		devices.Should().NotBeNullOrEmpty();
 		devices.Should().ContainSingle();

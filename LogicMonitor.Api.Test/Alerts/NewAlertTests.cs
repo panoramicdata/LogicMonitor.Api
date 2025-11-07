@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Alerts;
 
-public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private static readonly DateTime _endDateTime = DateTime.UtcNow.Date;
 	private static readonly int _startDateTimeSeconds = _endDateTime.AddDays(-14).SecondsSinceTheEpoch();
@@ -39,14 +39,11 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Act
 		var allAlerts = await LogicMonitorClient
-			.GetAllAsync(allFilter, default)
-			.ConfigureAwait(true);
+			.GetAllAsync(allFilter, CancellationToken);
 		var sdtAlerts = await LogicMonitorClient
-			.GetAllAsync(sdtFilter, default)
-			.ConfigureAwait(true);
+			.GetAllAsync(sdtFilter, CancellationToken);
 		var nonSdtAlerts = await LogicMonitorClient
-			.GetAllAsync(nonSdtFilter, default)
-			.ConfigureAwait(true);
+			.GetAllAsync(nonSdtFilter, CancellationToken);
 
 		// Assert
 
@@ -71,8 +68,7 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		};
 
 		var allAlerts = await LogicMonitorClient
-			.GetAllAsync(allFilter, default)
-			.ConfigureAwait(true);
+			.GetAllAsync(allFilter, CancellationToken);
 
 		var unique = true;
 		foreach (var alert in allAlerts)
@@ -89,8 +85,7 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetAlertsFilteredByResource()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		foreach (var alertType in new List<AlertType> { AlertType.DataSource, AlertType.EventSource })
 		{
 			var alertFilter = new Filter<Alert>
@@ -104,11 +99,10 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			};
 
 			// Refetch each alert
-			foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter, default).ConfigureAwait(true))
+			foreach (var alert in await LogicMonitorClient.GetAllAsync(alertFilter, CancellationToken))
 			{
 				var a = await LogicMonitorClient
-					.GetAlertAsync(alert.Id, default)
-					.ConfigureAwait(true);
+					.GetAlertAsync(alert.Id, CancellationToken);
 				a.DetailMessage.Should().NotBeNull();
 			}
 		}
@@ -130,20 +124,14 @@ public class NewAlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Act
 		var alerts = await LogicMonitorClient
-			.GetAllAsync(filter, default)
-			.ConfigureAwait(true);
+			.GetAllAsync(filter, CancellationToken);
 		alerts.Should().AllSatisfy(alert => severities.Should().Contain(alert.Severity));
 	}
 
 	[Fact]
-	public async Task GetNonExistentAlertAsJObject()
-	{
-		var action = async () => await LogicMonitorClient
-			.GetJObjectAsync("alert/alerts/DS_NonExistent", default)
-			.ConfigureAwait(true);
-		await action
+	public Task GetNonExistentAlertAsJObject()
+		=> ((Func<Task<JObject>>?)(async () => await LogicMonitorClient
+			.GetJObjectAsync("alert/alerts/DS_NonExistent", CancellationToken)))
 			.Should()
-			.ThrowAsync<LogicMonitorApiException>()
-			.ConfigureAwait(true);
-	}
+			.ThrowAsync<LogicMonitorApiException>();
 }

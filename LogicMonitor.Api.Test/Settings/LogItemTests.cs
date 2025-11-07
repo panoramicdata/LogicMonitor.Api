@@ -2,7 +2,7 @@ using LogicMonitor.Api.Test.Extensions;
 
 namespace LogicMonitor.Api.Test.Settings;
 
-public class LogItemTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class LogItemTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task Get()
@@ -19,7 +19,7 @@ public class LogItemTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 				Property = nameof(LogItem.HappenedOnTimeStampUtc),
 				Direction = OrderDirection.Asc
 			}
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		(accessLogItems.Count > 0).Should().BeTrue();
@@ -42,7 +42,7 @@ public class LogItemTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 				take,
 				DateTime.UtcNow.AddDays(-2),
 				DateTime.UtcNow,
-				LogFilterSortOrder.HappenedOnAsc), default);
+				LogFilterSortOrder.HappenedOnAsc), CancellationToken);
 
 		// Make sure that some are returned
 		accessLogItems.Should().NotBeNullOrEmpty();

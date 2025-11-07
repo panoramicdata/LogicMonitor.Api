@@ -2,23 +2,20 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Data;
 
-public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetForecastGraphData()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var dataSourceGraphs = await LogicMonitorClient
-			.GetDataSourceGraphsAsync(dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetDataSourceGraphsAsync(dataSource.Id, CancellationToken);
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(
@@ -26,7 +23,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 				deviceDataSource.Id,
 				new(),
 				cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataSourceGraph = dataSourceGraphs[0];
@@ -42,7 +39,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 					DataPointLabel = virtualDataPoint.Name
 				},
 				default)
-			.ConfigureAwait(true);
+			;
 
 		forecastGraphData.TrainingGraphData.Lines.Should().ContainSingle();
 		forecastGraphData.ForecastedGraphData.Lines.Should().HaveCount(3);
@@ -51,33 +48,27 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	[Fact]
 	public async Task GetOverviewGraphData()
 	{
-		var device = await GetSnmpResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetSnmpResourceAsync(CancellationToken);
 		device.Should().NotBeNull();
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("snmp64_If-", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("snmp64_If-", CancellationToken);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstanceGroups = await LogicMonitorClient
-			.GetResourceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceGroupsAsync(device.Id, deviceDataSource.Id, CancellationToken);
 		deviceDataSourceInstanceGroups.Should().NotBeNull();
 		deviceDataSourceInstanceGroups.Should().NotBeNullOrEmpty();
 		var deviceDataSourceInstanceGroup = deviceDataSourceInstanceGroups.Skip(2).First();
 		var deviceDataSourceInstanceGroupRefetch = await LogicMonitorClient
-			.GetResourceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceInstanceGroupByNameAsync(device.Id, deviceDataSource.Id, deviceDataSourceInstanceGroup.Name, CancellationToken);
 		deviceDataSourceInstanceGroupRefetch.Should().NotBeNull();
 		deviceDataSourceInstanceGroupRefetch.Name.Should().Be(deviceDataSourceInstanceGroup.Name);
 
 		var overviewGraph = await LogicMonitorClient
-			.GetResourceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets", default)
-			.ConfigureAwait(true);
+			.GetResourceOverviewGraphByNameAsync(device.Id, deviceDataSource.Id, "Top 10 Interfaces by Total Packets", CancellationToken);
 		overviewGraph.Should().NotBeNull();
 
 		var graphDataRequest = new ResourceDataSourceGraphDataRequest
@@ -93,8 +84,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		};
 		graphDataRequest.Validate();
 		var graphData = await LogicMonitorClient
-			.GetGraphDataAsync(graphDataRequest, default)
-			.ConfigureAwait(true);
+			.GetGraphDataAsync(graphDataRequest, CancellationToken);
 		graphData.Should().NotBeNull();
 	}
 
@@ -105,8 +95,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	public async Task GetNetflowGraphData()
 	{
 		var utcNow = DateTime.UtcNow;
-		var netflowDevice = await GetNetflowDeviceAsync(default)
-			.ConfigureAwait(true);
+		var netflowDevice = await GetNetflowDeviceAsync(CancellationToken);
 		_ = await LogicMonitorClient.GetGraphDataAsync(new NetflowGraphDataRequest
 		{
 			ResourceId = netflowDevice.Id,
@@ -114,7 +103,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			EndDateTime = new DateTime(utcNow.Year, utcNow.Month, 1),
 			NetflowFilter = new NetflowFilters(),
 			TimePeriod = TimePeriod.Zoom
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 	}
 
 	/// <summary>
@@ -126,7 +115,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var utcNow = DateTime.UtcNow;
 
 		// Get the configured Netflow Device
-		var netflowDevice = await GetNetflowDeviceAsync(default).ConfigureAwait(true);
+		var netflowDevice = await GetNetflowDeviceAsync(CancellationToken);
 
 		// Create the request
 		var request = new NetflowResourceGroupGraphDataRequest
@@ -139,8 +128,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		// Send the request
 		var data = await LogicMonitorClient
-			.GetGraphDataAsync(request, default)
-			.ConfigureAwait(true);
+			.GetGraphDataAsync(request, CancellationToken);
 
 		// Check there is at least one line of data
 		data.Lines.Should().NotBeEmpty();
@@ -153,21 +141,17 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var dataSourceGraph = await LogicMonitorClient
-			.GetDataSourceGraphByNameAsync(dataSource.Id, "Capacity Detail", default)
-			.ConfigureAwait(true);
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Capacity Detail", CancellationToken);
 		dataSourceGraph.Should().NotBeNull();
 
 		var resourceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, resourceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, resourceDataSource.Id, new Filter<ResourceDataSourceInstance>(), CancellationToken);
 		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
 		{
 			ResourceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
@@ -181,8 +165,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		{
 			Logger.LogInformation("{N:000}: {ElapsedMS:00000}ms", n, stopwatch.ElapsedMilliseconds);
 			await LogicMonitorClient
-				.GetGraphDataAsync(deviceGraphDataRequest, default)
-				.ConfigureAwait(true);
+				.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
 		}
 	}
 
@@ -193,24 +176,20 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var startDateTime = utcNow.FirstDayOfLastMonth();
 
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 
 		var dataSourceGraph = await LogicMonitorClient
-			.GetDataSourceGraphByNameAsync(dataSource.Id, "Capacity Detail", default)
-			.ConfigureAwait(true);
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Capacity Detail", CancellationToken);
 		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), CancellationToken);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 
@@ -227,8 +206,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		LogicMonitorClient.UseCache = true;
 
 		var graphData = await LogicMonitorClient
-			.GetGraphDataAsync(deviceGraphDataRequest, default)
-			.ConfigureAwait(true);
+			.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
 
 		graphData.Lines.Should().NotBeNullOrEmpty();
 		graphData.StartTimeUtc.Should().Be(startDateTime);
@@ -237,8 +215,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		// Ensure that subsequent fetches are fast
 		var stopwatch = Stopwatch.StartNew();
 		graphData = await LogicMonitorClient
-			.GetGraphDataAsync(deviceGraphDataRequest, default)
-			.ConfigureAwait(true);
+			.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
 		graphData.Should().NotBeNull();
 		stopwatch.Stop();
 		stopwatch.ElapsedMilliseconds.Should().BeLessThan(50);
@@ -248,24 +225,20 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	public async Task GetGraphDataWithoutFakeData()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("Ping", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("Ping", CancellationToken);
 		dataSource.Should().NotBeNull();
 		dataSource ??= new();
 
 		var dataSourceGraph = await LogicMonitorClient
-			.GetDataSourceGraphByNameAsync(dataSource.Id, "Ping Round-Trip Time", default)
-			.ConfigureAwait(true);
+			.GetDataSourceGraphByNameAsync(dataSource.Id, "Ping Round-Trip Time", CancellationToken);
 		dataSourceGraph.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>(), CancellationToken);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 
@@ -285,8 +258,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		LogicMonitorClient.UseCache = true;
 
 		var graphData = await LogicMonitorClient
-			.GetGraphDataAsync(deviceGraphDataRequest, default)
-			.ConfigureAwait(true);
+			.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
 		graphData.TimeStamps.Should().HaveCount(62);
 	}
 
@@ -295,13 +267,11 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	{
 		var utcNow = DateTime.UtcNow;
 		var startDateTime = utcNow.FirstDayOfLastMonth();
-		var dashboard = await GetAllWidgetsDashboardAsync(default)
-			.ConfigureAwait(true);
+		var dashboard = await GetAllWidgetsDashboardAsync(CancellationToken);
 		dashboard.Should().NotBeNull();
 
 		var widgets = await LogicMonitorClient
-			.GetWidgetsByDashboardIdAsync(dashboard.Id, default)
-			.ConfigureAwait(true);
+			.GetWidgetsByDashboardIdAsync(dashboard.Id, CancellationToken);
 		widgets.Should().NotBeNull();
 		widgets.Should().NotBeNullOrEmpty();
 
@@ -316,8 +286,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			EndDateTime = utcNow.LastDayOfLastMonth()
 		};
 		var graphData = await LogicMonitorClient
-			.GetGraphDataAsync(widgetGraphDataRequest, default)
-			.ConfigureAwait(true);
+			.GetGraphDataAsync(widgetGraphDataRequest, CancellationToken);
 		graphData.Lines.Should().NotBeNullOrEmpty();
 		graphData.StartTimeUtc.Should().Be(startDateTime);
 		graphData.Lines[0].ColorString.Should().NotBeNull();
@@ -327,8 +296,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	public async Task GetDeviceDataSourceInstances()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
@@ -336,7 +304,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 				WindowsDeviceId,
 				dataSource.Id,
 				default)
-			.ConfigureAwait(true);
+			;
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
@@ -351,7 +319,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 								new Eq<ResourceDataSourceInstance>(nameof(ResourceDataSourceInstance.StopMonitoring), false)
 						],
 						Order = new Order<ResourceDataSourceInstance> { Property = nameof(ResourceDataSourceInstance.Name), Direction = OrderDirection.Asc }
-					}, default).ConfigureAwait(true);
+					}, CancellationToken);
 		deviceDataSourceInstances.Should().NotBeNull();
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 	}
@@ -360,13 +328,11 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	public async Task GetDataSourceUpdateReasons()
 	{
 		var dataSource = await LogicMonitorClient
-		.GetDataSourceByUniqueNameAsync("WinCPU", default)
-			.ConfigureAwait(true);
+		.GetDataSourceByUniqueNameAsync("WinCPU", CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var updateReasons = await LogicMonitorClient
-			.GetDataSourceUpdateReasonAsync(dataSource.Id, new Filter<DataSourceUpdateReason>(), default)
-			.ConfigureAwait(true);
+			.GetDataSourceUpdateReasonAsync(dataSource.Id, new Filter<DataSourceUpdateReason>(), CancellationToken);
 
 		updateReasons.Should().NotBeNull();
 		updateReasons.Items.Should().NotBeEmpty();

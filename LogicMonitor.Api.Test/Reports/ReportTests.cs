@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Reports;
 
-public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllReportGroups()
 	{
 		var reportGroups = await LogicMonitorClient
-			.GetAllAsync<ReportGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<ReportGroup>(CancellationToken);
 		reportGroups.Should().NotBeNull();
 		reportGroups.Should().NotBeNullOrEmpty();
 	}
@@ -16,8 +15,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	public async Task GetAllReports()
 	{
 		var reports = await LogicMonitorClient
-			.GetAllAsync<ReportBase>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<ReportBase>(CancellationToken);
 		reports.Should().NotBeNull();
 		reports.Should().NotBeNullOrEmpty();
 	}
@@ -27,8 +25,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	public async Task RunReportById()
 	{
 		var response =
-			await LogicMonitorClient.RunReportById(ReportId, default)
-			.ConfigureAwait(true);
+			await LogicMonitorClient.RunReportById(ReportId, CancellationToken);
 
 		response.Should().NotBeNull();
 		response.ResultUrl.Should().NotBeNullOrEmpty();
@@ -53,11 +50,11 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 				DashboardId = 205
 			},
 			default)
-			.ConfigureAwait(true);
+			;
 
 		report.Should().NotBeNull();
 
-		await LogicMonitorClient.DeleteAsync<ReportBase>(report.Id, default).ConfigureAwait(true);
+		await LogicMonitorClient.DeleteAsync<ReportBase>(report.Id, CancellationToken);
 	}
 
 	[Fact]
@@ -70,12 +67,12 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 			[
 				new Eq<ReportGroup>(nameof(ReportGroup.Name), "Test Name")
 			]
-		}, default).ConfigureAwait(true)
+		}, CancellationToken)
 		)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingReportGroup, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		// Create it
@@ -83,11 +80,11 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		{
 			Name = "Test Name",
 			Description = "Test Description"
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		// Delete it again
 		await LogicMonitorClient
 			.DeleteAsync(reportGroup, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 }

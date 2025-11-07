@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Users;
 
-public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string TestName = "Test Name";
 
@@ -8,8 +8,7 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetAll()
 	{
 		var items = await LogicMonitorClient
-			.GetAllAsync<UserGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<UserGroup>(CancellationToken);
 		items.Should().NotBeNull();
 		items.Should().NotBeNullOrEmpty();
 	}
@@ -24,16 +23,16 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 			[
 				new Eq<UserGroup>(nameof(ReportGroup.Name), TestName)
 			]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingItem, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		await Task.Delay(TimeSpan.FromSeconds(2))
-			.ConfigureAwait(true);
+			;
 
 		// Create it
 		var newItem = await LogicMonitorClient
@@ -45,14 +44,14 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 				},
 				default
 			)
-			.ConfigureAwait(true);
+			;
 
 		await Task.Delay(TimeSpan.FromSeconds(2))
-			.ConfigureAwait(true);
+			;
 
 		// Delete it again
 		await LogicMonitorClient
 			.DeleteAsync(newItem, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 }

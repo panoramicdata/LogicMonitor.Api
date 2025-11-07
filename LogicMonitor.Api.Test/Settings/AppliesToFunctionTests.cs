@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAppliesToFunctionListSucceeds()
 	{
 		var appliesToFunctions = await LogicMonitorClient
-			.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), default)
-			.ConfigureAwait(true);
+			.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), CancellationToken);
 		appliesToFunctions.Should().NotBeNull();
 		appliesToFunctions.Items.Should().NotBeEmpty();
 	}
@@ -16,8 +15,7 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 	public async Task GetSpecificAppliesToFunctionSucceeds()
 	{
 		var appliesToFunction = await LogicMonitorClient
-			.GetAppliesToFunctionAsync(1, default)
-			.ConfigureAwait(true);
+			.GetAppliesToFunctionAsync(1, CancellationToken);
 		appliesToFunction.Name.Should().Be("NetSNMPComputers");
 	}
 
@@ -36,14 +34,12 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Delete the test AppliesToFunction if it already exists
 		var appliesToFunctions = await LogicMonitorClient
-			.GetAppliesToFunctionListAsync(filter, default)
-			.ConfigureAwait(true);
+			.GetAppliesToFunctionListAsync(filter, CancellationToken);
 
 		foreach (var atf in appliesToFunctions.Items)
 		{
 			await LogicMonitorClient
-				.DeleteAsync<AppliesToFunction>(atf.Id, default)
-				.ConfigureAwait(true);
+				.DeleteAsync<AppliesToFunction>(atf.Id, CancellationToken);
 		}
 
 		var newATF = new AppliesToFunctionCreationDto()
@@ -54,12 +50,10 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 		};
 
 		await LogicMonitorClient
-			.AddAppliesToFunctionAsync(newATF, default)
-			.ConfigureAwait(true);
+			.AddAppliesToFunctionAsync(newATF, CancellationToken);
 
 		appliesToFunctions = await LogicMonitorClient
-			.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), default)
-			.ConfigureAwait(true);
+			.GetAppliesToFunctionListAsync(new Filter<AppliesToFunction>(), CancellationToken);
 
 		var foundATF = appliesToFunctions.Items.SingleOrDefault(atf => atf.Name == TestAppliesToFunctionName);
 		foundATF.Should().NotBeNull();
@@ -67,7 +61,6 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 		foundATF.Description.Should().Be(TestAppliesToFunctionDescription);
 
 		await LogicMonitorClient
-				.DeleteAsync<AppliesToFunction>(foundATF.Id, default)
-				.ConfigureAwait(true);
+				.DeleteAsync<AppliesToFunction>(foundATF.Id, CancellationToken);
 	}
 }

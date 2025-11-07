@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Statistics;
 
-public class StatisticsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class StatisticsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task Statistics_GetVersion_Succeeds()
 	{
 		_ = await LogicMonitorClient
-			.GetVersionAsync(default)
-			.ConfigureAwait(true);
+			.GetVersionAsync(CancellationToken);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
 		statistics.ApiCallFailureCount.Should().Be(0);
@@ -28,8 +27,7 @@ public class StatisticsTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task Statistics_GetCollectors_Succeeds()
 	{
 		_ = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		Api.Statistics statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
 		statistics.ApiCallFailureCount.Should().Be(0);

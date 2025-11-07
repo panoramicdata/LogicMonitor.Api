@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task CreateUpdateAndDelete()
@@ -11,13 +11,12 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Delete if already present
 		var existingAppliesToFunction = await LogicMonitorClient
-			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, CancellationToken);
 		if (existingAppliesToFunction != null)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingAppliesToFunction, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		// Create
@@ -26,12 +25,11 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 			Name = testAppliesToFunctionName,
 			Description = testAppliesToFunctionDescription,
 			Code = testAppliesToFunctionCode
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		// Refetch and check
 		existingAppliesToFunction = await LogicMonitorClient
-			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, CancellationToken);
 		existingAppliesToFunction.Should().NotBeNull();
 		if (existingAppliesToFunction != null)
 		{
@@ -44,13 +42,11 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 		const string newDescription = testAppliesToFunctionDescription + "2";
 		existingAppliesToFunction.Description = newDescription;
 		await LogicMonitorClient
-			.PutAsync(existingAppliesToFunction, default)
-			.ConfigureAwait(true);
+			.PutAsync(existingAppliesToFunction, CancellationToken);
 
 		// Refetch and check
 		existingAppliesToFunction = await LogicMonitorClient
-			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, CancellationToken);
 
 		existingAppliesToFunction ??= new();
 		existingAppliesToFunction.Description.Should().Be(newDescription);
@@ -58,12 +54,11 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 		// Delete
 		await LogicMonitorClient
 			.DeleteAsync(existingAppliesToFunction, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 
 		// Refetch and check
 		existingAppliesToFunction = await LogicMonitorClient
-			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, default)
-			.ConfigureAwait(true);
+			.GetByNameAsync<AppliesToFunction>(testAppliesToFunctionName, CancellationToken);
 		existingAppliesToFunction.Should().BeNull();
 	}
 
@@ -119,8 +114,7 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 	public async Task CustomerCodeWorks()
 	{
 		var matches = await LogicMonitorClient
-			.GetAppliesToAsync("customer.code == \"PDL\"", default)
-			.ConfigureAwait(true);
+			.GetAppliesToAsync("customer.code == \"PDL\"", CancellationToken);
 		matches.Should().NotBeNull();
 		matches.Should().NotBeEmpty();
 	}

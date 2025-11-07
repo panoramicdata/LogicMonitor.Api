@@ -1,13 +1,12 @@
 namespace LogicMonitor.Api.Test.Resources;
 
-public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllDeviceDataSourcesAsync()
 	{
 		var deviceDataSources = await LogicMonitorClient
-			.GetAllResourceDataSourcesAsync(1765, null, default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourcesAsync(1765, null, CancellationToken);
 		deviceDataSources.Should().NotBeNull();
 	}
 
@@ -15,13 +14,11 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	public async Task DeviceDataSourceTests2()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SSL_Certificates", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("SSL_Certificates", CancellationToken);
 
 		// Get all windows devices in the datacenter
 		var resources = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, default)
-			.ConfigureAwait(true);
+			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
 		resources.Should().NotBeNullOrEmpty();
 		// We have devices
 
@@ -32,8 +29,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 			if (dataSource != null)
 			{
 				var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient
-					.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default)
-					.ConfigureAwait(true);
+					.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
 				if (deviceDataSourceByDeviceIdAndDataSourceId is null)
 				{
 					continue;
@@ -50,12 +46,10 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	public async Task GetDeviceDatasourceData()
 	{
 		var deviceDataSources = await LogicMonitorClient
-			.GetAllResourceDataSourcesAsync(WindowsDeviceId, null, default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourcesAsync(WindowsDeviceId, null, CancellationToken);
 
 		var data = await LogicMonitorClient
-			.GetResourceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataSourceDataAsync(WindowsDeviceId, deviceDataSources[0].Id, CancellationToken);
 
 		data.Should().NotBeNull();
 	}

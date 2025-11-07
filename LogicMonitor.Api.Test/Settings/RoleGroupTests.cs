@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string Value = "Unit Test Role Group";
 
@@ -8,16 +8,14 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	public async Task GetRoleGroups()
 	{
 		var roleGroups = await LogicMonitorClient
-			.GetAllAsync<RoleGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<RoleGroup>(CancellationToken);
 		roleGroups.Should().NotBeNull();
 		roleGroups.Should().NotBeNullOrEmpty();
 
 		foreach (var role in roleGroups)
 		{
 			var refetchedRole = await LogicMonitorClient
-				.GetAsync<RoleGroup>(role.Id, default)
-				.ConfigureAwait(true);
+				.GetAsync<RoleGroup>(role.Id, CancellationToken);
 			refetchedRole.Name.Should().Be(role.Name);
 		}
 	}
@@ -27,31 +25,30 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	{
 		// Ensure there is no existing RoleGroup called "Test"
 		var existingRoleGroup = (await LogicMonitorClient
-				.GetAllAsync(new Filter<RoleGroup> { FilterItems = [new Eq<RoleGroup>(nameof(RoleGroup.Name), Value)] }, default)
-				.ConfigureAwait(true))
+				.GetAllAsync(new Filter<RoleGroup> { FilterItems = [new Eq<RoleGroup>(nameof(RoleGroup.Name), Value)] }, CancellationToken)
+				)
 			.SingleOrDefault();
 		if (existingRoleGroup is not null)
 		{
 			await LogicMonitorClient
 				.DeleteAsync(existingRoleGroup, cancellationToken: default)
-				.ConfigureAwait(true);
+				;
 		}
 
 		var roleGroup = await LogicMonitorClient.CreateAsync(new RoleGroupCreationDto
 		{
 			Name = Value,
 			Description = "Desc",
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		// Refetch
 		var refetch = await LogicMonitorClient
-			.GetAsync<RoleGroup>(roleGroup.Id, default)
-			.ConfigureAwait(true);
+			.GetAsync<RoleGroup>(roleGroup.Id, CancellationToken);
 		refetch.Should().NotBeNull();
 
 		// Delete
 		await LogicMonitorClient
 			.DeleteAsync(roleGroup, cancellationToken: default)
-			.ConfigureAwait(true);
+			;
 	}
 }

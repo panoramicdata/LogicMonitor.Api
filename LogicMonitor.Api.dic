@@ -58,6 +58,7 @@ Cognito
 color
 configsources
 Connectwise
+criticals
 Datacenter
 datafetch
 datapoint
@@ -106,6 +107,7 @@ importcore
 inline
 internalalerts
 Ipmi
+IPs
 java
 jdbc
 jmx
@@ -138,12 +140,14 @@ opsnote
 Otel
 Paas
 pagerduty
+panoramicdata
 perfmon
 pollnow
 propertyrules
 pushmodules
 recurse
 recursing
+refetches
 Rm
 rpn
 Saas
@@ -169,6 +173,7 @@ Soql
 Sqs
 sr
 Sso
+Stat
 syntheticsselenium
 Sys
 Syslog

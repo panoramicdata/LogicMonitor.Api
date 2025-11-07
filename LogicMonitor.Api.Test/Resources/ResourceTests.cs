@@ -2,14 +2,13 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Resources;
 
-public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetResourcesByResourceGroupRecursive()
 	{
 		var devices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, default)
-			.ConfigureAwait(true);
+			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
 
 		devices.Should().NotBeNull();
 	}
@@ -41,30 +40,28 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Delete device if it already exists
 		var deviceForDeletion = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(deviceDisplayName, default)
-			.ConfigureAwait(true);
+			.GetResourceByDisplayNameAsync(deviceDisplayName, CancellationToken);
 		if (deviceForDeletion is not null)
 		{
 			await logicMonitorClient
-				.DeleteAsync(deviceForDeletion, cancellationToken: default)
-				.ConfigureAwait(true);
+				.DeleteAsync(deviceForDeletion, cancellationToken: CancellationToken)
+				;
 		}
 
 		// Delete ResourceGroup if it already exists
 		var deviceGroupForDeletion = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(deviceGroupName, default)
-			.ConfigureAwait(true);
+			.GetResourceGroupByFullPathAsync(deviceGroupName, CancellationToken);
 		if (deviceGroupForDeletion is not null)
 		{
 			await logicMonitorClient
-				.DeleteAsync(deviceGroupForDeletion, cancellationToken: default)
-				.ConfigureAwait(true);
+				.DeleteAsync(deviceGroupForDeletion, cancellationToken: CancellationToken)
+				;
 		}
 
 		// Get an active collector
 		var collectorId = (await logicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true))
+			.GetAllAsync<Collector>(CancellationToken)
+			)
 		.OrderBy(c => c.Id)
 		.FirstOrDefault(c => !c.IsDown)?.Id;
 		collectorId.Should().NotBeNull();
@@ -76,7 +73,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			Name = deviceGroupName,
 			Description = deviceGroupDescription,
 			ParentId = deviceGroupParentId.ToString(CultureInfo.InvariantCulture)
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 
 		foreach (var finalHardDelete in new[] { false, true })
 		{
@@ -99,10 +96,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			var deviceFromCreation = await logicMonitorClient
 				.CreateAsync(
 					deviceCreationDto,
-					default)
-				.ConfigureAwait(true);
+					CancellationToken);
 
-			foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Resource>(deviceFromCreation.Id, default).ConfigureAwait(true) })
+			foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Resource>(deviceFromCreation.Id, CancellationToken) })
 			{
 				device.Name.Should().Be(resourceName);
 				device.DisplayName.Should().Be(deviceDisplayName);
@@ -118,13 +114,11 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 			// Soft delete device
 			await logicMonitorClient
-				.DeleteAsync(deviceFromCreation, false, cancellationToken: default)
-				.ConfigureAwait(true);
+				.DeleteAsync(deviceFromCreation, false, cancellationToken: CancellationToken);
 
 			// Get recycle bin items
 			var recycleBinItems = await logicMonitorClient
-				.GetAllAsync<RecycleBinItem>(default)
-				.ConfigureAwait(true);
+				.GetAllAsync<RecycleBinItem>(CancellationToken);
 
 			// Assert that the device is in the recycle bin
 			recycleBinItems.Select(i => i.ResourceId).Should().Contain(deviceFromCreation.Id);
@@ -141,21 +135,18 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			{
 				// Restore from recycle bin
 				await logicMonitorClient
-					.RecycleBinRestoreAsync([recycleBinItem.Id], default)
-					.ConfigureAwait(true);
+					.RecycleBinRestoreAsync([recycleBinItem.Id], CancellationToken);
 
 				// Make sure that it's no longer in the recycle bin
 				recycleBinItems = await logicMonitorClient
-					.GetAllAsync<RecycleBinItem>(default)
-					.ConfigureAwait(true);
+					.GetAllAsync<RecycleBinItem>(CancellationToken);
 				recycleBinItem = recycleBinItems
 					.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
 				recycleBinItem.Should().BeNull();
 
 				// Get the resource again by Id
 				var restoredResource = await logicMonitorClient
-					.GetAsync<Resource>(deviceFromCreation.Id, default)
-					.ConfigureAwait(true);
+					.GetAsync<Resource>(deviceFromCreation.Id, CancellationToken);
 
 				// Check that it's the same
 				restoredResource.Should().NotBeNull();
@@ -163,30 +154,28 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 				// Do a regular hard delete
 				await logicMonitorClient
-					.DeleteAsync(deviceFromCreation, cancellationToken: default)
-					.ConfigureAwait(true);
+					.DeleteAsync(deviceFromCreation, cancellationToken: CancellationToken)
+					;
 			}
 			else
 			{
 				// Remove from the recycle bin
 				await logicMonitorClient
-					.RecycleBinDeleteAsync([recycleBinItem.Id], default)
-					.ConfigureAwait(true);
+					.RecycleBinDeleteAsync([recycleBinItem.Id], CancellationToken);
 			}
 		}
 
 		// Delete ResourceGroup
 		await logicMonitorClient
-			.DeleteAsync(deviceGroup, cancellationToken: default)
-			.ConfigureAwait(true);
+			.DeleteAsync(deviceGroup, cancellationToken: CancellationToken)
+			;
 	}
 
 	[Fact]
 	public async Task GetAllScheduledDownTimes()
 	{
 		var scheduledDownTimes = await LogicMonitorClient
-			.GetAllAsync<ScheduledDownTime>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<ScheduledDownTime>(CancellationToken);
 
 		scheduledDownTimes.Should().NotBeNull();
 	}
@@ -196,8 +185,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		const int MaxCount = 50;
 		var devicesPage = await LogicMonitorClient
-			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = MaxCount }, default)
-			.ConfigureAwait(true);
+			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = MaxCount }, CancellationToken);
 
 		devicesPage.Should().NotBeNull();
 		(devicesPage.Items.Count <= MaxCount).Should().BeTrue();
@@ -215,8 +203,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 						nameof(ResourceDataSourceInstance.Name),
 						nameof(ResourceDataSourceInstance.DataSourceName),
 				]
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 		(deviceInstances.Items.Count > 10).Should().BeTrue();
 	}
 
@@ -224,8 +211,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetDeviceByDeviceId()
 	{
 		var device = await LogicMonitorClient
-			.GetAsync<Resource>(77, default)
-			.ConfigureAwait(true);
+			.GetAsync<Resource>(77, CancellationToken);
 		device.Should().NotBeNull();
 	}
 
@@ -237,30 +223,26 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public Task GetDeviceByNonExistentDeviceIdShouldFail() =>
 		LogicMonitorClient
 			.Invoking(async x => await LogicMonitorClient
-				.GetAsync<Resource>(12345678, default)
-				.ConfigureAwait(true))
+				.GetAsync<Resource>(12345678, CancellationToken)
+				)
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>();
 
 	[Fact]
 	public async Task GetDeviceByDisplayNameAsync()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var device2 = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(device.DisplayName, default)
-			.ConfigureAwait(true);
+			.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken);
 		device2.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetDeviceByHostName()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var devices = await LogicMonitorClient
-			.GetResourcesByHostNameAsync(device.Name, 100, default)
-			.ConfigureAwait(true);
+			.GetResourcesByHostNameAsync(device.Name, 100, CancellationToken);
 
 		// Possibly all 127.0.0.1
 		devices.Should().NotBeEmpty();
@@ -269,11 +251,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task DateTimeSetCorrectly()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var refresh = await LogicMonitorClient
-			.GetAsync<Resource>(device.Id, default)
-			.ConfigureAwait(true);
+			.GetAsync<Resource>(device.Id, CancellationToken);
 		refresh.CreatedOnSeconds.Should().BePositive();
 		refresh.CreatedOnUtc.Should().NotBeNull();
 		refresh.CreatedOnUtc.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
@@ -282,8 +262,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task SerialisationIgnoredProperties()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		device.Should().NotBeNull();
 		var jObject = JObject.FromObject(device);
 		int.Parse(jObject["id"]!.ToString(), CultureInfo.InvariantCulture).Should().Be(device.Id);
@@ -293,11 +272,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDevicePropertiesContainsExpected()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		deviceProperties.Should().Contain(dp => dp.Name == "location");
 		deviceProperties.Should().Contain(dp => dp.Type == PropertyType.Auto);
 	}
@@ -307,8 +284,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		// Get the dataSource
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", default)
-			.ConfigureAwait(true);
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		// Get the information
@@ -316,8 +292,8 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.GetResourcesAndInstancesAssociatedWithDataSourceByIdPageAsync(
 				dataSource!.Id,
 				new Filter<ResourceWithDataSourceInstanceInformation> { Skip = 0, Take = 300 },
-				default)
-			.ConfigureAwait(true);
+				CancellationToken)
+			;
 
 		// Check
 		info.Should().NotBeNull();
@@ -327,11 +303,11 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public void GetDevicesByDeviceGroupFullPath_InvalidDeviceGroup_ThrowsException()
 	{
 		LogicMonitorClient
-			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", true, default).ConfigureAwait(true))
+			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", true, CancellationToken))
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>();
 		LogicMonitorClient
-			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", false, default).ConfigureAwait(true))
+			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", false, CancellationToken))
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>();
 	}
@@ -341,12 +317,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		// Recurse
 		var allDatacenterDevices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, default)
-			.ConfigureAwait(true);
+			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
 		// Don't recurse
 		var topFolderDevices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, false, default)
-			.ConfigureAwait(true);
+			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, false, CancellationToken);
 
 		// Make sure there are more when recursing
 		allDatacenterDevices.Should().HaveCountGreaterThan(topFolderDevices.Count);
@@ -357,8 +331,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetDevicesRecurse()
 	{
 		var allStaffDevices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, default)
-			.ConfigureAwait(true);
+			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
 		allStaffDevices.Should().NotBeNullOrEmpty();
 	}
 
@@ -367,8 +340,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		const int numberToFetch = 10;
 		var devices = await LogicMonitorClient
-			.GetPageAsync(new Filter<Resource> { Skip = 0, Take = numberToFetch }, default)
-			.ConfigureAwait(true);
+			.GetPageAsync(new Filter<Resource> { Skip = 0, Take = numberToFetch }, CancellationToken);
 		devices.Items.Should().HaveCount(numberToFetch);
 		devices.TotalCount.Should().NotBe(numberToFetch);
 		devices.TotalCount.Should().NotBe(0);
@@ -378,8 +350,8 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetFullDeviceTree()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetFullResourceTreeAsync(cancellationToken: default)
-			.ConfigureAwait(true);
+			.GetFullResourceTreeAsync(cancellationToken: CancellationToken)
+			;
 		deviceGroup.Should().NotBeNull();
 	}
 
@@ -387,11 +359,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetFullDeviceTreeForDatacenter()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, default)
-			.ConfigureAwait(true);
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
 		deviceGroup = await LogicMonitorClient
-			.GetFullResourceTreeAsync(deviceGroup.Id, default)
-			.ConfigureAwait(true);
+			.GetFullResourceTreeAsync(deviceGroup.Id, CancellationToken);
 		deviceGroup.Should().NotBeNull();
 	}
 
@@ -400,21 +370,21 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		// Get the result without specifying a type
 		var treeNodeFreeSearch = await LogicMonitorClient
-			.TreeNodeFreeSearchAsync("Datacenter", 100, cancellationToken: default)
-			.ConfigureAwait(true);
+			.TreeNodeFreeSearchAsync("Datacenter", 100, cancellationToken: CancellationToken)
+			;
 		var totalItemCount = treeNodeFreeSearch.Count;
 
 		// Subtract the count of a search for each individual type
 		var treeNodeFreeSearchResultTypes =
-		Enum.GetValues(typeof(TreeNodeFreeSearchResultType))
-		.Cast<TreeNodeFreeSearchResultType>()
-		.Except([TreeNodeFreeSearchResultType.Unknown]);
+		Enum.GetValues<TreeNodeFreeSearchResultType>()
+			.Cast<TreeNodeFreeSearchResultType>()
+			.Except([TreeNodeFreeSearchResultType.Unknown]);
 		var list = new List<TreeNodeFreeSearchResult>();
 		foreach (var treeNodeFreeSearchResultType in treeNodeFreeSearchResultTypes)
 		{
 			var treeNodeFreeSearchResult = await LogicMonitorClient
 				.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType)
-				.ConfigureAwait(true);
+				;
 			list.AddRange(treeNodeFreeSearchResult);
 		}
 		// Make sure that some are returned
@@ -425,8 +395,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task UpdateDeviceProperty()
 	{
 		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 
 		// Remove any called "test"
 		const string testPropertyName = "test";
@@ -445,12 +414,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Update the device
 		await portalClient
-			.PutAsync(device, default)
-			.ConfigureAwait(true);
+			.PutAsync(device, CancellationToken);
 
 		// Re-fetch the device
-		device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		device = await GetWindowsResourceAsync(CancellationToken);
 
 		// Make sure that there is now one called "test"
 		var testProperty = device
@@ -465,12 +432,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		device.CustomProperties = [.. device.CustomProperties.Where(p => p.Name != testPropertyName)];
 
 		// Update the device
-		await portalClient.PutAsync(device, default)
-			.ConfigureAwait(true);
+		await portalClient.PutAsync(device, CancellationToken);
 
 		// Re-fetch the properties
-		device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		device = await GetWindowsResourceAsync(CancellationToken);
 
 		// Make sure that there are none called "test"
 		device.CustomProperties.Should().AllSatisfy(p => p.Name.Should().NotBe(testPropertyName));
@@ -479,39 +444,33 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task SetDeviceCustomProperty()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		const string propertyName = "blah";
 		const string value1 = "test1";
 		const string value2 = "test2";
 
 		// Set it to an expected value
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, value1, default)
-			.ConfigureAwait(true);
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, value1, CancellationToken);
 		var deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
 		// Set it to a different value
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, value2, default)
-			.ConfigureAwait(true);
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, value2, CancellationToken);
 		deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
 		// Set it to null (delete it)
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: default)
-			.ConfigureAwait(true);
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: CancellationToken)
+			;
 		deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 
@@ -522,9 +481,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 					propertyName,
 					null,
 					SetPropertyMode.Delete,
-					default)
-				.ConfigureAwait(true))
-			.ConfigureAwait(true);
+					CancellationToken)
+				)
+			;
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
 		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient
@@ -533,8 +492,8 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				null,
 				SetPropertyMode.Update,
-				default).ConfigureAwait(true)
-			).ConfigureAwait(true);
+				CancellationToken)
+			);
 		updateException.Should().BeOfType<InvalidOperationException>();
 
 		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient
@@ -543,9 +502,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				null,
 				SetPropertyMode.Create,
-				default)
-				.ConfigureAwait(true))
-			.ConfigureAwait(true);
+				CancellationToken)
+				)
+			;
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
@@ -555,11 +514,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				value1,
 				SetPropertyMode.Create,
-				cancellationToken: default)
-			.ConfigureAwait(true);
+				cancellationToken: CancellationToken)
+			;
 		deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
 		actual.Should().Be(1);
 
@@ -570,11 +528,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				value2,
 				SetPropertyMode.Update,
-				cancellationToken: default)
-			.ConfigureAwait(true);
+				cancellationToken: CancellationToken)
+			;
 		deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
 		actual.Should().Be(1);
 
@@ -585,11 +542,10 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				null,
 				SetPropertyMode.Delete,
-				cancellationToken: default)
-			.ConfigureAwait(true);
+				cancellationToken: CancellationToken)
+			;
 		deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 	}
@@ -597,33 +553,27 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceCustomProperties()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
-		var deviceProperties = await LogicMonitorClient.GetResourcePropertiesAsync(device.Id, default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
+		var deviceProperties = await LogicMonitorClient.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		deviceProperties.Should().NotBeNullOrEmpty();
 	}
 
 	[Fact]
 	public async Task GetDeviceUsingSubUrl()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var deviceRefetch = await LogicMonitorClient
-			.GetAllAsync<JObject>($"device/devices?filter=id:{device.Id}&fields=inheritedProperties", default)
-			.ConfigureAwait(true);
+			.GetAllAsync<JObject>($"device/devices?filter=id:{device.Id}&fields=inheritedProperties", CancellationToken);
 		deviceRefetch.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task GetDifferentDeviceTypes()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		device.ResourceType.Should().Be(ResourceType.Regular);
 
-		device = await GetServiceDeviceAsync(default)
-			.ConfigureAwait(true);
+		device = await GetServiceDeviceAsync(CancellationToken);
 		device.ResourceType.Should().Be(ResourceType.Service);
 
 		// TODO - AWS and Azure
@@ -638,7 +588,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			[
 				new Eq<Resource>(nameof(Resource.ResourceStatus), "dead")
 			]
-		}, default).ConfigureAwait(true);
+		}, CancellationToken);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -652,8 +602,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			[
 				new Ne<Resource>(nameof(Resource.AlertDisableStatus), "none-none-none")
 			]
-		}, default)
-		.ConfigureAwait(true);
+		}, CancellationToken);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -663,8 +612,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(
 			new Filter<Resource> { QueryString = "filter=alertDisableStatus!:\"none-none-none\"" },
-			default)
-			.ConfigureAwait(true);
+			CancellationToken);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -677,14 +625,12 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.GetAllAsync(new Filter<ResourceGroup>
 			{
 				Order = new Order<ResourceGroup> { Property = nameof(ResourceGroup.Id), Direction = OrderDirection.Asc }
-			}, default)
-			.ConfigureAwait(true);
+			}, CancellationToken);
 		var deviceGroup = deviceGroups.Find(dg => dg.SubGroups.Count != 0);
 		deviceGroup.Should().NotBeNull();
 		deviceGroup ??= new();
 		var deviceList = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(deviceGroup.FullPath, true, default)
-			.ConfigureAwait(true);
+			.GetResourcesByResourceGroupFullPathAsync(deviceGroup.FullPath, true, CancellationToken);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}
@@ -692,11 +638,9 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceAlertsPageAsync()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var alertsPage = await LogicMonitorClient
-			.GetResourceAlertsPageAsync(device.Id, 0, 100, default)
-			.ConfigureAwait(true);
+			.GetResourceAlertsPageAsync(device.Id, 0, 100, CancellationToken);
 		alertsPage.Should().NotBeNull();
 		alertsPage.Items.Should().HaveCount(alertsPage.TotalCount);
 	}
@@ -717,51 +661,42 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		};
 
 		// Get the Device
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		device.Should().NotBeNull();
 
 		// Get the Alerts
 		var allAlerts = await LogicMonitorClient
-			.GetResourceAlertsByIdAsync(device.Id, alertFilter, default)
-			.ConfigureAwait(true);
+			.GetResourceAlertsByIdAsync(device.Id, alertFilter, CancellationToken);
 		allAlerts.Should().NotBeNull();
 	}
 
 	[Fact]
 	public async Task PatchDeviceAsync()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 		var oldDescription = device.Description;
 		var newDescription = Guid.NewGuid().ToString();
 		await LogicMonitorClient
-			.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }, default)
-			.ConfigureAwait(true);
-		var updatedDevice = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+			.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }, CancellationToken);
+		var updatedDevice = await GetWindowsResourceAsync(CancellationToken);
 		updatedDevice.Description.Should().Be(newDescription);
 		await LogicMonitorClient
-			.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }, default)
-			.ConfigureAwait(true);
+			.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }, CancellationToken);
 	}
 
 	[Fact]
-	public async Task ScheduleActiveDiscovery()
-		=> await LogicMonitorClient
-			.ScheduleActiveDiscovery(WindowsDeviceId, default)
-			.ConfigureAwait(true);
+	public Task ScheduleActiveDiscovery()
+		=> LogicMonitorClient
+			.ScheduleActiveDiscovery(WindowsDeviceId, CancellationToken);
 
 	[Fact]
 	[Trait("Long Tests", "")]
 	public async Task GetDeviceAlertSettings()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 
 		var config = await LogicMonitorClient
-			.GetResourceDataPointConfigurationsAsync(device.Id, default)
-			.ConfigureAwait(true);
+			.GetResourceDataPointConfigurationsAsync(device.Id, CancellationToken);
 
 		config.Should().NotBeEmpty();
 	}
@@ -769,19 +704,17 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetDeviceDataSourceInstanceDataPointConfigurationAsync()
 	{
-		var device = await GetWindowsResourceAsync(default)
-			.ConfigureAwait(true);
+		var device = await GetWindowsResourceAsync(CancellationToken);
 
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SNMP_Network_Interfaces", default);
+			.GetDataSourceByUniqueNameAsync("SNMP_Network_Interfaces", CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, default);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
 
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, default)
-			.ConfigureAwait(true);
+			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, CancellationToken);
 
 		var deviceDataSourceInstance = deviceDataSourceInstances.FirstOrDefault();
 		deviceDataSourceInstance.Should().NotBeNull();
@@ -791,8 +724,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				device.Id,
 				deviceDataSource.Id,
 				deviceDataSourceInstance.Id,
-				default)
-			.ConfigureAwait(true);
+				CancellationToken);
 
 		config.Should().NotBeNull();
 	}
@@ -801,8 +733,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetTopTalkerGraphAsync()
 	{
 		var devicesPage = await LogicMonitorClient
-			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = 50 }, default)
-			.ConfigureAwait(true);
+			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = 50 }, CancellationToken);
 
 		var netflowEnabledId = 0;
 
@@ -815,8 +746,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		}
 
 		var graph = await LogicMonitorClient
-			.GetTopTalkersGraphAsync(netflowEnabledId, default)
-			.ConfigureAwait(true);
+			.GetTopTalkersGraphAsync(netflowEnabledId, CancellationToken);
 		graph.Should().NotBeNull();
 	}
 }

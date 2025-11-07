@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.Cache;
 
-public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task CacheTestFasterSecondTimeAround()
@@ -10,16 +10,16 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		LogicMonitorClient.CacheTimeSpan = TimeSpan.FromSeconds(3);
 
 		// Wait for any cache entry to expire (required for consistent operation)
-		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(true);
+		await Task.Delay(TimeSpan.FromSeconds(4), CancellationToken);
 
 		var stopwatch = Stopwatch.StartNew();
-		var firstResource = await GetWindowsResourceAsync(default).ConfigureAwait(true);
+		var firstResource = await GetWindowsResourceAsync(CancellationToken);
 
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 		stopwatch.Restart();
 
-		var secondResource = await GetWindowsResourceAsync(default).ConfigureAwait(true);
+		var secondResource = await GetWindowsResourceAsync(CancellationToken);
 
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -43,22 +43,21 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 
 		// Make a call to force authentication
 		_ = await LogicMonitorClient
-			.GetTimeZoneSettingAsync(default)
-			.ConfigureAwait(true);
+			.GetTimeZoneSettingAsync(CancellationToken);
 
 		// Fetch a result
 		var stopwatch = Stopwatch.StartNew();
-		var firstDevice = await GetWindowsResourceAsync(default).ConfigureAwait(true);
+		var firstDevice = await GetWindowsResourceAsync(CancellationToken);
 		firstDevice.Should().NotBeNull();
 		var firstDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 1 {FirstDuration}", firstDuration);
 
 		// Wait for the cache timeout duration
-		await Task.Delay(TimeSpan.FromSeconds(4)).ConfigureAwait(true);
+		await Task.Delay(TimeSpan.FromSeconds(4), CancellationToken);
 
 		// Re-fetch a result
 		stopwatch.Restart();
-		var secondDevice = await GetWindowsResourceAsync(default).ConfigureAwait(true);
+		var secondDevice = await GetWindowsResourceAsync(CancellationToken);
 		secondDevice.Should().NotBeNull();
 		var secondDuration = stopwatch.Elapsed;
 		Logger.LogInformation("Duration 2 {SecondDuration}", secondDuration);
@@ -78,7 +77,7 @@ public class CacheTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		for (var n = 0; n < 1000; n++)
 		{
 			var innerStopwatch = Stopwatch.StartNew();
-			_ = await GetWindowsResourceAsync(default).ConfigureAwait(true);
+			_ = await GetWindowsResourceAsync(CancellationToken);
 			Logger.LogInformation("Run {RunIndex}: {Milliseconds}ms", n, innerStopwatch.ElapsedMilliseconds);
 		}
 

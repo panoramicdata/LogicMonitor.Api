@@ -33,7 +33,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetApplicationsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync(default);
+		var device = await GetNetflowDeviceAsync(CancellationToken);
 
 		var flowApplications = await LogicMonitorClient
 			.GetResourceGroupFlowApplicationsPageAsync(
@@ -59,7 +59,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetBandwidthsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync(default);
+		var device = await GetNetflowDeviceAsync(CancellationToken);
 
 		var flowBandwidths = await LogicMonitorClient.GetResourceGroupFlowBandwidthsPageAsync(new ResourceGroupFlowBandwidthsRequest
 		{
@@ -72,7 +72,7 @@ public class FlowTests : TestWithOutput
 			FlowDirection = FlowDirection.All,
 			StartDateTime = DateTime.UtcNow.AddDays(-2),
 			EndDateTime = DateTime.UtcNow.AddDays(-1)
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		flowBandwidths.Items.Should().NotBeNullOrEmpty();
@@ -81,7 +81,7 @@ public class FlowTests : TestWithOutput
 	[Fact]
 	public async Task GetFlowsForDeviceGroup()
 	{
-		var device = await GetNetflowDeviceAsync(default);
+		var device = await GetNetflowDeviceAsync(CancellationToken);
 
 		var flows = await LogicMonitorClient.GetResourceGroupFlowsPageAsync(new ResourceGroupFlowsRequest
 		{
@@ -94,7 +94,7 @@ public class FlowTests : TestWithOutput
 			FlowDirection = FlowDirection.All,
 			StartDateTime = DateTime.UtcNow.AddDays(-2),
 			EndDateTime = DateTime.UtcNow.AddDays(-1)
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
@@ -107,7 +107,7 @@ public class FlowTests : TestWithOutput
 		{
 			TimePeriod = TimePeriod.OneDay,
 			ResourceId = NetflowDeviceId
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		flowEndpoints.Items.Should().NotBeNullOrEmpty();
@@ -123,7 +123,7 @@ public class FlowTests : TestWithOutput
 		{
 			TimePeriod = TimePeriod.OneDay,
 			ResourceId = NetflowDeviceId
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
@@ -139,7 +139,7 @@ public class FlowTests : TestWithOutput
 		{
 			TimePeriod = TimePeriod.OneDay,
 			ResourceId = NetflowDeviceId
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		flowPorts.Items.Should().NotBeNullOrEmpty();
@@ -157,7 +157,7 @@ public class FlowTests : TestWithOutput
 			TimePeriod = TimePeriod.Zoom,
 			StartDateTime = _startDateTimeSeconds,
 			EndDateTime = _endDateTimeSeconds
-		}, default);
+		}, CancellationToken);
 
 		// Make sure that some are returned
 		flows.Items.Should().NotBeNullOrEmpty();
@@ -167,7 +167,7 @@ public class FlowTests : TestWithOutput
 	public async Task GetDeviceFlowInformation()
 	{
 		var interfaces = await LogicMonitorClient
-			.GetResourceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), default);
+			.GetResourceFlowInterfacesPageAsync(NetflowDeviceId, new Filter<FlowInterface>(), CancellationToken);
 		interfaces.Items.Should().NotBeNullOrEmpty();
 	}
 }

@@ -1,12 +1,12 @@
 namespace LogicMonitor.Api.Test.Resources;
 
-public class ResourceSystemPropertyAdjustmentTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class ResourceSystemPropertyAdjustmentTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetUnmonitoredResources()
 	{
 		var resourcesToAdjust = await LogicMonitorClient
-			.GetAllAsync<Resource>("device/devices?filter=customProperties.name:\"meraki_datamagic.network_id\"", default);
+			.GetAllAsync<Resource>("device/devices?filter=customProperties.name:\"meraki_datamagic.network_id\"", CancellationToken);
 
 		foreach (var resource in resourcesToAdjust)
 		{
@@ -19,7 +19,7 @@ public class ResourceSystemPropertyAdjustmentTests(ITestOutputHelper iTestOutput
 
 			categoriesSystemProperty.Value = "NoPing";
 
-			await LogicMonitorClient.PutAsync(resource, default);
+			await LogicMonitorClient.PutAsync(resource, CancellationToken);
 		}
 	}
 }

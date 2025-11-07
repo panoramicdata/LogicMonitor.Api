@@ -1,6 +1,6 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
-public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 
 	/// <summary>
@@ -12,8 +12,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var dataSourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, CancellationToken);
 
 		dataSourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -27,8 +26,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var eventSourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, CancellationToken);
 
 		eventSourceUpdates.Items.Should().NotBeNull();
 	}
@@ -42,8 +40,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var configSourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, CancellationToken);
 
 		configSourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -57,8 +54,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var propertySourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, CancellationToken);
 
 		propertySourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -72,8 +68,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var topologySourceUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.TopologySource, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.TopologySource, CancellationToken);
 
 		topologySourceUpdates.Items.Should().NotBeNullOrEmpty();
 	}
@@ -86,8 +81,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	public async Task GetLogicModuleJobMonitorUpdates()
 	{
 		var propertySourceUpdates = await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, CancellationToken);
 
 		propertySourceUpdates.Items.Should().NotBeNull();
 	}
@@ -100,8 +94,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	public async Task GetLogicModuleAppliesToUpdates()
 	{
 		var appliesToUpdates = await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, CancellationToken);
 
 		appliesToUpdates.Items.Should().NotBeNull();
 	}
@@ -115,8 +108,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var snmpSysOidUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, CancellationToken);
 
 		snmpSysOidUpdates.Items.Should().NotBeNull();
 	}
@@ -130,8 +122,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var allUpdates =
 			await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.All, default)
-				.ConfigureAwait(true);
+				.GetLogicModuleUpdatesAsync(LogicModuleType.All, CancellationToken);
 
 		allUpdates.Should().NotBeNull();
 	}
@@ -145,8 +136,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var dataSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(LogicModuleType.DataSource, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedNotInUse)
@@ -159,7 +150,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					dataSourceToAudit.LocalId,
 					dataSourceToAudit.Version,
 					default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -172,8 +163,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var eventSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(LogicModuleType.EventSource, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
@@ -186,7 +177,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					eventSourceToAudit.LocalId,
 					eventSourceToAudit.Version,
 					default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -199,8 +190,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var configSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(LogicModuleType.ConfigSource, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
@@ -214,7 +205,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					configSourceToAudit.LocalId,
 					configSourceToAudit.Version,
 					default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -227,8 +218,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var propertySourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
@@ -241,7 +232,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					propertySourceToAudit.LocalId,
 					propertySourceToAudit.Version,
 					default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -256,8 +247,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var dataSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -272,7 +263,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					dataSourceUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -287,8 +278,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var eventSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -303,7 +294,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 						eventSourceUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -318,8 +309,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var configSourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -334,7 +325,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 						configSourceUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -349,8 +340,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var propertySourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -365,7 +356,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 						propertySourceUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -380,8 +371,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var topologySourceUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -396,7 +387,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 						topologySourceUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -411,8 +402,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var jobMonitorUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -427,7 +418,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					jobMonitorUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -442,8 +433,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var appliesToFunctionUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -458,7 +449,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					appliesToFunctionUpdates[0].Name
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 
@@ -473,8 +464,8 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		var snmpSysOidMapUpdates =
 			(await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(logicModuleType, default)
-				.ConfigureAwait(true))
+				.GetLogicModuleUpdatesAsync(logicModuleType, CancellationToken)
+				)
 			.Items
 			.Where(ds =>
 				ds.Category == LogicModuleUpdateCategory.New)
@@ -492,7 +483,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 					}
 				],
 				default)
-				.ConfigureAwait(true);
+				;
 		}
 	}
 }

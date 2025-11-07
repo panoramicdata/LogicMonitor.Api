@@ -1,12 +1,11 @@
 namespace LogicMonitor.Api.Test.Settings;
 
-public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private static async Task GetAlertRule(LogicMonitorClient portalClient, string alertRuleName, bool enableAlertClear)
 	{
 		var alertRules = await portalClient
-				.GetAllAsync<AlertRule>(default)
-				.ConfigureAwait(true);
+				.GetAllAsync<AlertRule>(CancellationToken);
 
 		var alertRule = alertRules.SingleOrDefault(ar => ar.Name == alertRuleName);
 		alertRule.Should().NotBeNull();
@@ -18,17 +17,16 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		var portalClient = LogicMonitorClient;
 		await GetAlertRule(portalClient, AlertRuleName, true)
-			.ConfigureAwait(true);
+			;
 		await GetAlertRule(portalClient, AlertRuleName, false)
-			.ConfigureAwait(true);
+			;
 	}
 
 	[Fact]
 	public async Task GetAlertRules()
 	{
 		var alertRules = await LogicMonitorClient
-			.GetAllAsync<AlertRule>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<AlertRule>(CancellationToken);
 		alertRules.Should().NotBeNullOrEmpty();
 
 		// Get each one individually and check everything matches
@@ -36,12 +34,10 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		{
 			// Save it
 			await LogicMonitorClient
-				.SaveAlertRuleAsync(alertRule, default)
-				.ConfigureAwait(true);
+				.SaveAlertRuleAsync(alertRule, CancellationToken);
 
 			var refetchedAlertRule = await LogicMonitorClient
-				.GetAsync<AlertRule>(alertRule.Id, default)
-				.ConfigureAwait(true);
+				.GetAsync<AlertRule>(alertRule.Id, CancellationToken);
 			refetchedAlertRule.Id.Should().Be(alertRule.Id);
 			// Other tests?
 
@@ -70,12 +66,10 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		};
 
 		await LogicMonitorClient
-			.CreateAsync(newRule, default)
-			.ConfigureAwait(true);
+			.CreateAsync(newRule, CancellationToken);
 
 		var alertRules = await LogicMonitorClient
-			.GetAllAsync<AlertRule>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<AlertRule>(CancellationToken);
 		var found = false;
 		var createdAlert = new AlertRule();
 
@@ -92,8 +86,7 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		if (found)
 		{
 			await LogicMonitorClient
-				.DeleteAsync<AlertRule>(createdAlert.Id, default)
-				.ConfigureAwait(true);
+				.DeleteAsync<AlertRule>(createdAlert.Id, CancellationToken);
 		}
 
 		found.Should().BeTrue();

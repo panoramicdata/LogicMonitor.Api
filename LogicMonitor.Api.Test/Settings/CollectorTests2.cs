@@ -3,22 +3,20 @@ using System.Data;
 namespace LogicMonitor.Api.Test.Settings;
 
 [Collection("CollectorRelated")]
-public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture)
+public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
 	public async Task GetAllCollectorGroups()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<CollectorGroup>(CancellationToken);
 		collectorGroups.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collectorGroup in collectorGroups)
 		{
 			var refetch = await LogicMonitorClient
-				.GetAsync<CollectorGroup>(collectorGroup.Id, default)
-				.ConfigureAwait(true);
+				.GetAsync<CollectorGroup>(collectorGroup.Id, CancellationToken);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -27,8 +25,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetCollectorsFromGroup()
 	{
 		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<CollectorGroup>(CancellationToken);
 
 		var fullGroup = new CollectorGroup();
 		var i = 0;
@@ -44,8 +41,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		}
 
 		var collectors = await LogicMonitorClient
-			.GetAllCollectorsByCollectorGroupIdAsync(fullGroup.Id, default)
-			.ConfigureAwait(true);
+			.GetAllCollectorsByCollectorGroupIdAsync(fullGroup.Id, CancellationToken);
 
 		collectors.Items.Should().NotBeNullOrEmpty();
 	}
@@ -54,16 +50,14 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetAllCollectors()
 	{
 		var collectors = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		collectors.Should().NotBeNullOrEmpty();
 
 		// Re-fetch each
 		foreach (var collector in collectors)
 		{
 			var refetch = await LogicMonitorClient
-				.GetAsync<Collector>(collector.Id, default)
-				.ConfigureAwait(true);
+				.GetAsync<Collector>(collector.Id, CancellationToken);
 			refetch.Should().NotBeNull();
 		}
 	}
@@ -72,8 +66,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task RunDebugCommand()
 	{
 		var collectors = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		var testCollector = collectors.Find(c => !c.IsDown);
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
@@ -82,8 +75,8 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				"!ping 8.8.8.8",
 				10_000,
 				500,
-				default)
-			.ConfigureAwait(true);
+				CancellationToken)
+			;
 		response.Should().NotBeNull();
 		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
@@ -93,8 +86,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task RunGroovyDebugCommand()
 	{
 		var collectors = await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true);
+			.GetAllAsync<Collector>(CancellationToken);
 		var testCollector = collectors.Find(c => !c.IsDown);
 		testCollector.Should().NotBeNull();
 		var response = await LogicMonitorClient
@@ -103,8 +95,8 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				$"!groovy hostId={WindowsDeviceId}\nprintln \"Hello World\"",
 				10_000,
 				500,
-				default)
-			.ConfigureAwait(true);
+				CancellationToken)
+			;
 		response.Should().NotBeNull();
 		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
@@ -114,27 +106,25 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task UpdateCollectorGroup()
 	{
 		var collectorGroup = (await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true))[2];
+			.GetAllAsync<CollectorGroup>(CancellationToken)
+			)[2];
 
 		var defaultDesc = collectorGroup.Description;
 		collectorGroup.Description = "test desc";
 
 		await LogicMonitorClient
-			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
-			.ConfigureAwait(true);
+			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, CancellationToken);
 
 		var updatedGroup = (await LogicMonitorClient
-			.GetAllAsync<CollectorGroup>(default)
-			.ConfigureAwait(true))[1];
+			.GetAllAsync<CollectorGroup>(CancellationToken)
+			)[1];
 		updatedGroup.Should().NotBeNull();
 
 		var updatedDesc = collectorGroup.Description;
 		collectorGroup.Description = defaultDesc;
 
 		await LogicMonitorClient
-			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, default)
-			.ConfigureAwait(true);
+			.UpdateCollectorGroupByIdAsync(collectorGroup.Id, collectorGroup, CancellationToken);
 
 		updatedDesc.Should().Be("test desc");
 	}
@@ -143,7 +133,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task UpdateCollector()
 	{
 		var collector = (await LogicMonitorClient
-			.GetAllAsync<Collector>(default))
+			.GetAllAsync<Collector>(CancellationToken))
 			[0];
 
 		var collectorId = collector.Id;
@@ -157,11 +147,10 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 
 		// Update the collector
 		await LogicMonitorClient
-			.UpdateCollectorByIdAsync(collectorId, collector, default)
-			.ConfigureAwait(true);
+			.UpdateCollectorByIdAsync(collectorId, collector, CancellationToken);
 
 		var updatedCollector = await LogicMonitorClient
-			.GetAsync<Collector>(collectorId, default);
+			.GetAsync<Collector>(collectorId, CancellationToken);
 		updatedCollector.Should().NotBeNull();
 
 		collector.Description.Should().Be(testDescription);
@@ -172,13 +161,12 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		collector.CustomProperties.Remove(collector.CustomProperties.Single(cp => cp.Name == testPropertyName));
 
 		await LogicMonitorClient
-			.UpdateCollectorByIdAsync(collector.Id, collector, default)
-			.ConfigureAwait(true);
+			.UpdateCollectorByIdAsync(collector.Id, collector, CancellationToken);
 
 		// Check
 		collector = (await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true))[0];
+			.GetAllAsync<Collector>(CancellationToken)
+			)[0];
 
 		collector.Description.Should().Be(initialDescription);
 		collector.CustomProperties.Should().NotContain(cp => cp.Name == testPropertyName);
@@ -188,7 +176,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task UpdateCollector_WithUpdate()
 	{
 		var collector = (await LogicMonitorClient
-			.GetAllAsync<Collector>(default))
+			.GetAllAsync<Collector>(CancellationToken))
 			[0];
 
 		var collectorId = collector.Id;
@@ -204,11 +192,10 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		try
 		{
 			await LogicMonitorClient
-				.PutAsync(collector, default)
-				.ConfigureAwait(true);
+				.PutAsync(collector, CancellationToken);
 
 			var updatedCollector = await LogicMonitorClient
-				.GetAsync<Collector>(collectorId, default);
+				.GetAsync<Collector>(collectorId, CancellationToken);
 			updatedCollector.Should().NotBeNull();
 
 			collector.Description.Should().Be(testDescription);
@@ -225,13 +212,12 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		collector.CustomProperties.Remove(collector.CustomProperties.Single(cp => cp.Name == testPropertyName));
 
 		await LogicMonitorClient
-			.UpdateCollectorByIdAsync(collector.Id, collector, default)
-			.ConfigureAwait(true);
+			.UpdateCollectorByIdAsync(collector.Id, collector, CancellationToken);
 
 		// Check
 		collector = (await LogicMonitorClient
-			.GetAllAsync<Collector>(default)
-			.ConfigureAwait(true))[0];
+			.GetAllAsync<Collector>(CancellationToken)
+			)[0];
 
 		collector.Description.Should().Be(initialDescription);
 		collector.CustomProperties.Should().NotContain(cp => cp.Name == testPropertyName);
@@ -248,8 +234,8 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				[
 					new Eq<CollectorVersion>(nameof(CollectorVersion.IsStable), true),
 				]
-			}, default
-			).ConfigureAwait(true))
+			}, CancellationToken
+			))
 			.Select(cv => cv.MajorVersion * 1000 + cv.MinorVersion)
 			.OrderByDescending(v => v)
 			.ToList();
@@ -261,8 +247,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 
 		// Create the collector
 		var collector = await LogicMonitorClient
-			.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, default)
-			.ConfigureAwait(true);
+			.CreateAsync(new CollectorCreationDto { Description = "UNIT TEST" }, CancellationToken);
 
 		var tempFileInfo = new FileInfo(Path.GetTempPath() + Guid.NewGuid().ToString());
 		try
@@ -274,18 +259,17 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				CollectorDownloadType.Bootstrap,
 				CollectorSize.Medium,
 				collectorVersionInt)
-				.ConfigureAwait(true);
+				;
 		}
 		finally
 		{
 			// No need to do this as the collector has not been registered
-			// await DefaultPortalClient.DeleteAsync(collector).ConfigureAwait(true);
+			// await DefaultPortalClient.DeleteAsync(collector);
 			tempFileInfo.Delete();
 
 			// Remove the collector from the API
 			await LogicMonitorClient
-				.DeleteAsync(collector, default)
-				.ConfigureAwait(true);
+				.DeleteAsync(collector, CancellationToken);
 		}
 	}
 }
