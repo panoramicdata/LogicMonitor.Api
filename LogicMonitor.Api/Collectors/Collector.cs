@@ -7,6 +7,13 @@ namespace LogicMonitor.Api.Collectors;
 public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 {
 	/// <summary>
+	///     The calculated threshold
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "calculatedThreshold")]
+	public string CalculatedThreshold { get; set; } = string.Empty;
+
+	/// <summary>
 	///     The collector down acknowledgement comment
 	/// </summary>
 	[DataMember(Name = "ackComment")]
