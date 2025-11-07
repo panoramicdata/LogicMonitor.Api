@@ -11,9 +11,7 @@ public class XunitLoggerProvider(ITestOutputHelper testOutputHelper) : ILoggerPr
 		=> new XunitLogger(_testOutputHelper, categoryName);
 
 	public void Dispose()
-	{
-		// Nothing to dispose
-	}
+		=> GC.SuppressFinalize(this);
 }
 
 /// <summary>

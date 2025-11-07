@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<AssemblyName>LogicMonitor.PowerShell</AssemblyName>
+		<PackageId>LogicMonitor.PowerShell</PackageId>
+		<OutputType>Library</OutputType>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<Title>LogicMonitor PowerShell Module</Title>
+		<Description>A PowerShell module wrapper for the LogicMonitor.Api .NET library</Description>
+		<Authors>Panoramic Data Limited</Authors>
+		<Company>Panoramic Data Limited</Company>
+		<Copyright>Copyright © Panoramic Data Limited 2011-2025</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>LogicMonitor PowerShell API REST</PackageTags>
+		<PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/panoramicdata/LogicMonitor.Api/</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Version>1.0.0</Version>
+		<PowerShellModuleName>LogicMonitor</PowerShellModuleName>
+		<PowerShellModuleDirectory>$(OutputPath)/LogicMonitor</PowerShellModuleDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="PowerShellStandard.Library" Version="5.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.9" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\LogicMonitor.Api\LogicMonitor.Api.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="/" />
+	</ItemGroup>
+
+	<Target Name="CreatePowerShellModule" AfterTargets="Build">
+		<ItemGroup>
+			<ModuleFiles Include="$(OutputPath)*.dll" />
+			<ModuleFiles Include="$(OutputPath)*.pdb" />
+			<ModuleFiles Include="LogicMonitor.psd1" />
+			<ModuleFiles Include="LogicMonitor.psm1" />
+		</ItemGroup>
+
+		<MakeDir Directories="$(PowerShellModuleDirectory)" />
+		<Copy SourceFiles="@(ModuleFiles)" DestinationFolder="$(PowerShellModuleDirectory)" />
+	</Target>
+
+</Project>

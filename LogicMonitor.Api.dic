@@ -49,11 +49,14 @@ azurevmbackupstatus
 azurevmservicelimits
 azurevngconnection
 azurewebjob
+backoff
 batchscript
 bignumber
 bools
 cgraph
 Cim
+Cmdlet
+Cmdlets
 Cognito
 color
 configsources

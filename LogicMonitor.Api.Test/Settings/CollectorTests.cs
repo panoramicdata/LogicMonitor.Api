@@ -13,8 +13,7 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 				CollectorId,
 				"!ping 8.8.8.8",
 				CancellationToken
-			)
-			;
+			);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();
@@ -31,8 +30,7 @@ public class CollectorTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 				20000,
 				100,
 				CancellationToken
-			)
-			;
+			);
 
 		// Check for valid response
 		debugCommandResponse.Should().NotBeNull();

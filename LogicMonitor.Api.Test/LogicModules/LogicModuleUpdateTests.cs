@@ -80,10 +80,10 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleJobMonitorUpdates()
 	{
-		var propertySourceUpdates = await LogicMonitorClient
-				.GetLogicModuleUpdatesAsync(LogicModuleType.PropertySource, CancellationToken);
+		var jobMonitorUpdates = await LogicMonitorClient
+				.GetLogicModuleUpdatesAsync(LogicModuleType.JobMonitor, CancellationToken);
 
-		propertySourceUpdates.Items.Should().NotBeNull();
+		jobMonitorUpdates.Items.Should().NotBeNull();
 	}
 
 	/// <summary>
@@ -149,8 +149,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 			_ = await LogicMonitorClient.AuditDataSourceAsync(
 					dataSourceToAudit.LocalId,
 					dataSourceToAudit.Version,
-					default)
-				;
+					CancellationToken);
 		}
 	}
 
@@ -176,8 +175,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 			_ = await LogicMonitorClient.AuditEventSourceAsync(
 					eventSourceToAudit.LocalId,
 					eventSourceToAudit.Version,
-					default)
-				;
+					CancellationToken);
 		}
 	}
 
@@ -204,8 +202,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				await LogicMonitorClient.AuditConfigSourceAsync(
 					configSourceToAudit.LocalId,
 					configSourceToAudit.Version,
-					default)
-				;
+					CancellationToken);
 		}
 	}
 
@@ -231,8 +228,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 			_ = await LogicMonitorClient.AuditPropertySourceAsync(
 					propertySourceToAudit.LocalId,
 					propertySourceToAudit.Version,
-					default)
-				;
+					CancellationToken);
 		}
 	}
 
@@ -262,8 +258,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 					dataSourceUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -293,8 +288,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 						eventSourceUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -324,8 +318,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 						configSourceUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -355,8 +348,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 						propertySourceUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -386,8 +378,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 						topologySourceUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -417,8 +408,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 					jobMonitorUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -448,8 +438,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 				[
 					appliesToFunctionUpdates[0].Name
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 
@@ -482,8 +471,7 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 						Oid = snmpSysOidMapUpdates[0].Name
 					}
 				],
-				default)
-				;
+				CancellationToken);
 		}
 	}
 }

@@ -6,8 +6,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	public async Task GetAllDeviceDataSourceInstancesAsync()
 	{
 		var result = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: CancellationToken)
-			;
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, cancellationToken: CancellationToken);
 		result.Should().NotBeNull();
 	}
 
@@ -15,16 +14,14 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	public async Task GetAllDeviceDataSourceInstancesForOneDeviceDataSourceAsync()
 	{
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", cancellationToken: CancellationToken)
-			;
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", cancellationToken: CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 
 		_ = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: CancellationToken)
-			;
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: CancellationToken);
 	}
 
 	[Fact]
@@ -32,13 +29,11 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 	{
 		var device = await GetSnmpResourceAsync(CancellationToken);
 		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: CancellationToken)
-			;
+			.GetDataSourceByUniqueNameAsync("snmp64_If-", cancellationToken: CancellationToken);
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: CancellationToken)
-			;
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: CancellationToken);
 		var resourceDataSourceInstances = await LogicMonitorClient.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>
 		{
 			Order = new Order<ResourceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(ResourceDataSourceInstance.DisplayName) },
@@ -243,8 +238,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				resourceDataSources[0].Id,
 				instance.Id,
 				instance,
-				CancellationToken)
-			;
+				CancellationToken);
 
 		// Re-fetch the instance
 		var refetchedInstance = await LogicMonitorClient
@@ -265,8 +259,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				resourceDataSources[0].Id,
 				instance.Id,
 				refetchedInstance,
-				CancellationToken)
-			;
+				CancellationToken);
 
 		// Re-fetch the instance
 		refetchedInstance = await LogicMonitorClient

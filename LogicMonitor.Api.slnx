@@ -1,0 +1,39 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Dictionary.dic" />
+    <File Path="Doxyfile" />
+    <File Path="global.json" />
+    <File Path="LICENSE" />
+    <File Path="LogicMonitor.Api.dic" />
+    <File Path="README.md" />
+    <File Path="version.json" />
+  </Folder>
+  <Folder Name="/Solution Items/docs/">
+    <File Path="docs/Changes Required (Sorted).txt" />
+    <File Path="docs/Changes Required.txt" />
+    <File Path="docs/New Models Required (Sorted).txt" />
+    <File Path="docs/New Models Required.txt" />
+  </Folder>
+  <Folder Name="/Solution Items/docs/V2/">
+    <File Path="docs/V2/V2SwaggerApi.json" />
+  </Folder>
+  <Folder Name="/Solution Items/docs/V3/">
+    <File Path="docs/V3/V3SwaggerApi.json" />
+  </Folder>
+  <Folder Name="/Solution Items/workflow/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/codeql-analysis.yml" />
+  </Folder>
+  <Project Path="LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj">
+    <Platform Project="x64" />
+    <Build Solution="Release|Any CPU" Project="false" />
+  </Project>
+  <Project Path="LogicMonitor.Api/LogicMonitor.Api.csproj" />
+  <Project Path="LogicMonitor.PowerShell/LogicMonitor.PowerShell.csproj" />
+</Solution>

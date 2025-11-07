@@ -31,8 +31,7 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		if (existingRoleGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingRoleGroup, CancellationToken)
-				;
+				.DeleteAsync(existingRoleGroup, CancellationToken);
 		}
 
 		var roleGroup = await LogicMonitorClient.CreateAsync(new RoleGroupCreationDto
@@ -48,7 +47,6 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 
 		// Delete
 		await LogicMonitorClient
-			.DeleteAsync(roleGroup, CancellationToken)
-			;
+			.DeleteAsync(roleGroup, CancellationToken);
 	}
 }

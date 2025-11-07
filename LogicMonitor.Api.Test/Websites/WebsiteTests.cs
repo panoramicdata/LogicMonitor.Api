@@ -116,8 +116,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		foreach (var oldWebsite in oldWebsites)
 		{
 			await LogicMonitorClient
-				.DeleteAsync<Website>(oldWebsite.Id, CancellationToken)
-				;
+				.DeleteAsync<Website>(oldWebsite.Id, CancellationToken);
 		}
 
 		// Ensure the website group doesn't exist
@@ -126,8 +125,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		if (oldWebsiteGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id, CancellationToken)
-				;
+				.DeleteAsync<WebsiteGroup>(oldWebsiteGroup.Id, CancellationToken);
 		}
 
 
@@ -158,15 +156,13 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 				websiteGroup.Id.Should().Be(website.GroupId);
 
 				// Wait to ensure that it was created
-				await Task.Delay(1000)
-					;
+				await Task.Delay(1000, CancellationToken);
 			}
 			finally
 			{
 				// Delete it
 				await LogicMonitorClient
-					.DeleteAsync<Website>(website.Id, CancellationToken)
-					;
+					.DeleteAsync<Website>(website.Id, CancellationToken);
 			}
 		}
 		finally
@@ -174,8 +170,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			// Delete it again
 
 			await LogicMonitorClient
-				.DeleteAsync(websiteGroup, CancellationToken)
-				;
+				.DeleteAsync(websiteGroup, CancellationToken);
 		}
 	}
 
@@ -186,12 +181,12 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		var website = await LogicMonitorClient
 			.GetByNameAsync<Website>(
 				nameof(SetWebsiteCustomProperty),
-				default
+				CancellationToken
 			)
-			
+
 			?? await LogicMonitorClient.CreateAsync(
 				GetWebsiteCreationDto(16, nameof(SetWebsiteCustomProperty)),
-				default
+				CancellationToken
 				);
 
 		try
@@ -202,8 +197,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 			// Set it to an expected value
 			await LogicMonitorClient
-				.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1, CancellationToken)
-				;
+				.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value1, cancellationToken: CancellationToken);
 			var deviceProperties = await LogicMonitorClient
 				.GetWebsitePropertiesAsync(website.Id, CancellationToken);
 			var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
@@ -211,8 +205,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 			// Set it to a different value
 			await LogicMonitorClient
-				.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2, CancellationToken)
-				;
+				.SetWebsiteCustomPropertyAsync(website.Id, propertyName, value2, cancellationToken: CancellationToken);
 			deviceProperties = await LogicMonitorClient
 				.GetWebsitePropertiesAsync(website.Id, CancellationToken);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
@@ -220,8 +213,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 			// Set it to null (delete it)
 			await LogicMonitorClient
-				.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, CancellationToken)
-				;
+				.SetWebsiteCustomPropertyAsync(website.Id, propertyName, null, cancellationToken: CancellationToken);
 			deviceProperties = await LogicMonitorClient
 				.GetWebsitePropertiesAsync(website.Id, CancellationToken);
 			actual = deviceProperties.Count(dp => dp.Name == propertyName);
@@ -264,8 +256,7 @@ public class WebsiteTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		finally
 		{
 			await LogicMonitorClient
-				.DeleteAsync(website, CancellationToken)
-				;
+				.DeleteAsync(website, CancellationToken);
 		}
 
 

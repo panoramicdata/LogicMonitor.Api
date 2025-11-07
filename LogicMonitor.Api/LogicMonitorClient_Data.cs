@@ -112,10 +112,7 @@ public partial class LogicMonitorClient
 	/// <returns></returns>
 	public Task<CheckpointRawDataSet> GetWebsiteCheckpointRawDataSet(
 		WebsiteCheckPointRawDataRequest request,
-		CancellationToken cancellationToken)
-	{
-		return GetAsync<CheckpointRawDataSet>(false, request.SubUrl, cancellationToken);
-	}
+		CancellationToken cancellationToken) => GetAsync<CheckpointRawDataSet>(false, request.SubUrl, cancellationToken);
 
 	/// <summary>
 	/// Polls now for data via the collector

@@ -18,7 +18,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			Tags = [new OpsNoteTagCreationDto { Name = "LogicMonitor.Api" }]
 		}, CancellationToken);
 
-		await Task.Delay(TimeSpan.FromSeconds(2));
+		await Task.Delay(TimeSpan.FromSeconds(2), CancellationToken);
 
 		var allOpsNotes = await LogicMonitorClient
 			.GetAllAsync<OpsNote>(CancellationToken);
@@ -71,8 +71,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		createdOpsNote.Id.Should().NotBeNullOrWhiteSpace();
 
 		// Wait 2 seconds
-		await Task.Delay(5000)
-			;
+		await Task.Delay(5000, CancellationToken);
 
 		// Make sure the opsNote is now present when listing opsNotes and that all properties match
 		var refetchedOpsNote = await LogicMonitorClient
@@ -84,18 +83,15 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Remove the test OpsNote - this takes some time
 		await LogicMonitorClient
-			.DeleteAsync<OpsNote>(createdOpsNote.Id, CancellationToken)
-			;
+			.DeleteAsync<OpsNote>(createdOpsNote.Id, CancellationToken);
 
 		// Wait 2 seconds
-		await Task.Delay(2000)
-			;
+		await Task.Delay(2000, CancellationToken);
 
 		// Make sure that it is gone
 		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, CancellationToken);
 		await operation
 			.Should()
-			.ThrowAsync<LogicMonitorApiException>()
-			;
+			.ThrowAsync<LogicMonitorApiException>();
 	}
 }

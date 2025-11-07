@@ -16,8 +16,7 @@ public class NetscanGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		if (existingTestNetscanGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id, CancellationToken)
-				;
+				.DeleteAsync<NetscanGroup>(existingTestNetscanGroup.Id, CancellationToken);
 		}
 
 		var netscanGroups = await LogicMonitorClient
@@ -38,8 +37,7 @@ public class NetscanGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		netscanGroupsRefetched.Should().Contain(group => group.Name == name);
 
 		await LogicMonitorClient
-			.DeleteAsync(newNetscanGroup, CancellationToken)
-			;
+			.DeleteAsync(newNetscanGroup, CancellationToken);
 		netscanGroupsRefetched = await LogicMonitorClient
 			.GetAllAsync<NetscanGroup>(CancellationToken);
 		netscanGroupsRefetched.Should().NotContain(group => group.Name == name);

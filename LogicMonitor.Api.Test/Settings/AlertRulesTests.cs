@@ -16,10 +16,8 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task DisableAndReEnableClearedAlerts()
 	{
 		var portalClient = LogicMonitorClient;
-		await GetAlertRule(portalClient, AlertRuleName, true)
-			;
-		await GetAlertRule(portalClient, AlertRuleName, false)
-			;
+		await GetAlertRule(portalClient, AlertRuleName, true);
+		await GetAlertRule(portalClient, AlertRuleName, false);
 	}
 
 	[Fact]

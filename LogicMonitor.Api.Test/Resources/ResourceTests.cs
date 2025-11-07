@@ -44,8 +44,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		if (deviceForDeletion is not null)
 		{
 			await logicMonitorClient
-				.DeleteAsync(deviceForDeletion, cancellationToken: CancellationToken)
-				;
+				.DeleteAsync(deviceForDeletion, cancellationToken: CancellationToken);
 		}
 
 		// Delete ResourceGroup if it already exists
@@ -54,8 +53,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		if (deviceGroupForDeletion is not null)
 		{
 			await logicMonitorClient
-				.DeleteAsync(deviceGroupForDeletion, cancellationToken: CancellationToken)
-				;
+				.DeleteAsync(deviceGroupForDeletion, cancellationToken: CancellationToken);
 		}
 
 		// Get an active collector
@@ -154,8 +152,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 				// Do a regular hard delete
 				await logicMonitorClient
-					.DeleteAsync(deviceFromCreation, cancellationToken: CancellationToken)
-					;
+					.DeleteAsync(deviceFromCreation, cancellationToken: CancellationToken);
 			}
 			else
 			{
@@ -167,8 +164,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Delete ResourceGroup
 		await logicMonitorClient
-			.DeleteAsync(deviceGroup, cancellationToken: CancellationToken)
-			;
+			.DeleteAsync(deviceGroup, cancellationToken: CancellationToken);
 	}
 
 	[Fact]
@@ -292,8 +288,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.GetResourcesAndInstancesAssociatedWithDataSourceByIdPageAsync(
 				dataSource!.Id,
 				new Filter<ResourceWithDataSourceInstanceInformation> { Skip = 0, Take = 300 },
-				CancellationToken)
-			;
+				CancellationToken);
 
 		// Check
 		info.Should().NotBeNull();
@@ -350,8 +345,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetFullResourceTree()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetFullResourceTreeAsync(cancellationToken: CancellationToken)
-			;
+			.GetFullResourceTreeAsync(cancellationToken: CancellationToken);
 		deviceGroup.Should().NotBeNull();
 	}
 
@@ -370,8 +364,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		// Get the result without specifying a type
 		var treeNodeFreeSearch = await LogicMonitorClient
-			.TreeNodeFreeSearchAsync("Datacenter", 100, cancellationToken: CancellationToken)
-			;
+			.TreeNodeFreeSearchAsync("Datacenter", 100, cancellationToken: CancellationToken);
 		var totalItemCount = treeNodeFreeSearch.Count;
 
 		// Subtract the count of a search for each individual type
@@ -383,8 +376,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		foreach (var treeNodeFreeSearchResultType in treeNodeFreeSearchResultTypes)
 		{
 			var treeNodeFreeSearchResult = await LogicMonitorClient
-				.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType)
-				;
+				.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType);
 			list.AddRange(treeNodeFreeSearchResult);
 		}
 		// Make sure that some are returned
@@ -467,8 +459,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Set it to null (delete it)
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: CancellationToken)
-			;
+			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
@@ -482,8 +473,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 					null,
 					SetPropertyMode.Delete,
 					CancellationToken)
-				)
-			;
+				);
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
 		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient
@@ -503,8 +493,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				null,
 				SetPropertyMode.Create,
 				CancellationToken)
-				)
-			;
+				);
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
@@ -514,8 +503,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				value1,
 				SetPropertyMode.Create,
-				cancellationToken: CancellationToken)
-			;
+				cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
@@ -528,8 +516,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				value2,
 				SetPropertyMode.Update,
-				cancellationToken: CancellationToken)
-			;
+				cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
@@ -542,8 +529,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 				propertyName,
 				null,
 				SetPropertyMode.Delete,
-				cancellationToken: CancellationToken)
-			;
+				cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);

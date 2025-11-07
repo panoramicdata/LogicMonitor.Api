@@ -59,8 +59,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			if (createdSdt is not null)
 			{
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
-					;
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
 		}
 	}
@@ -176,8 +175,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			{
 				// Delete
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
-					;
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
 		}
 	}
@@ -335,8 +333,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			{
 				// Delete
 				await portalClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
-					;
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
 		}
 	}
@@ -385,8 +382,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 		if (resourceGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(resourceGroup, CancellationToken)
-				;
+				.DeleteAsync(resourceGroup, CancellationToken);
 		}
 
 		// Create DeviceGroup
@@ -435,15 +431,13 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			{
 				// Clean up
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
-					;
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
 		}
 
 		// Remove the ResourceGroup
 		await LogicMonitorClient
-			.DeleteAsync(resourceGroup, CancellationToken)
-			;
+			.DeleteAsync(resourceGroup, CancellationToken);
 	}
 
 	[Fact]
@@ -493,8 +487,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			if (createdSdt is not null)
 			{
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
-					;
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
 		}
 	}

@@ -33,8 +33,7 @@ public class DashboardGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 					}
 				]
 			},
-			default)
-			;
+			CancellationToken);
 
 		dashboardGroup.Should().NotBeNull();
 

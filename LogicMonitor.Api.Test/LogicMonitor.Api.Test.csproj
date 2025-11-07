@@ -22,6 +22,10 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 
+		<!-- PowerShell Testing Dependencies -->
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.5.1" />
+		<PackageReference Include="System.Management.Automation" Version="7.5.1" />
+
 		<!-- Analyzers -->
 		<PackageReference Include="AsyncFixer" Version="1.6.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -56,6 +60,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\LogicMonitor.Api\LogicMonitor.Api.csproj" />
+		<ProjectReference Include="..\LogicMonitor.PowerShell\LogicMonitor.PowerShell.csproj" />
 	</ItemGroup>
 
 </Project>

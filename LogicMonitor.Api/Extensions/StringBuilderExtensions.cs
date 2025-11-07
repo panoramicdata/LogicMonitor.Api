@@ -17,10 +17,9 @@ internal static class StringBuilderExtensions
 		stringBuilder.Append($"{(stringBuilder.Length == 0 ? string.Empty : delimiter)}{parameter.LowerCaseFirst()}{@operator}{(encodeResult ? value.UriEscape() : value)}");
 	}
 
-	internal static string UriEscape(this object value)
-	{
+	internal static string UriEscape(this object value) =>
 		// If it's a list, return each item UrlEscaped, separated by "|"
-		return value is IEnumerable<string> list
+		value is IEnumerable<string> list
 			? string.Join("|", list.Select(item => item.UriEscape()))
 			: Uri
 				.EscapeUriString(value.ToString())
@@ -28,5 +27,4 @@ internal static class StringBuilderExtensions
 				.Replace(":", "%3A")
 				.Replace("/", "%2F")
 				.Replace(",", "%2C");
-	}
 }

@@ -31,8 +31,7 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		if (existingUserGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingUserGroup, CancellationToken)
-				;
+				.DeleteAsync(existingUserGroup, CancellationToken);
 		}
 
 		var userGroup = await LogicMonitorClient.CreateAsync(new UserGroupCreationDto
@@ -48,7 +47,6 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 
 		// Delete
 		await LogicMonitorClient
-			.DeleteAsync(userGroup, CancellationToken)
-			;
+			.DeleteAsync(userGroup, CancellationToken);
 	}
 }

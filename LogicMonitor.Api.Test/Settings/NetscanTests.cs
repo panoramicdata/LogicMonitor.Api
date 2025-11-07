@@ -124,8 +124,7 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 		// Clean up
 		await portalClient
-			.DeleteAsync(createdNetscan, CancellationToken)
-			;
+			.DeleteAsync(createdNetscan, CancellationToken);
 	}
 
 	[Fact]

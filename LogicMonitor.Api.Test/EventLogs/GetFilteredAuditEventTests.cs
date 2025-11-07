@@ -20,9 +20,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AActiveDiscovery\"" },
-			default
-			)
-			;
+			CancellationToken
+			);
 
 		var filteredLogItemsSystemActiveDiscoveryCount = filteredLogItemsSystemActiveDiscovery.Count;
 
@@ -34,9 +33,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AAppliesTo\"" },
-			default
-			)
-			;
+			CancellationToken
+			);
 
 		var filteredLogItemsSystemAppliesToCount = filteredLogItemsSystemAppliesTo.Count;
 
@@ -48,9 +46,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnAsc)
 			{ UsernameFilter = "\"System%3AAppliesTo\"|\"System%3AActiveDiscovery\"" },
-			default
-			)
-			;
+			CancellationToken
+			);
 
 		var filteredLogItemsSystemAppliesToAndSystemDiscoveryCount = filteredLogItemsSystemAppliesToAndSystemDiscovery.Count;
 
@@ -65,9 +62,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 	{
 		var unfilteredLogItems = await LogicMonitorClient
 			.GetLogItemsAsync(new LogFilter(0, 300, _startDateTimeUtc, _endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc),
-			default
-			)
-			;
+			CancellationToken
+			);
 
 		var unfilteredLogItemsCount = unfilteredLogItems.Count;
 
@@ -81,9 +77,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnDesc)
 			{ TextFilter = "\"* AND NOT *health*\"" },
-			default
-			)
-			;
+			CancellationToken
+			);
 
 		var filteredLogItemsHealthTextExcludedCount = filteredLogItemsHealthTextExcluded.Count;
 
@@ -95,9 +90,8 @@ public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fix
 				_endDateTimeUtc,
 				LogFilterSortOrder.HappenedOnDesc)
 			{ TextFilter = "\"*health*\"" },
-			default
-			)
-			;
+			CancellationToken
+			);
 
 		var filteredLogItemsHealthTextIncludedCount = filteredLogItemsHealthTextIncluded.Count;
 

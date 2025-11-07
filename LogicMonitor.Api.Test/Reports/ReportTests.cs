@@ -64,8 +64,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 				DateRange = $"{sDate:yyyy-MM-dd HH:mm} TO {eDate:yyyy-MM-dd HH:mm}",
 				DashboardId = 205
 			},
-			CancellationToken)
-			;
+			CancellationToken);
 
 		report.Should().NotBeNull();
 
@@ -86,8 +85,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingReportGroup, CancellationToken)
-				;
+				.DeleteAsync(existingReportGroup, CancellationToken);
 		}
 
 		// Create it
@@ -99,7 +97,6 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(reportGroup, CancellationToken)
-			;
+			.DeleteAsync(reportGroup, CancellationToken);
 	}
 }

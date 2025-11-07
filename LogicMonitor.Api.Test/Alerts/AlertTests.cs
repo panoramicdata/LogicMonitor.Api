@@ -179,8 +179,7 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 	{
 		var startEpoch = DateTime.UtcNow.AddDays(-1).SecondsSinceTheEpoch();
 		var alertList = await LogicMonitorClient
-			.GetRestAlertsWithV84BugAsync(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8))
-			;
+			.GetRestAlertsWithV84BugAsync(new AlertFilter { StartEpochIsAfter = startEpoch }, TimeSpan.FromHours(8));
 
 		var unique = true;
 		foreach (var alert in alertList)

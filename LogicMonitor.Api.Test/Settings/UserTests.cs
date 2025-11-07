@@ -33,8 +33,7 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		}, CancellationToken))
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingUser, CancellationToken)
-				;
+				.DeleteAsync(existingUser, CancellationToken);
 		}
 
 		var userCreationDto = new UserCreationDto
@@ -76,8 +75,7 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		// Delete again
 		await LogicMonitorClient
-			.DeleteAsync(user, CancellationToken)
-			;
+			.DeleteAsync(user, CancellationToken);
 	}
 
 	[Fact]

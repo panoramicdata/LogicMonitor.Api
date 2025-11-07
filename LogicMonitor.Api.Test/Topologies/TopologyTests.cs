@@ -26,8 +26,7 @@ public class TopologyTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 						Algorithm = TopologyAlgorithm.SecondDegreeAway,
 					},
 					CancellationToken
-				)
-				;
+				);
 			item.Should().NotBeNull();
 		}
 	}

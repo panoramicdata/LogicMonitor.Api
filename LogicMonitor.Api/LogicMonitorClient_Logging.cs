@@ -25,7 +25,7 @@ public partial class LogicMonitorClient
 	public Task<WriteLogResponse> WriteLogAsync(
 		WriteLogRequest writeLogRequest,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { writeLogRequest }, cancellationToken);
+		=> WriteLogAsync([writeLogRequest], cancellationToken);
 
 	/// <summary>
 	///     Logs a single writeLogRequest
@@ -40,7 +40,7 @@ public partial class LogicMonitorClient
 		int resourceId,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, resourceId, message) }, cancellationToken);
+		=> WriteLogAsync([new WriteLogRequest(writeLogLevel, resourceId, message)], cancellationToken);
 
 	/// <summary>
 	///     Logs a single writeLogRequest
@@ -55,7 +55,7 @@ public partial class LogicMonitorClient
 		string deviceDisplayName,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, deviceDisplayName, message) }, cancellationToken);
+		=> WriteLogAsync([new WriteLogRequest(writeLogLevel, deviceDisplayName, message)], cancellationToken);
 
 	/// <summary>
 	///     Logs a single writeLogRequest
@@ -75,7 +75,7 @@ public partial class LogicMonitorClient
 		string customPropertyValue,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, customPropertyName, customPropertyValue, message) }, cancellationToken);
+		=> WriteLogAsync([new WriteLogRequest(writeLogLevel, customPropertyName, customPropertyValue, message)], cancellationToken);
 
 	/// <summary>
 	///     Logs a single writeLogRequest
@@ -93,5 +93,5 @@ public partial class LogicMonitorClient
 		Dictionary<string, string> propertyDictionary,
 		string message,
 		CancellationToken cancellationToken)
-		=> WriteLogAsync(new[] { new WriteLogRequest(writeLogLevel, propertyDictionary, message) }, cancellationToken);
+		=> WriteLogAsync([new WriteLogRequest(writeLogLevel, propertyDictionary, message)], cancellationToken);
 }

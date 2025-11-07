@@ -75,8 +75,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				"!ping 8.8.8.8",
 				10_000,
 				500,
-				CancellationToken)
-			;
+				CancellationToken);
 		response.Should().NotBeNull();
 		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
@@ -95,8 +94,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				$"!groovy hostId={WindowsDeviceId}\nprintln \"Hello World\"",
 				10_000,
 				500,
-				CancellationToken)
-			;
+				CancellationToken);
 		response.Should().NotBeNull();
 		response ??= new();
 		Logger.LogInformation("{Output}", response.Output);
@@ -258,8 +256,7 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				CollectorPlatformAndArchitecture.Win64,
 				CollectorDownloadType.Bootstrap,
 				CollectorSize.Medium,
-				collectorVersionInt)
-				;
+				collectorVersionInt);
 		}
 		finally
 		{

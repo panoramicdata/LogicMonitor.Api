@@ -68,8 +68,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 			.GetResourceEventSourcesPageAsync(
 				device.Id,
 				new Filter<ResourceEventSource> { Skip = 0, Take = 300 },
-				CancellationToken)
-			;
+				CancellationToken);
 
 		// Make sure that we have groups and they are not null
 		deviceEventSources.Should().NotBeNull();
@@ -94,8 +93,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		var specificEventSource = eventsources.Items[0];
 
 		var refetchedEventSource = await LogicMonitorClient
-			.GetResourceEventSourceByResourceIdAndEventSourceIdAsync(WindowsDeviceId, specificEventSource.EventSourceId)
-			;
+			.GetResourceEventSourceByResourceIdAndEventSourceIdAsync(WindowsDeviceId, specificEventSource.EventSourceId);
 
 		refetchedEventSource.Should().Be(specificEventSource);
 	}

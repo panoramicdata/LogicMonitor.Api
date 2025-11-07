@@ -22,8 +22,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 				WindowsDeviceId,
 				deviceDataSource.Id,
 				new(),
-				CancellationToken)
-			;
+				CancellationToken);
 
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
 		var dataSourceGraph = dataSourceGraphs[0];
@@ -38,8 +37,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 					GraphId = dataSourceGraph.Id,
 					DataPointLabel = virtualDataPoint.Name
 				},
-				default)
-			;
+				CancellationToken);
 
 		forecastGraphData.TrainingGraphData.Lines.Should().ContainSingle();
 		forecastGraphData.ForecastedGraphData.Lines.Should().HaveCount(3);
@@ -303,8 +301,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
 				WindowsDeviceId,
 				dataSource.Id,
-				default)
-			;
+				CancellationToken);
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient

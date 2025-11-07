@@ -62,8 +62,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				null,
 				null,
 				new Filter<InstanceProperty>(),
-				CancellationToken)
-			;
+				CancellationToken);
 
 		resourceDataSourceInstances.Should().NotBeNull();
 		resourceDataSourceInstances.Should().NotBeNullOrEmpty();
@@ -77,7 +76,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					 .GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
 						resourceDataSourceInstance.ResourceId,
 						resourceDataSourceInstance.DataSourceId.Value,
-						default)
+						CancellationToken)
 					 ).InstanceCount;
 				refetchedDeviceDataSourceInstanceCount.Should().NotBe(0);
 				sum += refetchedDeviceDataSourceInstanceCount;
@@ -238,8 +237,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					device.Id,
 					deviceDataSource.Id,
 					deviceDataSourceInstance.Id,
-					default)
-				;
+					CancellationToken);
 			deviceDataSourceInstanceRefetch.Should().NotBeNull();
 		}
 
@@ -247,8 +245,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.GetResourceDataSourceInstanceGroupsAsync(
 				device.Id,
 				deviceDataSource.Id,
-				default)
-			;
+				CancellationToken);
 		deviceDataSourceInstanceGroups.Should().NotBeNull();
 
 		var fetchedGraph = await LogicMonitorClient
@@ -352,8 +349,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				.GetResourceDataSourceAsync(
 					WindowsDeviceId,
 					deviceDataSource.Id,
-					default)
-				;
+					CancellationToken);
 
 			// Make sure they are the same
 			deviceDataSourceRefetch.ResourceId.Should().Be(WindowsDeviceId);

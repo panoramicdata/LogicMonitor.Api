@@ -23,7 +23,7 @@ public class FlowTests : TestWithOutput
 				{
 					ResourceId = NetflowDeviceId
 				},
-				default
+				CancellationToken
 			);
 
 		// Make sure that some are returned
@@ -50,7 +50,7 @@ public class FlowTests : TestWithOutput
 					StartDateTime = DateTime.UtcNow.AddDays(-2),
 					EndDateTime = DateTime.UtcNow.AddDays(-1),
 				},
-				default);
+				CancellationToken);
 
 		// Make sure that some are returned
 		flowApplications.Items.Should().NotBeNullOrEmpty();

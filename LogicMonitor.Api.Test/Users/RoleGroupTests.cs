@@ -27,8 +27,7 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingItem, CancellationToken)
-				;
+				.DeleteAsync(existingItem, CancellationToken);
 		}
 
 		// Create it
@@ -39,13 +38,11 @@ public class RoleGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 					Name = TestName,
 					Description = "Test Description"
 				},
-				default
-			)
-			;
+				CancellationToken
+			);
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(newItem, CancellationToken)
-			;
+			.DeleteAsync(newItem, CancellationToken);
 	}
 }

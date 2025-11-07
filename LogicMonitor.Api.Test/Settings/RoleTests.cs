@@ -42,8 +42,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		if (existingRole is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingRole, CancellationToken)
-				;
+				.DeleteAsync(existingRole, CancellationToken);
 		}
 
 		var dashboardGroup = (await LogicMonitorClient.GetAllAsync(new Filter<DashboardGroup> { Take = 1 }, CancellationToken)).SingleOrDefault();
@@ -121,7 +120,6 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		// Delete
 		await LogicMonitorClient
-			.DeleteAsync(role, CancellationToken)
-			;
+			.DeleteAsync(role, CancellationToken);
 	}
 }

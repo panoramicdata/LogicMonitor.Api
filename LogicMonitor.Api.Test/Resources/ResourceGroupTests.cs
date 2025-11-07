@@ -47,8 +47,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 				"> 191 timezone=Europe/London",
 				$"Set by LogicMonitor.Api Unit Test at {DateTimeOffset.UtcNow}",
 				true,
-				CancellationToken)
-			;
+				CancellationToken);
 		resourceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
@@ -168,8 +167,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 		var resourceGroup = await LogicMonitorClient
 			.GetResourceGroupByFullPathAsync(
 				testResourceGroupName,
-				CancellationToken)
-				;
+				CancellationToken);
 
 		resourceGroup ??= await LogicMonitorClient.CreateAsync(
 					  new ResourceGroupCreationDto
@@ -217,7 +215,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 			//	propertyName,
 			//	null,
 			//	SetPropertyMode.Automatic,
-			//	default);
+			//	CancellationToken);
 			resourceGroupProperties = await LogicMonitorClient
 				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
 			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName);

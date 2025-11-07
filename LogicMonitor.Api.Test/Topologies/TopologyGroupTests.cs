@@ -27,8 +27,7 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingItem, CancellationToken)
-				;
+				.DeleteAsync(existingItem, CancellationToken);
 		}
 
 		// Create it
@@ -39,14 +38,12 @@ public class TopologyGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 					Name = TestName,
 					Description = "Test Description"
 				},
-				default
-			)
-			;
+				CancellationToken
+			);
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(newItem, CancellationToken)
-			;
+			.DeleteAsync(newItem, CancellationToken);
 	}
 
 	[Fact]
