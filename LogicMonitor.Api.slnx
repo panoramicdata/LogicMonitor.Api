@@ -11,6 +11,7 @@
     <File Path="global.json" />
     <File Path="LICENSE" />
     <File Path="LogicMonitor.Api.dic" />
+    <File Path="nuget-key.txt" />
     <File Path="README.md" />
     <File Path="version.json" />
   </Folder>

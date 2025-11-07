@@ -1,6 +1,6 @@
 @{
  RootModule = 'LogicMonitor.psm1'
-    ModuleVersion = '1.0.0'
+    ModuleVersion = 'zzzzzzzzzz'
     GUID = '12345678-1234-1234-1234-123456789abc'
     Author = 'Panoramic Data Limited'
     CompanyName = 'Panoramic Data Limited'
