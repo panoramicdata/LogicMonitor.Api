@@ -4,6 +4,7 @@ bin
 lib
 packages
 *.nupkg
+*.snupkg
 /.vs
 /LogicMonitor.Api.Test/userSecrets.json
 /LogicMonitor.Api.tss
