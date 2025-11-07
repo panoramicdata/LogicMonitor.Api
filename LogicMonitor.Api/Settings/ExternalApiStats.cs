@@ -28,7 +28,7 @@ public class ExternalApiStats
 	/// Total nano time
 	/// </summary>
 	[DataMember(Name = "totNanoTime")]
-	public int TotNanoTime { get; set; }
+	public long TotNanoTime { get; set; }
 
 	/// <summary>
 	/// Total processed requests

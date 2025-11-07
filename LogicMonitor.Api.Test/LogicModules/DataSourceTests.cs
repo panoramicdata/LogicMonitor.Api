@@ -62,7 +62,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				null,
 				null,
 				new Filter<InstanceProperty>(),
-				cancellationToken: default)
+				CancellationToken)
 			;
 
 		resourceDataSourceInstances.Should().NotBeNull();

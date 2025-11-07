@@ -11,11 +11,11 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		var deviceDataSource = await LogicMonitorClient
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken)
 			;
 		var deviceDataSourceInstance = deviceDataSourceInstances.Single();
 		var rawData = await LogicMonitorClient
-			.GetRawDataSetAsync(WindowsDeviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, null, null, cancellationToken: default)
+			.GetRawDataSetAsync(WindowsDeviceId, deviceDataSource.Id, deviceDataSourceInstance.Id, null, null, CancellationToken)
 			;
 
 		rawData.Should().NotBeNull();
@@ -118,7 +118,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		var deviceDataSource = await LogicMonitorClient
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken)
 			;
 		var deviceDataSourceInstance = deviceDataSourceInstances.Single();
 		var rawData = await LogicMonitorClient
@@ -145,7 +145,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstances = await portalClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken)
 			;
 		var deviceDataSourceInstance = deviceDataSourceInstances.FirstOrDefault();
 		deviceDataSourceInstance.Should().NotBeNull();
@@ -176,7 +176,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 				WindowsDeviceId,
 				deviceDataSource.Id,
 				new(),
-				cancellationToken: default)
+				CancellationToken)
 			;
 		deviceDataSourceInstances.Should().NotBeNullOrEmpty();
 
@@ -184,7 +184,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		var start = end.AddHours(-2);
 
 		var rawData = await LogicMonitorClient
-			.GetFetchDataResponseAsync(deviceDataSourceInstances.ConvertAll(ddsi => ddsi.Id), start, end, cancellationToken: default)
+			.GetFetchDataResponseAsync(deviceDataSourceInstances.ConvertAll(ddsi => ddsi.Id), start, end, CancellationToken)
 			;
 
 		rawData.Should().NotBeNull();

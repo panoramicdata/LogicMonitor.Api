@@ -47,4 +47,11 @@ public class DashboardReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "displayLink")]
 	public bool DisplayLink { get; set; }
+
+	/// <summary>
+	/// The report group name
+	/// </summary>
+	[DataMember(Name = "reportGroupName")]
+	public string? ReportGroupName { get; set; }
+
 }

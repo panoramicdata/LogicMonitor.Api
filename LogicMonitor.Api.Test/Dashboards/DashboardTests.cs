@@ -30,7 +30,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 
 		// Delete the clone
 		await LogicMonitorClient
-			.DeleteAsync(newDashboard, cancellationToken: default)
+			.DeleteAsync(newDashboard, CancellationToken)
 			;
 	}
 

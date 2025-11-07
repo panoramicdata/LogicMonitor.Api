@@ -15,7 +15,7 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 		if (existingAppliesToFunction != null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingAppliesToFunction, cancellationToken: default)
+				.DeleteAsync(existingAppliesToFunction, CancellationToken)
 				;
 		}
 
@@ -53,7 +53,7 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Delete
 		await LogicMonitorClient
-			.DeleteAsync(existingAppliesToFunction, cancellationToken: default)
+			.DeleteAsync(existingAppliesToFunction, CancellationToken)
 			;
 
 		// Refetch and check

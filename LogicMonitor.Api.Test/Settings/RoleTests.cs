@@ -42,7 +42,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		if (existingRole is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingRole, cancellationToken: default)
+				.DeleteAsync(existingRole, CancellationToken)
 				;
 		}
 
@@ -121,7 +121,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		// Delete
 		await LogicMonitorClient
-			.DeleteAsync(role, cancellationToken: default)
+			.DeleteAsync(role, CancellationToken)
 			;
 	}
 }

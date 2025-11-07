@@ -13,6 +13,12 @@ public class AccountSettings : IHasSingletonEndpoint
 	public bool KeepMeSignedInIsEnabled { get; set; }
 
 	/// <summary>
+	///     Whether user details notifications are enabled
+	/// </summary>
+	[DataMember(Name = "enableUserDetailsEmailNotification")]
+	public bool UserDetailsEmailNotificationIsEnabled { get; set; }
+
+	/// <summary>
 	///     The number of days to keep the user signed in
 	/// </summary>
 	[DataMember(Name = "keepMeSignedInConfigurableDays")]
@@ -594,28 +600,34 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int TokenDisabledDays { get; set; }
 
 	/// <summary>
-	/// LogNumOfPipelines 
+	/// LogNumOfPipelines
 	/// </summary>
 	[DataMember(Name = "logNumOfPipelines")]
 	public int LogNumOfPipelines { get; set; }
 
 	/// <summary>
-	/// LogNumOfPartitions 
+	/// LogNumOfPartitions
 	/// </summary>
 	[DataMember(Name = "logNumOfPartitions")]
 	public int LogNumOfPartitions { get; set; }
 
 	/// <summary>
-	/// LogNumOfAlertConditions 
+	/// LogNumOfAlertConditions
 	/// </summary>
 	[DataMember(Name = "logNumOfAlertConditions")]
 	public int LogNumOfAlertConditions { get; set; }
 
 	/// <summary>
-	/// Widgets per dashboard 
+	/// Widgets per dashboard
 	/// </summary>
 	[DataMember(Name = "widgetsPerDashboard")]
-	public object? widgetsPerDashboard { get; set; }
+	public object? WidgetsPerDashboard { get; set; }
+
+	/// <summary>
+	/// Disable Collector debug timeout in seconds
+	/// </summary>
+	[DataMember(Name = "disableCollectorDebugTimeoutInSeconds")]
+	public int DisableCollectorDebugTimeoutInSeconds { get; set; }
 
 	/// <summary>
 	///     The endpoint

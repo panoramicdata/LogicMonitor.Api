@@ -149,6 +149,13 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public ResourceType ResourceType { get; set; }
 
 	/// <summary>
+	///    The type
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "type")]
+	public object? Type { get; set; }
+
+	/// <summary>
 	///    Whether alerting is effectively enabled
 	/// </summary>
 	[DataMember(Name = "disableAlerting")]

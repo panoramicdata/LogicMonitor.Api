@@ -53,4 +53,22 @@ public class UserReportUserFilter
 	/// </summary>
 	[DataMember(Name = "username")]
 	public string Username { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The email verification
+	/// </summary>
+	[DataMember(Name = "emailVerification")]
+	public string EmailVerification { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The 2FA
+	/// </summary>
+	[DataMember(Name = "2FA")]
+	public string TwoFactorAuthentication { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The 2FA Passkey
+	/// </summary>
+	[DataMember(Name = "2FA Passkey")]
+	public string TwoFactorAuthenticationPasskey { get; set; } = string.Empty;
 }

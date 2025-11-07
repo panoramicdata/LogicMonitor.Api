@@ -12,7 +12,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		if (existingWebsiteGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingWebsiteGroup, cancellationToken: default)
+				.DeleteAsync(existingWebsiteGroup, CancellationToken)
 				;
 		}
 
@@ -28,7 +28,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set it to an expected value
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value1)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value1, cancellationToken: CancellationToken)
 			;
 		var deviceProperties = await LogicMonitorClient
 			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, CancellationToken);
@@ -37,7 +37,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set it to a different value
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value2)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value2, cancellationToken: CancellationToken)
 			;
 		deviceProperties = await LogicMonitorClient.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, CancellationToken);
 		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
@@ -45,7 +45,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Set it to null (delete it)
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, cancellationToken: CancellationToken)
 			;
 		deviceProperties = await LogicMonitorClient
 			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, CancellationToken);
@@ -53,18 +53,18 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		actual.Should().Be(0);
 
 		// This should fail as there is nothing to delete
-		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Delete));
+		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Delete, CancellationToken));
 		deletionException.Should().BeOfType<LogicMonitorApiException>();
 
-		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Update));
+		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Update, CancellationToken));
 		updateException.Should().BeOfType<InvalidOperationException>();
 
-		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Create));
+		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Create, CancellationToken));
 		createNullException.Should().BeOfType<InvalidOperationException>();
 
 		// Create one without checking
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value1, SetPropertyMode.Create)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value1, SetPropertyMode.Create, CancellationToken)
 			;
 		deviceProperties = await LogicMonitorClient
 			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, CancellationToken);
@@ -73,7 +73,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Update one without checking
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value2, SetPropertyMode.Update)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, value2, SetPropertyMode.Update, CancellationToken)
 			;
 		deviceProperties = await LogicMonitorClient
 			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, CancellationToken);
@@ -82,7 +82,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		// Delete one without checking
 		await LogicMonitorClient
-			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Delete)
+			.SetWebsiteGroupCustomPropertyAsync(websiteGroup.Id, propertyName, null, SetPropertyMode.Delete, CancellationToken)
 			;
 		deviceProperties = await LogicMonitorClient
 			.GetWebsiteGroupPropertiesAsync(websiteGroup.Id, CancellationToken);
@@ -121,7 +121,7 @@ public class WebsiteGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		{
 			// Delete it
 			await LogicMonitorClient
-				.DeleteAsync(websiteGroup, cancellationToken: default)
+				.DeleteAsync(websiteGroup, CancellationToken)
 				;
 		}
 	}

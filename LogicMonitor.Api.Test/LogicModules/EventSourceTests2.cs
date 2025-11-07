@@ -68,7 +68,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 			.GetResourceEventSourcesPageAsync(
 				device.Id,
 				new Filter<ResourceEventSource> { Skip = 0, Take = 300 },
-				default)
+				CancellationToken)
 			;
 
 		// Make sure that we have groups and they are not null

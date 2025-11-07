@@ -5,15 +5,15 @@ namespace LogicMonitor.Api.Test.Resources;
 public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
-	public async Task GetDeviceGroupByFullPath()
+	public async Task GetResourceGroupByFullPath()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
 		resourceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
-	public async Task GetDevicesByDeviceGroupByFullPathWhereNameContainsParentheses()
+	public async Task GetResourcesByResourceGroupByFullPathWhereNameContainsParentheses()
 	{
 		// No recurse
 		var nonrecurse = await LogicMonitorClient
@@ -31,7 +31,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task SetAlertThreshold()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
 		var dataSource = await LogicMonitorClient
 			.GetByNameAsync<DataSource>("Ping", CancellationToken);
 		dataSource ??= new();
@@ -47,13 +47,13 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 				"> 191 timezone=Europe/London",
 				$"Set by LogicMonitor.Api Unit Test at {DateTimeOffset.UtcNow}",
 				true,
-				default)
+				CancellationToken)
 			;
 		resourceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupByFullPath_InvalidDeviceGroup_ReturnsNull()
+	public async Task GetResourceGroupByFullPath_InvalidResourceGroup_ReturnsNull()
 	{
 		var nonExistentResourceGroup = await LogicMonitorClient
 			.GetResourceGroupByFullPathAsync("XXXXXX/YYYYYY", CancellationToken);
@@ -61,15 +61,15 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupById()
+	public async Task GetResourceGroupById()
 	{
-		var rootDeviceGroup = await LogicMonitorClient
+		var rootResourceGroup = await LogicMonitorClient
 			.GetAsync<ResourceGroup>(1, CancellationToken);
-		rootDeviceGroup.Should().NotBeNull();
+		rootResourceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetRootDeviceGroupByFullPath()
+	public async Task GetRootResourceGroupByFullPath()
 	{
 		var resourceGroup = await LogicMonitorClient
 			.GetResourceGroupByFullPathAsync("", CancellationToken);
@@ -77,9 +77,9 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetAllDeviceGroups()
+	public async Task GetAllResourceGroups()
 	{
-		// For LMREP-4060, to test if there are any missing DeviceGroupTypes
+		// For LMREP-4060, to test if there are any missing ResourceGroupTypes
 		var resourceGroups = await LogicMonitorClient
 			.GetAllAsync<ResourceGroup>(CancellationToken);
 		resourceGroups.Should().NotBeNull();
@@ -93,7 +93,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupProperties()
+	public async Task GetResourceGroupProperties()
 	{
 		var resourceGroupProperties = await LogicMonitorClient
 			.GetResourceGroupPropertiesAsync(1, CancellationToken);
@@ -103,7 +103,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupPropertiesByName()
+	public async Task GetResourceGroupPropertiesByName()
 	{
 		var resourceGroupProperties = await LogicMonitorClient
 			.GetResourceGroupPropertiesByNameAsync(1, "api.account", CancellationToken);
@@ -111,10 +111,10 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupsByFullPath()
+	public async Task GetResourceGroupsByFullPath()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
 
 		var resourceGroups = resourceGroup.SubGroups;
 
@@ -126,7 +126,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetOneDeviceGroup_Succeeds()
+	public async Task GetOneResourceGroup_Succeeds()
 	{
 		var resourceGroup = await LogicMonitorClient
 			.GetAllAsync(new Filter<ResourceGroup> { Take = 1 }, CancellationToken);
@@ -136,7 +136,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupsByParentId()
+	public async Task GetResourceGroupsByParentId()
 	{
 		var resourceGroup = await LogicMonitorClient
 			.GetAsync<ResourceGroup>(1, CancellationToken);
@@ -152,23 +152,23 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	/// Get a ResourceGroup that has a + character in the name (must be escaped)
 	/// </summary>
 	[Fact]
-	public async Task GetDeviceGroupByFullPathWithPlusInName()
+	public async Task GetResourceGroupByFullPathWithPlusInName()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
 
 		resourceGroup.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task SetDeviceGroupCustomProperty()
+	public async Task SetResourceGroupCustomProperty()
 	{
 		// Make sure a ResourceGroup exists for testing purposes
 		const string testResourceGroupName = "Property Test ResourceGroup";
 		var resourceGroup = await LogicMonitorClient
 			.GetResourceGroupByFullPathAsync(
 				testResourceGroupName,
-				default)
+				CancellationToken)
 				;
 
 		resourceGroup ??= await LogicMonitorClient.CreateAsync(
@@ -190,7 +190,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 				propertyName,
 				value1,
 				SetPropertyMode.Automatic,
-				default);
+				CancellationToken);
 			var resourceGroupProperties = await LogicMonitorClient
 				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
 			var actual = resourceGroupProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
@@ -202,7 +202,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 				propertyName,
 				value2,
 				SetPropertyMode.Automatic,
-				default);
+				CancellationToken);
 			resourceGroupProperties = await LogicMonitorClient
 				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
 			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
@@ -212,7 +212,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 			await LogicMonitorClient
 				.DeleteResourceGroupPropertyAsync(resourceGroup.Id, propertyName, CancellationToken);
 
-			//await LogicMonitorClient.SetDeviceGroupCustomPropertyAsync(
+			//await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(
 			//	deviceGroup.Id,
 			//	propertyName,
 			//	null,
@@ -224,13 +224,13 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 			actual.Should().Be(0);
 
 			// This should fail as there is nothing to delete
-			var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Delete, cancellationToken: default));
+			var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Delete, CancellationToken));
 			deletionException.Should().BeOfType<LogicMonitorApiException>();
 
-			var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Update, cancellationToken: default));
+			var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Update, CancellationToken));
 			updateException.Should().BeOfType<InvalidOperationException>();
 
-			var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Create, cancellationToken: default));
+			var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Create, CancellationToken));
 			createNullException.Should().BeOfType<InvalidOperationException>();
 
 			// Create one without checking
@@ -273,21 +273,20 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupSDTs()
+	public async Task GetResourceGroupSDTs()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
 		var sdts = await LogicMonitorClient
 			.GetResourceGroupSdtsAsync(resourceGroup.Id, new Filter<ScheduledDownTime>(), CancellationToken);
 		sdts.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetDeviceGroupAlerts()
+	public async Task GetResourceGroupAlerts()
 	{
 		var alerts = await LogicMonitorClient
-			.GetResourceGroupAlertsAsync(1)
-			;
+			.GetResourceGroupAlertsAsync(1, cancellationToken: CancellationToken);
 		alerts.Items.Should().NotBeEmpty();
 	}
 }

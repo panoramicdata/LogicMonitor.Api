@@ -34,6 +34,21 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	[Fact]
 	public async Task CreateAndDeleteReport()
 	{
+		const string TemporaryReportName = "Temporary Report 5 - can delete";
+
+		// Remove any existing temporary reports
+		foreach (var existingReport in await LogicMonitorClient.GetAllAsync(new Filter<ReportBase>
+		{
+			FilterItems =
+			[
+				new Eq<ReportBase>(nameof(ReportBase.Name), TemporaryReportName)
+			]
+		}, CancellationToken)
+		)
+		{
+			await LogicMonitorClient.DeleteAsync<ReportBase>(existingReport.Id, CancellationToken);
+		}
+
 		var sDate = DateTime.UtcNow.AddDays(-1);
 		var eDate = sDate.AddHours(1);
 
@@ -41,7 +56,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		var report =
 			await LogicMonitorClient.CreateAsync(new ReportCreationDto
 			{
-				Name = "Temporary Report 5 - can delete",
+				Name = TemporaryReportName,
 				Description = "Temporary Report - can delete",
 				Format = "PDF",
 				Type = "Dashboard",
@@ -49,7 +64,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 				DateRange = $"{sDate:yyyy-MM-dd HH:mm} TO {eDate:yyyy-MM-dd HH:mm}",
 				DashboardId = 205
 			},
-			default)
+			CancellationToken)
 			;
 
 		report.Should().NotBeNull();
@@ -71,7 +86,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingReportGroup, cancellationToken: default)
+				.DeleteAsync(existingReportGroup, CancellationToken)
 				;
 		}
 
@@ -84,7 +99,7 @@ public class ReportTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(reportGroup, cancellationToken: default)
+			.DeleteAsync(reportGroup, CancellationToken)
 			;
 	}
 }

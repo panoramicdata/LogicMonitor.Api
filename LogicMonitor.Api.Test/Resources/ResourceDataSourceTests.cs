@@ -3,7 +3,7 @@ namespace LogicMonitor.Api.Test.Resources;
 public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]
-	public async Task GetAllDeviceDataSourcesAsync()
+	public async Task GetAllResourceDataSourcesAsync()
 	{
 		var deviceDataSources = await LogicMonitorClient
 			.GetAllResourceDataSourcesAsync(1765, null, CancellationToken);
@@ -11,7 +11,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	}
 
 	[Fact]
-	public async Task DeviceDataSourceTests2()
+	public async Task ResourceDataSourceTests2()
 	{
 		var dataSource = await LogicMonitorClient
 			.GetDataSourceByUniqueNameAsync("SSL_Certificates", CancellationToken);
@@ -43,7 +43,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	}
 
 	[Fact]
-	public async Task GetDeviceDatasourceData()
+	public async Task GetResourceDatasourceData()
 	{
 		var deviceDataSources = await LogicMonitorClient
 			.GetAllResourceDataSourcesAsync(WindowsDeviceId, null, CancellationToken);

@@ -58,6 +58,7 @@ Cognito
 color
 configsources
 Connectwise
+critical
 criticals
 Datacenter
 datafetch
@@ -132,6 +133,7 @@ Netscan
 Netscans
 Noc
 nullable
+OCI
 ographs
 Oid
 oids

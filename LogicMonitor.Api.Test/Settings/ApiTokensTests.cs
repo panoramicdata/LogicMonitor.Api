@@ -7,7 +7,7 @@ public class ApiTokensTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 	{
 		var logicMonitorClient = LogicMonitorClient;
 		var apiTokens = await logicMonitorClient
-			.GetAllAsync<ApiToken>(cancellationToken: default)
+			.GetAllAsync<ApiToken>(CancellationToken)
 			;
 
 		apiTokens.Should().NotBeNullOrEmpty();

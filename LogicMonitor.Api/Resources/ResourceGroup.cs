@@ -115,6 +115,34 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	public int AzureResourceCount { get; set; }
 
 	/// <summary>
+	/// The number of OCI Resource that belong to this ResourceGroup (includes OCI devices in sub groups)
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "numOfOCIDevices")]
+	public int OciResourceCount { get; set; }
+
+	/// <summary>
+	/// The number of instances in each OCI region (only applies to OCI groups)
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "ociRegionsInfo")]
+	public string OciRegionsInfo { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The Status code result returned by the transaction that tests the OCI credentials associated with the OCI group
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "ociTestResultCode")]
+	public int OciTestResultCode { get; set; }
+
+	/// <summary>
+	/// The String result returned by the transaction that tests the OCI credentials associated with the OCI group
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "ociTestResult")]
+	public object? OciTestResult { get; set; } = new();
+
+	/// <summary>
 	/// The number of instances in each Azure region (only applies to Azure groups)
 	/// </summary>
 	[SantabaReadOnly]

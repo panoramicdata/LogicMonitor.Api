@@ -59,7 +59,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			if (createdSdt is not null)
 			{
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
 					;
 			}
 		}
@@ -176,7 +176,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			{
 				// Delete
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
 					;
 			}
 		}
@@ -255,7 +255,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 	//		{
 	//			// Delete
 	//			await LogicMonitorClient
-	//				.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
+	//				.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
 	//				;
 	//		}
 	//	}
@@ -335,7 +335,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			{
 				// Delete
 				await portalClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
 					;
 			}
 		}
@@ -358,7 +358,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 				new Eq<ScheduledDownTime>(nameof(Type), "DeviceSDT"),
 				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.ResourceId), resourceId!)
 			]
-		}, default
+		}, CancellationToken
 		);
 		filteredScheduledDownTimes.Should().NotBeNull();
 
@@ -385,7 +385,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 		if (resourceGroup is not null)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(resourceGroup, cancellationToken: default)
+				.DeleteAsync(resourceGroup, CancellationToken)
 				;
 		}
 
@@ -435,14 +435,14 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			{
 				// Clean up
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
 					;
 			}
 		}
 
 		// Remove the ResourceGroup
 		await LogicMonitorClient
-			.DeleteAsync(resourceGroup, cancellationToken: default)
+			.DeleteAsync(resourceGroup, CancellationToken)
 			;
 	}
 
@@ -465,7 +465,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
 
 		var deviceDataSourceInstance = (await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: default)
+			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken)
 			)
 			.Single();
 
@@ -493,7 +493,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			if (createdSdt is not null)
 			{
 				await LogicMonitorClient
-					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, cancellationToken: default)
+					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken)
 					;
 			}
 		}

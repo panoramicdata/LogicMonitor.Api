@@ -39,7 +39,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Changed_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Value(s) changed for: PDL-K8S-TEST (CollectorID=297) [Critical Linux Processes-java from 9947 to 22713]; valueChanges=[deviceId=3271,dataSourceId=94545589,instanceChanges=[instanceId=263219850,oldValue=22713,newValue=9947];];'""",
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=TemporaryReportName(s) changed for: PDL-K8S-TEST (CollectorID=297) [Critical Linux Processes-java from 9947 to 22713]; valueChanges=[deviceId=3271,dataSourceId=94545589,instanceChanges=[instanceId=263219850,oldValue=22713,newValue=9947];];'""",
 			new()
 			{
 				MatchedRegExId = 6,

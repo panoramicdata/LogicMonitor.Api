@@ -205,6 +205,12 @@ public class Netscan : NamedItem, IExecutable
 	public string LinuxScript { get; set; } = string.Empty;
 
 	/// <summary>
+	/// The filters
+	/// </summary>
+	[DataMember(Name = "filters")]
+	public List<object?> Filters { get; set; } = [];
+
+	/// <summary>
 	///    The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/netscans";

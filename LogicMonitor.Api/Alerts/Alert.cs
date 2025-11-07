@@ -97,6 +97,12 @@ public class Alert : IHasEndpoint
 	public int StartOnSeconds { get; set; }
 
 	/// <summary>
+	///    The number of seconds since the Epoch when the alert was last updated
+	/// </summary>
+	[DataMember(Name = "lastUpdatedOnEpoch")]
+	public long? LastUpdatedOnMs { get; set; }
+
+	/// <summary>
 	///    The number of seconds since the Epoch when the alert state started
 	/// </summary>
 	[DataMember(Name = "endEpoch")]
@@ -336,6 +342,18 @@ public class Alert : IHasEndpoint
 	[DataMember(Name = "suppressDesc")]
 	public string SuppressedDescending { get; set; } = string.Empty;
 
+	/// <summary>
+	/// The SDT ids
+	/// </summary>
+	[DataMember(Name = "sdtIds")]
+	public string? SdtIds { get; set; }
+
+	/// <summary>
+	/// The threshold metadata
+	/// </summary>
+	[DataMember(Name = "thresholdMetadata")]
+	public string? ThresholdMetadata { get; set; }
+
 	///////////////////
 
 	/// <summary>
@@ -349,6 +367,12 @@ public class Alert : IHasEndpoint
 	/// </summary>
 	[IgnoreDataMember]
 	public DateTime StartOnUtc => StartOnSeconds.ToDateTimeUtc();
+
+	/// <summary>
+	///    The DateTime that the Alert state was last updated
+	/// </summary>
+	[IgnoreDataMember]
+	public DateTime? LastUpdatedOnUtc => LastUpdatedOnMs?.ToDateTimeUtcFromMs();
 
 	/// <summary>
 	///    The DateTime that the Alert state was acknowledged

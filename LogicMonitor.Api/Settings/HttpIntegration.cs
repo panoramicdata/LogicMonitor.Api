@@ -223,16 +223,28 @@ public class HttpIntegration : Integration
 	public string UpdateMethod { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The update Url
+	///     The update URL
 	/// </summary>
 	[DataMember(Name = "updateUrl")]
 	public string UpdateUrl { get; set; } = string.Empty;
 
 	/// <summary>
-	///     The Url
+	///     The Custom URL
+	/// </summary>
+	[DataMember(Name = "customUrl")]
+	public string CustomUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The URL
 	/// </summary>
 	[DataMember(Name = "url")]
 	public string Url { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The URL type
+	/// </summary>
+	[DataMember(Name = "urlType")]
+	public string UrlType { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The Username

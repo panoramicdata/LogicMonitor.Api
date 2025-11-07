@@ -96,12 +96,11 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		};
 
 		// Remove any existing  by this name
-		var existingNetscan = (await portalClient.GetAllAsync<Netscan>(CancellationToken)).SingleOrDefault(nsp => nsp.Name == name);
+		var existingNetscan = (await portalClient.GetAllAsync<Netscan>(CancellationToken))
+			.SingleOrDefault(nsp => nsp.Name == name);
 		if (existingNetscan is not null)
 		{
-			await portalClient
-				.DeleteAsync(existingNetscan, cancellationToken: default)
-				;
+			await portalClient.DeleteAsync(existingNetscan, CancellationToken);
 		}
 
 		// Create one
@@ -125,7 +124,7 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 		// Clean up
 		await portalClient
-			.DeleteAsync(createdNetscan, cancellationToken: default)
+			.DeleteAsync(createdNetscan, CancellationToken)
 			;
 	}
 

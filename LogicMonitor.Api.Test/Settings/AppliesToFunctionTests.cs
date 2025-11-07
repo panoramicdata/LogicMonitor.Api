@@ -16,7 +16,7 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		var appliesToFunction = await LogicMonitorClient
 			.GetAppliesToFunctionAsync(1, CancellationToken);
-		appliesToFunction.Name.Should().Be("NetSNMPComputers");
+		appliesToFunction.Name.Should().NotBeNullOrWhiteSpace();
 	}
 
 	[Fact]

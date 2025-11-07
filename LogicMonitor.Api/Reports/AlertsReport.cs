@@ -125,4 +125,16 @@ public class AlertsReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "dependencyRoutingState")]
 	public string DependencyRoutingState { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The clear filter
+	/// </summary>
+	[DataMember(Name = "clearFilter")]
+	public string ClearFilter { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Whether to include historical SDT
+	/// </summary>
+	[DataMember(Name = "isHistoricalSDT")]
+	public string IsHistoricalSDT { get; set; } = string.Empty;
 }

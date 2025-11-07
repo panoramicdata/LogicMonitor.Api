@@ -599,4 +599,47 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 
 		fetchAlert.Acked.Should().Be(true);
 	}
+
+	[Fact]
+	public void LastUpdatedOnMs_ConvertsCorrectlyToDateTime()
+	{
+		// Arrange - Create an alert with a specific timestamp in milliseconds
+		// 1746002725588 ms since epoch = 2025-04-30 08:45:25.588 UTC
+		var alert = new Alert
+		{
+			LastUpdatedOnMs = 1746002725588
+		};
+
+		// Act
+		var lastUpdatedUtc = alert.LastUpdatedOnUtc;
+
+		// Assert
+		lastUpdatedUtc.Should().NotBeNull();
+		lastUpdatedUtc.Should().HaveYear(2025);
+		lastUpdatedUtc.Should().HaveMonth(4);
+		lastUpdatedUtc.Should().HaveDay(30);
+		lastUpdatedUtc.Should().HaveHour(8);
+		lastUpdatedUtc.Should().HaveMinute(45);
+		lastUpdatedUtc.Should().HaveSecond(25);
+		
+		// Verify the exact timestamp
+		var expectedDateTime = new DateTime(2025, 4, 30, 8, 45, 25, 588, DateTimeKind.Utc);
+		lastUpdatedUtc.Should().Be(expectedDateTime);
+	}
+
+	[Fact]
+	public void LastUpdatedOnMs_WhenNull_ReturnsNull()
+	{
+		// Arrange
+		var alert = new Alert
+		{
+			LastUpdatedOnMs = null
+		};
+
+		// Act
+		var lastUpdatedUtc = alert.LastUpdatedOnUtc;
+
+		// Assert
+		lastUpdatedUtc.Should().BeNull();
+	}
 }

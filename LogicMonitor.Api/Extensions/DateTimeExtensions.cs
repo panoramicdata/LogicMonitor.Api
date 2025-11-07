@@ -10,9 +10,16 @@ internal static class DateTimeExtensions
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970
 	/// </summary>
-	/// <param name="secondsSinceTheEpoch">the number of seconds since the Epoch</param>
-	public static DateTime ToDateTimeUtc(this long secondsSinceTheEpoch)
-		=> _theEpoch.AddSeconds(secondsSinceTheEpoch);
+	/// <param name="msSinceTheEpoch">the number of seconds since the Epoch</param>
+	public static DateTime ToDateTimeUtc(this long msSinceTheEpoch)
+		=> _theEpoch.AddSeconds(msSinceTheEpoch);
+
+	/// <summary>
+	/// The number of ms that this DateTime is past midnight on 1st January 1970
+	/// </summary>
+	/// <param name="msSinceTheEpoch">the number of seconds since the Epoch</param>
+	public static DateTime ToDateTimeFromMsUtc(this long msSinceTheEpoch)
+		=> _theEpoch.AddSeconds(msSinceTheEpoch);
 
 	/// <summary>
 	/// The number of seconds that this DateTime is past midnight on 1st January 1970

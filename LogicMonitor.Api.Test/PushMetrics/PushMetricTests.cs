@@ -43,7 +43,7 @@ public class PushMetricTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 						]
 					}
 				]
-			}, cancellationToken: default)
+			}, CancellationToken)
 			;
 		response.Should().NotBeNull();
 	}

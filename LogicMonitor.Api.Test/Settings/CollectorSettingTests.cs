@@ -40,7 +40,7 @@ public class CollectorSettingTests(ITestOutputHelper iTestOutputHelper, Fixture 
 	public async Task GetCollectorVersions_Unfiltered_Succeeds()
 	{
 		var collectorVersions = await LogicMonitorClient
-			.GetAllCollectorVersionsAsync(new(), cancellationToken: default)
+			.GetAllCollectorVersionsAsync(new(), CancellationToken)
 			;
 		collectorVersions.Should().NotBeNull();
 		collectorVersions.Should().NotBeNullOrEmpty();

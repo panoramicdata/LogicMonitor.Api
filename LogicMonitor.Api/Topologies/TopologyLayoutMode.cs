@@ -7,14 +7,20 @@
 public enum TopologyLayoutMode
 {
 	/// <summary>
-	/// Dynamic
+	/// Circular
 	/// </summary>
-	[EnumMember(Value = "dynamic")]
-	Dynamic,
+	[EnumMember(Value = "CIRCULAR")]
+	Circular,
 
 	/// <summary>
 	/// Hierarchical
 	/// </summary>
-	[EnumMember(Value = "hierarchical")]
-	Hierarchical
+	[EnumMember(Value = "HIERARCHIC")]
+	Hierarchical,
+
+	/// <summary>
+	/// Horizontal
+	/// </summary>
+	[EnumMember(Value = "HORIZONTAL")]
+	Horizontal,
 }

@@ -82,7 +82,7 @@ public class Topology : NamedItem, IHasEndpoint
 	///    The connections
 	/// </summary>
 	[DataMember(Name = "connections")]
-	public List<TopologyConnection> Connection { get; set; } = [];
+	public List<string> Connection { get; set; } = [];
 
 	/// <summary>
 	/// The REST API endpoint

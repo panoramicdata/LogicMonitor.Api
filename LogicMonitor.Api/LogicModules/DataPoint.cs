@@ -167,4 +167,10 @@ public class DataPoint : NamedItem
 	/// </summary>
 	[DataMember(Name = "originId")]
 	public string OriginId { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Status display names
+	/// </summary>
+	[DataMember(Name = "statusDisplayNames")]
+	public List<string> StatusDisplayNames { get; set; } = [];
 }

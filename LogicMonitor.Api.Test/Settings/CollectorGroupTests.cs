@@ -86,7 +86,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 		foreach (var priorCollectorGroup in collectorGroups)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(priorCollectorGroup, cancellationToken: default)
+				.DeleteAsync(priorCollectorGroup, CancellationToken)
 				;
 		}
 		// There are now none with this name
@@ -121,7 +121,7 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 
 		// Delete
 		await LogicMonitorClient
-			.DeleteAsync(newCollectorGroupRefetch, cancellationToken: default)
+			.DeleteAsync(newCollectorGroupRefetch, CancellationToken)
 			;
 	}
 }

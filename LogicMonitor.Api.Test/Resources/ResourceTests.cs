@@ -181,7 +181,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDevicePage()
+	public async Task GetResourcePage()
 	{
 		const int MaxCount = 50;
 		var devicesPage = await LogicMonitorClient
@@ -192,7 +192,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetAllDeviceInstances()
+	public async Task GetAllResourceInstances()
 	{
 		var deviceInstances = await LogicMonitorClient
 			.GetResourceInstanceListAsync(WindowsDeviceId, new Filter<ResourceDataSourceInstance>
@@ -208,7 +208,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceByDeviceId()
+	public async Task GetResourceByDeviceId()
 	{
 		var device = await LogicMonitorClient
 			.GetAsync<Resource>(77, CancellationToken);
@@ -220,7 +220,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	/// </summary>
 	/// <returns></returns>
 	[Fact]
-	public Task GetDeviceByNonExistentDeviceIdShouldFail() =>
+	public Task GetResourceByNonExistentDeviceIdShouldFail() =>
 		LogicMonitorClient
 			.Invoking(async x => await LogicMonitorClient
 				.GetAsync<Resource>(12345678, CancellationToken)
@@ -229,7 +229,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.ThrowAsync<LogicMonitorApiException>();
 
 	[Fact]
-	public async Task GetDeviceByDisplayNameAsync()
+	public async Task GetResourceByDisplayNameAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var device2 = await LogicMonitorClient
@@ -238,7 +238,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceByHostName()
+	public async Task GetResourceByHostName()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var devices = await LogicMonitorClient
@@ -270,7 +270,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDevicePropertiesContainsExpected()
+	public async Task GetResourcePropertiesContainsExpected()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var deviceProperties = await LogicMonitorClient
@@ -280,7 +280,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDevicesAndInstancesAssociatedWithDataSourceById()
+	public async Task GetResourcesAndInstancesAssociatedWithDataSourceById()
 	{
 		// Get the dataSource
 		var dataSource = await LogicMonitorClient
@@ -300,7 +300,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public void GetDevicesByDeviceGroupFullPath_InvalidDeviceGroup_ThrowsException()
+	public void GetResourcesByDeviceGroupFullPath_InvalidDeviceGroup_ThrowsException()
 	{
 		LogicMonitorClient
 			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", true, CancellationToken))
@@ -313,7 +313,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDevicesByDeviceGroupFullPathV78()
+	public async Task GetResourcesByDeviceGroupFullPathV78()
 	{
 		// Recurse
 		var allDatacenterDevices = await LogicMonitorClient
@@ -328,7 +328,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDevicesRecurse()
+	public async Task GetResourcesRecurse()
 	{
 		var allStaffDevices = await LogicMonitorClient
 			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
@@ -336,7 +336,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetFewerDevices()
+	public async Task GetFewerResources()
 	{
 		const int numberToFetch = 10;
 		var devices = await LogicMonitorClient
@@ -347,7 +347,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetFullDeviceTree()
+	public async Task GetFullResourceTree()
 	{
 		var deviceGroup = await LogicMonitorClient
 			.GetFullResourceTreeAsync(cancellationToken: CancellationToken)
@@ -356,7 +356,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetFullDeviceTreeForDatacenter()
+	public async Task GetFullResourceTreeForDatacenter()
 	{
 		var deviceGroup = await LogicMonitorClient
 			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
@@ -392,7 +392,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task UpdateDeviceProperty()
+	public async Task UpdateResourceProperty()
 	{
 		var portalClient = LogicMonitorClient;
 		var device = await GetWindowsResourceAsync(CancellationToken);
@@ -442,7 +442,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task SetDeviceCustomProperty()
+	public async Task SetResourceCustomProperty()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		const string propertyName = "blah";
@@ -551,7 +551,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceCustomProperties()
+	public async Task GetResourceCustomProperties()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var deviceProperties = await LogicMonitorClient.GetResourcePropertiesAsync(device.Id, CancellationToken);
@@ -559,7 +559,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceUsingSubUrl()
+	public async Task GetResourceUsingSubUrl()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var deviceRefetch = await LogicMonitorClient
@@ -568,7 +568,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDifferentDeviceTypes()
+	public async Task GetDifferentResourceTypes()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		device.ResourceType.Should().Be(ResourceType.Regular);
@@ -580,7 +580,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeadDevices()
+	public async Task GetDeadResources()
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Resource>
 		{
@@ -594,7 +594,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetAlertDisableDevices_Filtered()
+	public async Task GetAlertDisableResources_Filtered()
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Resource>
 		{
@@ -608,7 +608,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetAlertDisableDevices_RawFilter()
+	public async Task GetAlertDisableResources_RawFilter()
 	{
 		var deviceList = await LogicMonitorClient.GetAllAsync(
 			new Filter<Resource> { QueryString = "filter=alertDisableStatus!:\"none-none-none\"" },
@@ -618,7 +618,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDevicesFromRoot()
+	public async Task GetResourcesFromRoot()
 	{
 		// Fetch in ascending order to get unchanging DeviceGroup first
 		var deviceGroups = await LogicMonitorClient
@@ -636,7 +636,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceAlertsPageAsync()
+	public async Task GetResourceAlertsPageAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var alertsPage = await LogicMonitorClient
@@ -646,7 +646,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceAlertsWithFilterAsync()
+	public async Task GetResourceAlertsWithFilterAsync()
 	{
 		var alertFilter = new AlertFilter
 		{
@@ -671,7 +671,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task PatchDeviceAsync()
+	public async Task PatchResourceAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var oldDescription = device.Description;
@@ -691,7 +691,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 	[Fact]
 	[Trait("Long Tests", "")]
-	public async Task GetDeviceAlertSettings()
+	public async Task GetResourceAlertSettings()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 
@@ -702,7 +702,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetDeviceDataSourceInstanceDataPointConfigurationAsync()
+	public async Task GetResourceDataSourceInstanceDataPointConfigurationAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 

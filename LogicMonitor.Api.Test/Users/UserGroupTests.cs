@@ -27,7 +27,7 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		foreach (var existingItem in existingItems)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(existingItem, cancellationToken: default)
+				.DeleteAsync(existingItem, CancellationToken)
 				;
 		}
 
@@ -51,7 +51,7 @@ public class UserGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 
 		// Delete it again
 		await LogicMonitorClient
-			.DeleteAsync(newItem, cancellationToken: default)
+			.DeleteAsync(newItem, CancellationToken)
 			;
 	}
 }

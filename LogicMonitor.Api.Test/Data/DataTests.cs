@@ -22,7 +22,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 				WindowsDeviceId,
 				deviceDataSource.Id,
 				new(),
-				cancellationToken: default)
+				CancellationToken)
 			;
 
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];

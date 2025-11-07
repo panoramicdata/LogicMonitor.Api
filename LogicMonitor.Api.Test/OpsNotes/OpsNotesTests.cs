@@ -84,7 +84,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		// Remove the test OpsNote - this takes some time
 		await LogicMonitorClient
-			.DeleteAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default)
+			.DeleteAsync<OpsNote>(createdOpsNote.Id, CancellationToken)
 			;
 
 		// Wait 2 seconds
@@ -92,7 +92,7 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			;
 
 		// Make sure that it is gone
-		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, cancellationToken: default);
+		var operation = async () => await LogicMonitorClient.GetAsync<OpsNote>(createdOpsNote.Id, CancellationToken);
 		await operation
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>()
