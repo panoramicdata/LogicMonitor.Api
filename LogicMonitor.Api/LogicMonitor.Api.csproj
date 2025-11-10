@@ -28,7 +28,9 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Updated Microsoft .NET packages to 9.0.9
+			Replaced SixLabors.ImageSharp test dependency with SkiaSharp (MIT license, free for commercial use)
+			Fixed PowerShell module logger disposal issue
+			Code formatting and quality improvements
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

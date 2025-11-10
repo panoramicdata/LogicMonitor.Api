@@ -26,7 +26,6 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
 global using Newtonsoft.Json.Linq;
 global using System.Diagnostics;
-global using System.Drawing;
 global using System.IO;
 global using System.Linq;
 global using System.Threading;

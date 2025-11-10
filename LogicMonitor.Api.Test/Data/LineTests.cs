@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace LogicMonitor.Api.Test.Data;
 
 public class LineTests
