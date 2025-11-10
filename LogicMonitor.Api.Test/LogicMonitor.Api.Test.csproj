@@ -15,7 +15,7 @@
 
 	<ItemGroup>
 		<!-- XUnit 3 Packages -->
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
 		<PackageReference Include="SkiaSharp" Version="3.119.1" />
 		<PackageReference Include="xunit.v3" Version="3.2.0" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
@@ -24,8 +24,8 @@
 		</PackageReference>
 
 		<!-- PowerShell Testing Dependencies -->
-		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.5.1" />
-		<PackageReference Include="System.Management.Automation" Version="7.5.1" />
+		<PackageReference Include="Microsoft.PowerShell.SDK" Version="7.5.4" />
+		<PackageReference Include="System.Management.Automation" Version="7.5.4" />
 
 		<!-- Analyzers -->
 		<PackageReference Include="AsyncFixer" Version="1.6.0">
