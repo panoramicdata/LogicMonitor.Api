@@ -28,9 +28,9 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Replaced SixLabors.ImageSharp test dependency with SkiaSharp (MIT license, free for commercial use)
-			Fixed PowerShell module logger disposal issue
-			Code formatting and quality improvements
+			Security fix: Updated Newtonsoft.Json from 13.0.3 to 13.0.4 (CVE-2024-21907 - DoS vulnerability)
+			Updated Microsoft.Extensions.Logging packages to 9.0.10
+			Replaced SixLabors.ImageSharp test dependency with SkiaSharp (MIT license)
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
