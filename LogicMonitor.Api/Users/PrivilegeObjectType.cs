@@ -137,5 +137,11 @@ public enum PrivilegeObjectType
 	/// Diagnostic Source
 	/// </summary>
 	[EnumMember(Value = "diagnosticSource")]
-	DiagnosticSource
+	DiagnosticSource,
+
+	/// <summary>
+	/// Diagnostic Source
+	/// </summary>
+	[EnumMember(Value = "remediationSource")]
+	RemediationSource
 }

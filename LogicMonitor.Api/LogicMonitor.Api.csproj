@@ -28,9 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Security fix: Updated Newtonsoft.Json from 13.0.3 to 13.0.4 (CVE-2024-21907 - DoS vulnerability)
-			Updated Microsoft.Extensions.Logging packages to 9.0.10
-			Replaced SixLabors.ImageSharp test dependency with SkiaSharp (MIT license)
+			Added RemediationSource to PrivilegeObjectType, as used by various User-related endpoints.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
