@@ -41,5 +41,5 @@ public enum NetscanMethod
 	///    Enhanced script discovery method
 	/// </summary>
 	[EnumMember(Value = "enhancedScript")]
-	EnhancedScript = 4
+	EnhancedScript = 5
 }

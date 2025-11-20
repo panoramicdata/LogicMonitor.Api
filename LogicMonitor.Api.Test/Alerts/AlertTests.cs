@@ -12,7 +12,7 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 	private static void CheckAlertsAreValid(List<Alert> alerts)
 	{
 		// Make sure that all have Unique Ids
-		foreach (var alertType in Enum.GetValues<AlertType>().Cast<AlertType>())
+		foreach (var alertType in Enum.GetValues<AlertType>())
 		{
 			alerts
 				.Where(a => a.AlertType == alertType)
@@ -443,8 +443,7 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 	public Task GetOfNonExistentAlertShouldThrowException()
 			=> ((Func<Task>?)(async () =>
 				{
-					var alert = await LogicMonitorClient
-						.GetAlertAsync("DS1234", CancellationToken);
+					var _ = await LogicMonitorClient.GetAlertAsync("DS1234", CancellationToken);
 				}))
 				.Should()
 				.ThrowAsync<LogicMonitorApiException>();

@@ -869,14 +869,15 @@ public partial class LogicMonitorClient
 				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
 				return newAlertFilter;
 			});
-		await Task.WhenAll(alertFilterList.Select((Func<AlertFilter, Task>)(async individualAlertFilter =>
+
+		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
 			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetResourceAlertsByIdNormalAsync((int)resourceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
+			foreach (var alert in (await GetResourceAlertsByIdNormalAsync(resourceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
 			{
-				allAlerts.Add((Alert)alert);
+				allAlerts.Add(alert);
 			}
-		}))).ConfigureAwait(false);
+		})).ConfigureAwait(false);
 
 		filter.StartEpochIsAfter = originalStartEpochIsAfter;
 		filter.StartEpochIsBefore = originalStartEpochIsBefore;

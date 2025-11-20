@@ -273,7 +273,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		var found = false;
 		var foundBoard = new Dashboard();
 
-		foreach (Dashboard dashboard in fetchedDashboards.Items)
+		foreach (var dashboard in fetchedDashboards.Items)
 		{
 			if (dashboard.Description.Equals("Test dashboard - will be deleted", StringComparison.Ordinal))
 			{
@@ -308,7 +308,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		found = false;
 		foundBoard = new Dashboard();
 
-		foreach (Dashboard dashboard in refetchedDashboards.Items)
+		foreach (var dashboard in refetchedDashboards.Items)
 		{
 			if (dashboard.Description.Equals("Test dashboard - will be deleted", StringComparison.Ordinal))
 			{

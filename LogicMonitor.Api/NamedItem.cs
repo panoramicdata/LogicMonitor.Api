@@ -23,9 +23,8 @@ public abstract class NamedItem : DescribedItem, IHasName
 			return false;
 		}
 
-		return obj is not NamedItem logicMonitorNamedEntity
-			? false
-			: base.Equals(logicMonitorNamedEntity)
+		return obj is NamedItem logicMonitorNamedEntity
+			&& base.Equals(logicMonitorNamedEntity)
 			&& logicMonitorNamedEntity is not null
 			&& logicMonitorNamedEntity.Name == Name
 			&& logicMonitorNamedEntity.Description == Description;

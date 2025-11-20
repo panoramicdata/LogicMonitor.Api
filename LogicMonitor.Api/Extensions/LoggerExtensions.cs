@@ -38,7 +38,7 @@ public static class LoggerExtensions
 			}
 			catch (Exception e)
 			{
-				logger.LogDebug("{Guid}Unable to get headers for debug logging: {Message}", guidPrefix, e.Message);
+				logger.LogDebug(e, "{Guid}Unable to get headers for debug logging: {Message}", guidPrefix, e.Message);
 			}
 		}
 	}

@@ -7,7 +7,7 @@ public class StatisticsTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		_ = await LogicMonitorClient
 			.GetVersionAsync(CancellationToken);
-		Api.Statistics statistics = LogicMonitorClient.Statistics;
+		var statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
 		statistics.ApiCallFailureCount.Should().Be(0);
 		statistics.ApiCallPostCount.Should().Be(0);
@@ -28,7 +28,7 @@ public class StatisticsTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		_ = await LogicMonitorClient
 			.GetAllAsync<Collector>(CancellationToken);
-		Api.Statistics statistics = LogicMonitorClient.Statistics;
+		var statistics = LogicMonitorClient.Statistics;
 		statistics.ApiCallSuccessCount.Should().Be(1);
 		statistics.ApiCallFailureCount.Should().Be(0);
 		statistics.ApiCallPostCount.Should().Be(0);

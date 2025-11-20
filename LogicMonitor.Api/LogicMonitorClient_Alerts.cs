@@ -176,7 +176,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="cancellationToken">The optional cancellation token</param>
 	/// <returns>The message template set</returns>
-	public async Task<MessageTemplateSet> GetMessageTemplatesAsync(CancellationToken cancellationToken) => new MessageTemplateSet
+	public async Task<MessageTemplateSet> GetMessageTemplatesAsync(CancellationToken cancellationToken) => new()
 	{
 		AlertThrottledAlertMessageTemplate = await GetAsync<AlertMessageTemplate>(false, "setting/alert/alertTemplates/alertThrottledAlert", cancellationToken).ConfigureAwait(false),
 		AlertThrottledClearMessageTemplate = await GetAsync<AlertMessageTemplate>(false, "setting/alert/alertTemplates/alertThrottledAlert_clear", cancellationToken).ConfigureAwait(false),

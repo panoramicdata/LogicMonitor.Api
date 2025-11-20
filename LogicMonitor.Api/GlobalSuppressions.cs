@@ -36,11 +36,3 @@
 	"Naming",
 	"CA1711:Identifiers should not have incorrect suffix",
 	Justification = "Names selected by LogicMonitor")]
-
-[assembly: SuppressMessage(
-	"Naming",
-	"VSSpell001:Spell Check",
-	Justification = "Temporary for typo fix",
-	Scope = "member",
-	Target = "~P:LogicMonitor.Api.Collectors.CollectorGroup.MismatchVerison")
-]

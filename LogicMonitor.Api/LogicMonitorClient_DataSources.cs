@@ -439,12 +439,9 @@ public partial class LogicMonitorClient
 						foreach (var resourceDataSourceInstance in thisResourceDataSourceInstances)
 						{
 							var instanceCustomProperties = await GetAllResourceDataSourceInstancePropertiesAsync(deviceId, resourceDataSource.Id, resourceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
-							if (instancePropertyValueRegex is not null)
+							if (instancePropertyValueRegex is not null && !instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
 							{
-								if (!instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
-								{
-									continue;
-								}
+								continue;
 							}
 
 							resourceDataSourceInstances.Add(resourceDataSourceInstance);

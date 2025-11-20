@@ -979,7 +979,7 @@ public partial class LogicMonitorClient : IDisposable
 			}
 			catch (Exception e)
 			{
-				_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {StackTrace}",
+				_logger.LogDebug(e, "{Prefix} failed on attempt {FailureCount}: {StackTrace}",
 					prefix,
 					++failureCount,
 					e.ToString());
@@ -1118,7 +1118,7 @@ public partial class LogicMonitorClient : IDisposable
 		}
 		catch (DeserializationException e)
 		{
-			_logger.LogError("{Prefix} Unable to deserialize\n{ResponseBody}\n{Message}",
+			_logger.LogError(e, "{Prefix} Unable to deserialize\n{ResponseBody}\n{Message}",
 				prefix,
 				e.ResponseBody,
 				e.Message);

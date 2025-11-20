@@ -95,8 +95,7 @@ namespace LogicMonitor.PowerShell.Commands
 
 				// Test the connection by getting account information
 				WriteVerboseMessage("Testing connection...");
-				var accountInfo = Client.GetAsync<LogicMonitor.Api.Settings.AccountSettings>(CancellationToken.None)
-			.GetAwaiter().GetResult();
+				var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None).GetAwaiter().GetResult();
 
 				// Create connection info
 				ConnectionInfo = new LogicMonitorConnectionInfo

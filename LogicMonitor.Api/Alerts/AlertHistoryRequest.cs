@@ -20,7 +20,9 @@ public class AlertHistoryRequest : IValidate
 	/// </summary>
 	public DateTime? EndDateTimeUtc { get; set; }
 
-	///
+	/// <summary>
+	/// The Alert History Period
+	/// </summary>
 	public AlertHistoryPeriod HistoryPeriod { get; set; } = AlertHistoryPeriod.Last24Hours;
 
 	/// <summary>

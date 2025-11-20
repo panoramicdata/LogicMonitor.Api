@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Topologies;
 ///    A ResourceGroup
 /// </summary>
 [DataContract]
-public class TopologyGroup : NamedItem, IHasEndpoint, IPatchable
+public class TopologyGroup : NamedItem, IPatchable
 {
 	/// <summary>
 	///    The topology count

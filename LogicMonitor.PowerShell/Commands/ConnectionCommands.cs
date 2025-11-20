@@ -54,7 +54,7 @@ namespace LogicMonitor.PowerShell.Commands
 				WriteVerboseMessage("Testing LogicMonitor connection...");
 
 				// Try to get account settings to test connection
-				var accountInfo = Client.GetAsync<LogicMonitor.Api.Settings.AccountSettings>(CancellationToken.None)
+				var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None)
 				  .GetAwaiter().GetResult();
 
 				WriteVerboseMessage("Connection test successful.");
