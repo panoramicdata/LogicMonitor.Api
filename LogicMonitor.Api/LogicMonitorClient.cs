@@ -68,8 +68,6 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	public bool UseCache { get; set; }
 
-	private int _attemptCount = 5;
-
 	private readonly ILogger _logger;
 
 	/// <summary>
@@ -86,7 +84,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// </summary>
 	public int AttemptCount
 	{
-		get => _attemptCount;
+		get;
 		set
 		{
 			if (value < 1)
@@ -94,9 +92,9 @@ public partial class LogicMonitorClient : IDisposable
 				throw new ArgumentOutOfRangeException(nameof(value), "Must be >= 1.");
 			}
 
-			_attemptCount = value;
+			field = value;
 		}
-	}
+	} = 5;
 
 	/// <summary>
 	/// Whether to wait (10 second delay) during upgrades

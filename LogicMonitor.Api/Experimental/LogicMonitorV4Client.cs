@@ -121,7 +121,8 @@ public class LogicMonitorV4Client : IDisposable
 		{
 			Console.WriteLine($"{header.Key}: {string.Join(", ", header.Value)}");
 		}
-		string body = await response.Content.ReadAsStringAsync();
+
+		var body = await response.Content.ReadAsStringAsync();
 		Console.WriteLine($"Body: {body}");
 	}
 
