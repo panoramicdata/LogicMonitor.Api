@@ -4,6 +4,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// The LogicModule type
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(TolerantStringEnumConverter))]
 public enum LogicModuleType
 {
 	/// <summary>
@@ -49,9 +50,10 @@ public enum LogicModuleType
 	AppliesToFunction,
 
 	/// <summary>
-	/// SnmpSysOIDMap
+	/// SnmpSysOIDMap (or SNMP_SYSOID_MAP)
 	/// </summary>
 	[EnumMember(Value = "SNMP SysOID Map")]
+	[EnumMemberAlias("SNMP_SYSOID_MAP")]
 	SnmpSysOIDMap,
 
 	/// <summary>

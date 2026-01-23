@@ -28,7 +28,7 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Added RemediationSource to PrivilegeObjectType, as used by various User-related endpoints.
+			Fixes for LogicModuleType de-serialization (now handles "SNMP_SYSOID_MAP" and "SNMP SysOID Map").
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 
