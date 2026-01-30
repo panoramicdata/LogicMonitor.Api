@@ -38,3 +38,55 @@ public static async Task GetAllResources(ILogger logger, CancellationToken cance
 
 	Console.WriteLine($"Resource Count: {resources.Count}");
 }
+```
+
+## LogicModule Export/Import (JSON Format)
+
+The modern LogicMonitor UI exports LogicModules to JSON format. This library supports both JSON and XML export/import:
+
+```c#
+// Export a DataSource as JSON (modern UI format)
+var json = await logicMonitorClient
+	.GetDataSourceJsonAsync(dataSourceId, cancellationToken);
+
+// Export a DataSource as XML (legacy format)
+var xml = await logicMonitorClient
+	.GetDataSourceXmlAsync(dataSourceId, cancellationToken);
+
+// Generic export by LogicModuleType
+var json = await logicMonitorClient
+	.GetLogicModuleJsonAsync(LogicModuleType.DataSource, dataSourceId, cancellationToken);
+
+// Export to a file
+await logicMonitorClient
+	.ExportLogicModuleToJsonFileAsync(
+		LogicModuleType.DataSource,
+		dataSourceId,
+		"datasource.json",
+		cancellationToken);
+
+// Import from JSON string
+var imported = await logicMonitorClient
+	.ImportDataSourceJsonAsync(json, cancellationToken);
+
+// Import from file
+var imported = await logicMonitorClient
+	.ImportDataSourceFromJsonFileAsync("datasource.json", cancellationToken);
+```
+
+Supported LogicModule types for export/import:
+- DataSource
+- EventSource
+- ConfigSource
+- PropertySource
+- TopologySource
+- JobMonitor
+- AppliesToFunction
+
+## API Documentation
+
+For more information on the LogicMonitor REST API, see the [official documentation](https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

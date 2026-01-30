@@ -28,7 +28,13 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			Fixes for LogicModuleType de-serialization (now handles "SNMP_SYSOID_MAP" and "SNMP SysOID Map").
+			v3.229.11:
+			- Added JSON export/import support for LogicModules (compatible with modern LogicMonitor UI format)
+			- New methods: GetDataSourceJsonAsync, GetEventSourceJsonAsync, GetConfigSourceJsonAsync, etc.
+			- New methods: ImportDataSourceJsonAsync, ImportEventSourceJsonAsync, ImportConfigSourceJsonAsync, etc.
+			- New file-based export/import: ExportLogicModuleToJsonFileAsync, ImportDataSourceFromJsonFileAsync, etc.
+			- Generic methods: GetLogicModuleJsonAsync and GetLogicModuleXmlAsync by LogicModuleType
+			- Security: Updated Microsoft.Extensions.Logging.Abstractions to 10.0.1
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

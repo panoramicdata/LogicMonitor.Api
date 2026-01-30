@@ -22,6 +22,15 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PowerShellModuleName>LogicMonitor</PowerShellModuleName>
 		<PowerShellModuleDirectory>$(OutputPath)/LogicMonitor</PowerShellModuleDirectory>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageReleaseNotes>
+			v3.229.11:
+			- Now uses Nerdbank.GitVersioning for automatic versioning (synchronized with LogicMonitor.Api)
+			- Updated Microsoft.Extensions.Logging packages to 10.0.1
+			- Fixed logger disposal issue in cmdlets
+			- Underlying LogicMonitor.Api now supports JSON export/import for LogicModules
+		</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
