@@ -462,11 +462,12 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			@"Import DataSource from repository.  Change details : Change datasource : NetApp_Cluster_FibreChannel, dsId=1211 {\nDataSourceContent\n}",
 			new()
 			{
-				MatchedRegExId = 27,
+				// This is no longer matched by regex 27 since David excluded these messages from regex parsing
+				//MatchedRegExId = 27,
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.DataSource,
-				LogicModuleId = 1211,
-				LogicModuleName = "NetApp_Cluster_FibreChannel",
+				//LogicModuleId = 1211,
+				//LogicModuleName = "NetApp_Cluster_FibreChannel",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);

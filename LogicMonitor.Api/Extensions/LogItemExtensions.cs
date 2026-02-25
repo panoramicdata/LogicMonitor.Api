@@ -312,6 +312,9 @@ public static class LogItemExtensions
 		// DataSource imports have a LOT of text.  Skip these for now.
 		if (logItem.Description.StartsWith("Import DataSource", StringComparison.Ordinal))
 		{
+			auditEvent.ActionType = AuditEventActionType.Update;
+			auditEvent.EntityType = AuditEventEntityType.DataSource;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
 			return auditEvent;
 		}
 
