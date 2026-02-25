@@ -463,9 +463,9 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			new()
 			{
 				// This is no longer matched by regex 27 since David excluded these messages from regex parsing
-				//MatchedRegExId = 27,
-				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.DataSource,
+				MatchedRegExId = 27,
+				//ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.None,
 				//LogicModuleId = 1211,
 				//LogicModuleName = "NetApp_Cluster_FibreChannel",
 				OutcomeType = AuditEventOutcomeType.Success
