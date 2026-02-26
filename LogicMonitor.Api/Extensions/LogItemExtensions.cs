@@ -281,6 +281,9 @@ public static class LogItemExtensions
 		new(86,
 			AuditEventEntityType.Resource,
 			new(@"^""Action=(?<action>Schedule)""; ""Type=Device""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)""; ""Description=(?<description>.+)""$", RegexOptions.Singleline)),
+		new(87,
+			AuditEventEntityType.Account,
+			new(@"^(?<userName>.+?) (?<logout>signs out) \(adminId=(?<userId>\d+)\)\.$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -498,6 +501,8 @@ public static class LogItemExtensions
 			? AuditEventActionType.ScheduledHealthCheckScript
 			: value.Groups["login"].Success
 			? AuditEventActionType.Login
+			: value.Groups["logout"].Success
+			? AuditEventActionType.Logout
 			: value.Groups["discardedEventAlert"].Success
 			? AuditEventActionType.DiscardedEventAlert
 			: value.Groups["alertId"].Success

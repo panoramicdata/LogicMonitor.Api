@@ -428,6 +428,26 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			}
 		);
 
+	[Theory]
+	[InlineData("remco.bekker@global.ntt signs out (adminId=1037).", "remco.bekker@global.ntt", 1037, 87)]
+	public void Logout_Success(
+		string logItemMessage,
+		string expectedUsername,
+		int? expectedId,
+		int expectedMatchedRegExId)
+		=> AssertToAuditEventSucceeds(
+			logItemMessage,
+			new()
+			{
+				MatchedRegExId = expectedMatchedRegExId,
+				UserName = expectedUsername,
+				UserId = expectedId,
+				ActionType = AuditEventActionType.Logout,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
 	[Fact]
 	public void AddNewAccountAdmin_Success()
 		=> AssertToAuditEventSucceeds(

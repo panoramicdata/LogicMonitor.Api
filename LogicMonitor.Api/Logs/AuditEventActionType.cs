@@ -41,6 +41,11 @@ public enum AuditEventActionType
 	Login,
 
 	/// <summary>
+	/// A logout event
+	/// </summary>
+	Logout,
+
+	/// <summary>
 	/// A general API event
 	/// </summary>
 	GeneralApi,
