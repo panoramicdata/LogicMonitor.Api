@@ -756,6 +756,7 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 				MatchedRegExId = 38,
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.ScheduledDownTime,
+				Description = " Delete SDT for Group CSM Bakeries on Group Path NTTData GTS Integrator/CSM Bakeries with scheduled downtime from 2025-12-31 04:25:00 GMT to 2027-06-30 05:25:00 GMT ",
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceNames = ["CSM Bakeries"],
 				ResourceIds = [3786],
