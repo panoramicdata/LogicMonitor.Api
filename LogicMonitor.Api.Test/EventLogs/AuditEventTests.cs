@@ -463,6 +463,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void AddApiTokenForApiTokenUser_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add new api token - I9fc6ID2QyCH27scuRZC for API token user",
+			new()
+			{
+				MatchedRegExId = 88,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ApiToken,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "I9fc6ID2QyCH27scuRZC"
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",

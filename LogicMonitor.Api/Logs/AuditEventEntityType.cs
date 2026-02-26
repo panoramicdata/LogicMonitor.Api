@@ -104,4 +104,9 @@ public enum AuditEventEntityType
 	/// Collector Group
 	/// </summary>
 	CollectorGroup,
+
+	/// <summary>
+	/// API Token
+	/// </summary>
+	ApiToken
 }

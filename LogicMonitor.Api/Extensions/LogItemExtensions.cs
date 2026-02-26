@@ -284,6 +284,9 @@ public static class LogItemExtensions
 		new(87,
 			AuditEventEntityType.Account,
 			new(@"^(?<userName>.+?) (?<logout>signs out) \(adminId=(?<userId>\d+)\)\.$", RegexOptions.Singleline)),
+		new(88,
+			AuditEventEntityType.ApiToken,
+			new(@"^(?<action>Add) new api token - (?<apiTokenId>.+?) for API token user$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
