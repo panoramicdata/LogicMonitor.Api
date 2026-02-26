@@ -491,6 +491,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void EditDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Edit the dashboard Wolters Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 90,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["Wolters Oracle Capacity"]
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",

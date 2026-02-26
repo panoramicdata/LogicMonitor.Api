@@ -290,6 +290,9 @@ public static class LogItemExtensions
 		new(89,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Add) a widget (?<widgetName>.+?) to dashboard (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(90,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Edit) the dashboard (?<resourceName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
