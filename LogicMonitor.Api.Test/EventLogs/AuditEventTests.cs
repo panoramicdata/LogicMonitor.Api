@@ -816,6 +816,23 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		);
 
 	[Fact]
+	public void UpdateGroupThresholdsWithEmptyAlertThresholdChanges_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Update""; ""Type=Group""; ""Device=NA""; ""GroupName=Toppan Group""; ""Description= Enable alerting on datapoint syncStatus ""; ""Alert_threshold_changes=""; ""DataSource=Fortinet_FortiGate_HighAvailabilityPeers""; ""DataSourceId=5804476""; ""Reason=Datapoint alerting enabled""",
+			new()
+			{
+				MatchedRegExId = 46,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "Toppan Group",
+				Description = " Enable alerting on datapoint syncStatus ",
+				LogicModuleName = "Fortinet_FortiGate_HighAvailabilityPeers",
+				LogicModuleId = 5804476
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",
