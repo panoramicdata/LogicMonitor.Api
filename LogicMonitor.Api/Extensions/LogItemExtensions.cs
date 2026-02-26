@@ -348,6 +348,9 @@ public static class LogItemExtensions
 		new(108,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^(?<action>Update) the datasource instances, (?<description>enable monitoring of instances : \[(?<affectedInstances>.+?)\]enable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
+		new(109,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<userName>.+?) (?<action>share) a dashboard\((?<dashboardName>.+?)\)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -419,6 +422,9 @@ public static class LogItemExtensions
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
 				case 105:
+					auditEvent.ActionType = AuditEventActionType.Update;
+					break;
+				case 109:
 					auditEvent.ActionType = AuditEventActionType.Update;
 					break;
 			case 27:

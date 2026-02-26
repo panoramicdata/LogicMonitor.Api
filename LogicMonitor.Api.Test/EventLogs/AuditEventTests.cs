@@ -750,6 +750,21 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void ShareDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"ankit15.patel@global.ntt share a dashboard(DBA PROD-APP-SEA02)",
+			new()
+			{
+				MatchedRegExId = 109,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				UserName = "ankit15.patel@global.ntt",
+				DashboardName = "DBA PROD-APP-SEA02"
+			}
+		);
+
+	[Fact]
 	public void UpdateGroupDeviceGroupDescription_Success()
 		=> AssertToAuditEventSucceeds(
 			@"  {
