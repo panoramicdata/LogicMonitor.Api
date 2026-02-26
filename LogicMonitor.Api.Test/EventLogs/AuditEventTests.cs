@@ -566,6 +566,41 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void ScheduleDebugCommand_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Schedule debug command""; ""Command=help""; ""AgentId=21""",
+			new()
+			{
+				MatchedRegExId = 95,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Success,
+				CollectorId = 21,
+				Command = "help"
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesDisableMonitoringAndAlerting_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, disable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]disable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+			new()
+			{
+				MatchedRegExId = 96,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "disable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]disable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+				DataSourceNewInstanceNames = [
+					"SNMP_Network_Interfaces-pc-0/2/0",
+					"SNMP_Network_Interfaces-pc-0/2/0.16383",
+					"SNMP_Network_Interfaces-pc-0/2/0.16384"
+				],
+				DataSourceNewInstanceIds = [426808630, 426808624, 426808618]
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",

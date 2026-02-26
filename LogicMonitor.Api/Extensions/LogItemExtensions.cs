@@ -20,6 +20,7 @@ public static class LogItemExtensions
 	}
 
 	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
+	private static readonly Regex _dataSourceInstanceEntryRegex = new(@"(?:^|,)(?<instanceName>.+?) \[ID:\d+\] id=(?<instanceId>\d+) hid=\d+", RegexOptions.Singleline);
 
 	private static readonly List<LogItemRegex> _regexs =
 	[
@@ -305,6 +306,12 @@ public static class LogItemExtensions
 		new(94,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^(?<action>Set) all instances' datapoint \((?<dataPointId>\d+):(?<dataPointName>.+?)\) alert threshold as \((?<thresholdValue>.+?)\), alert enable as \((?<description>.+?)\) under the instance groups\((?<instanceGroupId>\d+):(?<instanceGroupName>.+?)\) of device\((?<resourceId>\d+):(?<resourceName>.+?)\)$", RegexOptions.Singleline)),
+		new(95,
+			AuditEventEntityType.Collector,
+			new(@"^""Action=Schedule debug command""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""$", RegexOptions.Singleline)),
+		new(96,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances, (?<description>disable monitoring of instances : \[(?<affectedInstances>.+?)\]disable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -387,6 +394,9 @@ public static class LogItemExtensions
 			case 94:
 				auditEvent.ActionType = AuditEventActionType.Update;
 				break;
+			case 95:
+				auditEvent.ActionType = AuditEventActionType.Run;
+				break;
 			default:
 				break;
 		}
@@ -460,6 +470,24 @@ public static class LogItemExtensions
 			var resourceName = GetGroupValueAsTypeOrNull<string>(match, "resourceName");
 			auditEvent.ResourceIds = resourceId is null ? null : new() { resourceId.Value };
 			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
+		}
+
+		if (auditEvent.MatchedRegExId == 96 && match.Groups["affectedInstances"].Success)
+		{
+			var dataSourceInstanceIds = new List<int>();
+			var dataSourceInstanceNames = new List<string>();
+			foreach (Match affectedInstanceMatch in _dataSourceInstanceEntryRegex.Matches(match.Groups["affectedInstances"].Value))
+			{
+				if (affectedInstanceMatch.Success)
+				{
+					var instanceName = affectedInstanceMatch.Groups["instanceName"].Value.TrimStart().TrimStart(',', '"');
+					dataSourceInstanceNames.Add(instanceName);
+					dataSourceInstanceIds.Add(int.Parse(affectedInstanceMatch.Groups["instanceId"].Value, CultureInfo.InvariantCulture));
+				}
+			}
+
+			auditEvent.DataSourceNewInstanceNames = dataSourceInstanceNames;
+			auditEvent.DataSourceNewInstanceIds = dataSourceInstanceIds;
 		}
 
 		return auditEvent;
