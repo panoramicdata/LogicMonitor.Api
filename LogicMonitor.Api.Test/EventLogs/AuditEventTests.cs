@@ -536,6 +536,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateAzureAccount_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update a Azure account - ea-clientportal-sandbox;",
+			new()
+			{
+				MatchedRegExId = 93,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success,
+				UserName = "ea-clientportal-sandbox"
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",

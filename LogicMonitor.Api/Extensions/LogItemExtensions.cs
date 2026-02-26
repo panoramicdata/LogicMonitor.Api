@@ -299,6 +299,9 @@ public static class LogItemExtensions
 		new(92,
 			AuditEventEntityType.Widget,
 			new(@"^(?<action>Delete) the widget (?<widgetName>.+?) of dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(93,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>Update) a Azure account - (?<userName>.+?);$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
