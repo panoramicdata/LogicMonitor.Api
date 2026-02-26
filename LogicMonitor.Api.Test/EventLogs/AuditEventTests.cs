@@ -684,6 +684,7 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 			@"Change host collectors: host<378754>(SRV000109569 sgcaplmprod002), preferred<55> , current<55> to collector <57>(DC\SGCAPLMPROD003)",
 			new()
 			{
+				MatchedRegExId = 100,
 				ActionType = AuditEventActionType.GeneralApi,
 				EntityType = AuditEventEntityType.Collector,
 				OutcomeType = AuditEventOutcomeType.Success

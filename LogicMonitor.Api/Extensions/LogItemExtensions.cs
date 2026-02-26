@@ -321,6 +321,9 @@ public static class LogItemExtensions
 		new(99,
 			AuditEventEntityType.Dashboard,
 			new(@"^(?<action>Create) a dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(100,
+			AuditEventEntityType.Collector,
+			new(@"^(?<action>Change) host collectors:(?<description>.+)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -362,6 +365,7 @@ public static class LogItemExtensions
 		// Change host collectors messages can be extremely large and don't need detailed parsing.
 		if (logItem.Description.StartsWith("Change host collectors", StringComparison.Ordinal))
 		{
+			auditEvent.MatchedRegExId = 100;
 			auditEvent.EntityType = AuditEventEntityType.Collector;
 			auditEvent.ActionType = AuditEventActionType.GeneralApi;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
