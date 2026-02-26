@@ -730,6 +730,26 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringAndAlerting_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, enable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]enable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+			new()
+			{
+				MatchedRegExId = 108,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "enable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]enable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+				DataSourceNewInstanceNames = [
+					"SNMP_Network_Interfaces-pc-0/2/0",
+					"SNMP_Network_Interfaces-pc-0/2/0.16383",
+					"SNMP_Network_Interfaces-pc-0/2/0.16384"
+				],
+				DataSourceNewInstanceIds = [426808630, 426808624, 426808618]
+			}
+		);
+
+	[Fact]
 	public void UpdateGroupDeviceGroupDescription_Success()
 		=> AssertToAuditEventSucceeds(
 			@"  {

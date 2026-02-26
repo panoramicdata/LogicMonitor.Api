@@ -345,6 +345,9 @@ public static class LogItemExtensions
 		new(107,
 			AuditEventEntityType.DashboardGroup,
 			new(@"^(?<action>Update) a dashboard group (?<resourceGroupName>.+?)$", RegexOptions.Singleline)),
+		new(108,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances, (?<description>enable monitoring of instances : \[(?<affectedInstances>.+?)\]enable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -522,7 +525,7 @@ public static class LogItemExtensions
 			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
 		}
 
-		if (auditEvent.MatchedRegExId == 96 && match.Groups["affectedInstances"].Success)
+		if ((auditEvent.MatchedRegExId == 96 || auditEvent.MatchedRegExId == 108) && match.Groups["affectedInstances"].Success)
 		{
 			var dataSourceInstanceIds = new List<int>();
 			var dataSourceInstanceNames = new List<string>();
