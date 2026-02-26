@@ -797,6 +797,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateWebsite_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update website http:__10.41.10.25:8081_sapdashboard - SRV000056568 - WEB0004720 ,   {
+[
+getParameterAsJSONForWebsiteDevice: update value={""schema"":""http""}, old value={""schema"":""https""}
+]
+}",
+			new()
+			{
+				MatchedRegExId = 112,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["http:__10.41.10.25:8081_sapdashboard"],
+				InstanceName = "WEB0004720"
+			}
+		);
+
+	[Fact]
 	public void UpdateGroupDeviceGroupDescription_Success()
 		=> AssertToAuditEventSucceeds(
 			@"  {

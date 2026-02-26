@@ -357,6 +357,9 @@ public static class LogItemExtensions
 		new(111,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^(?<action>Update) the datasource instances, (?<description>enable monitoring of instances : \[(?<affectedInstances>.+?)\])$", RegexOptions.Singleline)),
+		new(112,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Update) website (?<resourceName>.+?) - (?<resourceDisplayName>.+?) - (?<instanceName>.+?) ,", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
