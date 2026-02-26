@@ -302,6 +302,9 @@ public static class LogItemExtensions
 		new(93,
 			AuditEventEntityType.Account,
 			new(@"^(?<action>Update) a Azure account - (?<userName>.+?);$", RegexOptions.Singleline)),
+		new(94,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Set) all instances' datapoint \((?<dataPointId>\d+):(?<dataPointName>.+?)\) alert threshold as \((?<thresholdValue>.+?)\), alert enable as \((?<description>.+?)\) under the instance groups\((?<instanceGroupId>\d+):(?<instanceGroupName>.+?)\) of device\((?<resourceId>\d+):(?<resourceName>.+?)\)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -381,6 +384,7 @@ public static class LogItemExtensions
 			case 70:
 			case 71:
 			case 72:
+			case 94:
 				auditEvent.ActionType = AuditEventActionType.Update;
 				break;
 			default:

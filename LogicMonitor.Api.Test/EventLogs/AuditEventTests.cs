@@ -550,6 +550,22 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void SetAllInstancesDatapointThresholdOnDevice_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Set all instances' datapoint (18371:NoData) alert threshold as (NO CHANGE), alert enable as (false) under the instance groups(0:@default) of device(1416411:SRV000013100 Tatenen)",
+			new()
+			{
+				MatchedRegExId = 94,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceIds = [1416411],
+				ResourceNames = ["SRV000013100 Tatenen"],
+				Description = "false"
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",
