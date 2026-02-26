@@ -606,6 +606,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateDashboardGroup_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update a dashboard group DBA",
+			new()
+			{
+				MatchedRegExId = 107,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.DashboardGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "DBA"
+			}
+		);
+
+	[Fact]
 	public void EditWidgetOfDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",

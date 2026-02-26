@@ -342,6 +342,9 @@ public static class LogItemExtensions
 		new(106,
 			AuditEventEntityType.DashboardGroup,
 			new(@"^(?<action>Delete) the dashboard group (?<resourceGroupName>.+?)$", RegexOptions.Singleline)),
+		new(107,
+			AuditEventEntityType.DashboardGroup,
+			new(@"^(?<action>Update) a dashboard group (?<resourceGroupName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
