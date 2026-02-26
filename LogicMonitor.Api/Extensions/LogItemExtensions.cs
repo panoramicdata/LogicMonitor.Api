@@ -324,6 +324,9 @@ public static class LogItemExtensions
 		new(100,
 			AuditEventEntityType.Collector,
 			new(@"^(?<action>Change) host collectors:(?<description>.+)$", RegexOptions.Singleline)),
+		new(101,
+			AuditEventEntityType.Report,
+			new(@"^(?<action>Update) report (?<resourceName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

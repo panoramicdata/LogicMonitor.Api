@@ -118,5 +118,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Dashboard Widget
 	/// </summary>
-	Widget
+	Widget,
+
+	/// <summary>
+	/// Report
+	/// </summary>
+	Report
 }

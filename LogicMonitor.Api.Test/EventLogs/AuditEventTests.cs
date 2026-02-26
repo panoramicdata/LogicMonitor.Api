@@ -520,6 +520,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateReport_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update report AEM-CPU",
+			new()
+			{
+				MatchedRegExId = 101,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Report,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["AEM-CPU"]
+			}
+		);
+
+	[Fact]
 	public void EditWidgetOfDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",
