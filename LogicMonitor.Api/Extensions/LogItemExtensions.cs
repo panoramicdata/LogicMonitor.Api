@@ -312,6 +312,9 @@ public static class LogItemExtensions
 		new(96,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^(?<action>Update) the datasource instances, (?<description>disable monitoring of instances : \[(?<affectedInstances>.+?)\]disable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
+		new(97,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^.+?""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

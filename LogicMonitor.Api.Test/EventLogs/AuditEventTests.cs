@@ -601,6 +601,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateGroupDeviceGroupDescription_Success()
+		=> AssertToAuditEventSucceeds(
+			@"  {
+[
+getExtra: update value={""key"":1}, old value={""key"":0}
+]
+}""Action=Update""; ""Type=Group""; ""DeviceGroup=NTTCMS Integrator/EisnerAmper/EA-AZURE-SUBSCRIPTIONS - Prod - PL00008552/ea-clientportal-sandbox (SG00023621)/CLA0003221 ea-clientportal-sandbox/ea-clientportal-sandbox""; ""Description=""",
+			new()
+			{
+				MatchedRegExId = 97,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "NTTCMS Integrator/EisnerAmper/EA-AZURE-SUBSCRIPTIONS - Prod - PL00008552/ea-clientportal-sandbox (SG00023621)/CLA0003221 ea-clientportal-sandbox/ea-clientportal-sandbox",
+				Description = string.Empty,
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",
