@@ -748,6 +748,23 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		);
 
 	[Fact]
+	public void DeleteSdt_GroupQuotedFormat_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Delete""; ""Type=SDT""; ""Description= Delete SDT for Group CSM Bakeries on Group Path NTTData GTS Integrator/CSM Bakeries with scheduled downtime from 2025-12-31 04:25:00 GMT to 2027-06-30 05:25:00 GMT ""; ""DeviceGroupName=CSM Bakeries""; ""DeviceGroupId=3786""; ""StartDownTime=2025-12-31 04:25:00 GMT""; ""EndDownTime=2027-06-30 05:25:00 GMT"";",
+			new()
+			{
+				MatchedRegExId = 38,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["CSM Bakeries"],
+				ResourceIds = [3786],
+				StartDownTime = "2025-12-31 04:25:00 GMT",
+				EndDownTime = "2027-06-30 05:25:00 GMT"
+			}
+		);
+
+	[Fact]
 	public void AddSdt_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token xx123xxx",

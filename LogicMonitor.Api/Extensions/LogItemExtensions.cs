@@ -137,7 +137,7 @@ public static class LogItemExtensions
 			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
 		new(38,
 			AuditEventEntityType.ScheduledDownTime,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ?""Type=SDT""; ?""Description=(?<description>.+?)""; ?"".+?Name=(?<resourceName>.+?)""; ?"".+?Id=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ?""Type=SDT""; ?""Description=(?<description>.+?)""; ?"".+?Name=(?<resourceName>.+?)""; ?"".+?Id=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(39,
 			AuditEventEntityType.OpsNote,
 			new(@"^(?<action>add) new opsnote \((?<description>.+?)\)$", RegexOptions.Singleline)),
