@@ -330,6 +330,9 @@ public static class LogItemExtensions
 		new(102,
 			AuditEventEntityType.Widget,
 			new(@"^(?<action>Add) custom graph widget (?<widgetName>.+?) <id=\d+> from instance graph .+? to dashboard (?<dashboardName>.+?) <id=\d+>$", RegexOptions.Singleline)),
+		new(103,
+			AuditEventEntityType.Report,
+			new(@"^(?<action>Add) report (?<resourceName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

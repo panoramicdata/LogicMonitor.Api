@@ -534,6 +534,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void AddReport_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add report Standard Bank - Alert Thresholds",
+			new()
+			{
+				MatchedRegExId = 103,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Report,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["Standard Bank - Alert Thresholds"]
+			}
+		);
+
+	[Fact]
 	public void AddCustomGraphWidgetToDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Add custom graph widget Buffer Cache Hit Ratio <id=57456> from instance graph Buffer Cache Hit Ratio <id=12968> to dashboard DBA Dev-App-WCUS03 <id=5705>",
