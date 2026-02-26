@@ -336,6 +336,9 @@ public static class LogItemExtensions
 		new(104,
 			AuditEventEntityType.Dashboard,
 			new(@"^(?<action>Delete) the dashboard (?<dashboardName>.+?) \((?<visibility>Private|Shared)\)$", RegexOptions.Singleline)),
+		new(105,
+			AuditEventEntityType.Dashboard,
+			new(@"^Dashboard '(?<description>.+?)' renamed to '(?<dashboardName>.+?)'$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -406,6 +409,9 @@ public static class LogItemExtensions
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
+				case 105:
+					auditEvent.ActionType = AuditEventActionType.Update;
+					break;
 			case 27:
 				auditEvent.ActionType = AuditEventActionType.Update;
 				break;
