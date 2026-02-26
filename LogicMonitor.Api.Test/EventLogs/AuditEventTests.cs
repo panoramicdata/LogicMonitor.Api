@@ -778,6 +778,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringOnly_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, enable monitoring of instances : [SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1 [ID:9] id=426199595 hid=416898,SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2 [ID:10] id=426199584 hid=416898]",
+			new()
+			{
+				MatchedRegExId = 111,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "enable monitoring of instances : [SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1 [ID:9] id=426199595 hid=416898,SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2 [ID:10] id=426199584 hid=416898]",
+				DataSourceNewInstanceNames = [
+					"SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1",
+					"SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2"
+				],
+				DataSourceNewInstanceIds = [426199595, 426199584]
+			}
+		);
+
+	[Fact]
 	public void UpdateGroupDeviceGroupDescription_Success()
 		=> AssertToAuditEventSucceeds(
 			@"  {

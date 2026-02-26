@@ -354,6 +354,9 @@ public static class LogItemExtensions
 		new(110,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^(?<action>Update) the datasource instances,$", RegexOptions.Singleline)),
+		new(111,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances, (?<description>enable monitoring of instances : \[(?<affectedInstances>.+?)\])$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -534,7 +537,7 @@ public static class LogItemExtensions
 			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
 		}
 
-		if ((auditEvent.MatchedRegExId == 96 || auditEvent.MatchedRegExId == 108) && match.Groups["affectedInstances"].Success)
+		if ((auditEvent.MatchedRegExId == 96 || auditEvent.MatchedRegExId == 108 || auditEvent.MatchedRegExId == 111) && match.Groups["affectedInstances"].Success)
 		{
 			var dataSourceInstanceIds = new List<int>();
 			var dataSourceInstanceNames = new List<string>();
