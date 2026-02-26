@@ -592,6 +592,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void DeleteDashboardGroup_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the dashboard group AirLife (Alias Sunmed)",
+			new()
+			{
+				MatchedRegExId = 106,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.DashboardGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "AirLife (Alias Sunmed)"
+			}
+		);
+
+	[Fact]
 	public void EditWidgetOfDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",

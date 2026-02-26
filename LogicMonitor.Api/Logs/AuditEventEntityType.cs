@@ -123,5 +123,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Report
 	/// </summary>
-	Report
+	Report,
+
+	/// <summary>
+	/// Dashboard Group
+	/// </summary>
+	DashboardGroup
 }

@@ -339,6 +339,9 @@ public static class LogItemExtensions
 		new(105,
 			AuditEventEntityType.Dashboard,
 			new(@"^Dashboard '(?<description>.+?)' renamed to '(?<dashboardName>.+?)'$", RegexOptions.Singleline)),
+		new(106,
+			AuditEventEntityType.DashboardGroup,
+			new(@"^(?<action>Delete) the dashboard group (?<resourceGroupName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
