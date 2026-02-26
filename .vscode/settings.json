@@ -1,5 +1,9 @@
 {
     "chat.tools.terminal.autoApprove": {
-        "dotnet test": true
+        "dotnet test": true,
+        "/^pwsh \\./\\.github/skills/audit-event-unhandled-logs/assets/Get-UnhandledLogMessages\\.ps1 -RootPath \\./LogicMonitor\\.Api\\.Test/EventLogs/UnhandledLogs -First 20$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }

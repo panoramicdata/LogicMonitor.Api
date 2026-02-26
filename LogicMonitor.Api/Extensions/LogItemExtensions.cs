@@ -287,6 +287,9 @@ public static class LogItemExtensions
 		new(88,
 			AuditEventEntityType.ApiToken,
 			new(@"^(?<action>Add) new api token - (?<apiTokenId>.+?) for API token user$", RegexOptions.Singleline)),
+		new(89,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Add) a widget (?<widgetName>.+?) to dashboard (?<resourceName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

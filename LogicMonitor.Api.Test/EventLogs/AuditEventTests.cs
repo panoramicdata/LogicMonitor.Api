@@ -477,6 +477,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void AddWidgetToDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add a widget SRV000024036 eul1900684-phxdbpro-Fra reclaimable overview to dashboard Wolters Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 89,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["Wolters Oracle Capacity"]
+			}
+		);
+
+	[Fact]
 	public void UpdatePassword_Success()
 		=> AssertToAuditEventSucceeds(
 			@"some.user.admin update password change password",
