@@ -318,6 +318,9 @@ public static class LogItemExtensions
 		new(98,
 			AuditEventEntityType.Collector,
 			new(@"^""(?<failed>Unknown debug command)""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""; ""Company=(?<company>.+?)"";$", RegexOptions.Singleline)),
+		new(99,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<action>Create) a dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

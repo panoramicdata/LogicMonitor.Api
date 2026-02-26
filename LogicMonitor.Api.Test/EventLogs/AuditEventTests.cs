@@ -506,6 +506,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void CreateDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Create a dashboard DBA PROD-APP-SEA02",
+			new()
+			{
+				MatchedRegExId = 99,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				DashboardName = "DBA PROD-APP-SEA02"
+			}
+		);
+
+	[Fact]
 	public void EditWidgetOfDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",
