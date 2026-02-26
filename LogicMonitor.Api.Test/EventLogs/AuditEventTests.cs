@@ -563,6 +563,20 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void DeleteDashboardWithVisibility_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the dashboard DBA PROD-APP-SEA02 (Private)",
+			new()
+			{
+				MatchedRegExId = 104,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				DashboardName = "DBA PROD-APP-SEA02"
+			}
+		);
+
+	[Fact]
 	public void EditWidgetOfDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",

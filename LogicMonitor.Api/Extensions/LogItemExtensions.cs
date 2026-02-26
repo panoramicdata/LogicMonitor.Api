@@ -333,6 +333,9 @@ public static class LogItemExtensions
 		new(103,
 			AuditEventEntityType.Report,
 			new(@"^(?<action>Add) report (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(104,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<action>Delete) the dashboard (?<dashboardName>.+?) \((?<visibility>Private|Shared)\)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
