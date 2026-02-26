@@ -356,6 +356,15 @@ public static class LogItemExtensions
 			return auditEvent;
 		}
 
+		// Change host collectors messages can be extremely large and don't need detailed parsing.
+		if (logItem.Description.StartsWith("Change host collectors", StringComparison.Ordinal))
+		{
+			auditEvent.EntityType = AuditEventEntityType.Collector;
+			auditEvent.ActionType = AuditEventActionType.GeneralApi;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			return auditEvent;
+		}
+
 		// Interpret the description field
 		var entityTypeMatch = GetMatchFromDescription(logItem.Description);
 		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)

@@ -10,11 +10,36 @@ Use this workflow to process unhandled messages from `LogicMonitor.Api.Test/Even
 ## Assets
 
 - `assets/Get-UnhandledLogMessages.ps1`: parses the unhandled log files into clean message text blocks.
+- `assets/Scan-UnhandledLogMessages.cs`: runs each unhandled message through `LogItem.ToAuditEvent()` and outputs only unmatched/errored messages.
+
+## Scanner Quick Start
+
+- Default scan (recommended):
+   - `dotnet run ./.github/skills/audit-event-unhandled-logs/assets/Scan-UnhandledLogMessages.cs -- --root ./LogicMonitor.Api.Test/EventLogs/UnhandledLogs --first 20 --progress-every 25 --regex-timeout-seconds 5`
+- Verbose diagnostics (when it appears stalled):
+   - `dotnet run ./.github/skills/audit-event-unhandled-logs/assets/Scan-UnhandledLogMessages.cs -- --root ./LogicMonitor.Api.Test/EventLogs/UnhandledLogs --first 20 --progress-every 10 --regex-timeout-seconds 5 --log-each-message`
+
+## Scanner Output Interpretation
+
+- `TIMEOUT` lines indicate a very large/pathological message; these are counted under `Errored` and scanning continues.
+- `Progress` lines provide processed/handled/unhandled/errored counts with elapsed time.
+- Ranked entries like `[1] count=...` are unmatched patterns, sorted by frequency; start with the highest count.
+- Summary lines (`Total messages`, `Handled`, `Unhandled`, `Errored`, `Unique unmatched patterns`) are the key health metrics.
+
+## Scanner Options
+
+- `--root <path>`: folder containing unhandled log files.
+- `--first <n>`: number of unmatched patterns to print.
+- `--progress-every <n>`: progress heartbeat interval (in messages processed).
+- `--regex-timeout-seconds <n>`: per-message regex timeout safeguard.
+- `--log-each-message`: prints a timestamped line before each message parse.
 
 ## Workflow
 
 1. Extract candidate messages:
-   - `pwsh ./.github/skills/audit-event-unhandled-logs/assets/Get-UnhandledLogMessages.ps1 -RootPath ./LogicMonitor.Api.Test/EventLogs/UnhandledLogs -First 20`
+   - `dotnet run ./.github/skills/audit-event-unhandled-logs/assets/Scan-UnhandledLogMessages.cs -- --root ./LogicMonitor.Api.Test/EventLogs/UnhandledLogs --first 20 --progress-every 25 --regex-timeout-seconds 5`
+   - If it appears slow/stuck, add per-message tracing: `--log-each-message`
+   - Optional (raw view): `pwsh ./.github/skills/audit-event-unhandled-logs/assets/Get-UnhandledLogMessages.ps1 -RootPath ./LogicMonitor.Api.Test/EventLogs/UnhandledLogs -First 20`
 2. Pick the first message that is not currently parsed by `LogItem.ToAuditEvent()`.
 3. Add or update a focused unit test in `LogicMonitor.Api.Test/EventLogs/AuditEventTests.cs` (or adjacent test file):
    - First characterize the current behavior.

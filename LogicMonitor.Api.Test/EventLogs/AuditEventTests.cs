@@ -665,6 +665,18 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		);
 
 	[Fact]
+	public void ChangeHostCollectors_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Change host collectors: host<378754>(SRV000109569 sgcaplmprod002), preferred<55> , current<55> to collector <57>(DC\SGCAPLMPROD003)",
+			new()
+			{
+				ActionType = AuditEventActionType.GeneralApi,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
 	public void AddDataSourceGraph_Success()
 		=> AssertToAuditEventSucceeds(
 			@"""Action=Add""; ""Type=DataSourceGraph""; ""DataSourceName=test_NetApp_Cluster_FibreChannel""; ""Device=NA""; ""Description=Add datasource graph, graph=Signal/Sync Loss(8702), """,
