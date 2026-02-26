@@ -581,6 +581,21 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UnknownDebugCommand_Failure()
+		=> AssertToAuditEventSucceeds(
+			@"""Unknown debug command""; ""Command=!script""; ""AgentId=60""; ""Company=nttdatagtsus1"";",
+			new()
+			{
+				MatchedRegExId = 98,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Failure,
+				CollectorId = 60,
+				Command = "!script"
+			}
+		);
+
+	[Fact]
 	public void UpdateDatasourceInstancesDisableMonitoringAndAlerting_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Update the datasource instances, disable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]disable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",

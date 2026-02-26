@@ -315,6 +315,9 @@ public static class LogItemExtensions
 		new(97,
 			AuditEventEntityType.ResourceGroup,
 			new(@"^.+?""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline)),
+		new(98,
+			AuditEventEntityType.Collector,
+			new(@"^""(?<failed>Unknown debug command)""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""; ""Company=(?<company>.+?)"";$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -399,6 +402,10 @@ public static class LogItemExtensions
 				break;
 			case 95:
 				auditEvent.ActionType = AuditEventActionType.Run;
+				break;
+			case 98:
+				auditEvent.ActionType = AuditEventActionType.Run;
+				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
 			default:
 				break;
