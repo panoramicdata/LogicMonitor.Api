@@ -288,11 +288,17 @@ public static class LogItemExtensions
 			AuditEventEntityType.ApiToken,
 			new(@"^(?<action>Add) new api token - (?<apiTokenId>.+?) for API token user$", RegexOptions.Singleline)),
 		new(89,
-			AuditEventEntityType.Resource,
-			new(@"^(?<action>Add) a widget (?<widgetName>.+?) to dashboard (?<resourceName>.+?)$", RegexOptions.Singleline)),
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Add) a widget (?<widgetName>.+?) to dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
 		new(90,
-			AuditEventEntityType.Resource,
-			new(@"^(?<action>Edit) the dashboard (?<resourceName>.+?)$", RegexOptions.Singleline)),
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<action>Edit) the dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(91,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Edit) the widget (?<widgetName>.+?) of dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(92,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Delete) the widget (?<widgetName>.+?) of dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -392,6 +398,7 @@ public static class LogItemExtensions
 		auditEvent.CollectorName = GetGroupValueAsTypeOrNull<string>(match, "collectorName");
 		auditEvent.CollectorDescription = GetGroupValueAsTypeOrNull<string>(match, "collectorDescription");
 		auditEvent.Command = GetGroupValueAsTypeOrNull<string>(match, "command");
+		auditEvent.DashboardName = GetGroupValueAsTypeOrNull<string>(match, "dashboardName");
 		auditEvent.DataSourceNewInstanceIds = GetGroupValueAsTypeOrNull<List<int>>(match, "dataSourceNewInstanceIds");
 		auditEvent.DataSourceNewInstanceNames = GetGroupValueAsTypeOrNull<List<string>>(match, "dataSourceNewInstanceNames");
 		auditEvent.DataSourceDeletedInstanceIds = GetGroupValueAsTypeOrNull<List<int>>(match, "dataSourceDeletedInstanceIds");
@@ -406,6 +413,7 @@ public static class LogItemExtensions
 		auditEvent.RestrictSso = GetGroupValueAsStructOrNull<bool>(match, "restrictSso");
 		auditEvent.StartDownTime = GetGroupValueAsTypeOrNull<string>(match, "startDownTime");
 		auditEvent.UserRole = GetGroupValueAsTypeOrNull<string>(match, "userRole");
+		auditEvent.WidgetName = GetGroupValueAsTypeOrNull<string>(match, "widgetName");
 
 		auditEvent.InstanceId = GetGroupValueAsStructOrNull<int>(match, "instanceId");
 		auditEvent.InstanceName = GetGroupValueAsTypeOrNull<string>(match, "instanceName");

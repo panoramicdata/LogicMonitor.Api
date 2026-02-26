@@ -484,9 +484,10 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			{
 				MatchedRegExId = 89,
 				ActionType = AuditEventActionType.Create,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.Widget,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceNames = ["Wolters Oracle Capacity"]
+				WidgetName = "SRV000024036 eul1900684-phxdbpro-Fra reclaimable overview",
+				DashboardName = "Wolters Oracle Capacity"
 			}
 		);
 
@@ -498,9 +499,39 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			{
 				MatchedRegExId = 90,
 				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.Resource,
+				EntityType = AuditEventEntityType.Dashboard,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceNames = ["Wolters Oracle Capacity"]
+				DashboardName = "Wolters Oracle Capacity"
+			}
+		);
+
+	[Fact]
+	public void EditWidgetOfDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 91,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "phxdbpro - Fra usage overview",
+				DashboardName = "Wolters Oracle Capacity"
+			}
+		);
+
+	[Fact]
+	public void DeleteWidgetOfDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 92,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "phxdbpro - Fra usage overview",
+				DashboardName = "Wolters Oracle Capacity"
 			}
 		);
 

@@ -108,5 +108,15 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// API Token
 	/// </summary>
-	ApiToken
+	ApiToken,
+
+	/// <summary>
+	/// Dashboard
+	/// </summary>
+	Dashboard,
+
+	/// <summary>
+	/// Dashboard Widget
+	/// </summary>
+	Widget
 }
