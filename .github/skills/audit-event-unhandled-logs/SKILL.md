@@ -29,6 +29,7 @@ Use this workflow to process unhandled messages from `LogicMonitor.Api.Test/Even
 
 ## Notes
 
+- After adding each new validation (test/assertion), pause and wait for user input before proceeding to the next unhandled message.
 - Keep regexes minimal and specific to avoid regressions.
 - Reuse existing action/entity conventions already used in `AuditEventTests`.
 - Always build before running unit tests so `AuditEventTests` counts are accurate for the current code.
