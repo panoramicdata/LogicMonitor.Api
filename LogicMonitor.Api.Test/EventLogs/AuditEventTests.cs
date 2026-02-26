@@ -835,6 +835,31 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		);
 
 	[Fact]
+	public void UpdateGroupDeviceGroupDescription_WithLargeGetExtraPayload_Success()
+	{
+		var largeValue = new string('x', 25_000);
+		var message = "  {\n[\ngetExtra: update value={\"payload\":\""
+			+ largeValue
+			+ "\"}, old value={\"payload\":\""
+			+ largeValue
+			+ "\"}\n]\n}"
+			+ "\"Action=Update\"; \"Type=Group\"; \"DeviceGroup=NTTCMS Integrator/EisnerAmper/EA-AZURE-SUBSCRIPTIONS - Prod - PL00008552/ea-clientportal-sandbox (SG00023621)/CLA0003221 ea-clientportal-sandbox/ea-clientportal-sandbox\"; \"Description=\"";
+
+		AssertToAuditEventSucceeds(
+			message,
+			new()
+			{
+				MatchedRegExId = 97,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "NTTCMS Integrator/EisnerAmper/EA-AZURE-SUBSCRIPTIONS - Prod - PL00008552/ea-clientportal-sandbox (SG00023621)/CLA0003221 ea-clientportal-sandbox/ea-clientportal-sandbox",
+				Description = string.Empty,
+			}
+		);
+	}
+
+	[Fact]
 	public void UpdateGroupThresholdsWithEmptyAlertThresholdChanges_Success()
 		=> AssertToAuditEventSucceeds(
 			@"""Action=Update""; ""Type=Group""; ""Device=NA""; ""GroupName=Toppan Group""; ""Description= Enable alerting on datapoint syncStatus ""; ""Alert_threshold_changes=""; ""DataSource=Fortinet_FortiGate_HighAvailabilityPeers""; ""DataSourceId=5804476""; ""Reason=Datapoint alerting enabled""",

@@ -21,6 +21,8 @@ public static class LogItemExtensions
 
 	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
 	private static readonly Regex _dataSourceInstanceEntryRegex = new(@"(?:^|,)(?<instanceName>.+?) \[ID:\d+\] id=(?<instanceId>\d+) hid=\d+", RegexOptions.Singleline);
+	private static readonly Regex _groupActionRegex = new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline);
+	private static readonly LogItemRegex _groupActionLogItemRegex = new(97, AuditEventEntityType.ResourceGroup, _groupActionRegex);
 
 	private static readonly List<LogItemRegex> _regexs =
 	[
@@ -430,12 +432,12 @@ public static class LogItemExtensions
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
-				case 105:
-					auditEvent.ActionType = AuditEventActionType.Update;
-					break;
-				case 109:
-					auditEvent.ActionType = AuditEventActionType.Update;
-					break;
+			case 105:
+				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
+			case 109:
+				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
 			case 27:
 				auditEvent.ActionType = AuditEventActionType.Update;
 				break;
@@ -561,7 +563,6 @@ public static class LogItemExtensions
 		return auditEvent;
 	}
 
-
 	private static T? GetGroupValueAsStructOrNull<T>(Match match, string groupName) where T : struct
 	{
 		if (!match.Groups[groupName].Success)
@@ -612,9 +613,36 @@ public static class LogItemExtensions
 	}
 
 	private static (LogItemRegex? LogItemRegex, Match? Match) GetMatchFromDescription(string description)
-		=> _regexs
+	{
+		if (TryGetGroupUpdateWithGetExtraMatch(description, out var getExtraMatch))
+		{
+			return (_groupActionLogItemRegex, getExtraMatch);
+		}
+
+		return _regexs
 			.Select(entry => (LogItemRegex: entry, Match: entry.Regex.Match(description)))
 			.FirstOrDefault(entry => entry.Match.Success);
+	}
+
+	private static bool TryGetGroupUpdateWithGetExtraMatch(string description, out Match match)
+	{
+		match = Match.Empty;
+
+		if (!description.Contains("getExtra: update value=", StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		var actionStartIndex = description.IndexOf("\"Action=", StringComparison.Ordinal);
+		if (actionStartIndex < 0)
+		{
+			return false;
+		}
+
+		var actionSegment = description.Substring(actionStartIndex);
+		match = _groupActionRegex.Match(actionSegment);
+		return match.Success;
+	}
 
 	private static AuditEventActionType GetAction(Match value)
 		=> value.Groups["scheduledHealthCheck"].Success
