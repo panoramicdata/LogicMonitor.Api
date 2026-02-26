@@ -351,6 +351,9 @@ public static class LogItemExtensions
 		new(109,
 			AuditEventEntityType.Dashboard,
 			new(@"^(?<userName>.+?) (?<action>share) a dashboard\((?<dashboardName>.+?)\)$", RegexOptions.Singleline)),
+		new(110,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances,$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

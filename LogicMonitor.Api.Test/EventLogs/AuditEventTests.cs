@@ -765,6 +765,19 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateDatasourceInstancesBareMessage_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances,",
+			new()
+			{
+				MatchedRegExId = 110,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
 	public void UpdateGroupDeviceGroupDescription_Success()
 		=> AssertToAuditEventSucceeds(
 			@"  {
