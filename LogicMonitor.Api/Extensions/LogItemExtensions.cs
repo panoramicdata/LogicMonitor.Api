@@ -253,7 +253,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+)  account (?<userName>.+) \((?<description>.*)\)$", RegexOptions.Singleline)),
 		new(77,
 			AuditEventEntityType.ResourceDataSourceInstance,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline)),
 		new(78,
 			AuditEventEntityType.Resource,
 			new(@"^Remote (?<remoteSessionType>.+) session (?<remoteSessionId>.+) to (?<resourceHostname>.+) (?<action>.+) at (?<time>.+)$", RegexOptions.Singleline)),

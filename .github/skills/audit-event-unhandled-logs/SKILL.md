@@ -22,6 +22,8 @@ Use this workflow to process unhandled messages from `LogicMonitor.Api.Test/Even
 4. Implement parsing fix in `LogicMonitor.Api/Extensions/LogItemExtensions.cs`:
    - Prefer a targeted regex entry and required action overrides.
 5. Validate:
+   - Build first to ensure test discovery/count reflects compiled sources:
+     - `dotnet build .\\LogicMonitor.Api.Test\\LogicMonitor.Api.Test.csproj`
    - Targeted test(s) for the new message.
    - `dotnet test .\\LogicMonitor.Api.Test\\LogicMonitor.Api.Test.csproj --filter "FullyQualifiedName~AuditEventTests"`
 
@@ -29,4 +31,5 @@ Use this workflow to process unhandled messages from `LogicMonitor.Api.Test/Even
 
 - Keep regexes minimal and specific to avoid regressions.
 - Reuse existing action/entity conventions already used in `AuditEventTests`.
+- Always build before running unit tests so `AuditEventTests` counts are accurate for the current code.
 - Repeat the cycle until all desired unhandled messages are covered.

@@ -908,6 +908,22 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	}
 );
 
+	[Fact]
+	public void DeleteInstanceWithEmptyDescription_Success()
+		=> AssertToAuditEventSucceeds(
+		@"""Action=Delete""; ""Type=Instance""; ""Device=SRV000129223 vfrawapdpaprd03""; ""InstanceName=SSL_Certificates-HTTPS""; ""Description=""",
+		new()
+		{
+			MatchedRegExId = 77,
+			ActionType = AuditEventActionType.Delete,
+			EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+			OutcomeType = AuditEventOutcomeType.Success,
+			ResourceNames = ["SRV000129223 vfrawapdpaprd03"],
+			InstanceName = "SSL_Certificates-HTTPS",
+			Description = string.Empty,
+		}
+	);
+
 	[Theory]
 	[InlineData(
 		"Remote rdp session 1234 to 5.6.7.8 started at 09:10",
