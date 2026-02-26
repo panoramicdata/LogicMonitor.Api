@@ -327,6 +327,9 @@ public static class LogItemExtensions
 		new(101,
 			AuditEventEntityType.Report,
 			new(@"^(?<action>Update) report (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(102,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Add) custom graph widget (?<widgetName>.+?) <id=\d+> from instance graph .+? to dashboard (?<dashboardName>.+?) <id=\d+>$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

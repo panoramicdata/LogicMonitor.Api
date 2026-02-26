@@ -534,6 +534,21 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void AddCustomGraphWidgetToDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add custom graph widget Buffer Cache Hit Ratio <id=57456> from instance graph Buffer Cache Hit Ratio <id=12968> to dashboard DBA Dev-App-WCUS03 <id=5705>",
+			new()
+			{
+				MatchedRegExId = 102,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "Buffer Cache Hit Ratio",
+				DashboardName = "DBA Dev-App-WCUS03"
+			}
+		);
+
+	[Fact]
 	public void EditWidgetOfDashboard_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Edit the widget phxdbpro - Fra usage overview of dashboard Wolters Oracle Capacity",
