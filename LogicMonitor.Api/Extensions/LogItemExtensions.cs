@@ -430,6 +430,27 @@ public static class LogItemExtensions
 			return auditEvent;
 		}
 
+		// Imported module messages can embed full script/config payloads.
+		if (logItem.Description.StartsWith("Add new DataSource '", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.DataSource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new DataSource '");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Add new PropertySource '", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.PropertySource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new PropertySource '");
+			return auditEvent;
+		}
+
 		// Interpret the description field
 		var entityTypeMatch = GetMatchFromDescription(logItem.Description);
 		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)
@@ -662,6 +683,23 @@ public static class LogItemExtensions
 		var actionSegment = description.Substring(actionStartIndex);
 		match = _groupActionRegex.Match(actionSegment);
 		return match.Success;
+	}
+
+	private static string? ExtractNameBetweenSingleQuotes(string description, string prefix)
+	{
+		var start = prefix.Length;
+		if (description.Length <= start)
+		{
+			return null;
+		}
+
+		var end = description.IndexOf('\'', start);
+		if (end <= start)
+		{
+			return null;
+		}
+
+		return description.Substring(start, end - start);
 	}
 
 	private static AuditEventActionType GetAction(Match value)

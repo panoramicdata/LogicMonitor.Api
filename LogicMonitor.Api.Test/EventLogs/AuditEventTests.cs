@@ -1466,6 +1466,34 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 			}
 		);
 
+	[Fact]
+	public void AddNewDataSource_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add new DataSource 'NTT_MCN_ADEM_SITE_ISSUES'. Imported from JSON file. Change details: \"Action=Add\"; \"Type=DataSource\"; \"LogicModuleName=NTT_MCN_ADEM_SITE_ISSUES\"; \"Device=NA\"; \"Description={...very long...}\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSource,
+				LogicModuleName = "NTT_MCN_ADEM_SITE_ISSUES",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void AddNewPropertySource_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add new PropertySource 'addERI_ISIS'. Imported from JSON file. Change details: \"Action=Add\"; \"Type=PropertySource\"; \"LogicModuleName=addERI_ISIS\"; \"Device=NA\"; \"Description={...very long...}\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.PropertySource,
+				LogicModuleName = "addERI_ISIS",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
 	[Theory]
 	[InlineData(
 		@"""Action=Delete""; ""Type=PropertySource""; ""LogicModuleName=addCategory_MSSQL_CLONE""; ""Device=NA""; ""LogicModuleId=300""; ""Description="";",
