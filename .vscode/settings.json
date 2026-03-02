@@ -5,6 +5,7 @@
             "approve": true,
             "matchCommandLine": true
         },
-        "dotnet run": true
+        "dotnet run": true,
+        "ForEach-Object": true
     }
 }
