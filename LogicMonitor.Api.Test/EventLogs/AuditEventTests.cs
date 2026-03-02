@@ -695,6 +695,21 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void ScheduleDebugCommand_WithScriptBody_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Schedule debug command""; ""Command=!groovy""; ""AgentId=698""; ""DeviceId=256234""; ""DeviceName=Juniper-Mist-Bangalore""; ""ScriptBody=/* big script */""",
+			new()
+			{
+				MatchedRegExId = 95,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Success,
+				CollectorId = 698,
+				Command = "!groovy"
+			}
+		);
+
+	[Fact]
 	public void UnknownDebugCommand_Failure()
 		=> AssertToAuditEventSucceeds(
 			@"""Unknown debug command""; ""Command=!script""; ""AgentId=60""; ""Company=nttdatagtsus1"";",
@@ -1434,6 +1449,54 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 				OutcomeType = AuditEventOutcomeType.Success,
 			}
 		);
+
+	[Theory]
+	[InlineData(
+		@"""Action=Delete""; ""Type=PropertySource""; ""LogicModuleName=addCategory_MSSQL_CLONE""; ""Device=NA""; ""LogicModuleId=300""; ""Description="";",
+		"addCategory_MSSQL_CLONE",
+		300)]
+	public void DeletePropertySource_Success(
+		string logItemMessage,
+		string expectedLogicModuleName,
+		int expectedLogicModuleId
+		)
+		=> AssertToAuditEventSucceeds(
+		logItemMessage,
+		new()
+		{
+			MatchedRegExId = 113,
+			ActionType = AuditEventActionType.Delete,
+			EntityType = AuditEventEntityType.PropertySource,
+			OutcomeType = AuditEventOutcomeType.Success,
+			Description = string.Empty,
+			LogicModuleName = expectedLogicModuleName,
+			LogicModuleId = expectedLogicModuleId
+		}
+	);
+
+	[Theory]
+	[InlineData(
+	@"""Action=Delete""; ""Type=TopologySource""; ""LogicModuleName=Fortinet_FortiGate_SDWAN""; ""Device=NA""; ""LogicModuleId=67""; ""Description="";",
+	"Fortinet_FortiGate_SDWAN",
+	67)]
+	public void DeleteTopologySource_Success(
+	string logItemMessage,
+	string expectedLogicModuleName,
+	int expectedLogicModuleId
+	)
+	=> AssertToAuditEventSucceeds(
+		logItemMessage,
+		new()
+		{
+			MatchedRegExId = 114,
+			ActionType = AuditEventActionType.Delete,
+			EntityType = AuditEventEntityType.TopologySource,
+			OutcomeType = AuditEventOutcomeType.Success,
+			Description = string.Empty,
+			LogicModuleName = expectedLogicModuleName,
+			LogicModuleId = expectedLogicModuleId
+		}
+	);
 
 	[Theory]
 	[InlineData(

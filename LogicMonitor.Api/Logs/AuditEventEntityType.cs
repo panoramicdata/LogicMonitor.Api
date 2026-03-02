@@ -133,5 +133,15 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Test Script Scheduled
 	/// </summary>
-	TestScriptScheduled
+	TestScriptScheduled,
+
+	/// <summary>
+	/// Property Source
+	/// </summary>
+	PropertySource,
+
+	/// <summary>
+	/// Topology Source
+	/// </summary>
+	TopologySource
 }

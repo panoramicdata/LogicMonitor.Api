@@ -24,6 +24,7 @@ public static class LogItemExtensions
 	private static readonly Regex _groupActionRegex = new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline);
 	private static readonly LogItemRegex _groupActionLogItemRegex = new(97, AuditEventEntityType.ResourceGroup, _groupActionRegex);
 
+	// Keep regex entries in numeric order by ID to make maintenance and reviews easier.
 	private static readonly List<LogItemRegex> _regexs =
 	[
 		new(01,
@@ -310,7 +311,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>Set) all instances' datapoint \((?<dataPointId>\d+):(?<dataPointName>.+?)\) alert threshold as \((?<thresholdValue>.+?)\), alert enable as \((?<description>.+?)\) under the instance groups\((?<instanceGroupId>\d+):(?<instanceGroupName>.+?)\) of device\((?<resourceId>\d+):(?<resourceName>.+?)\)$", RegexOptions.Singleline)),
 		new(95,
 			AuditEventEntityType.Collector,
-			new(@"^""Action=Schedule debug command""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""$", RegexOptions.Singleline)),
+			new(@"^""Action=Schedule debug command""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""(?:; .+)?$", RegexOptions.Singleline)),
 		new(96,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^(?<action>Update) the datasource instances, (?<description>disable monitoring of instances : \[(?<affectedInstances>.+?)\]disable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
@@ -362,6 +363,12 @@ public static class LogItemExtensions
 		new(112,
 			AuditEventEntityType.Resource,
 			new(@"^(?<action>Update) website (?<resourceName>.+?) - (?<resourceDisplayName>.+?) - (?<instanceName>.+?) ,", RegexOptions.Singleline)),
+		new(113,
+			AuditEventEntityType.PropertySource,
+			new(@"^""Action=(?<action>Delete)""; ""Type=(?<logicModuleType>PropertySource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
+		new(114,
+			AuditEventEntityType.TopologySource,
+			new(@"^""Action=(?<action>Delete)""; ""Type=(?<logicModuleType>TopologySource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
