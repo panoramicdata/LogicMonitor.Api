@@ -143,5 +143,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Topology Source
 	/// </summary>
-	TopologySource
+	TopologySource,
+
+	/// <summary>
+	/// Event Source
+	/// </summary>
+	EventSource
 }

@@ -369,6 +369,9 @@ public static class LogItemExtensions
 		new(114,
 			AuditEventEntityType.TopologySource,
 			new(@"^""Action=(?<action>Delete)""; ""Type=(?<logicModuleType>TopologySource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
+		new(115,
+			AuditEventEntityType.EventSource,
+			new(@"^""Action=(?<action>Add|Update)""; ""Type=(?<logicModuleType>EventSource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>

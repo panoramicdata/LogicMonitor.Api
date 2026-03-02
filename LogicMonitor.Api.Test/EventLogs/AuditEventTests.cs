@@ -962,6 +962,22 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		);
 
 	[Fact]
+	public void UpdateEventSource_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Update""; ""Type=EventSource""; ""LogicModuleName=NTT_MCN_Prisma_SDWAN_Alerts_new""; ""Device=NA""; ""LogicModuleId=61""; ""Description=Updated directly by user; Diff=Update display name from NTT_MCN_Prisma_SDWAN_Alerts to NTT_MCN_Prisma_SDWAN_Alerts_new; ; "";",
+			new()
+			{
+				MatchedRegExId = 115,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.EventSource,
+				LogicModuleName = "NTT_MCN_Prisma_SDWAN_Alerts_new",
+				LogicModuleId = 61,
+				Description = "Updated directly by user; Diff=Update display name from NTT_MCN_Prisma_SDWAN_Alerts to NTT_MCN_Prisma_SDWAN_Alerts_new; ; ",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
 	public void DeleteSdt_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token xx123xxx",
