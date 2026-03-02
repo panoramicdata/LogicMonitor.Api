@@ -59,6 +59,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 $ScriptDir = $PSScriptRoot
+$ApiProjectPath = Join-Path $ScriptDir "LogicMonitor.Api\LogicMonitor.Api.csproj"
+$ApiPackagePrefix = "LogicMonitor.Api."
 
 # ANSI color codes for better output
 $ColorReset = "`e[0m"
@@ -132,6 +134,11 @@ if ([string]::IsNullOrWhiteSpace($NuGetApiKey)) {
 }
 
 Write-Success "Found nuget-key.txt with API key"
+
+if (-not (Test-Path $ApiProjectPath)) {
+    Write-ErrorMessage "LogicMonitor.Api project file not found: $ApiProjectPath"
+    exit 1
+}
 
 # ============================================================================
 # Step 2: Check Git Working Directory is Clean
@@ -276,10 +283,20 @@ Write-Step "Running unit tests..."
 # Step 7: Pack NuGet Packages
 # ============================================================================
 
-Write-Step "Creating NuGet packages..."
+Write-Step "Creating LogicMonitor.Api NuGet packages..."
+
+$PackageDir = Join-Path $ScriptDir "nupkgs"
+if (-not (Test-Path $PackageDir)) {
+    New-Item -Path $PackageDir -ItemType Directory | Out-Null
+} else {
+    # Remove previous package artifacts to avoid publishing stale versions.
+    Get-ChildItem -Path $PackageDir -File |
+        Where-Object { $_.Extension -eq ".nupkg" -or $_.Extension -eq ".snupkg" } |
+        Remove-Item -Force
+}
 
 try {
-    dotnet pack --configuration Release --no-build --include-symbols -p:SymbolPackageFormat=snupkg --output "$ScriptDir/nupkgs"
+    dotnet pack $ApiProjectPath --configuration Release --no-build --include-symbols -p:SymbolPackageFormat=snupkg --output $PackageDir
     if ($LASTEXITCODE -eq 0) {
         Write-Success "Packages created successfully"
     } else {
@@ -295,12 +312,28 @@ try {
 # Step 8: List Created Packages
 # ============================================================================
 
-$PackageDir = Join-Path $ScriptDir "nupkgs"
-$NuGetPackages = Get-ChildItem -Path $PackageDir -Filter "*.nupkg" -Exclude "*.symbols.nupkg"
-$SymbolPackages = Get-ChildItem -Path $PackageDir -Filter "*.snupkg"
+$AllPackages = Get-ChildItem -Path $PackageDir -File
+$NuGetPackages = $AllPackages |
+    Where-Object { $_.Extension -eq ".nupkg" -and $_.Name -notlike "*.symbols.nupkg" -and $_.Name -like "$ApiPackagePrefix*" } |
+    Sort-Object Name
+$SymbolPackages = $AllPackages |
+    Where-Object { $_.Extension -eq ".snupkg" -and $_.Name -like "$ApiPackagePrefix*" } |
+    Sort-Object Name
 
 Write-Host ""
 Write-Step "Created packages:"
+
+if ($NuGetPackages.Count -eq 0 -and $SymbolPackages.Count -eq 0) {
+    Write-ErrorMessage "No LogicMonitor.Api packages were created in $PackageDir"
+    exit 1
+}
+
+if ($NuGetPackages.Count -eq 0) {
+    Write-ErrorMessage "No publishable LogicMonitor.Api .nupkg packages found in $PackageDir"
+    Write-Host "Only symbol packages (.snupkg) were found, so publishing cannot continue." -ForegroundColor Yellow
+    exit 1
+}
+
 foreach ($package in $NuGetPackages) {
   Write-Host "  ?? $($package.Name)" -ForegroundColor White
 }
@@ -325,6 +358,7 @@ Write-Step "Publishing packages to NuGet ($NuGetSource)..."
 Write-Host ""
 
 $publishSuccess = $true
+$publishedCount = 0
 
 foreach ($package in $NuGetPackages) {
     Write-Host "Publishing: $($package.Name)" -ForegroundColor Cyan
@@ -337,6 +371,7 @@ foreach ($package in $NuGetPackages) {
         
         if ($LASTEXITCODE -eq 0) {
      Write-Success "Published: $($package.Name)"
+            $publishedCount++
         } else {
             Write-ErrorMessage "Failed to publish: $($package.Name)"
             $publishSuccess = $false
@@ -358,7 +393,7 @@ Write-Host "============================================" -ForegroundColor Cyan
 if ($publishSuccess) {
     Write-Success "Publish completed successfully!"
     Write-Host ""
-    Write-Host "Your packages have been published to NuGet." -ForegroundColor Green
+    Write-Host "Published $publishedCount package(s) to NuGet." -ForegroundColor Green
     Write-Host "It may take a few minutes for them to appear in search results." -ForegroundColor Gray
 } else {
     Write-ErrorMessage "Publish completed with errors"
