@@ -118,5 +118,10 @@ public enum AuditEventActionType
 	/// <summary>
 	/// Schedule Active Discovery
 	/// </summary>
-	ScheduleActiveDiscovery
+	ScheduleActiveDiscovery,
+
+	/// <summary>
+	/// Test Script Scheduled
+	/// </summary>
+	TestScriptScheduled
 }

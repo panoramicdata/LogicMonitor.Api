@@ -128,5 +128,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Dashboard Group
 	/// </summary>
-	DashboardGroup
+	DashboardGroup,
+
+	/// <summary>
+	/// Test Script Scheduled
+	/// </summary>
+	TestScriptScheduled
 }

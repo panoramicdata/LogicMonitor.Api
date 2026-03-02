@@ -1422,6 +1422,18 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 );
 
 
+	[Fact]
+	public void TestScriptScheduled_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Test script scheduled""; ""Description=Schedule""; ""LogicModuleType=autodiscovery""; ""LogicModuleName=Extreme_Access_Points_Ping""; ""Script=`some script content`""",
+			new()
+			{
+				ActionType = AuditEventActionType.TestScriptScheduled,
+				EntityType = AuditEventEntityType.TestScriptScheduled,
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
 	[Theory]
 	[InlineData(
 		"Delete the collector 123 (hostname=HostName, desc=Description)",
