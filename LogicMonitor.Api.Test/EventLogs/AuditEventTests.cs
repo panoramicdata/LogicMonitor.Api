@@ -1428,6 +1428,7 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 			@"""Action=Test script scheduled""; ""Description=Schedule""; ""LogicModuleType=autodiscovery""; ""LogicModuleName=Extreme_Access_Points_Ping""; ""Script=`some script content`""",
 			new()
 			{
+				MatchedRegExId = 0,
 				ActionType = AuditEventActionType.TestScriptScheduled,
 				EntityType = AuditEventEntityType.TestScriptScheduled,
 				OutcomeType = AuditEventOutcomeType.Success,

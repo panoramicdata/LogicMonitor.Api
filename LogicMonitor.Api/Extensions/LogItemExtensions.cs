@@ -413,6 +413,7 @@ public static class LogItemExtensions
 		// Test script scheduled messages contain full script bodies and are very long.
 		if (logItem.Description.StartsWith("\"Action=Test script scheduled\"", StringComparison.Ordinal))
 		{
+			auditEvent.MatchedRegExId = 0;
 			auditEvent.EntityType = AuditEventEntityType.TestScriptScheduled;
 			auditEvent.ActionType = AuditEventActionType.TestScriptScheduled;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
