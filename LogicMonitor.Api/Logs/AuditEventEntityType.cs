@@ -104,4 +104,54 @@ public enum AuditEventEntityType
 	/// Collector Group
 	/// </summary>
 	CollectorGroup,
+
+	/// <summary>
+	/// API Token
+	/// </summary>
+	ApiToken,
+
+	/// <summary>
+	/// Dashboard
+	/// </summary>
+	Dashboard,
+
+	/// <summary>
+	/// Dashboard Widget
+	/// </summary>
+	Widget,
+
+	/// <summary>
+	/// Report
+	/// </summary>
+	Report,
+
+	/// <summary>
+	/// Dashboard Group
+	/// </summary>
+	DashboardGroup,
+
+	/// <summary>
+	/// Test Script Scheduled
+	/// </summary>
+	TestScriptScheduled,
+
+	/// <summary>
+	/// Property Source
+	/// </summary>
+	PropertySource,
+
+	/// <summary>
+	/// Topology Source
+	/// </summary>
+	TopologySource,
+
+	/// <summary>
+	/// Event Source
+	/// </summary>
+	EventSource,
+
+	/// <summary>
+	/// Website
+	/// </summary>
+	Website
 }

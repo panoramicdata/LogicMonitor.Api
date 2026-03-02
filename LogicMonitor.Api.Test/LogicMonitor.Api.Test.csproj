@@ -63,4 +63,8 @@
 		<ProjectReference Include="..\LogicMonitor.PowerShell\LogicMonitor.PowerShell.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="EventLogs\UnhandledLogs\" />
+	</ItemGroup>
+
 </Project>

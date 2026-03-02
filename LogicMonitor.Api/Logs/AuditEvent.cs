@@ -123,6 +123,21 @@ public class AuditEvent
 	public string? ApiMethod { get; internal set; }
 
 	/// <summary>
+	/// The Dashboard name
+	/// </summary>
+	public string? DashboardName { get; internal set; }
+
+	/// <summary>
+	/// The Widget name
+	/// </summary>
+	public string? WidgetName { get; internal set; }
+
+	/// <summary>
+	/// The Website name
+	/// </summary>
+	public string? WebsiteName { get; internal set; }
+
+	/// <summary>
 	/// The DataSource new instance ids
 	/// </summary>
 	public ICollection<int>? DataSourceNewInstanceIds { get; internal set; }

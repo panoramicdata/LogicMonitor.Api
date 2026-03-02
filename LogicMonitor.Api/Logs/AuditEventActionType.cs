@@ -41,6 +41,11 @@ public enum AuditEventActionType
 	Login,
 
 	/// <summary>
+	/// A logout event
+	/// </summary>
+	Logout,
+
+	/// <summary>
 	/// A general API event
 	/// </summary>
 	GeneralApi,
@@ -113,5 +118,10 @@ public enum AuditEventActionType
 	/// <summary>
 	/// Schedule Active Discovery
 	/// </summary>
-	ScheduleActiveDiscovery
+	ScheduleActiveDiscovery,
+
+	/// <summary>
+	/// Test Script Scheduled
+	/// </summary>
+	TestScriptScheduled
 }

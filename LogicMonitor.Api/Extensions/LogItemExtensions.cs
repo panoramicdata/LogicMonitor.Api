@@ -20,7 +20,11 @@ public static class LogItemExtensions
 	}
 
 	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
+	private static readonly Regex _dataSourceInstanceEntryRegex = new(@"(?:^|,)(?<instanceName>.+?) (?:\[ID:\d+\] )?id=(?<instanceId>\d+) hid=\d+", RegexOptions.Singleline);
+	private static readonly Regex _groupActionRegex = new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline);
+	private static readonly LogItemRegex _groupActionLogItemRegex = new(97, AuditEventEntityType.ResourceGroup, _groupActionRegex);
 
+	// Keep regex entries in numeric order by ID to make maintenance and reviews easier.
 	private static readonly List<LogItemRegex> _regexs =
 	[
 		new(01,
@@ -136,7 +140,7 @@ public static class LogItemExtensions
 			new(@"^Throttled API request: API token (?<apiTokenId>.+?) attempted to access path '(?<apiPath>.+?)' with Method: (?<apiMethod>.+?)$", RegexOptions.Singleline)),
 		new(38,
 			AuditEventEntityType.ScheduledDownTime,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ?""Type=SDT""; ?""Description=(?<description>.+?)""; ?"".+?Name=(?<resourceName>.+?)""; ?"".+?Id=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ?""Type=SDT""; ?""Description=(?<description>.+?)""; ?"".+?Name=(?<resourceName>.+?)""; ?"".+?Id=(?<resourceId>.+?)""; ?""StartDownTime=(?<startDownTime>.+?)""; ?""EndDownTime=(?<endDownTime>.+?)"";$", RegexOptions.Singleline)),
 		new(39,
 			AuditEventEntityType.OpsNote,
 			new(@"^(?<action>add) new opsnote \((?<description>.+?)\)$", RegexOptions.Singleline)),
@@ -160,7 +164,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>Add) a widget test to dashboard (?<resourceName>.+?) via API token (?<apiTokenId>.+?)$", RegexOptions.Singleline)),
 		new(46,
 			AuditEventEntityType.ResourceGroup,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Group""; ""Device=NA""; ""GroupName=(?<resourceGroupName>.+?)""; ""Description=(?<description>(.|\n)+?)""; ""Alert_threshold_changes=((.|\n)+?)""; ""DataSource=(?<logicModuleName>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Group""; ""Device=NA""; ""GroupName=(?<resourceGroupName>.+?)""; ""Description=(?<description>(.|\n)+?)""; ""Alert_threshold_changes=((.|\n)*?)""; ""DataSource=(?<logicModuleName>.+?)""; ""DataSourceId=(?<logicModuleId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
 		new(47,
 			AuditEventEntityType.ResourceDataSourceInstance,
 			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""; ""Alert_threshold_changes=\[DataPointId=(.+?),DataPointName=(.+?),OldDataPointValue=(?<instanceOldValue>.+?),NewDataPointValue=(?<instanceNewValue>.+?)\]""; ""InstanceId=(?<instanceId>\d+?)""; ""Reason=(.+?)""$", RegexOptions.Singleline)),
@@ -253,7 +257,7 @@ public static class LogItemExtensions
 			new(@"^(?<action>.+)  account (?<userName>.+) \((?<description>.*)\)$", RegexOptions.Singleline)),
 		new(77,
 			AuditEventEntityType.ResourceDataSourceInstance,
-			new(@"^""Action=(?<action>Add|Fetch|Update)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.+?)""$", RegexOptions.Singleline)),
+			new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Instance""; ""Device=(?<resourceName>.+?)""; ""InstanceName=(?<instanceName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline)),
 		new(78,
 			AuditEventEntityType.Resource,
 			new(@"^Remote (?<remoteSessionType>.+) session (?<remoteSessionId>.+) to (?<resourceHostname>.+) (?<action>.+) at (?<time>.+)$", RegexOptions.Singleline)),
@@ -281,6 +285,93 @@ public static class LogItemExtensions
 		new(86,
 			AuditEventEntityType.Resource,
 			new(@"^""Action=(?<action>Schedule)""; ""Type=Device""; ""DeviceName=(?<resourceName>.+)""; ""DeviceId=(?<resourceId>\d+)""; ""Description=(?<description>.+)""$", RegexOptions.Singleline)),
+		new(87,
+			AuditEventEntityType.Account,
+			new(@"^(?<userName>.+?) (?<logout>signs out) \(adminId=(?<userId>\d+)\)\.$", RegexOptions.Singleline)),
+		new(88,
+			AuditEventEntityType.ApiToken,
+			new(@"^(?<action>Add) new api token - (?<apiTokenId>.+?) for API token user$", RegexOptions.Singleline)),
+		new(89,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Add) a widget (?<widgetName>.+?) to dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(90,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<action>Edit) the dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(91,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Edit) the widget (?<widgetName>.+?) of dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(92,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Delete) the widget (?<widgetName>.+?) of dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(93,
+			AuditEventEntityType.Account,
+			new(@"^(?<action>Update) a Azure account - (?<userName>.+?);$", RegexOptions.Singleline)),
+		new(94,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Set) all instances' datapoint \((?<dataPointId>\d+):(?<dataPointName>.+?)\) alert threshold as \((?<thresholdValue>.+?)\), alert enable as \((?<description>.+?)\) under the instance groups\((?<instanceGroupId>\d+):(?<instanceGroupName>.+?)\) of device\((?<resourceId>\d+):(?<resourceName>.+?)\)$", RegexOptions.Singleline)),
+		new(95,
+			AuditEventEntityType.Collector,
+			new(@"^""Action=Schedule debug command""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""(?:; .+)?$", RegexOptions.Singleline)),
+		new(96,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances, (?<description>disable monitoring of instances : \[(?<affectedInstances>.+?)\]disable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
+		new(97,
+			AuditEventEntityType.ResourceGroup,
+			new(@"^.+?""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline)),
+		new(98,
+			AuditEventEntityType.Collector,
+			new(@"^""(?<failed>Unknown debug command)""; ""Command=(?<command>.+?)""; ""AgentId=(?<collectorId>\d+)""; ""Company=(?<company>.+?)"";$", RegexOptions.Singleline)),
+		new(99,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<action>Create) a dashboard (?<dashboardName>.+?)$", RegexOptions.Singleline)),
+		new(100,
+			AuditEventEntityType.Collector,
+			new(@"^(?<action>Change) host collectors:(?<description>.+)$", RegexOptions.Singleline)),
+		new(101,
+			AuditEventEntityType.Report,
+			new(@"^(?<action>Update) report (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(102,
+			AuditEventEntityType.Widget,
+			new(@"^(?<action>Add) custom graph widget (?<widgetName>.+?) <id=\d+> from instance graph .+? to dashboard (?<dashboardName>.+?) <id=\d+>$", RegexOptions.Singleline)),
+		new(103,
+			AuditEventEntityType.Report,
+			new(@"^(?<action>Add) report (?<resourceName>.+?)$", RegexOptions.Singleline)),
+		new(104,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<action>Delete) the dashboard (?<dashboardName>.+?) \((?<visibility>Private|Shared)\)$", RegexOptions.Singleline)),
+		new(105,
+			AuditEventEntityType.Dashboard,
+			new(@"^Dashboard '(?<description>.+?)' renamed to '(?<dashboardName>.+?)'$", RegexOptions.Singleline)),
+		new(106,
+			AuditEventEntityType.DashboardGroup,
+			new(@"^(?<action>Delete) the dashboard group (?<resourceGroupName>.+?)$", RegexOptions.Singleline)),
+		new(107,
+			AuditEventEntityType.DashboardGroup,
+			new(@"^(?<action>Update) a dashboard group (?<resourceGroupName>.+?)$", RegexOptions.Singleline)),
+		new(108,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances, (?<description>enable monitoring of instances : \[(?<affectedInstances>.+?)\]enable alerting on instances : \[(?<affectedInstancesAlerting>.+?)\])$", RegexOptions.Singleline)),
+		new(109,
+			AuditEventEntityType.Dashboard,
+			new(@"^(?<userName>.+?) (?<action>share) a dashboard\((?<dashboardName>.+?)\)$", RegexOptions.Singleline)),
+		new(110,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances,$", RegexOptions.Singleline)),
+		new(111,
+			AuditEventEntityType.ResourceDataSourceInstance,
+			new(@"^(?<action>Update) the datasource instances, (?<description>enable monitoring of instances : \[(?<affectedInstances>.+)\])\s*$", RegexOptions.Singleline)),
+		new(112,
+			AuditEventEntityType.Resource,
+			new(@"^(?<action>Update) website (?<resourceName>.+?) - (?<resourceDisplayName>.+?) - (?<instanceName>.+?) ,", RegexOptions.Singleline)),
+		new(113,
+			AuditEventEntityType.PropertySource,
+			new(@"^""Action=(?<action>Delete)""; ""Type=(?<logicModuleType>PropertySource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
+		new(114,
+			AuditEventEntityType.TopologySource,
+			new(@"^""Action=(?<action>Delete)""; ""Type=(?<logicModuleType>TopologySource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
+		new(115,
+			AuditEventEntityType.EventSource,
+			new(@"^""Action=(?<action>Add|Update)""; ""Type=(?<logicModuleType>EventSource)""; ""LogicModuleName=(?<logicModuleName>.+?)""; ""Device=NA""; ""LogicModuleId=(?<logicModuleId>\d+)""; ""Description=(?<description>.*?)"";$", RegexOptions.Singleline)),
 	];
 
 	/// <summary>
@@ -312,6 +403,104 @@ public static class LogItemExtensions
 		// DataSource imports have a LOT of text.  Skip these for now.
 		if (logItem.Description.StartsWith("Import DataSource", StringComparison.Ordinal))
 		{
+			auditEvent.MatchedRegExId = 27;
+			// This "none" denotes that we are not expecting to handle this type of message
+			auditEvent.EntityType = AuditEventEntityType.None;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			return auditEvent;
+		}
+
+		// Change host collectors messages can be extremely large and don't need detailed parsing.
+		if (logItem.Description.StartsWith("Change host collectors", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 100;
+			auditEvent.EntityType = AuditEventEntityType.Collector;
+			auditEvent.ActionType = AuditEventActionType.GeneralApi;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			return auditEvent;
+		}
+
+		// Test script scheduled messages contain full script bodies and are very long.
+		if (logItem.Description.StartsWith("\"Action=Test script scheduled\"", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.TestScriptScheduled;
+			auditEvent.ActionType = AuditEventActionType.TestScriptScheduled;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			return auditEvent;
+		}
+
+		// Imported module messages can embed full script/config payloads.
+		if (logItem.Description.StartsWith("Add new DataSource '", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.DataSource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new DataSource '");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Add new PropertySource '", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.PropertySource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new PropertySource '");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Add new TopologySource '", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.TopologySource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new TopologySource '");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Import EventSource from XML.", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.EventSource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractValueBetween(logItem.Description, "\"LogicModuleName=", "\";");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Add website ", StringComparison.Ordinal)
+			&& logItem.Description.Contains(" via URL check", StringComparison.Ordinal))
+
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.Website;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			var websiteName = ExtractValueBetween(logItem.Description, "Add website ", " via URL check");
+			if (!string.IsNullOrEmpty(websiteName))
+			{
+				auditEvent.WebsiteName = websiteName;
+			}
+
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Update website ", StringComparison.Ordinal)
+			&& logItem.Description.Contains(" via URL check", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.Website;
+			auditEvent.ActionType = AuditEventActionType.Update;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			var websiteName = ExtractValueBetween(logItem.Description, "Update website ", " via URL check");
+			if (!string.IsNullOrEmpty(websiteName))
+			{
+				auditEvent.WebsiteName = websiteName;
+			}
+
 			return auditEvent;
 		}
 
@@ -337,6 +526,12 @@ public static class LogItemExtensions
 				auditEvent.ActionType = AuditEventActionType.GeneralApi;
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
+			case 105:
+				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
+			case 109:
+				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
 			case 27:
 				auditEvent.ActionType = AuditEventActionType.Update;
 				break;
@@ -356,7 +551,15 @@ public static class LogItemExtensions
 			case 70:
 			case 71:
 			case 72:
+			case 94:
 				auditEvent.ActionType = AuditEventActionType.Update;
+				break;
+			case 95:
+				auditEvent.ActionType = AuditEventActionType.Run;
+				break;
+			case 98:
+				auditEvent.ActionType = AuditEventActionType.Run;
+				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
 			default:
 				break;
@@ -376,6 +579,7 @@ public static class LogItemExtensions
 		auditEvent.CollectorName = GetGroupValueAsTypeOrNull<string>(match, "collectorName");
 		auditEvent.CollectorDescription = GetGroupValueAsTypeOrNull<string>(match, "collectorDescription");
 		auditEvent.Command = GetGroupValueAsTypeOrNull<string>(match, "command");
+		auditEvent.DashboardName = GetGroupValueAsTypeOrNull<string>(match, "dashboardName");
 		auditEvent.DataSourceNewInstanceIds = GetGroupValueAsTypeOrNull<List<int>>(match, "dataSourceNewInstanceIds");
 		auditEvent.DataSourceNewInstanceNames = GetGroupValueAsTypeOrNull<List<string>>(match, "dataSourceNewInstanceNames");
 		auditEvent.DataSourceDeletedInstanceIds = GetGroupValueAsTypeOrNull<List<int>>(match, "dataSourceDeletedInstanceIds");
@@ -390,6 +594,7 @@ public static class LogItemExtensions
 		auditEvent.RestrictSso = GetGroupValueAsStructOrNull<bool>(match, "restrictSso");
 		auditEvent.StartDownTime = GetGroupValueAsTypeOrNull<string>(match, "startDownTime");
 		auditEvent.UserRole = GetGroupValueAsTypeOrNull<string>(match, "userRole");
+		auditEvent.WidgetName = GetGroupValueAsTypeOrNull<string>(match, "widgetName");
 
 		auditEvent.InstanceId = GetGroupValueAsStructOrNull<int>(match, "instanceId");
 		auditEvent.InstanceName = GetGroupValueAsTypeOrNull<string>(match, "instanceName");
@@ -431,9 +636,26 @@ public static class LogItemExtensions
 			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
 		}
 
+		if ((auditEvent.MatchedRegExId == 96 || auditEvent.MatchedRegExId == 108 || auditEvent.MatchedRegExId == 111) && match.Groups["affectedInstances"].Success)
+		{
+			var dataSourceInstanceIds = new List<int>();
+			var dataSourceInstanceNames = new List<string>();
+			foreach (Match affectedInstanceMatch in _dataSourceInstanceEntryRegex.Matches(match.Groups["affectedInstances"].Value))
+			{
+				if (affectedInstanceMatch.Success)
+				{
+					var instanceName = affectedInstanceMatch.Groups["instanceName"].Value.TrimStart().TrimStart(',', '"');
+					dataSourceInstanceNames.Add(instanceName);
+					dataSourceInstanceIds.Add(int.Parse(affectedInstanceMatch.Groups["instanceId"].Value, CultureInfo.InvariantCulture));
+				}
+			}
+
+			auditEvent.DataSourceNewInstanceNames = dataSourceInstanceNames;
+			auditEvent.DataSourceNewInstanceIds = dataSourceInstanceIds;
+		}
+
 		return auditEvent;
 	}
-
 
 	private static T? GetGroupValueAsStructOrNull<T>(Match match, string groupName) where T : struct
 	{
@@ -485,15 +707,79 @@ public static class LogItemExtensions
 	}
 
 	private static (LogItemRegex? LogItemRegex, Match? Match) GetMatchFromDescription(string description)
-		=> _regexs
+	{
+		if (TryGetGroupUpdateWithGetExtraMatch(description, out var getExtraMatch))
+		{
+			return (_groupActionLogItemRegex, getExtraMatch);
+		}
+
+		return _regexs
 			.Select(entry => (LogItemRegex: entry, Match: entry.Regex.Match(description)))
 			.FirstOrDefault(entry => entry.Match.Success);
+	}
+
+	private static bool TryGetGroupUpdateWithGetExtraMatch(string description, out Match match)
+	{
+		match = Match.Empty;
+
+		if (!description.Contains("getExtra: update value=", StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		var actionStartIndex = description.IndexOf("\"Action=", StringComparison.Ordinal);
+		if (actionStartIndex < 0)
+		{
+			return false;
+		}
+
+		var actionSegment = description.Substring(actionStartIndex);
+		match = _groupActionRegex.Match(actionSegment);
+		return match.Success;
+	}
+
+	private static string? ExtractNameBetweenSingleQuotes(string description, string prefix)
+	{
+		var start = prefix.Length;
+		if (description.Length <= start)
+		{
+			return null;
+		}
+
+		var end = description.IndexOf('\'', start);
+		if (end <= start)
+		{
+			return null;
+		}
+
+		return description.Substring(start, end - start);
+	}
+
+	private static string? ExtractValueBetween(string source, string startMarker, string endMarker)
+	{
+		var start = source.IndexOf(startMarker, StringComparison.Ordinal);
+		if (start < 0)
+		{
+			return null;
+		}
+
+		start += startMarker.Length;
+		var end = source.IndexOf(endMarker, start, StringComparison.Ordinal);
+		if (end <= start)
+		{
+			return null;
+		}
+
+		return source.Substring(start, end - start);
+	}
 
 	private static AuditEventActionType GetAction(Match value)
 		=> value.Groups["scheduledHealthCheck"].Success
 			? AuditEventActionType.ScheduledHealthCheckScript
 			: value.Groups["login"].Success
 			? AuditEventActionType.Login
+			: value.Groups["logout"].Success
+			? AuditEventActionType.Logout
 			: value.Groups["discardedEventAlert"].Success
 			? AuditEventActionType.DiscardedEventAlert
 			: value.Groups["alertId"].Success

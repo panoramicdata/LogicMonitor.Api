@@ -5,7 +5,6 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	private const string TestUsername = "test";
 	private const string TestIpAddress = "127.0.0.1";
 
-
 	[Fact]
 	public void Create_DeviceFailure_Success()
 		=> AssertToAuditEventSucceeds(
@@ -24,14 +23,14 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Disappeared_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceId=NA""; ""Description=Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; """,
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceId=NA""; ""Description=Instance(s) disappeared from: EXAMPLE-FW-01 (CollectorID=249) [DS--192.0.2.4]; """,
 			new()
 			{
 				MatchedRegExId = 11,
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
-				Description = "Instance(s) disappeared from: PDL-FW-01 (CollectorID=249) [DS--1.2.3.4]; ",
+				Description = "Instance(s) disappeared from: EXAMPLE-FW-01 (CollectorID=249) [DS--192.0.2.4]; ",
 				ResourceNames = ["NA"]
 			}
 		);
@@ -39,7 +38,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Changed_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=TemporaryReportName(s) changed for: PDL-K8S-TEST (CollectorID=297) [Critical Linux Processes-java from 9947 to 22713]; valueChanges=[deviceId=3271,dataSourceId=94545589,instanceChanges=[instanceId=263219850,oldValue=22713,newValue=9947];];'""",
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=TemporaryReportName(s) changed for: EXAMPLE-K8S-TEST (CollectorID=297) [Critical Linux Processes-java from 9947 to 22713]; valueChanges=[deviceId=3271,dataSourceId=94545589,instanceChanges=[instanceId=263219850,oldValue=22713,newValue=9947];];'""",
 			new()
 			{
 				MatchedRegExId = 6,
@@ -57,17 +56,17 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 
 	[Theory]
 	[InlineData(
-		"Update host<4030, docker-registry-deploy-default-PDL-K8S-PROD> (monitored by collector <295, pdl-k8s-prod-0>), ,  via API token xx123",
+		"Update host<4030, docker-registry-deploy-default-EXAMPLE-K8S-PROD> (monitored by collector <295, example-k8s-prod-0>), ,  via API token API_TOKEN_EXAMPLE",
 		3,
 		4030,
-		"docker-registry-deploy-default-PDL-K8S-PROD",
+		"docker-registry-deploy-default-EXAMPLE-K8S-PROD",
 		295,
-		"pdl-k8s-prod-0",
-		"xx123"
+		"example-k8s-prod-0",
+		"API_TOKEN_EXAMPLE"
 		)]
 	[InlineData(
 """
-"Action=Update"; "Type=Device"; "Device=ecloud-vm-124345 (124345) (1661057)"; "Description=(monitored by collector <1007, Workgroup\I-A7F966D2>),   {
+"Action=Update"; "Type=Device"; "Device=example-vm-124345 (124345) (1661057)"; "Description=(monitored by collector <1007, Workgroup\EXAMPLE-HOST>),   {
 	[
 		getAlertEnable: update value=false, old value=true.
 	]
@@ -75,7 +74,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 """,
 		2,
 		1661057,
-		"ecloud-vm-124345 (124345)",
+		"example-vm-124345 (124345)",
 		null,
 		null,
 		null
@@ -107,7 +106,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_New_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: PDL-LM.logicmonitor.com (CollectorID=249) [LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter]; New_InstanceIds=[deviceId=2781,dataSourceId=112813425,dataSourceNewInstanceId(s)=263395102];""",
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: EXAMPLE-LM.example.com (CollectorID=249) [LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter]; New_InstanceIds=[deviceId=2781,dataSourceId=112813425,dataSourceNewInstanceId(s)=263395102];""",
 			new()
 			{
 				MatchedRegExId = 8,
@@ -116,7 +115,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [2781],
-				ResourceNames = ["PDL-LM.logicmonitor.com"],
+				ResourceNames = ["EXAMPLE-LM.example.com"],
 				LogicModuleId = 112813425,
 				InstanceName = "NA",
 				DataSourceNewInstanceNames = ["LogicMonitor_Portal_DataSources-Win_WMI_UACTroubleshooter"],
@@ -127,7 +126,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_Disappeared2_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Instance(s) disappeared from: PDL-K8S-TEST-03 (CollectorID=249) [Critical Linux Processes-java]; New_InstanceIds=[deviceId=1525,dataSourceId=94545589,dataSourceDeletedInstanceId(s)=263219849];""",
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Instance(s) disappeared from: EXAMPLE-K8S-TEST-03 (CollectorID=249) [Critical Linux Processes-java]; New_InstanceIds=[deviceId=1525,dataSourceId=94545589,dataSourceDeletedInstanceId(s)=263219849];""",
 			new()
 			{
 				MatchedRegExId = 7,
@@ -136,7 +135,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [1525],
-				ResourceNames = ["PDL-K8S-TEST-03"],
+				ResourceNames = ["EXAMPLE-K8S-TEST-03"],
 				LogicModuleId = 94545589,
 				LogicModuleName = "Critical Linux Processes-java",
 				InstanceName = "NA",
@@ -147,7 +146,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_NewAndDisappeared_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: PDL-HAPROXY-TEST-02 (CollectorID=249) [HA Proxy Backend-ui_alpha_reportmagic,HA Proxy Backend-pdl_app_jira_test_01]; Instance(s) disappeared from: PDL-HAPROXY-TEST-02 (CollectorID=249) [HA Proxy Backend-uiv3_alpha_reportmagic]; New_InstanceIds=[deviceId=2365,dataSourceId=111613364,dataSourceNewInstanceId(s)=263956258,263956259,dataSourceDeletedInstanceId(s)=256832296];""",
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: EXAMPLE-HAPROXY-TEST-02 (CollectorID=249) [HA Proxy Backend-ui_alpha_reportmagic,HA Proxy Backend-pdl_app_jira_test_01]; Instance(s) disappeared from: EXAMPLE-HAPROXY-TEST-02 (CollectorID=249) [HA Proxy Backend-uiv3_alpha_reportmagic]; New_InstanceIds=[deviceId=2365,dataSourceId=111613364,dataSourceNewInstanceId(s)=263956258,263956259,dataSourceDeletedInstanceId(s)=256832296];""",
 			new()
 			{
 				MatchedRegExId = 9,
@@ -156,7 +155,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [2365],
-				ResourceNames = ["PDL-HAPROXY-TEST-02"],
+				ResourceNames = ["EXAMPLE-HAPROXY-TEST-02"],
 				InstanceName = "NA",
 				LogicModuleId = 111613364,
 				DataSourceNewInstanceIds = [263956258, 263956259],
@@ -169,7 +168,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceDataSourceInstance_NewAndDisappeared2_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: EU-W1:recoveryservices:pambackup (CollectorID=-2) [Microsoft_Azure_BackupJobStatus-xxx,Microsoft_Azure_BackupJobStatus-yyy]; Instance(s) disappeared from: EU-W1:recoveryservices:pambackup (CollectorID=-2) [Microsoft_Azure_BackupJobStatus-aaa,Microsoft_Azure_BackupJobStatus-bbb]; New_InstanceIds=[deviceId=2571,dataSourceId=39016161,dataSourceNewInstanceId(s)=570930097,570930098,dataSourceDeletedInstanceId(s)=569154776,569154777];""",
+			@"""Action=Update""; ""Type=Instance""; ""Device=NA""; ""InstanceName=NA""; ""Description=Found new instance(s) for: EXAMPLE-W1:recoveryservices:pambackup (CollectorID=-2) [Microsoft_Azure_BackupJobStatus-xxx,Microsoft_Azure_BackupJobStatus-yyy]; Instance(s) disappeared from: EXAMPLE-W1:recoveryservices:pambackup (CollectorID=-2) [Microsoft_Azure_BackupJobStatus-aaa,Microsoft_Azure_BackupJobStatus-bbb]; New_InstanceIds=[deviceId=2571,dataSourceId=39016161,dataSourceNewInstanceId(s)=570930097,570930098,dataSourceDeletedInstanceId(s)=569154776,569154777];""",
 			new()
 			{
 				MatchedRegExId = 9,
@@ -178,7 +177,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceIds = [2571],
-				ResourceNames = ["EU-W1:recoveryservices:pambackup"],
+				ResourceNames = ["EXAMPLE-W1:recoveryservices:pambackup"],
 				InstanceName = "NA",
 				LogicModuleId = 39016161,
 				DataSourceNewInstanceIds = [570930097, 570930098],
@@ -191,22 +190,22 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Update_DeviceGroup_NothingChanged_Success()
 		=> AssertToAuditEventSucceeds(
-			"Update the ResourceGroup PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-TEST.Nothing has been changed. via API token TOKENID",
+			"Update the ResourceGroup EXAMPLE - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: EXAMPLE-K8S-TEST.Nothing has been changed. via API token TOKEN_EXAMPLE",
 			new()
 			{
 				MatchedRegExId = 13,
 				ActionType = AuditEventActionType.Update,
 				EntityType = AuditEventEntityType.ResourceGroup,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ResourceGroupName = "PDL - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: PDL-K8S-TEST",
-				ApiTokenId = "TOKENID"
+				ResourceGroupName = "EXAMPLE - Panoramic Data/Datacenter/Private/Servers/Kubernetes Cluster: EXAMPLE-K8S-TEST",
+				ApiTokenId = "TOKEN_EXAMPLE"
 			}
 		);
 
 	[Fact]
 	public void Added_DeviceGroup_Success()
 		=> AssertToAuditEventSucceeds(
-			"Added ResourceGroup Path1/Path2/Path3 (6686)  via API token TOKENID, ",
+			"Added ResourceGroup Path1/Path2/Path3 (6686)  via API token TOKEN_EXAMPLE, ",
 			new()
 			{
 				MatchedRegExId = 14,
@@ -215,7 +214,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				OutcomeType = AuditEventOutcomeType.Success,
 				ResourceGroupId = 6686,
 				ResourceGroupName = "Path1/Path2/Path3",
-				ApiTokenId = "TOKENID"
+				ApiTokenId = "TOKEN_EXAMPLE"
 			}
 		);
 
@@ -223,12 +222,12 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Added_DataSource_Success()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=Whois_TTL_Expiry""; ""DeviceName=UK-S1:appserviceplan:CappedAndHooked (UK-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID)""; ""DeviceId=8555""; ""Description=Addition of datasource to device""; ""DataSourceId=114345723""; ""DeviceDataSourceId=615826""",
+			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=Whois_TTL_Expiry""; ""DeviceName=EXAMPLE-S1:appserviceplan:CappedAndHooked (EXAMPLE-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID)""; ""DeviceId=8555""; ""Description=Addition of datasource to device""; ""DataSourceId=114345723""; ""DeviceDataSourceId=615826""",
 			new()
 			{
 				MatchedRegExId = 15,
 				ResourceIds = [8555],
-				ResourceNames = ["UK-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID"],
+				ResourceNames = ["EXAMPLE-S1:cappedandhooked:appserviceplan:CappedAndHooked-ID"],
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.DataSource,
 				OutcomeType = AuditEventOutcomeType.Success,
@@ -241,7 +240,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void Added_ResourceProperty_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Add property(name=propname, value=propvalue) to host(resourceName) via API token TOKENID.",
+			@"Add property(name=propname, value=propvalue) to host(resourceName) via API token TOKEN_EXAMPLE.",
 			new()
 			{
 				MatchedRegExId = 16,
@@ -249,7 +248,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.ResourceProperty,
 				OutcomeType = AuditEventOutcomeType.Success,
-				ApiTokenId = "TOKENID",
+				ApiTokenId = "TOKEN_EXAMPLE",
 				PropertyName = "propname",
 				PropertyValue = "propvalue"
 			}
@@ -303,12 +302,12 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void DeleteKubernetesHosts_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Delete the Kubernetes hosts those were marked for deletion [argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876(id=8443)]",
+			@"Delete the Kubernetes hosts those were marked for deletion [argus-5848fb564c-v7h75-pod-logicmonitor-EXAMPLE-K8S-TEST-636946876(id=8443)]",
 			new()
 			{
 				MatchedRegExId = 18,
 				ResourceIds = [8443],
-				ResourceNames = ["argus-5848fb564c-v7h75-pod-logicmonitor-PDL-K8S-TEST-636946876"],
+				ResourceNames = ["argus-5848fb564c-v7h75-pod-logicmonitor-EXAMPLE-K8S-TEST-636946876"],
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.Resource,
 				OutcomeType = AuditEventOutcomeType.Success
@@ -318,7 +317,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void DeleteKubernetesHostsMultiple_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Delete the Kubernetes hosts those were marked for deletion [collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781(id=8595), argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789(id=8603), argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493(id=8581), collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716(id=8438)]",
+			@"Delete the Kubernetes hosts those were marked for deletion [collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-EXAMPLE-K8S-TEST-442068781(id=8595), argus-5848fb564c-kl52v-pod-logicmonitor-EXAMPLE-K8S-TEST-4069678789(id=8603), argus-5848fb564c-tbx4r-pod-logicmonitor-EXAMPLE-K8S-TEST-460934296-2144132493(id=8581), collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-EXAMPLE-K8S-TEST-199135028-2350553716(id=8438)]",
 			new()
 			{
 				MatchedRegExId = 18,
@@ -329,10 +328,10 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					8438
 				],
 				ResourceNames = [
-					"collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-PDL-K8S-TEST-442068781",
-					"argus-5848fb564c-kl52v-pod-logicmonitor-PDL-K8S-TEST-4069678789",
-					"argus-5848fb564c-tbx4r-pod-logicmonitor-PDL-K8S-TEST-460934296-2144132493",
-					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-PDL-K8S-TEST-199135028-2350553716"
+					"collectorset-controller-54f4644c65-59jmm-pod-logicmonitor-EXAMPLE-K8S-TEST-442068781",
+					"argus-5848fb564c-kl52v-pod-logicmonitor-EXAMPLE-K8S-TEST-4069678789",
+					"argus-5848fb564c-tbx4r-pod-logicmonitor-EXAMPLE-K8S-TEST-460934296-2144132493",
+					"collectorset-controller-54f4644c65-mqnrr-pod-logicmonitor-EXAMPLE-K8S-TEST-199135028-2350553716"
 				],
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.Resource,
@@ -374,13 +373,13 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void FailedApiRequest_Failure()
 		=> AssertToAuditEventSucceeds(
-			@"Failed API request: API token TOKENID attempted to access path '/santaba/rest/device/groups/1613/devices' with Method: GET",
+			@"Failed API request: API token TOKEN_EXAMPLE attempted to access path '/santaba/rest/device/groups/1613/devices' with Method: GET",
 			new()
 			{
 				MatchedRegExId = 22,
 				ActionType = AuditEventActionType.GeneralApi,
 				OutcomeType = AuditEventOutcomeType.Failure,
-				ApiTokenId = "TOKENID",
+				ApiTokenId = "TOKEN_EXAMPLE",
 				ApiMethod = "GET",
 				ApiPath = "/santaba/rest/device/groups/1613/devices"
 			}
@@ -389,7 +388,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void DeleteAwsHostsMultiple_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Delete the aws hosts [EU-W1:i-0ad560910aee79179(id=4573), EU-W1:i-0070bf1c74503d8ed(id=4574)]",
+			@"Delete the aws hosts [EXAMPLE-W1:i-0ad560910aee79179(id=4573), EXAMPLE-W1:i-0070bf1c74503d8ed(id=4574)]",
 			new()
 			{
 				MatchedRegExId = 23,
@@ -398,8 +397,8 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					4574
 				],
 				ResourceNames = [
-					"EU-W1:i-0ad560910aee79179",
-					"EU-W1:i-0070bf1c74503d8ed"
+					"EXAMPLE-W1:i-0ad560910aee79179",
+					"EXAMPLE-W1:i-0070bf1c74503d8ed"
 				],
 				ActionType = AuditEventActionType.Delete,
 				EntityType = AuditEventEntityType.Resource,
@@ -428,6 +427,26 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			}
 		);
 
+	[Theory]
+	[InlineData("user@example.com signs out (adminId=1037).", "user@example.com", 1037, 87)]
+	public void Logout_Success(
+		string logItemMessage,
+		string expectedUsername,
+		int? expectedId,
+		int expectedMatchedRegExId)
+		=> AssertToAuditEventSucceeds(
+			logItemMessage,
+			new()
+			{
+				MatchedRegExId = expectedMatchedRegExId,
+				UserName = expectedUsername,
+				UserId = expectedId,
+				ActionType = AuditEventActionType.Logout,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
 	[Fact]
 	public void AddNewAccountAdmin_Success()
 		=> AssertToAuditEventSucceeds(
@@ -439,6 +458,435 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				ActionType = AuditEventActionType.Create,
 				EntityType = AuditEventEntityType.Account,
 				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void AddApiTokenForApiTokenUser_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add new api token - API_TOKEN_EXAMPLE_2 for API token user",
+			new()
+			{
+				MatchedRegExId = 88,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.ApiToken,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ApiTokenId = "API_TOKEN_EXAMPLE_2"
+			}
+		);
+
+	[Fact]
+	public void AddWidgetToDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+		 @"Add a widget EXAMPLE_SRV_A eul1900684-phxdbpro-Fra reclaimable overview to dashboard Sample Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 89,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "EXAMPLE_SRV_A eul1900684-phxdbpro-Fra reclaimable overview",
+				DashboardName = "Sample Oracle Capacity"
+			}
+		);
+
+	[Fact]
+	public void EditDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+		  @"Edit the dashboard Sample Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 90,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				DashboardName = "Sample Oracle Capacity"
+			}
+		);
+
+	[Fact]
+	public void CreateDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Create a dashboard DBA PROD-APP-SEA02",
+			new()
+			{
+				MatchedRegExId = 99,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				DashboardName = "DBA PROD-APP-SEA02"
+			}
+		);
+
+	[Fact]
+	public void UpdateReport_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update report AEM-CPU",
+			new()
+			{
+				MatchedRegExId = 101,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Report,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["AEM-CPU"]
+			}
+		);
+
+	[Fact]
+	public void AddReport_Success()
+		=> AssertToAuditEventSucceeds(
+		 @"Add report Example Bank - Alert Thresholds",
+			new()
+			{
+				MatchedRegExId = 103,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Report,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["Example Bank - Alert Thresholds"]
+			}
+		);
+
+	[Fact]
+	public void AddCustomGraphWidgetToDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Add custom graph widget Buffer Cache Hit Ratio <id=57456> from instance graph Buffer Cache Hit Ratio <id=12968> to dashboard DBA Dev-App-WCUS03 <id=5705>",
+			new()
+			{
+				MatchedRegExId = 102,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "Buffer Cache Hit Ratio",
+				DashboardName = "DBA Dev-App-WCUS03"
+			}
+		);
+
+	[Fact]
+	public void DeleteDashboardWithVisibility_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the dashboard DBA PROD-APP-SEA02 (Private)",
+			new()
+			{
+				MatchedRegExId = 104,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				DashboardName = "DBA PROD-APP-SEA02"
+			}
+		);
+
+	[Fact]
+	public void RenameDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+		  @"Dashboard 'Sample Dashboard (Alias Demo)' renamed to 'DBA PROD-APP-SEA02'",
+			new()
+			{
+				MatchedRegExId = 105,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				DashboardName = "DBA PROD-APP-SEA02",
+				Description = "Sample Dashboard (Alias Demo)"
+			}
+		);
+
+	[Fact]
+	public void DeleteDashboardGroup_Success()
+		=> AssertToAuditEventSucceeds(
+		   @"Delete the dashboard group Sample Dashboard (Alias Demo)",
+			new()
+			{
+				MatchedRegExId = 106,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.DashboardGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "Sample Dashboard (Alias Demo)"
+			}
+		);
+
+	[Fact]
+	public void UpdateDashboardGroup_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update a dashboard group DBA",
+			new()
+			{
+				MatchedRegExId = 107,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.DashboardGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "DBA"
+			}
+		);
+
+	[Fact]
+	public void EditWidgetOfDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+		  @"Edit the widget phxdbpro - Fra usage overview of dashboard Sample Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 91,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "phxdbpro - Fra usage overview",
+				DashboardName = "Sample Oracle Capacity"
+			}
+		);
+
+	[Fact]
+	public void DeleteWidgetOfDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Delete the widget phxdbpro - Fra usage overview of dashboard Sample Oracle Capacity",
+			new()
+			{
+				MatchedRegExId = 92,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.Widget,
+				OutcomeType = AuditEventOutcomeType.Success,
+				WidgetName = "phxdbpro - Fra usage overview",
+				DashboardName = "Sample Oracle Capacity"
+			}
+		);
+
+	[Fact]
+	public void UpdateAzureAccount_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update a Azure account - ea-clientportal-sandbox;",
+			new()
+			{
+				MatchedRegExId = 93,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Account,
+				OutcomeType = AuditEventOutcomeType.Success,
+				UserName = "ea-clientportal-sandbox"
+			}
+		);
+
+	[Fact]
+	public void SetAllInstancesDatapointThresholdOnDevice_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Set all instances' datapoint (18371:NoData) alert threshold as (NO CHANGE), alert enable as (false) under the instance groups(0:@default) of device(1416411:EXAMPLE_SRV_B Tatenen)",
+			new()
+			{
+				MatchedRegExId = 94,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceIds = [1416411],
+				ResourceNames = ["EXAMPLE_SRV_B Tatenen"],
+				Description = "false"
+			}
+		);
+
+	[Fact]
+	public void ScheduleDebugCommand_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Schedule debug command""; ""Command=help""; ""AgentId=21""",
+			new()
+			{
+				MatchedRegExId = 95,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Success,
+				CollectorId = 21,
+				Command = "help"
+			}
+		);
+
+	[Fact]
+	public void ScheduleDebugCommand_WithScriptBody_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Schedule debug command""; ""Command=!groovy""; ""AgentId=698""; ""DeviceId=256234""; ""DeviceName=Juniper-Mist-Bangalore""; ""ScriptBody=/* big script */""",
+			new()
+			{
+				MatchedRegExId = 95,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Success,
+				CollectorId = 698,
+				Command = "!groovy"
+			}
+		);
+
+	[Fact]
+	public void UnknownDebugCommand_Failure()
+		=> AssertToAuditEventSucceeds(
+		  @"""Unknown debug command""; ""Command=!script""; ""AgentId=60""; ""Company=examplecompany"";",
+			new()
+			{
+				MatchedRegExId = 98,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Failure,
+				CollectorId = 60,
+				Command = "!script"
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesDisableMonitoringAndAlerting_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, disable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]disable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+			new()
+			{
+				MatchedRegExId = 96,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "disable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]disable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+				DataSourceNewInstanceNames = [
+					"SNMP_Network_Interfaces-pc-0/2/0",
+					"SNMP_Network_Interfaces-pc-0/2/0.16383",
+					"SNMP_Network_Interfaces-pc-0/2/0.16384"
+				],
+				DataSourceNewInstanceIds = [426808630, 426808624, 426808618]
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringAndAlerting_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, enable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]enable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+			new()
+			{
+				MatchedRegExId = 108,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "enable monitoring of instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]enable alerting on instances : [SNMP_Network_Interfaces-pc-0/2/0 [ID:588] id=426808630 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16383 [ID:591] id=426808624 hid=489168,SNMP_Network_Interfaces-pc-0/2/0.16384 [ID:592] id=426808618 hid=489168]",
+				DataSourceNewInstanceNames = [
+					"SNMP_Network_Interfaces-pc-0/2/0",
+					"SNMP_Network_Interfaces-pc-0/2/0.16383",
+					"SNMP_Network_Interfaces-pc-0/2/0.16384"
+				],
+				DataSourceNewInstanceIds = [426808630, 426808624, 426808618]
+			}
+		);
+
+	[Fact]
+	public void ShareDashboard_Success()
+		=> AssertToAuditEventSucceeds(
+		  @"user@example.com share a dashboard(DBA PROD-APP-SEA02)",
+			new()
+			{
+				MatchedRegExId = 109,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Dashboard,
+				OutcomeType = AuditEventOutcomeType.Success,
+				UserName = "user@example.com",
+				DashboardName = "DBA PROD-APP-SEA02"
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesBareMessage_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances,",
+			new()
+			{
+				MatchedRegExId = 110,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringOnly_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, enable monitoring of instances : [SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1 [ID:9] id=426199595 hid=416898,SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2 [ID:10] id=426199584 hid=416898]",
+			new()
+			{
+				MatchedRegExId = 111,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "enable monitoring of instances : [SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1 [ID:9] id=426199595 hid=416898,SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2 [ID:10] id=426199584 hid=416898]",
+				DataSourceNewInstanceNames = [
+					"SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1",
+					"SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2"
+				],
+				DataSourceNewInstanceIds = [426199595, 426199584]
+			}
+		);
+
+	[Fact]
+	public void UpdateWebsite_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update website http:__10.41.10.25:8081_sapdashboard - EXAMPLE_SRV_C - WEB0004720 ,   {
+[
+getParameterAsJSONForWebsiteDevice: update value={""schema"":""http""}, old value={""schema"":""https""}
+]
+}",
+			new()
+			{
+				MatchedRegExId = 112,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Resource,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["http:__10.41.10.25:8081_sapdashboard"],
+				InstanceName = "WEB0004720"
+			}
+		);
+
+	[Fact]
+	public void UpdateGroupDeviceGroupDescription_Success()
+		=> AssertToAuditEventSucceeds(
+			@"  {
+[
+getExtra: update value={""key"":1}, old value={""key"":0}
+]
+}""Action=Update""; ""Type=Group""; ""DeviceGroup=Example Integrator/CustomerA/EXAMPLE-AZURE-SUBSCRIPTIONS - Prod - PL00008552/example-sandbox (SG00023621)/CLA0003221 example-sandbox/example-sandbox""; ""Description=""",
+			new()
+			{
+				MatchedRegExId = 97,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "Example Integrator/CustomerA/EXAMPLE-AZURE-SUBSCRIPTIONS - Prod - PL00008552/example-sandbox (SG00023621)/CLA0003221 example-sandbox/example-sandbox",
+				Description = string.Empty,
+			}
+		);
+
+	[Fact]
+	public void UpdateGroupDeviceGroupDescription_WithLargeGetExtraPayload_Success()
+	{
+		var largeValue = new string('x', 25_000);
+		var message = "  {\n[\ngetExtra: update value={\"payload\":\""
+			+ largeValue
+			+ "\"}, old value={\"payload\":\""
+			+ largeValue
+			+ "\"}\n]\n}"
+		  + "\"Action=Update\"; \"Type=Group\"; \"DeviceGroup=Example Integrator/CustomerA/EXAMPLE-AZURE-SUBSCRIPTIONS - Prod - PL00008552/example-sandbox (SG00023621)/CLA0003221 example-sandbox/example-sandbox\"; \"Description=\"";
+
+		AssertToAuditEventSucceeds(
+			message,
+			new()
+			{
+				MatchedRegExId = 97,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "Example Integrator/CustomerA/EXAMPLE-AZURE-SUBSCRIPTIONS - Prod - PL00008552/example-sandbox (SG00023621)/CLA0003221 example-sandbox/example-sandbox",
+				Description = string.Empty,
+			}
+		);
+	}
+
+	[Fact]
+	public void UpdateGroupThresholdsWithEmptyAlertThresholdChanges_Success()
+		=> AssertToAuditEventSucceeds(
+		 @"""Action=Update""; ""Type=Group""; ""Device=NA""; ""GroupName=Example Group""; ""Description= Enable alerting on datapoint syncStatus ""; ""Alert_threshold_changes=""; ""DataSource=Fortinet_FortiGate_HighAvailabilityPeers""; ""DataSourceId=5804476""; ""Reason=Datapoint alerting enabled""",
+			new()
+			{
+				MatchedRegExId = 46,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceGroup,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceGroupName = "Example Group",
+				Description = " Enable alerting on datapoint syncStatus ",
+				LogicModuleName = "Fortinet_FortiGate_HighAvailabilityPeers",
+				LogicModuleId = 5804476
 			}
 		);
 
@@ -462,11 +910,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			@"Import DataSource from repository.  Change details : Change datasource : NetApp_Cluster_FibreChannel, dsId=1211 {\nDataSourceContent\n}",
 			new()
 			{
+				// This is no longer matched by regex 27 since David excluded these messages from regex parsing
 				MatchedRegExId = 27,
-				ActionType = AuditEventActionType.Update,
-				EntityType = AuditEventEntityType.DataSource,
-				LogicModuleId = 1211,
-				LogicModuleName = "NetApp_Cluster_FibreChannel",
+				//ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.None,
+				//LogicModuleId = 1211,
+				//LogicModuleName = "NetApp_Cluster_FibreChannel",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
+	public void ChangeHostCollectors_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Change host collectors: host<378754>(EXAMPLE_SRV_D sgcaplmprod002), preferred<55> , current<55> to collector <57>(DC\SGCAPLMPROD003)",
+			new()
+			{
+				MatchedRegExId = 100,
+				ActionType = AuditEventActionType.GeneralApi,
+				EntityType = AuditEventEntityType.Collector,
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -499,9 +961,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void UpdateEventSource_Success()
+		=> AssertToAuditEventSucceeds(
+		  @"""Action=Update""; ""Type=EventSource""; ""LogicModuleName=EXAMPLE_EVENTSOURCE_ALERTS_NEW""; ""Device=NA""; ""LogicModuleId=61""; ""Description=Updated directly by user; Diff=Update display name from EXAMPLE_EVENTSOURCE_ALERTS to EXAMPLE_EVENTSOURCE_ALERTS_NEW; ; "";",
+			new()
+			{
+				MatchedRegExId = 115,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.EventSource,
+				LogicModuleName = "EXAMPLE_EVENTSOURCE_ALERTS_NEW",
+				LogicModuleId = 61,
+				Description = "Updated directly by user; Diff=Update display name from EXAMPLE_EVENTSOURCE_ALERTS to EXAMPLE_EVENTSOURCE_ALERTS_NEW; ; ",
+				OutcomeType = AuditEventOutcomeType.Success
+			}
+		);
+
+	[Fact]
 	public void DeleteSdt_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token xx123xxx",
+			@"Delete SDT from 2022-05-18 08:51:27 GMT to 2022-05-18 09:51:27 GMT from Datasource Collector DNS Resolving on Host somehost name via API token TOKEN_EXAMPLE_2",
 			new()
 			{
 				MatchedRegExId = 30,
@@ -509,14 +987,32 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.ScheduledDownTime,
 				ResourceNames = ["somehost name"],
 				OutcomeType = AuditEventOutcomeType.Success,
-				ApiTokenId = "xx123xxx"
+				ApiTokenId = "TOKEN_EXAMPLE_2"
+			}
+		);
+
+	[Fact]
+	public void DeleteSdt_GroupQuotedFormat_Success()
+		=> AssertToAuditEventSucceeds(
+		   @"""Action=Delete""; ""Type=SDT""; ""Description= Delete SDT for Group Example Bakeries on Group Path Example Integrator/Example Bakeries with scheduled downtime from 2025-12-31 04:25:00 GMT to 2027-06-30 05:25:00 GMT ""; ""DeviceGroupName=Example Bakeries""; ""DeviceGroupId=3786""; ""StartDownTime=2025-12-31 04:25:00 GMT""; ""EndDownTime=2027-06-30 05:25:00 GMT"";",
+			new()
+			{
+				MatchedRegExId = 38,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.ScheduledDownTime,
+				Description = " Delete SDT for Group Example Bakeries on Group Path Example Integrator/Example Bakeries with scheduled downtime from 2025-12-31 04:25:00 GMT to 2027-06-30 05:25:00 GMT ",
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["Example Bakeries"],
+				ResourceIds = [3786],
+				StartDownTime = "2025-12-31 04:25:00 GMT",
+				EndDownTime = "2027-06-30 05:25:00 GMT"
 			}
 		);
 
 	[Fact]
 	public void AddSdt_Success()
 		=> AssertToAuditEventSucceeds(
-			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token xx123xxx",
+			@"Add SDT for Datasource Collector DNS Resolving on Host somehost name with scheduled downtime from 2022-05-18 08:53:39 GMT to 2022-05-18 09:53:39 GMT via API token TOKEN_EXAMPLE_2",
 			new()
 			{
 				MatchedRegExId = 48,
@@ -524,7 +1020,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.ScheduledDownTime,
 				ResourceNames = ["somehost name"],
 				OutcomeType = AuditEventOutcomeType.Success,
-				ApiTokenId = "xx123xxx"
+				ApiTokenId = "TOKEN_EXAMPLE_2"
 			}
 		);
 
@@ -560,7 +1056,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public void AddDataSource_Succeeds()
 		=> AssertToAuditEventSucceeds(
-			@"""Action=Add""; ""Type=DataSource""; ""DataSourceName=nttcms_ALL_ALL_IP_Addresses""; ""DeviceName=127.0.0.1""; ""DeviceId=4808""; ""Description=Addition of datasource to device""; ""DataSourceId=33514257""; ""DeviceDataSourceId=52050""",
+		 @"""Action=Add""; ""Type=DataSource""; ""DataSourceName=example_ALL_ALL_IP_Addresses""; ""DeviceName=127.0.0.1""; ""DeviceId=4808""; ""Description=Addition of datasource to device""; ""DataSourceId=33514257""; ""DeviceDataSourceId=52050""",
 			new()
 			{
 				MatchedRegExId = 33,
@@ -568,7 +1064,7 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 				EntityType = AuditEventEntityType.DataSource,
 				ResourceIds = [4808],
 				LogicModuleId = 33514257,
-				LogicModuleName = "nttcms_ALL_ALL_IP_Addresses",
+				LogicModuleName = "example_ALL_ALL_IP_Addresses",
 				OutcomeType = AuditEventOutcomeType.Success
 			}
 		);
@@ -646,8 +1142,8 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 );
 
 	[Theory]
-	[InlineData("Request remote ssh session to 1.2.3.4", "ssh", "1.2.3.4")]
-	[InlineData("Request remote rdp session to 5.6.7.8", "rdp", "5.6.7.8")]
+	[InlineData("Request remote ssh session to 192.0.2.10", "ssh", "192.0.2.10")]
+	[InlineData("Request remote rdp session to 198.51.100.20", "rdp", "198.51.100.20")]
 	public void RequestRemoteSession_Success(
 		string logItemMessage,
 		string expectedRemoteSessionType,
@@ -814,19 +1310,35 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	}
 );
 
+	[Fact]
+	public void DeleteInstanceWithEmptyDescription_Success()
+		=> AssertToAuditEventSucceeds(
+		@"""Action=Delete""; ""Type=Instance""; ""Device=EXAMPLE_SRV_E vfrawapdpaprd03""; ""InstanceName=SSL_Certificates-HTTPS""; ""Description=""",
+		new()
+		{
+			MatchedRegExId = 77,
+			ActionType = AuditEventActionType.Delete,
+			EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+			OutcomeType = AuditEventOutcomeType.Success,
+			ResourceNames = ["EXAMPLE_SRV_E vfrawapdpaprd03"],
+			InstanceName = "SSL_Certificates-HTTPS",
+			Description = string.Empty,
+		}
+	);
+
 	[Theory]
 	[InlineData(
-		"Remote rdp session 1234 to 5.6.7.8 started at 09:10",
+		"Remote rdp session 1234 to 198.51.100.20 started at 09:10",
 		"rdp",
 		1234,
-		"5.6.7.8",
+		"198.51.100.20",
 		AuditEventActionType.Start,
 		"09:10")]
 	[InlineData(
-		"Remote ssh session 4321 to 8.7.6.5 terminated at 12:34",
+		"Remote ssh session 4321 to 203.0.113.30 terminated at 12:34",
 		"ssh",
 		4321,
-		"8.7.6.5",
+		"203.0.113.30",
 		AuditEventActionType.End,
 		"12:34")]
 	public void RemoteSession_Success(
@@ -940,6 +1452,151 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 );
 
 
+	[Fact]
+	public void TestScriptScheduled_Success()
+		=> AssertToAuditEventSucceeds(
+			@"""Action=Test script scheduled""; ""Description=Schedule""; ""LogicModuleType=autodiscovery""; ""LogicModuleName=Extreme_Access_Points_Ping""; ""Script=`some script content`""",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.TestScriptScheduled,
+				EntityType = AuditEventEntityType.TestScriptScheduled,
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void AddNewDataSource_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+		  "Add new DataSource 'EXAMPLE_DATASOURCE_SITE_ISSUES'. Imported from JSON file. Change details: \"Action=Add\"; \"Type=DataSource\"; \"LogicModuleName=EXAMPLE_DATASOURCE_SITE_ISSUES\"; \"Device=NA\"; \"Description={...very long...}\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.DataSource,
+				LogicModuleName = "EXAMPLE_DATASOURCE_SITE_ISSUES",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void AddNewPropertySource_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add new PropertySource 'addERI_ISIS'. Imported from JSON file. Change details: \"Action=Add\"; \"Type=PropertySource\"; \"LogicModuleName=addERI_ISIS\"; \"Device=NA\"; \"Description={...very long...}\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.PropertySource,
+				LogicModuleName = "addERI_ISIS",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void AddNewTopologySource_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add new TopologySource 'Fortinet_FortiGate_SDWAN'. Imported from JSON file. Change details: \"Action=Add\"; \"Type=TopologySource\"; \"LogicModuleName=Fortinet_FortiGate_SDWAN\"; \"Device=NA\"; \"Description={...very long...}\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.TopologySource,
+				LogicModuleName = "Fortinet_FortiGate_SDWAN",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void ImportEventSourceFromXml_Success()
+		=> AssertToAuditEventSucceeds(
+		   "Import EventSource from XML. Change details : \"Action=Add\"; \"Type=EventSource\"; \"LogicModuleName=EXAMPLE_EVENTSOURCE_ALERTS\"; \"Device=NA\"; \"Description=Add eventsource : EXAMPLE_EVENTSOURCE_ALERTS, id = 85\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.EventSource,
+				LogicModuleName = "EXAMPLE_EVENTSOURCE_ALERTS",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void AddWebsiteViaUrlCheck_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add website SpektraEdgeController Availability monitoring via URL check",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Website,
+				WebsiteName = "SpektraEdgeController Availability monitoring",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void UpdateWebsiteSettings_Success()
+		=> AssertToAuditEventSucceeds(
+			"Update website SpektraEdgeController Availability monitoring via URL check , [Modified param individualSmAlertEnable: true -> false]",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Website,
+				WebsiteName = "SpektraEdgeController Availability monitoring",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Theory]
+	[InlineData(
+		@"""Action=Delete""; ""Type=PropertySource""; ""LogicModuleName=addCategory_MSSQL_CLONE""; ""Device=NA""; ""LogicModuleId=300""; ""Description="";",
+		"addCategory_MSSQL_CLONE",
+		300)]
+	public void DeletePropertySource_Success(
+		string logItemMessage,
+		string expectedLogicModuleName,
+		int expectedLogicModuleId
+		)
+		=> AssertToAuditEventSucceeds(
+		logItemMessage,
+		new()
+		{
+			MatchedRegExId = 113,
+			ActionType = AuditEventActionType.Delete,
+			EntityType = AuditEventEntityType.PropertySource,
+			OutcomeType = AuditEventOutcomeType.Success,
+			Description = string.Empty,
+			LogicModuleName = expectedLogicModuleName,
+			LogicModuleId = expectedLogicModuleId
+		}
+	);
+
+	[Theory]
+	[InlineData(
+	@"""Action=Delete""; ""Type=TopologySource""; ""LogicModuleName=Fortinet_FortiGate_SDWAN""; ""Device=NA""; ""LogicModuleId=67""; ""Description="";",
+	"Fortinet_FortiGate_SDWAN",
+	67)]
+	public void DeleteTopologySource_Success(
+	string logItemMessage,
+	string expectedLogicModuleName,
+	int expectedLogicModuleId
+	)
+	=> AssertToAuditEventSucceeds(
+		logItemMessage,
+		new()
+		{
+			MatchedRegExId = 114,
+			ActionType = AuditEventActionType.Delete,
+			EntityType = AuditEventEntityType.TopologySource,
+			OutcomeType = AuditEventOutcomeType.Success,
+			Description = string.Empty,
+			LogicModuleName = expectedLogicModuleName,
+			LogicModuleId = expectedLogicModuleId
+		}
+	);
+
 	[Theory]
 	[InlineData(
 		"Delete the collector 123 (hostname=HostName, desc=Description)",
@@ -965,6 +1622,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		CollectorDescription = expectedCollectorDescription
 	}
 );
+
+	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringOnly2_Success()
+	=> AssertToAuditEventSucceeds(
+		@"Update the datasource instances, enable monitoring of instances : [a.b.c.d id=123 hid=276643,e.f.g.h id=456 hid=276643] ",
+		new()
+		{
+			MatchedRegExId = 111,
+			ActionType = AuditEventActionType.Update,
+			EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+			OutcomeType = AuditEventOutcomeType.Success,
+			Description = "enable monitoring of instances : [a.b.c.d id=123 hid=276643,e.f.g.h id=456 hid=276643]",
+			DataSourceNewInstanceNames = [
+				"a.b.c.d",
+				"e.f.g.h"
+			],
+			DataSourceNewInstanceIds = [123, 456]
+		}
+	);
 
 	private static void AssertToAuditEventSucceeds(
 		string description,
