@@ -133,6 +133,11 @@ public class AuditEvent
 	public string? WidgetName { get; internal set; }
 
 	/// <summary>
+	/// The Website name
+	/// </summary>
+	public string? WebsiteName { get; internal set; }
+
+	/// <summary>
 	/// The DataSource new instance ids
 	/// </summary>
 	public ICollection<int>? DataSourceNewInstanceIds { get; internal set; }

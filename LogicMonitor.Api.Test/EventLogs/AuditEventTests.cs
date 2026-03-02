@@ -1494,6 +1494,62 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 			}
 		);
 
+	[Fact]
+	public void AddNewTopologySource_LargePayload_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add new TopologySource 'Fortinet_FortiGate_SDWAN'. Imported from JSON file. Change details: \"Action=Add\"; \"Type=TopologySource\"; \"LogicModuleName=Fortinet_FortiGate_SDWAN\"; \"Device=NA\"; \"Description={...very long...}\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.TopologySource,
+				LogicModuleName = "Fortinet_FortiGate_SDWAN",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void ImportEventSourceFromXml_Success()
+		=> AssertToAuditEventSucceeds(
+			"Import EventSource from XML. Change details : \"Action=Add\"; \"Type=EventSource\"; \"LogicModuleName=NTT_MCN_Prisma_SDWAN_Alerts\"; \"Device=NA\"; \"Description=Add eventsource : NTT_MCN_Prisma_SDWAN_Alerts, id = 85\"",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.EventSource,
+				LogicModuleName = "NTT_MCN_Prisma_SDWAN_Alerts",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void AddWebsiteViaUrlCheck_Success()
+		=> AssertToAuditEventSucceeds(
+			"Add website SpektraEdgeController Availability monitoring via URL check",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Create,
+				EntityType = AuditEventEntityType.Website,
+				WebsiteName = "SpektraEdgeController Availability monitoring",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
+	[Fact]
+	public void UpdateWebsiteSettings_Success()
+		=> AssertToAuditEventSucceeds(
+			"Update website SpektraEdgeController Availability monitoring via URL check , [Modified param individualSmAlertEnable: true -> false]",
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.Website,
+				WebsiteName = "SpektraEdgeController Availability monitoring",
+				OutcomeType = AuditEventOutcomeType.Success,
+			}
+		);
+
 	[Theory]
 	[InlineData(
 		@"""Action=Delete""; ""Type=PropertySource""; ""LogicModuleName=addCategory_MSSQL_CLONE""; ""Device=NA""; ""LogicModuleId=300""; ""Description="";",

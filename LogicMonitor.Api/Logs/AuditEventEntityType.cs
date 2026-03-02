@@ -148,5 +148,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Event Source
 	/// </summary>
-	EventSource
+	EventSource,
+
+	/// <summary>
+	/// Website
+	/// </summary>
+	Website
 }

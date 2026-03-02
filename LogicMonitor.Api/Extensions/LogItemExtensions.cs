@@ -451,6 +451,59 @@ public static class LogItemExtensions
 			return auditEvent;
 		}
 
+		if (logItem.Description.StartsWith("Add new TopologySource '", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.TopologySource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new TopologySource '");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Import EventSource from XML.", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.EventSource;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			auditEvent.LogicModuleName = ExtractValueBetween(logItem.Description, "\"LogicModuleName=", "\";");
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Add website ", StringComparison.Ordinal)
+			&& logItem.Description.Contains(" via URL check", StringComparison.Ordinal))
+
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.Website;
+			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			var websiteName = ExtractValueBetween(logItem.Description, "Add website ", " via URL check");
+			if (!string.IsNullOrEmpty(websiteName))
+			{
+				auditEvent.WebsiteName = websiteName;
+			}
+
+			return auditEvent;
+		}
+
+		if (logItem.Description.StartsWith("Update website ", StringComparison.Ordinal)
+			&& logItem.Description.Contains(" via URL check", StringComparison.Ordinal))
+		{
+			auditEvent.MatchedRegExId = 0;
+			auditEvent.EntityType = AuditEventEntityType.Website;
+			auditEvent.ActionType = AuditEventActionType.Update;
+			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+			var websiteName = ExtractValueBetween(logItem.Description, "Update website ", " via URL check");
+			if (!string.IsNullOrEmpty(websiteName))
+			{
+				auditEvent.WebsiteName = websiteName;
+			}
+
+			return auditEvent;
+		}
+
 		// Interpret the description field
 		var entityTypeMatch = GetMatchFromDescription(logItem.Description);
 		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)
@@ -700,6 +753,24 @@ public static class LogItemExtensions
 		}
 
 		return description.Substring(start, end - start);
+	}
+
+	private static string? ExtractValueBetween(string source, string startMarker, string endMarker)
+	{
+		var start = source.IndexOf(startMarker, StringComparison.Ordinal);
+		if (start < 0)
+		{
+			return null;
+		}
+
+		start += startMarker.Length;
+		var end = source.IndexOf(endMarker, start, StringComparison.Ordinal);
+		if (end <= start)
+		{
+			return null;
+		}
+
+		return source.Substring(start, end - start);
 	}
 
 	private static AuditEventActionType GetAction(Match value)
