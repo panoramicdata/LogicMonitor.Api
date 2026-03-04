@@ -5,6 +5,7 @@
 /// </summary>
 public static class LogItemExtensions
 {
+	private static readonly TimeSpan _regexEvaluationTimeout = TimeSpan.FromSeconds(5);
 	private const int MaxRegexDescriptionLength = 16 * 1024;
 	private const int OversizedDescriptionPreviewLength = 512;
 
@@ -21,9 +22,9 @@ public static class LogItemExtensions
 		}
 	}
 
-	private static readonly Regex _k8sHostRegex = new(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
-	private static readonly Regex _dataSourceInstanceEntryRegex = new(@"(?:^|,)(?<instanceName>.+?) (?:\[ID:\d+\] )?id=(?<instanceId>\d+) hid=\d+", RegexOptions.Singleline);
-	private static readonly Regex _groupActionRegex = new(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline);
+	private static readonly Regex _k8sHostRegex = CreateRegex(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
+	private static readonly Regex _dataSourceInstanceEntryRegex = CreateRegex(@"(?:^|,)(?<instanceName>.+?) (?:\[ID:\d+\] )?id=(?<instanceId>\d+) hid=\d+", RegexOptions.Singleline);
+	private static readonly Regex _groupActionRegex = CreateRegex(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline);
 	private static readonly LogItemRegex _groupActionLogItemRegex = new(97, AuditEventEntityType.ResourceGroup, _groupActionRegex);
 
 	// Keep regex entries in numeric order by ID to make maintenance and reviews easier.
@@ -641,7 +642,7 @@ public static class LogItemExtensions
 				auditEvent.ResourceNames ??= [];
 				foreach (var k8sHost in k8sHosts)
 				{
-					var k8sHostMatch = _k8sHostRegex.Match(k8sHost);
+					var k8sHostMatch = SafeMatch(_k8sHostRegex, k8sHost);
 					if (k8sHostMatch.Success)
 					{
 						auditEvent.ResourceIds.Add(int.Parse(k8sHostMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture));
@@ -662,7 +663,7 @@ public static class LogItemExtensions
 		{
 			var dataSourceInstanceIds = new List<int>();
 			var dataSourceInstanceNames = new List<string>();
-			foreach (Match affectedInstanceMatch in _dataSourceInstanceEntryRegex.Matches(match.Groups["affectedInstances"].Value))
+			foreach (var affectedInstanceMatch in SafeMatches(_dataSourceInstanceEntryRegex, match.Groups["affectedInstances"].Value))
 			{
 				if (affectedInstanceMatch.Success)
 				{
@@ -736,7 +737,7 @@ public static class LogItemExtensions
 		}
 
 		return _regexs
-			.Select(entry => (LogItemRegex: entry, Match: entry.Regex.Match(description)))
+		  .Select(entry => (LogItemRegex: entry, Match: SafeMatch(entry.Regex, description)))
 			.FirstOrDefault(entry => entry.Match.Success);
 	}
 
@@ -756,8 +757,38 @@ public static class LogItemExtensions
 		}
 
 		var actionSegment = description.Substring(actionStartIndex);
-		match = _groupActionRegex.Match(actionSegment);
+		match = SafeMatch(_groupActionRegex, actionSegment);
 		return match.Success;
+	}
+
+	private static Regex CreateRegex(string pattern, RegexOptions options)
+		=> new(pattern, options, _regexEvaluationTimeout);
+
+	private static Regex WithTimeout(Regex regex)
+		=> new(regex.ToString(), regex.Options, _regexEvaluationTimeout);
+
+	private static Match SafeMatch(Regex regex, string input)
+	{
+		try
+		{
+			return regex.Match(input);
+		}
+		catch (RegexMatchTimeoutException)
+		{
+			return Match.Empty;
+		}
+	}
+
+	private static IEnumerable<Match> SafeMatches(Regex regex, string input)
+	{
+		try
+		{
+			return regex.Matches(input).Cast<Match>();
+		}
+		catch (RegexMatchTimeoutException)
+		{
+			return [];
+		}
 	}
 
 	private static string? ExtractNameBetweenSingleQuotes(string description, string prefix)
@@ -844,7 +875,7 @@ public static class LogItemExtensions
 
 		public AuditEventEntityType EntityType { get; set; } = entityType;
 
-		public Regex Regex { get; set; } = regex;
+		public Regex Regex { get; set; } = WithTimeout(regex);
 	}
 
 }
