@@ -5,6 +5,8 @@
 /// </summary>
 public static class LogItemExtensions
 {
+	private const int MaxRegexDescriptionLength = 16 * 1024;
+	private const int OversizedDescriptionPreviewLength = 512;
 
 	internal static void ValidateRegexes()
 	{
@@ -505,7 +507,27 @@ public static class LogItemExtensions
 		}
 
 		// Interpret the description field
-		var entityTypeMatch = GetMatchFromDescription(logItem.Description);
+		(LogItemRegex? LogItemRegex, Match? Match) entityTypeMatch;
+		if (logItem.Description.Length > MaxRegexDescriptionLength)
+		{
+			if (TryGetGroupUpdateWithGetExtraMatch(logItem.Description, out var getExtraMatch))
+			{
+				entityTypeMatch = (_groupActionLogItemRegex, getExtraMatch);
+			}
+			else
+			{
+				auditEvent.MatchedRegExId = 0;
+				auditEvent.EntityType = AuditEventEntityType.None;
+				auditEvent.Description =
+					$"Message not handled because description length ({logItem.Description.Length}) exceeded max regex length ({MaxRegexDescriptionLength}). Preview: {GetPreview(logItem.Description, OversizedDescriptionPreviewLength)}";
+				return auditEvent;
+			}
+		}
+		else
+		{
+			entityTypeMatch = GetMatchFromDescription(logItem.Description);
+		}
+
 		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)
 		{
 			// Not recognised
@@ -771,6 +793,15 @@ public static class LogItemExtensions
 		}
 
 		return source.Substring(start, end - start);
+	}
+
+	private static string GetPreview(string value, int maxLength)
+	{
+		var previewLength = Math.Min(value.Length, maxLength);
+		return value
+			.Substring(0, previewLength)
+		 .Replace("\r", "\\r")
+			.Replace("\n", "\\n");
 	}
 
 	private static AuditEventActionType GetAction(Match value)
