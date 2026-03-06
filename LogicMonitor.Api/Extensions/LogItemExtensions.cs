@@ -507,6 +507,11 @@ public static class LogItemExtensions
 			return auditEvent;
 		}
 
+		if (TryHandleScheduledDebugCommand(logItem.Description, auditEvent))
+		{
+			return auditEvent;
+		}
+
 		// Interpret the description field
 		(LogItemRegex? LogItemRegex, Match? Match) entityTypeMatch;
 		if (logItem.Description.Length > MaxRegexDescriptionLength)
@@ -789,6 +794,28 @@ public static class LogItemExtensions
 		{
 			return [];
 		}
+	}
+
+	private static bool TryHandleScheduledDebugCommand(string description, AuditEvent auditEvent)
+	{
+		if (!description.StartsWith("\"Action=Schedule debug command\"", StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		auditEvent.MatchedRegExId = 95;
+		auditEvent.EntityType = AuditEventEntityType.Collector;
+		auditEvent.ActionType = AuditEventActionType.Run;
+		auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+		auditEvent.Command = ExtractValueBetween(description, "\"Command=", "\"");
+
+		var collectorIdValue = ExtractValueBetween(description, "\"AgentId=", "\"");
+		if (int.TryParse(collectorIdValue, NumberStyles.None, CultureInfo.InvariantCulture, out var collectorId))
+		{
+			auditEvent.CollectorId = collectorId;
+		}
+
+		return true;
 	}
 
 	private static string? ExtractNameBetweenSingleQuotes(string description, string prefix)

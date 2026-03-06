@@ -709,6 +709,25 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void ScheduleDebugCommand_WithLargeScriptBody_Success()
+	{
+		var message = "\"Action=Schedule debug command\"; \"Command=!groovy\"; \"AgentId=698\"; \"DeviceId=256234\"; \"DeviceName=Juniper-Mist-Bangalore\"; \"ScriptBody=" + new string('x', 20_000) + "\"";
+
+		AssertToAuditEventSucceeds(
+			message,
+			new()
+			{
+				MatchedRegExId = 95,
+				ActionType = AuditEventActionType.Run,
+				EntityType = AuditEventEntityType.Collector,
+				OutcomeType = AuditEventOutcomeType.Success,
+				CollectorId = 698,
+				Command = "!groovy"
+			}
+		);
+	}
+
+	[Fact]
 	public void UnknownDebugCommand_Failure()
 		=> AssertToAuditEventSucceeds(
 		  @"""Unknown debug command""; ""Command=!script""; ""AgentId=60""; ""Company=examplecompany"";",
