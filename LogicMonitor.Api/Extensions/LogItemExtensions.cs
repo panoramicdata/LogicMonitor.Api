@@ -507,6 +507,11 @@ public static class LogItemExtensions
 			return auditEvent;
 		}
 
+		if (TryHandleDeleteAzureAccount(logItem.Description, auditEvent))
+		{
+			return auditEvent;
+		}
+
 		if (TryHandleScheduledDebugCommand(logItem.Description, auditEvent))
 		{
 			return auditEvent;
@@ -813,6 +818,29 @@ public static class LogItemExtensions
 		if (int.TryParse(collectorIdValue, NumberStyles.None, CultureInfo.InvariantCulture, out var collectorId))
 		{
 			auditEvent.CollectorId = collectorId;
+		}
+
+		return true;
+	}
+
+	private static bool TryHandleDeleteAzureAccount(string description, AuditEvent auditEvent)
+	{
+		const string prefix = "Delete Azure account ";
+
+		if (!description.StartsWith(prefix, StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		auditEvent.MatchedRegExId = 0;
+		auditEvent.EntityType = AuditEventEntityType.AzureAccount;
+		auditEvent.ActionType = AuditEventActionType.Delete;
+		auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+
+		var resourceName = ExtractValueBetween(description, prefix, ",");
+		if (!string.IsNullOrEmpty(resourceName))
+		{
+			auditEvent.ResourceNames = [resourceName!];
 		}
 
 		return true;

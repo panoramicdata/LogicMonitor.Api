@@ -663,6 +663,24 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		);
 
 	[Fact]
+	public void DeleteAzureAccount_WithLargeBody_Success()
+	{
+		var message = "Delete Azure account ea-eisnerai-prod," + new string('x', 20_000);
+
+		AssertToAuditEventSucceeds(
+			message,
+			new()
+			{
+				MatchedRegExId = 0,
+				ActionType = AuditEventActionType.Delete,
+				EntityType = AuditEventEntityType.AzureAccount,
+				OutcomeType = AuditEventOutcomeType.Success,
+				ResourceNames = ["ea-eisnerai-prod"]
+			}
+		);
+	}
+
+	[Fact]
 	public void SetAllInstancesDatapointThresholdOnDevice_Success()
 		=> AssertToAuditEventSucceeds(
 			@"Set all instances' datapoint (18371:NoData) alert threshold as (NO CHANGE), alert enable as (false) under the instance groups(0:@default) of device(1416411:EXAMPLE_SRV_B Tatenen)",

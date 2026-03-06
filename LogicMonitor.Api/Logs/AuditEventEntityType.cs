@@ -153,5 +153,10 @@ public enum AuditEventEntityType
 	/// <summary>
 	/// Website
 	/// </summary>
-	Website
+	Website,
+
+	/// <summary>
+	/// Azure Account
+	/// </summary>
+	AzureAccount
 }
