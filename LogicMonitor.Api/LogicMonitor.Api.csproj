@@ -28,8 +28,8 @@
 
 		<!-- Update the following before releasing to nuget -->
 		<PackageReleaseNotes>
-			v3.229.20:
-			- Added additional Graph Data unit tests to validate data aggregation granularity
+			v3.235.7:
+			- Added missing 'PropertyForBalancingXXX' properties to CollectorGroup. CalculatedThreshold on Collector is now back to a string rather than an integer.
 		</PackageReleaseNotes>
 		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
 

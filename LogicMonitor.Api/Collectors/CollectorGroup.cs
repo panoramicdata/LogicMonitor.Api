@@ -103,6 +103,24 @@ public class CollectorGroup : NamedItem, IHasCustomProperties, IHasEndpoint
 	public RestHighestPriorityCollectorStatus HighestPriorityCollectorStatus { get; set; } = new();
 
 	/// <summary>
+	/// The property for balancing, which is used to store the property name and value for auto-balancing. It is in the format of "propertyName:propertyValue". For example, if the property name is "location" and the property value is "us-west", then the property for balancing will be "location:us-west". This property is used to determine which collectors are eligible for auto-balancing based on their custom properties. If a collector has a custom property that matches the property for balancing, then it will be considered for auto-balancing.
+	/// </summary>
+	[DataMember(Name = "propertyForBalancing")]
+	public string PropertyForBalancing { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The time at which the property for balancing was last updated, in epoch format. This property is used to determine when the property for balancing was last changed, so that the system can decide whether to trigger auto-balancing or not. If the property for balancing was updated recently, then the system may delay auto-balancing to avoid unnecessary movements of collectors. If the property for balancing was updated a long time ago, then the system may trigger auto-balancing if there are any collectors that match the property for balancing and are eligible for auto-balancing.
+	/// </summary>
+	[DataMember(Name = "propertyForBalancingLastUpdatedOn")]
+	public long PropertyForBalancingLastUpdatedOn { get; set; }
+
+	/// <summary>
+	/// The time up to which the property for balancing update is locked, in epoch format. This property is used to prevent multiple updates to the property for balancing within a short period of time, which can cause instability in the system. When the property for balancing is updated, the system will set this property to a future time (e.g., current time + 30 minutes) to indicate that any further updates to the property for balancing should be ignored until this time has passed. This allows the system to stabilize after an update to the property for balancing before allowing any more changes.
+	/// </summary>
+	[DataMember(Name = "propertyForBalancingUpdateLockedUptoMS")]
+	public long PropertyForBalancingUpdateLockedUpToMilliseconds { get; set; }
+
+	/// <summary>
 	///    The subUrl for setting by id
 	/// </summary>
 	public string Endpoint() => "setting/collector/groups";

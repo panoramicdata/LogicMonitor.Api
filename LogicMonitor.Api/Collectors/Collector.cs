@@ -529,8 +529,10 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	/// <summary>
 	/// The calculated threshold in auto-balanced Collector Groups
 	/// </summary>
+	[SantabaReadOnly]
 	[DataMember(Name = "calculatedThreshold")]
-	public int CalculatedThreshold { get; set; }
+	[JsonConverter(typeof(NumberOrStringConverter))]
+	public string CalculatedThreshold { get; set; } = string.Empty;
 
 	/// <summary>
 	///     The subUrl for setting by id
