@@ -3,7 +3,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<Authors>Panoramic Data Limited</Authors>
 		<PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
-		<Copyright>Copyright © Panoramic Data Limited 2011-2025</Copyright>
+		<Copyright>Copyright © Panoramic Data Limited 2011-2026</Copyright>
 		<PackageLicenseUrl></PackageLicenseUrl>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageIcon>Icon.png</PackageIcon>
