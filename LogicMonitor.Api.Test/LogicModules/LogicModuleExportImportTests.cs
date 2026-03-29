@@ -20,7 +20,7 @@ public class LogicModuleExportImportTests(ITestOutputHelper iTestOutputHelper, F
 		// Verify it's valid JSON
 		var jObject = JObject.Parse(json);
 		jObject.Should().NotBeNull();
-		jObject["name"]?.ToString()?.Should().Contain("Ping");
+		jObject["name"]?.ToString().Should().Contain("Ping");
 	}
 
 	[Fact]
