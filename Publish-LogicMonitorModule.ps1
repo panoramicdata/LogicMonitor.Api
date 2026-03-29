@@ -18,7 +18,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "Preparing LogicMonitor PowerShell Module v$Version for publishing..." -ForegroundColor Green
+Write-Information "Preparing LogicMonitor PowerShell Module v$Version for publishing..." -ForegroundColor Green
 
 # Paths
 $rootPath = $PSScriptRoot
@@ -30,7 +30,7 @@ $modulePublishPath = Join-Path $publishPath "LogicMonitor"
 try {
     # Step 1: Build the project
     if (-not $SkipBuild) {
-        Write-Host "Building LogicMonitor.PowerShell project..." -ForegroundColor Yellow
+        Write-Information "Building LogicMonitor.PowerShell project..." -ForegroundColor Yellow
  
         Push-Location $rootPath
      $buildResult = dotnet build "LogicMonitor.PowerShell/LogicMonitor.PowerShell.csproj" -c Release
@@ -39,26 +39,26 @@ try {
       if ($LASTEXITCODE -ne 0) {
       throw "Build failed with exit code $LASTEXITCODE"
   }
-        Write-Host "Build completed successfully." -ForegroundColor Green
+        Write-Information "Build completed successfully." -ForegroundColor Green
     }
     
     # Step 2: Update module version
-    Write-Host "Updating module manifest version to $Version..." -ForegroundColor Yellow
+    Write-Information "Updating module manifest version to $Version..." -ForegroundColor Yellow
     
     $manifestContent = Get-Content $manifestPath -Raw
     $manifestContent = $manifestContent -replace "ModuleVersion = '[^']*'", "ModuleVersion = '$Version'"
     Set-Content $manifestPath -Value $manifestContent -Encoding UTF8
     
     # Step 3: Test module manifest
-    Write-Host "Testing module manifest..." -ForegroundColor Yellow
+    Write-Information "Testing module manifest..." -ForegroundColor Yellow
     $testResult = Test-ModuleManifest -Path $manifestPath
     if (-not $testResult) {
       throw "Module manifest test failed"
     }
-    Write-Host "Module manifest is valid." -ForegroundColor Green
+    Write-Information "Module manifest is valid." -ForegroundColor Green
     
   # Step 4: Prepare publishing directory
-    Write-Host "Preparing module for publishing..." -ForegroundColor Yellow
+    Write-Information "Preparing module for publishing..." -ForegroundColor Yellow
     
     if (Test-Path $publishPath) {
      Remove-Item $publishPath -Recurse -Force
@@ -84,7 +84,7 @@ try {
     }
     
     # Step 5: Test the prepared module
-    Write-Host "Testing prepared module..." -ForegroundColor Yellow
+    Write-Information "Testing prepared module..." -ForegroundColor Yellow
     
     $preparedManifestPath = Join-Path $modulePublishPath "LogicMonitor.psd1"
     Test-ModuleManifest -Path $preparedManifestPath | Out-Null
@@ -92,23 +92,23 @@ try {
     # Import and test commands
     Import-Module $preparedManifestPath -Force
     $commands = Get-Command -Module LogicMonitor
-    Write-Host "Module loaded successfully with $($commands.Count) commands." -ForegroundColor Green
+    Write-Information "Module loaded successfully with $($commands.Count) commands." -ForegroundColor Green
     
     # Step 6: Create local package
     $packagePath = Join-Path $publishPath "LogicMonitor-PowerShell-v$Version.zip"
     Compress-Archive -Path (Join-Path $modulePublishPath "*") -DestinationPath $packagePath -Force
-  Write-Host "Created local package: $packagePath" -ForegroundColor Green
+  Write-Information "Created local package: $packagePath" -ForegroundColor Green
     
     if ($LocalOnly) {
-        Write-Host "Local package created. Skipping repository publish as requested." -ForegroundColor Yellow
+        Write-Information "Local package created. Skipping repository publish as requested." -ForegroundColor Yellow
      return
     }
   
     # Step 7: Publish to repository
     if ($WhatIf) {
-      Write-Host "WhatIf: Would publish to repository '$Repository'" -ForegroundColor Cyan
-        Write-Host "Module Path: $modulePublishPath" -ForegroundColor Cyan
- Write-Host "Version: $Version" -ForegroundColor Cyan
+      Write-Information "WhatIf: Would publish to repository '$Repository'" -ForegroundColor Cyan
+        Write-Information "Module Path: $modulePublishPath" -ForegroundColor Cyan
+ Write-Information "Version: $Version" -ForegroundColor Cyan
     } else {
         if ([string]::IsNullOrEmpty($ApiKey)) {
    if ($Repository -eq "PSGallery") {
@@ -118,7 +118,7 @@ try {
      }
         }
   
-        Write-Host "Publishing module to repository '$Repository'..." -ForegroundColor Yellow
+        Write-Information "Publishing module to repository '$Repository'..." -ForegroundColor Yellow
       
         $publishParams = @{
    Path = $modulePublishPath
@@ -131,7 +131,7 @@ try {
         }
         
    Publish-Module @publishParams
-    Write-Host "Module published successfully!" -ForegroundColor Green
+    Write-Information "Module published successfully!" -ForegroundColor Green
     }
     
 } catch {
@@ -143,4 +143,4 @@ try {
     Remove-Module LogicMonitor -ErrorAction SilentlyContinue
 }
 
-Write-Host "Publishing process completed!" -ForegroundColor Green
+Write-Information "Publishing process completed!" -ForegroundColor Green

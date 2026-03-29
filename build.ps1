@@ -72,27 +72,27 @@ $ColorGray = "`e[90m"
 
 function Write-Step {
     param([string]$Message)
-    Write-Host "${ColorCyan}==>${ColorReset} ${Message}" -ForegroundColor Cyan
+    Write-Information "${ColorCyan}==>${ColorReset} ${Message}" -ForegroundColor Cyan
 }
 
 function Write-Success {
     param([string]$Message)
-    Write-Host "${ColorGreen}?${ColorReset} ${Message}" -ForegroundColor Green
+    Write-Information "${ColorGreen}?${ColorReset} ${Message}" -ForegroundColor Green
 }
 
 function Write-Info {
     param([string]$Message)
-    Write-Host "${ColorGray}  ${Message}${ColorReset}" -ForegroundColor Gray
+    Write-Information "${ColorGray}  ${Message}${ColorReset}" -ForegroundColor Gray
 }
 
 function Write-Warning {
     param([string]$Message)
-    Write-Host "${ColorYellow}?${ColorReset} ${Message}" -ForegroundColor Yellow
+    Write-Information "${ColorYellow}?${ColorReset} ${Message}" -ForegroundColor Yellow
 }
 
 function Write-ErrorMessage {
     param([string]$Message)
-    Write-Host "${ColorRed}?${ColorReset} ${Message}" -ForegroundColor Red
+    Write-Information "${ColorRed}?${ColorReset} ${Message}" -ForegroundColor Red
 }
 
 function Test-CommandExists {
@@ -169,11 +169,11 @@ if ($Publish -and -not $SkipGitCheck) {
         $gitStatus = git status --porcelain
         if ($gitStatus) {
             Write-ErrorMessage "Git repository is not clean. Uncommitted changes detected:"
-            Write-Host ""
+            Write-Information ""
             git status --short
-            Write-Host ""
-            Write-Host "Please commit or stash your changes before publishing." -ForegroundColor Yellow
-            Write-Host "To skip this check, use the -SkipGitCheck parameter (not recommended)." -ForegroundColor Gray
+            Write-Information ""
+            Write-Information "Please commit or stash your changes before publishing." -ForegroundColor Yellow
+            Write-Information "To skip this check, use the -SkipGitCheck parameter (not recommended)." -ForegroundColor Gray
             exit 1
         }
         
@@ -278,8 +278,8 @@ if (-not $SkipTests) {
         }
         else {
             Write-ErrorMessage "Tests failed"
-            Write-Host ""
-            Write-Host "To skip tests, run with -SkipTests parameter" -ForegroundColor Yellow
+            Write-Information ""
+            Write-Information "To skip tests, run with -SkipTests parameter" -ForegroundColor Yellow
             exit 1
         }
     }
@@ -296,20 +296,20 @@ else {
 # Step 7: Display Build Summary
 # ============================================================================
 
-Write-Host ""
-Write-Host "============================================" -ForegroundColor Cyan
+Write-Information ""
+Write-Information "============================================" -ForegroundColor Cyan
 Write-Success "Build completed successfully!"
-Write-Host "  Version:       $version" -ForegroundColor Gray
-Write-Host "  Configuration: $Configuration" -ForegroundColor Gray
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host ""
+Write-Information "  Version:       $version" -ForegroundColor Gray
+Write-Information "  Configuration: $Configuration" -ForegroundColor Gray
+Write-Information "============================================" -ForegroundColor Cyan
+Write-Information ""
 
 # ============================================================================
 # Step 8: Publish to NuGet (if requested)
 # ============================================================================
 
 if ($Publish) {
-    Write-Host ""
+    Write-Information ""
     Write-Step "Publishing to NuGet..."
     
     # Check for publish script
@@ -340,6 +340,6 @@ else {
     Write-Info "To publish to NuGet, run with -Publish parameter"
 }
 
-Write-Host ""
+Write-Information ""
 Write-Success "Build script completed successfully!"
-Write-Host ""
+Write-Information ""

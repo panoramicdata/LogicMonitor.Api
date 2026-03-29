@@ -1,0 +1,38 @@
+<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+	<ItemGroup>
+		<!-- Shared -->
+		<PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.5" />
+		<PackageVersion Include="Nerdbank.GitVersioning" Version="3.9.50" />
+		<PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+
+		<!-- LogicMonitor.Api.Test -->
+		<PackageVersion Include="AsyncFixer" Version="2.1.0" />
+		<PackageVersion Include="AwesomeAssertions" Version="9.4.0" />
+		<PackageVersion Include="AwesomeAssertions.Analyzers" Version="9.0.8" />
+		<PackageVersion Include="FluentAssertions.Analyzers" Version="0.34.1" />
+		<PackageVersion Include="Humanizer.Core" Version="3.0.10" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.5" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+		<PackageVersion Include="Microsoft.PowerShell.SDK" Version="7.6.0" />
+		<PackageVersion Include="SkiaSharp" Version="3.119.2" />
+		<PackageVersion Include="System.Management.Automation" Version="7.6.0" />
+		<PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+		<PackageVersion Include="xunit.v3" Version="3.2.2" />
+
+		<!-- LogicMonitor.PowerShell -->
+		<PackageVersion Include="PowerShellStandard.Library" Version="5.1.1" />
+	</ItemGroup>
+</Project>

@@ -71,22 +71,22 @@ $ColorCyan = "`e[36m"
 
 function Write-Step {
   param([string]$Message)
-  Write-Host "${ColorCyan}==>${ColorReset} ${Message}" -ForegroundColor Cyan
+  Write-Information "${ColorCyan}==>${ColorReset} ${Message}" -ForegroundColor Cyan
 }
 
 function Write-Success {
     param([string]$Message)
-    Write-Host "${ColorGreen}?${ColorReset} ${Message}" -ForegroundColor Green
+    Write-Information "${ColorGreen}?${ColorReset} ${Message}" -ForegroundColor Green
 }
 
 function Write-Warning {
     param([string]$Message)
-    Write-Host "${ColorYellow}?${ColorReset} ${Message}" -ForegroundColor Yellow
+    Write-Information "${ColorYellow}?${ColorReset} ${Message}" -ForegroundColor Yellow
 }
 
 function Write-ErrorMessage {
     param([string]$Message)
-    Write-Host "${ColorRed}?${ColorReset} ${Message}" -ForegroundColor Red
+    Write-Information "${ColorRed}?${ColorReset} ${Message}" -ForegroundColor Red
 }
 
 # Function to check if a command exists
@@ -123,7 +123,7 @@ Write-Success "Found $gitVersion"
 $NuGetKeyFile = Join-Path $ScriptDir "nuget-key.txt"
 if (-not (Test-Path $NuGetKeyFile)) {
     Write-ErrorMessage "nuget-key.txt not found in solution root: $ScriptDir"
-    Write-Host "Please create nuget-key.txt with your NuGet API key."
+    Write-Information "Please create nuget-key.txt with your NuGet API key."
     exit 1
 }
 
@@ -154,18 +154,18 @@ if (-not $SkipGitCheck) {
         if ($isGitRepo -eq "true") {
 # Get current branch
     $currentBranch = git rev-parse --abbrev-ref HEAD
-          Write-Host "  Current branch: $currentBranch" -ForegroundColor Gray
+          Write-Information "  Current branch: $currentBranch" -ForegroundColor Gray
     
             # Check for uncommitted changes
             $gitStatus = git status --porcelain
      
   if ($gitStatus) {
        Write-ErrorMessage "Git working directory is not clean. Uncommitted changes detected:"
-                Write-Host ""
+                Write-Information ""
       git status --short
-         Write-Host ""
-    Write-Host "Please commit or stash your changes before publishing." -ForegroundColor Yellow
- Write-Host "To skip this check, use the -SkipGitCheck parameter (not recommended)." -ForegroundColor Gray
+         Write-Information ""
+    Write-Information "Please commit or stash your changes before publishing." -ForegroundColor Yellow
+ Write-Information "To skip this check, use the -SkipGitCheck parameter (not recommended)." -ForegroundColor Gray
                 exit 1
             }
      
@@ -173,15 +173,15 @@ if (-not $SkipGitCheck) {
             $unpushedCommits = git log origin/$currentBranch..$currentBranch --oneline 2>$null
    if ($unpushedCommits) {
   Write-Warning "You have unpushed commits:"
-            Write-Host ""
-     Write-Host $unpushedCommits -ForegroundColor Yellow
-    Write-Host ""
-       Write-Host "Consider pushing your changes before publishing." -ForegroundColor Yellow
+            Write-Information ""
+     Write-Information $unpushedCommits -ForegroundColor Yellow
+    Write-Information ""
+       Write-Information "Consider pushing your changes before publishing." -ForegroundColor Yellow
       
      # Prompt user to continue
   $response = Read-Host "Continue anyway? (y/N)"
     if ($response -ne 'y' -and $response -ne 'Y') {
-  Write-Host "Publishing cancelled." -ForegroundColor Yellow
+  Write-Information "Publishing cancelled." -ForegroundColor Yellow
      exit 0
         }
             }
@@ -192,7 +192,7 @@ if (-not $SkipGitCheck) {
 }
     } catch {
         Write-Warning "Could not check Git status: $_"
-   Write-Host "Continuing anyway..." -ForegroundColor Gray
+   Write-Information "Continuing anyway..." -ForegroundColor Gray
     }
 } else {
     Write-Warning "Skipping Git working directory check as requested"
@@ -267,8 +267,8 @@ Write-Step "Running unit tests..."
             Write-Success "All tests passed"
         } else {
      Write-ErrorMessage "Tests failed"
-        Write-Host ""
-            Write-Host "To skip tests and publish anyway, run with -SkipTests parameter" -ForegroundColor Yellow
+        Write-Information ""
+            Write-Information "To skip tests and publish anyway, run with -SkipTests parameter" -ForegroundColor Yellow
             exit 1
         }
 } catch {
@@ -320,7 +320,7 @@ $SymbolPackages = $AllPackages |
     Where-Object { $_.Extension -eq ".snupkg" -and $_.Name -like "$ApiPackagePrefix*" } |
     Sort-Object Name
 
-Write-Host ""
+Write-Information ""
 Write-Step "Created packages:"
 
 if ($NuGetPackages.Count -eq 0 -and $SymbolPackages.Count -eq 0) {
@@ -330,17 +330,17 @@ if ($NuGetPackages.Count -eq 0 -and $SymbolPackages.Count -eq 0) {
 
 if ($NuGetPackages.Count -eq 0) {
     Write-ErrorMessage "No publishable LogicMonitor.Api .nupkg packages found in $PackageDir"
-    Write-Host "Only symbol packages (.snupkg) were found, so publishing cannot continue." -ForegroundColor Yellow
+    Write-Information "Only symbol packages (.snupkg) were found, so publishing cannot continue." -ForegroundColor Yellow
     exit 1
 }
 
 foreach ($package in $NuGetPackages) {
-  Write-Host "  ?? $($package.Name)" -ForegroundColor White
+  Write-Information "  ?? $($package.Name)" -ForegroundColor White
 }
 foreach ($package in $SymbolPackages) {
-    Write-Host "  ?? $($package.Name)" -ForegroundColor Gray
+    Write-Information "  ?? $($package.Name)" -ForegroundColor Gray
 }
-Write-Host ""
+Write-Information ""
 
 # ============================================================================
 # Step 9: Publish to NuGet
@@ -348,20 +348,20 @@ Write-Host ""
 
 if ($DryRun) {
     Write-Warning "DRY RUN MODE: Skipping publish to NuGet"
-    Write-Host ""
-    Write-Host "Packages are ready in: $PackageDir"
-    Write-Host "To publish, run without -DryRun parameter"
+    Write-Information ""
+    Write-Information "Packages are ready in: $PackageDir"
+    Write-Information "To publish, run without -DryRun parameter"
     exit 0
 }
 
 Write-Step "Publishing packages to NuGet ($NuGetSource)..."
-Write-Host ""
+Write-Information ""
 
 $publishSuccess = $true
 $publishedCount = 0
 
 foreach ($package in $NuGetPackages) {
-    Write-Host "Publishing: $($package.Name)" -ForegroundColor Cyan
+    Write-Information "Publishing: $($package.Name)" -ForegroundColor Cyan
     
     try {
         dotnet nuget push $package.FullName `
@@ -381,25 +381,25 @@ foreach ($package in $NuGetPackages) {
         $publishSuccess = $false
     }
     
-    Write-Host ""
+    Write-Information ""
 }
 
 # ============================================================================
 # Summary
 # ============================================================================
 
-Write-Host ""
-Write-Host "============================================" -ForegroundColor Cyan
+Write-Information ""
+Write-Information "============================================" -ForegroundColor Cyan
 if ($publishSuccess) {
     Write-Success "Publish completed successfully!"
-    Write-Host ""
-    Write-Host "Published $publishedCount package(s) to NuGet." -ForegroundColor Green
-    Write-Host "It may take a few minutes for them to appear in search results." -ForegroundColor Gray
+    Write-Information ""
+    Write-Information "Published $publishedCount package(s) to NuGet." -ForegroundColor Green
+    Write-Information "It may take a few minutes for them to appear in search results." -ForegroundColor Gray
 } else {
     Write-ErrorMessage "Publish completed with errors"
-    Write-Host ""
-    Write-Host "Some packages failed to publish. Please review the errors above." -ForegroundColor Yellow
+    Write-Information ""
+    Write-Information "Some packages failed to publish. Please review the errors above." -ForegroundColor Yellow
     exit 1
 }
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host ""
+Write-Information "============================================" -ForegroundColor Cyan
+Write-Information ""

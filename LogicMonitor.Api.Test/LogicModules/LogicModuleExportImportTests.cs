@@ -20,7 +20,7 @@ public class LogicModuleExportImportTests(ITestOutputHelper iTestOutputHelper, F
 		// Verify it's valid JSON
 		var jObject = JObject.Parse(json);
 		jObject.Should().NotBeNull();
-		jObject["name"]?.ToString().Should().Contain("Ping");
+		jObject["name"]?.ToString()?.Should().Contain("Ping");
 	}
 
 	[Fact]
@@ -252,7 +252,7 @@ public class LogicModuleExportImportTests(ITestOutputHelper iTestOutputHelper, F
 			File.Exists(tempFilePath).Should().BeTrue();
 
 			// Read and verify content
-			var fileContent = File.ReadAllText(tempFilePath);
+			var fileContent = await File.ReadAllTextAsync(tempFilePath, CancellationToken);
 			fileContent.Should().NotBeNullOrEmpty();
 
 			// Verify it's valid JSON
@@ -297,7 +297,7 @@ public class LogicModuleExportImportTests(ITestOutputHelper iTestOutputHelper, F
 			File.Exists(tempFilePath).Should().BeTrue();
 
 			// Read and verify content
-			var fileContent = File.ReadAllText(tempFilePath);
+			var fileContent = await File.ReadAllTextAsync(tempFilePath, CancellationToken);
 			fileContent.Should().NotBeNullOrEmpty();
 			fileContent.Trim().Should().StartWith("<");
 

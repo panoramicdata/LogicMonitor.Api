@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Netflow;
 
-public class FlowTests : TestWithOutput
+public class FlowTests : TestWithOutput, IClassFixture<Fixture>
 {
 	public FlowTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : base(iTestOutputHelper, fixture)
 	{

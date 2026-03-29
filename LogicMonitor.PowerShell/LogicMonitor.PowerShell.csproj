@@ -6,13 +6,9 @@
 		<PackageId>LogicMonitor.PowerShell</PackageId>
 		<OutputType>Library</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<Title>LogicMonitor PowerShell Module</Title>
 		<Description>A PowerShell module wrapper for the LogicMonitor.Api .NET library</Description>
-		<Authors>Panoramic Data Limited</Authors>
-		<Company>Panoramic Data Limited</Company>
-		<Copyright>Copyright © Panoramic Data Limited 2011-2025</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>LogicMonitor PowerShell API REST</PackageTags>
 		<PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
@@ -34,10 +30,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="PowerShellStandard.Library" Version="5.1.1" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
-		<PackageReference Include="Nerdbank.GitVersioning" Version="3.9.50">
+		<PackageReference Include="PowerShellStandard.Library" />
+		<PackageReference Include="Microsoft.Extensions.Logging" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" />
+		<PackageReference Include="Nerdbank.GitVersioning">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
