@@ -85,6 +85,12 @@ public class Topology : NamedItem, IHasEndpoint
 	public List<string> Connection { get; set; } = [];
 
 	/// <summary>
+	///    The edge status configuration
+	/// </summary>
+	[DataMember(Name = "edgeStatusConfig")]
+	public object? EdgeStatusConfig { get; set; }
+
+	/// <summary>
 	/// The REST API endpoint
 	/// </summary>
 	public string Endpoint() => "topology/topologies";

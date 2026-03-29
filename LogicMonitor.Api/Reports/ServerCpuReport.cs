@@ -23,4 +23,10 @@ public class ServerCpuReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "displayGraphs")]
 	public bool DisplayGraphs { get; set; }
+
+	/// <summary>
+	/// The columns
+	/// </summary>
+	[DataMember(Name = "columns")]
+	public List<ReportColumn> Columns { get; set; } = [];
 }

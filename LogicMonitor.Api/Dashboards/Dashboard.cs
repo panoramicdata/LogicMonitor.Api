@@ -76,6 +76,12 @@ public class Dashboard
 	public bool OverwriteGroupFields { get; set; }
 
 	/// <summary>
+	///     The default dashboard filters
+	/// </summary>
+	[DataMember(Name = "defaultDashboardFilters")]
+	public DefaultDashboardFilters? DefaultDashboardFilters { get; set; }
+
+	/// <summary>
 	///     The widgets configuration
 	/// </summary>
 	[DataMember(Name = "widgetsConfig")]

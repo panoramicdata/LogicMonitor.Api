@@ -47,4 +47,10 @@ public class BigNumberItem
 	/// </summary>
 	[DataMember(Name = "colorThresholds")]
 	public List<ColorThreshold> ColorThresholds { get; set; } = [];
+
+	/// <summary>
+	/// The actions
+	/// </summary>
+	[DataMember(Name = "actions")]
+	public List<object> Actions { get; set; } = [];
 }

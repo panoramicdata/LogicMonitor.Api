@@ -354,6 +354,12 @@ public class Alert : IHasEndpoint
 	[DataMember(Name = "thresholdMetadata")]
 	public string? ThresholdMetadata { get; set; }
 
+	/// <summary>
+	///     The value that triggered the alert
+	/// </summary>
+	[DataMember(Name = "alertTriggerValue")]
+	public string? AlertTriggerValue { get; set; }
+
 	///////////////////
 
 	/// <summary>

@@ -630,6 +630,270 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int DisableCollectorDebugTimeoutInSeconds { get; set; }
 
 	/// <summary>
+	/// The epoch time when collector debug was disabled
+	/// </summary>
+	[DataMember(Name = "disableCollectorDebugEpochTime")]
+	public long DisableCollectorDebugEpochTime { get; set; }
+
+	/// <summary>
+	/// Disable test script timeout in seconds
+	/// </summary>
+	[DataMember(Name = "disableTestScriptTimeoutInSeconds")]
+	public int DisableTestScriptTimeoutInSeconds { get; set; }
+
+	/// <summary>
+	/// The epoch time when test script was disabled
+	/// </summary>
+	[DataMember(Name = "disableTestScriptEpochTime")]
+	public long DisableTestScriptEpochTime { get; set; }
+
+	/// <summary>
+	/// Disable remote session timeout in seconds
+	/// </summary>
+	[DataMember(Name = "disableRemoteSessionTimeoutInSeconds")]
+	public int DisableRemoteSessionTimeoutInSeconds { get; set; }
+
+	/// <summary>
+	/// The epoch time when remote session was disabled
+	/// </summary>
+	[DataMember(Name = "disableRemoteSessionEpochTime")]
+	public long DisableRemoteSessionEpochTime { get; set; }
+
+	/// <summary>
+	/// Configurable 2FA options
+	/// </summary>
+	[DataMember(Name = "configurable2FAOptions")]
+	public object? Configurable2FaOptions { get; set; }
+
+	/// <summary>
+	/// The number of website resources
+	/// </summary>
+	[DataMember(Name = "numberOfWebsiteResources")]
+	public int WebsiteResourceCount { get; set; }
+
+	/// <summary>
+	/// The number of committed website resources
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedWebsiteResources")]
+	public int CommittedWebsiteResourceCount { get; set; }
+
+	/// <summary>
+	/// The number of webchecks
+	/// </summary>
+	[DataMember(Name = "numberOfWebcheck")]
+	public int WebcheckCount { get; set; }
+
+	/// <summary>
+	/// The number of committed webchecks
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedWebcheck")]
+	public int CommittedWebcheckCount { get; set; }
+
+	/// <summary>
+	/// The number of ping checks
+	/// </summary>
+	[DataMember(Name = "numberOfPingCheck")]
+	public int PingCheckCount { get; set; }
+
+	/// <summary>
+	/// The number of committed ping checks
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedPingCheck")]
+	public int CommittedPingCheckCount { get; set; }
+
+	/// <summary>
+	/// The number of website resources warning limit
+	/// </summary>
+	[DataMember(Name = "numOfWebsiteResourcesWarningLimit")]
+	public int WebsiteResourcesWarningLimit { get; set; }
+
+	/// <summary>
+	/// The number of website resources error limit
+	/// </summary>
+	[DataMember(Name = "numOfWebsiteResourcesErrorLimit")]
+	public int WebsiteResourcesErrorLimit { get; set; }
+
+	/// <summary>
+	/// The number of webcheck warning limit
+	/// </summary>
+	[DataMember(Name = "numOfWebcheckWarningLimit")]
+	public int WebcheckWarningLimit { get; set; }
+
+	/// <summary>
+	/// The number of webcheck error limit
+	/// </summary>
+	[DataMember(Name = "numOfWebcheckErrorLimit")]
+	public int WebcheckErrorLimit { get; set; }
+
+	/// <summary>
+	/// The number of ping check warning limit
+	/// </summary>
+	[DataMember(Name = "numOfPingCheckWarningLimit")]
+	public int PingCheckWarningLimit { get; set; }
+
+	/// <summary>
+	/// The number of ping check error limit
+	/// </summary>
+	[DataMember(Name = "numOfPingCheckErrorLimit")]
+	public int PingCheckErrorLimit { get; set; }
+
+	/// <summary>
+	/// Whether execution for diagnostic source is allowed
+	/// </summary>
+	[DataMember(Name = "allowExecutionForDiagnosticSource")]
+	public bool AllowExecutionForDiagnosticSource { get; set; }
+
+	/// <summary>
+	/// Whether execution for remediation source is allowed
+	/// </summary>
+	[DataMember(Name = "allowExecutionForRemediationSource")]
+	public bool AllowExecutionForRemediationSource { get; set; }
+
+	/// <summary>
+	/// OCI Resource count
+	/// </summary>
+	[DataMember(Name = "numOfOciDevices")]
+	public int OciResourceCount { get; set; }
+
+	/// <summary>
+	/// Combined OCI Resource count
+	/// </summary>
+	[DataMember(Name = "numOfCombinedOciDevices")]
+	public int CombinedOciResourceCount { get; set; }
+
+	/// <summary>
+	/// Stopped OCI Resource count
+	/// </summary>
+	[DataMember(Name = "numOfStoppedOciDevices")]
+	public int StoppedOciResourceCount { get; set; }
+
+	/// <summary>
+	/// Terminated OCI Resource count
+	/// </summary>
+	[DataMember(Name = "numOfTerminatedOciDevices")]
+	public int TerminatedOciResourceCount { get; set; }
+
+	/// <summary>
+	/// Terminated OCI Cloud Resource count
+	/// </summary>
+	[DataMember(Name = "numOfTerminatedOciCloudDevices")]
+	public int TerminatedOciCloudResourceCount { get; set; }
+
+	/// <summary>
+	/// Number of diagnostic sources executed
+	/// </summary>
+	[DataMember(Name = "numberOfDiagnosticSourceExecuted")]
+	public int DiagnosticSourceExecutedCount { get; set; }
+
+	/// <summary>
+	/// Number of remediation sources executed
+	/// </summary>
+	[DataMember(Name = "numberOfRemediationSourceExecuted")]
+	public int RemediationSourceExecutedCount { get; set; }
+
+	/// <summary>
+	/// Number of committed diagnostic source executions
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedDiagnosticSourceExecutions")]
+	public int CommittedDiagnosticSourceExecutionCount { get; set; }
+
+	/// <summary>
+	/// Number of committed remediation source executions
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedRemediationSourceExecutions")]
+	public int CommittedRemediationSourceExecutionCount { get; set; }
+
+	/// <summary>
+	/// Whether concurrent logins are allowed
+	/// </summary>
+	[DataMember(Name = "allowConcurrentLogins")]
+	public bool AllowConcurrentLogins { get; set; }
+
+	/// <summary>
+	/// Log number of tracked queries
+	/// </summary>
+	[DataMember(Name = "logNumOfTrackedQueries")]
+	public int LogNumOfTrackedQueries { get; set; }
+
+	/// <summary>
+	/// Log number of saved searches
+	/// </summary>
+	[DataMember(Name = "logNumOfSavedSearches")]
+	public int LogNumOfSavedSearches { get; set; }
+
+	/// <summary>
+	/// Number of AI Ops insights
+	/// </summary>
+	[DataMember(Name = "numberOfAIOpsInsights")]
+	public int AiOpsInsightsCount { get; set; }
+
+	/// <summary>
+	/// Number of committed AI Ops insights
+	/// </summary>
+	[DataMember(Name = "numberOfCommittedAIOpsInsights")]
+	public int CommittedAiOpsInsightsCount { get; set; }
+
+	/// <summary>
+	/// Log tracked queries limit
+	/// </summary>
+	[DataMember(Name = "logTrackedQueriesLimit")]
+	public int LogTrackedQueriesLimit { get; set; }
+
+	/// <summary>
+	/// Log saved searches limit
+	/// </summary>
+	[DataMember(Name = "logSavedSearchesLimit")]
+	public int LogSavedSearchesLimit { get; set; }
+
+	/// <summary>
+	/// Log pipelines limit
+	/// </summary>
+	[DataMember(Name = "logPipelinesLimit")]
+	public int LogPipelinesLimit { get; set; }
+
+	/// <summary>
+	/// Log partitions limit
+	/// </summary>
+	[DataMember(Name = "logPartitionsLimit")]
+	public int LogPartitionsLimit { get; set; }
+
+	/// <summary>
+	/// Log alert conditions limit
+	/// </summary>
+	[DataMember(Name = "logAlertConditionsLimit")]
+	public int LogAlertConditionsLimit { get; set; }
+
+	/// <summary>
+	/// Log tracked queries details
+	/// </summary>
+	[DataMember(Name = "logTrackedQueries")]
+	public object? LogTrackedQueries { get; set; }
+
+	/// <summary>
+	/// Log saved searches details
+	/// </summary>
+	[DataMember(Name = "logSavedSearches")]
+	public object? LogSavedSearches { get; set; }
+
+	/// <summary>
+	/// Log ingested per day
+	/// </summary>
+	[DataMember(Name = "logIngestedPerDay")]
+	public long LogIngestedPerDay { get; set; }
+
+	/// <summary>
+	/// Committed log quota
+	/// </summary>
+	[DataMember(Name = "committedLogQuota")]
+	public long CommittedLogQuota { get; set; }
+
+	/// <summary>
+	/// Log retention days
+	/// </summary>
+	[DataMember(Name = "logRetentionDays")]
+	public int LogRetentionDays { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/companySetting";

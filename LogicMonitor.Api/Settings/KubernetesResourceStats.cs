@@ -161,4 +161,10 @@ public class KubernetesResourceStats
 	/// </summary>
 	[DataMember(Name = "StatefulSets")]
 	public int StatefulSetCount { get; set; }
+
+	/// <summary>
+	/// Unknown resource count
+	/// </summary>
+	[DataMember(Name = "Unknown")]
+	public int UnknownCount { get; set; }
 }

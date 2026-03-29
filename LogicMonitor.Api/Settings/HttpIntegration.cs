@@ -454,4 +454,88 @@ public class HttpIntegration : Integration
 	/// </summary>
 	[DataMember(Name = "updateOAuthScope")]
 	public string? UpdateOAuthScope { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes method
+	/// </summary>
+	[DataMember(Name = "actionNotesMethod")]
+	public string ActionNotesMethod { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes URL
+	/// </summary>
+	[DataMember(Name = "actionNotesUrl")]
+	public string ActionNotesUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes username
+	/// </summary>
+	[DataMember(Name = "actionNotesUsername")]
+	public string ActionNotesUsername { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes password
+	/// </summary>
+	[DataMember(Name = "actionNotesPassword")]
+	public string ActionNotesPassword { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes payload
+	/// </summary>
+	[DataMember(Name = "actionNotesPayload")]
+	public string ActionNotesPayload { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes payload format
+	/// </summary>
+	[DataMember(Name = "actionNotesPayloadFormat")]
+	public string ActionNotesPayloadFormat { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes headers
+	/// </summary>
+	[DataMember(Name = "actionNotesHeaders")]
+	public List<object> ActionNotesHeaders { get; set; } = [];
+
+	/// <summary>
+	///     The action notes alert data type
+	/// </summary>
+	[DataMember(Name = "actionNotesAlertDataType")]
+	public string ActionNotesAlertDataType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes OAuth version
+	/// </summary>
+	[DataMember(Name = "actionNotesOAuthVersion")]
+	public string? ActionNotesOAuthVersion { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes OAuth grant type
+	/// </summary>
+	[DataMember(Name = "actionNotesOAuthGrantType")]
+	public string? ActionNotesOAuthGrantType { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes OAuth access token URL
+	/// </summary>
+	[DataMember(Name = "actionNotesOAuthAccessTokenUrl")]
+	public string? ActionNotesOAuthAccessTokenUrl { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes OAuth client id
+	/// </summary>
+	[DataMember(Name = "actionNotesOAuthClientId")]
+	public string? ActionNotesOAuthClientId { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes OAuth client secret
+	/// </summary>
+	[DataMember(Name = "actionNotesOAuthClientSecret")]
+	public string? ActionNotesOAuthClientSecret { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The action notes OAuth scope
+	/// </summary>
+	[DataMember(Name = "actionNotesOAuthScope")]
+	public string? ActionNotesOAuthScope { get; set; } = string.Empty;
 }

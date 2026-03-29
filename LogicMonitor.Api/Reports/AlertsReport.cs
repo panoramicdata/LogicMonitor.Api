@@ -137,4 +137,10 @@ public class AlertsReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "isHistoricalSDT")]
 	public string IsHistoricalSDT { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The monitored object groups
+	/// </summary>
+	[DataMember(Name = "monitoredObjectGroups")]
+	public object? MonitoredObjectGroups { get; set; }
 }

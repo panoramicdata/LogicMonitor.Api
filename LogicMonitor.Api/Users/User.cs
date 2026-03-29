@@ -229,6 +229,18 @@ public class User : IdentifiedItem, IHasEndpoint
 	public string LastAuthIp { get; set; } = string.Empty;
 
 	/// <summary>
+	///    The inactive session timeout in seconds
+	/// </summary>
+	[DataMember(Name = "inactiveSessionTimeoutInSeconds")]
+	public int? InactiveSessionTimeoutInSeconds { get; set; }
+
+	/// <summary>
+	///    Whether persistent session is enabled
+	/// </summary>
+	[DataMember(Name = "persistentSessionEnabled")]
+	public bool PersistentSessionEnabled { get; set; }
+
+	/// <summary>
 	///    The User type
 	/// </summary>
 	[DataMember(Name = "userType")]
