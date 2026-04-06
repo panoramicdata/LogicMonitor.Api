@@ -18,7 +18,7 @@ public abstract class IdentifiedItemBase<T>
 	/// </summary>
 	/// <param name="obj">The comparison object</param>
 	/// <returns>True if equal</returns>
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 		=> obj is not null
 			&& GetType() == obj.GetType()
 			&& Id is not null

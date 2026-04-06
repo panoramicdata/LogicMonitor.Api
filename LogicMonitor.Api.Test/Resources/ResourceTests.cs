@@ -14,6 +14,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
+	[Trait("Category", "Long")]
 	public async Task CreateAndRemoveResourceAndResourceGroup()
 	{
 		var logicMonitorClient = LogicMonitorClient;
@@ -229,7 +230,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		var device2 = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken);
+			.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken) ?? throw new InvalidOperationException();
 		device2.Should().NotBeNull();
 	}
 
@@ -353,7 +354,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetFullResourceTreeForDatacenter()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		deviceGroup = await LogicMonitorClient
 			.GetFullResourceTreeAsync(deviceGroup.Id, CancellationToken);
 		deviceGroup.Should().NotBeNull();
@@ -676,7 +677,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 			.ScheduleActiveDiscovery(WindowsDeviceId, CancellationToken);
 
 	[Fact]
-	[Trait("Long Tests", "")]
+	[Trait("Category", "Long")]
 	public async Task GetResourceAlertSettings()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
@@ -688,6 +689,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
+	[Trait("Category", "Long")]
 	public async Task GetResourceDataSourceInstanceDataPointConfigurationAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
@@ -697,7 +699,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, CancellationToken);
@@ -716,20 +718,16 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
+	[Trait("Category", "Long")]
 	public async Task GetTopTalkerGraphAsync()
 	{
 		var devicesPage = await LogicMonitorClient
 			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = 50 }, CancellationToken);
 
-		var netflowEnabledId = 0;
-
-		foreach (var device in devicesPage.Items)
-		{
-			if (device.EnableNetflow)
-			{
-				netflowEnabledId = device.Id;
-			}
-		}
+		var netflowEnabledId = devicesPage
+			.Items
+			.FirstOrDefault(device => device.EnableNetflow)?.Id ?? NetflowDeviceId;
+		netflowEnabledId.Should().BePositive();
 
 		var graph = await LogicMonitorClient
 			.GetTopTalkersGraphAsync(netflowEnabledId, CancellationToken);

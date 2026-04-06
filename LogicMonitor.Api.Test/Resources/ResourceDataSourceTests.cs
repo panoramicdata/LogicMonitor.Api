@@ -29,7 +29,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 			if (dataSource != null)
 			{
 				var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient
-					.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
+					.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 				if (deviceDataSourceByDeviceIdAndDataSourceId is null)
 				{
 					continue;

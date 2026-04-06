@@ -14,7 +14,7 @@ internal class QueryStringBuilder<T>(string subUrl) where T : IHasEndpoint, new(
 		}
 
 		AddDelimiter();
-		_stringBuilder.Append($"{key}={string.Join(",", values.Select(Api.LogicMonitorClient.GetSerializationName<T>))}");
+		_stringBuilder.Append(CultureInfo.InvariantCulture, $"{key}={string.Join(",", values.Select(Api.LogicMonitorClient.GetSerializationName<T>))}");
 	}
 
 	private void AddDelimiter()
@@ -37,13 +37,13 @@ internal class QueryStringBuilder<T>(string subUrl) where T : IHasEndpoint, new(
 		}
 
 		AddDelimiter();
-		_stringBuilder.Append($"{key}={filter}");
+		_stringBuilder.Append(CultureInfo.InvariantCulture, $"{key}={filter}");
 	}
 
 	public void Append(string key, int value)
 	{
 		AddDelimiter();
-		_stringBuilder.Append($"{key}={value}");
+		_stringBuilder.Append(CultureInfo.InvariantCulture, $"{key}={value}");
 	}
 
 	public override string ToString()

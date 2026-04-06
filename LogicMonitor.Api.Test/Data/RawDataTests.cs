@@ -9,7 +9,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken);
 		var deviceDataSourceInstance = deviceDataSourceInstances.Single();
@@ -110,7 +110,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken);
 		var deviceDataSourceInstance = deviceDataSourceInstances.Single();
@@ -135,7 +135,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource.Should().NotBeNull();
 		var deviceDataSource = await portalClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 		deviceDataSource.Should().NotBeNull();
 		var deviceDataSourceInstances = await portalClient
 			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken);
@@ -159,7 +159,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
 				WindowsDeviceId,
 				dataSource.Id,
-				CancellationToken);
+				CancellationToken) ?? throw new InvalidOperationException();
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await LogicMonitorClient

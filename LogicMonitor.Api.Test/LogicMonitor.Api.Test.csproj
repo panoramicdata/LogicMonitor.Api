@@ -10,6 +10,7 @@
 		<AnalysisMode>All</AnalysisMode>
 		<Platforms>x64</Platforms>
 		<UserSecretsId>4c4b4867-3f42-418b-b605-19da703a194d</UserSecretsId>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

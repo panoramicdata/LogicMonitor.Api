@@ -456,7 +456,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			.Single();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 
 		var deviceDataSourceInstance = (await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), CancellationToken)

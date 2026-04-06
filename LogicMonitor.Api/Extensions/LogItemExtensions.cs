@@ -383,10 +383,7 @@ public static class LogItemExtensions
 	/// <param name="logItem"></param>
 	public static AuditEvent ToAuditEvent(this LogItem logItem)
 	{
-		if (logItem is null)
-		{
-			throw new ArgumentNullException(nameof(logItem));
-		}
+		ArgumentNullException.ThrowIfNull(logItem);
 
 		var auditEvent = new AuditEvent
 		{

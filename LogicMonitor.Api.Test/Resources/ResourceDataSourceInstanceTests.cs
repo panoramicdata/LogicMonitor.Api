@@ -18,7 +18,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 
 		_ = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new(), cancellationToken: CancellationToken);
@@ -33,7 +33,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		dataSource.Should().NotBeNull();
 
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, cancellationToken: CancellationToken) ?? throw new InvalidOperationException();
 		var resourceDataSourceInstances = await LogicMonitorClient.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, new Filter<ResourceDataSourceInstance>
 		{
 			Order = new Order<ResourceDataSourceInstance> { Direction = OrderDirection.Asc, Property = nameof(ResourceDataSourceInstance.DisplayName) },

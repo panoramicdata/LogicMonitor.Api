@@ -16,7 +16,7 @@ public abstract class NamedItem : DescribedItem, IHasName
 	///    Equals override
 	/// </summary>
 	/// <param name="obj"></param>
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is null || obj.GetType() != GetType())
 		{

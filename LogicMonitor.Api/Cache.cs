@@ -2,7 +2,7 @@
 
 namespace LogicMonitor.Api;
 
-internal class Cache<TIndex, TValue>
+internal class Cache<TIndex, TValue> where TIndex : notnull
 {
 	private readonly ConcurrentDictionary<TIndex, CachedItem<TValue>> _cache = new();
 	private TimeSpan _maxAge;

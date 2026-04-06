@@ -102,7 +102,7 @@ public class FilterItem<T>
 					break;
 				}
 
-				valueString = Value.ToString();
+				valueString = Value.ToString() ?? string.Empty;
 				break;
 		}
 

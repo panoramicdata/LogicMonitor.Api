@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<AssemblyName>LogicMonitor.PowerShell</AssemblyName>
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
 		<PackageId>LogicMonitor.PowerShell</PackageId>
 		<OutputType>Library</OutputType>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -20,6 +21,8 @@
 		<PowerShellModuleDirectory>$(OutputPath)/LogicMonitor</PowerShellModuleDirectory>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageIcon>Icon.png</PackageIcon>
+		<NeutralResourcesLanguage>en</NeutralResourcesLanguage>
 		<PackageReleaseNotes>
 			v3.229.11:
 			- Now uses Nerdbank.GitVersioning for automatic versioning (synchronized with LogicMonitor.Api)
@@ -45,6 +48,7 @@
 
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="/" />
+		<None Include="..\LogicMonitor.Api\Icon.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<Target Name="CreatePowerShellModule" AfterTargets="Build">

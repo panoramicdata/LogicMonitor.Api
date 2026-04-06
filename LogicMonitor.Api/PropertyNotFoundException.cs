@@ -29,13 +29,4 @@ public class PropertyNotFoundException : Exception
 	public PropertyNotFoundException(string message, Exception innerException) : base(message, innerException)
 	{
 	}
-
-	/// <summary>
-	/// PropertyNotFoundException
-	/// </summary>
-	/// <param name="info"></param>
-	/// <param name="context"></param>
-	protected PropertyNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-	{
-	}
 }

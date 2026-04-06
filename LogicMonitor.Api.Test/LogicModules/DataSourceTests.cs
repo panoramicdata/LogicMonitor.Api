@@ -17,7 +17,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetDeviceGroupDataSources()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		deviceGroup.Should().NotBeNull();
 
 		var resourceGroupDataSources = await LogicMonitorClient
@@ -34,7 +34,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetDeviceGroupDeviceDataSourceInstances()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		deviceGroup.Should().NotBeNull();
 		deviceGroup.Id.Should().NotBe(0);
 		// We have the ResourceGroup
@@ -77,7 +77,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 						resourceDataSourceInstance.ResourceId,
 						resourceDataSourceInstance.DataSourceId.Value,
 						CancellationToken)
-					 ).InstanceCount;
+					 )!.InstanceCount;
 				refetchedDeviceDataSourceInstanceCount.Should().NotBe(0);
 				sum += refetchedDeviceDataSourceInstanceCount;
 			}
@@ -87,7 +87,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	}
 
 	[Fact]
-	[Trait("Long Tests", "")]
+	[Trait("Category", "Long")]
 	public async Task GetWinService()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
@@ -164,7 +164,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 		var deviceDataSourceInstances = await LogicMonitorClient
 			.GetAllResourceDataSourceInstancesAsync(WindowsDeviceId, deviceDataSource.Id, new Filter<ResourceDataSourceInstance> { Skip = 0, Take = 10 }, CancellationToken);
 		var deviceDataSourceInstance = deviceDataSourceInstances[0];
@@ -203,6 +203,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	}
 
 	[Fact]
+	[Trait("Category", "Long")]
 	public async Task GetDeviceDataSourceInstances()
 	{
 		var portalClient = LogicMonitorClient;
@@ -215,7 +216,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		dataSource ??= new();
 
 		var deviceDataSource = await portalClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 		deviceDataSource.Should().NotBeNull();
 
 		var deviceDataSourceInstances = await portalClient
@@ -287,7 +288,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task TestResourceGroupAlertSettings()
 	{
 		var deviceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		var items = await LogicMonitorClient
 			.GetResourceGroupDataPointConfigurationAsync(deviceGroup.Id, 3, CancellationToken);
 		items.Should().NotBeNull();
@@ -387,6 +388,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	}
 
 	[Fact]
+	[Trait("Category", "Long")]
 	public async Task CollectDeviceConfig()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
@@ -464,7 +466,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
 		dataSource ??= new();
 		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(1765, dataSource.Id, CancellationToken);
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(1765, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
 		deviceDataSource.ResourceId.Should().Be(1765);
 		deviceDataSource.DataSourceId.Should().Be(dataSource.Id);
 	}

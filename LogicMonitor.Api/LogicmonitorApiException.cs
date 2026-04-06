@@ -50,21 +50,11 @@ public class LogicMonitorApiException : Exception
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	/// <param name="info"></param>
-	/// <param name="context"></param>
-	protected LogicMonitorApiException(SerializationInfo info, StreamingContext context)
-		: base(info, context)
-	{
-	}
-
-	/// <summary>
-	/// Constructor
-	/// </summary>
 	/// <param name="httpResponseMessage"></param>
 	public LogicMonitorApiException(HttpResponseMessage httpResponseMessage)
 	{
 		HttpStatusCode = httpResponseMessage.StatusCode;
-		ErrorMessage = httpResponseMessage.ReasonPhrase;
+		ErrorMessage = httpResponseMessage.ReasonPhrase ?? string.Empty;
 		ResponseBody = httpResponseMessage.Content.ReadAsStringAsync().Result;
 	}
 
@@ -86,6 +76,18 @@ public class LogicMonitorApiException : Exception
 	{
 	}
 
+#pragma warning disable SYSLIB0003, SYSLIB0051
+	/// <summary>
+	/// Constructor
+	/// </summary>
+	/// <param name="info"></param>
+	/// <param name="context"></param>
+	protected LogicMonitorApiException(SerializationInfo info, StreamingContext context)
+		: base(info, context)
+	{
+	}
+#pragma warning restore SYSLIB0003, SYSLIB0051
+
 	/// <summary>
 	/// The body of the response sent by LogicMonitor
 	/// </summary>
@@ -104,7 +106,7 @@ public class LogicMonitorApiException : Exception
 	private bool Equals(LogicMonitorApiException other) => HttpStatusCode == other.HttpStatusCode && string.Equals(ErrorMessage, other.ErrorMessage, StringComparison.Ordinal);
 
 	/// <inheritdoc />
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is null)
 		{
@@ -125,14 +127,4 @@ public class LogicMonitorApiException : Exception
 
 	/// <inheritdoc />
 	public override string ToString() => $"{HttpStatusCode}:{ErrorMessage}:{base.ToString()}";
-
-	/// <inheritdoc />
-	[SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-	public override void GetObjectData(SerializationInfo info, StreamingContext context)
-	{
-		base.GetObjectData(info, context);
-
-		info.AddValue("HttpStatusCode", HttpStatusCode);
-		info.AddValue("ErrorMessage", ErrorMessage);
-	}
 }

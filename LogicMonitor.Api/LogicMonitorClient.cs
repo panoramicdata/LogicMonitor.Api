@@ -148,7 +148,7 @@ public partial class LogicMonitorClient : IDisposable
 		using var hmac = new HMACSHA256 { Key = Encoding.UTF8.GetBytes(accessKey) };
 		var compoundString = $"{httpVerb}{epoch}{data}{resourcePath}";
 		var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
-		var signatureHex = BitConverter.ToString(signatureBytes).Replace("-", "").ToLower(CultureInfo.InvariantCulture);
+		var signatureHex = Convert.ToHexStringLower(signatureBytes);
 		return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
 	}
 
@@ -293,10 +293,7 @@ public partial class LogicMonitorClient : IDisposable
 	public virtual async Task<T?> GetByNameAsync<T>(string name, CancellationToken cancellationToken)
 	where T : NamedItem, IHasEndpoint, new()
 	{
-		if (name is null)
-		{
-			throw new ArgumentNullException(nameof(name));
-		}
+		ArgumentNullException.ThrowIfNull(name);
 
 		var items = await GetAllAsync(new Filter<T>
 		{
@@ -370,7 +367,7 @@ public partial class LogicMonitorClient : IDisposable
 			?? throw new ArgumentOutOfRangeException(nameof(propertyName), $"{propertyName} is not a property of {typeof(T).Name}.");
 
 		// Use reflection to find the DataMember Name
-		return property.GetCustomAttributes(typeof(DataMemberAttribute), true).Cast<DataMemberAttribute>().SingleOrDefault().Name;
+		return property.GetCustomAttributes(typeof(DataMemberAttribute), true).Cast<DataMemberAttribute>().SingleOrDefault()!.Name!;
 	}
 
 	/// <summary>
@@ -391,7 +388,7 @@ public partial class LogicMonitorClient : IDisposable
 
 		// Use reflection to find the DataMember Name
 		var list = field.GetCustomAttributes(typeof(EnumMemberAttribute), true).Cast<EnumMemberAttribute>().ToList();
-		return list.SingleOrDefault().Value;
+		return list.SingleOrDefault()!.Value!;
 	}
 
 	/// <summary>
@@ -457,7 +454,7 @@ public partial class LogicMonitorClient : IDisposable
 						continue;
 					}
 
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 						prefix,
 						httpResponseMessage.StatusCode,
@@ -700,8 +697,8 @@ public partial class LogicMonitorClient : IDisposable
 	private async Task<HttpResponseMessage> GetHttpResponseMessage(HttpRequestMessage requestMessage, string subUrl, string? data, CancellationToken cancellationToken)
 	{
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
-		var subUrl2 = subUrl.Contains("?")
-			? subUrl.Substring(0, subUrl.IndexOf("?", StringComparison.Ordinal))
+		var subUrl2 = subUrl.Contains('?')
+			? subUrl.Substring(0, subUrl.IndexOf('?'))
 			: subUrl;
 		var httpVerb = requestMessage.Method.ToString().ToUpperInvariant();
 		var resourcePath = $"/{subUrl2}";
@@ -803,10 +800,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken"></param>
 	public async Task DeleteAsync(string subUrl, CancellationToken cancellationToken)
 	{
-		if (subUrl is null)
-		{
-			throw new ArgumentNullException(nameof(subUrl));
-		}
+		ArgumentNullException.ThrowIfNull(subUrl);
 
 		var httpMethod = HttpMethod.Delete;
 		var prefix = GetPrefix(httpMethod);
@@ -861,7 +855,7 @@ public partial class LogicMonitorClient : IDisposable
 						continue;
 					}
 
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 					_logger.LogDebug("{Prefix} failed with {StatusCode}: {ResponseBody}",
 						prefix,
 						httpResponseMessage.StatusCode,
@@ -905,7 +899,7 @@ public partial class LogicMonitorClient : IDisposable
 		if (!httpResponseMessage.IsSuccessStatusCode)
 		{
 			// If a success code was not received, throw an exception
-			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 				prefix,
 				httpResponseMessage.StatusCode,
@@ -914,12 +908,12 @@ public partial class LogicMonitorClient : IDisposable
 		}
 
 		// Get the content
-		var jsonString = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+		var jsonString = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 		if (jsonString.Contains("group is not empty"))
 		{
 			// If a success code was not received, throw an exception
 			_logger.LogDebug("{Prefix} failed - group is not empty for suburl", prefix);
-			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 			throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.PreconditionFailed, responseBody, $"{prefix} failed - group is not empty for suburl");
 		}
 	}
@@ -1014,7 +1008,7 @@ public partial class LogicMonitorClient : IDisposable
 					continue;
 				}
 
-				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
 				if (statusCode is >= 400 and < 500)
 				{
@@ -1064,14 +1058,14 @@ public partial class LogicMonitorClient : IDisposable
 		// If this is a file response, return that
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
-			var content = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 			_logger.LogTrace("RESPONSE:\r\n\r\n {Content}", content);
 			return new XmlResponse { Content = content } as T
 				?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
 		else if (typeof(T) == typeof(List<byte>))
 		{
-			var content = await httpResponseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+			var content = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
 			_logger.LogTrace("Byte Array");
 			return content.ToList() as T
 				?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
@@ -1080,8 +1074,8 @@ public partial class LogicMonitorClient : IDisposable
 		{
 			var tempFileInfo = new FileInfo(Path.GetTempFileName());
 			using Stream output = File.OpenWrite(tempFileInfo.FullName);
-			using var input = await httpResponseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-			await input.CopyToAsync(output).ConfigureAwait(false);
+			using var input = await httpResponseMessage.Content.ReadAsStreamAsync(cancellationToken).ConfigureAwait(false);
+			await input.CopyToAsync(output, cancellationToken).ConfigureAwait(false);
 
 			return new DownloadFileInfo
 			{
@@ -1097,7 +1091,7 @@ public partial class LogicMonitorClient : IDisposable
 		if (!portalResponse.IsSuccessStatusCode)
 		{
 			// If a success code was not received, throw an exception
-			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 			_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
 			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 				prefix,
@@ -1143,10 +1137,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken">An optional CancellationToken</param>
 	public async Task<TOut> PostAsync<TIn, TOut>(TIn postedObject, string subUrl, CancellationToken cancellationToken) where TOut : new()
 	{
-		if (subUrl is null)
-		{
-			throw new ArgumentNullException(nameof(subUrl));
-		}
+		ArgumentNullException.ThrowIfNull(subUrl);
 
 		var httpMethod = HttpMethod.Post;
 		var prefix = GetPrefix(httpMethod);
@@ -1183,7 +1174,7 @@ public partial class LogicMonitorClient : IDisposable
 						continue;
 					}
 					// If a success code was not received, throw an exception
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 						prefix,
 						httpResponseMessage.StatusCode,
@@ -1253,10 +1244,7 @@ public partial class LogicMonitorClient : IDisposable
 		string subUrl,
 		CancellationToken cancellationToken)
 	{
-		if (subUrl is null)
-		{
-			throw new ArgumentNullException(nameof(subUrl));
-		}
+		ArgumentNullException.ThrowIfNull(subUrl);
 
 		var httpMethod = HttpMethod.Post;
 		var prefix = GetPrefix(httpMethod);
@@ -1291,7 +1279,7 @@ public partial class LogicMonitorClient : IDisposable
 						continue;
 					}
 					// If a success code was not received, throw an exception
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 						prefix,
 						httpResponseMessage.StatusCode,
@@ -1385,7 +1373,7 @@ public partial class LogicMonitorClient : IDisposable
 			{
 				if (httpResponseMessage.StatusCode == HttpStatusCode.Forbidden)
 				{
-					var body = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+					var body = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 					throw new LogicMonitorApiException(HttpMethod.Post, subUrl, HttpStatusCode.Forbidden, body, $"{prefix} failed ({httpResponseMessage.StatusCode}): {body}");
 				}
 
@@ -1397,7 +1385,7 @@ public partial class LogicMonitorClient : IDisposable
 					continue;
 				}
 				// If a success code was not received, throw an exception
-				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 				_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
 					prefix,
 					httpResponseMessage.StatusCode,
@@ -1607,7 +1595,7 @@ public partial class LogicMonitorClient : IDisposable
 	/// <returns>True if the property is read only</returns>
 	public static bool IsPropertyReadOnly(string name, Type logicMonitorClassType, bool tryJsonNameFirst)
 	{
-		PropertyInfo propertyInfo;
+		PropertyInfo? propertyInfo;
 		if (tryJsonNameFirst)
 		{
 			// Try and find a property which matches the DataMemberAttributes name if it's set

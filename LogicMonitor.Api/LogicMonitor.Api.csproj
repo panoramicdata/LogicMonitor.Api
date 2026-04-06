@@ -1,61 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
-		<PackageLicenseUrl></PackageLicenseUrl>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageIcon>Icon.png</PackageIcon>
-		<PackageTags>LogicMonitor API REST</PackageTags>
-		<Title>LogicMonitor.Api</Title>
-		<Description>A .NET API for LogicMonitor</Description>
-		<Summary>A .NET API for LogicMonitor</Summary>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<LangVersion>latest</LangVersion>
-		<AnalysisMode>All</AnalysisMode>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/panoramicdata/LogicMonitor.Api/</RepositoryUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<AnalysisLevel>latest-recommended</AnalysisLevel>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
-		<!-- Update the following before releasing to nuget -->
-		<PackageReleaseNotes>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageTags>LogicMonitor API REST</PackageTags>
+    <Title>LogicMonitor.Api</Title>
+    <Description>A .NET API for LogicMonitor</Description>
+    <Summary>A .NET API for LogicMonitor</Summary>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <LangVersion>latest</LangVersion>
+    <AnalysisMode>All</AnalysisMode>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/panoramicdata/LogicMonitor.Api/</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ApplicationIcon>LogicMonitor.ico</ApplicationIcon>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <!-- Update the following before releasing to nuget -->
+    <PackageReleaseNotes>
 			v3.235.7:
 			- Added missing 'PropertyForBalancingXXX' properties to CollectorGroup. CalculatedThreshold on Collector is now back to a string rather than an integer.
 		</PackageReleaseNotes>
-		<UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
-
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DocumentationFile>bin\Debug\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DocumentationFile>bin\Release\netstandard2.0\LogicMonitor.Api.xml</DocumentationFile>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Remove="Icon.png" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="LogicMonitor.ico" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-		<PackageReference Include="Nerdbank.GitVersioning">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Newtonsoft.Json" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="..\README.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
-		<None Include="Icon.png" Pack="true" PackagePath="" />
-		<Folder Include="Properties\" />
-	</ItemGroup>
+    <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
+    <PackageId>LogicMonitor.Api</PackageId>
+    <NeutralResourcesLanguage>en</NeutralResourcesLanguage>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LogicMonitor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Nerdbank.GitVersioning">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="Icon.png" Pack="true" PackagePath="" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>
