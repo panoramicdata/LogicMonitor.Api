@@ -13,6 +13,12 @@ public class ParentResourceGroupAlertExpression
 	public string ResourceGroupFullPath { get; set; } = string.Empty;
 
 	/// <summary>
+	///     The ResourceGroup full path (alternative API field name)
+	/// </summary>
+	[DataMember(Name = "groupFullPath")]
+	public string GroupFullPath { get; set; } = string.Empty;
+
+	/// <summary>
 	/// The ResourceGroup id
 	/// </summary>
 	[DataMember(Name = "groupId")]
@@ -65,4 +71,34 @@ public class ParentResourceGroupAlertExpression
 	/// </summary>
 	[DataMember(Name = "enableAnomalyAlertSuppression")]
 	public string IsAnomalyAlertSuppressionEnabled { get; set; } = string.Empty;   // This is a string NOT a bool e.g. "enableAnomalyAlertSuppression": "0,0,0"
+
+	/// <summary>
+	///     The dynamic parent group id
+	/// </summary>
+	[DataMember(Name = "dynamicParentGroupId")]
+	public int DynamicParentGroupId { get; set; }
+
+	/// <summary>
+	///     Whether AD advanced setting is enabled
+	/// </summary>
+	[DataMember(Name = "_adAdvSettingEnabled")]
+	public bool AdAdvSettingEnabled { get; set; }
+
+	/// <summary>
+	///     The warn AD advanced setting
+	/// </summary>
+	[DataMember(Name = "_warnAdAdvSetting")]
+	public string WarnAdAdvSetting { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The error AD advanced setting
+	/// </summary>
+	[DataMember(Name = "_errorAdAdvSetting")]
+	public string ErrorAdAdvSetting { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The critical AD advanced setting
+	/// </summary>
+	[DataMember(Name = "_criticalAdAdvSetting")]
+	public string CriticalAdAdvSetting { get; set; } = string.Empty;
 }
