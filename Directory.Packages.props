@@ -33,5 +33,6 @@
     <PackageVersion Include="xunit.v3" Version="3.2.2" />
     <!-- LogicMonitor.PowerShell -->
     <PackageVersion Include="PowerShellStandard.Library" Version="5.1.1" />
+    <PackageVersion Include="coverlet.collector" Version="8.0.1" />
   </ItemGroup>
 </Project>
