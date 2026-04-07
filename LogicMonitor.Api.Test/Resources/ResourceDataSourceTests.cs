@@ -6,7 +6,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	public async Task GetAllResourceDataSourcesAsync()
 	{
 		var deviceDataSources = await LogicMonitorClient
-			.GetAllResourceDataSourcesAsync(1765, null, CancellationToken);
+			.GetAllResourceDataSourcesAsync(WindowsDeviceId, null, CancellationToken);
 		deviceDataSources.Should().NotBeNull();
 	}
 
@@ -29,7 +29,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 			if (dataSource != null)
 			{
 				var deviceDataSourceByDeviceIdAndDataSourceId = await LogicMonitorClient
-					.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
+					.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken);
 				if (deviceDataSourceByDeviceIdAndDataSourceId is null)
 				{
 					continue;

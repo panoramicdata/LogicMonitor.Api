@@ -18,11 +18,12 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PowerShellModuleName>LogicMonitor</PowerShellModuleName>
-		<PowerShellModuleDirectory>$(OutputPath)/LogicMonitor</PowerShellModuleDirectory>
+		<PowerShellModuleDirectory>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\LogicMonitor</PowerShellModuleDirectory>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageIcon>Icon.png</PackageIcon>
 		<NeutralResourcesLanguage>en</NeutralResourcesLanguage>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<PackageReleaseNotes>
 			v3.229.11:
 			- Now uses Nerdbank.GitVersioning for automatic versioning (synchronized with LogicMonitor.Api)
@@ -52,15 +53,27 @@
 	</ItemGroup>
 
 	<Target Name="CreatePowerShellModule" AfterTargets="Build">
+		<PropertyGroup>
+			<_ModuleBinDir>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)\</_ModuleBinDir>
+		</PropertyGroup>
 		<ItemGroup>
-			<ModuleFiles Include="$(OutputPath)*.dll" />
-			<ModuleFiles Include="$(OutputPath)*.pdb" />
+			<ModuleFiles Include="$(_ModuleBinDir)*.dll" />
+			<ModuleFiles Include="$(_ModuleBinDir)*.pdb" />
 			<ModuleFiles Include="LogicMonitor.psd1" />
 			<ModuleFiles Include="LogicMonitor.psm1" />
 		</ItemGroup>
 
 		<MakeDir Directories="$(PowerShellModuleDirectory)" />
 		<Copy SourceFiles="@(ModuleFiles)" DestinationFolder="$(PowerShellModuleDirectory)" />
+
+		<!-- Replace version placeholder in the copied .psd1 -->
+		<PropertyGroup>
+			<_PsdFile>$(PowerShellModuleDirectory)\LogicMonitor.psd1</_PsdFile>
+		</PropertyGroup>
+		<ReadLinesFromFile File="$(_PsdFile)">
+			<Output TaskParameter="Lines" ItemName="_PsdLines" />
+		</ReadLinesFromFile>
+		<WriteLinesToFile File="$(_PsdFile)" Lines="@(_PsdLines-&gt;Replace('zzzzzzzzzz','$(Version)'))" Overwrite="true" />
 	</Target>
 
 </Project>

@@ -35,6 +35,19 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 			.Select(i => $"GetAllCollectorGroupsWithSubUrl_{i}")
 			.ToList();
 
+		// Pre-cleanup: remove any leftover groups from previous failed runs
+		var existingGroups = await LogicMonitorClient
+			.GetAllAsync<JObject>($"setting/collector/groups", CancellationToken);
+		foreach (var existingGroup in existingGroups)
+		{
+			var name = existingGroup["name"]?.Value<string>();
+			if (name is not null && name.StartsWith("GetAllCollectorGroupsWithSubUrl_", StringComparison.Ordinal))
+			{
+				var id = existingGroup["id"]!.Value<int>();
+				await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{id}", CancellationToken);
+			}
+		}
+
 		foreach (var collectorGroupName in collectorGroupNames)
 		{
 			await LogicMonitorClient.CreateAsync(new CollectorGroupCreationDto

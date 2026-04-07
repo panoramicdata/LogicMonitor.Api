@@ -607,17 +607,17 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	[Fact]
 	public async Task GetResourcesFromRoot()
 	{
-		// Fetch in ascending order to get unchanging DeviceGroup first
+		// Fetch groups ordered by ID ascending, find one with direct resources
 		var deviceGroups = await LogicMonitorClient
 			.GetAllAsync(new Filter<ResourceGroup>
 			{
 				Order = new Order<ResourceGroup> { Property = nameof(ResourceGroup.Id), Direction = OrderDirection.Asc }
 			}, CancellationToken);
-		var deviceGroup = deviceGroups.Find(dg => dg.SubGroups.Count != 0);
+		var deviceGroup = deviceGroups.Find(dg => dg.DirectResourceCount > 0);
 		deviceGroup.Should().NotBeNull();
 		deviceGroup ??= new();
 		var deviceList = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(deviceGroup.FullPath, true, CancellationToken);
+			.GetResourcesByResourceGroupFullPathAsync(deviceGroup.FullPath, false, CancellationToken);
 		deviceList.Should().NotBeNull();
 		deviceList.Should().NotBeNullOrEmpty();
 	}

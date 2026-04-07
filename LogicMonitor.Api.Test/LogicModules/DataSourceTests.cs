@@ -102,7 +102,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	public async Task GetMonitoredWinService()
 	{
 		var windowsServices = await LogicMonitorClient
-			.GetMonitoredResourceProcessesAsync(29, ResourceProcessServiceTaskType.WindowsService, CancellationToken);
+			.GetMonitoredResourceProcessesAsync(WindowsDeviceId, ResourceProcessServiceTaskType.WindowsService, CancellationToken);
 		windowsServices.Should().NotBeNullOrEmpty();
 	}
 
@@ -299,7 +299,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		var stopwatch = Stopwatch.StartNew();
 		var deviceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(
-			425,
+			WindowsDeviceId,
 			new Filter<ResourceDataSource>
 			{
 				Take = 1,

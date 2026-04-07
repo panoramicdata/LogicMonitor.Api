@@ -98,7 +98,7 @@ public class FilterItem<T>
 				}
 				else if (Value.GetType().IsEnum)
 				{
-					valueString = LogicMonitorClient.GetSerializationNameFromEnumMember(Value);
+					valueString = $"\"{LogicMonitorClient.GetSerializationNameFromEnumMember(Value)}\"";
 					break;
 				}
 

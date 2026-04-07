@@ -30,37 +30,8 @@ function ConvertTo-LMFilter {
     return $null
 }
 
-# Export module members
+# Export script functions and let NestedModules handle binary cmdlets
 Export-ModuleMember -Function @(
-   'Connect-LogicMonitor',
-   'Disconnect-LogicMonitor',
-    'Test-LMConnection',
-    'Get-LMResource',
-  'New-LMResource',
-    'Set-LMResource',
-    'Remove-LMResource',
- 'Get-LMResourceGroup',
- 'New-LMResourceGroup',
-    'Set-LMResourceGroup',
-  'Remove-LMResourceGroup',
-    'Get-LMAlert',
-   'Set-LMAlert',
- 'Get-LMAlertRule',
-  'Get-LMDashboard',
-    'Get-LMDashboardGroup',
-    'Get-LMResourceData',
-    'Get-LMRawData',
-   'Get-LMGraphData',
-  'Get-LMUser',
-  'New-LMUser',
-  'Set-LMUser',
-   'Remove-LMUser',
-   'Get-LMCollector',
-  'Get-LMCollectorGroup',
-    'Set-LMResourceProperty',
-    'Get-LMResourceProperty',
- 'Remove-LMResourceProperty',
-   'Get-LMDataSource',
-    'Get-LMWebsite',
-   'Get-LMWebsiteGroup'
-)
+    'Test-ClientConnection',
+    'ConvertTo-LMFilter'
+) -Cmdlet '*'

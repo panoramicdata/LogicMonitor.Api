@@ -592,10 +592,21 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		await LogicMonitorClient
 			.AcknowledgeAlertAsync(alertId, "acknowledgementTest", CancellationToken);
 
-		var fetchAlert = await LogicMonitorClient
-			.GetAlertAsync(alertId, CancellationToken);
+		// Allow time for the acknowledgement to propagate
+		Alert? fetchAlert = null;
+		for (var attempt = 0; attempt < 5; attempt++)
+		{
+			await Task.Delay(1000, CancellationToken);
+			fetchAlert = await LogicMonitorClient
+				.GetAlertAsync(alertId, CancellationToken);
+			if (fetchAlert.Acked)
+			{
+				break;
+			}
+		}
 
-		fetchAlert.Acked.Should().Be(true);
+		fetchAlert.Should().NotBeNull();
+		fetchAlert!.Acked.Should().Be(true);
 	}
 
 	[Fact]

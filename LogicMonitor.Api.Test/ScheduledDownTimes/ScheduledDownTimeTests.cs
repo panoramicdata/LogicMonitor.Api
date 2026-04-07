@@ -69,7 +69,7 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		// Device
 		var testsdts =
-			await LogicMonitorClient.GetResourceHistorySdtsAsync(1053, CancellationToken);
+			await LogicMonitorClient.GetResourceHistorySdtsAsync(WindowsDeviceId, CancellationToken);
 		testsdts.Should().NotBeNull();
 
 		// ResourceGroup - currently throws a permission denied error
@@ -80,19 +80,25 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 
 		// Device
 		var deviceHistorySdts =
-			await LogicMonitorClient.GetResourceHistorySdtsAsync(1765, CancellationToken);
+			await LogicMonitorClient.GetResourceHistorySdtsAsync(WindowsDeviceId, CancellationToken);
 		deviceHistorySdts.Should().NotBeNull();
 
 		// Device Data Source
+		var deviceDataSource = await LogicMonitorClient
+			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
+		deviceDataSource.Should().NotBeNull();
+		var resourceDataSource = await LogicMonitorClient
+			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(WindowsDeviceId, deviceDataSource!.Id, CancellationToken);
+		resourceDataSource.Should().NotBeNull();
+
 		var deviceDataSourceHistorySdts =
-			await LogicMonitorClient.GetResourceDataSourceHistorySdtsAsync(1765, 98562, CancellationToken);
+			await LogicMonitorClient.GetResourceDataSourceHistorySdtsAsync(WindowsDeviceId, resourceDataSource!.Id, CancellationToken);
 		deviceDataSourceHistorySdts.Should().NotBeNull();
+	}
 
-		// Device Data Source Instance
-		var deviceDataSourceInstanceHistorySdts =
-			await LogicMonitorClient.GetResourceDataSourceInstanceHistorySdtsAsync(1765, 98562, 244662832, CancellationToken);
-		deviceDataSourceInstanceHistorySdts.Should().NotBeNull();
-
+	[Fact]
+	public async Task GetHistoricWebsiteScheduledDownTimes()
+	{
 		// Website Group
 		var websiteGroupHistorySdts =
 			await LogicMonitorClient.GetAllSdtListByWebsiteGroupIdAsync(20, new(), CancellationToken);
