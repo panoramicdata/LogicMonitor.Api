@@ -14,15 +14,15 @@ internal static class StringBuilderExtensions
 		// Object is not null so we're going to do something with it
 
 		// If the StringBuilder already contains an entry, use delimiter to concatenate
-		stringBuilder.Append($"{(stringBuilder.Length == 0 ? string.Empty : delimiter)}{parameter.LowerCaseFirst()}{@operator}{(encodeResult ? value.UriEscape() : value)}");
+		stringBuilder.Append(CultureInfo.InvariantCulture, $"{(stringBuilder.Length == 0 ? string.Empty : delimiter)}{parameter.LowerCaseFirst()}{@operator}{(encodeResult ? value.UriEscape() : value)}");
 	}
 
 	internal static string UriEscape(this object value) =>
-		// If it's a list, return each item UrlEscaped, separated by "|"
+		// If it's a list, return each item UrlEscaped, separated by "|" 
 		value is IEnumerable<string> list
 			? string.Join("|", list.Select(item => item.UriEscape()))
 			: Uri
-				.EscapeUriString(value.ToString())
+				.EscapeDataString(value.ToString()!)
 				.Replace("&", "%26")
 				.Replace(":", "%3A")
 				.Replace("/", "%2F")

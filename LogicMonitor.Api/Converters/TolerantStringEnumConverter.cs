@@ -14,7 +14,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 
 	private static string? GetEnumMemberAttrValue(Type type, object enumVal)
 	{
-		var memberInfos = type.GetMember(enumVal.ToString());
+		var memberInfos = type.GetMember(enumVal.ToString()!);
 		var memberInfo = memberInfos.SingleOrDefault(m => m.Name == enumVal.ToString());
 		return memberInfo
 			?.GetCustomAttributes(false)
@@ -25,7 +25,7 @@ internal class TolerantStringEnumConverter : JsonConverter
 
 	private static string[]? GetEnumMemberAliases(Type type, object enumVal)
 	{
-		var memberInfos = type.GetMember(enumVal.ToString());
+		var memberInfos = type.GetMember(enumVal.ToString()!);
 		var memberInfo = memberInfos.SingleOrDefault(m => m.Name == enumVal.ToString());
 		return memberInfo
 			?.GetCustomAttributes(false)

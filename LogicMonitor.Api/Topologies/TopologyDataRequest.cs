@@ -23,8 +23,8 @@ public class TopologyDataRequest
 	{
 		// Get the attribute from the Algorithm
 		var memberInfo = typeof(TopologyAlgorithm).GetField(Algorithm.ToString());
-		var attribute = (EnumMemberAttribute)Attribute.GetCustomAttribute(memberInfo, typeof(EnumMemberAttribute));
-		var algorithmString = attribute.Value;
+		var attribute = (EnumMemberAttribute?)Attribute.GetCustomAttribute(memberInfo!, typeof(EnumMemberAttribute));
+		var algorithmString = attribute!.Value;
 		return $"resource=device.{ResourceId}&algorithm={algorithmString}";
 	}
 }

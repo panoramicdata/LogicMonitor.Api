@@ -1,5 +1,6 @@
 namespace LogicMonitor.Api.Test.LogicModules;
 
+[Trait("Category", "Long")]
 public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 
@@ -7,7 +8,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get DataSource updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleDataSourceUpdates()
 	{
 		var dataSourceUpdates =
@@ -21,7 +21,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get EventSource updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleEventSourceUpdates()
 	{
 		var eventSourceUpdates =
@@ -35,7 +34,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get ConfigSource updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleConfigSourceUpdates()
 	{
 		var configSourceUpdates =
@@ -49,7 +47,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get PropertySource updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModulePropertySourceUpdates()
 	{
 		var propertySourceUpdates =
@@ -63,7 +60,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get TopologySource updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleTopologySourceUpdates()
 	{
 		var topologySourceUpdates =
@@ -77,7 +73,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get Job Monitor updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleJobMonitorUpdates()
 	{
 		var jobMonitorUpdates = await LogicMonitorClient
@@ -90,7 +85,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get AppliesTo Function updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleAppliesToUpdates()
 	{
 		var appliesToUpdates = await LogicMonitorClient
@@ -103,7 +97,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get SnmpSysOID updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetLogicModuleSnmpSysOidUpdates()
 	{
 		var snmpSysOidUpdates =
@@ -117,7 +110,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Get ALL LogicModule updates
 	/// </summary>
 	[Fact]
-	[Trait("Long Tests", "")]
 	public async Task GetAllLogicModuleUpdates()
 	{
 		var allUpdates =
@@ -131,7 +123,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one unaudited data source update and mark as audited
 	/// </summary>
 	[Fact(Skip = "Don't audit without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task AuditDataSource()
 	{
 		var dataSourceUpdates =
@@ -157,7 +148,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one unaudited event source update and mark as audited
 	/// </summary>
 	[Fact(Skip = "Don't audit without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task AuditEventSource()
 	{
 		var eventSourceUpdates =
@@ -183,7 +173,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one unaudited config source update and mark as audited
 	/// </summary>
 	[Fact(Skip = "Don't audit without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task AuditConfigSource()
 	{
 		var configSourceUpdates =
@@ -210,7 +199,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one unaudited property source update and mark as audited
 	/// </summary>
 	[Fact(Skip = "Don't audit without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task AuditPropertySource()
 	{
 		var propertySourceUpdates =
@@ -236,7 +224,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated Data Source and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportDataSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.DataSource;
@@ -266,7 +253,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated Event Source and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportEventSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.EventSource;
@@ -296,7 +282,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated Config Source and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportConfigSource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.ConfigSource;
@@ -326,7 +311,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated Property Source and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportPropertySource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.PropertySource;
@@ -356,7 +340,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated Topology Source and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportTopologySource()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.TopologySource;
@@ -386,7 +369,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated Job Monitor and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportJobMonitor()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.JobMonitor;
@@ -416,7 +398,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated AppliesToFunction and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportAppliesToFunction()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.AppliesToFunction;
@@ -446,7 +427,6 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	/// Find one updated SNMP SysOID Map and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
-	[Trait("Long Tests", "")]
 	public async Task ImportSnmpSysOidMap()
 	{
 		const LogicModuleType logicModuleType = LogicModuleType.SnmpSysOIDMap;

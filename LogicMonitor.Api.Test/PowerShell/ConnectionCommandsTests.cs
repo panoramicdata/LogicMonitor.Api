@@ -35,7 +35,8 @@ public class ConnectionCommandsTests(ITestOutputHelper iTestOutputHelper, Fixtur
 		{
 			{ "Account", "invalid-account" },
 			{ "AccessId", "invalid-id" },
-			{ "AccessKey", "invalid-key" }
+			{ "AccessKey", "invalid-key" },
+			{ "Force", true }
 		});
 
 		action.Should().Throw<InvalidOperationException>()

@@ -54,7 +54,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="displayName">The Resource DisplayName</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Resource> GetResourceByDisplayNameAsync(
+	public async Task<Resource?> GetResourceByDisplayNameAsync(
 		string displayName,
 		CancellationToken cancellationToken)
 	{
@@ -378,10 +378,7 @@ public partial class LogicMonitorClient
 		int maxResultCount,
 		CancellationToken cancellationToken)
 	{
-		if (searchString is null)
-		{
-			throw new ArgumentNullException(nameof(searchString));
-		}
+		ArgumentNullException.ThrowIfNull(searchString);
 
 		var treeNodeFreeSearchResults = await TreeNodeFreeSearchAsync(
 			searchString,
@@ -405,7 +402,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="resourceGroupFullPath"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<ResourceGroup> GetResourceGroupByFullPathAsync(
+	public async Task<ResourceGroup?> GetResourceGroupByFullPathAsync(
 		string resourceGroupFullPath,
 		CancellationToken cancellationToken)
 	{
@@ -488,10 +485,7 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken,
 		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
 	{
-		if (searchText is null)
-		{
-			throw new ArgumentNullException(nameof(searchText));
-		}
+		ArgumentNullException.ThrowIfNull(searchText);
 
 		var modifier = treeNodeFreeSearchResultType switch
 		{

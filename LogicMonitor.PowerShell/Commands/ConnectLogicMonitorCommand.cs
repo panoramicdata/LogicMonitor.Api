@@ -58,6 +58,10 @@ namespace LogicMonitor.PowerShell.Commands
 
 		protected override void ProcessRecord()
 		{
+			// Save previous state in case the new connection fails
+			var previousClient = Client;
+			var previousConnectionInfo = ConnectionInfo;
+
 			try
 			{
 				// Check if already connected
@@ -91,11 +95,15 @@ namespace LogicMonitor.PowerShell.Commands
 				};
 
 				// Create the client
-				Client = new LogicMonitorClient(options);
+				var newClient = new LogicMonitorClient(options);
+				Client = newClient;
 
 				// Test the connection by getting account information
 				WriteVerboseMessage("Testing connection...");
 				var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None).GetAwaiter().GetResult();
+
+				// Dispose previous client now that new connection is confirmed
+				previousClient?.Dispose();
 
 				// Create connection info
 				ConnectionInfo = new LogicMonitorConnectionInfo
@@ -109,9 +117,17 @@ namespace LogicMonitor.PowerShell.Commands
 				WriteVerboseMessage($"Successfully connected to LogicMonitor account: {Account}");
 				WriteObject(ConnectionInfo);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				HandleApiException(ex);
+				// Dispose the failed new client and restore previous state
+				if (Client != previousClient)
+				{
+					Client?.Dispose();
+				}
+
+				Client = previousClient;
+				ConnectionInfo = previousConnectionInfo;
+				throw;
 			}
 		}
 	}

@@ -51,7 +51,7 @@ internal class LogicMonitorClient : IDisposable
 			.ConfigureAwait(false);
 
 		// Extract the response as a Page<T> via a string
-		var value = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+		var value = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
 		var page = JsonConvert.DeserializeObject<Page<T>>(value);
 		return page ?? throw new InvalidOperationException("The response was not a Page<T>");
