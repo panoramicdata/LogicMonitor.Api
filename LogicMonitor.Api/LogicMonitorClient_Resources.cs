@@ -58,10 +58,7 @@ public partial class LogicMonitorClient
 		string displayName,
 		CancellationToken cancellationToken)
 	{
-		if (displayName is null)
-		{
-			throw new ArgumentNullException(nameof(displayName));
-		}
+		ArgumentException.ThrowIfNullOrWhiteSpace(displayName);
 
 		// The LM API Eq filter cannot handle parentheses in values - fall back to tree node search
 		if (displayName.Contains('(') || displayName.Contains(')'))
