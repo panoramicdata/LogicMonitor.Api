@@ -219,8 +219,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public Task GetResourceByNonExistentDeviceIdShouldFail() =>
 		LogicMonitorClient
 			.Invoking(async x => await LogicMonitorClient
-				.GetAsync<Resource>(12345678, CancellationToken)
-				)
+				.GetAsync<Resource>(12345678, CancellationToken))
 			.Should()
 			.ThrowAsync<LogicMonitorApiException>();
 
@@ -228,8 +227,7 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetResourceByDisplayNameAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
-		var device2 = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken);
+		var device2 = await LogicMonitorClient.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken);
 		device2.Should().NotBeNull();
 	}
 

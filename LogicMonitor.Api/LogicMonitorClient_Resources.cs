@@ -57,17 +57,36 @@ public partial class LogicMonitorClient
 	public async Task<Resource> GetResourceByDisplayNameAsync(
 		string displayName,
 		CancellationToken cancellationToken)
-		=> (await GetAllAsync(new Filter<Resource>
+	{
+		if (displayName is null)
+		{
+			throw new ArgumentNullException(nameof(displayName));
+		}
+
+		// The LM API Eq filter cannot handle parentheses in values - fall back to tree node search
+		if (displayName.Contains('(') || displayName.Contains(')'))
+		{
+			return (await GetResourcesByNameAsync(
+				displayName,
+				100,
+				cancellationToken)
+				.ConfigureAwait(false))
+				.SingleOrDefault(r => r.DisplayName == displayName);
+		}
+
+		return (await GetAllAsync(new Filter<Resource>
 		{
 			FilterItems =
-				[
-						new Eq<Resource>(nameof(Resource.DisplayName), (displayName ?? throw new ArgumentNullException(nameof(displayName)))
-							.EscapeSlashes()
-							.EscapePlusCharacter())
-				]
-		}, cancellationToken)
-			   .ConfigureAwait(false))
-			   .SingleOrDefault();
+			[
+				new Eq<Resource>(nameof(Resource.DisplayName), displayName
+					.EscapeSlashes()
+					.EscapePlusCharacter())
+			]
+		},
+		cancellationToken)
+		.ConfigureAwait(false))
+		.SingleOrDefault(r => r.DisplayName == displayName);
+	}
 
 	/// <summary>
 	///     Get device properties, in the following order:
