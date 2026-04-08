@@ -232,6 +232,13 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		device2.Should().NotBeNull();
 	}
 
+	//[Fact]
+	//public async Task GetResourceByDisplayNameContainsParenthesisAsync()
+	//{
+	//	var device2 = await LogicMonitorClient.GetResourceByDisplayNameAsync("Roland(Test)", CancellationToken);
+	//	device2.Should().NotBeNull();
+	//}
+
 	[Fact]
 	public async Task GetResourceByHostName()
 	{
