@@ -24,11 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <!-- Update the following before releasing to nuget -->
     <PackageReleaseNotes>
-		v3.236.10:
-		- fix: handle parentheses in GetResourceByDisplayNameAsync
-		The LM API Eq filter no longer accepts parentheses in values.
-		Fall back to tree node search (POST /functions) when the display
-		name contains '(' or ')' and match client-side with SingleOrDefault.
+		v3.236.14:
+		- Fixed GetResourceGroupByFullPathAsync to handle full paths containing parentheses by falling back to tree node search
+		- Removed EscapeParens() from GetResourceGroupByFullPathAsync which caused double-encoding via HttpUtility.UrlEncode
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>

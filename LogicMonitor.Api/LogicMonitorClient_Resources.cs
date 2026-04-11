@@ -408,19 +408,41 @@ public partial class LogicMonitorClient
 			return await GetAsync<ResourceGroup>(1, cancellationToken).ConfigureAwait(false);
 		}
 
-		// This may actually return more than one, as LogicMonitor does not correctly handle brackets in some cases.
-		var allResourceGroups = await GetAllAsync(new Filter<ResourceGroup>
+		// The LM API Eq filter cannot handle parentheses in values - fall back to tree node search
+		if (resourceGroupFullPath.Contains('(') || resourceGroupFullPath.Contains(')'))
 		{
-			FilterItems =
-			[
-				new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), resourceGroupFullPath.EscapePlusCharacter().EscapeParens())
-			]
-		},
-		cancellationToken: cancellationToken)
-		.ConfigureAwait(false);
+			// Search by leaf group name, then match by full path client-side
+			var leafName = resourceGroupFullPath.Split('/')[^1];
+			var searchResults = await TreeNodeFreeSearchAsync(
+				leafName,
+				100,
+				cancellationToken,
+				TreeNodeFreeSearchResultType.ResourceGroup)
+				.ConfigureAwait(false);
 
-		return allResourceGroups
-			.SingleOrDefault(dg => dg.FullPath == resourceGroupFullPath);
+			foreach (var result in searchResults)
+			{
+				var group = await GetAsync<ResourceGroup>(result.EntityId, cancellationToken).ConfigureAwait(false);
+				if (group.FullPath == resourceGroupFullPath)
+				{
+					return group;
+				}
+			}
+
+			return null;
+		}
+
+		// This may actually return more than one, as LogicMonitor does not correctly handle brackets in some cases.
+		var allResourceGroups =
+			await GetAllAsync(new Filter<ResourceGroup>{
+				FilterItems =
+				[
+					new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), resourceGroupFullPath.EscapePlusCharacter())
+				]},
+				cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
+		return allResourceGroups.SingleOrDefault(dg => dg.FullPath == resourceGroupFullPath);
 	}
 
 	/// <summary>

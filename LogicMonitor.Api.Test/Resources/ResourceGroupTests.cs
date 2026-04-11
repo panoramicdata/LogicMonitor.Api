@@ -4,6 +4,13 @@ namespace LogicMonitor.Api.Test.Resources;
 
 public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
+	//[Fact]
+	//public async Task GetResourceGroupByDisplayNameContainsParenthesisAsync()
+	//{
+	//	var x = await LogicMonitorClient.GetResourceGroupByFullPathAsync("DSW - (Test) Denise Home Network", CancellationToken);
+	//	x.Should().NotBeNull();
+	//}
+
 	[Fact]
 	public async Task GetResourceGroupByFullPath()
 	{
