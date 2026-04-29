@@ -252,6 +252,17 @@ public class TolerantStringEnumConverterTests
 		result!.Value.Should().Be(LogicModuleType.DataSource);
 	}
 
+	[Fact]
+	public void ReadJson_LogicModuleType_DiagnosticSource_DeserializesCorrectly()
+	{
+		var json = """{"value": "DIAGNOSTICSOURCE"}""";
+
+		var result = JsonConvert.DeserializeObject<TestContainer<LogicModuleType>>(json, SerializerSettings);
+
+		result.Should().NotBeNull();
+		result!.Value.Should().Be(LogicModuleType.DiagnosticSource);
+	}
+
 
 	[Fact]
 	public void ReadJson_LogicModuleType_UnknownValue_InDebugThrowsNotImplementedException()

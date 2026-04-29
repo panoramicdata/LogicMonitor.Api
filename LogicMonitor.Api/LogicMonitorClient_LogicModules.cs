@@ -50,6 +50,7 @@ public partial class LogicMonitorClient
 			case LogicModuleType.DataSource:
 			case LogicModuleType.EventSource:
 			case LogicModuleType.ConfigSource:
+			case LogicModuleType.DiagnosticSource:
 				typeParameter = $"?type={logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}";
 				break;
 			case LogicModuleType.PropertySource:
@@ -121,6 +122,19 @@ public partial class LogicMonitorClient
 		);
 
 	/// <summary>
+	/// Mark a DiagnosticSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+	/// </summary>
+	/// <param name="diagnosticSourceId"></param>
+	/// <param name="auditVersion"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<LogicMonitor.Api.LogicModules.DiagnosticSource> AuditDiagnosticSourceAsync(int diagnosticSourceId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, LogicMonitor.Api.LogicModules.DiagnosticSource>
+		(
+			new LogicModuleUpdateVersion { Version = auditVersion },
+			$"setting/diagnosticsources/{diagnosticSourceId}/audit", cancellationToken
+		);
+
+	/// <summary>
 	/// Mark a PropertySource (from the repository) as audited. Find the version via GetLogicModuleUpdates
 	/// </summary>
 	/// <param name="propertySourceId"></param>
@@ -146,7 +160,7 @@ public partial class LogicMonitorClient
 	{
 		var typeEndpoint = logicModuleType switch
 		{
-			LogicModuleType.DataSource or LogicModuleType.EventSource or LogicModuleType.ConfigSource or LogicModuleType.TopologySource => $"{logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}s",
+			LogicModuleType.DataSource or LogicModuleType.EventSource or LogicModuleType.ConfigSource or LogicModuleType.TopologySource or LogicModuleType.DiagnosticSource => $"{logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}s",
 			LogicModuleType.PropertySource => "propertyrules",
 			LogicModuleType.JobMonitor => "batchjobs",
 			LogicModuleType.AppliesToFunction => "functions",

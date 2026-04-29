@@ -52,6 +52,17 @@ public partial class LogicMonitorClient
 		=> (await GetBySubUrlAsync<XmlResponse>($"setting/topologysources/{topologySourceId}?format=json", cancellationToken).ConfigureAwait(false)).Content;
 
 	/// <summary>
+	///     Gets the JSON export for a DiagnosticSource.
+	/// </summary>
+	/// <param name="diagnosticSourceId">The DiagnosticSource id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>The JSON string representation of the DiagnosticSource</returns>
+	public async Task<string> GetDiagnosticSourceJsonAsync(
+		int diagnosticSourceId,
+		CancellationToken cancellationToken)
+		=> (await GetBySubUrlAsync<XmlResponse>($"setting/diagnosticsources/{diagnosticSourceId}?format=json", cancellationToken).ConfigureAwait(false)).Content;
+
+	/// <summary>
 	///     Gets the JSON export for a JobMonitor (BatchJob).
 	/// </summary>
 	/// <param name="jobMonitorId">The JobMonitor id</param>
@@ -92,6 +103,7 @@ public partial class LogicMonitorClient
 			LogicModuleType.ConfigSource => GetConfigSourceJsonAsync(logicModuleId, cancellationToken),
 			LogicModuleType.PropertySource => GetPropertySourceJsonAsync(logicModuleId, cancellationToken),
 			LogicModuleType.TopologySource => GetTopologySourceJsonAsync(logicModuleId, cancellationToken),
+			LogicModuleType.DiagnosticSource => GetDiagnosticSourceJsonAsync(logicModuleId, cancellationToken),
 			LogicModuleType.JobMonitor => GetJobMonitorJsonAsync(logicModuleId, cancellationToken),
 			LogicModuleType.AppliesToFunction => GetAppliesToFunctionJsonAsync(logicModuleId, cancellationToken),
 			_ => throw new NotSupportedException($"JSON export is not supported for LogicModule type: {logicModuleType}")
@@ -176,6 +188,17 @@ public partial class LogicMonitorClient
 		string json,
 		CancellationToken cancellationToken)
 		=> ImportLogicModuleJsonAsync<TopologySource>(json, "setting/topologysources", cancellationToken);
+
+	/// <summary>
+	///     Imports a DiagnosticSource from a JSON string.
+	/// </summary>
+	/// <param name="json">The JSON string representing the DiagnosticSource</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>The imported DiagnosticSource</returns>
+	public Task<LogicMonitor.Api.LogicModules.DiagnosticSource> ImportDiagnosticSourceJsonAsync(
+		string json,
+		CancellationToken cancellationToken)
+		=> ImportLogicModuleJsonAsync<LogicMonitor.Api.LogicModules.DiagnosticSource>(json, "setting/diagnosticsources", cancellationToken);
 
 	/// <summary>
 	///     Imports a JobMonitor (BatchJob) from a JSON string.
@@ -335,6 +358,20 @@ public partial class LogicMonitorClient
 	{
 		var json = File.ReadAllText(filePath);
 		return ImportTopologySourceJsonAsync(json, cancellationToken);
+	}
+
+	/// <summary>
+	///     Imports a DiagnosticSource from a JSON file.
+	/// </summary>
+	/// <param name="filePath">The file path to read the JSON from</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>The imported DiagnosticSource</returns>
+	public Task<LogicMonitor.Api.LogicModules.DiagnosticSource> ImportDiagnosticSourceFromJsonFileAsync(
+		string filePath,
+		CancellationToken cancellationToken)
+	{
+		var json = File.ReadAllText(filePath);
+		return ImportDiagnosticSourceJsonAsync(json, cancellationToken);
 	}
 
 	/// <summary>
