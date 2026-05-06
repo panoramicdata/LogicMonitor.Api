@@ -20,6 +20,12 @@ public enum PrivilegeObjectType
 	DashboardGroup,
 
 	/// <summary>
+	/// Dashboard Shared Filter Group
+	/// </summary>
+	[EnumMember(Value = "dashboardSharedFilterGroup")]
+	DashboardSharedFilterGroup,
+
+	/// <summary>
 	/// ResourceGroup
 	/// </summary>
 	[EnumMember(Value = "host_group")]
