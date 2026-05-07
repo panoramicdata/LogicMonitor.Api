@@ -1036,4 +1036,124 @@ public partial class LogicMonitorClient
 		Filter<UnmonitoredResource> filter,
 		CancellationToken cancellationToken)
 		=> FilteredGetAsync($"device/unmonitoreddevices", filter, cancellationToken);
+
+	/// <summary>
+	/// Get all cluster alert configurations for a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<List<ResourceGroupClusterAlertConfig>> GetAllResourceGroupClusterAlertConfigsAsync(
+		int resourceGroupId,
+		CancellationToken cancellationToken)
+	{
+		var items = await GetAllAsync<ResourceGroupClusterAlertConfig>(
+			$"device/groups/{resourceGroupId}/clusterAlertConf",
+			cancellationToken).ConfigureAwait(false);
+		foreach (var item in items)
+			item.ResourceGroupId = resourceGroupId;
+		return items;
+	}
+
+	/// <summary>
+	/// Get a filtered page of cluster alert configurations for a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="filter">The filter</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<Page<ResourceGroupClusterAlertConfig>> GetResourceGroupClusterAlertConfigsPageAsync(
+		int resourceGroupId,
+		Filter<ResourceGroupClusterAlertConfig>? filter,
+		CancellationToken cancellationToken)
+	{
+		var page = await FilteredGetAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf",
+			filter,
+			cancellationToken).ConfigureAwait(false);
+		foreach (var item in page.Items ?? [])
+			item.ResourceGroupId = resourceGroupId;
+		return page;
+	}
+
+	/// <summary>
+	/// Get a single cluster alert configuration by Id
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="id">The cluster alert configuration Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<ResourceGroupClusterAlertConfig> GetResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		int id,
+		CancellationToken cancellationToken)
+	{
+		var item = await GetBySubUrlAsync<ResourceGroupClusterAlertConfig>(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
+			cancellationToken).ConfigureAwait(false);
+		item.ResourceGroupId = resourceGroupId;
+		return item;
+	}
+
+	/// <summary>
+	/// Create a cluster alert configuration for a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="config">The configuration to create</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<ResourceGroupClusterAlertConfig> CreateResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		ResourceGroupClusterAlertConfig config,
+		CancellationToken cancellationToken)
+	{
+		var result = await PostAsync<ResourceGroupClusterAlertConfig, ResourceGroupClusterAlertConfig>(
+			config,
+			$"device/groups/{resourceGroupId}/clusterAlertConf",
+			cancellationToken).ConfigureAwait(false);
+		result.ResourceGroupId = resourceGroupId;
+		return result;
+	}
+
+	/// <summary>
+	/// Replace a cluster alert configuration (full update via PUT)
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="config">The updated configuration (must have Id set)</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task UpdateResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		ResourceGroupClusterAlertConfig config,
+		CancellationToken cancellationToken)
+		=> PutAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{config.Id}",
+			config,
+			cancellationToken);
+
+	/// <summary>
+	/// Partially update a cluster alert configuration (PATCH)
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="id">The cluster alert configuration Id</param>
+	/// <param name="fieldsToUpdate">The fields to update</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task PatchResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		int id,
+		Dictionary<string, object> fieldsToUpdate,
+		CancellationToken cancellationToken)
+		=> PatchAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
+			fieldsToUpdate,
+			cancellationToken);
+
+	/// <summary>
+	/// Delete a cluster alert configuration from a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="id">The cluster alert configuration Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task DeleteResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		int id,
+		CancellationToken cancellationToken)
+		=> DeleteAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
+			cancellationToken);
 }
