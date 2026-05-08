@@ -149,5 +149,11 @@ public enum PrivilegeObjectType
 	/// Diagnostic Source
 	/// </summary>
 	[EnumMember(Value = "remediationSource")]
-	RemediationSource
+	RemediationSource,
+
+	/// <summary>
+	/// Control Panel (administrative configuration pages)
+	/// </summary>
+	[EnumMember(Value = "cp")]
+	Cp
 }
