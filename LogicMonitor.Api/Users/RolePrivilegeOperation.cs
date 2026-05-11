@@ -68,13 +68,13 @@ public enum RolePrivilegeOperation
 	Commit,
 
 	/// <summary>
-	/// Visit
+	/// Visit (used for Control Panel page access)
 	/// </summary>
 	[EnumMember(Value = "visit")]
 	Visit,
 
 	/// <summary>
-	/// Create / modify
+	/// CreateModify (combined create and modify permission)
 	/// </summary>
 	[EnumMember(Value = "createmodify")]
 	CreateModify,

@@ -152,8 +152,8 @@ public enum PrivilegeObjectType
 	RemediationSource,
 
 	/// <summary>
-	/// Control Panel
+	/// Control Panel (administrative configuration pages)
 	/// </summary>
 	[EnumMember(Value = "cp")]
-	ControlPanel
+	Cp
 }
