@@ -65,5 +65,23 @@ public enum RolePrivilegeOperation
 	/// Commit
 	/// </summary>
 	[EnumMember(Value = "commit")]
-	Commit
+	Commit,
+
+	/// <summary>
+	/// Visit
+	/// </summary>
+	[EnumMember(Value = "visit")]
+	Visit,
+
+	/// <summary>
+	/// Create / modify
+	/// </summary>
+	[EnumMember(Value = "createmodify")]
+	CreateModify,
+
+	/// <summary>
+	/// Delete
+	/// </summary>
+	[EnumMember(Value = "delete")]
+	Delete
 }
