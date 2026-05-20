@@ -23,7 +23,7 @@ public static class LogItemExtensions
 	}
 
 	private static readonly Regex _k8sHostRegex = CreateRegex(@"^(?<resourceName>.+?)\(id=(?<resourceId>.+?)\)$", RegexOptions.Singleline);
-	private static readonly Regex _dataSourceInstanceEntryRegex = CreateRegex(@"(?:^|,)(?<instanceName>.+?) (?:\[ID:\d+\] )?id=(?<instanceId>\d+) hid=\d+", RegexOptions.Singleline);
+	private static readonly Regex _dataSourceInstanceEntryRegex = CreateRegex(@"(?:^|,)(?<instanceName>.+?) (?:\[ID:\d+\] )?id=(?<instanceId>\d+) hid=(?<resourceId>\d+)", RegexOptions.Singleline);
 	private static readonly Regex _groupActionRegex = CreateRegex(@"^""Action=(?<action>Add|Fetch|Update|Delete)""; ""Type=Group""; ""DeviceGroup=(?<resourceGroupName>.+?)""; ""Description=(?<description>.*?)""$", RegexOptions.Singleline);
 	private static readonly LogItemRegex _groupActionLogItemRegex = new(97, AuditEventEntityType.ResourceGroup, _groupActionRegex);
 
@@ -670,18 +670,25 @@ public static class LogItemExtensions
 		{
 			var dataSourceInstanceIds = new List<int>();
 			var dataSourceInstanceNames = new List<string>();
+			var resourceIds = new List<int>();
 			foreach (var affectedInstanceMatch in SafeMatches(_dataSourceInstanceEntryRegex, match.Groups["affectedInstances"].Value))
 			{
 				if (affectedInstanceMatch.Success)
 				{
 					var instanceName = affectedInstanceMatch.Groups["instanceName"].Value.TrimStart().TrimStart(',', '"');
+					var resourceId = int.Parse(affectedInstanceMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
 					dataSourceInstanceNames.Add(instanceName);
 					dataSourceInstanceIds.Add(int.Parse(affectedInstanceMatch.Groups["instanceId"].Value, CultureInfo.InvariantCulture));
+					if (!resourceIds.Contains(resourceId))
+					{
+						resourceIds.Add(resourceId);
+					}
 				}
 			}
 
 			auditEvent.DataSourceNewInstanceNames = dataSourceInstanceNames;
 			auditEvent.DataSourceNewInstanceIds = dataSourceInstanceIds;
+			auditEvent.ResourceIds = new(resourceIds);
 		}
 
 		return auditEvent;
