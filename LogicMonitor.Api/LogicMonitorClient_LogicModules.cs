@@ -148,6 +148,58 @@ public partial class LogicMonitorClient
 		);
 
 	/// <summary>
+	/// Mark a TopologySource (from the repository) as audited. Find the version via GetLogicModuleUpdates
+	/// </summary>
+	/// <param name="topologySourceId"></param>
+	/// <param name="auditVersion"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<TopologySource> AuditTopologySourceAsync(int topologySourceId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, TopologySource>
+		(
+			new LogicModuleUpdateVersion { Version = auditVersion },
+			$"setting/topologysources/{topologySourceId}/audit", cancellationToken
+		);
+
+	/// <summary>
+	/// Mark a JobMonitor (from the repository) as audited. Find the version via GetLogicModuleUpdates
+	/// </summary>
+	/// <param name="jobMonitorId"></param>
+	/// <param name="auditVersion"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<JobMonitor> AuditJobMonitorAsync(int jobMonitorId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, JobMonitor>
+		(
+			new LogicModuleUpdateVersion { Version = auditVersion },
+			$"setting/batchjobs/{jobMonitorId}/audit", cancellationToken
+		);
+
+	/// <summary>
+	/// Mark an AppliesToFunction (from the repository) as audited. Find the version via GetLogicModuleUpdates
+	/// </summary>
+	/// <param name="appliesToFunctionId"></param>
+	/// <param name="auditVersion"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<AppliesToFunction> AuditAppliesToFunctionAsync(int appliesToFunctionId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, AppliesToFunction>
+		(
+			new LogicModuleUpdateVersion { Version = auditVersion },
+			$"setting/functions/{appliesToFunctionId}/audit", cancellationToken
+		);
+
+	/// <summary>
+	/// Mark a SnmpSysOidMap (from the repository) as audited. Find the version via GetLogicModuleUpdates
+	/// </summary>
+	/// <param name="snmpSysOidMapId"></param>
+	/// <param name="auditVersion"></param>
+	/// <param name="cancellationToken"></param>
+	public Task<SnmpSysOidMap> AuditSnmpSysOidMapAsync(int snmpSysOidMapId, long auditVersion, CancellationToken cancellationToken)
+		=> PostAsync<LogicModuleUpdateVersion, SnmpSysOidMap>
+		(
+			new LogicModuleUpdateVersion { Version = auditVersion },
+			$"setting/oids/{snmpSysOidMapId}/audit", cancellationToken
+		);
+
+	/// <summary>
 	/// Import a LogicModule
 	/// </summary>
 	/// <param name="logicModuleType">The LogicModule type (except SNMP SysOID Maps - for those use ImportSnmpSysOidMap)</param>

@@ -221,6 +221,106 @@ public class LogicModuleUpdateTests(ITestOutputHelper iTestOutputHelper, Fixture
 	}
 
 	/// <summary>
+	/// Find one unaudited topology source update and mark as audited
+	/// </summary>
+	[Fact(Skip = "Don't audit without understanding the implications")]
+	public async Task AuditTopologySource()
+	{
+		var topologySourceUpdates =
+			(await LogicMonitorClient
+				.GetLogicModuleUpdatesAsync(LogicModuleType.TopologySource, CancellationToken)
+				)
+			.Items
+			.Where(ds =>
+				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
+			.ToList();
+
+		if (topologySourceUpdates.Count > 0)
+		{
+			var topologySourceToAudit = topologySourceUpdates[0];
+			_ = await LogicMonitorClient.AuditTopologySourceAsync(
+					topologySourceToAudit.LocalId,
+					topologySourceToAudit.Version,
+					CancellationToken);
+		}
+	}
+
+	/// <summary>
+	/// Find one unaudited job monitor update and mark as audited
+	/// </summary>
+	[Fact(Skip = "Don't audit without understanding the implications")]
+	public async Task AuditJobMonitor()
+	{
+		var jobMonitorUpdates =
+			(await LogicMonitorClient
+				.GetLogicModuleUpdatesAsync(LogicModuleType.JobMonitor, CancellationToken)
+				)
+			.Items
+			.Where(ds =>
+				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
+			.ToList();
+
+		if (jobMonitorUpdates.Count > 0)
+		{
+			var jobMonitorToAudit = jobMonitorUpdates[0];
+			_ = await LogicMonitorClient.AuditJobMonitorAsync(
+					jobMonitorToAudit.LocalId,
+					jobMonitorToAudit.Version,
+					CancellationToken);
+		}
+	}
+
+	/// <summary>
+	/// Find one unaudited applies-to function update and mark as audited
+	/// </summary>
+	[Fact(Skip = "Don't audit without understanding the implications")]
+	public async Task AuditAppliesToFunction()
+	{
+		var appliesToFunctionUpdates =
+			(await LogicMonitorClient
+				.GetLogicModuleUpdatesAsync(LogicModuleType.AppliesToFunction, CancellationToken)
+				)
+			.Items
+			.Where(ds =>
+				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
+			.ToList();
+
+		if (appliesToFunctionUpdates.Count > 0)
+		{
+			var appliesToFunctionToAudit = appliesToFunctionUpdates[0];
+			_ = await LogicMonitorClient.AuditAppliesToFunctionAsync(
+					appliesToFunctionToAudit.LocalId,
+					appliesToFunctionToAudit.Version,
+					CancellationToken);
+		}
+	}
+
+	/// <summary>
+	/// Find one unaudited SNMP SysOID Map update and mark as audited
+	/// </summary>
+	[Fact(Skip = "Don't audit without understanding the implications")]
+	public async Task AuditSnmpSysOidMap()
+	{
+		var snmpSysOidMapUpdates =
+			(await LogicMonitorClient
+				.GetLogicModuleUpdatesAsync(LogicModuleType.SnmpSysOIDMap, CancellationToken)
+				)
+			.Items
+			.Where(ds =>
+				ds.Category == LogicModuleUpdateCategory.UpdatedInUse)
+			.ToList();
+
+		if (snmpSysOidMapUpdates.Count > 0)
+		{
+			var snmpSysOidMapToAudit = snmpSysOidMapUpdates[0];
+			_ = await LogicMonitorClient.AuditSnmpSysOidMapAsync(
+					snmpSysOidMapToAudit.LocalId,
+					snmpSysOidMapToAudit.Version,
+					CancellationToken);
+		}
+	}
+
+	/// <summary>
 	/// Find one updated Data Source and import
 	/// </summary>
 	[Fact(Skip = "Don't update without understanding the implications")]
