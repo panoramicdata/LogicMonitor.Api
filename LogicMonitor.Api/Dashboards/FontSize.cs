@@ -31,6 +31,12 @@ public enum FontSize
 	Normal,
 
 	/// <summary>
+	/// Medium
+	/// </summary>
+	[EnumMember(Value = "medium-font")]
+	Medium,
+
+	/// <summary>
 	/// Large
 	/// </summary>
 	[EnumMember(Value = "large-font")]
