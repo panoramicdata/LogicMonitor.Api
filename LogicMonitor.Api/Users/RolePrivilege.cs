@@ -8,7 +8,7 @@ namespace LogicMonitor.Api.Users;
 public class RolePrivilege
 {
 	/// <summary>
-	/// The privilege object type. values can be [dashboard_group|dashboard|host_group|service_group|website_group|report_group|remoteSession|chat|setting|device_dashboard|help|logs|configNeedDeviceManagePermission|map|resourceMapTab|tracesManageTab]
+	/// The privilege object type. values can be [dashboard_group|dashboard|host_group|service_group|website_group|report_group|remoteSession|chat|setting|device_dashboard|help|logs|configNeedDeviceManagePermission|map|resourceMapTab|tracesManageTab|cp|...]
 	/// </summary>
 	[DataMember(Name = "objectType")]
 	public PrivilegeObjectType ObjectType { get; set; }

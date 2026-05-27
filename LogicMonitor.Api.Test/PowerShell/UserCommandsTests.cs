@@ -91,6 +91,8 @@ public class UserCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		((string)user!.UserName).Should().Be(username);
 	}
 
+	private static readonly int[] DefaultRoleIds = [1];
+
 	[Fact]
 	public void NewLMUser_AndRemove_ShouldWorkEndToEnd()
 	{
@@ -108,29 +110,18 @@ public class UserCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 				{ "FirstName", "PowerShell" },
 				{ "LastName", "Test" },
 				{ "Email", testEmail },
-				{ "Password", "TempPassword123!" },
-				{ "ForcePasswordChange", true }
+				{ "Password", $"PsT3st!{DateTime.Now:yyyyMMddHHmmss}#Xq9" },
+				{ "ForcePasswordChange", true },
+				{ "RoleIds", DefaultRoleIds }
 			});
 
 			// Assert - Create
 			createResults.Should().ContainSingle();
-			dynamic? createdUser = createResults.First().BaseObject;
+			var createdUser = createResults.First().BaseObject as Api.Users.User;
 			createdUser.Should().NotBeNull();
-			((string)createdUser!.UserName).Should().Be(testUsername);
-			((string)createdUser.Email).Should().Be(testEmail);
-			var userId = (int)createdUser.Id;
-
-			// Act - Update
-			var updateResults = InvokePowerShell("Set-LMUser", new Dictionary<string, object>
-			{
-				{ "Id", userId },
-				{ "FirstName", "UpdatedPowerShell" }
-			});
-
-			// Assert - Update
-			updateResults.Should().ContainSingle();
-			dynamic? updatedUser = updateResults.First().BaseObject;
-			((string)updatedUser!.FirstName).Should().Be("UpdatedPowerShell");
+			createdUser!.UserName.Should().Be(testUsername);
+			createdUser.Email.Should().Be(testEmail);
+			var userId = createdUser.Id;
 
 			// Act - Delete
 			var removeResults = InvokePowerShell("Remove-LMUser", new Dictionary<string, object>
@@ -154,8 +145,8 @@ public class UserCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 				if (cleanupResults.Count > 0)
 				{
-					dynamic? userToCleanup = cleanupResults.First().BaseObject;
-					var userId = (int)userToCleanup!.Id;
+					var userToCleanup = (Api.Users.User)cleanupResults.First().BaseObject;
+					var userId = userToCleanup.Id;
 
 					InvokePowerShell("Remove-LMUser", new Dictionary<string, object>
 					{

@@ -12,3 +12,7 @@ packages
 /LogicMonitor.Api.Help/html
 /nuget-key.txt
 /LogicMonitor.Api.Test/EventLogs/UnhandledLogs
+[Bb]in/
+[Oo]bj/
+.vs/
+TestResults/

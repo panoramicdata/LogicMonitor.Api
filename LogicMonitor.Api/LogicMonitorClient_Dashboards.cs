@@ -21,7 +21,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="dashboardGroupFullPath">The full path</param>
 	/// <param name="cancellationToken"></param>
-	public async Task<DashboardGroup> GetDashboardGroupByFullPathAsync(string dashboardGroupFullPath, CancellationToken cancellationToken)
+	public async Task<DashboardGroup?> GetDashboardGroupByFullPathAsync(string dashboardGroupFullPath, CancellationToken cancellationToken)
 		=> (await GetAllAsync(new Filter<DashboardGroup>
 		{
 			FilterItems =

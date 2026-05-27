@@ -35,10 +35,7 @@ public partial class LogicMonitorClient
 	/// <exception cref="ArgumentNullException"></exception>
 	public async Task<GraphData> GetGraphDataAsync(GraphDataRequest graphDataRequest, CancellationToken cancellationToken)
 	{
-		if (graphDataRequest is null)
-		{
-			throw new ArgumentNullException(nameof(graphDataRequest));
-		}
+		ArgumentNullException.ThrowIfNull(graphDataRequest);
 
 		graphDataRequest.Validate();
 
@@ -75,7 +72,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceDataSourceId">The device dataSource Id</param>
 	/// <param name="name">The overview graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetResourceOverviewGraphByNameAsync(
+	public async Task<DataSourceGraph?> GetResourceOverviewGraphByNameAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		string name,

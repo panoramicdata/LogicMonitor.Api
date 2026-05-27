@@ -4,11 +4,18 @@ namespace LogicMonitor.Api.Test.Resources;
 
 public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
+	//[Fact]
+	//public async Task GetResourceGroupByDisplayNameContainsParenthesisAsync()
+	//{
+	//	var x = await LogicMonitorClient.GetResourceGroupByFullPathAsync("DSW - (Test) Denise Home Network", CancellationToken);
+	//	x.Should().NotBeNull();
+	//}
+
 	[Fact]
 	public async Task GetResourceGroupByFullPath()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		resourceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
@@ -31,7 +38,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task SetAlertThreshold()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		var dataSource = await LogicMonitorClient
 			.GetByNameAsync<DataSource>("Ping", CancellationToken);
 		dataSource ??= new();
@@ -71,7 +78,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task GetRootResourceGroupByFullPath()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync("", CancellationToken);
+			.GetResourceGroupByFullPathAsync("", CancellationToken) ?? throw new InvalidOperationException();
 		resourceGroup.AlertStatus.Should().NotBe(AlertStatus.Unknown);
 	}
 
@@ -113,7 +120,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task GetResourceGroupsByFullPath()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 
 		var resourceGroups = resourceGroup.SubGroups;
 
@@ -154,7 +161,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task GetResourceGroupByFullPathWithPlusInName()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 
 		resourceGroup.Should().NotBeNull();
 	}
@@ -274,7 +281,7 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	public async Task GetResourceGroupSDTs()
 	{
 		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken);
+			.GetResourceGroupByFullPathAsync(ResourceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
 		var sdts = await LogicMonitorClient
 			.GetResourceGroupSdtsAsync(resourceGroup.Id, new Filter<ScheduledDownTime>(), CancellationToken);
 		sdts.Should().NotBeNull();

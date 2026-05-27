@@ -894,6 +894,18 @@ public class AccountSettings : IHasSingletonEndpoint
 	public int LogRetentionDays { get; set; }
 
 	/// <summary>
+	/// Count of Individual DiagnosticSource Executed
+	/// </summary>
+	[DataMember(Name = "numberOfIndividualDiagnosticSourceExecuted")]
+	public int IndividualDiagnosticSourceExecutionCount { get; set; }
+
+	/// <summary>
+	/// Count of Individual RemediationSource Executed
+	/// </summary>
+	[DataMember(Name = "numberOfIndividualRemediationSourceExecuted")]
+	public int IndividualRemediationSourceExecutionCount { get; set; }
+
+	/// <summary>
 	///     The endpoint
 	/// </summary>
 	public string Endpoint() => "setting/companySetting";

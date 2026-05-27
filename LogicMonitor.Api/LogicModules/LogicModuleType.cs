@@ -63,6 +63,12 @@ public enum LogicModuleType
 	TopologySource,
 
 	/// <summary>
+	/// DiagnosticSource
+	/// </summary>
+	[EnumMember(Value = "DIAGNOSTICSOURCE")]
+	DiagnosticSource,
+
+	/// <summary>
 	/// LogSource
 	/// </summary>
 	[EnumMember(Value = "LOGSOURCE")]

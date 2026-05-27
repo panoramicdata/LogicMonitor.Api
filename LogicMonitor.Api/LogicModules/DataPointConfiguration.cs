@@ -187,6 +187,7 @@ public class DataPointConfiguration : IdentifiedItem
 	///     The parent ResourceGroup Alert Expression List
 	/// </summary>
 	[DataMember(Name = "parentDeviceGroupAlertExprList")]
+	[JsonConverter(typeof(SingleOrArrayConverter<ParentResourceGroupAlertExpression>))]
 	public List<ParentResourceGroupAlertExpression> ParentResourceGroupAlertExprList { get; set; } = [];
 
 	/// <summary>

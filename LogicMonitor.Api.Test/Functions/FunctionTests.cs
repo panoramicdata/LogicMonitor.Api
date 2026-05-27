@@ -6,7 +6,7 @@ public class FunctionTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	public async Task GetApplications()
 	{
 		var things = await LogicMonitorClient
-			.GetAppliesToAsync("isCisco()", CancellationToken);
+			.GetAppliesToAsync("isWindows()", CancellationToken);
 		things.Should().NotBeNull();
 		things.Should().NotBeNullOrEmpty();
 	}

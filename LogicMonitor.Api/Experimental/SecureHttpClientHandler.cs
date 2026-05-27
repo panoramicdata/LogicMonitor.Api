@@ -10,16 +10,16 @@ internal class SecureHttpClientHandler(LogicMonitorClientOptions logicMonitorCli
 		CancellationToken cancellationToken
 	)
 	{
-		var subUrl = request.RequestUri.PathAndQuery.Replace("/santaba/rest/", "");
+		var subUrl = request.RequestUri!.PathAndQuery.Replace("/santaba/rest/", "");
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
-		var subUrl2 = subUrl.Contains("?")
-			? subUrl.Substring(0, subUrl.IndexOf("?", StringComparison.Ordinal))
+		var subUrl2 = subUrl.Contains('?')
+			? subUrl.Substring(0, subUrl.IndexOf('?'))
 			: subUrl;
 		var httpVerb = request.Method.ToString().ToUpperInvariant();
 		var resourcePath = $"/{subUrl2}";
 		var data = request.Content == null
 			? string.Empty
-			: await request.Content.ReadAsStringAsync().ConfigureAwait(false);
+			: await request.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
 		// Auth header
 		var authHeaderValue = _accessKey.StartsWith("lmb_", StringComparison.Ordinal)

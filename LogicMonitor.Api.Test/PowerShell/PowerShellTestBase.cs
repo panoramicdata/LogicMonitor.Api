@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
@@ -9,22 +10,23 @@ namespace LogicMonitor.Api.Test.PowerShell;
 /// </summary>
 public abstract class PowerShellTestBase : TestWithOutput, IDisposable
 {
+	private readonly TestPortalConfig _config;
+
 	protected System.Management.Automation.PowerShell? PowerShellInstance { get; private set; }
 
 	protected Runspace? TestRunspace { get; private set; }
 
 	// Shared configuration from the main test fixture
-	protected string Account => GetConfiguration()["LogicMonitor:Account"] ?? throw new InvalidOperationException("LogicMonitor:Account not configured");
-	protected string AccessId => GetConfiguration()["LogicMonitor:AccessId"] ?? throw new InvalidOperationException("LogicMonitor:AccessId not configured");
-	protected string AccessKey => GetConfiguration()["LogicMonitor:AccessKey"] ?? throw new InvalidOperationException("LogicMonitor:AccessKey not configured");
+	protected string Account => _config.Account;
+	protected string AccessId => _config.AccessId;
+	protected string AccessKey => _config.AccessKey;
 
 	protected PowerShellTestBase(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		: base(iTestOutputHelper, fixture)
 	{
+		_config = fixture.GetService<IOptions<TestPortalConfig>>().Value;
 		SetupPowerShell();
 	}
-
-	private IConfiguration GetConfiguration() => Fixture.GetService<IConfiguration>();
 
 	private void SetupPowerShell()
 	{
@@ -57,10 +59,20 @@ public abstract class PowerShellTestBase : TestWithOutput, IDisposable
 
 		if (projectDir != null)
 		{
-			var modulePath = Path.Combine(projectDir, "LogicMonitor.PowerShell", "bin", "Debug", "net9.0", "LogicMonitor.psd1");
-			if (File.Exists(modulePath))
+			// Check several possible locations for the module manifest
+			string[] candidates =
+			[
+				Path.Combine(projectDir, "LogicMonitor.PowerShell", "bin", "Debug", "net10.0", "LogicMonitor", "LogicMonitor.psd1"),
+				Path.Combine(projectDir, "LogicMonitor.PowerShell", "bin", "Debug", "net10.0", "LogicMonitor.psd1"),
+				Path.Combine(projectDir, "LogicMonitor.PowerShell", "LogicMonitor.psd1"),
+			];
+
+			foreach (var candidate in candidates)
 			{
-				return modulePath;
+				if (File.Exists(candidate))
+				{
+					return candidate;
+				}
 			}
 		}
 
@@ -83,7 +95,14 @@ public abstract class PowerShellTestBase : TestWithOutput, IDisposable
 			.AddParameter("AccessId", AccessId)
 			.AddParameter("AccessKey", AccessKey);
 
-		var results = PowerShellInstance.Invoke();
+		try
+		{
+			PowerShellInstance.Invoke();
+		}
+		catch (Exception ex) when (ex is CmdletInvocationException or ActionPreferenceStopException or PipelineStoppedException)
+		{
+			throw new InvalidOperationException($"Failed to connect to LogicMonitor: {ex.InnerException?.Message ?? ex.Message}", ex);
+		}
 
 		if (PowerShellInstance.HadErrors)
 		{
@@ -129,7 +148,17 @@ public abstract class PowerShellTestBase : TestWithOutput, IDisposable
 
 		PowerShellInstance.Commands.Clear();
 		PowerShellInstance.AddScript(command);
-		var results = PowerShellInstance.Invoke();
+
+		Collection<PSObject> results;
+		try
+		{
+			results = PowerShellInstance.Invoke();
+		}
+		catch (Exception ex) when (ex is CmdletInvocationException or ActionPreferenceStopException or PipelineStoppedException)
+		{
+			var inner = ex.InnerException;
+			throw new InvalidOperationException($"PowerShell command failed: {inner?.Message ?? ex.Message}", ex);
+		}
 
 		if (PowerShellInstance.HadErrors)
 		{
@@ -159,7 +188,16 @@ public abstract class PowerShellTestBase : TestWithOutput, IDisposable
 			command.AddParameter(param.Key, param.Value);
 		}
 
-		var results = PowerShellInstance.Invoke();
+		Collection<PSObject> results;
+		try
+		{
+			results = PowerShellInstance.Invoke();
+		}
+		catch (Exception ex) when (ex is CmdletInvocationException or ActionPreferenceStopException or PipelineStoppedException)
+		{
+			var inner = ex.InnerException;
+			throw new InvalidOperationException($"PowerShell command '{commandName}' failed: {inner?.Message ?? ex.Message}", ex);
+		}
 
 		if (PowerShellInstance.HadErrors)
 		{

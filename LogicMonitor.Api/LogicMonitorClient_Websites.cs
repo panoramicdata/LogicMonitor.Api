@@ -13,10 +13,7 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken">Optional cancellation token</param>
 	public async Task<WebsiteGroup?> GetWebsiteGroupByFullPathAsync(string websiteGroupFullPath, CancellationToken cancellationToken)
 	{
-		if (websiteGroupFullPath is null)
-		{
-			throw new ArgumentNullException(nameof(websiteGroupFullPath));
-		}
+		ArgumentNullException.ThrowIfNull(websiteGroupFullPath);
 
 		if (string.IsNullOrWhiteSpace(websiteGroupFullPath) || websiteGroupFullPath == "/")
 		{

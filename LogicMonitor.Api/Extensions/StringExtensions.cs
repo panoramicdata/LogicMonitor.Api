@@ -5,12 +5,12 @@ internal static class StringExtensions
 	public static string LowerCaseFirst(this string value)
 		=> value.Length == 0
 			? value
-			: value.Substring(0, 1).ToLowerInvariant() + value.Substring(1);
+			: string.Concat(value.AsSpan(0, 1).ToString().ToLowerInvariant(), value.AsSpan(1));
 
 	public static string UpperCaseFirst(this string value)
 		=> value.Length == 0
 			? value
-			: value.Substring(0, 1).ToUpperInvariant() + value.Substring(1);
+			: string.Concat(value.AsSpan(0, 1).ToString().ToUpperInvariant(), value.AsSpan(1));
 
 	public static string DeCamelCase(this string value)
 		=> Regex.Replace(value, "(?<a>(?<!^)((?:[A-Z][a-z])|(?:(?<!^[A-Z]+)[A-Z0-9]+(?:(?=[A-Z][a-z])|$))|(?:[0-9]+)))", " ${a}");

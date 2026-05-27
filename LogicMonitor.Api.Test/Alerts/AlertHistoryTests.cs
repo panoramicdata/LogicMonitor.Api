@@ -2,16 +2,24 @@ namespace LogicMonitor.Api.Test.Alerts;
 
 public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
-	[Fact]
-	public async Task GetAlertHistory_Last24Hours_Returns24Items()
+	private async Task<string> GetRecentAlertIdAsync()
 	{
+		var alerts = await LogicMonitorClient
+			.GetPageAsync(new Filter<Alert> { Skip = 0, Take = 1 }, CancellationToken);
+		alerts.Items.Should().NotBeNullOrEmpty("at least one alert must exist in the portal");
+		return alerts.Items[0].Id;
+	}
+
+	[Fact]
+	public async Task GetAlertHistory_Last24Hours_Returns25Items()
+	{
+		var alertId = await GetRecentAlertIdAsync();
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = alertId,
 			HistoryPeriod = AlertHistoryPeriod.Last24Hours
 		};
 
-		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, CancellationToken);
 
@@ -22,13 +30,13 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	[Fact]
 	public async Task GetAlertHistory_Last7Days_Returns8Items()
 	{
+		var alertId = await GetRecentAlertIdAsync();
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = alertId,
 			HistoryPeriod = AlertHistoryPeriod.Last7Days
 		};
 
-		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, CancellationToken);
 
@@ -39,13 +47,13 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	[Fact]
 	public async Task GetAlertHistory_Last30Days_Returns31Items()
 	{
+		var alertId = await GetRecentAlertIdAsync();
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = alertId,
 			HistoryPeriod = AlertHistoryPeriod.Last30Days
 		};
 
-		// Get alert history
 		var history = await LogicMonitorClient
 			.GetAlertHistoryAsync(request, CancellationToken);
 
@@ -56,12 +64,13 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	[Fact]
 	public async Task GetAlertHistory_Custom24Hours_Returns25Items()
 	{
+		var alertId = await GetRecentAlertIdAsync();
 		var start = DateTime.UtcNow.AddDays(-3);
 		var end = start.AddDays(1);
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = alertId,
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = end
@@ -83,7 +92,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = "any-alert-id",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = null,
 			EndDateTimeUtc = end
@@ -105,7 +114,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = "any-alert-id",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = null
@@ -128,7 +137,7 @@ public class AlertHistoryTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 		var request = new AlertHistoryRequest
 		{
-			Id = "DS26985243",
+			Id = "any-alert-id",
 			HistoryPeriod = AlertHistoryPeriod.Custom,
 			StartDateTimeUtc = start,
 			EndDateTimeUtc = end

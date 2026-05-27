@@ -776,7 +776,8 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					"SNMP_Network_Interfaces-pc-0/2/0.16383",
 					"SNMP_Network_Interfaces-pc-0/2/0.16384"
 				],
-				DataSourceNewInstanceIds = [426808630, 426808624, 426808618]
+				DataSourceNewInstanceIds = [426808630, 426808624, 426808618],
+				ResourceIds = [489168]
 			}
 		);
 
@@ -796,7 +797,8 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					"SNMP_Network_Interfaces-pc-0/2/0.16383",
 					"SNMP_Network_Interfaces-pc-0/2/0.16384"
 				],
-				DataSourceNewInstanceIds = [426808630, 426808624, 426808618]
+				DataSourceNewInstanceIds = [426808630, 426808624, 426808618],
+				ResourceIds = [489168]
 			}
 		);
 
@@ -843,7 +845,45 @@ public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 					"SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/1",
 					"SNMP_Network_Interfaces_CLONE-GigabitEthernet1/0/2"
 				],
-				DataSourceNewInstanceIds = [426199595, 426199584]
+				DataSourceNewInstanceIds = [426199595, 426199584],
+				ResourceIds = [416898]
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringOnly_VMwareDatastoreStatus_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, enable monitoring of instances : [VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXA_VMFS_P_NRP_PUR54_13ED_251 id=70959579 hid=276643,VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXB_VMFS_P_NRP_PUR54_13EE_250 id=70959578 hid=276643]",
+			new()
+			{
+				MatchedRegExId = 111,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "enable monitoring of instances : [VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXA_VMFS_P_NRP_PUR54_13ED_251 id=70959579 hid=276643,VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXB_VMFS_P_NRP_PUR54_13EE_250 id=70959578 hid=276643]",
+				DataSourceNewInstanceNames = [
+					"VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXA_VMFS_P_NRP_PUR54_13ED_251",
+					"VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXB_VMFS_P_NRP_PUR54_13EE_250"
+				],
+				DataSourceNewInstanceIds = [70959579, 70959578],
+				ResourceIds = [276643]
+			}
+		);
+
+	[Fact]
+	public void UpdateDatasourceInstancesEnableMonitoringOnly_VMwareScratch_Success()
+		=> AssertToAuditEventSucceeds(
+			@"Update the datasource instances, enable monitoring of instances : [VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXB_SCRATCH_PUR54_3 id=70959582 hid=276643]",
+			new()
+			{
+				MatchedRegExId = 111,
+				ActionType = AuditEventActionType.Update,
+				EntityType = AuditEventEntityType.ResourceDataSourceInstance,
+				OutcomeType = AuditEventOutcomeType.Success,
+				Description = "enable monitoring of instances : [VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXB_SCRATCH_PUR54_3 id=70959582 hid=276643]",
+				DataSourceNewInstanceNames = ["VMware_vCenter_DatastoreStatus_CLONE-LSP-DX0201ESXB_SCRATCH_PUR54_3"],
+				DataSourceNewInstanceIds = [70959582],
+				ResourceIds = [276643]
 			}
 		);
 
@@ -1675,7 +1715,8 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 				"a.b.c.d",
 				"e.f.g.h"
 			],
-			DataSourceNewInstanceIds = [123, 456]
+			DataSourceNewInstanceIds = [123, 456],
+			ResourceIds = [276643]
 		}
 	);
 

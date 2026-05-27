@@ -6,7 +6,7 @@ public class ResourceDataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 	public async Task GetAllResourceDataSourcesAsync()
 	{
 		var deviceDataSources = await LogicMonitorClient
-			.GetAllResourceDataSourcesAsync(1765, null, CancellationToken);
+			.GetAllResourceDataSourcesAsync(WindowsDeviceId, null, CancellationToken);
 		deviceDataSources.Should().NotBeNull();
 	}
 

@@ -81,12 +81,12 @@ public class AlertCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 			{ "Take", 10 }
 		});
 
-		// Find an unacknowledged alert
+		// Find an unacknowledged, active alert
 		PSObject? unackedAlert = null;
 		foreach (var alertObj in activeAlerts)
 		{
 			dynamic? alert = alertObj.BaseObject;
-			if (alert != null && alert?.Acked == false)
+			if (alert != null && alert?.Acked == false && alert?.IsCleared == false)
 			{
 				unackedAlert = alertObj;
 				break;

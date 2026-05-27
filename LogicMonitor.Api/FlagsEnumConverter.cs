@@ -8,7 +8,7 @@ internal class FlagsEnumConverter : JsonConverter
 	{
 		var values = serializer.Deserialize<string[]>(reader);
 
-		return values
+		return values!
 			 .Select(x => Enum.Parse(objectType, x))
 			 .Aggregate(0, (current, value) => current | (int)value);
 	}

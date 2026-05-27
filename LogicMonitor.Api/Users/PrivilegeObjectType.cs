@@ -20,6 +20,12 @@ public enum PrivilegeObjectType
 	DashboardGroup,
 
 	/// <summary>
+	/// Dashboard Shared Filter Group
+	/// </summary>
+	[EnumMember(Value = "dashboardSharedFilterGroup")]
+	DashboardSharedFilterGroup,
+
+	/// <summary>
 	/// ResourceGroup
 	/// </summary>
 	[EnumMember(Value = "host_group")]
@@ -143,5 +149,11 @@ public enum PrivilegeObjectType
 	/// Diagnostic Source
 	/// </summary>
 	[EnumMember(Value = "remediationSource")]
-	RemediationSource
+	RemediationSource,
+
+	/// <summary>
+	/// Control Panel (administrative configuration pages)
+	/// </summary>
+	[EnumMember(Value = "cp")]
+	Cp
 }

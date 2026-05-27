@@ -61,7 +61,7 @@ namespace LogicMonitor.PowerShell.Commands
 				_ => ErrorCategory.NotSpecified
 			};
 
-			WriteError(new ErrorRecord(
+			ThrowTerminatingError(new ErrorRecord(
 				ex,
 				ex.GetType().Name,
 				errorCategory,

@@ -26,7 +26,7 @@ public static class LoggerExtensions
 				var output = new StringBuilder();
 				foreach (var header in headers.Where(x => x.Key != "Authorization"))
 				{
-					output.Append($"HEADER-NAME: {header.Key} | HEADER-VALUE(S): {string.Join(";", header.Value)} \r\n");
+					output.Append(CultureInfo.InvariantCulture, $"HEADER-NAME: {header.Key} | HEADER-VALUE(S): {string.Join(";", header.Value)} \r\n");
 				}
 
 				if (output.Length == 0)

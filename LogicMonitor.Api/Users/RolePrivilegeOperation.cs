@@ -65,5 +65,23 @@ public enum RolePrivilegeOperation
 	/// Commit
 	/// </summary>
 	[EnumMember(Value = "commit")]
-	Commit
+	Commit,
+
+	/// <summary>
+	/// Visit (used for Control Panel page access)
+	/// </summary>
+	[EnumMember(Value = "visit")]
+	Visit,
+
+	/// <summary>
+	/// CreateModify (combined create and modify permission)
+	/// </summary>
+	[EnumMember(Value = "createmodify")]
+	CreateModify,
+
+	/// <summary>
+	/// Delete
+	/// </summary>
+	[EnumMember(Value = "delete")]
+	Delete
 }

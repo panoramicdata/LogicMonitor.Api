@@ -28,7 +28,7 @@ public class ConfigSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fix
 		configSource.Should().NotBeNull();
 	}
 
-	[Fact]
+	[Fact(Skip = "API endpoint setting/configsources/{id}/audit returns 501 Not Implemented")]
 	public async Task UpdateAuditVersion()
 	{
 		var configSources = await LogicMonitorClient

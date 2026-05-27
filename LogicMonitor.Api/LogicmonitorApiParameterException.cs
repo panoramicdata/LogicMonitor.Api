@@ -32,9 +32,11 @@ public class LogicMonitorApiParameterException : Exception
 	/// </summary>
 	/// <param name="info"></param>
 	/// <param name="context"></param>
+#pragma warning disable SYSLIB0051
 	protected LogicMonitorApiParameterException(SerializationInfo info, StreamingContext context) : base(info, context)
 	{
 	}
+#pragma warning restore SYSLIB0051
 
 	/// <summary>
 	///  Constructor
@@ -46,6 +48,7 @@ public class LogicMonitorApiParameterException : Exception
 	}
 
 	/// <inheritdoc />
+#pragma warning disable CS0672, SYSLIB0003, SYSLIB0051
 	[SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
 	public override void GetObjectData(SerializationInfo info, StreamingContext context)
 	{
@@ -53,4 +56,5 @@ public class LogicMonitorApiParameterException : Exception
 
 		info.AddValue("Parameter", Parameter);
 	}
+#pragma warning restore CS0672, SYSLIB0003, SYSLIB0051
 }

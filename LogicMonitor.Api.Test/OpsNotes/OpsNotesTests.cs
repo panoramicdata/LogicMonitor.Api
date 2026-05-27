@@ -20,12 +20,24 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 
 		await Task.Delay(TimeSpan.FromSeconds(2), CancellationToken);
 
-		var allOpsNotes = await LogicMonitorClient
-			.GetAllAsync<OpsNote>(CancellationToken);
+		// Retry a few times for eventual consistency
+		List<OpsNote>? allOpsNotes = null;
+		for (var attempt = 0; attempt < 5; attempt++)
+		{
+			allOpsNotes = await LogicMonitorClient
+				.GetAllAsync<OpsNote>(CancellationToken);
+
+			if (allOpsNotes.Exists(o => o.Id == newOpsNote.Id))
+			{
+				break;
+			}
+
+			await Task.Delay(TimeSpan.FromSeconds(2), CancellationToken);
+		}
 
 		// Make sure that some are returned
 		allOpsNotes.Should().NotBeNullOrEmpty();
-		allOpsNotes.Select(o => o.Id).Should().Contain(newOpsNote.Id);
+		allOpsNotes!.Select(o => o.Id).Should().Contain(newOpsNote.Id);
 	}
 
 	[Theory]
@@ -40,8 +52,12 @@ public class OpsNotesTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		var device = await LogicMonitorClient
 			.GetAsync<Resource>(WindowsDeviceId, CancellationToken);
 
-		var website = await LogicMonitorClient
-			.GetByNameAsync<Website>(WebsiteName, CancellationToken);
+		Website? website = null;
+		if (t == typeof(WebsiteOpsNoteScopeCreationDto) || t == typeof(WebsiteGroupOpsNoteScopeCreationDto))
+		{
+			website = await LogicMonitorClient
+				.GetByNameAsync<Website>(WebsiteName, CancellationToken);
+		}
 
 		website ??= new();
 

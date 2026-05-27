@@ -35,7 +35,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The datasource id</param>
 	/// <param name="graphName">The graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDataSourceGraphByNameAsync(
+	public async Task<DataSourceGraph?> GetDataSourceGraphByNameAsync(
 		int dataSourceId,
 		string graphName,
 		CancellationToken cancellationToken)
@@ -58,7 +58,7 @@ public partial class LogicMonitorClient
 	/// <param name="dataSourceId">The datasource id</param>
 	/// <param name="graphName">The graph name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<DataSourceGraph> GetDataSourceOverviewGraphByNameAsync(
+	public async Task<DataSourceGraph?> GetDataSourceOverviewGraphByNameAsync(
 		int dataSourceId,
 		string graphName,
 		CancellationToken cancellationToken)
@@ -431,11 +431,11 @@ public partial class LogicMonitorClient
 
 					if (instanceProperty is null)
 					{
-						resourceDataSourceInstances.AddRange(await GetAllResourceDataSourceInstancesAsync(deviceId, resourceDataSource.Id, instanceFilter, cancellationToken).ConfigureAwait(false));
+						resourceDataSourceInstances.AddRange(await GetAllResourceDataSourceInstancesAsync(deviceId, resourceDataSource!.Id, instanceFilter, cancellationToken).ConfigureAwait(false));
 					}
 					else
 					{
-						var thisResourceDataSourceInstances = await GetAllResourceDataSourceInstancesAsync(deviceId, resourceDataSource.Id, instanceFilter, cancellationToken).ConfigureAwait(false);
+						var thisResourceDataSourceInstances = await GetAllResourceDataSourceInstancesAsync(deviceId, resourceDataSource!.Id, instanceFilter, cancellationToken).ConfigureAwait(false);
 						foreach (var resourceDataSourceInstance in thisResourceDataSourceInstances)
 						{
 							var instanceCustomProperties = await GetAllResourceDataSourceInstancePropertiesAsync(deviceId, resourceDataSource.Id, resourceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
@@ -496,7 +496,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceDataSourceId"></param>
 	/// <param name="name">The device dataSource instanceGroup name</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<ResourceDataSourceInstanceGroup> GetResourceDataSourceInstanceGroupByNameAsync(
+	public async Task<ResourceDataSourceInstanceGroup?> GetResourceDataSourceInstanceGroupByNameAsync(
 		int resourceId,
 		int resourceDataSourceId,
 		string name,
@@ -662,7 +662,7 @@ public partial class LogicMonitorClient
 	/// <param name="resourceId"></param>
 	/// <param name="dataSourceId"></param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
-	public async Task<ResourceDataSource> GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
+	public async Task<ResourceDataSource?> GetResourceDataSourceByResourceIdAndDataSourceIdAsync(
 	int resourceId,
 	int dataSourceId,
 	CancellationToken cancellationToken)

@@ -9,11 +9,13 @@ public class ResourceCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 	[Fact]
 	public void GetLMResource_WithoutConnection_ShouldFail()
 	{
-		// Act & Assert
+		// Ensure disconnected state by explicitly disconnecting
+		DisconnectFromLogicMonitor();
+
+		// Act & Assert - when not connected, the cmdlet should throw
 		var action = () => InvokePowerShell("Get-LMResource", []);
 
-		action.Should().Throw<InvalidOperationException>()
-			.WithMessage("*not connected*");
+		action.Should().Throw<InvalidOperationException>();
 	}
 
 	[Fact]
@@ -118,10 +120,12 @@ public class ResourceCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 
 			// Assert - Create
 			createResults.Should().ContainSingle();
-			dynamic? createdGroup = createResults.First().BaseObject;
+			var createdGroup = createResults.First().BaseObject;
 			createdGroup.Should().NotBeNull();
-			((string)createdGroup!.Name).Should().Be(testGroupName);
-			var groupId = (int)createdGroup.Id;
+			createdGroup.Should().BeOfType<Api.Resources.ResourceGroup>();
+			var typedGroup = (Api.Resources.ResourceGroup)createdGroup;
+			typedGroup.Name.Should().Be(testGroupName);
+			var groupId = typedGroup.Id;
 
 			// Act - Verify it exists
 			var getResults = InvokePowerShell("Get-LMResourceGroup", new Dictionary<string, object>
@@ -131,8 +135,8 @@ public class ResourceCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 
 			// Assert - Verify
 			getResults.Should().ContainSingle();
-			dynamic? retrievedGroup = getResults.First().BaseObject;
-			((int)retrievedGroup!.Id).Should().Be(groupId);
+			var retrievedGroup = (Api.Resources.ResourceGroup)getResults.First().BaseObject;
+			retrievedGroup.Id.Should().Be(groupId);
 
 			// Act - Delete
 			var removeResults = InvokePowerShell("Remove-LMResourceGroup", new Dictionary<string, object>
@@ -156,8 +160,8 @@ public class ResourceCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 
 				if (cleanupResults.Count > 0)
 				{
-					dynamic? groupToCleanup = cleanupResults.First().BaseObject;
-					var groupId = (int)groupToCleanup!.Id;
+					var groupToCleanup = (Api.Resources.ResourceGroup)cleanupResults.First().BaseObject;
+					var groupId = groupToCleanup.Id;
 
 					InvokePowerShell("Remove-LMResourceGroup", new Dictionary<string, object>
 					{

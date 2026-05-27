@@ -54,20 +54,36 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="displayName">The Resource DisplayName</param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<Resource> GetResourceByDisplayNameAsync(
+	public async Task<Resource?> GetResourceByDisplayNameAsync(
 		string displayName,
 		CancellationToken cancellationToken)
-		=> (await GetAllAsync(new Filter<Resource>
+	{
+		ArgumentException.ThrowIfNullOrWhiteSpace(displayName);
+
+		// The LM API Eq filter cannot handle parentheses in values - fall back to tree node search
+		if (displayName.Contains('(') || displayName.Contains(')'))
+		{
+			return (await GetResourcesByNameAsync(
+				displayName,
+				100,
+				cancellationToken)
+				.ConfigureAwait(false))
+				.SingleOrDefault(r => r.DisplayName == displayName);
+		}
+
+		return (await GetAllAsync(new Filter<Resource>
 		{
 			FilterItems =
-				[
-						new Eq<Resource>(nameof(Resource.DisplayName), (displayName ?? throw new ArgumentNullException(nameof(displayName)))
-							.EscapeSlashes()
-							.EscapePlusCharacter())
-				]
-		}, cancellationToken)
-			   .ConfigureAwait(false))
-			   .SingleOrDefault();
+			[
+				new Eq<Resource>(nameof(Resource.DisplayName), displayName
+					.EscapeSlashes()
+					.EscapePlusCharacter())
+			]
+		},
+		cancellationToken)
+		.ConfigureAwait(false))
+		.SingleOrDefault(r => r.DisplayName == displayName);
+	}
 
 	/// <summary>
 	///     Get device properties, in the following order:
@@ -359,10 +375,7 @@ public partial class LogicMonitorClient
 		int maxResultCount,
 		CancellationToken cancellationToken)
 	{
-		if (searchString is null)
-		{
-			throw new ArgumentNullException(nameof(searchString));
-		}
+		ArgumentNullException.ThrowIfNull(searchString);
 
 		var treeNodeFreeSearchResults = await TreeNodeFreeSearchAsync(
 			searchString,
@@ -386,7 +399,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="resourceGroupFullPath"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
-	public async Task<ResourceGroup> GetResourceGroupByFullPathAsync(
+	public async Task<ResourceGroup?> GetResourceGroupByFullPathAsync(
 		string resourceGroupFullPath,
 		CancellationToken cancellationToken)
 	{
@@ -395,19 +408,41 @@ public partial class LogicMonitorClient
 			return await GetAsync<ResourceGroup>(1, cancellationToken).ConfigureAwait(false);
 		}
 
-		// This may actually return more than one, as LogicMonitor does not correctly handle brackets in some cases.
-		var allResourceGroups = await GetAllAsync(new Filter<ResourceGroup>
+		// The LM API Eq filter cannot handle parentheses in values - fall back to tree node search
+		if (resourceGroupFullPath.Contains('(') || resourceGroupFullPath.Contains(')'))
 		{
-			FilterItems =
-			[
-				new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), resourceGroupFullPath.EscapePlusCharacter().EscapeParens())
-			]
-		},
-		cancellationToken: cancellationToken)
-		.ConfigureAwait(false);
+			// Search by leaf group name, then match by full path client-side
+			var leafName = resourceGroupFullPath.Split('/')[^1];
+			var searchResults = await TreeNodeFreeSearchAsync(
+				leafName,
+				100,
+				cancellationToken,
+				TreeNodeFreeSearchResultType.ResourceGroup)
+				.ConfigureAwait(false);
 
-		return allResourceGroups
-			.SingleOrDefault(dg => dg.FullPath == resourceGroupFullPath);
+			foreach (var result in searchResults)
+			{
+				var group = await GetAsync<ResourceGroup>(result.EntityId, cancellationToken).ConfigureAwait(false);
+				if (group.FullPath == resourceGroupFullPath)
+				{
+					return group;
+				}
+			}
+
+			return null;
+		}
+
+		// This may actually return more than one, as LogicMonitor does not correctly handle brackets in some cases.
+		var allResourceGroups =
+			await GetAllAsync(new Filter<ResourceGroup>{
+				FilterItems =
+				[
+					new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), resourceGroupFullPath.EscapePlusCharacter())
+				]},
+				cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
+
+		return allResourceGroups.SingleOrDefault(dg => dg.FullPath == resourceGroupFullPath);
 	}
 
 	/// <summary>
@@ -469,10 +504,7 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken,
 		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
 	{
-		if (searchText is null)
-		{
-			throw new ArgumentNullException(nameof(searchText));
-		}
+		ArgumentNullException.ThrowIfNull(searchText);
 
 		var modifier = treeNodeFreeSearchResultType switch
 		{
@@ -1004,4 +1036,124 @@ public partial class LogicMonitorClient
 		Filter<UnmonitoredResource> filter,
 		CancellationToken cancellationToken)
 		=> FilteredGetAsync($"device/unmonitoreddevices", filter, cancellationToken);
+
+	/// <summary>
+	/// Get all cluster alert configurations for a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<List<ResourceGroupClusterAlertConfig>> GetAllResourceGroupClusterAlertConfigsAsync(
+		int resourceGroupId,
+		CancellationToken cancellationToken)
+	{
+		var items = await GetAllAsync<ResourceGroupClusterAlertConfig>(
+			$"device/groups/{resourceGroupId}/clusterAlertConf",
+			cancellationToken).ConfigureAwait(false);
+		foreach (var item in items)
+			item.ResourceGroupId = resourceGroupId;
+		return items;
+	}
+
+	/// <summary>
+	/// Get a filtered page of cluster alert configurations for a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="filter">The filter</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<Page<ResourceGroupClusterAlertConfig>> GetResourceGroupClusterAlertConfigsPageAsync(
+		int resourceGroupId,
+		Filter<ResourceGroupClusterAlertConfig>? filter,
+		CancellationToken cancellationToken)
+	{
+		var page = await FilteredGetAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf",
+			filter,
+			cancellationToken).ConfigureAwait(false);
+		foreach (var item in page.Items ?? [])
+			item.ResourceGroupId = resourceGroupId;
+		return page;
+	}
+
+	/// <summary>
+	/// Get a single cluster alert configuration by Id
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="id">The cluster alert configuration Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<ResourceGroupClusterAlertConfig> GetResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		int id,
+		CancellationToken cancellationToken)
+	{
+		var item = await GetBySubUrlAsync<ResourceGroupClusterAlertConfig>(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
+			cancellationToken).ConfigureAwait(false);
+		item.ResourceGroupId = resourceGroupId;
+		return item;
+	}
+
+	/// <summary>
+	/// Create a cluster alert configuration for a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="config">The configuration to create</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public async Task<ResourceGroupClusterAlertConfig> CreateResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		ResourceGroupClusterAlertConfig config,
+		CancellationToken cancellationToken)
+	{
+		var result = await PostAsync<ResourceGroupClusterAlertConfig, ResourceGroupClusterAlertConfig>(
+			config,
+			$"device/groups/{resourceGroupId}/clusterAlertConf",
+			cancellationToken).ConfigureAwait(false);
+		result.ResourceGroupId = resourceGroupId;
+		return result;
+	}
+
+	/// <summary>
+	/// Replace a cluster alert configuration (full update via PUT)
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="config">The updated configuration (must have Id set)</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task UpdateResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		ResourceGroupClusterAlertConfig config,
+		CancellationToken cancellationToken)
+		=> PutAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{config.Id}",
+			config,
+			cancellationToken);
+
+	/// <summary>
+	/// Partially update a cluster alert configuration (PATCH)
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="id">The cluster alert configuration Id</param>
+	/// <param name="fieldsToUpdate">The fields to update</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task PatchResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		int id,
+		Dictionary<string, object> fieldsToUpdate,
+		CancellationToken cancellationToken)
+		=> PatchAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
+			fieldsToUpdate,
+			cancellationToken);
+
+	/// <summary>
+	/// Delete a cluster alert configuration from a ResourceGroup
+	/// </summary>
+	/// <param name="resourceGroupId">The ResourceGroup Id</param>
+	/// <param name="id">The cluster alert configuration Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task DeleteResourceGroupClusterAlertConfigAsync(
+		int resourceGroupId,
+		int id,
+		CancellationToken cancellationToken)
+		=> DeleteAsync(
+			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
+			cancellationToken);
 }

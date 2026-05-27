@@ -66,7 +66,7 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="resourceId"></param>
 	/// <param name="eventSourceId"></param>
-	public async Task<ResourceEventSource> GetResourceEventSourceByResourceIdAndEventSourceIdAsync(
+	public async Task<ResourceEventSource?> GetResourceEventSourceByResourceIdAndEventSourceIdAsync(
 		int resourceId,
 		int eventSourceId)
 	{

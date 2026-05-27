@@ -37,10 +37,16 @@ public class ExternalApiStats
 	public int TotalProcessedRequests { get; set; }
 
 	/// <summary>
-	/// Total rejected requests
+	/// Total rejected GET requests
 	/// </summary>
 	[DataMember(Name = "totalRejectedGetAPICount")]
 	public int TotalRejectedGetApiCount { get; set; }
+
+	/// <summary>
+	/// Total rejected modification (PUT/POST/PATCH/DELETE) requests
+	/// </summary>
+	[DataMember(Name = "totalRejectedModAPICount")]
+	public int TotalRejectedModApiCount { get; set; }
 
 	/// <summary>
 	/// API
