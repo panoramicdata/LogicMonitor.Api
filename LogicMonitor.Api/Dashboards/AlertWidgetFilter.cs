@@ -95,4 +95,16 @@ public class AlertWidgetFilter
 	/// </summary>
 	[DataMember(Name = "keyword")]
 	public string KeyWord { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The escalation filter
+	/// </summary>
+	[DataMember(Name = "isEscalation")]
+	public string IsEscalation { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The historical SDT filter
+	/// </summary>
+	[DataMember(Name = "isHistoricalSdt")]
+	public string IsHistoricalSdt { get; set; } = string.Empty;
 }

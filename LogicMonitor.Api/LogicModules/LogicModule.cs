@@ -36,4 +36,10 @@ public abstract class LogicModule : NamedItem
 	/// </summary>
 	[DataMember(Name = "installationMetadata", IsRequired = false)]
 	public IntegrationMetadata InstallationMetadata { get; set; } = new();
+
+	/// <summary>
+	/// Whether the LogicModule is in use
+	/// </summary>
+	[DataMember(Name = "isInUse")]
+	public bool? IsInUse { get; set; }
 }

@@ -94,4 +94,16 @@ public class ParsedAlertFilters
 	/// </summary>
 	[DataMember(Name = "severity")]
 	public string Severity { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The escalation filter
+	/// </summary>
+	[DataMember(Name = "isEscalation")]
+	public string IsEscalation { get; set; } = string.Empty;
+
+	/// <summary>
+	///     The historical SDT filter
+	/// </summary>
+	[DataMember(Name = "isHistoricalSdt")]
+	public string IsHistoricalSdt { get; set; } = string.Empty;
 }
