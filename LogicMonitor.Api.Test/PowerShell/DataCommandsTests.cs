@@ -1,5 +1,3 @@
-using System.Management.Automation;
-
 namespace LogicMonitor.Api.Test.PowerShell;
 
 /// <summary>

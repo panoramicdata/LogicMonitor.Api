@@ -27,12 +27,22 @@ public enum ResourceType
 	Service = 6,
 
 	/// <summary>
-	/// PaaS
+	/// Platform as a Service
 	/// </summary>
 	PaaS = 8,
 
 	/// <summary>
-	/// Service
+	/// Software as a Service
 	/// </summary>
-	SaaS = 10
+	SaaS = 10,
+
+	/// <summary>
+	/// Web Check (Internal or External)
+	/// </summary>
+	Web = 18,
+
+	/// <summary>
+	/// Ping Check (Internal or External)
+	/// </summary>
+	Ping = 19,
 }

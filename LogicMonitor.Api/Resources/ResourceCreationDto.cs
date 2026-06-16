@@ -61,6 +61,24 @@ public class ResourceCreationDto : CreationDto<Resource>, IHasName, IHasDescript
 	public int PreferredCollectorId { get; set; }
 
 	/// <summary>
+	///    The device type as an integer (e.g. 19 for Ping checks). Omitted when null, defaulting to 0 (Regular) on the server.
+	/// </summary>
+	[DataMember(Name = "deviceType", EmitDefaultValue = false)]
+	public ResourceType? ResourceType { get; set; }
+
+	/// <summary>
+	///    The test location (collectors that perform the check). Required for ICMP resources.
+	/// </summary>
+	[DataMember(Name = "testLocation", EmitDefaultValue = false)]
+	public WebsiteLocation? TestLocation { get; set; }
+
+	/// <summary>
+	///    The synthetics collector IDs (for internal ping/web checks)
+	/// </summary>
+	[DataMember(Name = "syntheticsCollectorIds", EmitDefaultValue = false)]
+	public List<int>? SyntheticsCollectorIds { get; set; }
+
+	/// <summary>
 	///    Custom properties
 	/// </summary>
 	[DataMember(Name = "customProperties")]

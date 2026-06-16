@@ -472,6 +472,162 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public List<int>? SyntheticsCollectorIds { get; set; }
 
 	/// <summary>
+	/// The ID of the host this was cloned from (null if not cloned)
+	/// </summary>
+	[DataMember(Name = "clonedFromHostId")]
+	public int? ClonedFromHostId { get; set; }
+
+	/// <summary>
+	/// Whether monitoring is stopped for this resource
+	/// </summary>
+	[DataMember(Name = "stopMonitoring")]
+	public bool StopMonitoring { get; set; }
+
+	/// <summary>
+	/// Whether monitoring is stopped by folder for this resource
+	/// </summary>
+	[DataMember(Name = "stopMonitoringByFolder")]
+	public bool StopMonitoringByFolder { get; set; }
+
+	/// <summary>
+	/// Individual checkpoint alert enable (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "individualSmAlertEnable")]
+	public bool IndividualSmAlertEnable { get; set; }
+
+	/// <summary>
+	/// Individual alert level (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "individualAlertLevel")]
+	public string? IndividualAlertLevel { get; set; }
+
+	/// <summary>
+	/// Overall alert level (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "overallAlertLevel")]
+	public string? OverallAlertLevel { get; set; }
+
+	/// <summary>
+	/// Polling interval in minutes (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "pollingInterval")]
+	public int PollingInterval { get; set; }
+
+	/// <summary>
+	/// Transition value - number of polls before alert (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "transition")]
+	public int Transition { get; set; }
+
+	/// <summary>
+	/// Global service monitor alert condition (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "globalSmAlertCond")]
+	public int GlobalSmAlertCond { get; set; }
+
+	/// <summary>
+	/// Use default location setting (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "useDefaultLocationSetting")]
+	public bool UseDefaultLocationSetting { get; set; }
+
+	/// <summary>
+	/// Use default alert setting (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "useDefaultAlertSetting")]
+	public bool UseDefaultAlertSetting { get; set; }
+
+	/// <summary>
+	/// Checkpoints (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "checkpoints")]
+	public List<object>? Checkpoints { get; set; }
+
+	/// <summary>
+	/// Whether this is an internal check (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "isInternal")]
+	public bool IsInternal { get; set; }
+
+	/// <summary>
+	/// Collectors used for internal checks (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "collectors")]
+	public List<object>? Collectors { get; set; }
+
+	/// <summary>
+	/// Test location configuration (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "testLocation")]
+	public WebsiteLocation? TestLocation { get; set; }
+
+	/// <summary>
+	/// Group IDs for the resource
+	/// </summary>
+	[DataMember(Name = "groupIds")]
+	public List<int>? GroupIds { get; set; }
+
+	/// <summary>
+	/// Properties for the resource
+	/// </summary>
+	[DataMember(Name = "properties")]
+	public List<object>? Properties { get; set; }
+
+	/// <summary>
+	/// Status of the check (for ping/web checks)
+	/// </summary>
+	[DataMember(Name = "status")]
+	public string? Status { get; set; }
+
+	/// <summary>
+	/// Template information
+	/// </summary>
+	[DataMember(Name = "template")]
+	public object? Template { get; set; }
+
+	/// <summary>
+	/// Last updated timestamp
+	/// </summary>
+	[DataMember(Name = "lastUpdated")]
+	public long? LastUpdated { get; set; }
+
+	/// <summary>
+	/// Steps for web checks
+	/// </summary>
+	[DataMember(Name = "steps")]
+	public List<object>? Steps { get; set; }
+
+	/// <summary>
+	/// Domain for the check
+	/// </summary>
+	[DataMember(Name = "domain")]
+	public string? Domain { get; set; }
+
+	/// <summary>
+	/// Ping count (for ping checks)
+	/// </summary>
+	[DataMember(Name = "count")]
+	public int? Count { get; set; }
+
+	/// <summary>
+	/// Host/IP address (for ping checks)
+	/// </summary>
+	[DataMember(Name = "host")]
+	public string? Host { get; set; }
+
+	/// <summary>
+	/// Percent packets not received in time threshold (for ping checks)
+	/// </summary>
+	[DataMember(Name = "percentPktsNotReceiveInTime")]
+	public int? PercentPktsNotReceiveInTime { get; set; }
+
+	/// <summary>
+	/// Timeout in milliseconds for packets not received (for ping checks)
+	/// </summary>
+	[DataMember(Name = "timeoutInMSPktsNotReceive")]
+	public int? TimeoutInMSPktsNotReceive { get; set; }
+
+	/// <summary>
 	/// The role privilege operation(s) for this device that are granted to the user who made the API request
 	/// </summary>
 	[SantabaReadOnly]
