@@ -21,10 +21,12 @@ public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.DeleteAsync(existingResource, cancellationToken: CancellationToken);
 		}
 
-		// Build the service parameters blob that LM uses to configure the ping check synthetics
+		// Build the service parameters blob that LM uses to configure the ping check synthetics.
+		// Per the "Adding Uptime Devices" docs, an internal check must set all=false when specific
+		// collectorIds are supplied (and smgIds must be empty).
 		var testLocationParams = new TestLocationParameters
 		{
-			All = true,
+			All = false,
 			CollectorIds = [CollectorId],
 			SmgIds = []
 		};
@@ -37,13 +39,12 @@ public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture
 			OverallAlertLevel = "critical",
 			PollingInterval = "5",
 			Dns = targetHost,
-			Count = "10",
+			Count = "5",
 			IndividualSmAlertEnable = "true",
 			TimeoutInMSPktsNotReceive = "500",
 			Transition = "1",
 			GlobalSmAlertCond = "0",
 			IsInternal = "true",
-			ClearTransition = "5",
 			IndividualAlertLevel = "warn"
 		};
 		var serviceParametersJson = JsonSerializer.Serialize(serviceParameters);
@@ -60,7 +61,7 @@ public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture
 			ResourceType = ResourceType.Ping,
 			TestLocation = new WebsiteLocation
 			{
-				All = true,
+				All = false,
 				CollectorIds = [CollectorId],
 				SmgIds = []
 			},

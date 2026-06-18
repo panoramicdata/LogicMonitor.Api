@@ -16,6 +16,7 @@ global using LogicMonitor.Api.RecycleBin;
 global using LogicMonitor.Api.Reports;
 global using LogicMonitor.Api.ResourceProcesses;
 global using LogicMonitor.Api.Resources;
+global using LogicMonitor.Api.Resources.Uptime;
 global using LogicMonitor.Api.ScheduledDownTimes;
 global using LogicMonitor.Api.Settings;
 global using LogicMonitor.Api.Time;
