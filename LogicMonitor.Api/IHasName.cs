@@ -1,4 +1,5 @@
 ﻿namespace LogicMonitor.Api;
+
 /// <summary>
 /// Defines that the object has a Name property
 /// </summary>

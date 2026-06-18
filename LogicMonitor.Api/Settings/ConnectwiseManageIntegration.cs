@@ -102,4 +102,3 @@ public class ConnectwiseManageIntegration : HttpIntegration
 	[DataMember(Name = "statusAckTicket")]
 	public int StatusAckTicket { get; set; }
 }
-

@@ -630,7 +630,7 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		lastUpdatedUtc.Should().HaveHour(8);
 		lastUpdatedUtc.Should().HaveMinute(45);
 		lastUpdatedUtc.Should().HaveSecond(25);
-		
+	
 		// Verify the exact timestamp
 		var expectedDateTime = new DateTime(2025, 4, 30, 8, 45, 25, 588, DateTimeKind.Utc);
 		lastUpdatedUtc.Should().Be(expectedDateTime);

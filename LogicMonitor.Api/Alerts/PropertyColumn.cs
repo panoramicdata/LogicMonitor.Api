@@ -18,4 +18,3 @@ public class PropertyColumn
 	[DataMember(Name = "columnName")]
 	public string ColumnName { get; set; } = string.Empty;
 }
-

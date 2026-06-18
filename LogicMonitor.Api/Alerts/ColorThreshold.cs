@@ -24,4 +24,3 @@ public class ColorThreshold
 	[DataMember(Name = "relation")]
 	public string Relation { get; set; } = string.Empty;
 }
-

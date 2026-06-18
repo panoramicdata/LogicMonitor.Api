@@ -18,4 +18,3 @@ public class ResourceGroupAlertSdt : AlertSdt
 	[DataMember(Name = "dataSourceId")]
 	public int? DataSourceId { get; set; }
 }
-

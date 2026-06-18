@@ -18,4 +18,3 @@ public class ResourceGroupsInfoDetail
 	[DataMember(Name = "props")]
 	public int PropertyCount { get; set; }
 }
-

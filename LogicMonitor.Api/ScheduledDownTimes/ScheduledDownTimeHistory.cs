@@ -1,4 +1,5 @@
 ﻿namespace LogicMonitor.Api.ScheduledDownTimes;
+
 /// <summary>
 /// ScheduledDownTimeHistory
 /// </summary>

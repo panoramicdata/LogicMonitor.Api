@@ -1,70 +1,69 @@
 using System.Management.Automation;
 
-namespace LogicMonitor.PowerShell.Commands
+namespace LogicMonitor.PowerShell.Commands;
+
+/// <summary>
+/// Disconnects from LogicMonitor
+/// </summary>
+[Cmdlet(VerbsCommunications.Disconnect, "LogicMonitor")]
+public class DisconnectLogicMonitorCommand : LogicMonitorCmdletBase
 {
-	/// <summary>
-	/// Disconnects from LogicMonitor
-	/// </summary>
-	[Cmdlet(VerbsCommunications.Disconnect, "LogicMonitor")]
-	public class DisconnectLogicMonitorCommand : LogicMonitorCmdletBase
+	protected override void ProcessRecord()
 	{
-		protected override void ProcessRecord()
+		try
 		{
-			try
+			if (Client == null)
 			{
-				if (Client == null)
-				{
-					WriteWarning("Not currently connected to LogicMonitor.");
-					return;
-				}
-
-				WriteVerboseMessage("Disconnecting from LogicMonitor...");
-
-				// Dispose the client
-				Client.Dispose();
-				Client = null;
-				ConnectionInfo = null;
-
-				WriteVerboseMessage("Successfully disconnected from LogicMonitor.");
+				WriteWarning("Not currently connected to LogicMonitor.");
+				return;
 			}
-			catch (Exception ex)
-			{
-				HandleApiException(ex);
-			}
+
+			WriteVerboseMessage("Disconnecting from LogicMonitor...");
+
+			// Dispose the client
+			Client.Dispose();
+			Client = null;
+			ConnectionInfo = null;
+
+			WriteVerboseMessage("Successfully disconnected from LogicMonitor.");
+		}
+		catch (Exception ex)
+		{
+			HandleApiException(ex);
 		}
 	}
+}
 
-	/// <summary>
-	/// Tests the current connection to LogicMonitor
-	/// </summary>
-	[Cmdlet(VerbsDiagnostic.Test, "LMConnection")]
-	[OutputType(typeof(bool))]
-	public class TestLMConnectionCommand : LogicMonitorCmdletBase
+/// <summary>
+/// Tests the current connection to LogicMonitor
+/// </summary>
+[Cmdlet(VerbsDiagnostic.Test, "LMConnection")]
+[OutputType(typeof(bool))]
+public class TestLMConnectionCommand : LogicMonitorCmdletBase
+{
+	protected override void ProcessRecord()
 	{
-		protected override void ProcessRecord()
+		try
 		{
-			try
+			if (Client == null)
 			{
-				if (Client == null)
-				{
-					WriteObject(false);
-					return;
-				}
-
-				WriteVerboseMessage("Testing LogicMonitor connection...");
-
-				// Try to get account settings to test connection
-				var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None)
-				  .GetAwaiter().GetResult();
-
-				WriteVerboseMessage("Connection test successful.");
-				WriteObject(true);
-			}
-			catch (Exception ex)
-			{
-				WriteVerboseMessage($"Connection test failed: {ex.Message}");
 				WriteObject(false);
+				return;
 			}
+
+			WriteVerboseMessage("Testing LogicMonitor connection...");
+
+			// Try to get account settings to test connection
+			var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None)
+			  .GetAwaiter().GetResult();
+
+			WriteVerboseMessage("Connection test successful.");
+			WriteObject(true);
+		}
+		catch (Exception ex)
+		{
+			WriteVerboseMessage($"Connection test failed: {ex.Message}");
+			WriteObject(false);
 		}
 	}
 }

@@ -18,4 +18,3 @@ public class HierarchyTypeAndId
 	[DataMember(Name = "model")]
 	public string Type { get; set; } = string.Empty;
 }
-

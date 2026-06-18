@@ -30,7 +30,7 @@ public abstract class TestWithOutput(ITestOutputHelper testOutputHelper, Fixture
 	protected Stopwatch TestStopwatch { get; } = Stopwatch.StartNew();
 	protected int StartEpoch { get; } = DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch();
 	protected int EndEpoch { get; } = DateTime.UtcNow.SecondsSinceTheEpoch();
-	
+
 	internal Api.Experimental.LogicMonitorClient ExperimentalLogicMonitorClient { get; } = CreateExperimentalClient(fixture, CreateLogger(testOutputHelper));
 	protected LogicMonitorClient LogicMonitorClient { get; } = CreateClient(fixture, CreateLogger(testOutputHelper));
 

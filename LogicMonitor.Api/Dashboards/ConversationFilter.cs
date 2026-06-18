@@ -36,4 +36,3 @@ public class ConversationFilter
 	[DataMember(Name = "toEndpoint")]
 	public string ToEndpoint { get; set; } = string.Empty;
 }
-

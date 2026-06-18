@@ -12,4 +12,3 @@ public class HierarchyResponseById
 	[DataMember(Name = "dataSourceInstances")]
 	public Dictionary<string, ResourceDataSourceInstanceSummary> ResourceDataSourceInstances { get; set; } = [];
 }
-

@@ -36,4 +36,3 @@ public class ResourceDataSourceInstanceSummary
 	[DataMember(Name = "dataId")]
 	public HierarchyTypeAndId DataId { get; set; } = new HierarchyTypeAndId();
 }
-

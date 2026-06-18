@@ -36,4 +36,3 @@ public class HierarchyResponseMeta
 	[DataMember(Name = "pageOffsetCount")]
 	public int PageOffset { get; set; }
 }
-

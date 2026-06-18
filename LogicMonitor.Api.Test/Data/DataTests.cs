@@ -303,7 +303,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		graphData.Should().NotBeNull();
 		graphData.TimeStamps.Should().NotBeEmpty();
-		
+	
 		// For a 1-month period, LogicMonitor aggregates to hourly intervals (3600 seconds)
 		graphData.Step.Should().Be(3600, "for a 1-month time range, data should be aggregated to hourly intervals");
 	}
@@ -377,7 +377,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		graphData.Should().NotBeNull();
 		graphData.TimeStamps.Should().NotBeEmpty();
-		
+	
 		// Verify the step matches the expected resolution (allow +/-10% tolerance)
 		var stepTolerance = (int)(expectedStepSeconds * 0.10);
 		graphData.Step.Should().BeInRange(
@@ -424,10 +424,10 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 
 		graphData.Should().NotBeNull();
 		graphData.TimeStamps.Should().NotBeEmpty();
-		
+	
 		// Verify we have at least 2 timestamps to calculate intervals
 		graphData.TimeStamps.Should().HaveCountGreaterThan(1);
-		
+	
 		// Calculate actual intervals between consecutive timestamps
 		var intervals = new List<long>();
 		for (int i = 1; i < Math.Min(graphData.TimeStamps.Count, 100); i++)
@@ -435,19 +435,19 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			var intervalMs = graphData.TimeStamps[i] - graphData.TimeStamps[i - 1];
 			intervals.Add(intervalMs);
 		}
-		
+	
 		// Convert to seconds
 		var intervalsInSeconds = intervals.Select(ms => ms / 1000).ToList();
-		
+	
 		// Most intervals should be equal to the Step value
 		var expectedIntervalSeconds = graphData.Step;
 		var matchingIntervals = intervalsInSeconds.Count(interval => Math.Abs(interval - expectedIntervalSeconds) <= 1);
 		var matchPercentage = (double)matchingIntervals / intervalsInSeconds.Count * 100;
-		
+	
 		// At least 90% of intervals should match the expected step
 		matchPercentage.Should().BeGreaterThanOrEqualTo(90,
 			$"most intervals should match the Step value of {expectedIntervalSeconds}s");
-		
+	
 		// Log detailed information
 		Logger.LogInformation("1-Month Zoom - Total TimeStamps: {Count}", graphData.TimeStamps.Count);
 		Logger.LogInformation("1-Month Zoom - Step: {Step}s", graphData.Step);
@@ -681,7 +681,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		// Validate based on known boundaries
 		graphData.Should().NotBeNull();
 		graphData.TimeStamps.Should().NotBeEmpty();
-		
+	
 		// GraphId=-1 behaviour is server-determined and can vary by account/data retention.
 		// Keep this as a characterization test and only assert the response is well-formed.
 		graphData.Step.Should().BeGreaterThan(0);
@@ -746,7 +746,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		graphData.Should().NotBeNull();
 		graphData.TimeStamps.Should().NotBeEmpty();
 		graphData.TimeStamps.Should().HaveCountGreaterThan(1, "should have multiple data points for trending");
-		
+	
 		// Calculate actual metrics
 		var durationInSeconds = (endDateTime - startDateTime).TotalSeconds;
 		var actualDataPoints = graphData.TimeStamps.Count;

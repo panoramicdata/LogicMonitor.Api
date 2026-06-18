@@ -5,8 +5,8 @@ using LogicMonitor.Api.LogicModules;
 using LogicMonitor.Api.Websites;
 using LogicMonitor.Api.Filters;
 
-namespace LogicMonitor.PowerShell.Commands
-{
+namespace LogicMonitor.PowerShell.Commands;
+
     /// <summary>
     /// Gets LogicMonitor dashboards
   /// </summary>
@@ -120,7 +120,7 @@ WriteVerboseMessage($"Retrieved {dashboards.Count} dashboards.");
   {
      filter.FilterItems =
  [
-		 new Eq<DashboardGroup>(nameof(DashboardGroup.Name), Name)
+	 new Eq<DashboardGroup>(nameof(DashboardGroup.Name), Name)
     ];
             }
 
@@ -171,7 +171,7 @@ WriteVerboseMessage($"Retrieved {dashboards.Count} dashboards.");
   {
          filter.FilterItems =
  [
-		 new Eq<Collector>(nameof(Collector.Description), Description)
+	 new Eq<Collector>(nameof(Collector.Description), Description)
     ];
   }
 
@@ -272,8 +272,8 @@ HandleApiException(ex);
    if (!string.IsNullOrEmpty(Name))
       {
       filter.FilterItems =
-		[
-	  new Eq<DataSource>(nameof(DataSource.Name), Name)
+	[
+  new Eq<DataSource>(nameof(DataSource.Name), Name)
     ];
        }
 
@@ -323,8 +323,8 @@ HandleApiException(ex);
      if (!string.IsNullOrEmpty(Name))
        {
    filter.FilterItems =
-	 [
-		new Eq<Website>(nameof(Website.Name), Name)
+ [
+	new Eq<Website>(nameof(Website.Name), Name)
   ];
   }
 
@@ -374,8 +374,8 @@ WriteObject(group);
        if (!string.IsNullOrEmpty(Name))
       {
     filter.FilterItems =
-	 [
-		new Eq<WebsiteGroup>(nameof(WebsiteGroup.Name), Name)
+ [
+	new Eq<WebsiteGroup>(nameof(WebsiteGroup.Name), Name)
     ];
   }
 
@@ -390,4 +390,3 @@ WriteObject(group);
             }
         }
     }
-}

@@ -4,8 +4,8 @@ using LogicMonitor.Api;
 using LogicMonitor.Api.Resources;
 using LogicMonitor.Api.Filters;
 
-namespace LogicMonitor.PowerShell.Commands
-{
+namespace LogicMonitor.PowerShell.Commands;
+
     /// <summary>
     /// Gets LogicMonitor resources
     /// </summary>
@@ -198,121 +198,120 @@ public string? Description { get; set; }
     }
 
     /// <summary>
-	/// Updates a LogicMonitor resource
+/// Updates a LogicMonitor resource
+/// </summary>
+[Cmdlet(VerbsCommon.Set, "LMResource")]
+[OutputType(typeof(Resource))]
+public class SetLMResourceCommand : LogicMonitorCmdletBase
+{
+	/// <summary>
+	/// Resource ID to update
 	/// </summary>
-	[Cmdlet(VerbsCommon.Set, "LMResource")]
-	[OutputType(typeof(Resource))]
-	public class SetLMResourceCommand : LogicMonitorCmdletBase
-	{
-		/// <summary>
-		/// Resource ID to update
-		/// </summary>
-		[Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-		public int Id { get; set; }
-
-		/// <summary>
-		/// New resource name
-		/// </summary>
-		[Parameter()]
-		public string? Name { get; set; }
-
-		/// <summary>
-		/// New display name
-		/// </summary>
-		[Parameter()]
-		public string? DisplayName { get; set; }
-
-		/// <summary>
-		/// New description
-		/// </summary>
-		[Parameter()]
-		public string? Description { get; set; }
-
-		protected override void ProcessRecord()
-		{
-			try
-			{
-				EnsureConnection();
-
-				WriteVerboseMessage($"Updating resource ID: {Id}");
-
-				// Get the existing resource
-				var resource = Client!.GetAsync<Resource>(Id, CancellationToken.None)
-				 .GetAwaiter().GetResult();
-
-				// Update properties
-				if (!string.IsNullOrEmpty(Name))
-				{
-					resource.Name = Name;
-				}
-
-				if (!string.IsNullOrEmpty(DisplayName))
-				{
-					resource.DisplayName = DisplayName;
-				}
-
-				if (!string.IsNullOrEmpty(Description))
-				{
-					resource.Description = Description;
-				}
-
-				// Update the resource
-				Client!.PutAsync(resource, CancellationToken.None)
-					 .GetAwaiter().GetResult();
-
-				WriteVerboseMessage($"Successfully updated resource: {resource.Name}");
-				WriteObject(resource);
-			}
-			catch (Exception ex)
-			{
-				HandleApiException(ex);
-			}
-		}
-	}
+	[Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+	public int Id { get; set; }
 
 	/// <summary>
-	/// Removes a LogicMonitor resource
+	/// New resource name
 	/// </summary>
-	[Cmdlet(VerbsCommon.Remove, "LMResource", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-	public class RemoveLMResourceCommand : LogicMonitorCmdletBase
+	[Parameter()]
+	public string? Name { get; set; }
+
+	/// <summary>
+	/// New display name
+	/// </summary>
+	[Parameter()]
+	public string? DisplayName { get; set; }
+
+	/// <summary>
+	/// New description
+	/// </summary>
+	[Parameter()]
+	public string? Description { get; set; }
+
+	protected override void ProcessRecord()
 	{
-		/// <summary>
-		/// Resource ID to remove
-		/// </summary>
-		[Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
-		public int Id { get; set; }
-
-		/// <summary>
-		/// Perform hard delete (permanent removal)
-		/// </summary>
-		[Parameter()]
-		public SwitchParameter HardDelete { get; set; }
-
-		protected override void ProcessRecord()
+		try
 		{
-			try
-			{
-				EnsureConnection();
+			EnsureConnection();
 
-				// Get resource info for confirmation
-				var resource = Client!.GetAsync<Resource>(Id, CancellationToken.None)
+			WriteVerboseMessage($"Updating resource ID: {Id}");
+
+			// Get the existing resource
+			var resource = Client!.GetAsync<Resource>(Id, CancellationToken.None)
 			 .GetAwaiter().GetResult();
 
-				var deleteType = HardDelete ? "permanently delete" : "delete";
-				if (ShouldProcess($"Resource '{resource.Name}' (ID: {Id})", $"{deleteType} resource"))
-				{
-					WriteVerboseMessage($"Removing resource: {resource.Name} (ID: {Id})");
-
-					Client!.DeleteAsync<Resource>(Id, HardDelete, CancellationToken.None)
-								 .GetAwaiter().GetResult();
-
-					WriteVerboseMessage($"Successfully removed resource: {resource.Name}");
-				}
-			}
-			catch (Exception ex)
+			// Update properties
+			if (!string.IsNullOrEmpty(Name))
 			{
-				HandleApiException(ex);
+				resource.Name = Name;
 			}
+
+			if (!string.IsNullOrEmpty(DisplayName))
+			{
+				resource.DisplayName = DisplayName;
+			}
+
+			if (!string.IsNullOrEmpty(Description))
+			{
+				resource.Description = Description;
+			}
+
+			// Update the resource
+			Client!.PutAsync(resource, CancellationToken.None)
+				 .GetAwaiter().GetResult();
+
+			WriteVerboseMessage($"Successfully updated resource: {resource.Name}");
+			WriteObject(resource);
+		}
+		catch (Exception ex)
+		{
+			HandleApiException(ex);
+		}
+	}
+}
+
+/// <summary>
+/// Removes a LogicMonitor resource
+/// </summary>
+[Cmdlet(VerbsCommon.Remove, "LMResource", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+public class RemoveLMResourceCommand : LogicMonitorCmdletBase
+{
+	/// <summary>
+	/// Resource ID to remove
+	/// </summary>
+	[Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
+	public int Id { get; set; }
+
+	/// <summary>
+	/// Perform hard delete (permanent removal)
+	/// </summary>
+	[Parameter()]
+	public SwitchParameter HardDelete { get; set; }
+
+	protected override void ProcessRecord()
+	{
+		try
+		{
+			EnsureConnection();
+
+			// Get resource info for confirmation
+			var resource = Client!.GetAsync<Resource>(Id, CancellationToken.None)
+		 .GetAwaiter().GetResult();
+
+			var deleteType = HardDelete ? "permanently delete" : "delete";
+			if (ShouldProcess($"Resource '{resource.Name}' (ID: {Id})", $"{deleteType} resource"))
+			{
+				WriteVerboseMessage($"Removing resource: {resource.Name} (ID: {Id})");
+
+				Client!.DeleteAsync<Resource>(Id, HardDelete, CancellationToken.None)
+							 .GetAwaiter().GetResult();
+
+				WriteVerboseMessage($"Successfully removed resource: {resource.Name}");
+			}
+		}
+		catch (Exception ex)
+		{
+			HandleApiException(ex);
 		}
 	}
 }

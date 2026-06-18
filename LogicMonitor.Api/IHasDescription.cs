@@ -1,4 +1,5 @@
 ﻿namespace LogicMonitor.Api;
+
 /// <summary>
 /// An object that has a Description
 /// </summary>

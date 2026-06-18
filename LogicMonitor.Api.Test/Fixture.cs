@@ -17,7 +17,7 @@ public class Fixture : IDisposable
 
 		// Build service collection
 		var services = new ServiceCollection();
-		
+	
 		services
 			.AddLogging(builder => builder.AddDebug().SetMinimumLevel(LogLevel.Debug))
 			.AddScoped<CancellationTokenSource>()

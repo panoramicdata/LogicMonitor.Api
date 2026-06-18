@@ -24,4 +24,3 @@ public class NOCWidgetData : WidgetData
 	[DataMember(Name = "items")]
 	public List<NOCWidgetDataItem> Items { get; set; } = [];
 }
-
