@@ -9,6 +9,7 @@ internal static class UptimeWireKeys
 {
 	public const string SystemCategories = "system.categories";
 	public const string Hostname = "uptime.hostname";
+	public const string Url = "uptime.url";
 	public const string PollingInterval = "uptime.pollingInterval";
 	public const string UseDefaultAlertSetting = "uptime.usedefaultalertsetting";
 	public const string UseDefaultLocationSetting = "uptime.usedefaultlocationsetting";

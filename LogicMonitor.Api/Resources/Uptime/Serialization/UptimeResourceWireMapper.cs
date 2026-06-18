@@ -31,14 +31,28 @@ internal static class UptimeResourceWireMapper
 			["deviceType"] = (int)definition.ResourceType,
 			["disableAlerting"] = definition.DisableAlerting,
 			["testLocation"] = BuildTestLocation(definition.TestLocation),
-			["syntheticsCollectorIds"] = new JArray(definition.SyntheticsCollectorIds),
 		};
 
-		// External checks have no Collector - only emit a preferred Collector when one is set, otherwise
-		// the portal rejects the create with "Collector(id=0) does not exist".
-		if (definition.PreferredCollectorId > 0)
+		// Internal checks run from real Collectors; external checks run from Site Monitor "pseudo-collectors"
+		// whose ids are derived from the Site Monitor Group ids (smgId 2 -> -7, 3 -> -8, ...).
+		var collectorIds = definition.IsInternal
+			? definition.SyntheticsCollectorIds
+			: definition.TestLocation.SmgIds.Select(SmgIdToSiteMonitorCollectorId).ToList();
+
+		var preferredCollectorId = definition.IsInternal
+			? definition.PreferredCollectorId
+			: collectorIds.FirstOrDefault();
+
+		// Only emit Collector references when set, otherwise the portal rejects the create with
+		// "Collector(id=0) does not exist".
+		if (preferredCollectorId != 0)
 		{
-			device["preferredCollectorId"] = definition.PreferredCollectorId;
+			device["preferredCollectorId"] = preferredCollectorId;
+		}
+
+		if (collectorIds.Count > 0)
+		{
+			device["syntheticsCollectorIds"] = new JArray(collectorIds);
 		}
 
 		if (id is > 0)
@@ -96,36 +110,74 @@ internal static class UptimeResourceWireMapper
 	private static void WriteWeb(JObject device, IWebCheckDefinition web)
 	{
 		var domain = string.IsNullOrWhiteSpace(web.Domain) ? web.HostName : web.Domain;
+		var scheme = SchemeToWire(web.Scheme);
 
-		device["type"] = "uptimewebcheck";
-		device["isInternal"] = web.IsInternal;
-		device["individualSmAlertEnable"] = web.Alerting.IndividualCheckpointAlertsEnabled;
-		device["individualAlertLevel"] = LevelToWire(web.Alerting.IndividualAlertLevel);
-		device["overallAlertLevel"] = LevelToWire(web.Alerting.OverallAlertLevel);
-		device["pollingInterval"] = web.PollingIntervalMinutes;
-		device["transition"] = web.Alerting.FailedCheckCountBeforeAlerting;
-		device["globalSmAlertCond"] = (int)web.Alerting.AlertCondition;
-		device["useDefaultLocationSetting"] = web.UseDefaultLocationSetting;
-		device["useDefaultAlertSetting"] = web.UseDefaultAlertSetting;
-		device["domain"] = domain;
-		device["schema"] = SchemeToWire(web.Scheme);
-		device["ignoreSSL"] = web.IgnoreSsl;
-		device["pageLoadAlertTimeInMS"] = web.PageLoadAlertTimeMs;
-		device["triggerSSLStatusAlert"] = web.TriggerSslStatusAlerts;
-		device["triggerSSLExpirationAlert"] = web.TriggerSslExpirationAlerts;
-		device["steps"] = JArray.FromObject(web.Steps);
-
-		if (!string.IsNullOrWhiteSpace(web.AlertExpression))
+		// Web checks store their configuration in the same website.private.serviceParameters blob as ping
+		// checks, with each step encoded as a nested "__stepN" JSON string.
+		var serviceParameters = new JObject
 		{
-			device["alertExpr"] = web.AlertExpression;
+			["schema"] = scheme,
+			["testLocation"] = BuildTestLocation(web.TestLocation).ToString(Formatting.None),
+			["triggerSSLStatusAlert"] = BoolToWire(web.TriggerSslStatusAlerts),
+			["overallAlertLevel"] = LevelToWire(web.Alerting.OverallAlertLevel),
+			["pollingInterval"] = web.PollingIntervalMinutes.ToString(Invariant),
+			["pageLoadAlertTimeInMS"] = web.PageLoadAlertTimeMs.ToString(Invariant),
+			["individualSmAlertEnable"] = BoolToWire(web.Alerting.IndividualCheckpointAlertsEnabled),
+			["ignoreSSL"] = BoolToWire(web.IgnoreSsl),
+			["transition"] = web.Alerting.FailedCheckCountBeforeAlerting.ToString(Invariant),
+			["globalSmAlertCond"] = ((int)web.Alerting.AlertCondition).ToString(Invariant),
+			["isInternal"] = BoolToWire(web.IsInternal),
+			["clearTransition"] = web.Alerting.FailedCheckCountBeforeAlerting.ToString(Invariant),
+			["triggerSSLExpirationAlert"] = BoolToWire(web.TriggerSslExpirationAlerts),
+			["domain"] = domain,
+			["individualAlertLevel"] = LevelToWire(web.Alerting.IndividualAlertLevel),
+			["alertExpr"] = web.AlertExpression,
+		};
+
+		var steps = web.Steps.Count > 0 ? web.Steps : [new UptimeWebCheckStep()];
+		for (var i = 0; i < steps.Count; i++)
+		{
+			serviceParameters[$"__step{i.ToString(Invariant)}"] = BuildWebStep(steps[i], scheme, i).ToString(Formatting.None);
 		}
 
 		device["customProperties"] = new JArray
 		{
 			Property(UptimeWireKeys.SystemCategories, UptimeWireKeys.WebCategory),
-			Property(UptimeWireKeys.Hostname, web.HostName),
+			Property(UptimeWireKeys.Url, scheme + "://" + domain),
+			Property(UptimeWireKeys.PollingInterval, web.PollingIntervalMinutes.ToString(Invariant)),
+			Property(UptimeWireKeys.UseDefaultAlertSetting, BoolToWire(web.UseDefaultAlertSetting)),
+			Property(UptimeWireKeys.UseDefaultLocationSetting, BoolToWire(web.UseDefaultLocationSetting)),
+			Property(UptimeWireKeys.ServiceParameters, serviceParameters.ToString(Formatting.None)),
 		};
 	}
+
+	private static JObject BuildWebStep(UptimeWebCheckStep step, string scheme, int sequence) => new()
+	{
+		["respType"] = "config",
+		["schema"] = scheme,
+		["headers"] = string.Empty,
+		["data"] = string.Empty,
+		["method"] = step.HttpMethod,
+		["matchType"] = "plain",
+		["match"] = step.Keyword,
+		["description"] = string.Empty,
+		["label"] = string.Empty,
+		["type"] = "config",
+		["url"] = string.IsNullOrEmpty(step.Url) ? "/" : step.Url,
+		["invertMatch"] = false,
+		["timeout"] = 30,
+		["useDefaultRoot"] = step.UseDefaultRoot,
+		["path"] = string.Empty,
+		["enable"] = step.Enabled,
+		["followRedirect"] = step.FollowRedirection,
+		["reqType"] = "config",
+		["requireAuth"] = false,
+		["action"] = "next",
+		["fullpageLoad"] = step.FullPageLoad,
+		["HTTPVersion"] = step.HttpVersion,
+		["seq"] = sequence,
+		["statusCode"] = step.StatusCode,
+	};
 
 	private static JObject BuildTestLocation(UptimeTestLocation testLocation) => new()
 	{
@@ -139,6 +191,12 @@ internal static class UptimeResourceWireMapper
 		["name"] = name,
 		["value"] = value,
 	};
+
+	/// <summary>
+	/// Maps a Site Monitor Group id to the negative "pseudo-collector" id that external checks reference
+	/// (smgId 2 -> -7, 3 -> -8, 4 -> -9, 5 -> -10, 6 -> -11).
+	/// </summary>
+	private static int SmgIdToSiteMonitorCollectorId(int smgId) => -(smgId + 5);
 
 	#endregion
 

@@ -11,8 +11,10 @@ namespace LogicMonitor.Api.Resources.Uptime;
 [JsonConverter(typeof(UptimeResourceCreationDtoJsonConverter))]
 public abstract class UptimeResourceCreationDto<T> : CreationDto<T>, IUptimeCheckDefinition where T : UptimeResource
 {
-	/// <inheritdoc />
-	public string Name { get; set; } = string.Empty;
+	/// <summary>
+	/// The name of the check. Required.
+	/// </summary>
+	public required string Name { get; set; }
 
 	/// <summary>
 	/// The display name of the check. Defaults to <see cref="Name"/> when left blank.
@@ -24,8 +26,10 @@ public abstract class UptimeResourceCreationDto<T> : CreationDto<T>, IUptimeChec
 	/// </summary>
 	public string Description { get; set; } = string.Empty;
 
-	/// <inheritdoc />
-	public string HostName { get; set; } = string.Empty;
+	/// <summary>
+	/// The host name or IP address (web checks may also use a domain) being checked. Required.
+	/// </summary>
+	public required string HostName { get; set; }
 
 	/// <inheritdoc />
 	public string ResourceGroupIds { get; set; } = string.Empty;

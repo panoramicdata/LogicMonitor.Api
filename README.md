@@ -83,6 +83,30 @@ Supported LogicModule types for export/import:
 - JobMonitor
 - AppliesToFunction
 
+## **NEW!** Uptime Resources (LM Uptime ping & web checks)
+
+LM Uptime is LogicMonitor's replacement for the legacy **Websites** product. This library provides a
+strongly-typed surface for creating and managing internal/external ping and web checks as first-class
+resources. See [docs/UptimeResources.md](docs/UptimeResources.md) for a detailed guide, including how it is
+backed by Resources and custom properties.
+
+```c#
+using LogicMonitor.Api.Resources.Uptime;
+
+var pingCheck = await logicMonitorClient.CreateAsync(
+    new PingCheckResourceCreationDto
+    {
+        Name = "dns-google-ping",
+        HostName = "8.8.8.8",
+        PreferredCollectorId = collectorId,
+        SyntheticsCollectorIds = [collectorId],
+        TestLocation = new UptimeTestLocation { CollectorIds = [collectorId] }
+    },
+    cancellationToken);
+
+var fetched = await logicMonitorClient.GetAsync<PingCheckResource>(pingCheck.Id, cancellationToken);
+```
+
 ## API Documentation
 
 For more information on the LogicMonitor REST API, see the [official documentation](https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/).

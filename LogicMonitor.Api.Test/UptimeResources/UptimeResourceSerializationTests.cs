@@ -120,12 +120,23 @@ public class UptimeResourceSerializationTests
 		var json = JObject.Parse(JsonConvert.SerializeObject(dto));
 
 		json["deviceType"]!.Value<int>().Should().Be(18);
-		json["type"]!.Value<string>().Should().Be("uptimewebcheck");
-		json["domain"]!.Value<string>().Should().Be("www.google.com");
-		json["schema"]!.Value<string>().Should().Be("https");
-		json["ignoreSSL"]!.Value<bool>().Should().BeTrue();
-		((JArray)json["steps"]!).Should().HaveCount(1);
-		json["steps"]![0]!["name"]!.Value<string>().Should().Be("__step0");
+
+		var customProperties = (JArray)json["customProperties"]!;
+		string PropValue(string name) => customProperties.First(p => p["name"]!.Value<string>() == name)["value"]!.Value<string>()!;
+
+		PropValue("system.categories").Should().Be("webcheckdevice");
+		PropValue("uptime.url").Should().Be("https://www.google.com");
+
+		// Web config (including steps) lives in the serviceParameters blob, with each step as a "__stepN" string.
+		var serviceParameters = JObject.Parse(PropValue("website.private.serviceParameters"));
+		serviceParameters["schema"]!.Value<string>().Should().Be("https");
+		serviceParameters["domain"]!.Value<string>().Should().Be("www.google.com");
+		serviceParameters["ignoreSSL"]!.Value<string>().Should().Be("true");
+		serviceParameters["isInternal"]!.Value<string>().Should().Be("true");
+
+		var step0 = JObject.Parse(serviceParameters["__step0"]!.Value<string>()!);
+		step0["method"]!.Value<string>().Should().Be("GET");
+		step0["statusCode"]!.Value<string>().Should().Be("200");
 	}
 }
 
