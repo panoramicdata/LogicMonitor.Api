@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace LogicMonitor.Api.Test.Resources;
+namespace LogicMonitor.Api.Test.UptimeResources;
 
 /// <summary>
 /// Portal-free tests that exercise the Uptime wire mapping (no network/credentials required).
@@ -128,3 +128,4 @@ public class UptimeResourceSerializationTests
 		json["steps"]![0]!["name"]!.Value<string>().Should().Be("__step0");
 	}
 }
+

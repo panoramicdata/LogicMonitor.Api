@@ -11,7 +11,7 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	{
 		// Arrange
 		ConnectToLogicMonitor();
-		
+	
 		// Get a resource with data
 		var resources = InvokePowerShell("Get-LMResource", new Dictionary<string, object>
 		{
@@ -19,7 +19,7 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		});
 
 		resources.Should().HaveCountGreaterThan(0);
-		
+	
 		// Find a resource that likely has data (skip if none found)
 		dynamic? resourceWithData = null;
 		foreach (var resourceObj in resources)
@@ -56,12 +56,12 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 			// Assert
 			results.Should().NotBeNull();
-			
+		
 			if (results.Count > 0)
 			{
 				var rawData = results.First().BaseObject;
 				rawData.Should().NotBeNull();
-				
+			
 				// Check that it has expected properties
 				var properties = rawData.GetType().GetProperties();
 				properties.Should().Contain(p => p.Name == "Values" || p.Name == "DataPoints");
@@ -79,7 +79,7 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 	{
 		// Arrange
 		ConnectToLogicMonitor();
-		
+	
 		// Get a resource
 		var resources = InvokePowerShell("Get-LMResource", new Dictionary<string, object>
 		{
@@ -110,12 +110,12 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 			// Assert
 			results.Should().NotBeNull();
-			
+		
 			if (results.Count > 0)
 			{
 				var pollResponse = results.First().BaseObject;
 				pollResponse.Should().NotBeNull();
-				
+			
 				// Check that it has expected properties
 				var properties = pollResponse.GetType().GetProperties();
 				properties.Should().Contain(p => p.Name == "RequestStatus" || p.Name == "Status");
@@ -149,12 +149,12 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 			// Assert
 			results.Should().NotBeNull();
-			
+		
 			if (results.Count > 0)
 			{
 				var graphData = results.First().BaseObject;
 				graphData.Should().NotBeNull();
-				
+			
 				// Check that it has expected properties
 				var properties = graphData.GetType().GetProperties();
 				properties.Should().Contain(p => p.Name == "Lines" || p.Name == "TimeStamps");
@@ -191,7 +191,7 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 			// Assert
 			results.Should().NotBeNull();
-			
+		
 			if (results.Count > 0)
 			{
 				var graphData = results.First().BaseObject;
@@ -227,12 +227,12 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 
 			// Assert
 			results.Should().NotBeNull();
-			
+		
 			if (results.Count > 0)
 			{
 				var fetchData = results.First().BaseObject;
 				fetchData.Should().NotBeNull();
-				
+			
 				// Check that it has expected properties
 				var properties = fetchData.GetType().GetProperties();
 				properties.Should().Contain(p => p.Name == "TotalCount" || p.Name == "InstanceFetchDataResponses");

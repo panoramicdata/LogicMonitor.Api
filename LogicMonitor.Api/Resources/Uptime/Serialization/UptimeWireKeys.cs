@@ -17,3 +17,4 @@ internal static class UptimeWireKeys
 	public const string PingCategory = "pingcheckdevice";
 	public const string WebCategory = "webcheckdevice";
 }
+

@@ -1,13 +1,15 @@
-namespace LogicMonitor.Api.Test.Resources;
+namespace LogicMonitor.Api.Test.UptimeResources;
 
 public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string TargetHost = "8.8.8.8";
 
 	[Fact]
-	public Task CrudInternalPingCheckResource()
+	public async Task CrudInternalPingCheckResource()
 	{
 		const string resourceDisplayName = "IntegrationTest-Uptime-Ping-Internal";
+
+		var collectorId = await GetLiveCollectorIdAsync();
 
 		var creationDto = new PingCheckResourceCreationDto
 		{
@@ -15,7 +17,7 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			DisplayName = resourceDisplayName,
 			Description = "Integration test internal Uptime ping check",
 			ResourceGroupIds = "1",
-			PreferredCollectorId = CollectorId,
+			PreferredCollectorId = collectorId,
 			DisableAlerting = true,
 			IsInternal = true,
 			HostName = TargetHost,
@@ -23,8 +25,8 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			PacketCount = 5,
 			TimeoutMs = 500,
 			PercentPacketsNotReceivedInTime = 80,
-			SyntheticsCollectorIds = [CollectorId],
-			TestLocation = new UptimeTestLocation { All = false, CollectorIds = [CollectorId], SmgIds = [] },
+			SyntheticsCollectorIds = [collectorId],
+			TestLocation = new UptimeTestLocation { All = false, CollectorIds = [collectorId], SmgIds = [] },
 			Alerting = new UptimeAlertSettings
 			{
 				OverallAlertLevel = Level.Critical,
@@ -35,7 +37,7 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			}
 		};
 
-		return AssertPingCrudAsync(creationDto, resourceDisplayName);
+		await AssertPingCrudAsync(creationDto, resourceDisplayName);
 	}
 
 	[Fact]
@@ -69,6 +71,23 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 		};
 
 		return AssertPingCrudAsync(creationDto, resourceDisplayName);
+	}
+
+	/// <summary>
+	/// Resolves a usable Collector id from the portal, preferring the configured <see cref="TestWithOutput.CollectorId"/>
+	/// when it still exists, otherwise the first non-down Collector. Internal Uptime checks must reference a real Collector.
+	/// </summary>
+	private async Task<int> GetLiveCollectorIdAsync()
+	{
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(CancellationToken);
+
+		var collector = collectors.FirstOrDefault(c => c.Id == CollectorId)
+			?? collectors.FirstOrDefault(c => !c.IsDown)
+			?? collectors.FirstOrDefault();
+
+		collector.Should().NotBeNull("the portal must have at least one Collector for an internal Uptime check");
+		return collector!.Id;
 	}
 
 	private async Task AssertPingCrudAsync(PingCheckResourceCreationDto creationDto, string resourceDisplayName)
@@ -133,3 +152,4 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 		}
 	}
 }
+

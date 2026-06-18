@@ -32,3 +32,4 @@ public class WebCheckResourceCreationDto : UptimeResourceCreationDto<WebCheckRes
 	/// <inheritdoc />
 	public List<UptimeWebCheckStep> Steps { get; set; } = [];
 }
+

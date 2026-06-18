@@ -17,3 +17,4 @@ public class PingCheckResourceCreationDto : UptimeResourceCreationDto<PingCheckR
 	/// <inheritdoc />
 	public int PercentPacketsNotReceivedInTime { get; set; } = 80;
 }
+

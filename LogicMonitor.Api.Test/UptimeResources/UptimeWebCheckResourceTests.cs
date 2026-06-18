@@ -1,13 +1,15 @@
-namespace LogicMonitor.Api.Test.Resources;
+namespace LogicMonitor.Api.Test.UptimeResources;
 
 public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private const string TargetDomain = "www.google.com";
 
 	[Fact]
-	public Task CrudInternalWebCheckResource()
+	public async Task CrudInternalWebCheckResource()
 	{
 		const string resourceDisplayName = "IntegrationTest-Uptime-Web-Internal";
+
+		var collectorId = await GetLiveCollectorIdAsync();
 
 		var creationDto = new WebCheckResourceCreationDto
 		{
@@ -15,7 +17,7 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 			DisplayName = resourceDisplayName,
 			Description = "Integration test internal Uptime web check",
 			ResourceGroupIds = "1",
-			PreferredCollectorId = CollectorId,
+			PreferredCollectorId = collectorId,
 			DisableAlerting = true,
 			IsInternal = true,
 			HostName = TargetDomain,
@@ -24,8 +26,8 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 			IgnoreSsl = true,
 			PollingIntervalMinutes = 5,
 			PageLoadAlertTimeMs = 30000,
-			SyntheticsCollectorIds = [CollectorId],
-			TestLocation = new UptimeTestLocation { All = false, CollectorIds = [CollectorId], SmgIds = [] },
+			SyntheticsCollectorIds = [collectorId],
+			TestLocation = new UptimeTestLocation { All = false, CollectorIds = [collectorId], SmgIds = [] },
 			Alerting = new UptimeAlertSettings
 			{
 				OverallAlertLevel = Level.Warning,
@@ -37,7 +39,7 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 			Steps = [new UptimeWebCheckStep { Name = "__step0", Url = TargetDomain, HttpMethod = "GET", StatusCode = "200" }]
 		};
 
-		return AssertWebCrudAsync(creationDto, resourceDisplayName);
+		await AssertWebCrudAsync(creationDto, resourceDisplayName);
 	}
 
 	[Fact]
@@ -73,6 +75,23 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 		};
 
 		return AssertWebCrudAsync(creationDto, resourceDisplayName);
+	}
+
+	/// <summary>
+	/// Resolves a usable Collector id from the portal, preferring the configured <see cref="TestWithOutput.CollectorId"/>
+	/// when it still exists, otherwise the first non-down Collector. Internal Uptime checks must reference a real Collector.
+	/// </summary>
+	private async Task<int> GetLiveCollectorIdAsync()
+	{
+		var collectors = await LogicMonitorClient
+			.GetAllAsync<Collector>(CancellationToken);
+
+		var collector = collectors.FirstOrDefault(c => c.Id == CollectorId)
+			?? collectors.FirstOrDefault(c => !c.IsDown)
+			?? collectors.FirstOrDefault();
+
+		collector.Should().NotBeNull("the portal must have at least one Collector for an internal Uptime check");
+		return collector!.Id;
 	}
 
 	private async Task AssertWebCrudAsync(WebCheckResourceCreationDto creationDto, string resourceDisplayName)
@@ -134,3 +153,4 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 		}
 	}
 }
+

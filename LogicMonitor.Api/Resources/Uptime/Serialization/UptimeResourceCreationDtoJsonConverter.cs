@@ -25,3 +25,4 @@ internal sealed class UptimeResourceCreationDtoJsonConverter : JsonConverter
 		UptimeResourceWireMapper.Write(writer, definition, id: null);
 	}
 }
+

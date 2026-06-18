@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace LogicMonitor.Api.Test.Resources;
+namespace LogicMonitor.Api.Test.UptimeResources;
 
 public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
@@ -132,3 +132,4 @@ public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture
 		}
 	}
 }
+

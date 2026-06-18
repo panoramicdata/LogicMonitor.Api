@@ -30,10 +30,16 @@ internal static class UptimeResourceWireMapper
 			["description"] = definition.Description,
 			["deviceType"] = (int)definition.ResourceType,
 			["disableAlerting"] = definition.DisableAlerting,
-			["preferredCollectorId"] = definition.PreferredCollectorId,
 			["testLocation"] = BuildTestLocation(definition.TestLocation),
 			["syntheticsCollectorIds"] = new JArray(definition.SyntheticsCollectorIds),
 		};
+
+		// External checks have no Collector - only emit a preferred Collector when one is set, otherwise
+		// the portal rejects the create with "Collector(id=0) does not exist".
+		if (definition.PreferredCollectorId > 0)
+		{
+			device["preferredCollectorId"] = definition.PreferredCollectorId;
+		}
 
 		if (id is > 0)
 		{
@@ -372,3 +378,4 @@ internal static class UptimeResourceWireMapper
 
 	#endregion
 }
+

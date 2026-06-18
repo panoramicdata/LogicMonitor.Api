@@ -74,3 +74,4 @@ public abstract class UptimeResource : IdentifiedItem, IHasEndpoint, IHasName, I
 	/// <inheritdoc />
 	public string Endpoint() => "device/devices";
 }
+

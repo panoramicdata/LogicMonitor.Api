@@ -66,3 +66,4 @@ public class UptimeWebCheckStep
 	[JsonProperty("keyword")]
 	public string Keyword { get; set; } = string.Empty;
 }
+

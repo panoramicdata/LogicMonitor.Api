@@ -48,3 +48,4 @@ internal interface IUptimeCheckDefinition
 	/// </summary>
 	ResourceType ResourceType { get; }
 }
+

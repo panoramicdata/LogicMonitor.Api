@@ -1,4 +1,5 @@
 namespace LogicMonitor.Api.Test.EventLogs;
+
 public class GetEventLogTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	[Fact]

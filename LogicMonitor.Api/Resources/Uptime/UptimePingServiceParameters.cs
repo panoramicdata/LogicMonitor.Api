@@ -45,3 +45,4 @@ internal sealed class UptimePingServiceParameters
 	[JsonProperty("individualAlertLevel")]
 	public string IndividualAlertLevel { get; set; } = string.Empty;
 }
+

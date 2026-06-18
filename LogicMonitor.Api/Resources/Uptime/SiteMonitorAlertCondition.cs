@@ -26,3 +26,4 @@ public enum SiteMonitorAlertCondition
 	/// </summary>
 	AnyLocation = 3,
 }
+

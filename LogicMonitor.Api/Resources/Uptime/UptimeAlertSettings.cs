@@ -32,3 +32,4 @@ public class UptimeAlertSettings
 	/// </summary>
 	public SiteMonitorAlertCondition AlertCondition { get; set; } = SiteMonitorAlertCondition.AllLocations;
 }
+

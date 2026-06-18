@@ -1,4 +1,5 @@
 namespace LogicMonitor.Api.Test.EventLogs;
+
 public class GetFilteredAuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
 	private readonly DateTime _endDateTimeUtc = DateTime.UtcNow;

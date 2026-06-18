@@ -17,3 +17,4 @@ public class PingCheckResource : UptimeResource, IPingCheckDefinition
 	/// <inheritdoc />
 	public int PercentPacketsNotReceivedInTime { get; set; } = 80;
 }
+

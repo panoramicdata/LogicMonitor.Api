@@ -32,3 +32,4 @@ public class WebCheckResource : UptimeResource, IWebCheckDefinition
 	/// <inheritdoc />
 	public List<UptimeWebCheckStep> Steps { get; set; } = [];
 }
+

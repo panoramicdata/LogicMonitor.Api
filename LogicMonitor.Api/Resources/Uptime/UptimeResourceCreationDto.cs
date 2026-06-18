@@ -60,3 +60,4 @@ public abstract class UptimeResourceCreationDto<T> : CreationDto<T>, IUptimeChec
 	/// <inheritdoc />
 	public abstract ResourceType ResourceType { get; }
 }
+

@@ -24,3 +24,4 @@ public class UptimeTestLocation
 	/// </summary>
 	public List<int> SmgIds { get; set; } = [];
 }
+

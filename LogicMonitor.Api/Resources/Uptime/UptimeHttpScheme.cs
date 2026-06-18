@@ -19,3 +19,4 @@ public enum UptimeHttpScheme
 	[EnumMember(Value = "https")]
 	Https = 1,
 }
+
