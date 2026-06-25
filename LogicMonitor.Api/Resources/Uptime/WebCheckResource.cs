@@ -3,10 +3,13 @@ namespace LogicMonitor.Api.Resources.Uptime;
 /// <summary>
 /// A strongly-typed LogicMonitor Uptime web check.
 /// </summary>
-public class WebCheckResource : UptimeResource, IWebCheckDefinition
+public class WebCheckResource : UptimeResource, IWebCheckDefinition, IHasCreationEndpoint
 {
 	/// <inheritdoc />
 	public override ResourceType ResourceType => ResourceType.Web;
+
+	/// <inheritdoc />
+	public string CreationEndpoint() => "device/devices?type=uptimewebcheck";
 
 	/// <inheritdoc />
 	public UptimeHttpScheme Scheme { get; set; } = UptimeHttpScheme.Https;

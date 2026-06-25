@@ -26,7 +26,7 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			TimeoutMs = 500,
 			PercentPacketsNotReceivedInTime = 80,
 			SyntheticsCollectorIds = [collectorId],
-			TestLocation = new UptimeTestLocation { All = false, CollectorIds = [collectorId], SmgIds = [] },
+			TestLocation = new UptimeTestLocation { All = true, CollectorIds = [collectorId], SmgIds = [] },
 			Alerting = new UptimeAlertSettings
 			{
 				OverallAlertLevel = Level.Critical,
@@ -123,6 +123,12 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			fetched.PercentPacketsNotReceivedInTime.Should().Be(creationDto.PercentPacketsNotReceivedInTime);
 			fetched.PollingIntervalMinutes.Should().Be(creationDto.PollingIntervalMinutes);
 
+			// Internal ping checks must have Ping_Check_Individual and Ping_Check_Overall applied at creation
+			if (creationDto.IsInternal)
+			{
+				await AssertPingDataSourcesAppliedAsync(resource.Id);
+			}
+
 			// Update (skip if Uptime feature not enabled)
 			try
 			{
@@ -150,6 +156,37 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 					.DeleteAsync(resource, cancellationToken: CancellationToken);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Polls until both Ping_Check_Individual and Ping_Check_Overall DataSources are applied to the resource,
+	/// then asserts their presence. Polls up to 10 times with 3-second delays (30 seconds total) to allow
+	/// for any brief server-side processing after creation.
+	/// </summary>
+	private async Task AssertPingDataSourcesAppliedAsync(int resourceId)
+	{
+		List<ResourceDataSource> appliedDataSources = [];
+
+		for (var attempt = 0; attempt < 10; attempt++)
+		{
+			appliedDataSources = await LogicMonitorClient
+				.GetAllResourceDataSourcesAsync(resourceId, null, CancellationToken);
+
+			if (appliedDataSources.Any(ds => ds.DataSourceName == "Ping_Check_Individual")
+				&& appliedDataSources.Any(ds => ds.DataSourceName == "Ping_Check_Overall"))
+			{
+				break;
+			}
+
+			await Task.Delay(3000, CancellationToken);
+		}
+
+		appliedDataSources
+			.Should().Contain(ds => ds.DataSourceName == "Ping_Check_Individual",
+				"Ping_Check_Individual must be applied automatically when creating an internal ping check");
+		appliedDataSources
+			.Should().Contain(ds => ds.DataSourceName == "Ping_Check_Overall",
+				"Ping_Check_Overall must be applied automatically when creating an internal ping check");
 	}
 }
 

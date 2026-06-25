@@ -3,10 +3,13 @@ namespace LogicMonitor.Api.Resources.Uptime;
 /// <summary>
 /// A strongly-typed LogicMonitor Uptime ping check.
 /// </summary>
-public class PingCheckResource : UptimeResource, IPingCheckDefinition
+public class PingCheckResource : UptimeResource, IPingCheckDefinition, IHasCreationEndpoint
 {
 	/// <inheritdoc />
 	public override ResourceType ResourceType => ResourceType.Ping;
+
+	/// <inheritdoc />
+	public string CreationEndpoint() => "device/devices?type=uptimepingcheck";
 
 	/// <inheritdoc />
 	public int PacketCount { get; set; } = 5;

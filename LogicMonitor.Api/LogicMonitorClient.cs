@@ -648,7 +648,13 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <typeparam name="T"></typeparam>
 	public virtual Task<T> CreateAsync<T>(CreationDto<T> creationDto, CancellationToken cancellationToken) where T : IHasEndpoint, new()
-		=> PostAsync<CreationDto<T>, T>(creationDto, new T().Endpoint(), cancellationToken);
+	{
+		var instance = new T();
+		var endpoint = instance is IHasCreationEndpoint hasCreationEndpoint
+			? hasCreationEndpoint.CreationEndpoint()
+			: instance.Endpoint();
+		return PostAsync<CreationDto<T>, T>(creationDto, endpoint, cancellationToken);
+	}
 
 	/// <summary>
 	/// Gets an integer header
