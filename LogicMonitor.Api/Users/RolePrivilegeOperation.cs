@@ -83,5 +83,11 @@ public enum RolePrivilegeOperation
 	/// Delete
 	/// </summary>
 	[EnumMember(Value = "delete")]
-	Delete
+	Delete,
+
+	/// <summary>
+	/// Limited
+	/// </summary>
+	[EnumMember(Value = "limited")]
+	Limited
 }

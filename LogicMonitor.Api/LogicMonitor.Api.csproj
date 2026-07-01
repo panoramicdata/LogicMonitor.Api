@@ -24,8 +24,8 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.9:
-		- Added missing OtlpMetrics value to PrivilegeObjectType enum
+		v3.240.10:
+		- Added missing Limited value to RolePrivilegeOperation enum
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
