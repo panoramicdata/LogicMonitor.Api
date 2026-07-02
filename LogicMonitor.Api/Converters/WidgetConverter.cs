@@ -7,6 +7,7 @@ internal class WidgetConverter : JsonCreationConverter<Widget>
 		var type = jObject["type"]?.Value<string>()?.ToLowerInvariant();
 		return type switch
 		{
+			"advancedmetrics" => new AdvancedMetricsWidget(),
 			"alert" => new AlertWidget(),
 			"bignumber" => new BigNumberWidget(),
 			"cgraph" => new CustomGraphWidget(),

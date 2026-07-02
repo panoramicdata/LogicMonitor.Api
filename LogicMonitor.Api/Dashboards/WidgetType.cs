@@ -13,6 +13,12 @@ public enum WidgetType
 	Unknown = 0,
 
 	/// <summary>
+	/// Advanced Metrics widget (LMQL-driven)
+	/// </summary>
+	[EnumMember(Value = "advancedMetrics")]
+	AdvancedMetrics,
+
+	/// <summary>
 	/// Noc widget
 	/// </summary>
 	[EnumMember(Value = "noc")]
