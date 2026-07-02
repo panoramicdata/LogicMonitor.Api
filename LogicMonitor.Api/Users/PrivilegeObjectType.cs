@@ -155,5 +155,11 @@ public enum PrivilegeObjectType
 	/// Control Panel (administrative configuration pages)
 	/// </summary>
 	[EnumMember(Value = "cp")]
-	Cp
+	Cp,
+
+	/// <summary>
+	/// OTLP Metrics
+	/// </summary>
+	[EnumMember(Value = "otlpMetrics")]
+	OtlpMetrics
 }
