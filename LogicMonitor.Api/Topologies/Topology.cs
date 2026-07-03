@@ -4,7 +4,7 @@ namespace LogicMonitor.Api.Topologies;
 /// A Topology
 /// </summary>
 [DataContract]
-public class Topology : NamedItem, IHasEndpoint
+public class Topology : NamedItem, IHasEndpoint, IPatchable
 {
 	/// <summary>
 	///    Whether to collapse edges

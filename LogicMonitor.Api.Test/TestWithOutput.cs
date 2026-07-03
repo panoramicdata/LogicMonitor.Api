@@ -25,6 +25,7 @@ public abstract class TestWithOutput(ITestOutputHelper testOutputHelper, Fixture
 	protected int AllWidgetsDashboardId { get; } = GetConfig(fixture).AllWidgetsDashboardId;
 	protected bool AccountHasBillingInformation { get; } = GetConfig(fixture).AccountHasBillingInformation;
 	protected int TestDashboardId { get; } = GetConfig(fixture).TestDashboardId;
+	protected int NugetDashboardGroupId { get; } = fixture.NugetDashboardGroupId;
 
 	protected static CancellationToken CancellationToken => TestContext.Current.CancellationToken;
 	protected Stopwatch TestStopwatch { get; } = Stopwatch.StartNew();
