@@ -37,4 +37,12 @@ public partial class LogicMonitorClient
 		int id,
 		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Topology>>($"topology/groups/{id}/topologies", cancellationToken);
+
+	/// <summary>
+	/// Get a single topology (map) using its id
+	/// </summary>
+	public Task<Topology> GetTopologyAsync(
+		int id,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<Topology>($"topology/topologies/{id}", cancellationToken);
 }

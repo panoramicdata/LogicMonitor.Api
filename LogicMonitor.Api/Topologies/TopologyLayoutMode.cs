@@ -23,4 +23,10 @@ public enum TopologyLayoutMode
 	/// </summary>
 	[EnumMember(Value = "HORIZONTAL")]
 	Horizontal,
+
+	/// <summary>
+	/// Radial
+	/// </summary>
+	[EnumMember(Value = "RADIAL")]
+	Radial,
 }
