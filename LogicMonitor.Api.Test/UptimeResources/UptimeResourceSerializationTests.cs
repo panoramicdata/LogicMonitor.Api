@@ -35,26 +35,26 @@ public class UptimeResourceSerializationTests
 
 		var json = JObject.Parse(JsonConvert.SerializeObject(dto));
 
+		// v3 structured Uptime creation body (flat top-level fields, not customProperties/serviceParameters).
+		json["type"]!.Value<string>().Should().Be("uptimepingcheck");
+		json["model"]!.Value<string>().Should().Be("websiteDevice");
 		json["deviceType"]!.Value<int>().Should().Be(19);
 		json["displayName"]!.Value<string>().Should().Be("ping-1"); // defaulted from Name
-		json["hostGroupIds"]!.Value<string>().Should().Be("1");
-		json["testLocation"]!["all"]!.Value<bool>().Should().BeFalse();
+		json["isInternal"]!.Value<bool>().Should().BeTrue();
+		((JArray)json["groupIds"]!).Select(t => t.Value<int>()).Should().Equal(1);
 
-		var customProperties = (JArray)json["customProperties"]!;
-		string PropValue(string name) => customProperties.First(p => p["name"]!.Value<string>() == name)["value"]!.Value<string>()!;
+		json["host"]!.Value<string>().Should().Be("8.8.8.8");
+		json["count"]!.Value<int>().Should().Be(5);
+		json["timeoutInMSPktsNotReceive"]!.Value<int>().Should().Be(500);
+		json["percentPktsNotReceiveInTime"]!.Value<int>().Should().Be(80);
+		json["pollingInterval"]!.Value<int>().Should().Be(5);
+		json["overallAlertLevel"]!.Value<string>().Should().Be("critical");
+		json["individualAlertLevel"]!.Value<string>().Should().Be("warn");
+		json["globalSmAlertCond"]!.Value<int>().Should().Be(0);
 
-		PropValue("system.categories").Should().Be("pingcheckdevice");
-		PropValue("uptime.hostname").Should().Be("8.8.8.8");
-		PropValue("uptime.pollingInterval").Should().Be("5");
-
-		var serviceParameters = JObject.Parse(PropValue("website.private.serviceParameters"));
-		serviceParameters["count"]!.Value<string>().Should().Be("5");
-		serviceParameters["timeoutInMSPktsNotReceive"]!.Value<string>().Should().Be("500");
-		serviceParameters["percentPktsNotReceiveInTime"]!.Value<string>().Should().Be("80");
-		serviceParameters["overallAlertLevel"]!.Value<string>().Should().Be("critical");
-		serviceParameters["individualAlertLevel"]!.Value<string>().Should().Be("warn");
-		serviceParameters["isInternal"]!.Value<string>().Should().Be("true");
-		serviceParameters["globalSmAlertCond"]!.Value<string>().Should().Be("0");
+		// Internal checks reference real Collectors via testLocation.collectorIds; smgIds is empty.
+		((JArray)json["testLocation"]!["collectorIds"]!).Select(t => t.Value<int>()).Should().Equal(7);
+		((JArray)json["testLocation"]!["smgIds"]!).Should().BeEmpty();
 	}
 
 	[Fact]
@@ -119,23 +119,19 @@ public class UptimeResourceSerializationTests
 
 		var json = JObject.Parse(JsonConvert.SerializeObject(dto));
 
+		// v3 structured Uptime creation body: web fields are top-level and steps are a real JSON array.
+		json["type"]!.Value<string>().Should().Be("uptimewebcheck");
 		json["deviceType"]!.Value<int>().Should().Be(18);
+		json["domain"]!.Value<string>().Should().Be("www.google.com");
+		json["schema"]!.Value<string>().Should().Be("https");
+		json["ignoreSSL"]!.Value<bool>().Should().BeTrue();
+		json["isInternal"]!.Value<bool>().Should().BeTrue();
 
-		var customProperties = (JArray)json["customProperties"]!;
-		string PropValue(string name) => customProperties.First(p => p["name"]!.Value<string>() == name)["value"]!.Value<string>()!;
-
-		PropValue("system.categories").Should().Be("webcheckdevice");
-		PropValue("uptime.url").Should().Be("https://www.google.com");
-
-		// Web config (including steps) lives in the serviceParameters blob, with each step as a "__stepN" string.
-		var serviceParameters = JObject.Parse(PropValue("website.private.serviceParameters"));
-		serviceParameters["schema"]!.Value<string>().Should().Be("https");
-		serviceParameters["domain"]!.Value<string>().Should().Be("www.google.com");
-		serviceParameters["ignoreSSL"]!.Value<string>().Should().Be("true");
-		serviceParameters["isInternal"]!.Value<string>().Should().Be("true");
-
-		var step0 = JObject.Parse(serviceParameters["__step0"]!.Value<string>()!);
-		step0["method"]!.Value<string>().Should().Be("GET");
+		var steps = (JArray)json["steps"]!;
+		steps.Should().HaveCount(1);
+		var step0 = (JObject)steps[0];
+		step0["type"]!.Value<string>().Should().Be("script"); // internal web step
+		step0["HTTPMethod"]!.Value<string>().Should().Be("GET");
 		step0["statusCode"]!.Value<string>().Should().Be("200");
 	}
 }

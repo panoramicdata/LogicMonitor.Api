@@ -22,47 +22,44 @@ internal static class UptimeResourceWireMapper
 	private static JObject BuildDevice(IUptimeCheckDefinition definition, int? id)
 	{
 		var displayName = string.IsNullOrWhiteSpace(definition.DisplayName) ? definition.Name : definition.DisplayName;
+		var isPing = definition is IPingCheckDefinition;
 
+		// The v3 Uptime creation contract (X-Version: 3, device/devices?type=uptime{ping,web}check) expects a
+		// flat, structured payload — NOT the legacy customProperties/website.private.serviceParameters blob.
+		// Only this shape makes the server register the device as an Uptime resource (system.device.provider =
+		// Uptime, system.uptime.type = internal), which is what causes the Ping_Check_*/Web_Check_* DataSources
+		// to apply and data to be collected. Verified against a live LM Uptime portal.
 		var device = new JObject
 		{
+			["type"] = isPing ? "uptimepingcheck" : "uptimewebcheck",
+			["model"] = "websiteDevice",
+			["deviceType"] = (int)definition.ResourceType,
+			["id"] = id ?? 0,
 			["name"] = definition.Name,
 			["displayName"] = displayName,
 			["description"] = definition.Description,
-			["deviceType"] = (int)definition.ResourceType,
+			["isInternal"] = definition.IsInternal,
 			["disableAlerting"] = definition.DisableAlerting,
-			["testLocation"] = BuildTestLocation(definition.TestLocation),
+			["individualSmAlertEnable"] = definition.Alerting.IndividualCheckpointAlertsEnabled,
+			["individualAlertLevel"] = LevelToWire(definition.Alerting.IndividualAlertLevel),
+			["overallAlertLevel"] = LevelToWire(definition.Alerting.OverallAlertLevel),
+			["pollingInterval"] = definition.PollingIntervalMinutes,
+			["transition"] = definition.Alerting.FailedCheckCountBeforeAlerting,
+			["globalSmAlertCond"] = (int)definition.Alerting.AlertCondition,
+			["useDefaultLocationSetting"] = definition.UseDefaultLocationSetting,
+			["useDefaultAlertSetting"] = definition.UseDefaultAlertSetting,
+			// Internal checks run from real Collectors (collectorIds); external checks from Site Monitor Groups (smgIds).
+			["testLocation"] = new JObject
+			{
+				["collectorIds"] = new JArray(definition.IsInternal ? definition.SyntheticsCollectorIds : []),
+				["smgIds"] = new JArray(definition.IsInternal ? [] : definition.TestLocation.SmgIds),
+			},
+			["properties"] = new JArray(),
 		};
-
-		// Internal checks run from real Collectors; external checks run from Site Monitor "pseudo-collectors"
-		// whose ids are derived from the Site Monitor Group ids (smgId 2 -> -7, 3 -> -8, ...).
-		var collectorIds = definition.IsInternal
-			? definition.SyntheticsCollectorIds
-			: definition.TestLocation.SmgIds.Select(SmgIdToSiteMonitorCollectorId).ToList();
-
-		var preferredCollectorId = definition.IsInternal
-			? definition.PreferredCollectorId
-			: collectorIds.FirstOrDefault();
-
-		// Only emit Collector references when set, otherwise the portal rejects the create with
-		// "Collector(id=0) does not exist".
-		if (preferredCollectorId != 0)
-		{
-			device["preferredCollectorId"] = preferredCollectorId;
-		}
-
-		if (collectorIds.Count > 0)
-		{
-			device["syntheticsCollectorIds"] = new JArray(collectorIds);
-		}
-
-		if (id is > 0)
-		{
-			device["id"] = id.Value;
-		}
 
 		if (!string.IsNullOrWhiteSpace(definition.ResourceGroupIds))
 		{
-			device["hostGroupIds"] = definition.ResourceGroupIds;
+			device["groupIds"] = new JArray(ParseGroupIds(definition.ResourceGroupIds));
 		}
 
 		switch (definition)
@@ -78,125 +75,69 @@ internal static class UptimeResourceWireMapper
 		return device;
 	}
 
+	private static int[] ParseGroupIds(string resourceGroupIds)
+		=> resourceGroupIds
+			.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+			.Select(s => int.TryParse(s, NumberStyles.Integer, Invariant, out var v) ? v : (int?)null)
+			.Where(v => v.HasValue)
+			.Select(v => v!.Value)
+			.ToArray();
+
 	private static void WritePing(JObject device, IPingCheckDefinition ping)
 	{
-		var serviceParameters = new UptimePingServiceParameters
-		{
-			PercentPktsNotReceiveInTime = ping.PercentPacketsNotReceivedInTime.ToString(Invariant),
-			TestLocation = BuildTestLocation(ping.TestLocation).ToString(Formatting.None),
-			OverallAlertLevel = LevelToWire(ping.Alerting.OverallAlertLevel),
-			PollingInterval = ping.PollingIntervalMinutes.ToString(Invariant),
-			Dns = ping.HostName,
-			Count = ping.PacketCount.ToString(Invariant),
-			IndividualSmAlertEnable = BoolToWire(ping.Alerting.IndividualCheckpointAlertsEnabled),
-			TimeoutInMSPktsNotReceive = ping.TimeoutMs.ToString(Invariant),
-			Transition = ping.Alerting.FailedCheckCountBeforeAlerting.ToString(Invariant),
-			GlobalSmAlertCond = ((int)ping.Alerting.AlertCondition).ToString(Invariant),
-			IsInternal = BoolToWire(ping.IsInternal),
-			IndividualAlertLevel = LevelToWire(ping.Alerting.IndividualAlertLevel),
-		};
-
-		device["customProperties"] = new JArray
-		{
-			Property(UptimeWireKeys.SystemCategories, UptimeWireKeys.PingCategory),
-			Property(UptimeWireKeys.Hostname, ping.HostName),
-			Property(UptimeWireKeys.PollingInterval, ping.PollingIntervalMinutes.ToString(Invariant)),
-			Property(UptimeWireKeys.UseDefaultAlertSetting, BoolToWire(ping.UseDefaultAlertSetting)),
-			Property(UptimeWireKeys.UseDefaultLocationSetting, BoolToWire(ping.UseDefaultLocationSetting)),
-			Property(UptimeWireKeys.ServiceParameters, JsonConvert.SerializeObject(serviceParameters)),
-		};
+		device["host"] = ping.HostName;
+		device["count"] = ping.PacketCount;
+		device["percentPktsNotReceiveInTime"] = ping.PercentPacketsNotReceivedInTime;
+		device["timeoutInMSPktsNotReceive"] = ping.TimeoutMs;
 	}
 
 	private static void WriteWeb(JObject device, IWebCheckDefinition web)
 	{
 		var domain = string.IsNullOrWhiteSpace(web.Domain) ? web.HostName : web.Domain;
-		var scheme = SchemeToWire(web.Scheme);
 
-		// Web checks store their configuration in the same website.private.serviceParameters blob as ping
-		// checks, with each step encoded as a nested "__stepN" JSON string.
-		var serviceParameters = new JObject
-		{
-			["schema"] = scheme,
-			["testLocation"] = BuildTestLocation(web.TestLocation).ToString(Formatting.None),
-			["triggerSSLStatusAlert"] = BoolToWire(web.TriggerSslStatusAlerts),
-			["overallAlertLevel"] = LevelToWire(web.Alerting.OverallAlertLevel),
-			["pollingInterval"] = web.PollingIntervalMinutes.ToString(Invariant),
-			["pageLoadAlertTimeInMS"] = web.PageLoadAlertTimeMs.ToString(Invariant),
-			["individualSmAlertEnable"] = BoolToWire(web.Alerting.IndividualCheckpointAlertsEnabled),
-			["ignoreSSL"] = BoolToWire(web.IgnoreSsl),
-			["transition"] = web.Alerting.FailedCheckCountBeforeAlerting.ToString(Invariant),
-			["globalSmAlertCond"] = ((int)web.Alerting.AlertCondition).ToString(Invariant),
-			["isInternal"] = BoolToWire(web.IsInternal),
-			["clearTransition"] = web.Alerting.FailedCheckCountBeforeAlerting.ToString(Invariant),
-			["triggerSSLExpirationAlert"] = BoolToWire(web.TriggerSslExpirationAlerts),
-			["domain"] = domain,
-			["individualAlertLevel"] = LevelToWire(web.Alerting.IndividualAlertLevel),
-			["alertExpr"] = web.AlertExpression,
-		};
+		device["domain"] = domain;
+		device["schema"] = SchemeToWire(web.Scheme);
+		device["ignoreSSL"] = web.IgnoreSsl;
+		device["pageLoadAlertTimeInMS"] = web.PageLoadAlertTimeMs;
+		device["alertExpr"] = web.AlertExpression;
+		device["triggerSSLStatusAlert"] = web.TriggerSslStatusAlerts;
+		device["triggerSSLExpirationAlert"] = web.TriggerSslExpirationAlerts;
 
 		var steps = web.Steps.Count > 0 ? web.Steps : [new UptimeWebCheckStep()];
+		var stepArray = new JArray();
 		for (var i = 0; i < steps.Count; i++)
 		{
-			serviceParameters[$"__step{i.ToString(Invariant)}"] = BuildWebStep(steps[i], scheme, i).ToString(Formatting.None);
+			stepArray.Add(BuildWebStep(steps[i], web.IsInternal, i));
 		}
 
-		device["customProperties"] = new JArray
-		{
-			Property(UptimeWireKeys.SystemCategories, UptimeWireKeys.WebCategory),
-			Property(UptimeWireKeys.Url, scheme + "://" + domain),
-			Property(UptimeWireKeys.PollingInterval, web.PollingIntervalMinutes.ToString(Invariant)),
-			Property(UptimeWireKeys.UseDefaultAlertSetting, BoolToWire(web.UseDefaultAlertSetting)),
-			Property(UptimeWireKeys.UseDefaultLocationSetting, BoolToWire(web.UseDefaultLocationSetting)),
-			Property(UptimeWireKeys.ServiceParameters, serviceParameters.ToString(Formatting.None)),
-		};
+		device["steps"] = stepArray;
 	}
 
-	private static JObject BuildWebStep(UptimeWebCheckStep step, string scheme, int sequence) => new()
+	// v3 web step. Internal checks use step type "script"; external checks use "config".
+	private static JObject BuildWebStep(UptimeWebCheckStep step, bool isInternal, int sequence) => new()
 	{
-		["respType"] = "config",
-		["schema"] = scheme,
-		["headers"] = string.Empty,
-		["data"] = string.Empty,
-		["method"] = step.HttpMethod,
-		["matchType"] = "plain",
-		["match"] = step.Keyword,
-		["description"] = string.Empty,
-		["label"] = string.Empty,
-		["type"] = "config",
-		["url"] = string.IsNullOrEmpty(step.Url) ? "/" : step.Url,
-		["invertMatch"] = false,
-		["timeout"] = 30,
-		["useDefaultRoot"] = step.UseDefaultRoot,
-		["path"] = string.Empty,
+		["type"] = isInternal ? "script" : "config",
 		["enable"] = step.Enabled,
-		["followRedirect"] = step.FollowRedirection,
-		["reqType"] = "config",
-		["requireAuth"] = false,
-		["action"] = "next",
-		["fullpageLoad"] = step.FullPageLoad,
+		["useDefaultRoot"] = step.UseDefaultRoot,
+		["url"] = step.Url ?? string.Empty,
 		["HTTPVersion"] = step.HttpVersion,
-		["seq"] = sequence,
+		["HTTPMethod"] = step.HttpMethod,
+		["name"] = string.IsNullOrEmpty(step.Name) ? $"__step{sequence.ToString(Invariant)}" : step.Name,
+		["followRedirection"] = step.FollowRedirection,
+		["fullpageLoad"] = step.FullPageLoad,
+		["requireAuth"] = false,
+		["auth"] = new JObject { ["domain"] = string.Empty, ["password"] = string.Empty, ["type"] = "basic", ["userName"] = string.Empty },
+		["HTTPHeaders"] = string.Empty,
+		["HTTPBody"] = string.Empty,
+		["timeout"] = 30,
+		["reqType"] = "config",
+		["respType"] = "config",
+		["matchType"] = "plain",
+		["keyword"] = step.Keyword,
+		["invertMatch"] = "false",
 		["statusCode"] = step.StatusCode,
+		["path"] = string.Empty,
 	};
-
-	private static JObject BuildTestLocation(UptimeTestLocation testLocation) => new()
-	{
-		["all"] = testLocation.All,
-		["collectorIds"] = new JArray(testLocation.CollectorIds),
-		["smgIds"] = new JArray(testLocation.SmgIds),
-	};
-
-	private static JObject Property(string name, string value) => new()
-	{
-		["name"] = name,
-		["value"] = value,
-	};
-
-	/// <summary>
-	/// Maps a Site Monitor Group id to the negative "pseudo-collector" id that external checks reference
-	/// (smgId 2 -> -7, 3 -> -8, 4 -> -9, 5 -> -10, 6 -> -11).
-	/// </summary>
-	private static int SmgIdToSiteMonitorCollectorId(int smgId) => -(smgId + 5);
 
 	#endregion
 

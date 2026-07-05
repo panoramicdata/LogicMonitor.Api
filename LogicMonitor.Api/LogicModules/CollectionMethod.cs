@@ -528,4 +528,16 @@ public enum CollectionMethod
 	/// </summary>
 	[EnumMember(Value = "saassalesforceinstancestatus")]
 	SaasSalesforceInstanceStatus = 202,
+
+	/// <summary>
+	/// Internal LM Uptime ping check (Ping_Check_Overall / Ping_Check_Individual DataSources)
+	/// </summary>
+	[EnumMember(Value = "pingcheckdevice")]
+	PingCheckDevice = 300,
+
+	/// <summary>
+	/// Internal LM Uptime web check (Web_Check_Overall / Web_Check_Individual DataSources)
+	/// </summary>
+	[EnumMember(Value = "webcheckdevice")]
+	WebCheckDevice = 301,
 }

@@ -105,8 +105,17 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 				.DeleteAsync(existingResource, cancellationToken: CancellationToken);
 		}
 
-		var resource = await LogicMonitorClient
-			.CreateAsync(creationDto, CancellationToken);
+		// LM Uptime web checks require the feature and the Web_Check LogicModules; skip (not fail) where absent.
+		WebCheckResource resource;
+		try
+		{
+			resource = await LogicMonitorClient.CreateAsync(creationDto, CancellationToken);
+		}
+		catch (LogicMonitorApiException ex) when (UptimePingCheckResourceTests.IsUptimeUnavailable(ex))
+		{
+			Assert.Skip($"Portal does not have LM Uptime web checks enabled: {ex.Message}");
+			return;
+		}
 
 		resource.Should().NotBeNull();
 
@@ -124,17 +133,11 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 			fetched.Domain.Should().Be(creationDto.Domain);
 			fetched.Scheme.Should().Be(creationDto.Scheme);
 
-			// Internal web checks must have website.private.checkpoints and system.categories set by CreateAsync
-			// (the web-check creation endpoint strips system.categories from the POST body).
+			// Internal web checks must be provisioned as an Uptime resource: the server applies the Web_Check
+			// DataSources and starts collecting, driven by the v3 structured creation body.
 			if (creationDto.IsInternal)
 			{
-				var raw = await LogicMonitorClient.GetAsync<Resource>(resource.Id, CancellationToken);
-				raw.CustomProperties.Should().Contain(
-					p => p.Name == "website.private.checkpoints" && !string.IsNullOrEmpty(p.Value),
-					"an internal web check must have website.private.checkpoints set by CreateAsync");
-				raw.CustomProperties.Should().Contain(
-					p => p.Name == "system.categories" && p.Value == "webcheckdevice",
-					"an internal web check must have system.categories re-applied by CreateAsync");
+				await AssertWebDataSourcesAppliedAsync(resource.Id);
 			}
 
 			// Update (skip if Uptime feature not enabled)
@@ -164,6 +167,32 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 					.DeleteAsync(resource, cancellationToken: CancellationToken);
 			}
 		}
+	}
+
+	private async Task AssertWebDataSourcesAppliedAsync(int resourceId)
+	{
+		List<ResourceDataSource> appliedDataSources = [];
+
+		for (var attempt = 0; attempt < 40; attempt++)
+		{
+			appliedDataSources = await LogicMonitorClient
+				.GetAllResourceDataSourcesAsync(resourceId, null, CancellationToken);
+
+			if (appliedDataSources.Any(ds => ds.DataSourceName == "Web_Check_Individual")
+				&& appliedDataSources.Any(ds => ds.DataSourceName == "Web_Check_Overall"))
+			{
+				break;
+			}
+
+			await Task.Delay(3000, CancellationToken);
+		}
+
+		appliedDataSources
+			.Should().Contain(ds => ds.DataSourceName == "Web_Check_Individual",
+				"Web_Check_Individual must be applied automatically when creating an internal web check");
+		appliedDataSources
+			.Should().Contain(ds => ds.DataSourceName == "Web_Check_Overall",
+				"Web_Check_Overall must be applied automatically when creating an internal web check");
 	}
 }
 

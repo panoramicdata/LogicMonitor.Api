@@ -101,8 +101,18 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 				.DeleteAsync(existingResource, cancellationToken: CancellationToken);
 		}
 
-		var resource = await LogicMonitorClient
-			.CreateAsync(creationDto, CancellationToken);
+		// LM Uptime must be enabled on the portal, otherwise the v3 creation endpoint rejects the request.
+		// Skip (rather than fail) on portals where the feature or the Ping_Check LogicModules are absent.
+		PingCheckResource resource;
+		try
+		{
+			resource = await LogicMonitorClient.CreateAsync(creationDto, CancellationToken);
+		}
+		catch (LogicMonitorApiException ex) when (IsUptimeUnavailable(ex))
+		{
+			Assert.Skip($"Portal does not have LM Uptime enabled: {ex.Message}");
+			return;
+		}
 
 		resource.Should().NotBeNull();
 
@@ -123,16 +133,13 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			fetched.PercentPacketsNotReceivedInTime.Should().Be(creationDto.PercentPacketsNotReceivedInTime);
 			fetched.PollingIntervalMinutes.Should().Be(creationDto.PollingIntervalMinutes);
 
-			// Internal ping checks must have Ping_Check_Individual and Ping_Check_Overall applied at creation
+			// Internal ping checks must be provisioned as an Uptime resource at creation: the server sets the
+			// read-only system.uptime.type/system.device.provider properties and applies the Ping_Check DataSources,
+			// then begins collecting data. This is driven entirely by the v3 structured creation body.
 			if (creationDto.IsInternal)
 			{
 				await AssertPingDataSourcesAppliedAsync(resource.Id);
-
-				// CreateAsync must have set website.private.checkpoints so the check is recognised as internal.
-				var raw = await LogicMonitorClient.GetAsync<Resource>(resource.Id, CancellationToken);
-				raw.CustomProperties.Should().Contain(
-					p => p.Name == "website.private.checkpoints" && !string.IsNullOrEmpty(p.Value),
-					"an internal ping check must have website.private.checkpoints set by CreateAsync");
+				await AssertUptimeDataFlowsAsync(resource.Id, "Ping_Check_Overall");
 			}
 
 			// Update (skip if Uptime feature not enabled)
@@ -169,11 +176,21 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 	/// then asserts their presence. Polls up to 10 times with 3-second delays (30 seconds total) to allow
 	/// for any brief server-side processing after creation.
 	/// </summary>
+	/// <summary>
+	/// True when a creation error indicates the portal cannot host LM Uptime checks (feature disabled or the
+	/// Ping_Check/Web_Check LogicModules are not imported) — in which case the test should be skipped, not failed.
+	/// </summary>
+	internal static bool IsUptimeUnavailable(LogicMonitorApiException ex)
+		=> ex.Message.Contains("Uptime feature is not enabled", StringComparison.OrdinalIgnoreCase)
+			|| ex.Message.Contains("datasources not found", StringComparison.OrdinalIgnoreCase);
+
 	private async Task AssertPingDataSourcesAppliedAsync(int resourceId)
 	{
 		List<ResourceDataSource> appliedDataSources = [];
 
-		for (var attempt = 0; attempt < 10; attempt++)
+		// Allow generous time: on a live portal the Collector must pick up the new Uptime device before the
+		// Ping_Check DataSources appear (typically seconds, but can take a minute or two).
+		for (var attempt = 0; attempt < 40; attempt++)
 		{
 			appliedDataSources = await LogicMonitorClient
 				.GetAllResourceDataSourcesAsync(resourceId, null, CancellationToken);
@@ -193,6 +210,54 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 		appliedDataSources
 			.Should().Contain(ds => ds.DataSourceName == "Ping_Check_Overall",
 				"Ping_Check_Overall must be applied automatically when creating an internal ping check");
+	}
+
+	/// <summary>
+	/// Polls until at least one instance of the named check DataSource has reported a non-null value, proving the
+	/// Collector is actually collecting data for the internal Uptime check. Forces a poll via PollNow to accelerate.
+	/// </summary>
+	private async Task AssertUptimeDataFlowsAsync(int resourceId, string overallDataSourceName)
+	{
+		var resourceDataSources = await LogicMonitorClient
+			.GetAllResourceDataSourcesAsync(resourceId, null, CancellationToken);
+		var overall = resourceDataSources.SingleOrDefault(ds => ds.DataSourceName == overallDataSourceName);
+		overall.Should().NotBeNull($"{overallDataSourceName} must be applied before data can be collected");
+
+		var instances = await LogicMonitorClient
+			.GetAllResourceDataSourceInstancesAsync(resourceId, overall!.Id, new(), CancellationToken);
+		instances.Should().NotBeNullOrEmpty("the internal Uptime check must have at least one instance");
+		var instanceIds = instances.ConvertAll(i => i.Id);
+
+		// Force an immediate poll so we do not have to wait a full polling interval.
+		foreach (var instance in instances)
+		{
+			try
+			{
+				await LogicMonitorClient.PollNowAsync(resourceId, overall.Id, instance.Id, CancellationToken);
+			}
+			catch (LogicMonitorApiException)
+			{
+				// PollNow is best-effort; fall back to waiting for the scheduled poll.
+			}
+		}
+
+		var dataArrived = false;
+		for (var attempt = 0; attempt < 40 && !dataArrived; attempt++)
+		{
+			var fetchData = await LogicMonitorClient.GetFetchDataResponseAsync(
+				instanceIds, DateTimeOffset.UtcNow.AddMinutes(-15), DateTimeOffset.UtcNow, CancellationToken);
+
+			dataArrived = fetchData.InstanceFetchDataResponses
+				.Any(r => r.DataValues.Any(row => row.Any(value => value is not null)));
+
+			if (!dataArrived)
+			{
+				await Task.Delay(5000, CancellationToken);
+			}
+		}
+
+		dataArrived.Should().BeTrue(
+			$"the internal Uptime check must collect data (a non-null value on a {overallDataSourceName} instance)");
 	}
 }
 
