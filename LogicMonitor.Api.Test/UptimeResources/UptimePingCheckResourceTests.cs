@@ -127,6 +127,12 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			if (creationDto.IsInternal)
 			{
 				await AssertPingDataSourcesAppliedAsync(resource.Id);
+
+				// CreateAsync must have set website.private.checkpoints so the check is recognised as internal.
+				var raw = await LogicMonitorClient.GetAsync<Resource>(resource.Id, CancellationToken);
+				raw.CustomProperties.Should().Contain(
+					p => p.Name == "website.private.checkpoints" && !string.IsNullOrEmpty(p.Value),
+					"an internal ping check must have website.private.checkpoints set by CreateAsync");
 			}
 
 			// Update (skip if Uptime feature not enabled)

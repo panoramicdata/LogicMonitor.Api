@@ -1,3 +1,4 @@
+using LogicMonitor.Api.Resources.Uptime.Serialization;
 using System.Security.Cryptography;
 
 namespace LogicMonitor.Api;
@@ -647,13 +648,79 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="creationDto"></param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <typeparam name="T"></typeparam>
-	public virtual Task<T> CreateAsync<T>(CreationDto<T> creationDto, CancellationToken cancellationToken) where T : IHasEndpoint, new()
+	public virtual async Task<T> CreateAsync<T>(CreationDto<T> creationDto, CancellationToken cancellationToken) where T : IHasEndpoint, new()
 	{
 		var instance = new T();
 		var endpoint = instance is IHasCreationEndpoint hasCreationEndpoint
 			? hasCreationEndpoint.CreationEndpoint()
 			: instance.Endpoint();
-		return PostAsync<CreationDto<T>, T>(creationDto, endpoint, cancellationToken);
+		var created = await PostAsync<CreationDto<T>, T>(creationDto, endpoint, cancellationToken)
+			.ConfigureAwait(false);
+
+		// An internal Uptime check is not fully configured by the creation POST alone: LogicMonitor requires the
+		// website.private.checkpoints property (which the POST body does not persist) before it marks the device as
+		// system.uptime.type = internal and collects data. Set it here so no caller can create a silently-broken check.
+		if (creationDto is IUptimeCheckDefinition { IsInternal: true } definition && created is IdentifiedItem { Id: > 0 } identified)
+		{
+			await ApplyInternalUptimeCheckpointsAsync(identified.Id, definition, cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		return created;
+	}
+
+	/// <summary>
+	/// Sets the <see cref="UptimeWireKeys.Checkpoints"/> property (and, for web checks, <see cref="UptimeWireKeys.SystemCategories"/>,
+	/// which the web-check creation endpoint strips from the POST body) on a freshly-created internal Uptime check.
+	/// </summary>
+	private async Task ApplyInternalUptimeCheckpointsAsync(int resourceId, IUptimeCheckDefinition definition, CancellationToken cancellationToken)
+	{
+		var collectorIds = definition.SyntheticsCollectorIds.Count > 0
+			? definition.SyntheticsCollectorIds
+			: (definition.PreferredCollectorId > 0 ? [definition.PreferredCollectorId] : new List<int>());
+		if (collectorIds.Count == 0)
+		{
+			return;
+		}
+
+		var checkpoints = new JArray();
+		var checkpointObject = new JObject();
+		foreach (var collectorId in collectorIds)
+		{
+			var collector = await GetAsync<Collector>(collectorId, cancellationToken).ConfigureAwait(false);
+			if (collector is null)
+			{
+				continue;
+			}
+
+			var description = string.IsNullOrEmpty(collector.Description) ? collector.HostName : collector.Description;
+			var hostName = string.IsNullOrEmpty(collector.HostName) ? collector.Description : collector.HostName;
+			checkpointObject[collectorId.ToString(CultureInfo.InvariantCulture)] = new JArray
+			{
+				description,
+				hostName,
+				collector.GroupId,
+				collector.GroupName,
+				"alive",
+			};
+		}
+
+		if (!checkpointObject.HasValues)
+		{
+			return;
+		}
+
+		checkpoints.Add(checkpointObject);
+
+		// Web checks lose system.categories on creation; ping checks keep it, so only web needs it re-applied.
+		if (definition.ResourceType == ResourceType.Web)
+		{
+			await SetResourceCustomPropertyAsync(resourceId, UptimeWireKeys.SystemCategories, UptimeWireKeys.WebCategory, cancellationToken)
+				.ConfigureAwait(false);
+		}
+
+		await SetResourceCustomPropertyAsync(resourceId, UptimeWireKeys.Checkpoints, checkpoints.ToString(Formatting.None), cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	/// <summary>

@@ -15,6 +15,15 @@ internal static class UptimeWireKeys
 	public const string UseDefaultLocationSetting = "uptime.usedefaultlocationsetting";
 	public const string ServiceParameters = "website.private.serviceParameters";
 
+	/// <summary>
+	/// The property that lists the internal Collectors an internal Uptime check runs from. Its presence is
+	/// what causes LogicMonitor to set the read-only <c>system.uptime.type = internal</c> system property and
+	/// render the internal-collector checkpoints in the portal. Must be set <em>after</em> creation (it needs
+	/// the created device id and the referenced Collectors' metadata) — the creation POST body does not persist it.
+	/// Format: <c>[{"&lt;collectorId&gt;": ["&lt;description&gt;", "&lt;hostname&gt;", &lt;groupId&gt;, "&lt;groupName&gt;", "alive"], ...}]</c>
+	/// </summary>
+	public const string Checkpoints = "website.private.checkpoints";
+
 	public const string PingCategory = "pingcheckdevice";
 	public const string WebCategory = "webcheckdevice";
 }

@@ -124,6 +124,19 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 			fetched.Domain.Should().Be(creationDto.Domain);
 			fetched.Scheme.Should().Be(creationDto.Scheme);
 
+			// Internal web checks must have website.private.checkpoints and system.categories set by CreateAsync
+			// (the web-check creation endpoint strips system.categories from the POST body).
+			if (creationDto.IsInternal)
+			{
+				var raw = await LogicMonitorClient.GetAsync<Resource>(resource.Id, CancellationToken);
+				raw.CustomProperties.Should().Contain(
+					p => p.Name == "website.private.checkpoints" && !string.IsNullOrEmpty(p.Value),
+					"an internal web check must have website.private.checkpoints set by CreateAsync");
+				raw.CustomProperties.Should().Contain(
+					p => p.Name == "system.categories" && p.Value == "webcheckdevice",
+					"an internal web check must have system.categories re-applied by CreateAsync");
+			}
+
 			// Update (skip if Uptime feature not enabled)
 			try
 			{
