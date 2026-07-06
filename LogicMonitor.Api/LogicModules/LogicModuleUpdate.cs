@@ -3,6 +3,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// <summary>
 /// A LogicModule Update
 /// </summary>
+[Obsolete("Returned by the retired listcore endpoint. Use ExchangeLogicModule (via GetExchangeLogicModulesAsync) instead.")]
 [DataContract]
 public class LogicModuleUpdate : IHasEndpoint
 {

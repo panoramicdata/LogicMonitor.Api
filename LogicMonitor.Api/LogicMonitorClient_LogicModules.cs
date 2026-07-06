@@ -32,11 +32,37 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
-	/// Get a list of LogicModule updates
+	/// Gets the LM Exchange metadata for all LogicModules of all types, annotated with installation and
+	/// upgrade state. This replaces the retired <see cref="GetLogicModuleUpdatesAsync"/> (listcore) mechanism.
+	/// A module has an update available when <see cref="ExchangeLogicModule.HasUpdateAvailable"/> is true.
+	/// Filter by <see cref="ExchangeLogicModule.Type"/> client-side to restrict to a specific LogicModule type.
+	/// </summary>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>All exchange LogicModules, across every type</returns>
+	public async Task<List<ExchangeLogicModule>> GetExchangeLogicModulesAsync(CancellationToken cancellationToken)
+	{
+		// This endpoint returns a bare JSON array rather than the usual PortalResponse envelope, and the
+		// fields vary by module type and installation state. Fetch the raw body via XmlResponse (which
+		// bypasses the envelope parsing) and project each element leniently onto ExchangeLogicModule
+		// (unmodelled, type-specific fields are ignored).
+		var response = await GetBySubUrlAsync<XmlResponse>("setting/logicmodules/metadata", cancellationToken)
+			.ConfigureAwait(false);
+
+		var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+		{
+			MissingMemberHandling = MissingMemberHandling.Ignore
+		});
+
+		return [.. JArray.Parse(response.Content).Select(token => token.ToObject<ExchangeLogicModule>(serializer)!)];
+	}
+
+	/// <summary>
+	/// Get a list of LogicModule updates.
 	/// </summary>
 	/// <param name="logicModuleType">The LogicModule type</param>
 	/// <param name="cancellationToken"></param>
 	/// <returns>A LogicModuleUpdate collection</returns>
+	[Obsolete("LogicMonitor has retired the listcore endpoint this uses (it now requires an undocumented admin bearer token in the body and otherwise fails with 'bearerToken may not be null or empty'). Use GetExchangeLogicModulesAsync instead; a module has an update available when ExchangeLogicModule.HasUpdateAvailable is true.")]
 	public async Task<LogicModuleUpdateCollection> GetLogicModuleUpdatesAsync(
 		LogicModuleType logicModuleType,
 		CancellationToken cancellationToken)

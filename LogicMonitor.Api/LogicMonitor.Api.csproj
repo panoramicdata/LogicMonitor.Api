@@ -24,8 +24,12 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.10:
-		- Added missing Limited value to RolePrivilegeOperation enum
+		v3.240.20:
+		- Added GetExchangeLogicModulesAsync and the ExchangeLogicModule model (setting/logicmodules/metadata),
+		  returning all LogicModules of all types in one call with installation, lifecycle and upgrade state.
+		  A module has an update available when ExchangeLogicModule.HasUpdateAvailable is true.
+		- Deprecated GetLogicModuleUpdatesAsync, LogicModuleUpdate and LogicModuleUpdateCollection: the underlying
+		  listcore endpoint has been retired by LogicMonitor. Use GetExchangeLogicModulesAsync instead.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>

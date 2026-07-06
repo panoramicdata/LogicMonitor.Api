@@ -3,6 +3,7 @@ namespace LogicMonitor.Api.LogicModules;
 /// <summary>
 /// The credentials used to get LogicModule update details
 /// </summary>
+[Obsolete("Request body for the retired listcore endpoint. No replacement; use GetExchangeLogicModulesAsync.")]
 [DataContract]
 public class LogicModuleUpdateCredential
 {
