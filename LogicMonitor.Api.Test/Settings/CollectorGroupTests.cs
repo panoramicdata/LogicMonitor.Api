@@ -51,7 +51,10 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 				if (name is not null && name.StartsWith(TestGroupNamePrefix, StringComparison.Ordinal))
 				{
 					var id = existingGroup["id"]!.Value<int>();
-					await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{id}", CancellationToken);
+					// The collector-group DELETE route requires the deleteHard query parameter;
+					// without it LogicMonitor returns HTTP 404 and the group is never removed
+					// (the original cause of the leaked GetAllCollectorGroupsWithSubUrl_* groups).
+					await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{id}?deleteHard=false", CancellationToken);
 				}
 			}
 		}
