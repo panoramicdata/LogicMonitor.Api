@@ -30,57 +30,67 @@ public class CollectorGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 	[Fact]
 	public async Task GetAllCollectorGroupsWithSubUrl()
 	{
+		const string TestGroupNamePrefix = "GetAllCollectorGroupsWithSubUrl_";
+
 		// Create a large number of CollectorGroups, all called "GetAllCollectorGroupsWithSubUrl_N" where N is a number
 		var collectorGroupNames = Enumerable.Range(1, 100)
-			.Select(i => $"GetAllCollectorGroupsWithSubUrl_{i}")
+			.Select(i => $"{TestGroupNamePrefix}{i}")
 			.ToList();
 
-		// Pre-cleanup: remove any leftover groups from previous failed runs
-		var existingGroups = await LogicMonitorClient
-			.GetAllAsync<JObject>($"setting/collector/groups", CancellationToken);
-		foreach (var existingGroup in existingGroups)
+		// Delete every CollectorGroup created by this test (matched by name prefix).
+		// Called before the test to clear leftovers from previous failed runs, and again in
+		// the finally block so a failed, timed-out, or cancelled run can never leak groups
+		// into the portal (these tests run against a live LogicMonitor portal).
+		async Task DeleteTestGroupsAsync()
 		{
-			var name = existingGroup["name"]?.Value<string>();
-			if (name is not null && name.StartsWith("GetAllCollectorGroupsWithSubUrl_", StringComparison.Ordinal))
+			var existingGroups = await LogicMonitorClient
+				.GetAllAsync<JObject>($"setting/collector/groups", CancellationToken);
+			foreach (var existingGroup in existingGroups)
 			{
-				var id = existingGroup["id"]!.Value<int>();
-				await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{id}", CancellationToken);
+				var name = existingGroup["name"]?.Value<string>();
+				if (name is not null && name.StartsWith(TestGroupNamePrefix, StringComparison.Ordinal))
+				{
+					var id = existingGroup["id"]!.Value<int>();
+					await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{id}", CancellationToken);
+				}
 			}
 		}
 
-		foreach (var collectorGroupName in collectorGroupNames)
+		// Pre-cleanup: remove any leftover groups from previous failed runs
+		await DeleteTestGroupsAsync();
+
+		try
 		{
-			await LogicMonitorClient.CreateAsync(new CollectorGroupCreationDto
+			foreach (var collectorGroupName in collectorGroupNames)
 			{
-				Name = collectorGroupName,
-				Description = "Description"
-			}, CancellationToken);
+				await LogicMonitorClient.CreateAsync(new CollectorGroupCreationDto
+				{
+					Name = collectorGroupName,
+					Description = "Description"
+				}, CancellationToken);
+			}
+
+			var collectorGroups = await LogicMonitorClient
+				.GetAllAsync<JObject>($"setting/collector/groups", CancellationToken);
+			collectorGroups.Should().NotBeNullOrEmpty();
+
+			// All should have the name property set
+			foreach (var collectorGroup in collectorGroups)
+			{
+				collectorGroup["name"].Should().NotBeNull();
+				collectorGroup["id"].Should().NotBeNull();
+			}
+
+			// Ensure that all the CollectorGroups we created are in the list
+			foreach (var collectorGroupName in collectorGroupNames)
+			{
+				collectorGroups.Should().Contain(cg => cg["name"]!.Value<string>() == collectorGroupName);
+			}
 		}
-
-		var collectorGroups = await LogicMonitorClient
-			.GetAllAsync<JObject>($"setting/collector/groups", CancellationToken);
-		collectorGroups.Should().NotBeNullOrEmpty();
-
-		// All should have the name property set
-		foreach (var collectorGroup in collectorGroups)
+		finally
 		{
-			collectorGroup["name"].Should().NotBeNull();
-			collectorGroup["id"].Should().NotBeNull();
-		}
-
-		// Ensure that all the CollectorGroups we created are in the list
-		var idsToDelete = new List<int>();
-		foreach (var collectorGroupName in collectorGroupNames)
-		{
-			var collectorGroup = collectorGroups.FirstOrDefault(cg => cg["name"]!.Value<string>() == collectorGroupName);
-			collectorGroup.Should().NotBeNull();
-			idsToDelete.Add(collectorGroup["id"]!.Value<int>());
-		}
-
-		// Delete all the CollectorGroups we created
-		foreach (var idToDelete in idsToDelete)
-		{
-			await LogicMonitorClient.DeleteAsync($"setting/collector/groups/{idToDelete}", CancellationToken);
+			// Guaranteed teardown even on assertion failure, timeout, or cancellation
+			await DeleteTestGroupsAsync();
 		}
 	}
 
