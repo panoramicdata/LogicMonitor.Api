@@ -24,12 +24,13 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.20:
-		- Added GetExchangeLogicModulesAsync and the ExchangeLogicModule model (setting/logicmodules/metadata),
-		  returning all LogicModules of all types in one call with installation, lifecycle and upgrade state.
-		  A module has an update available when ExchangeLogicModule.HasUpdateAvailable is true.
-		- Deprecated GetLogicModuleUpdatesAsync, LogicModuleUpdate and LogicModuleUpdateCollection: the underlying
-		  listcore endpoint has been retired by LogicMonitor. Use GetExchangeLogicModulesAsync instead.
+		v3.240.24:
+		- Fixed: ToDateTimeUtc(long)/ToDateTimeUtcFromMs(long) now clamp to DateTime.MinValue/DateTime.MaxValue
+		  instead of throwing ArgumentOutOfRangeException when the epoch value is out of DateTime's representable
+		  range. Some LogicMonitor SDTs return a corrupted start/end date/time that previously crashed any consumer
+		  reading ScheduledDownTime/HistoricScheduledDownTime.StartDateTimeUtc/EndDateTimeUtc, Alert.LastUpdatedOnUtc,
+		  or ResourceDataSourceInstanceConfig.PollUtc.
+		- Removed unused ToDateTimeFromMsUtc and ToSecondLevel from DateTimeExtensions (dead code, no callers).
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>

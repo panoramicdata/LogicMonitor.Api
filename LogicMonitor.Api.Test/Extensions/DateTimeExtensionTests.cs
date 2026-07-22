@@ -2,6 +2,57 @@ namespace LogicMonitor.Api.Test.Extensions;
 
 public class DateTimeExtensionTests
 {
+	// MS-24854: LogicMonitor can return a corrupted epoch value (e.g. on an SDT's start/end date/time) that
+	// overflows DateTime's representable range. ToDateTimeUtc/ToDateTimeUtcFromMs must clamp rather than throw,
+	// since an uncaught ArgumentOutOfRangeException here previously took down the whole calling macro.
+	[Fact]
+	public void ToDateTimeUtcFromMs_Zero_ReturnsEpoch()
+		=> 0L.ToDateTimeUtcFromMs().Should().Be(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+
+	[Fact]
+	public void ToDateTimeUtcFromMs_OneDayInMs_ReturnsNextDay()
+		=> 86400000L.ToDateTimeUtcFromMs().Should().Be(new DateTime(1970, 1, 2, 0, 0, 0, DateTimeKind.Utc));
+
+	[Fact]
+	public void ToDateTimeUtcFromMs_MaxValue_ClampsToDateTimeMaxValueInsteadOfThrowing()
+	{
+		var act = () => long.MaxValue.ToDateTimeUtcFromMs();
+
+		act.Should().NotThrow();
+		long.MaxValue.ToDateTimeUtcFromMs().Should().Be(DateTime.MaxValue);
+	}
+
+	[Fact]
+	public void ToDateTimeUtcFromMs_MinValue_ClampsToDateTimeMinValueInsteadOfThrowing()
+	{
+		var act = () => long.MinValue.ToDateTimeUtcFromMs();
+
+		act.Should().NotThrow();
+		long.MinValue.ToDateTimeUtcFromMs().Should().Be(DateTime.MinValue);
+	}
+
+	[Fact]
+	public void ToDateTimeUtcLong_OneDayInSeconds_ReturnsNextDay()
+		=> 86400L.ToDateTimeUtc().Should().Be(new DateTime(1970, 1, 2, 0, 0, 0, DateTimeKind.Utc));
+
+	[Fact]
+	public void ToDateTimeUtcLong_MaxValue_ClampsToDateTimeMaxValueInsteadOfThrowing()
+	{
+		var act = () => long.MaxValue.ToDateTimeUtc();
+
+		act.Should().NotThrow();
+		long.MaxValue.ToDateTimeUtc().Should().Be(DateTime.MaxValue);
+	}
+
+	[Fact]
+	public void ToDateTimeUtcLong_MinValue_ClampsToDateTimeMinValueInsteadOfThrowing()
+	{
+		var act = () => long.MinValue.ToDateTimeUtc();
+
+		act.Should().NotThrow();
+		long.MinValue.ToDateTimeUtc().Should().Be(DateTime.MinValue);
+	}
+
 	[Fact]
 	public void InvalidValuesThrowsException()
 		=> new DateTime(1976, 02, 18)
