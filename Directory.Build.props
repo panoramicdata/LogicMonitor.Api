@@ -10,4 +10,16 @@
     <NuGetAuditMode>All</NuGetAuditMode>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- NU1903: System.Security.Cryptography.Xml 10.0.9 has 5 known high severity vulnerabilities,
+         fixed in 10.0.10. Suppressed rather than bumped: an unrelated fix is landing in this repo
+         and being consumed by Magic Suite, which is going live 2026-07-23 - not worth bundling a
+         BCL version bump into that release with no soak time.
+         TODO: bump to 10.0.10 once Magic Suite's go-live has settled. -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-23rf-6693-g89p" />
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-8q5v-6pqq-x66h" />
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-cvvh-rhrc-wg4q" />
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-g8r8-53c2-pm3f" />
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-mmjf-rqrv-855v" />
+  </ItemGroup>
 </Project>
