@@ -70,7 +70,6 @@ public class IntegrationMetadata
 	/// DataSources | EventSources | PropertySources | ConfigSources | LogSources | TopologySources | Jobmonitors | AppliesTo Functions | SNMP SysOID Maps\nThe type of LogicModule
 	/// </summary>
 	[DataMember(Name = "logicModuleType")]
-	[JsonConverter(typeof(StringEnumConverter))]
 	public LogicModuleType LogicModuleType { get; set; }
 
 	/// <summary>

@@ -283,6 +283,50 @@ public class TolerantStringEnumConverterTests
 
 	#endregion
 
+	#region IntegrationMetadata Tests (MS-24811 regression - member-level JsonConverter override)
+
+	[Fact]
+	public void ReadJson_IntegrationMetadata_LogicModuleTypeSnmpSysOidMapAlias_DeserializesCorrectly()
+	{
+		// Reproduces the real DatamartClient payload shape at 'installationMetadata.logicModuleType'.
+		// IntegrationMetadata.LogicModuleType must NOT carry its own [JsonConverter(typeof(StringEnumConverter))],
+		// or that member-level attribute silently overrides the enum's TolerantStringEnumConverter.
+		var json = """{"logicModuleType": "SNMP_SYSOID_MAP"}""";
+
+		var result = JsonConvert.DeserializeObject<IntegrationMetadata>(json);
+
+		result.Should().NotBeNull();
+		result!.LogicModuleType.Should().Be(LogicModuleType.SnmpSysOIDMap);
+	}
+
+	[Fact]
+	public void ReadJson_IntegrationMetadata_LogicModuleTypeSnmpSysOidMapPrimaryValue_DeserializesCorrectly()
+	{
+		// The LogicMonitor API has been observed returning BOTH "SNMP SysOID Map" and "SNMP_SYSOID_MAP"
+		// for this same field across different endpoints/points in time (see commit history of
+		// LogicModuleType.cs - the enum value flip-flopped between the two several times before the
+		// alias mechanism was introduced). Both forms must deserialize cleanly through IntegrationMetadata.
+		var json = """{"logicModuleType": "SNMP SysOID Map"}""";
+
+		var result = JsonConvert.DeserializeObject<IntegrationMetadata>(json);
+
+		result.Should().NotBeNull();
+		result!.LogicModuleType.Should().Be(LogicModuleType.SnmpSysOIDMap);
+	}
+
+	[Fact]
+	public void ReadJson_IntegrationMetadata_LogicModuleTypePrimaryValue_DeserializesCorrectly()
+	{
+		var json = """{"logicModuleType": "DATASOURCE"}""";
+
+		var result = JsonConvert.DeserializeObject<IntegrationMetadata>(json);
+
+		result.Should().NotBeNull();
+		result!.LogicModuleType.Should().Be(LogicModuleType.DataSource);
+	}
+
+	#endregion
+
 	#region CollectionMethod Tests
 
 	[Fact]

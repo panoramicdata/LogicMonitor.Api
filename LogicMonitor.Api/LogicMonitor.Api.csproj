@@ -24,13 +24,12 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.24:
-		- Fixed: ToDateTimeUtc(long)/ToDateTimeUtcFromMs(long) now clamp to DateTime.MinValue/DateTime.MaxValue
-		  instead of throwing ArgumentOutOfRangeException when the epoch value is out of DateTime's representable
-		  range. Some LogicMonitor SDTs return a corrupted start/end date/time that previously crashed any consumer
-		  reading ScheduledDownTime/HistoricScheduledDownTime.StartDateTimeUtc/EndDateTimeUtc, Alert.LastUpdatedOnUtc,
-		  or ResourceDataSourceInstanceConfig.PollUtc.
-		- Removed unused ToDateTimeFromMsUtc and ToSecondLevel from DateTimeExtensions (dead code, no callers).
+		v3.240.27:
+		- Fixed: IntegrationMetadata.LogicModuleType no longer throws on values the enum's
+		  TolerantStringEnumConverter already knows how to handle (e.g. "SNMP_SYSOID_MAP" for
+		  SnmpSysOIDMap). A member-level [JsonConverter(StringEnumConverter)] on that property
+		  was silently overriding the enum's tolerant converter, causing DatamartClient calls
+		  touching installationMetadata.logicModuleType to fail deserialization.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
