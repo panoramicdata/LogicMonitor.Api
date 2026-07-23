@@ -131,6 +131,43 @@ public partial class LogicMonitorClient
 		=> GetBySubUrlAsync<DataSourceGraph>($"setting/datasources/{dataSourceId}/graphs/{graphId}", cancellationToken);
 
 	/// <summary>
+	///     Creates a graph on a DataSource.
+	/// </summary>
+	/// <param name="dataSourceId">The DataSource Id</param>
+	/// <param name="dataSourceGraph">The graph to create</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>The created graph, including its server-assigned Id.</returns>
+	public Task<DataSourceGraph> CreateDataSourceGraphAsync(
+		int dataSourceId,
+		DataSourceGraph dataSourceGraph,
+		CancellationToken cancellationToken)
+		=> PostAsync<DataSourceGraph, DataSourceGraph>(dataSourceGraph, $"setting/datasources/{dataSourceId}/graphs", cancellationToken);
+
+	/// <summary>
+	///     Updates an existing graph on a DataSource.
+	/// </summary>
+	/// <param name="dataSourceId">The DataSource Id</param>
+	/// <param name="dataSourceGraph">The graph to update (its Id identifies the graph)</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task UpdateDataSourceGraphAsync(
+		int dataSourceId,
+		DataSourceGraph dataSourceGraph,
+		CancellationToken cancellationToken)
+		=> PutAsync($"setting/datasources/{dataSourceId}/graphs/{dataSourceGraph.Id}", dataSourceGraph, cancellationToken);
+
+	/// <summary>
+	///     Deletes a graph from a DataSource.
+	/// </summary>
+	/// <param name="dataSourceId">The DataSource Id</param>
+	/// <param name="graphId">The graph Id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task DeleteDataSourceGraphAsync(
+		int dataSourceId,
+		int graphId,
+		CancellationToken cancellationToken)
+		=> DeleteAsync($"setting/datasources/{dataSourceId}/graphs/{graphId}", cancellationToken);
+
+	/// <summary>
 	///     Gets a list of DataSource graphs given its dataSourceId
 	/// </summary>
 	/// <param name="dataSourceId"></param>
