@@ -21,10 +21,11 @@ public class LmLogsTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		result.QueryId.Should().NotBeNullOrEmpty();
 
 		// A portal may legitimately have no logs in the window; when logs are present they must be
-		// well-formed (a message and a mapped resource).
+		// well-formed and honour the requested size (the search API otherwise returns up to 1000).
 		if (result.Logs is { Count: > 0 })
 		{
 			result.Logs.Should().OnlyContain(l => l.Message != null);
+			result.Logs.Count.Should().BeLessThanOrEqualTo(request.Size);
 		}
 	}
 }

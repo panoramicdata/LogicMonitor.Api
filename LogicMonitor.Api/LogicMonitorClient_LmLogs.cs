@@ -46,6 +46,13 @@ public partial class LogicMonitorClient
 
 			if (result.Logs is not null || result.Progress >= 1.0 || DateTimeOffset.UtcNow >= deadline)
 			{
+				// The search API ignores the requested size and returns up to its 1000-line cap, so
+				// honour LogQueryRequest.Size client-side.
+				if (result.Logs is { Count: > 0 } && request.Size > 0 && result.Logs.Count > request.Size)
+				{
+					result.Logs = result.Logs.GetRange(0, request.Size);
+				}
+
 				return result;
 			}
 
