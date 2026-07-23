@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace LogicMonitor.Api.Test.Converters;
 
-public class DoubleOrNAConverterTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
+public class DoubleOrNAConverterTests
 {
 	[Fact]
 	public void ReadJson_DataIsThreeValidDoubles_DeserializesCorrectly()
