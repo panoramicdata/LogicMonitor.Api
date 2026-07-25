@@ -455,4 +455,10 @@ public class AutoDiscoveryMethod
 	/// </summary>
 	[DataMember(Name = "propertyAttributes")]
 	public string PropertyAttributes { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The number of days before expiry at which a certificate/resource is considered "expiring soon".
+	/// </summary>
+	[DataMember(Name = "expiringSoonDays")]
+	public int ExpiringSoonDays { get; set; }
 }
