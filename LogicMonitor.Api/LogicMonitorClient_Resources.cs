@@ -210,9 +210,11 @@ public partial class LogicMonitorClient
 	///     target <see cref="Resource" /> or <see cref="ResourceGroup" />.
 	/// </summary>
 	/// <remarks>
-	///     This writes only the named property (never a full object), so masked <c>********</c> secret
-	///     values are never sent back and cannot be clobbered. It is the safe, admin-gated way to set
-	///     hidden fields such as <c>snmp.community</c>, <c>*.pass</c> and <c>*.key</c>.
+	///     This writes only the named property (never a full object), so you always supply the real value
+	///     rather than round-tripping a masked <c>********</c>. It is the admin-gated way to set or rotate
+	///     hidden fields such as <c>snmp.community</c>, <c>*.pass</c> and <c>*.key</c>. (For reference: a
+	///     full-object PUT does not clobber a Resource/ResourceGroup secret either - the server treats the
+	///     <c>********</c> mask as "unchanged" - but this method is how you change the stored value.)
 	/// </remarks>
 	/// <param name="write">The property write directive.</param>
 	/// <param name="mode">How to set the property (Create, Update, Delete or Automatic).</param>

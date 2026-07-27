@@ -6,10 +6,16 @@ namespace LogicMonitor.Api.Test.Resources;
 ///  2. An Uptime ping-check <see cref="Resource" /> can be renamed via PutAsync - and that BOTH Name and
 ///     DisplayName must be set (a DisplayName-only change silently no-ops on uptimepingcheck devices), while
 ///     the ping target (Host) is preserved.
-///  3. A hidden/secret custom property (snmp.community) can be written safely via
+///  3. A hidden/secret custom property (snmp.community) can be set/rotated via
 ///     <see cref="LogicMonitorClient.SetCustomPropertyAsync(EntityPropertyWrite, SetPropertyMode, CancellationToken)" />
-///     (one field at a time) - the admin-gated, clobber-free alternative to round-tripping a whole object
-///     whose secret fields come back masked as ********.
+///     (one field at a time, supplying the real value) - the admin-gated, config-as-code way to write
+///     hidden fields.
+///
+/// Note on the original masked-secret concern: a full-object PUT round-trip does NOT clobber a
+/// Resource/ResourceGroup secret - LogicMonitor treats the ******** mask as "unchanged" on write. This
+/// was verified empirically on a live portal (set test.pass, GET->PUT the whole object, then read the
+/// real stored value back via a reveal PropertySource that echoes nominated hidden props, with a
+/// fresh-run marker to defeat staleness; the value survived). So PutAsync-based rename is secret-safe.
 /// </summary>
 public class ResourceRenameTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	: TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
@@ -134,9 +140,9 @@ public class ResourceRenameTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 
 		try
 		{
-			// Write the hidden field one property at a time - never a full-object PUT - so the masked
-			// ******** value is never sent and the real value cannot be clobbered. This is the admin-gated
-			// config-as-code shape: [ { "type": "resourceGroup", "id": <id>, "name": "snmp.community", "value": "public" } ]
+			// Write the hidden field one property at a time, supplying the real value (never round-tripping
+			// a masked ********). This is the admin-gated config-as-code shape used to set/rotate hidden
+			// fields: [ { "type": "resourceGroup", "id": <id>, "name": "snmp.community", "value": "public" } ]
 			var write = new EntityPropertyWrite
 			{
 				Type = EntityPropertyWriteTargetType.ResourceGroup,

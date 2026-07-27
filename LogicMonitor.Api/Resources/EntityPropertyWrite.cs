@@ -6,16 +6,22 @@ namespace LogicMonitor.Api.Resources;
 /// </summary>
 /// <remarks>
 ///    <para>
-///    This is the config-as-code shape for setting <b>hidden</b> property fields (e.g.
-///    <c>snmp.community</c>, <c>*.pass</c>, <c>*.key</c>). LogicMonitor masks such values as
-///    <c>********</c> on GET, so a full object round-trip (GET then
-///    <see cref="LogicMonitorClient.PutAsync{T}(T, System.Threading.CancellationToken)" />) would
-///    write the mask back and clobber the real value. Writing the property directly, one field at a
-///    time, avoids that: only the named property is changed and the mask is never sent.
+///    This is the config-as-code shape for <b>setting or rotating</b> hidden property fields (e.g.
+///    <c>snmp.community</c>, <c>*.pass</c>, <c>*.key</c>) to a new value. It writes one named property
+///    at a time, so a masked <c>********</c> value is never sent - you always supply the real value.
 ///    </para>
 ///    <para>
-///    Applying these writes requires LogicMonitor administrator rights, so the operation is safe by
-///    virtue of that gate. A list of these objects deserialises directly from JSON such as:
+///    Note on the masked-secret concern: LogicMonitor masks these values as <c>********</c> on GET, but
+///    for a <see cref="Resource" /> / <see cref="ResourceGroup" /> the server treats that mask as
+///    "leave unchanged" on write, so a full-object round-trip (GET then
+///    <see cref="LogicMonitorClient.PutAsync{T}(T, System.Threading.CancellationToken)" />, e.g. for a
+///    rename) does <b>not</b> clobber the real secret. This was verified empirically. Use
+///    <see cref="EntityPropertyWrite" /> when you actually want to change the stored value, not merely
+///    preserve it across an unrelated update.
+///    </para>
+///    <para>
+///    Applying these writes requires LogicMonitor administrator rights. A list of these objects
+///    deserialises directly from JSON such as:
 ///    <code>
 ///    [ { "type": "resourceGroup", "id": 1234, "name": "snmp.community", "value": "public" } ]
 ///    </code>

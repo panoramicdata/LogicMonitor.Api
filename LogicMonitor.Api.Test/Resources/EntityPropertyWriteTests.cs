@@ -30,8 +30,8 @@ public class EntityPropertyWriteTests
 		write.Name.Should().Be("snmp.community");
 		write.Value.Should().Be("public");
 
-		// The write targets the group's own properties collection (one field), never a full object PUT,
-		// so a masked ******** value can never be sent back and clobber the real secret.
+		// The write targets the group's own properties collection (one field), so the caller always
+		// supplies the real value rather than round-tripping a masked ********.
 		write.PropertiesSubUrl().Should().Be("device/groups/1234/properties");
 	}
 
