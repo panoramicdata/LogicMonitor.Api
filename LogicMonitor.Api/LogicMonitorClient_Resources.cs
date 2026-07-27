@@ -206,6 +206,54 @@ public partial class LogicMonitorClient
 			cancellationToken);
 
 	/// <summary>
+	///     Applies a single <see cref="EntityPropertyWrite" />, writing one custom property onto the
+	///     target <see cref="Resource" /> or <see cref="ResourceGroup" />.
+	/// </summary>
+	/// <remarks>
+	///     This writes only the named property (never a full object), so masked <c>********</c> secret
+	///     values are never sent back and cannot be clobbered. It is the safe, admin-gated way to set
+	///     hidden fields such as <c>snmp.community</c>, <c>*.pass</c> and <c>*.key</c>.
+	/// </remarks>
+	/// <param name="write">The property write directive.</param>
+	/// <param name="mode">How to set the property (Create, Update, Delete or Automatic).</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	/// <exception cref="NotSupportedException">Thrown when the write targets an unsupported entity type.</exception>
+	public Task SetCustomPropertyAsync(
+		EntityPropertyWrite write,
+		SetPropertyMode mode,
+		CancellationToken cancellationToken)
+	{
+		ArgumentNullException.ThrowIfNull(write);
+		return write.Type switch
+		{
+			EntityPropertyWriteTargetType.Resource
+				=> SetResourceCustomPropertyAsync(write.Id, write.Name, write.Value, mode, cancellationToken),
+			EntityPropertyWriteTargetType.ResourceGroup
+				=> SetResourceGroupCustomPropertyAsync(write.Id, write.Name, write.Value, mode, cancellationToken),
+			_ => throw new NotSupportedException($"Unsupported {nameof(EntityPropertyWriteTargetType)}: {write.Type}")
+		};
+	}
+
+	/// <summary>
+	///     Applies a batch of <see cref="EntityPropertyWrite" /> directives in order. This is the
+	///     config-as-code entry point for setting hidden property fields across resources and groups.
+	/// </summary>
+	/// <param name="writes">The property write directives to apply, in order.</param>
+	/// <param name="mode">How to set each property (Create, Update, Delete or Automatic).</param>
+	/// <param name="cancellationToken">The cancellation token.</param>
+	public async Task SetCustomPropertiesAsync(
+		IEnumerable<EntityPropertyWrite> writes,
+		SetPropertyMode mode,
+		CancellationToken cancellationToken)
+	{
+		ArgumentNullException.ThrowIfNull(writes);
+		foreach (var write in writes)
+		{
+			await SetCustomPropertyAsync(write, mode, cancellationToken).ConfigureAwait(false);
+		}
+	}
+
+	/// <summary>
 	///     Gets Resources
 	/// </summary>
 	/// <param name="filter">The Resource filter</param>
