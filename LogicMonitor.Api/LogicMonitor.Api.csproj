@@ -24,7 +24,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		Next:
+		v3.240.34:
 		- Fixed: GetTopologyDataAsync no longer throws on vertex types the DataVertexType enum does
 		  not model. "Wireless" (any access point) is now a member, "Unknown" is accepted in either
 		  case, and the enum uses TolerantStringEnumConverter so a vertex type LogicMonitor adds in
