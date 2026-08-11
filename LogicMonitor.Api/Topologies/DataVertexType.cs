@@ -3,13 +3,20 @@
 /// <summary>
 /// The vertex type
 /// </summary>
-[JsonConverter(typeof(StringEnumConverter))]
+/// <remarks>
+/// LogicMonitor adds vertex types over time (e.g. "Wireless"), and the topology data endpoint
+/// returns whatever the TopologySources produced. A strict converter therefore fails the whole
+/// /topology/data call on the first unmodelled vertex, so this enum uses the tolerant converter
+/// and degrades an unrecognised type to <see cref="Unknown"/> instead.
+/// </remarks>
+[JsonConverter(typeof(TolerantStringEnumConverter))]
 public enum DataVertexType
 {
 	/// <summary>
-	/// Router
+	/// Unknown
 	/// </summary>
-	[EnumMember(Value = "unknown")]
+	[EnumMember(Value = "Unknown")]
+	[EnumMemberAlias("unknown", "UNKNOWN")]
 	Unknown,
 
 	/// <summary>
@@ -83,6 +90,12 @@ public enum DataVertexType
 	/// </summary>
 	[EnumMember(Value = "AccessPoint")]
 	AccessPoint,
+
+	/// <summary>
+	/// Wireless (e.g. a wireless access point or controller)
+	/// </summary>
+	[EnumMember(Value = "Wireless")]
+	Wireless,
 
 	/// <summary>
 	/// LoadBalancer
