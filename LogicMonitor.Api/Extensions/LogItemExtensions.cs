@@ -6,7 +6,16 @@
 public static class LogItemExtensions
 {
 	private static readonly TimeSpan _regexEvaluationTimeout = TimeSpan.FromSeconds(5);
-	private const int MaxRegexDescriptionLength = 16 * 1024;
+
+	/// <summary>
+	/// The maximum LogItem description length, in characters, that ToAuditEvent will process
+	/// with regular expressions. Longer descriptions are deliberately skipped to protect
+	/// processing time (DataSource update messages can be enormous), returning an AuditEvent
+	/// with MatchedRegExId 0, EntityType None and an explanatory Description.
+	/// Public so that consumers can report the limit when logging size-skipped messages.
+	/// A property rather than a const so the value is not compile-time inlined into consumers.
+	/// </summary>
+	public static int MaxRegexDescriptionLength { get; } = 32 * 1024;
 	private const int OversizedDescriptionPreviewLength = 512;
 
 	internal static void ValidateRegexes()

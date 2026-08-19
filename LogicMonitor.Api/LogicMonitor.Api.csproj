@@ -24,6 +24,14 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
+		Unreleased:
+		- Changed: LogItemExtensions.MaxRegexDescriptionLength (the maximum LogItem description
+		  length processed by ToAuditEvent's regular expressions) is now public, so consumers can
+		  report the limit when logging size-skipped messages, and raised from 16,384 to 32,768
+		  characters. Real-world "Found new instance(s)" audit messages with a few hundred
+		  instances exceed 16K and were being skipped; the 5-second per-regex evaluation timeout
+		  remains the protection against pathological messages.
+
 		v3.240.34:
 		- Fixed: GetTopologyDataAsync no longer throws on vertex types the DataVertexType enum does
 		  not model. "Wireless" (any access point) is now a member, "Unknown" is accepted in either
