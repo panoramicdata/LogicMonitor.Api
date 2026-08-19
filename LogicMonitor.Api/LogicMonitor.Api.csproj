@@ -24,7 +24,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		Unreleased:
+		v3.240.39:
 		- Changed: LogItemExtensions.MaxRegexDescriptionLength (the maximum LogItem description
 		  length processed by ToAuditEvent's regular expressions) is now public, so consumers can
 		  report the limit when logging size-skipped messages, and raised from 16,384 to 32,768
