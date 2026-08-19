@@ -13,8 +13,9 @@ public static class LogItemExtensions
 	/// processing time (DataSource update messages can be enormous), returning an AuditEvent
 	/// with MatchedRegExId 0, EntityType None and an explanatory Description.
 	/// Public so that consumers can report the limit when logging size-skipped messages.
+	/// A property rather than a const so the value is not compile-time inlined into consumers.
 	/// </summary>
-	public const int MaxRegexDescriptionLength = 32 * 1024;
+	public static int MaxRegexDescriptionLength { get; } = 32 * 1024;
 	private const int OversizedDescriptionPreviewLength = 512;
 
 	internal static void ValidateRegexes()
