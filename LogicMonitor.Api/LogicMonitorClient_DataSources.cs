@@ -788,4 +788,122 @@ public partial class LogicMonitorClient
 				$"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}",
 				resourceDataSourceInstance,
 				cancellationToken);
+
+	/// <summary>
+	/// Updates individual fields on a ResourceDataSourceInstance, leaving every other field alone.
+	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// Prefer this over <see cref="UpdateResourceDataSourceInstanceAsync(int, int, int, ResourceDataSourceInstance, CancellationToken)"/>
+	/// when changing one or two fields. That method issues a full PUT, so it sends back every field
+	/// of the instance it was handed - including any the caller did not mean to write, and any that
+	/// were stale by the time the call was made.
+	/// </para>
+	/// <para>
+	/// The instance endpoint is nested under its resource and resource DataSource, which the flat
+	/// <see cref="IHasEndpoint.Endpoint"/> contract cannot express - hence a named method rather than
+	/// the generic patch path. See issue #29.
+	/// </para>
+	/// </remarks>
+	/// <param name="resourceId">The resource id</param>
+	/// <param name="resourceDataSourceId">The resource DataSource id</param>
+	/// <param name="resourceDataSourceInstanceId">The instance id</param>
+	/// <param name="fieldsToUpdate">The fields to update, keyed by their JSON names</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task PatchResourceDataSourceInstanceAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		Dictionary<string, object> fieldsToUpdate,
+		CancellationToken cancellationToken) => PatchAsync(
+			$"device/devices/{resourceId}/devicedatasources/{resourceDataSourceId}/instances/{resourceDataSourceInstanceId}",
+			fieldsToUpdate,
+			cancellationToken);
+
+	/// <summary>
+	/// Enables or disables alerting on a ResourceDataSourceInstance.
+	/// </summary>
+	/// <remarks>
+	/// This is the standard mechanism for per-instance alert suppression (for example silencing a
+	/// single switch port), and is normally applied in bulk. Only the disableAlerting field is sent.
+	/// </remarks>
+	/// <param name="resourceId">The resource id</param>
+	/// <param name="resourceDataSourceId">The resource DataSource id</param>
+	/// <param name="resourceDataSourceInstanceId">The instance id</param>
+	/// <param name="disableAlerting">True to suppress alerting on the instance</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetResourceDataSourceInstanceAlertingAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		bool disableAlerting,
+		CancellationToken cancellationToken) => PatchResourceDataSourceInstanceAsync(
+			resourceId,
+			resourceDataSourceId,
+			resourceDataSourceInstanceId,
+			new Dictionary<string, object> { ["disableAlerting"] = disableAlerting },
+			cancellationToken);
+
+	/// <summary>
+	/// Enables or disables alerting on a ResourceDataSourceInstance, taking the ids from the instance.
+	/// </summary>
+	/// <param name="resourceDataSourceInstance">The instance to update</param>
+	/// <param name="disableAlerting">True to suppress alerting on the instance</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetResourceDataSourceInstanceAlertingAsync(
+		ResourceDataSourceInstance resourceDataSourceInstance,
+		bool disableAlerting,
+		CancellationToken cancellationToken)
+	{
+		ArgumentNullException.ThrowIfNull(resourceDataSourceInstance);
+
+		return SetResourceDataSourceInstanceAlertingAsync(
+			resourceDataSourceInstance.ResourceId,
+			resourceDataSourceInstance.ResourceDataSourceId,
+			resourceDataSourceInstance.Id,
+			disableAlerting,
+			cancellationToken);
+	}
+
+	/// <summary>
+	/// Starts or stops monitoring on a ResourceDataSourceInstance.
+	/// </summary>
+	/// <remarks>Only the stopMonitoring field is sent.</remarks>
+	/// <param name="resourceId">The resource id</param>
+	/// <param name="resourceDataSourceId">The resource DataSource id</param>
+	/// <param name="resourceDataSourceInstanceId">The instance id</param>
+	/// <param name="stopMonitoring">True to stop monitoring the instance</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetResourceDataSourceInstanceMonitoringAsync(
+		int resourceId,
+		int resourceDataSourceId,
+		int resourceDataSourceInstanceId,
+		bool stopMonitoring,
+		CancellationToken cancellationToken) => PatchResourceDataSourceInstanceAsync(
+			resourceId,
+			resourceDataSourceId,
+			resourceDataSourceInstanceId,
+			new Dictionary<string, object> { ["stopMonitoring"] = stopMonitoring },
+			cancellationToken);
+
+	/// <summary>
+	/// Starts or stops monitoring on a ResourceDataSourceInstance, taking the ids from the instance.
+	/// </summary>
+	/// <param name="resourceDataSourceInstance">The instance to update</param>
+	/// <param name="stopMonitoring">True to stop monitoring the instance</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetResourceDataSourceInstanceMonitoringAsync(
+		ResourceDataSourceInstance resourceDataSourceInstance,
+		bool stopMonitoring,
+		CancellationToken cancellationToken)
+	{
+		ArgumentNullException.ThrowIfNull(resourceDataSourceInstance);
+
+		return SetResourceDataSourceInstanceMonitoringAsync(
+			resourceDataSourceInstance.ResourceId,
+			resourceDataSourceInstance.ResourceDataSourceId,
+			resourceDataSourceInstance.Id,
+			stopMonitoring,
+			cancellationToken);
+	}
 }
