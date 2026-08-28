@@ -8,7 +8,10 @@ internal class AutomaticUpgradeInfoConverter : JsonCreationConverter<AutomaticUp
 		return type switch
 		{
 			"automatic upgrade" => new AutomaticUpgradeAutomaticUpgradeInfo(),
-			_ => throw new NotSupportedException($"{nameof(AutomaticUpgradeInfoConverter)}.cs needs updating to include include {type}.")
+			_ => throw new NotSupportedException(
+				type is null
+					? $"{nameof(AutomaticUpgradeInfoConverter)}: the response contained no 'type' field, so the automatic upgrade info subtype cannot be determined. If you are selecting specific fields, include 'type'."
+					: $"{nameof(AutomaticUpgradeInfoConverter)}.cs needs updating to include {type}.")
 		};
 	}
 

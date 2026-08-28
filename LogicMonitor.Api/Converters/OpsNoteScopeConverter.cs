@@ -12,7 +12,10 @@ internal class OpsNoteScopeConverter : JsonCreationConverter<OpsNoteScope>
 			"website" => new WebsiteOpsNoteScope(),
 			"websitegroup" => new WebsiteGroupOpsNoteScope(),
 			"groupall" => new AllGroupOpsNoteScope(),
-			_ => throw new NotSupportedException($"{nameof(OpsNoteScopeConverter)}.cs needs updating to include {type}."),
+			_ => throw new NotSupportedException(
+				type is null
+					? $"{nameof(OpsNoteScopeConverter)}: the response contained no 'type' field, so the ops note scope subtype cannot be determined. If you are selecting specific fields, include 'type'."
+					: $"{nameof(OpsNoteScopeConverter)}.cs needs updating to include {type}."),
 		};
 	}
 

@@ -9,7 +9,10 @@ internal class MapPointConverter : JsonCreationConverter<MapPoint>
 		{
 			"device" => new ResourceMapPoint(),
 			"group" => new ResourceGroupMapPoint(),
-			_ => throw new NotSupportedException($"{nameof(MapPointConverter)}.cs needs updating to include {type}."),
+			_ => throw new NotSupportedException(
+				type is null
+					? $"{nameof(MapPointConverter)}: the response contained no 'type' field, so the map point subtype cannot be determined. If you are selecting specific fields, include 'type'."
+					: $"{nameof(MapPointConverter)}.cs needs updating to include {type}."),
 		};
 	}
 
