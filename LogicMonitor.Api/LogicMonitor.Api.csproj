@@ -24,7 +24,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.44:
+		v3.240.46:
 		- Fixed: EscalationChainCreationDto no longer blanks its own destination lists. It carried
 		  four destination properties - the two names the API honours on write (destinations,
 		  ccDestinations) and the two the read model returns (destination, ccdestination). All four
