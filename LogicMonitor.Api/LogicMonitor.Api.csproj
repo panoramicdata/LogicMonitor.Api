@@ -24,6 +24,23 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
+		v3.240.44:
+		- Fixed: EscalationChainCreationDto no longer blanks its own destination lists. It carried
+		  four destination properties - the two names the API honours on write (destinations,
+		  ccDestinations) and the two the read model returns (destination, ccdestination). All four
+		  defaulted to an empty list rather than null, and NullValueHandling.Ignore only skips nulls,
+		  so every create serialised all four. Populating the read-shaped property sent recipients
+		  under ccdestination AND an empty ccDestinations; the API took the empty one and returned
+		  HTTP 200 with a fully-formed chain and no CC recipients - silent data loss visible only on
+		  a re-read. The read-shaped names are now non-serialising [Obsolete] aliases forwarding to
+		  the canonical properties, so existing code keeps compiling and starts working.
+		- Added: PatchResourceDataSourceInstanceAsync, plus SetResourceDataSourceInstanceAlertingAsync
+		  and SetResourceDataSourceInstanceMonitoringAsync (id and instance overloads), for writing
+		  individual fields on a resource DataSource instance. The pre-existing
+		  UpdateResourceDataSourceInstanceAsync is a full PUT that sends back every field it was
+		  handed; per-instance alert suppression is normally applied in bulk, where that is both
+		  wasteful and a clobbering risk.
+
 		v3.240.39:
 		- Changed: LogItemExtensions.MaxRegexDescriptionLength (the maximum LogItem description
 		  length processed by ToAuditEvent's regular expressions) is now public, so consumers can
