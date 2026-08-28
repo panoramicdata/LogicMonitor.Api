@@ -58,8 +58,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
 		<PackageReference Include="System.Security.Cryptography.Xml" />
-		<PackageReference Include="coverlet.collector" PrivateAssets="all" />
-	</ItemGroup>
+	<PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" PrivateAssets="all" /></ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\LogicMonitor.Api\LogicMonitor.Api.csproj" />
