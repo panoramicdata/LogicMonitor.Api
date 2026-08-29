@@ -37,9 +37,9 @@ public abstract class JsonCreationConverter<T> : JsonConverter
 		var jObject = JObject.Load(reader);
 
 		// Create target object based on JObject
-		var target = Create(objectType, jObject);
+		var target = Create(objectType, jObject) ?? throw new JsonSerializationException($"Failed to create an instance of {objectType} from JSON.");
 
-		if (target != null)
+		if (!EqualityComparer<T>.Default.Equals(target, default))
 		{
 			// Populate the object properties
 			serializer.Populate(jObject.CreateReader(), target);

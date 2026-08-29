@@ -54,7 +54,7 @@ public class TestLMConnectionCommand : LogicMonitorCmdletBase
 			WriteVerboseMessage("Testing LogicMonitor connection...");
 
 			// Try to get account settings to test connection
-			var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None)
+			_ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None)
 			  .GetAwaiter().GetResult();
 
 			WriteVerboseMessage("Connection test successful.");

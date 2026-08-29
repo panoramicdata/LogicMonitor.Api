@@ -19,14 +19,14 @@ public class GetLMAlertCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Maximum number of results to return
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int Take { get; set; } = 100;
 
 	/// <summary>
 	/// Number of results to skip
 	/// </summary>
-	[Parameter()]
-	public int Skip { get; set; } = 0;
+	[Parameter]
+	public int Skip { get; set; }
 
 	protected override void ProcessRecord()
 	{
@@ -82,7 +82,7 @@ public class ConfirmLMAlertCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Acknowledgment note
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Note { get; set; }
 
 	protected override void ProcessRecord()

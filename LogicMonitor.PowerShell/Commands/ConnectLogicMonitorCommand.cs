@@ -100,7 +100,7 @@ public class ConnectLogicMonitorCommand : LogicMonitorCmdletBase
 
 			// Test the connection by getting account information
 			WriteVerboseMessage("Testing connection...");
-			var _ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None).GetAwaiter().GetResult();
+			_ = Client.GetAsync<Api.Settings.AccountSettings>(CancellationToken.None).GetAwaiter().GetResult();
 
 			// Dispose previous client now that new connection is confirmed
 			previousClient?.Dispose();

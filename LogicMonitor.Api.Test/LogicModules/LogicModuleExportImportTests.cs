@@ -314,34 +314,6 @@ public class LogicModuleExportImportTests(ITestOutputHelper iTestOutputHelper, F
 		}
 	}
 
-	// Note: Import tests are skipped by default to avoid modifying the portal
-	// Uncomment and run manually when needed
-
-	//[Fact(Skip = "Don't import without understanding the implications")]
-	//public async Task ImportDataSourceFromJson()
-	//{
-	//	// First export a DataSource
-	//	var dataSource = await LogicMonitorClient
-	//		.GetDataSourceByUniqueNameAsync("Ping", CancellationToken);
-	//	dataSource.Should().NotBeNull();
-	//
-	//	var json = await LogicMonitorClient
-	//		.GetDataSourceJsonAsync(dataSource!.Id, CancellationToken);
-	//
-	//	// Modify the name to avoid conflicts
-	//	var jObject = JObject.Parse(json);
-	//	jObject["name"] = "Ping_Test_Copy_" + Guid.NewGuid().ToString("N").Substring(0, 8);
-	//	jObject["displayedAs"] = "Ping Test Copy";
-	//	var modifiedJson = jObject.ToString();
-	//
-	//	// Import (this will create a new DataSource)
-	//	var imported = await LogicMonitorClient
-	//		.ImportDataSourceJsonAsync(modifiedJson, CancellationToken);
-	//
-	//	imported.Should().NotBeNull();
-	//	imported.Id.Should().BePositive();
-	//
-	//	// Cleanup: delete the imported DataSource
-	//	await LogicMonitorClient.DeleteAsync<DataSource>(imported.Id, CancellationToken);
-	//}
+	// Note: import tests are deliberately absent. Importing a LogicModule mutates the portal,
+	// so it is not safe to run as part of the automated suite.
 }

@@ -22,26 +22,26 @@ public class GetLMResourceGroupCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Resource group name pattern
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Name { get; set; }
 
 	/// <summary>
 	/// Parent group ID
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int ParentId { get; set; }
 
 	/// <summary>
 	/// Maximum number of results to return
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int Take { get; set; } = 300;
 
 	/// <summary>
 	/// Number of results to skip
 	/// </summary>
-	[Parameter()]
-	public int Skip { get; set; } = 0;
+	[Parameter]
+	public int Skip { get; set; }
 
 	protected override void ProcessRecord()
 	{
@@ -122,13 +122,13 @@ public class NewLMResourceGroupCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Resource group description
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Description { get; set; }
 
 	/// <summary>
 	/// Custom properties hash table
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public Hashtable? Properties { get; set; }
 
 	protected override void ProcessRecord()
@@ -189,19 +189,19 @@ public class SetLMResourceGroupCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// New resource group name
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Name { get; set; }
 
 	/// <summary>
 	/// New description
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Description { get; set; }
 
 	/// <summary>
 	/// New parent group ID
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int ParentId { get; set; }
 
 	protected override void ProcessRecord()
@@ -261,7 +261,7 @@ public class RemoveLMResourceGroupCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Perform hard delete (permanent removal)
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public SwitchParameter HardDelete { get; set; }
 
 	protected override void ProcessRecord()

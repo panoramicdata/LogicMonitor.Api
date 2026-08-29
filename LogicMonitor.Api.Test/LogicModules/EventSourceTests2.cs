@@ -28,13 +28,15 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		eventSourcePage.Items.Select(c => c.Id).HasDuplicates().Should().BeFalse();
 
 		// Check each one
-		var eventSourcesString = string.Empty;
+		var eventSourcesStringBuilder = new StringBuilder();
 		foreach (var eventSource in eventSourcePage.Items)
 		{
-			eventSourcesString += $"{eventSource.Name}\r\n";
+			eventSourcesStringBuilder.Append(eventSource.Name).Append("\r\n");
 
 			var overviewGraphs = await LogicMonitorClient
-			.GetDataSourceOverviewGraphsPageAsync(eventSource.Id, new Filter<DataSourceGraph>(), CancellationToken);
+				.GetDataSourceOverviewGraphsPageAsync(eventSource.Id, new Filter<DataSourceGraph>(), CancellationToken);
+
+			overviewGraphs.Should().NotBeNull();
 
 			var testGraphs = await LogicMonitorClient
 				.GetDataSourceGraphsAsync(eventSource.Id, CancellationToken);
@@ -42,7 +44,7 @@ public class EventSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fixt
 			testGraphs.Should().NotBeNull();
 		}
 
-		Logger.LogInformation("{Message}", eventSourcesString);
+		Logger.LogInformation("{Message}", eventSourcesStringBuilder.ToString());
 	}
 
 	[Fact]

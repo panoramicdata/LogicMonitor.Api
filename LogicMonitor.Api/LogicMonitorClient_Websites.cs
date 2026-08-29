@@ -96,31 +96,27 @@ public partial class LogicMonitorClient
 
 				break;
 			default:
+				// Every other mode (e.g. CreateOrUpdate) permits both a null and a non-null value,
+				// so there is nothing to check.
 				break;
 		}
 
-		// NB it is not yet possible to do the following:
-		//return SetCustomPropertyAsync(
-		//		  websiteId,
-		//		  name,
-		//		  value,
-		//		  mode,
-		//		  "website/websites",
-		//		  cancellationToken);
+		// NB the generic SetCustomPropertyAsync helper cannot be used for websites and website
+		// groups - the portal does not support the sub-URL it builds, so the get/modify/put
+		// sequence below is done by hand instead.
 
 		var websiteOrGroup = await GetAsync<T>(id, cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
 		var existingCustomProperty = websiteOrGroup.CustomProperties.SingleOrDefault(cp => cp.Name == name);
 		if (existingCustomProperty is not null)
 		{
-			switch (value)
+			if (value is null)
 			{
-				case null:
-					websiteOrGroup.CustomProperties.Remove(existingCustomProperty);
-					break;
-				default:
-					existingCustomProperty.Value = value;
-					break;
+				websiteOrGroup.CustomProperties.Remove(existingCustomProperty);
+			}
+			else
+			{
+				existingCustomProperty.Value = value;
 			}
 		}
 		else
@@ -130,17 +126,13 @@ public partial class LogicMonitorClient
 				throw new LogicMonitorApiException("Can't delete a custom property that is not there.");
 			}
 
-			switch (value)
+			if (value is not null)
 			{
-				case null:
-					break;
-				default:
-					websiteOrGroup.CustomProperties.Add(new EntityProperty
-					{
-						Name = name,
-						Value = value
-					});
-					break;
+				websiteOrGroup.CustomProperties.Add(new EntityProperty
+				{
+					Name = name,
+					Value = value
+				});
 			}
 		}
 
@@ -293,8 +285,8 @@ public partial class LogicMonitorClient
 	internal async Task<(List<Alert> alerts, bool limitReached)> GetWebsiteAlertsByIdNormalAsync(
 		int websiteId,
 		AlertFilter filter,
-		bool calledFromChunked = false,
-		CancellationToken cancellationToken = default)
+		bool calledFromChunked,
+		CancellationToken cancellationToken)
 	{
 		// Ensure that the filter CANNOT override the website ID set!
 		filter.RemoveMonitorObjectReferences();

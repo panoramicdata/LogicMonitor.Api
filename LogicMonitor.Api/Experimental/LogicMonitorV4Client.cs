@@ -26,8 +26,10 @@ public class LogicMonitorV4Client : IDisposable
 
 		_account = options.Account;
 		_baseUrl = $"https://{_account}.logicmonitor.com/santaba/rest";
-		_username = ""; // options.Username;
-		_password = ""; // options.Password;
+		// LogicMonitorClientOptions does not (yet) carry the username and password that the v4
+		// session endpoint needs, so these are left empty until it does.
+		_username = "";
+		_password = "";
 		_client = new HttpClient(handler)
 		{
 			BaseAddress = new Uri(_baseUrl)

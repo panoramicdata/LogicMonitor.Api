@@ -71,7 +71,7 @@ internal class Cache<TIndex, TValue> where TIndex : notnull
 			ExpiryTimeUtc = DateTime.UtcNow + MaxAge,
 			Item = value
 		};
-		_cache.AddOrUpdate(index, cachedItem, (_, __) => cachedItem);
+		_cache.AddOrUpdate(index, cachedItem, (_, _) => cachedItem);
 	}
 
 	public void Age(bool force = false)

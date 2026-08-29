@@ -15,15 +15,8 @@ public class LogicModuleMetadataTests(ITestOutputHelper iTestOutputHelper, Fixtu
 		CheckMetadata(logicModuleMetadata);
 	}
 
-	//[Fact(Skip = "LogicMonitor is broken - ZenDesk ticket number 112910")]
-	//public async Task GetEventSourceMetadata()
-	//{
-	//	var eventSource = await DefaultPortalClient.GetByNameAsync<EventSource>("Windows System Event Log");
-	//	eventSource.Should().NotBeNull();
-	//	eventSource.Id.Should().NotBe(0);
-	//	var logicModuleMetadata = await DefaultPortalClient.GetLogicModuleMetadata(LogicModuleType.EventSource, eventSource.Id);
-	//	CheckMetadata(logicModuleMetadata);
-	//}
+	// Note: there is no EventSource metadata test - LogicMonitor's EventSource metadata
+	// endpoint is broken (ZenDesk ticket number 112910).
 
 	[Fact]
 	public async Task GetConfigSourceMetadata()

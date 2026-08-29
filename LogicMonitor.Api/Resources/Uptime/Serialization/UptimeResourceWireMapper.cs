@@ -62,14 +62,13 @@ internal static class UptimeResourceWireMapper
 			device["groupIds"] = new JArray(ParseGroupIds(definition.ResourceGroupIds));
 		}
 
-		switch (definition)
+		if (definition is IPingCheckDefinition ping)
 		{
-			case IPingCheckDefinition ping:
-				WritePing(device, ping);
-				break;
-			case IWebCheckDefinition web:
-				WriteWeb(device, web);
-				break;
+			WritePing(device, ping);
+		}
+		else if (definition is IWebCheckDefinition web)
+		{
+			WriteWeb(device, web);
 		}
 
 		return device;
@@ -151,14 +150,13 @@ internal static class UptimeResourceWireMapper
 		var resource = CreateInstance(device, objectType);
 		PopulateCommon(resource, device);
 
-		switch (resource)
+		if (resource is PingCheckResource ping)
 		{
-			case PingCheckResource ping:
-				PopulatePing(ping, device);
-				break;
-			case WebCheckResource web:
-				PopulateWeb(web, device);
-				break;
+			PopulatePing(ping, device);
+		}
+		else if (resource is WebCheckResource web)
+		{
+			PopulateWeb(web, device);
 		}
 
 		return resource;

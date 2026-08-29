@@ -593,11 +593,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
 
 		// Calculate metrics
-		var durationInSeconds = (endDateTime - startDateTime).TotalSeconds;
 		var actualDataPoints = graphData.TimeStamps.Count;
-		var averageInterval = actualDataPoints > 1 
-			? durationInSeconds / (actualDataPoints - 1) 
-			: graphData.Step;
 
 		// Log detailed information for boundary analysis
 		Logger.LogInformation("=== {Description} ===", description);
@@ -878,11 +874,20 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 	private static string FormatDuration(double seconds)
 	{
 		if (seconds < 60)
+		{
 			return $"{seconds:F0}s";
+		}
+
 		if (seconds < 3600)
+		{
 			return $"{seconds / 60:F1}m";
+		}
+
 		if (seconds < 86400)
+		{
 			return $"{seconds / 3600:F1}h";
+		}
+
 		return $"{seconds / 86400:F1}d";
 	}
 }

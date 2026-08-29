@@ -288,7 +288,7 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 			.DeleteAsync($"dashboard/dashboards/{foundBoard.Id}", CancellationToken);
 		}
 
-		var newDashboard = new DashboardCreationDto()
+		var newDashboard = new DashboardCreationDto
 		{
 			Owner = "test",
 			Template = new(),

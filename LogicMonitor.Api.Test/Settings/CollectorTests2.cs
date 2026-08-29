@@ -260,8 +260,8 @@ public class CollectorTests2(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		}
 		finally
 		{
-			// No need to do this as the collector has not been registered
-			// await DefaultPortalClient.DeleteAsync(collector);
+			// Note: the downloaded collector does not need deleting from the portal here,
+			// as it was never registered.
 			tempFileInfo.Delete();
 
 			// Remove the collector from the API

@@ -76,9 +76,7 @@ internal class PortalResponse<T> where T : new()
 	/// </summary>
 	public bool IsSuccessStatusCode =>
 		(int)HttpStatusCode == 207 // MultiStatus
-		|| HttpStatusCode switch
-		{
-			HttpStatusCode.Continue
+		|| HttpStatusCode is HttpStatusCode.Continue
 			or HttpStatusCode.SwitchingProtocols
 			or HttpStatusCode.OK
 			or HttpStatusCode.Created
@@ -94,11 +92,7 @@ internal class PortalResponse<T> where T : new()
 			or HttpStatusCode.NotModified
 			or HttpStatusCode.UseProxy
 			or HttpStatusCode.Unused
-			or HttpStatusCode.TemporaryRedirect
-				=> true,
-			_
-				=> false,
-		};
+			or HttpStatusCode.TemporaryRedirect;
 
 	/// <summary>
 	///    Parse a JSON string into an object of type T.

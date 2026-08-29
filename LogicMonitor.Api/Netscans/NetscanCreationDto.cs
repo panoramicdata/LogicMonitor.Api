@@ -7,13 +7,6 @@ namespace LogicMonitor.Api.Netscans;
 public class NetscanCreationDto : CreationDto<Netscan>, IHasName, IHasDescription
 {
 	/// <summary>
-	///    Constructor
-	/// </summary>
-	public NetscanCreationDto()
-	{
-	}
-
-	/// <summary>
 	///    The creator
 	/// </summary>
 	[DataMember(Name = "creator")]

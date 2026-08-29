@@ -113,7 +113,6 @@ public class FlowTests : TestWithOutput, IClassFixture<Fixture>
 		flowEndpoints.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	[Fact]
@@ -129,7 +128,6 @@ public class FlowTests : TestWithOutput, IClassFixture<Fixture>
 		flows.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	[Fact]
@@ -145,7 +143,6 @@ public class FlowTests : TestWithOutput, IClassFixture<Fixture>
 		flowPorts.Items.Should().NotBeNullOrEmpty();
 
 		// TODO Make sure that flows are unique in some way
-		//((flows.Select(flow => flow.Id).HasDuplicates())).Should().BeFalse();
 	}
 
 	[Fact]

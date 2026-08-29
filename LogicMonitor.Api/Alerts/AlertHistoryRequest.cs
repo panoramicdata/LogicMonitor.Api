@@ -95,11 +95,9 @@ public class AlertHistoryRequest : IValidate
 			throw new ArgumentException("EndDateTime must be specified for a custom history range");
 		}
 
-		var end = HistoryPeriod switch
-		{
-			AlertHistoryPeriod.Custom => EndDateTimeUtc!.Value,
-			_ => DateTime.UtcNow
-		};
+		var end = HistoryPeriod == AlertHistoryPeriod.Custom
+			? EndDateTimeUtc!.Value
+			: DateTime.UtcNow;
 		return end.SecondsSinceTheEpoch();
 	}
 }

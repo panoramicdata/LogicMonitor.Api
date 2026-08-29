@@ -47,9 +47,10 @@ public static class GraphDataExtensions
 			graphData.TimeStamps.RemoveAt(index);
 		}
 
-		//NO: what can happen is that some timestamps are duplicated (crazy, right?) and this could remove e.g. 2 but
-		// then we only were removing 1 in the line data. That's not right as the data and timestamp counts MUST match
-		//graphData.TimeStamps.RemoveAll(timestamp => timestampsAndIndexes.Exists(ts => ts.Timestamp == timestamp));
+		// NB the timestamps must be removed by index, one at a time, as above. Removing them by
+		// value is wrong: timestamps can be duplicated (crazy, right?), so a single removal by
+		// value could drop e.g. 2 timestamps while only 1 is dropped from the line data, and the
+		// data and timestamp counts MUST match.
 
 		// Remove line data at those indexes
 		foreach (var line in graphData.Lines)

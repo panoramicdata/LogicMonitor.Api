@@ -601,6 +601,7 @@ public static class LogItemExtensions
 				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
 				break;
 			default:
+				// Most patterns do not imply an action or outcome type; those are left unset.
 				break;
 		}
 

@@ -77,7 +77,7 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 	[Fact]
 	public async Task SaveWidget()
 	{
-		var widget = new HtmlWidget()
+		var widget = new HtmlWidget
 		{
 			DashboardId = TestDashboardId,
 			Name = "test",
@@ -86,7 +86,7 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 			UpdateIntervalMinutes = 5,
 			Type = "html",
 			Timescale = "string",
-			HtmlWidgetResources = [new HtmlWidgetResource()
+			HtmlWidgetResources = [new HtmlWidgetResource
 			{
 				Type = "html",
 				Url = "string"
@@ -100,7 +100,7 @@ public class WidgetTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) :
 		var getWidget = (HtmlWidget)await LogicMonitorClient
 			.GetWidgetByIdAsync(createdWidget.Id, CancellationToken);
 
-		var patchedWidget = new HtmlWidget()
+		var patchedWidget = new HtmlWidget
 		{
 			DashboardId = getWidget.DashboardId,
 			Name = getWidget.Name,

@@ -42,7 +42,7 @@ public class AppliesToFunctionTests(ITestOutputHelper iTestOutputHelper, Fixture
 				.DeleteAsync<AppliesToFunction>(atf.Id, CancellationToken);
 		}
 
-		var newATF = new AppliesToFunctionCreationDto()
+		var newATF = new AppliesToFunctionCreationDto
 		{
 			Name = TestAppliesToFunctionName,
 			Description = TestAppliesToFunctionDescription,

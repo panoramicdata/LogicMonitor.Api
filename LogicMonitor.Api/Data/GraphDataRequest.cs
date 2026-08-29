@@ -70,6 +70,8 @@ public abstract class GraphDataRequest : GraphDataRequestBase
 
 				break;
 			default:
+				// Every other TimePeriod is self-describing: it determines the start and end
+				// times on its own, so there is nothing to validate.
 				break;
 		}
 	}

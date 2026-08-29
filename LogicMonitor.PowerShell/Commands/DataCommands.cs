@@ -26,7 +26,7 @@ public class GetLMResourceDataCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Instance name (optional, for multi-instance datasources)
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Instance { get; set; }
 
 	/// <summary>
@@ -111,13 +111,13 @@ public class GetLMRawDataCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Start time for data retrieval
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public DateTime? StartTime { get; set; }
 
 	/// <summary>
 	/// End time for data retrieval
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public DateTime? EndTime { get; set; }
 
 	protected override void ProcessRecord()
@@ -209,19 +209,19 @@ public class GetLMGraphDataCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Start time for data retrieval
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public DateTime? StartTime { get; set; }
 
 	/// <summary>
 	/// End time for data retrieval
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public DateTime? EndTime { get; set; }
 
 	/// <summary>
 	/// Graph width
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int Width { get; set; } = 500;
 
 	protected override void ProcessRecord()

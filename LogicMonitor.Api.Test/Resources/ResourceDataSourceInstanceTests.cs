@@ -60,7 +60,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 				]
 		}, CancellationToken);
 
-		var newInstance = new ResourceDataSourceInstanceCreationDto()
+		var newInstance = new ResourceDataSourceInstanceCreationDto
 		{
 			DisplayName = "lornaTest",
 			Description = "test",
@@ -71,7 +71,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 			.AddResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[9].Id, newInstance, CancellationToken);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[9].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[9].Id, new Filter<ResourceDataSourceInstance>
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
@@ -91,7 +91,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		if (foundTest)
 		{
 			await LogicMonitorClient
-				.DeleteAsync(new ResourceDataSourceInstance()
+				.DeleteAsync(new ResourceDataSourceInstance
 				{
 					ResourceId = resource.Id,
 					ResourceDataSourceId = resourceDataSources[9].Id,
@@ -118,7 +118,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		}, CancellationToken);
 
 		var resourceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(resource.Id, resourceDataSources[0].Id, new Filter<ResourceDataSourceInstance>
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
@@ -145,7 +145,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 		}, CancellationToken);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id), nameof(ResourceDataSourceInstance.DisplayName)]
@@ -156,7 +156,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 
 		var configId = config[0].Id;
 		var prevSetting = config[0].DisableAlerting;
-		var updateConfig = new DataPointConfigurationCreationDTO()
+		var updateConfig = new DataPointConfigurationCreationDTO
 		{
 			AlertExpression = config[0].AlertExpression,
 			AlertExpressionNote = config[0].AlertExpressionNote,
@@ -206,7 +206,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 			.GetAllResourceDataSourceInstancesAsync(
 				resource.Id,
 				resourceDataSources[0].Id,
-				new Filter<ResourceDataSourceInstance>()
+				new Filter<ResourceDataSourceInstance>
 				{
 					Skip = 0,
 				}, CancellationToken);

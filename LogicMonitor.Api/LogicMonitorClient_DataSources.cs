@@ -407,12 +407,9 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken)
 	{
 		// TODO - Move this inline and support other LogicModule types
-		switch (logicModuleType)
+		if (logicModuleType != LogicModuleType.DataSource)
 		{
-			case LogicModuleType.DataSource:
-				break;
-			default:
-				throw new NotSupportedException($"LogicModuleType {logicModuleType} not yet supported.");
+			throw new NotSupportedException($"LogicModuleType {logicModuleType} not yet supported.");
 		}
 
 		var resourceGroupFilter = new Filter<ResourceGroup>

@@ -22,38 +22,38 @@ namespace LogicMonitor.PowerShell.Commands;
         /// <summary>
         /// Resource name pattern
      /// </summary>
-    [Parameter()]
+    [Parameter]
         public string? Name { get; set; }
 
    /// <summary>
         /// Resource display name pattern
      /// </summary>
-        [Parameter()]
+        [Parameter]
         public string? DisplayName { get; set; }
 
         /// <summary>
         /// Resource group ID
         /// </summary>
-        [Parameter()]
+        [Parameter]
         public int GroupId { get; set; }
 
    /// <summary>
       /// Filter hashtable for complex filtering
 /// </summary>
-        [Parameter()]
+        [Parameter]
 public Hashtable? Filter { get; set; }
 
     /// <summary>
         /// Maximum number of results to return
         /// </summary>
-        [Parameter()]
+        [Parameter]
       public int Take { get; set; } = 300;
 
         /// <summary>
         /// Number of results to skip
         /// </summary>
-   [Parameter()]
-        public int Skip { get; set; } = 0;
+   [Parameter]
+        public int Skip { get; set; }
 
 protected override void ProcessRecord()
    {
@@ -145,13 +145,13 @@ filterItems.Add(new Eq<Resource>("resourceGroupIds", GroupId.ToString()));
      /// <summary>
         /// Resource description
    /// </summary>
-    [Parameter()]
+    [Parameter]
 public string? Description { get; set; }
 
         /// <summary>
 /// Custom properties hashtable
         /// </summary>
-        [Parameter()]
+        [Parameter]
         public Hashtable? Properties { get; set; }
 
         protected override void ProcessRecord()
@@ -213,19 +213,19 @@ public class SetLMResourceCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// New resource name
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Name { get; set; }
 
 	/// <summary>
 	/// New display name
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? DisplayName { get; set; }
 
 	/// <summary>
 	/// New description
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Description { get; set; }
 
 	protected override void ProcessRecord()
@@ -285,7 +285,7 @@ public class RemoveLMResourceCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Perform hard delete (permanent removal)
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public SwitchParameter HardDelete { get; set; }
 
 	protected override void ProcessRecord()

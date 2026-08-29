@@ -7,13 +7,6 @@
 public class WidgetConfig
 {
 	/// <summary>
-	/// Create a WidgetConfig
-	/// </summary>
-	public WidgetConfig()
-	{
-	}
-
-	/// <summary>
 	///     Column
 	/// </summary>
 	[DataMember(Name = "col")]

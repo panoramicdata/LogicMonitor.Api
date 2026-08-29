@@ -1100,7 +1100,10 @@ public partial class LogicMonitorClient
 			$"device/groups/{resourceGroupId}/clusterAlertConf",
 			cancellationToken).ConfigureAwait(false);
 		foreach (var item in items)
+		{
 			item.ResourceGroupId = resourceGroupId;
+		}
+
 		return items;
 	}
 
@@ -1120,7 +1123,10 @@ public partial class LogicMonitorClient
 			filter,
 			cancellationToken).ConfigureAwait(false);
 		foreach (var item in page.Items ?? [])
+		{
 			item.ResourceGroupId = resourceGroupId;
+		}
+
 		return page;
 	}
 

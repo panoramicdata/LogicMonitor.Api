@@ -44,12 +44,6 @@ public abstract class WidgetCreationDto<T> : CreationDto<T>, IHasName, IHasDescr
 #pragma warning restore CS0618 // Type or member is obsolete
 	}
 
-	///// <summary>
-	/////    The dashboard Id as a string
-	///// </summary>
-	//[DataMember(Name = "dashboardId")]
-	//public string DashboardId { get; set; }
-
 	/// <summary>
 	///     The name
 	/// </summary>

@@ -7,11 +7,5 @@ public class RecycleBinTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		var recycleBinItems = await LogicMonitorClient.GetAllAsync<RecycleBinItem>(CancellationToken);
 		recycleBinItems.Should().NotBeNull();
-
-		// The following bit of code is for testing restores
-		if (recycleBinItems.Count > 0 && false)
-		{
-			var response = await LogicMonitorClient.RecycleBinRestoreAsync([recycleBinItems[0].Id], CancellationToken);
-		}
 	}
 }

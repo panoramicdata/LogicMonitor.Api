@@ -20,26 +20,26 @@ public class GetLMUserCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Username pattern
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Username { get; set; }
 
 	/// <summary>
 	/// Email pattern
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Email { get; set; }
 
 	/// <summary>
 	/// Maximum number of results to return
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int Take { get; set; } = 300;
 
 	/// <summary>
 	/// Number of results to skip
 	/// </summary>
-	[Parameter()]
-	public int Skip { get; set; } = 0;
+	[Parameter]
+	public int Skip { get; set; }
 
 	protected override void ProcessRecord()
 	{
@@ -142,13 +142,13 @@ public class NewLMUserCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Role IDs to assign to the user
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public int[]? RoleIds { get; set; }
 
 	/// <summary>
 	/// Force password change on first login
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public SwitchParameter ForcePasswordChange { get; set; }
 
 	protected override void ProcessRecord()
@@ -206,25 +206,25 @@ public class SetLMUserCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// New first name
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? FirstName { get; set; }
 
 	/// <summary>
 	/// New last name
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? LastName { get; set; }
 
 	/// <summary>
 	/// New email address
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public string? Email { get; set; }
 
 	/// <summary>
 	/// Enable or disable the user
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public bool? Enabled { get; set; }
 
 	protected override void ProcessRecord()

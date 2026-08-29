@@ -30,12 +30,6 @@ public class DashboardCloneRequest : CloneRequest<Dashboard>
 	[DataMember(Name = "sharable")]
 	public bool IsSharable { get; set; } = true;
 
-	///// <summary>
-	///// The GroupName
-	///// </summary>
-	//[DataMember(Name = "groupName")]
-	//public string GroupName { get; set; }
-
 	/// <summary>
 	/// The GroupId
 	/// </summary>

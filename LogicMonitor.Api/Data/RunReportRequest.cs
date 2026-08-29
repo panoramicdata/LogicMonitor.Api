@@ -10,5 +10,5 @@ public class RunReportRequest
 	/// The With Admin ID
 	/// </summary>
 	[DataMember(Name = "withAdminId")]
-	public int WithAdminId { get; set; } = 0;
+	public int WithAdminId { get; set; }
 }

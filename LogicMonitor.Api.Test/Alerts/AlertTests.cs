@@ -159,13 +159,6 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 		sdtAlerts.Should().OnlyHaveUniqueItems(a => a.Id);
 		nonSdtAlerts.Should().OnlyHaveUniqueItems(a => a.Id);
 
-		// Troubleshooting stuff
-		var extraNonSdtAlertIds = nonSdtAlerts.Select(a => a.Id).Except(allAlerts.Select(a => a.Id)).ToList();
-		var extraAllAlertIds = allAlerts.Select(a => a.Id).Except(nonSdtAlerts.Select(a => a.Id)).ToList();
-
-		var extraNonSdtAlerts = nonSdtAlerts.Where(a => extraNonSdtAlertIds.Contains(a.Id)).ToList();
-		var extraAllSdtAlerts = allAlerts.Where(a => extraAllAlertIds.Contains(a.Id)).ToList();
-
 		// Alert counts should add up
 		(sdtAlerts.Count + nonSdtAlerts.Count).Should().Be(allAlerts.Count);
 
@@ -443,7 +436,7 @@ public class AlertTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : 
 	public Task GetOfNonExistentAlertShouldThrowException()
 			=> ((Func<Task>?)(async () =>
 				{
-					var _ = await LogicMonitorClient.GetAlertAsync("DS1234", CancellationToken);
+					_ = await LogicMonitorClient.GetAlertAsync("DS1234", CancellationToken);
 				}))
 				.Should()
 				.ThrowAsync<LogicMonitorApiException>();

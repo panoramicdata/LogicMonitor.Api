@@ -47,7 +47,7 @@ public class AlertRulesTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	[Fact]
 	public async Task AddAndDeleteAlertRule()
 	{
-		var newRule = new AlertRuleCreationDto()
+		var newRule = new AlertRuleCreationDto
 		{
 			DataPoint = "*",
 			DataSourceInstanceName = "*",

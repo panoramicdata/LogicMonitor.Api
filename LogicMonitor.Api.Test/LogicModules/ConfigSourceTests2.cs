@@ -39,7 +39,7 @@ public class ConfigSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fix
 		var defaultVersion = original.AuditVersion;
 
 		await LogicMonitorClient
-			.AddConfigSourceAuditVersionAsync(original.Id, new Audit() { Version = 1 }, CancellationToken);
+			.AddConfigSourceAuditVersionAsync(original.Id, new Audit { Version = 1 }, CancellationToken);
 
 		var configSource = await LogicMonitorClient
 			.GetAsync<ConfigSource>(original.Id, CancellationToken);
@@ -47,6 +47,6 @@ public class ConfigSourceTests2(ITestOutputHelper iTestOutputHelper, Fixture fix
 		configSource.AuditVersion.Should().Be(1);
 
 		await LogicMonitorClient
-			.AddConfigSourceAuditVersionAsync(original.Id, new Audit() { Version = defaultVersion }, CancellationToken);
+			.AddConfigSourceAuditVersionAsync(original.Id, new Audit { Version = defaultVersion }, CancellationToken);
 	}
 }

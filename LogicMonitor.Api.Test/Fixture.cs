@@ -9,7 +9,7 @@ public class Fixture : IAsyncLifetime, IDisposable
 	private LogicMonitorClient? _client;
 	private bool _disposed;
 
-	public const string NugetDashboardGroupName = "NugetTest";
+	public static string NugetDashboardGroupName => "NugetTest";
 	public int NugetDashboardGroupId { get; private set; }
 
 	public Fixture()

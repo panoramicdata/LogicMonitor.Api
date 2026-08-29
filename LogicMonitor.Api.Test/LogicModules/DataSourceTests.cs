@@ -404,7 +404,7 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 		}, CancellationToken);
 
 		var datasourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>()
+			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>
 			{
 				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id)]

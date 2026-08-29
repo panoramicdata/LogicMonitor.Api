@@ -85,9 +85,15 @@ public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture
 		var resourceRefetched = await LogicMonitorClient
 			.GetAsync<Resource>(resource.Id, CancellationToken);
 
+		resourceRefetched.Should().NotBeNull();
+		resourceRefetched.Id.Should().Be(resource.Id);
+
 		// We should be able to retrieve the resource and it should have the same properties as when we created it, using the strongly-typed PingCheckResource class.
 		var pingCheckResource = await LogicMonitorClient
 			.GetAsync<PingCheckResource>(resource.Id, CancellationToken);
+
+		pingCheckResource.Should().NotBeNull();
+		pingCheckResource.Id.Should().Be(resource.Id);
 
 		try
 		{

@@ -23,19 +23,19 @@ namespace LogicMonitor.PowerShell.Commands;
      /// <summary>
         /// Dashboard name pattern
    /// </summary>
-        [Parameter()]
+        [Parameter]
         public string? Name { get; set; }
 
         /// <summary>
  /// Dashboard group ID
    /// </summary>
-        [Parameter()]
+        [Parameter]
         public int GroupId { get; set; }
 
    /// <summary>
      /// Maximum number of results to return
      /// </summary>
-     [Parameter()]
+     [Parameter]
         public int Take { get; set; } = 300;
 
         protected override void ProcessRecord()
@@ -95,10 +95,10 @@ WriteVerboseMessage($"Retrieved {dashboards.Count} dashboards.");
         [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public int Id { get; set; }
 
-        [Parameter()]
+        [Parameter]
     public string? Name { get; set; }
 
-        [Parameter()]
+        [Parameter]
         public int Take { get; set; } = 300;
 
         protected override void ProcessRecord()
@@ -146,10 +146,10 @@ WriteVerboseMessage($"Retrieved {dashboards.Count} dashboards.");
         [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public int Id { get; set; }
 
-        [Parameter()]
+        [Parameter]
      public string? Description { get; set; }
 
-       [Parameter()]
+       [Parameter]
         public int Take { get; set; } = 300;
 
    protected override void ProcessRecord()
@@ -197,10 +197,10 @@ WriteVerboseMessage($"Retrieved {dashboards.Count} dashboards.");
     [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
 public int Id { get; set; }
 
-    [Parameter()]
+    [Parameter]
     public string? Name { get; set; }
 
-        [Parameter()]
+        [Parameter]
      public int Take { get; set; } = 300;
 
         protected override void ProcessRecord()
@@ -248,10 +248,10 @@ HandleApiException(ex);
     [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public int Id { get; set; }
 
-   [Parameter()]
+   [Parameter]
         public string? Name { get; set; }
 
-        [Parameter()]
+        [Parameter]
  public int Take { get; set; } = 300;
 
         protected override void ProcessRecord()
@@ -299,10 +299,10 @@ HandleApiException(ex);
      [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public int Id { get; set; }
 
-   [Parameter()]
+   [Parameter]
         public string? Name { get; set; }
 
-    [Parameter()]
+    [Parameter]
         public int Take { get; set; } = 300;
 
         protected override void ProcessRecord()
@@ -350,10 +350,10 @@ HandleApiException(ex);
     [Parameter(Position = 0, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true)]
         public int Id { get; set; }
 
-[Parameter()]
+[Parameter]
  public string? Name { get; set; }
 
- [Parameter()]
+ [Parameter]
         public int Take { get; set; } = 300;
 
     protected override void ProcessRecord()

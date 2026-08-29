@@ -91,7 +91,7 @@ public class SetLMResourcePropertyCommand : LogicMonitorCmdletBase
 	/// <summary>
 	/// Create the property if it doesn't exist
 	/// </summary>
-	[Parameter()]
+	[Parameter]
 	public SwitchParameter CreateIfNotExists { get; set; }
 
 	protected override void ProcessRecord()
