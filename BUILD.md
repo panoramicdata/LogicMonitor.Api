@@ -306,9 +306,49 @@ LogicMonitor.Api/
 5. **API keys** should never be committed to source control
 6. **Symbols** (.snupkg) are automatically included for debugging support
 
+## Code analysis: `SonarLint.xml`
+
+Codacy analyses this repository with the `codacy/codacy-sonar-csharp` engine. That engine reads
+`SonarLint.xml` from the repository root, and **the file is an allowlist**: only the rules it
+lists are run, and any rule omitted from it is silently switched off. It has no effect on the
+`dotnet build` - no project references it as an `AdditionalFile`.
+
+It exists so that two rules can be switched off in source control rather than only in the Codacy
+UI:
+
+| Rule | Why it is off |
+|------|---------------|
+| `S2333` | `LogicMonitorClient` is genuinely split across 29 files, so `partial` is required on every part - removing it is a `CS0260` compile error. Codacy analyses each file in isolation and cannot see the other parts. |
+| `S2360` | The optional parameters it flags are part of this library's published public API. Converting them to overloads would add roughly 60 public methods and create overload-resolution ambiguity with the existing `CancellationToken` overloads. |
+
+### Regenerating after an engine upgrade
+
+The rule list was generated from the engine's own default-enabled pattern set. Regenerate it when
+the engine adds or retires patterns, otherwise new default rules will never run:
+
+```powershell
+# 1. Extract the engine's pattern definitions
+docker run --rm --entrypoint sh codacy/codacy-sonar-csharp:latest -c 'cat /docs/patterns.json' > patterns.json
+
+# 2. Rebuild SonarLint.xml from the default-enabled set, minus the two rules above
+#    (keep the existing header comment - it explains the omissions)
+```
+
+### Verifying a change to it
+
+```powershell
+# Should report S1481 but NOT S2333 or S2360
+docker run --rm -v "${PWD}:/src" codacy/codacy-sonar-csharp:latest
+```
+
+> If you would rather manage patterns in the Codacy UI instead, delete this file - the engine then
+> falls back to the pattern set Codacy passes it. Do not leave a partial file in place, as that
+> would disable every rule it omits.
+
 ## Related Files
 
 - `version.json` - Version configuration for Nerdbank.GitVersioning
 - `global.json` - .NET SDK version pinning
 - `.gitignore` - Excludes nuget-key.txt and build artifacts
 - `nuget.config` - NuGet package sources configuration (if exists)
+- `SonarLint.xml` - Codacy SonarC# rule allowlist (see above)

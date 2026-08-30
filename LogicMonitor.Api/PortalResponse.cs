@@ -26,12 +26,12 @@ internal class PortalResponse<T> where T : new()
 	private void Init(string jsonString)
 	{
 		// Determine the PortalResponse
-		if (jsonString?.Length == 0 || jsonString == "{}\r\n" || jsonString is null)
+		if (IsEmptyBody(jsonString))
 		{
 			return;
 		}
 
-		if (typeof(T) == typeof(List<string>) && jsonString.Replace(" ", "") == "[]")
+		if (IsEmptyStringList(jsonString))
 		{
 			Data = new JArray(new List<string>());
 			return;
@@ -40,20 +40,49 @@ internal class PortalResponse<T> where T : new()
 		var jObject = JObject.Parse(jsonString);
 
 		// Does the response contain the old wrapper?
-		var status = jObject["status"]?.ToString();
-		var errorMessage = ((JValue?)jObject["errmsg"])?.ToString(CultureInfo.InvariantCulture);
-		if (status is not null && jObject["data"] is JContainer data && errorMessage is not null)
+		if (TryReadLegacyWrapper(jObject, out var data, out var statusCode, out var errorMessage))
 		{
 			// Yes
-			HttpStatusCode = (HttpStatusCode)int.Parse(status, CultureInfo.InvariantCulture);
+			HttpStatusCode = statusCode;
 			Data = data;
 			ErrorMessage = errorMessage;
+			return;
 		}
-		else
+
+		// No
+		Data = jObject;
+	}
+
+	private static bool IsEmptyBody([NotNullWhen(false)] string? jsonString)
+		=> jsonString is null || jsonString.Length == 0 || jsonString == "{}\r\n";
+
+	private static bool IsEmptyStringList(string jsonString)
+		=> typeof(T) == typeof(List<string>) && jsonString.Replace(" ", "") == "[]";
+
+	/// <summary>
+	/// Recognises the legacy status/data/errmsg envelope that older portal endpoints return.
+	/// </summary>
+	private static bool TryReadLegacyWrapper(
+		JObject jObject,
+		[NotNullWhen(true)] out JContainer? data,
+		out HttpStatusCode statusCode,
+		[NotNullWhen(true)] out string? errorMessage)
+	{
+		data = null;
+		statusCode = default;
+		errorMessage = null;
+
+		var status = jObject["status"]?.ToString();
+		var wrapperErrorMessage = ((JValue?)jObject["errmsg"])?.ToString(CultureInfo.InvariantCulture);
+		if (status is null || jObject["data"] is not JContainer wrapperData || wrapperErrorMessage is null)
 		{
-			// No
-			Data = jObject;
+			return false;
 		}
+
+		data = wrapperData;
+		statusCode = (HttpStatusCode)int.Parse(status, CultureInfo.InvariantCulture);
+		errorMessage = wrapperErrorMessage;
+		return true;
 	}
 
 	/// <summary>
@@ -105,26 +134,14 @@ internal class PortalResponse<T> where T : new()
 		// If no data was received, throw an exception
 		if (Data is null)
 		{
-			if (typeof(T) == typeof(EmptyResponse))
-			{
-				return new T();
-			}
-
-			// If this is a "NoContent" response, return null.
-			if (HttpStatusCode == HttpStatusCode.NoContent)
-			{
-				return default;
-			}
-
-			// If a success code was not received, throw an exception
-			throw new LogicMonitorApiException("No data node present in response");
+			return GetObjectWithoutData();
 		}
 
 		var dataString = Data.ToString();
 		converters ??= [];
 		try
 		{
-			var deserializedObject = JsonConvert.DeserializeObject<T>(dataString, new JsonSerializerSettings
+			return JsonConvert.DeserializeObject<T>(dataString, new JsonSerializerSettings
 			{
 #if DEBUG
 				MissingMemberHandling = MissingMemberHandling.Error,
@@ -133,25 +150,40 @@ internal class PortalResponse<T> where T : new()
 				TypeNameHandling = TypeNameHandling.Auto,
 				Converters = converters
 			});
-			return deserializedObject;
 		}
 		catch (JsonSerializationException e)
 		{
-			if (dataString.Contains(LogicMonitorServiceUnavailableException.MatchText))
-			{
-				throw new LogicMonitorServiceUnavailableException(dataString);
-			}
-
-			throw new DeserializationException(dataString, e);
+			throw BuildDeserializationFailure(dataString, e);
 		}
 		catch (JsonReaderException e)
 		{
-			if (dataString.Contains(LogicMonitorServiceUnavailableException.MatchText))
-			{
-				throw new LogicMonitorServiceUnavailableException(dataString);
-			}
-
-			throw new DeserializationException(dataString, e);
+			throw BuildDeserializationFailure(dataString, e);
 		}
 	}
+
+	private T? GetObjectWithoutData()
+	{
+		if (typeof(T) == typeof(EmptyResponse))
+		{
+			return new T();
+		}
+
+		// If this is a "NoContent" response, return null.
+		if (HttpStatusCode == HttpStatusCode.NoContent)
+		{
+			return default;
+		}
+
+		// If a success code was not received, throw an exception
+		throw new LogicMonitorApiException("No data node present in response");
+	}
+
+	/// <summary>
+	/// A portal that is temporarily unavailable reports it in the body rather than the status
+	/// code, so that case is distinguished from a genuine deserialization failure.
+	/// </summary>
+	private static Exception BuildDeserializationFailure(string dataString, Exception e)
+		=> dataString.Contains(LogicMonitorServiceUnavailableException.MatchText)
+			? new LogicMonitorServiceUnavailableException(dataString)
+			: new DeserializationException(dataString, e);
 }

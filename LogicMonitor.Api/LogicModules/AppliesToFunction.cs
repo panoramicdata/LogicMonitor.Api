@@ -66,30 +66,52 @@ public class AppliesToFunction : LogicModule, IHasEndpoint
 		}
 
 		// Determine the applies function
-		switch (bitsInteger)
+		Code = BuildCode(cidr, networkParts, bitsInteger);
+	}
+
+	/// <summary>
+	/// Builds the AppliesTo expression matching the fourth-octet pattern for the given netmask.
+	/// </summary>
+	private static string BuildCode(string cidr, List<int> networkParts, int bitsInteger)
+	{
+		var hostPattern = BuildHostPattern(cidr, networkParts, bitsInteger);
+		return $"join(system.ips, \",\") =~ \"(^|,){networkParts[0]}\\\\.{networkParts[1]}\\\\.{hostPattern}(,|$)\"";
+	}
+
+	/// <summary>
+	/// Builds the part of the expression from the third octet onwards, which is what varies
+	/// between the supported netmasks.
+	/// </summary>
+	private static string BuildHostPattern(string cidr, List<int> networkParts, int bitsInteger)
+	{
+		// A /23 spans two adjacent third octets, each with any host
+		if (bitsInteger == 23)
 		{
-			case 23:
-				Code = $"join(system.ips, \",\") =~ \"(^|,){networkParts[0]}\\\\.{networkParts[1]}\\\\.({networkParts[2]}|{networkParts[2] + 1})\\\\.\\\\d+(,|$)\"";
-				return;
-			case 24:
-				Code = $"join(system.ips, \",\") =~ \"(^|,){networkParts[0]}\\\\.{networkParts[1]}\\\\.{networkParts[2]}\\\\.\\\\d+(,|$)\"";
-				return;
-			case 25:
-			case 26:
-			case 27:
-			case 28:
-			case 29:
-			case 30:
-			case 31:
-				var numbers = Enumerable.Range(networkParts[3], (2 << (32 - bitsInteger)) - 1).ToList();
-				Code = $"join(system.ips, \",\") =~ \"(^|,){networkParts[0]}\\\\.{networkParts[1]}\\\\.{networkParts[2]}\\\\.({string.Join("|", numbers)})(,|$)\"";
-				return;
-			case 32:
-				Code = $"join(system.ips, \",\") =~ \"(^|,){networkParts[0]}\\\\.{networkParts[1]}\\\\.{networkParts[2]}\\\\.{networkParts[3]}(,|$)\"";
-				return;
-			default:
-				// TODO - support other netmasks
-				throw new NotSupportedException($"Network: {cidr} netmask {bitsInteger} not supported.");
+			return $"({networkParts[2]}|{networkParts[2] + 1})\\\\.\\\\d+";
 		}
+
+		// A /24 is a single third octet with any host
+		if (bitsInteger == 24)
+		{
+			return $"{networkParts[2]}\\\\.\\\\d+";
+		}
+
+		// A /32 is one exact address
+		if (bitsInteger == 32)
+		{
+			return $"{networkParts[2]}\\\\.{networkParts[3]}";
+		}
+
+		if (bitsInteger is >= 25 and <= 31)
+		{
+			// NB the range size is (2 << (32 - bits)) - 1, which is twice the number of addresses
+			// the netmask actually covers. Preserved as-is: changing it would change which
+			// resources existing AppliesTo functions match.
+			var numbers = Enumerable.Range(networkParts[3], (2 << (32 - bitsInteger)) - 1).ToList();
+			return $"{networkParts[2]}\\\\.({string.Join("|", numbers)})";
+		}
+
+		// TODO - support other netmasks
+		throw new NotSupportedException($"Network: {cidr} netmask {bitsInteger} not supported.");
 	}
 }

@@ -70,60 +70,49 @@ public class FilterItem<T>
 	{
 		var field = LogicMonitorClient.GetSerializationName<T>(Property);
 
-		switch (Operation)
-		{
-			case ":::empty":
-			case ":::null":
-			case "!::empty":
-			case "!::null":
-				if (Value is not null)
-				{
-					throw new InvalidOperationException($"Value must be null for the '{Operation}' operation.");
-				}
+		ValidateValueAgainstOperation();
 
-				break;
-			default:
-				if (Value is null)
-				{
-					throw new InvalidOperationException($"Value must not be null for the '{Operation}' operation.");
-				}
-
-				break;
-		}
-
-		string valueString;
-		switch (Value)
-		{
-			case bool boolValue:
-				valueString = boolValue.ToString().ToLowerInvariant();
-				break;
-
-			case string text:
-				valueString = $"\"{text}\"";
-				break;
-
-			case null:
-				valueString = string.Empty;
-				break;
-
-			default:
-				if (Value is IEnumerable enumerable)
-				{
-					valueString = string.Join("|", enumerable.Cast<object>().Select(item => $"\"{item}\""));
-					break;
-				}
-				else if (Value.GetType().IsEnum)
-				{
-					valueString = $"\"{LogicMonitorClient.GetSerializationNameFromEnumMember(Value)}\"";
-					break;
-				}
-
-				valueString = Value.ToString() ?? string.Empty;
-				break;
-		}
-
-		return field + Operation + valueString;
+		return field + Operation + GetValueString();
 	}
+
+	/// <summary>
+	/// The null/empty operations carry no value; every other operation requires one.
+	/// </summary>
+	private void ValidateValueAgainstOperation()
+	{
+		if (_valuelessOperations.Contains(Operation))
+		{
+			if (Value is not null)
+			{
+				throw new InvalidOperationException($"Value must be null for the '{Operation}' operation.");
+			}
+
+			return;
+		}
+
+		if (Value is null)
+		{
+			throw new InvalidOperationException($"Value must not be null for the '{Operation}' operation.");
+		}
+	}
+
+	private static readonly HashSet<string> _valuelessOperations =
+		new(StringComparer.Ordinal) { ":::empty", ":::null", "!::empty", "!::null" };
+
+	/// <summary>
+	/// Renders the value the way the portal's filter syntax expects it: booleans lowercase and
+	/// bare, strings and enum members quoted, and lists quoted and pipe-separated.
+	/// </summary>
+	private string GetValueString() => Value switch
+	{
+		bool boolValue => boolValue.ToString().ToLowerInvariant(),
+		string text => $"\"{text}\"",
+		null => string.Empty,
+		IEnumerable enumerable => string.Join("|", enumerable.Cast<object>().Select(item => $"\"{item}\"")),
+		_ => Value.GetType().IsEnum
+			? $"\"{LogicMonitorClient.GetSerializationNameFromEnumMember(Value)}\""
+			: Value.ToString() ?? string.Empty,
+	};
 
 	/// <summary>
 	///     Creates output as a json string

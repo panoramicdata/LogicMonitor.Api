@@ -48,12 +48,7 @@ internal static class UptimeResourceWireMapper
 			["globalSmAlertCond"] = (int)definition.Alerting.AlertCondition,
 			["useDefaultLocationSetting"] = definition.UseDefaultLocationSetting,
 			["useDefaultAlertSetting"] = definition.UseDefaultAlertSetting,
-			// Internal checks run from real Collectors (collectorIds); external checks from Site Monitor Groups (smgIds).
-			["testLocation"] = new JObject
-			{
-				["collectorIds"] = new JArray(definition.IsInternal ? definition.SyntheticsCollectorIds : []),
-				["smgIds"] = new JArray(definition.IsInternal ? [] : definition.TestLocation.SmgIds),
-			},
+			["testLocation"] = BuildTestLocation(definition),
 			["properties"] = new JArray(),
 		};
 
@@ -73,6 +68,17 @@ internal static class UptimeResourceWireMapper
 
 		return device;
 	}
+
+	/// <summary>
+	/// Internal checks run from real Collectors (collectorIds); external checks from Site Monitor
+	/// Groups (smgIds). Exactly one of the two lists is populated.
+	/// </summary>
+	private static JObject BuildTestLocation(IUptimeCheckDefinition definition)
+		=> new()
+		{
+			["collectorIds"] = new JArray(definition.IsInternal ? definition.SyntheticsCollectorIds : []),
+			["smgIds"] = new JArray(definition.IsInternal ? [] : definition.TestLocation.SmgIds),
+		};
 
 	private static int[] ParseGroupIds(string resourceGroupIds)
 		=> resourceGroupIds
