@@ -3,7 +3,6 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 	private const int AlertsMaxTake = 300;
-	private readonly Random _randomGenerator = new();
 
 	/// <summary>
 	///     Gets a list of alerts.
@@ -58,7 +57,8 @@ public partial class LogicMonitorClient
 			});
 		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
 		{
-			await Task.Delay(_randomGenerator.Next(0, 2000), default).ConfigureAwait(false);
+			// Jitter, to spread the chunked requests out across the portal. Not security-sensitive.
+			await Task.Delay(Random.Shared.Next(0, 2000), default).ConfigureAwait(false);
 			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
 			{
 				allAlerts.Add(alert);

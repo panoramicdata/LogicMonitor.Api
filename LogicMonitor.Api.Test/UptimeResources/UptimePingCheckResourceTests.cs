@@ -2,7 +2,7 @@ namespace LogicMonitor.Api.Test.UptimeResources;
 
 public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
-	private const string TargetHost = "8.8.8.8";
+	private static string TargetHost => TestHosts.PingTarget;
 
 	[Fact]
 	public async Task CrudInternalPingCheckResource()

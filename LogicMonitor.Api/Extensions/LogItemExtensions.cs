@@ -18,6 +18,44 @@ public static class LogItemExtensions
 	public static int MaxRegexDescriptionLength { get; } = 32 * 1024;
 	private const int OversizedDescriptionPreviewLength = 512;
 
+	/// <summary>
+	/// "Add new &lt;module type&gt; '" prefixes, each of which names the module between single quotes.
+	/// </summary>
+	private static readonly (string Prefix, AuditEventEntityType EntityType)[] _logicModuleAdditionPrefixes =
+	[
+		("Add new DataSource '", AuditEventEntityType.DataSource),
+		("Add new PropertySource '", AuditEventEntityType.PropertySource),
+		("Add new TopologySource '", AuditEventEntityType.TopologySource),
+	];
+
+	private static readonly (string Prefix, AuditEventActionType ActionType)[] _websitePrefixes =
+	[
+		("Add website ", AuditEventActionType.Create),
+		("Update website ", AuditEventActionType.Update),
+	];
+
+	/// <summary>
+	/// Action and outcome types implied by the matched pattern id alone. A null entry means
+	/// "leave whatever the description itself yielded".
+	/// </summary>
+	private static readonly Dictionary<int, (AuditEventActionType? ActionType, AuditEventOutcomeType? OutcomeType)> _regexIdMetadata = new()
+	{
+		[22] = (AuditEventActionType.GeneralApi, AuditEventOutcomeType.Failure),
+		[27] = (AuditEventActionType.Update, null),
+		[36] = (AuditEventActionType.GeneralApi, null),
+		[37] = (AuditEventActionType.GeneralApi, AuditEventOutcomeType.Failure),
+		[41] = (AuditEventActionType.GeneralApi, null),
+		[69] = (null, AuditEventOutcomeType.Failure),
+		[70] = (AuditEventActionType.Update, null),
+		[71] = (AuditEventActionType.Update, null),
+		[72] = (AuditEventActionType.Update, null),
+		[94] = (AuditEventActionType.Update, null),
+		[95] = (AuditEventActionType.Run, null),
+		[98] = (AuditEventActionType.Run, AuditEventOutcomeType.Failure),
+		[105] = (AuditEventActionType.Update, null),
+		[109] = (AuditEventActionType.Update, null),
+	};
+
 	internal static void ValidateRegexes()
 	{
 		// Check that no two Regex have the same id
@@ -394,7 +432,41 @@ public static class LogItemExtensions
 	{
 		ArgumentNullException.ThrowIfNull(logItem);
 
-		var auditEvent = new AuditEvent
+		var auditEvent = CreateAuditEvent(logItem);
+
+		// Some messages carry very large payloads (imported module definitions, script bodies) or
+		// are otherwise not worth running the full regex set over. Those are recognised purely by
+		// their prefix and returned immediately.
+		if (TryHandleByPrefix(logItem.Description, auditEvent))
+		{
+			return auditEvent;
+		}
+
+		// Interpret the description field
+		if (!TryGetEntityTypeMatch(logItem.Description, auditEvent, out var logItemRegex, out var match))
+		{
+			return auditEvent;
+		}
+
+		auditEvent.MatchedRegExId = logItemRegex.Id;
+		// Have we determined the EntityType already?
+		auditEvent.EntityType = logItemRegex.EntityType;
+
+		auditEvent.ActionType = GetAction(match);
+		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
+
+		// Add metadata that can't be extracted from the description using the regex
+		ApplyRegexIdMetadata(auditEvent);
+
+		PopulateFromMatchGroups(auditEvent, match);
+		PopulateResources(auditEvent, match);
+		PopulateAffectedInstances(auditEvent, match);
+
+		return auditEvent;
+	}
+
+	private static AuditEvent CreateAuditEvent(LogItem logItem)
+		=> new()
 		{
 			Id = logItem.Id,
 			DateTime = logItem.HappenedOnUtc,
@@ -409,203 +481,181 @@ public static class LogItemExtensions
 				AuditEventOriginatorType.User,
 		};
 
+	/// <summary>
+	/// Handles the messages that are recognised by prefix alone. Returns true (and populates
+	/// <paramref name="auditEvent"/>) if the description was handled, in which case no regular
+	/// expression matching is needed. Order is significant and matches the original chain.
+	/// </summary>
+	private static bool TryHandleByPrefix(string description, AuditEvent auditEvent)
+		=> TryHandleBulkPayloadPrefix(description, auditEvent)
+			|| TryHandleLogicModuleAdditionPrefix(description, auditEvent)
+			|| TryHandleWebsitePrefix(description, auditEvent)
+			|| TryHandleDeleteAzureAccount(description, auditEvent)
+			|| TryHandleScheduledDebugCommand(description, auditEvent);
+
+	/// <summary>
+	/// Messages whose payloads are enormous and which do not need detailed parsing.
+	/// </summary>
+	private static bool TryHandleBulkPayloadPrefix(string description, AuditEvent auditEvent)
+	{
 		// DataSource imports have a LOT of text.  Skip these for now.
-		if (logItem.Description.StartsWith("Import DataSource", StringComparison.Ordinal))
+		if (description.StartsWith("Import DataSource", StringComparison.Ordinal))
 		{
 			auditEvent.MatchedRegExId = 27;
 			// This "none" denotes that we are not expecting to handle this type of message
 			auditEvent.EntityType = AuditEventEntityType.None;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			return auditEvent;
+			return true;
 		}
 
 		// Change host collectors messages can be extremely large and don't need detailed parsing.
-		if (logItem.Description.StartsWith("Change host collectors", StringComparison.Ordinal))
+		if (description.StartsWith("Change host collectors", StringComparison.Ordinal))
 		{
 			auditEvent.MatchedRegExId = 100;
 			auditEvent.EntityType = AuditEventEntityType.Collector;
 			auditEvent.ActionType = AuditEventActionType.GeneralApi;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			return auditEvent;
+			return true;
 		}
 
 		// Test script scheduled messages contain full script bodies and are very long.
-		if (logItem.Description.StartsWith("\"Action=Test script scheduled\"", StringComparison.Ordinal))
+		if (description.StartsWith("\"Action=Test script scheduled\"", StringComparison.Ordinal))
 		{
 			auditEvent.MatchedRegExId = 0;
 			auditEvent.EntityType = AuditEventEntityType.TestScriptScheduled;
 			auditEvent.ActionType = AuditEventActionType.TestScriptScheduled;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			return auditEvent;
+			return true;
 		}
 
-		// Imported module messages can embed full script/config payloads.
-		if (logItem.Description.StartsWith("Add new DataSource '", StringComparison.Ordinal))
+		return false;
+	}
+
+	/// <summary>
+	/// Imported/added LogicModule messages, which can embed full script or config payloads.
+	/// </summary>
+	private static bool TryHandleLogicModuleAdditionPrefix(string description, AuditEvent auditEvent)
+	{
+		foreach (var (prefix, entityType) in _logicModuleAdditionPrefixes)
 		{
+			if (!description.StartsWith(prefix, StringComparison.Ordinal))
+			{
+				continue;
+			}
+
 			auditEvent.MatchedRegExId = 0;
-			auditEvent.EntityType = AuditEventEntityType.DataSource;
+			auditEvent.EntityType = entityType;
 			auditEvent.ActionType = AuditEventActionType.Create;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new DataSource '");
-			return auditEvent;
+			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(description, prefix);
+			return true;
 		}
 
-		if (logItem.Description.StartsWith("Add new PropertySource '", StringComparison.Ordinal))
-		{
-			auditEvent.MatchedRegExId = 0;
-			auditEvent.EntityType = AuditEventEntityType.PropertySource;
-			auditEvent.ActionType = AuditEventActionType.Create;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new PropertySource '");
-			return auditEvent;
-		}
-
-		if (logItem.Description.StartsWith("Add new TopologySource '", StringComparison.Ordinal))
-		{
-			auditEvent.MatchedRegExId = 0;
-			auditEvent.EntityType = AuditEventEntityType.TopologySource;
-			auditEvent.ActionType = AuditEventActionType.Create;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			auditEvent.LogicModuleName = ExtractNameBetweenSingleQuotes(logItem.Description, "Add new TopologySource '");
-			return auditEvent;
-		}
-
-		if (logItem.Description.StartsWith("Import EventSource from XML.", StringComparison.Ordinal))
+		if (description.StartsWith("Import EventSource from XML.", StringComparison.Ordinal))
 		{
 			auditEvent.MatchedRegExId = 0;
 			auditEvent.EntityType = AuditEventEntityType.EventSource;
 			auditEvent.ActionType = AuditEventActionType.Create;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			auditEvent.LogicModuleName = ExtractValueBetween(logItem.Description, "\"LogicModuleName=", "\";");
-			return auditEvent;
+			auditEvent.LogicModuleName = ExtractValueBetween(description, "\"LogicModuleName=", "\";");
+			return true;
 		}
 
-		if (logItem.Description.StartsWith("Add website ", StringComparison.Ordinal)
-			&& logItem.Description.Contains(" via URL check", StringComparison.Ordinal))
+		return false;
+	}
 
+	/// <summary>
+	/// Website add/update messages raised via a URL check.
+	/// </summary>
+	private static bool TryHandleWebsitePrefix(string description, AuditEvent auditEvent)
+	{
+		if (!description.Contains(" via URL check", StringComparison.Ordinal))
 		{
+			return false;
+		}
+
+		foreach (var (prefix, actionType) in _websitePrefixes)
+		{
+			if (!description.StartsWith(prefix, StringComparison.Ordinal))
+			{
+				continue;
+			}
+
 			auditEvent.MatchedRegExId = 0;
 			auditEvent.EntityType = AuditEventEntityType.Website;
-			auditEvent.ActionType = AuditEventActionType.Create;
+			auditEvent.ActionType = actionType;
 			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			var websiteName = ExtractValueBetween(logItem.Description, "Add website ", " via URL check");
+			var websiteName = ExtractValueBetween(description, prefix, " via URL check");
 			if (!string.IsNullOrEmpty(websiteName))
 			{
 				auditEvent.WebsiteName = websiteName;
 			}
 
-			return auditEvent;
+			return true;
 		}
 
-		if (logItem.Description.StartsWith("Update website ", StringComparison.Ordinal)
-			&& logItem.Description.Contains(" via URL check", StringComparison.Ordinal))
+		return false;
+	}
+
+	/// <summary>
+	/// Chooses the regular expression that describes <paramref name="description"/>. Returns false
+	/// if the description is unrecognised, or is too long to run the regex set over - in the latter
+	/// case <paramref name="auditEvent"/> is populated with an explanatory Description.
+	/// </summary>
+	private static bool TryGetEntityTypeMatch(
+		string description,
+		AuditEvent auditEvent,
+		[NotNullWhen(true)] out LogItemRegex? logItemRegex,
+		[NotNullWhen(true)] out Match? match)
+	{
+		if (description.Length > MaxRegexDescriptionLength)
 		{
+			if (TryGetGroupUpdateWithGetExtraMatch(description, out var getExtraMatch))
+			{
+				logItemRegex = _groupActionLogItemRegex;
+				match = getExtraMatch;
+				return true;
+			}
+
 			auditEvent.MatchedRegExId = 0;
-			auditEvent.EntityType = AuditEventEntityType.Website;
-			auditEvent.ActionType = AuditEventActionType.Update;
-			auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-			var websiteName = ExtractValueBetween(logItem.Description, "Update website ", " via URL check");
-			if (!string.IsNullOrEmpty(websiteName))
-			{
-				auditEvent.WebsiteName = websiteName;
-			}
-
-			return auditEvent;
+			auditEvent.EntityType = AuditEventEntityType.None;
+			auditEvent.Description =
+				$"Message not handled because description length ({description.Length}) exceeded max regex length ({MaxRegexDescriptionLength}). Preview: {GetPreview(description, OversizedDescriptionPreviewLength)}";
+			logItemRegex = null;
+			match = null;
+			return false;
 		}
 
-		if (TryHandleDeleteAzureAccount(logItem.Description, auditEvent))
+		// Not recognised leaves both out parameters null
+		(logItemRegex, match) = GetMatchFromDescription(description);
+		return logItemRegex is not null && match is not null;
+	}
+
+	/// <summary>
+	/// Applies the action and outcome types that are implied by the matched pattern id rather than
+	/// by anything captured from the description itself.
+	/// </summary>
+	private static void ApplyRegexIdMetadata(AuditEvent auditEvent)
+	{
+		if (!_regexIdMetadata.TryGetValue(auditEvent.MatchedRegExId, out var metadata))
 		{
-			return auditEvent;
+			// Most patterns do not imply an action or outcome type; those are left as found.
+			return;
 		}
 
-		if (TryHandleScheduledDebugCommand(logItem.Description, auditEvent))
+		if (metadata.ActionType is not null)
 		{
-			return auditEvent;
+			auditEvent.ActionType = metadata.ActionType.Value;
 		}
 
-		// Interpret the description field
-		(LogItemRegex? LogItemRegex, Match? Match) entityTypeMatch;
-		if (logItem.Description.Length > MaxRegexDescriptionLength)
+		if (metadata.OutcomeType is not null)
 		{
-			if (TryGetGroupUpdateWithGetExtraMatch(logItem.Description, out var getExtraMatch))
-			{
-				entityTypeMatch = (_groupActionLogItemRegex, getExtraMatch);
-			}
-			else
-			{
-				auditEvent.MatchedRegExId = 0;
-				auditEvent.EntityType = AuditEventEntityType.None;
-				auditEvent.Description =
-					$"Message not handled because description length ({logItem.Description.Length}) exceeded max regex length ({MaxRegexDescriptionLength}). Preview: {GetPreview(logItem.Description, OversizedDescriptionPreviewLength)}";
-				return auditEvent;
-			}
+			auditEvent.OutcomeType = metadata.OutcomeType.Value;
 		}
-		else
-		{
-			entityTypeMatch = GetMatchFromDescription(logItem.Description);
-		}
+	}
 
-		if (entityTypeMatch.LogItemRegex is null || entityTypeMatch.Match is null)
-		{
-			// Not recognised
-			return auditEvent;
-		}
-
-		auditEvent.MatchedRegExId = entityTypeMatch.LogItemRegex.Id;
-		// Have we determined the EntityType already?
-		auditEvent.EntityType = entityTypeMatch.LogItemRegex.EntityType;
-		var match = entityTypeMatch.Match;
-
-		auditEvent.ActionType = GetAction(match);
-		auditEvent.OutcomeType = match.Groups["failed"].Success ? AuditEventOutcomeType.Failure : AuditEventOutcomeType.Success;
-		// Add metadata that can't be extracted from the description using the regex
-		switch (auditEvent.MatchedRegExId)
-		{
-			case 22:
-				auditEvent.ActionType = AuditEventActionType.GeneralApi;
-				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
-				break;
-			case 105:
-				auditEvent.ActionType = AuditEventActionType.Update;
-				break;
-			case 109:
-				auditEvent.ActionType = AuditEventActionType.Update;
-				break;
-			case 27:
-				auditEvent.ActionType = AuditEventActionType.Update;
-				break;
-			case 36:
-				auditEvent.ActionType = AuditEventActionType.GeneralApi;
-				break;
-			case 37:
-				auditEvent.ActionType = AuditEventActionType.GeneralApi;
-				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
-				break;
-			case 41:
-				auditEvent.ActionType = AuditEventActionType.GeneralApi;
-				break;
-			case 69:
-				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
-				break;
-			case 70:
-			case 71:
-			case 72:
-			case 94:
-				auditEvent.ActionType = AuditEventActionType.Update;
-				break;
-			case 95:
-				auditEvent.ActionType = AuditEventActionType.Run;
-				break;
-			case 98:
-				auditEvent.ActionType = AuditEventActionType.Run;
-				auditEvent.OutcomeType = AuditEventOutcomeType.Failure;
-				break;
-			default:
-				// Most patterns do not imply an action or outcome type; those are left unset.
-				break;
-		}
-
-		var resourceIdString = GetGroupValueAsTypeOrNull<string>(match, "resourceId");
+	private static void PopulateFromMatchGroups(AuditEvent auditEvent, Match match)
+	{
 		auditEvent.ResourceGroupId = GetGroupValueAsStructOrNull<int>(match, "resourceGroupId");
 		auditEvent.ResourceGroupName = GetGroupValueAsTypeOrNull<string>(match, "resourceGroupName");
 		auditEvent.AlertId = GetGroupValueAsTypeOrNull<string>(match, "alertId");
@@ -649,59 +699,86 @@ public static class LogItemExtensions
 		auditEvent.UserId = GetGroupValueAsStructOrNull<int>(match, "userId");
 		auditEvent.UserName = GetGroupValueAsTypeOrNull<string>(match, "userName");
 		auditEvent.WildValue = GetGroupValueAsTypeOrNull<string>(match, "wildValue");
+	}
 
+	/// <summary>
+	/// Resolves the resource id/name pair (or, for Kubernetes messages, the set of them).
+	/// </summary>
+	private static void PopulateResources(AuditEvent auditEvent, Match match)
+	{
 		if (match.Groups["multipleHosts"].Success)
 		{
-			var k8sHosts = match.Groups["multipleHosts"].ToString().Split(',').Select(h => h.Trim());
-			if (k8sHosts.Any())
+			PopulateKubernetesResources(auditEvent, match);
+			return;
+		}
+
+		var resourceIdString = GetGroupValueAsTypeOrNull<string>(match, "resourceId");
+		int? resourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
+		var resourceName = GetGroupValueAsTypeOrNull<string>(match, "resourceName");
+		auditEvent.ResourceIds = resourceId is null ? null : new() { resourceId.Value };
+		auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
+	}
+
+	private static void PopulateKubernetesResources(AuditEvent auditEvent, Match match)
+	{
+		var k8sHosts = match.Groups["multipleHosts"].ToString().Split(',').Select(h => h.Trim());
+		if (!k8sHosts.Any())
+		{
+			return;
+		}
+
+		auditEvent.ResourceIds ??= [];
+		auditEvent.ResourceNames ??= [];
+		foreach (var k8sHost in k8sHosts)
+		{
+			var k8sHostMatch = SafeMatch(_k8sHostRegex, k8sHost);
+			if (k8sHostMatch.Success)
 			{
-				auditEvent.ResourceIds ??= [];
-				auditEvent.ResourceNames ??= [];
-				foreach (var k8sHost in k8sHosts)
-				{
-					var k8sHostMatch = SafeMatch(_k8sHostRegex, k8sHost);
-					if (k8sHostMatch.Success)
-					{
-						auditEvent.ResourceIds.Add(int.Parse(k8sHostMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture));
-						auditEvent.ResourceNames.Add(k8sHostMatch.Groups["resourceName"].Value.ToString());
-					}
-				}
+				auditEvent.ResourceIds.Add(int.Parse(k8sHostMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture));
+				auditEvent.ResourceNames.Add(k8sHostMatch.Groups["resourceName"].Value.ToString());
 			}
 		}
-		else
+	}
+
+	/// <summary>
+	/// For the patterns that list affected DataSource instances, expands that list into the
+	/// instance ids/names and the distinct set of resource ids they belong to.
+	/// </summary>
+	private static void PopulateAffectedInstances(AuditEvent auditEvent, Match match)
+	{
+		if (auditEvent.MatchedRegExId is not (96 or 108 or 111))
 		{
-			int? resourceId = (resourceIdString == "NA" || string.IsNullOrEmpty(resourceIdString)) ? null : int.Parse(resourceIdString, CultureInfo.InvariantCulture);
-			var resourceName = GetGroupValueAsTypeOrNull<string>(match, "resourceName");
-			auditEvent.ResourceIds = resourceId is null ? null : new() { resourceId.Value };
-			auditEvent.ResourceNames = resourceName is null ? null : new() { resourceName };
+			return;
 		}
 
-		if ((auditEvent.MatchedRegExId == 96 || auditEvent.MatchedRegExId == 108 || auditEvent.MatchedRegExId == 111) && match.Groups["affectedInstances"].Success)
+		if (!match.Groups["affectedInstances"].Success)
 		{
-			var dataSourceInstanceIds = new List<int>();
-			var dataSourceInstanceNames = new List<string>();
-			var resourceIds = new List<int>();
-			foreach (var affectedInstanceMatch in SafeMatches(_dataSourceInstanceEntryRegex, match.Groups["affectedInstances"].Value))
+			return;
+		}
+
+		var dataSourceInstanceIds = new List<int>();
+		var dataSourceInstanceNames = new List<string>();
+		var resourceIds = new List<int>();
+		foreach (var affectedInstanceMatch in SafeMatches(_dataSourceInstanceEntryRegex, match.Groups["affectedInstances"].Value))
+		{
+			if (!affectedInstanceMatch.Success)
 			{
-				if (affectedInstanceMatch.Success)
-				{
-					var instanceName = affectedInstanceMatch.Groups["instanceName"].Value.TrimStart().TrimStart(',', '"');
-					var resourceId = int.Parse(affectedInstanceMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
-					dataSourceInstanceNames.Add(instanceName);
-					dataSourceInstanceIds.Add(int.Parse(affectedInstanceMatch.Groups["instanceId"].Value, CultureInfo.InvariantCulture));
-					if (!resourceIds.Contains(resourceId))
-					{
-						resourceIds.Add(resourceId);
-					}
-				}
+				continue;
 			}
 
-			auditEvent.DataSourceNewInstanceNames = dataSourceInstanceNames;
-			auditEvent.DataSourceNewInstanceIds = dataSourceInstanceIds;
-			auditEvent.ResourceIds = new(resourceIds);
+			var instanceName = affectedInstanceMatch.Groups["instanceName"].Value.TrimStart().TrimStart(',', '"');
+			var resourceId = int.Parse(affectedInstanceMatch.Groups["resourceId"].Value, CultureInfo.InvariantCulture);
+			dataSourceInstanceNames.Add(instanceName);
+			dataSourceInstanceIds.Add(int.Parse(affectedInstanceMatch.Groups["instanceId"].Value, CultureInfo.InvariantCulture));
+			if (!resourceIds.Contains(resourceId))
+			{
+				resourceIds.Add(resourceId);
+			}
 		}
 
-		return auditEvent;
+		auditEvent.DataSourceNewInstanceNames = dataSourceInstanceNames;
+		auditEvent.DataSourceNewInstanceIds = dataSourceInstanceIds;
+		auditEvent.ResourceIds = new(resourceIds);
 	}
 
 	private static T? GetGroupValueAsStructOrNull<T>(Match match, string groupName) where T : struct

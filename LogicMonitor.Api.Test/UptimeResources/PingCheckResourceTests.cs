@@ -8,7 +8,7 @@ public class PingCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fixture
 	public async Task CrudPingCheckResource()
 	{
 		const string resourceDisplayName = "IntegrationTest-Ping-Check";
-		const string targetHost = "8.8.8.8";
+		var targetHost = TestHosts.PingTarget;
 		const string initialDescription = "Integration test Ping check resource";
 		const string updatedDescription = "Integration test Ping check resource - updated";
 

@@ -1,3 +1,6 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+	'PSAvoidUsingWriteHost', '',
+	Justification = 'This is an interactive release tool run by a human at a console. Its progress and failure output is deliberately written to the host, in colour, and is never captured, piped or redirected.')]
 param(
 	# Skips waiting for the release run. The tag is still pushed, but nothing confirms a package
 	# reached nuget.org — use it only if you are checking the run yourself.

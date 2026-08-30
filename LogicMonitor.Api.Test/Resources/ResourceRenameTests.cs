@@ -20,7 +20,7 @@ namespace LogicMonitor.Api.Test.Resources;
 public class ResourceRenameTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	: TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
-	private const string TargetHost = "8.8.8.8";
+	private static string TargetHost => TestHosts.PingTarget;
 
 	[Fact]
 	public async Task PutAsync_RenamesResourceGroup()

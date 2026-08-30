@@ -16,7 +16,7 @@ public class UptimeResourceSerializationTests
 			Description = "desc",
 			ResourceGroupIds = "1",
 			PreferredCollectorId = 7,
-			HostName = "8.8.8.8",
+			HostName = "192.0.2.10",
 			PollingIntervalMinutes = 5,
 			PacketCount = 5,
 			TimeoutMs = 500,
@@ -43,7 +43,7 @@ public class UptimeResourceSerializationTests
 		json["isInternal"]!.Value<bool>().Should().BeTrue();
 		((JArray)json["groupIds"]!).Select(t => t.Value<int>()).Should().Equal(1);
 
-		json["host"]!.Value<string>().Should().Be("8.8.8.8");
+		json["host"]!.Value<string>().Should().Be("192.0.2.10");
 		json["count"]!.Value<int>().Should().Be(5);
 		json["timeoutInMSPktsNotReceive"]!.Value<int>().Should().Be(500);
 		json["percentPktsNotReceiveInTime"]!.Value<int>().Should().Be(80);
@@ -71,7 +71,7 @@ public class UptimeResourceSerializationTests
 			["transition"] = "3",
 			["globalSmAlertCond"] = "1",
 			["isInternal"] = "true",
-			["dns"] = "1.1.1.1"
+			["dns"] = "192.0.2.20"
 		}.ToString(Formatting.None);
 
 		var device = new JObject
@@ -83,7 +83,7 @@ public class UptimeResourceSerializationTests
 			["deviceType"] = 19,
 			["customProperties"] = new JArray
 			{
-				new JObject { ["name"] = "uptime.hostname", ["value"] = "1.1.1.1" },
+				new JObject { ["name"] = "uptime.hostname", ["value"] = "192.0.2.20" },
 				new JObject { ["name"] = "uptime.pollingInterval", ["value"] = "5" },
 				new JObject { ["name"] = "website.private.serviceParameters", ["value"] = serviceParameters }
 			}
@@ -94,7 +94,7 @@ public class UptimeResourceSerializationTests
 		resource.Should().NotBeNull();
 		resource!.Id.Should().Be(42);
 		resource.ResourceType.Should().Be(ResourceType.Ping);
-		resource.HostName.Should().Be("1.1.1.1");
+		resource.HostName.Should().Be("192.0.2.20");
 		resource.PacketCount.Should().Be(10);
 		resource.TimeoutMs.Should().Be(750);
 		resource.PercentPacketsNotReceivedInTime.Should().Be(90);

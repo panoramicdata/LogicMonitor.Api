@@ -44,73 +44,92 @@ internal class TolerantStringEnumConverter : JsonConverter
 		?? Array.Find(names, n => string.Equals(n, "All", StringComparison.OrdinalIgnoreCase))
 		?? Enum.GetName(enumType, 0);
 
-		switch (reader.TokenType)
+		return reader.TokenType switch
 		{
-			case JsonToken.String:
-			var enumText = reader.Value?.ToString();
+			JsonToken.String => ReadStringToken(reader.Value?.ToString(), enumType, isNullable, defaultName),
+			JsonToken.Integer => ReadIntegerToken(reader.Value, enumType, isNullable, defaultName),
+			_ => throw new FormatException($"Unsupported tokenType: {reader.TokenType}"),
+		};
+	}
 
-				if (!string.IsNullOrEmpty(enumText))
-				{
-					// Get the right member using the EnumMember attribute
-					var match = Array.Find(Enum
-						.GetNames(enumType), name => GetEnumMemberAttrValue(enumType, Enum.Parse(enumType, name)) == enumText);
-
-					if (match is not null)
-					{
-						return Enum.Parse(enumType, match);
-					}
-
-					// Check for aliases if primary EnumMember value didn't match
-					var aliasMatch = Array.Find(Enum
-						.GetNames(enumType), name =>
-						{
-							var aliases = GetEnumMemberAliases(enumType, Enum.Parse(enumType, name));
-							return aliases?.Contains(enumText) == true;
-						});
-
-					if (aliasMatch is not null)
-					{
-						return Enum.Parse(enumType, aliasMatch);
-					}
-				}
-
-				if (isNullable)
-				{
-					return null;
-				}
-
-				if (defaultName is not null)
-				{
-#if DEBUG
-						throw new NotImplementedException($"{enumType} missing an enum member for {enumText}");
-#else
-					return Enum.Parse(enumType, defaultName);
-#endif
-				}
-
-				throw new FormatException($"Unsupported string for {enumType.Name}: {enumText}");
-			case JsonToken.Integer:
-				var enumVal = Convert.ToInt32(reader.Value, CultureInfo.InvariantCulture);
-				var values = (int[])Enum.GetValues(enumType);
-				if (values.Contains(enumVal))
-				{
-					return Enum.Parse(enumType, enumVal.ToString(CultureInfo.InvariantCulture));
-				}
-
-				if (isNullable)
-				{
-					return null;
-				}
-
-				if (defaultName is not null)
-				{
-					return Enum.Parse(enumType, defaultName);
-				}
-
-				throw new FormatException($"Unsupported integer for {enumType.Name}: {enumVal} and {enumType} has no 'Unknown' member.");
-			default:
-				throw new FormatException($"Unsupported tokenType: {reader.TokenType}");
+	/// <summary>
+	/// Resolves a JSON string to an enum member, by EnumMember value first and then by alias.
+	/// </summary>
+	private static object? ReadStringToken(string? enumText, Type enumType, bool isNullable, string? defaultName)
+	{
+		var matched = MatchByEnumMemberOrAlias(enumText, enumType);
+		if (matched is not null)
+		{
+			return matched;
 		}
+
+		if (isNullable)
+		{
+			return null;
+		}
+
+		if (defaultName is not null)
+		{
+#if DEBUG
+			throw new NotImplementedException($"{enumType} missing an enum member for {enumText}");
+#else
+			return Enum.Parse(enumType, defaultName);
+#endif
+		}
+
+		throw new FormatException($"Unsupported string for {enumType.Name}: {enumText}");
+	}
+
+	private static object? MatchByEnumMemberOrAlias(string? enumText, Type enumType)
+	{
+		if (string.IsNullOrEmpty(enumText))
+		{
+			return null;
+		}
+
+		// Get the right member using the EnumMember attribute
+		var match = Array.Find(Enum
+			.GetNames(enumType), name => GetEnumMemberAttrValue(enumType, Enum.Parse(enumType, name)) == enumText);
+
+		if (match is not null)
+		{
+			return Enum.Parse(enumType, match);
+		}
+
+		// Check for aliases if primary EnumMember value didn't match
+		var aliasMatch = Array.Find(Enum
+			.GetNames(enumType), name =>
+			{
+				var aliases = GetEnumMemberAliases(enumType, Enum.Parse(enumType, name));
+				return aliases?.Contains(enumText) == true;
+			});
+
+		return aliasMatch is null ? null : Enum.Parse(enumType, aliasMatch);
+	}
+
+	/// <summary>
+	/// Resolves a JSON integer to an enum member by its underlying value.
+	/// </summary>
+	private static object? ReadIntegerToken(object? readerValue, Type enumType, bool isNullable, string? defaultName)
+	{
+		var enumVal = Convert.ToInt32(readerValue, CultureInfo.InvariantCulture);
+		var values = (int[])Enum.GetValues(enumType);
+		if (values.Contains(enumVal))
+		{
+			return Enum.Parse(enumType, enumVal.ToString(CultureInfo.InvariantCulture));
+		}
+
+		if (isNullable)
+		{
+			return null;
+		}
+
+		if (defaultName is not null)
+		{
+			return Enum.Parse(enumType, defaultName);
+		}
+
+		throw new FormatException($"Unsupported integer for {enumType.Name}: {enumVal} and {enumType} has no 'Unknown' member.");
 	}
 
 	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer) => writer.WriteValue(value?.ToString());

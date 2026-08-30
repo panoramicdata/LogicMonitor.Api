@@ -116,6 +116,11 @@ void ProcessBlock(List<string> block, string filePath)
 		Console.WriteLine($"[{TimestampUtc()}] Parsing message #{totalMessages}, id={sourceId}, file={Path.GetFileName(filePath)}, length={message.Length}...");
 	}
 
+	ClassifyMessage(message, filePath, sourceId);
+}
+
+void ClassifyMessage(string message, string filePath, string sourceId)
+{
 	try
 	{
 		var logItem = new LogItem
@@ -193,40 +198,50 @@ static string ExtractSourceId(string header)
 
 static Options ParseArgs(string[] args)
 {
-	var rootPath = "./LogicMonitor.Api.Test/EventLogs/UnhandledLogs";
-	var first = 20;
-	var progressEvery = 200;
-	var regexTimeoutSeconds = 5;
+	string[] valueOptionNames = ["--root", "--first", "--progress-every", "--regex-timeout-seconds"];
+
+	var values = new Dictionary<string, string>(StringComparer.Ordinal);
 	var logEachMessage = false;
 
-	for (var i = 0; i < args.Length; i++)
+	var i = 0;
+	while (i < args.Length)
 	{
 		var arg = args[i];
-		switch (arg)
+
+		if (Array.IndexOf(valueOptionNames, arg) >= 0 && i + 1 < args.Length)
 		{
-			case "--root" when i + 1 < args.Length:
-				rootPath = args[++i];
-				break;
-			case "--first" when i + 1 < args.Length && int.TryParse(args[i + 1], out var parsed):
-				first = parsed;
-				i++;
-				break;
-			case "--progress-every" when i + 1 < args.Length && int.TryParse(args[i + 1], out var parsedProgress) && parsedProgress > 0:
-				progressEvery = parsedProgress;
-				i++;
-				break;
-			case "--regex-timeout-seconds" when i + 1 < args.Length && int.TryParse(args[i + 1], out var parsedTimeout) && parsedTimeout > 0:
-				regexTimeoutSeconds = parsedTimeout;
-				i++;
-				break;
-			case "--log-each-message":
-				logEachMessage = true;
-				break;
+			values[arg] = args[i + 1];
+			i += 2;
+			continue;
 		}
+
+		if (arg == "--log-each-message")
+		{
+			logEachMessage = true;
+		}
+
+		i++;
 	}
 
-	return new Options(Path.GetFullPath(rootPath), first, progressEvery, regexTimeoutSeconds, logEachMessage);
+	return new Options(
+		Path.GetFullPath(GetStringOption(values, "--root", "./LogicMonitor.Api.Test/EventLogs/UnhandledLogs")),
+		GetInt32Option(values, "--first", 20, int.MinValue),
+		GetInt32Option(values, "--progress-every", 200, 1),
+		GetInt32Option(values, "--regex-timeout-seconds", 5, 1),
+		logEachMessage);
 }
+
+static string GetStringOption(Dictionary<string, string> values, string name, string fallback)
+	=> values.TryGetValue(name, out var value) ? value : fallback;
+
+// Reads an integer option, falling back to the supplied default if it is absent,
+// unparseable, or below the supplied minimum.
+static int GetInt32Option(Dictionary<string, string> values, string name, int fallback, int minimum)
+	=> values.TryGetValue(name, out var raw)
+		&& int.TryParse(raw, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed)
+		&& parsed >= minimum
+			? parsed
+			: fallback;
 
 static string TimestampUtc() => DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff 'UTC'", CultureInfo.InvariantCulture);
 

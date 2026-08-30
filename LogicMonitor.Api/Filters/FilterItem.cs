@@ -25,6 +25,22 @@ public class FilterItem<T>
 	[IgnoreDataMember]
 	public Comparator Comparator
 	{
+		get => Operation switch
+		{
+			":" => Comparator.Eq,
+			":::null" => Comparator.IsNull,
+			":::empty" => Comparator.IsNullOrEmpty,
+			">:" => Comparator.Ge,
+			">" => Comparator.Gt,
+			"~" => Comparator.Includes,
+			"<=" => Comparator.Le,
+			"<" => Comparator.Lt,
+			"!:" => Comparator.Ne,
+			"!::null" => Comparator.IsNotNull,
+			"!::empty" => Comparator.IsNotNullOrEmpty,
+			"!~" => Comparator.NotIncludes,
+			_ => throw new NotSupportedException($"Unexpected Operation: '{Operation}'"),
+		};
 		set => Operation = value switch
 		{
 			Comparator.Eq => ":",

@@ -94,6 +94,9 @@
     PowerShell 5.1 and PowerShell 7+.
 #>
 [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSAvoidUsingWriteHost', '',
+    Justification = 'This is an interactive, destructive migration tool run by a human at a console. Its progress banner and warnings are deliberately written to the host, in colour, so that they cannot be silently swallowed by a redirect; the script emits no pipeline output that a caller would want to capture.')]
 param(
     [Parameter(Mandatory)] [string] $Account,
     [Parameter(Mandatory)] [string] $AccessId,
@@ -118,7 +121,14 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 # TLS 1.2 for Windows PowerShell 5.1 (PowerShell 7 negotiates automatically).
-try { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 } catch {}
+try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+}
+catch {
+    # PowerShell 7 negotiates TLS on its own and does not expose this knob, so a failure here
+    # is expected and harmless. Report it at verbose level only.
+    Write-Verbose "Could not set TLS 1.2 explicitly (expected on PowerShell 7+): $($_.Exception.Message)"
+}
 
 # --- Validate resource selector -------------------------------------------------
 if (-not $ResourceId -and [string]::IsNullOrWhiteSpace($DisplayName)) {
@@ -196,7 +206,13 @@ function Invoke-LMApi {
                 $stream = $_.Exception.Response.GetResponseStream()
                 $reader = [IO.StreamReader]::new($stream)
                 $detail = $reader.ReadToEnd()
-            } catch {}
+            }
+            catch {
+                # Best-effort only: we are already handling a failure, and the response body is
+                # extra detail rather than something to fail over. Keep $detail null and let the
+                # outer throw report the original error.
+                Write-Verbose "Could not read the error response body: $($_.Exception.Message)"
+            }
         }
         throw "LogicMonitor API $Method $ResourcePath failed: $($_.Exception.Message)`n$detail"
     }

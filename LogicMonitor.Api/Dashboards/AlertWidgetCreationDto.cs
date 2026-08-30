@@ -35,6 +35,9 @@ public class AlertWidgetCreationDto : WidgetCreationDto<AlertWidget>
 	[IgnoreDataMember]
 	public AlertCreationDtoAlertExtra Extra
 	{
+		get => string.IsNullOrWhiteSpace(ExtraString)
+			? new()
+			: JsonConvert.DeserializeObject<AlertCreationDtoAlertExtra>(ExtraString) ?? new();
 		set => ExtraString = JsonConvert.SerializeObject(value);
 	}
 }
