@@ -16,3 +16,6 @@ packages
 [Oo]bj/
 .vs/
 TestResults/
+
+# Build output from the CI pack step (and from running it locally)
+artifacts/

@@ -27,17 +27,51 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - name: Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
+    # Only the tests that run without a LogicMonitor portal are run here. The rest of the
+    # suite drives a live portal using credentials held in user secrets, which CI does not
+    # have, so `dotnet test` over the whole suite can never pass. Those are run locally.
+    #
+    # The test project is excluded from the Release|Any CPU solution configuration (see
+    # LogicMonitor.Api.slnx) and is x64-only, so the solution build above does not produce
+    # it - it has to be built explicitly.
+    - name: Build tests
+      run: dotnet build LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj --configuration Release
+
+    - name: Portal-free unit tests
+      run: >-
+        dotnet run --project LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj
+        --configuration Release --no-build --
+        -class LogicMonitor.Api.Test.Alerts.AlertFilterGetFilterTests
+        -class LogicMonitor.Api.Test.Alerts.EscalationChainCreationDtoSerializationTests
+        -class LogicMonitor.Api.Test.Attributes.IsPropertyReadonlyTests
+        -class LogicMonitor.Api.Test.Converters.DoubleOrNAConverterTests
+        -class LogicMonitor.Api.Test.Converters.PolymorphicConverterMessageTests
+        -class LogicMonitor.Api.Test.Converters.TolerantStringEnumConverterTests
+        -class LogicMonitor.Api.Test.Data.LineTests
+        -class LogicMonitor.Api.Test.EventLogs.AuditEventTests
+        -class LogicMonitor.Api.Test.EventLogs.OversizedDescriptionTests
+        -class LogicMonitor.Api.Test.Extensions.DateTimeExtensionTests
+        -class LogicMonitor.Api.Test.Filters.FilterItemTests
+        -class LogicMonitor.Api.Test.LogicModules.AppliesToFunctionCidrTests
+        -class LogicMonitor.Api.Test.PortalResponseTests
+        -class LogicMonitor.Api.Test.Resources.EntityPropertyWriteTests
+        -class LogicMonitor.Api.Test.Topologies.TopologyDataDeserializationTests
+        -class LogicMonitor.Api.Test.UptimeResources.UptimeResourceSerializationTests
+        -noColor
 
     - name: Pack
-      run: dotnet pack --configuration Release --no-build --output ./artifacts
+      run: dotnet pack LogicMonitor.Api/LogicMonitor.Api.csproj --configuration Release --no-build --output ./artifacts
 
+    # The .snupkg has to travel with the .nupkg: `dotnet nuget push` picks up the symbol
+    # package from alongside the package it is pushing, so dropping it here would silently
+    # publish without symbols.
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
       with:
         name: packages
-        path: ./artifacts/*.nupkg
+        path: |
+          ./artifacts/*.nupkg
+          ./artifacts/*.snupkg
 
   publish:
     needs: build

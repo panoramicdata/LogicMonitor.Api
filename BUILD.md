@@ -306,6 +306,36 @@ LogicMonitor.Api/
 5. **API keys** should never be committed to source control
 6. **Symbols** (.snupkg) are automatically included for debugging support
 
+## Tests: what CI runs, and what it does not
+
+Most of the suite drives a **live LogicMonitor portal**, using credentials and object ids held
+in user secrets (`UserSecretsId 4c4b4867-3f42-418b-b605-19da703a194d`, shared by every checkout
+on the machine). CI has no such credentials, so `dotnet test` across the whole suite can never
+pass there.
+
+CI therefore runs only the portal-free classes, named explicitly in `.github/workflows/ci.yml`.
+There are 321 such tests and they must all pass for a release to happen.
+
+To run the same set locally:
+
+```powershell
+dotnet build LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj --configuration Release
+dotnet run --project LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj `
+    --configuration Release --no-build -- -class <FullyQualifiedClassName>
+```
+
+**When adding a portal-free test class, add it to the `Portal-free unit tests` step**, otherwise
+it will never run in CI.
+
+Two things to know if you change that step:
+
+- The test project is excluded from the `Release|Any CPU` solution configuration (see
+  `LogicMonitor.Api.slnx`) and is x64-only, so the solution-wide `dotnet build` does **not**
+  produce it. It is built explicitly in its own step; without that, `--no-build` fails with
+  `No test projects were found.`
+- To run the full suite against a portal, use `dotnet test LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj -c Release`.
+  Expect failures if the object ids in your user secrets no longer exist in the portal.
+
 ## Code analysis: `SonarLint.xml`
 
 Codacy analyses this repository with the `codacy/codacy-sonar-csharp` engine. That engine reads
