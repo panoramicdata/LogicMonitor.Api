@@ -1,6 +1,14 @@
 namespace LogicMonitor.Api.Test.EventLogs;
 
-public class AuditEventTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
+/// <summary>
+/// Tests for <see cref="LogItemExtensions.ToAuditEvent"/>.
+/// </summary>
+/// <remarks>
+/// These parse fixed log strings and touch no portal, so the class deliberately takes no
+/// <see cref="Fixture"/> - taking one would build a LogicMonitorClient and make the whole class
+/// fail wherever portal credentials are absent, such as CI.
+/// </remarks>
+public class AuditEventTests
 {
 	private const string TestUsername = "test";
 	private const string TestIpAddress = "127.0.0.1";
