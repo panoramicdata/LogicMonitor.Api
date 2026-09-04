@@ -430,6 +430,9 @@ public partial class LogicMonitorClient : IDisposable
 		using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
+		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
+		var rateLimitAttempt = 0;
+		var rateLimitTotalMs = 0L;
 		while (true)
 		{
 			// Determine the cancellationToken
@@ -478,11 +481,13 @@ public partial class LogicMonitorClient : IDisposable
 				}
 
 				// Wait some time and try again
-				_logger.LogInformation("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				rateLimitTotalMs = await WaitForRateLimitAsync(
 					prefix,
 					rateLimitInformation,
-					delayMs);
-				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+					delayMs,
+					++rateLimitAttempt,
+					rateLimitTotalMs,
+					cancellationToken).ConfigureAwait(false);
 
 				// Try again
 				continue;
@@ -819,6 +824,9 @@ public partial class LogicMonitorClient : IDisposable
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
 		var failureCount = 0;
+		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
+		var rateLimitAttempt = 0;
+		var rateLimitTotalMs = 0L;
 		while (true)
 		{
 			// Determine the cancellationToken
@@ -888,11 +896,13 @@ public partial class LogicMonitorClient : IDisposable
 				}
 
 				// Wait some time and try again
-				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				rateLimitTotalMs = await WaitForRateLimitAsync(
 					prefix,
 					rateLimitInformation,
-					delayMs);
-				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+					delayMs,
+					++rateLimitAttempt,
+					rateLimitTotalMs,
+					cancellationToken).ConfigureAwait(false);
 
 				// Try again
 				continue;
@@ -963,6 +973,9 @@ public partial class LogicMonitorClient : IDisposable
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
 		var failureCount = 0;
+		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
+		var rateLimitAttempt = 0;
+		var rateLimitTotalMs = 0L;
 		while (true)
 		{
 			// Determine the cancellationToken
@@ -1055,11 +1068,13 @@ public partial class LogicMonitorClient : IDisposable
 			}
 
 			// Wait some time and try again
-			_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+			rateLimitTotalMs = await WaitForRateLimitAsync(
 				prefix,
 				rateLimitInformation,
-				delayMs);
-			await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+				delayMs,
+				++rateLimitAttempt,
+				rateLimitTotalMs,
+				cancellationToken).ConfigureAwait(false);
 
 			// Try again
 		}
@@ -1157,6 +1172,9 @@ public partial class LogicMonitorClient : IDisposable
 		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
 		HttpResponseMessage httpResponseMessage;
 		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
+		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
+		var rateLimitAttempt = 0;
+		var rateLimitTotalMs = 0L;
 		while (true)
 		{
 			using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
@@ -1207,11 +1225,13 @@ public partial class LogicMonitorClient : IDisposable
 				}
 
 				// Wait some time and try again
-				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				rateLimitTotalMs = await WaitForRateLimitAsync(
 					prefix,
 					rateLimitInformation,
-					delayMs);
-				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+					delayMs,
+					++rateLimitAttempt,
+					rateLimitTotalMs,
+					cancellationToken).ConfigureAwait(false);
 
 				// Try again
 				continue;
@@ -1262,6 +1282,9 @@ public partial class LogicMonitorClient : IDisposable
 		var data = jObject.ToString();
 		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
 		HttpResponseMessage httpResponseMessage;
+		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
+		var rateLimitAttempt = 0;
+		var rateLimitTotalMs = 0L;
 		while (true)
 		{
 			using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
@@ -1312,11 +1335,13 @@ public partial class LogicMonitorClient : IDisposable
 				}
 
 				// Wait some time and try again
-				_logger.LogDebug("{Prefix} Rate limiting hit (with cancellation token): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				rateLimitTotalMs = await WaitForRateLimitAsync(
 					prefix,
 					rateLimitInformation,
-					delayMs);
-				await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+					delayMs,
+					++rateLimitAttempt,
+					rateLimitTotalMs,
+					cancellationToken).ConfigureAwait(false);
 
 				// Try again
 				continue;
@@ -1637,4 +1662,51 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="cancellationToken">An optional CancellationToken</param>
 	public Task<T> CloneAsync<T>(int id, CloneRequest<T> cloneRequest, CancellationToken cancellationToken) where T : IHasEndpoint, ICloneableItem, new()
 		=> PostAsync<CloneRequest<T>, T>(cloneRequest, $"{new T().Endpoint()}/{id}/clone", cancellationToken);
+
+	/// <summary>
+	/// Waits out a rate-limit backoff, reporting it at a level a caller can actually see.
+	///
+	/// Issue #38: the aggregate wait here is unbounded - the 429 loop retries until the portal relents -
+	/// and it is silent by every other measure: no CPU, no open socket, no exception. Logged at Debug, a
+	/// consumer running at Information could not distinguish a polite backoff from a hung call. The
+	/// cumulative attempt and total are included because the tenth five-minute wait reads very
+	/// differently from the first, and only this client is in a position to know which it is.
+	/// </summary>
+	/// <returns>The new cumulative wait for this request, in milliseconds.</returns>
+	private async Task<long> WaitForRateLimitAsync(
+		string prefix,
+		string rateLimitInformation,
+		int delayMs,
+		int attempt,
+		long previousTotalMs,
+		CancellationToken cancellationToken)
+	{
+		var totalMs = previousTotalMs + delayMs;
+
+		// Once more than a single maximum backoff has been spent waiting, this has stopped being routine.
+		if (totalMs > 1000L * MaximumBackOffSeconds)
+		{
+			_logger.LogWarning(
+				"{Prefix} Rate limiting hit (attempt {Attempt}, {TotalWaitedMs:N0}ms waited so far): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				prefix,
+				attempt,
+				totalMs,
+				rateLimitInformation,
+				delayMs);
+		}
+		else
+		{
+			_logger.LogInformation(
+				"{Prefix} Rate limiting hit (attempt {Attempt}, {TotalWaitedMs:N0}ms waited so far): {RateLimitInformation}, waiting {DelayMs:N0}ms",
+				prefix,
+				attempt,
+				totalMs,
+				rateLimitInformation,
+				delayMs);
+		}
+
+		await Task.Delay(delayMs, cancellationToken).ConfigureAwait(false);
+
+		return totalMs;
+	}
 }
