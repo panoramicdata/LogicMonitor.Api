@@ -24,22 +24,20 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.64:
-		- Added: UptimeResourceOverviewReport, for LogicMonitor's Uptime Resource Overview reports.
-		  ReportConverter did not model the type, so GetAllAsync&lt;ReportBase&gt;() threw on any portal
-		  containing one, taking every other report with it - on one live portal all 241 reports were
-		  unreachable because of 2. The wire format was captured rather than inferred: the
-		  type-specific fields are identical to WebsiteOverviewReport, so the new class derives from
-		  DateRangeReport and carries the same six properties. It is a sibling of WebsiteOverviewReport
-		  rather than a subclass, because it reports on resources rather than websites.
-		- Changed: ReportBase.Type's acceptable-values documentation now lists Uptime Resource
-		  Overview, which it had never mentioned.
-		- Unchanged, and deliberately so: an unrecognised report type still throws. Returning a base
-		  instance would silently drop every type-specific field, which is a quiet wrong answer rather
-		  than a graceful degrade. This client's job is to say truthfully that it does not model a
-		  type; whether that is fatal is the caller's policy. A test now locks that behaviour down for
-		  reports rather than leaving it merely intended.
-	</PackageReleaseNotes>
+		v3.240.67:
+		- Changed: rate-limit backoff is now logged at Information, and at Warning once the cumulative
+		  wait for a request exceeds a full MaximumBackOffSeconds. Four of the five backoff sites logged
+		  at Debug, so a client running at the default Information level saw nothing at all while the
+		  429 loop waited - and that wait is unbounded in aggregate and silent by every other measure:
+		  no CPU, no open socket, no exception. Telling a polite backoff from a hung call previously
+		  meant thread dumps and socket sampling. The message now also carries the attempt number and
+		  the total waited so far, not just the current delay, because the tenth five-minute wait reads
+		  very differently from the first and only the client knows which it is.
+		- Unchanged, deliberately: the 429 retry loop is still unbounded. Waiting as long as the portal
+		  asks is defensible, and bounding it is a policy decision for callers rather than for this
+		  client. The six Service Unavailable retry sites also remain at Debug, since those are bounded
+		  by AttemptCount and so cannot wait indefinitely.
+		</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
     <NeutralResourcesLanguage>en</NeutralResourcesLanguage>
