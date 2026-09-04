@@ -24,7 +24,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.59:
+		v3.240.60:
 		- Fixed: an unrecognised LogicModule type no longer deserialises to LogicModuleType.All, the
 		  value that means "every type" when querying. A type this client did not model was therefore
 		  indistinguishable from a deliberate no-filter, so a caller grouping by Type either dropped
@@ -38,44 +38,6 @@
 		  Windows Server Cluster Node and similar. The wire value is REMEDIATIONSOURCE, not the
 		  ACTIONSOURCE the module names suggest. On one live portal nine such modules were landing on
 		  All, out of 4,234 returned by setting/logicmodules/metadata.
-
-		v3.240.46:
-		- Fixed: EscalationChainCreationDto no longer blanks its own destination lists. It carried
-		  four destination properties - the two names the API honours on write (destinations,
-		  ccDestinations) and the two the read model returns (destination, ccdestination). All four
-		  defaulted to an empty list rather than null, and NullValueHandling.Ignore only skips nulls,
-		  so every create serialised all four. Populating the read-shaped property sent recipients
-		  under ccdestination AND an empty ccDestinations; the API took the empty one and returned
-		  HTTP 200 with a fully-formed chain and no CC recipients - silent data loss visible only on
-		  a re-read. The read-shaped names are now non-serialising [Obsolete] aliases forwarding to
-		  the canonical properties, so existing code keeps compiling and starts working.
-		- Added: PatchResourceDataSourceInstanceAsync, plus SetResourceDataSourceInstanceAlertingAsync
-		  and SetResourceDataSourceInstanceMonitoringAsync (id and instance overloads), for writing
-		  individual fields on a resource DataSource instance. The pre-existing
-		  UpdateResourceDataSourceInstanceAsync is a full PUT that sends back every field it was
-		  handed; per-instance alert suppression is normally applied in bulk, where that is both
-		  wasteful and a clobbering risk.
-
-		v3.240.39:
-		- Changed: LogItemExtensions.MaxRegexDescriptionLength (the maximum LogItem description
-		  length processed by ToAuditEvent's regular expressions) is now public, so consumers can
-		  report the limit when logging size-skipped messages, and raised from 16,384 to 32,768
-		  characters. Real-world "Found new instance(s)" audit messages with a few hundred
-		  instances exceed 16K and were being skipped; the 5-second per-regex evaluation timeout
-		  remains the protection against pathological messages.
-
-		v3.240.34:
-		- Fixed: GetTopologyDataAsync no longer throws on vertex types the DataVertexType enum does
-		  not model. "Wireless" (any access point) is now a member, "Unknown" is accepted in either
-		  case, and the enum uses TolerantStringEnumConverter so a vertex type LogicMonitor adds in
-		  future degrades to DataVertexType.Unknown instead of failing the whole /topology/data call.
-
-		v3.240.27:
-		- Fixed: IntegrationMetadata.LogicModuleType no longer throws on values the enum's
-		  TolerantStringEnumConverter already knows how to handle (e.g. "SNMP_SYSOID_MAP" for
-		  SnmpSysOIDMap). A member-level [JsonConverter(StringEnumConverter)] on that property
-		  was silently overriding the enum's tolerant converter, causing DatamartClient calls
-		  touching installationMetadata.logicModuleType to fail deserialization.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
