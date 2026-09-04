@@ -24,20 +24,21 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.60:
-		- Fixed: an unrecognised LogicModule type no longer deserialises to LogicModuleType.All, the
-		  value that means "every type" when querying. A type this client did not model was therefore
-		  indistinguishable from a deliberate no-filter, so a caller grouping by Type either dropped
-		  those modules or filed them under a heading that means nothing, with nothing to indicate
-		  anything was missing. TolerantStringEnumConverter already resolved an unmatched value to a
-		  member named Unknown and fell back to All only in its absence; LogicModuleType now has one.
-		  The converter itself is unchanged, and All remains 0, so the no-filter sentinel and
-		  default(LogicModuleType) are unaffected for existing callers.
-		- Added: LogicModuleType.RemediationSource, for LogicMonitor's remote action modules - Kill
-		  Windows Process, Restart Linux Device, Microsoft Windows Disk Cleanup, Suspend and Resume
-		  Windows Server Cluster Node and similar. The wire value is REMEDIATIONSOURCE, not the
-		  ACTIONSOURCE the module names suggest. On one live portal nine such modules were landing on
-		  All, out of 4,234 returned by setting/logicmodules/metadata.
+		v3.240.64:
+		- Added: UptimeResourceOverviewReport, for LogicMonitor's Uptime Resource Overview reports.
+		  ReportConverter did not model the type, so GetAllAsync&lt;ReportBase&gt;() threw on any portal
+		  containing one, taking every other report with it - on one live portal all 241 reports were
+		  unreachable because of 2. The wire format was captured rather than inferred: the
+		  type-specific fields are identical to WebsiteOverviewReport, so the new class derives from
+		  DateRangeReport and carries the same six properties. It is a sibling of WebsiteOverviewReport
+		  rather than a subclass, because it reports on resources rather than websites.
+		- Changed: ReportBase.Type's acceptable-values documentation now lists Uptime Resource
+		  Overview, which it had never mentioned.
+		- Unchanged, and deliberately so: an unrecognised report type still throws. Returning a base
+		  instance would silently drop every type-specific field, which is a quiet wrong answer rather
+		  than a graceful degrade. This client's job is to say truthfully that it does not model a
+		  type; whether that is fatal is the caller's policy. A test now locks that behaviour down for
+		  reports rather than leaving it merely intended.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
