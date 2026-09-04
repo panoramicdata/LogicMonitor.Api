@@ -24,6 +24,21 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
+		v3.240.59:
+		- Fixed: an unrecognised LogicModule type no longer deserialises to LogicModuleType.All, the
+		  value that means "every type" when querying. A type this client did not model was therefore
+		  indistinguishable from a deliberate no-filter, so a caller grouping by Type either dropped
+		  those modules or filed them under a heading that means nothing, with nothing to indicate
+		  anything was missing. TolerantStringEnumConverter already resolved an unmatched value to a
+		  member named Unknown and fell back to All only in its absence; LogicModuleType now has one.
+		  The converter itself is unchanged, and All remains 0, so the no-filter sentinel and
+		  default(LogicModuleType) are unaffected for existing callers.
+		- Added: LogicModuleType.RemediationSource, for LogicMonitor's remote action modules - Kill
+		  Windows Process, Restart Linux Device, Microsoft Windows Disk Cleanup, Suspend and Resume
+		  Windows Server Cluster Node and similar. The wire value is REMEDIATIONSOURCE, not the
+		  ACTIONSOURCE the module names suggest. On one live portal nine such modules were landing on
+		  All, out of 4,234 returned by setting/logicmodules/metadata.
+
 		v3.240.46:
 		- Fixed: EscalationChainCreationDto no longer blanks its own destination lists. It carried
 		  four destination properties - the two names the API honours on write (destinations,

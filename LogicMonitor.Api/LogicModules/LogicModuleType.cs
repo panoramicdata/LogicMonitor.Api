@@ -8,7 +8,15 @@ namespace LogicMonitor.Api.LogicModules;
 public enum LogicModuleType
 {
 	/// <summary>
-	/// Unknown
+	/// A type this client does not model.  TolerantStringEnumConverter resolves an
+	/// unrecognised value here, so an unknown type is never mistaken for All, which
+	/// means "every type" when querying.
+	/// </summary>
+	[EnumMember(Value = "Unknown")]
+	Unknown = -1,
+
+	/// <summary>
+	/// All types.  Used as the no-filter value when querying.
 	/// </summary>
 	[EnumMember(Value = "All")]
 	All = 0,
@@ -72,5 +80,12 @@ public enum LogicModuleType
 	/// LogSource
 	/// </summary>
 	[EnumMember(Value = "LOGSOURCE")]
-	LogSource
+	LogSource,
+
+	/// <summary>
+	/// RemediationSource - the remote action modules (Kill Windows Process, Restart Linux
+	/// Device and similar).  LogicMonitor sends REMEDIATIONSOURCE, not ACTIONSOURCE.
+	/// </summary>
+	[EnumMember(Value = "REMEDIATIONSOURCE")]
+	RemediationSource
 }
