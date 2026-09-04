@@ -265,6 +265,21 @@ public class TolerantStringEnumConverterTests
 
 
 	[Fact]
+	public void ReadJson_LogicModuleType_RemediationSource_DeserializesCorrectly()
+	{
+		// Issue #33: LogicMonitor sends REMEDIATIONSOURCE for the remote action modules - Kill Windows
+		// Process, Restart Linux Device and similar. Confirmed against a live portal, where nine such
+		// modules were silently landing on All. Note it is not ACTIONSOURCE, which is the name the
+		// modules themselves suggest.
+		var json = """{"value": "REMEDIATIONSOURCE"}""";
+
+		var result = JsonConvert.DeserializeObject<TestContainer<LogicModuleType>>(json, SerializerSettings);
+
+		result.Should().NotBeNull();
+		result!.Value.Should().Be(LogicModuleType.RemediationSource);
+	}
+
+	[Fact]
 	public void ReadJson_LogicModuleType_UnknownValue_InDebugThrowsNotImplementedException()
 	{
 		var json = """{"value": "UNKNOWN_TYPE"}""";
@@ -275,9 +290,13 @@ public class TolerantStringEnumConverterTests
 		act.Should().Throw<NotImplementedException>()
 			.WithMessage("*missing an enum member*");
 #else
+		// Issue #33: this used to resolve to All - the value that means "every type" when querying -
+		// so a type the client did not model was indistinguishable from a deliberate no-filter. The
+		// converter already preferred a member named Unknown; LogicModuleType simply did not have one.
 		var result = act();
 		result.Should().NotBeNull();
-		result!.Value.Should().Be(LogicModuleType.All);
+		result!.Value.Should().Be(LogicModuleType.Unknown);
+		result.Value.Should().NotBe(LogicModuleType.All);
 #endif
 	}
 
