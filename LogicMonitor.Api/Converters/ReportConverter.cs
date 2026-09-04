@@ -27,6 +27,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 			"role" => new RoleReport(),
 			"service level agreement" => new SlaReport(),
 			"user" => new UserReport(),
+			"uptime resource overview" => new UptimeResourceOverviewReport(),
 			"website service overview" => new WebsiteOverviewReport(),
 			"website sla" => new WebsiteSlaReport(),
 			"word template" => new WordTemplateReport(),

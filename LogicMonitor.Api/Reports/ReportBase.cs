@@ -9,7 +9,7 @@ namespace LogicMonitor.Api.Reports;
 public class ReportBase : NamedItem, IHasEndpoint
 {
 	/// <summary>
-	/// The report type. Acceptable values are: Alert,Alert SLA,Alert threshold,Alert trends,Host CPU,Host group inventory,Host inventory,Host metric trends,Interfaces Bandwidth,Netflow device metric,Service Level Agreement,Website Service Overview,Word template,Audit Log,Alert Forecasting,Dashboard,Website SLA,User,Role
+	/// The report type. Acceptable values are: Alert,Alert SLA,Alert threshold,Alert trends,Host CPU,Host group inventory,Host inventory,Host metric trends,Interfaces Bandwidth,Netflow device metric,Service Level Agreement,Website Service Overview,Word template,Audit Log,Alert Forecasting,Dashboard,Website SLA,User,Role,Uptime Resource Overview
 	/// </summary>
 	[DataMember(Name = "type")]
 	public string Type { get; set; } = string.Empty;
