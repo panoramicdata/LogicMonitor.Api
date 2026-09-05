@@ -17,7 +17,7 @@ public class ResourceGroupFullPathFallbackTests
 		=> LogicMonitorClient.RequiresTreeNodeSearchFallback(fullPath, fullPath.Split('/'));
 
 	[Theory]
-	[InlineData("Devices by Type/Meraki APAC/AU 71116 Highpoint MW PRL ")]   // trailing space - issue #40
+	[InlineData("Group A/Group B/Leaf Group ")]   // trailing space - issue #40
 	[InlineData(" Leading/Normal")]                                          // leading space on an interior segment
 	[InlineData("Normal/Interior /Leaf")]                                    // interior segment, whole path looks trimmed
 	[InlineData("Trailing\t/Leaf")]                                          // tab counts as whitespace
@@ -32,7 +32,7 @@ public class ResourceGroupFullPathFallbackTests
 		=> NeedsFallback(fullPath).Should().BeTrue("the original MS-23720 behaviour must be preserved");
 
 	[Theory]
-	[InlineData("Devices by Type/Meraki APAC/AU 71116 Highpoint MW PRL External BOH")]
+	[InlineData("Group A/Group B/Leaf Group Extended")]
 	[InlineData("Devices/Normal Group With Interior Spaces")]
 	[InlineData("Single")]
 	public void OrdinaryPaths_UseTheFilter(string fullPath)
