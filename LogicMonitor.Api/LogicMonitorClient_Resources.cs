@@ -445,6 +445,15 @@ public partial class LogicMonitorClient
 	}
 
 	/// <summary>
+	///     Whether a resource group full path must be resolved via a tree node search rather than an
+	///     Eq filter, because LogicMonitor's filter endpoint cannot carry the value faithfully.
+	/// </summary>
+	internal static bool RequiresTreeNodeSearchFallback(string fullPath, string[] segments)
+		=> fullPath.Contains('(')
+			|| fullPath.Contains(')')
+			|| Array.Exists(segments, segment => segment != segment.Trim());
+
+	/// <summary>
 	///     Gets Resources by ResourceGroup full path
 	/// </summary>
 	/// <param name="resourceGroupFullPath"></param>
@@ -458,11 +467,23 @@ public partial class LogicMonitorClient
 			return await GetAsync<ResourceGroup>(1, cancellationToken).ConfigureAwait(false);
 		}
 
-		// The LM API Eq filter cannot handle parentheses in values - fall back to tree node search
-		if (resourceGroupFullPath.Contains('(') || resourceGroupFullPath.Contains(')'))
+		// The LM API Eq filter cannot carry certain values - fall back to a tree node search and match
+		// the full path client-side.
+		//
+		// Parentheses: the filter cannot handle them at all.
+		//
+		// Issue #40 - leading/trailing whitespace: LogicMonitor silently TRIMS whitespace in filter
+		// values, so an Eq on a path whose segment ends in a space matches nothing and this method
+		// returned null for a group that plainly exists. Verified against a live portal: the filter
+		// returns 0 results for such a path and 1 for an otherwise identical control, while the free
+		// search below returns the group correctly with its whitespace intact. Tested segment by
+		// segment rather than on the whole path, because an interior segment can carry the space
+		// ("A /B") without the full path looking untrimmed.
+		var pathSegments = resourceGroupFullPath.Split('/');
+		if (RequiresTreeNodeSearchFallback(resourceGroupFullPath, pathSegments))
 		{
 			// Search by leaf group name, then match by full path client-side
-			var leafName = resourceGroupFullPath.Split('/')[^1];
+			var leafName = pathSegments[^1];
 			var searchResults = await TreeNodeFreeSearchAsync(
 				leafName,
 				100,
