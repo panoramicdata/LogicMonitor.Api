@@ -13,6 +13,43 @@ public class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 	}
 
 	[Fact]
+	public async Task GetResourcesByResourceGroupFullPath_WithPropertiesFilter_FetchesOnlyThoseFields()
+	{
+		// Read-only. Asks for two fields only.
+		var filtered = await LogicMonitorClient
+			.GetResourcesByResourceGroupFullPathAsync(
+				ResourceGroupFullPath,
+				true,
+				CancellationToken,
+				new Filter<Resource>
+				{
+					Properties = [nameof(Resource.Id), nameof(Resource.ResourceType)]
+				});
+
+		filtered.Should().NotBeEmpty();
+
+		// The requested field is populated...
+		filtered.Should().AllSatisfy(resource => resource.Id.Should().BePositive());
+
+		// ...and the ones not requested are not, which is only true if the filter
+		// reached the API as fields=. If the parameter were accepted and ignored,
+		// these would be populated and this test would fail.
+		filtered.Should().AllSatisfy(resource => resource.Name.Should().BeEmpty());
+		filtered.Should().AllSatisfy(resource => resource.DisplayName.Should().BeEmpty());
+
+		// The same call with no filter returns the same Resources, fully populated,
+		// so the narrowing above is caused by the filter and not by the group contents.
+		var unfiltered = await LogicMonitorClient
+			.GetResourcesByResourceGroupFullPathAsync(ResourceGroupFullPath, true, CancellationToken);
+
+		filtered.Select(resource => resource.Id)
+			.Should().BeEquivalentTo(unfiltered.Select(resource => resource.Id));
+		// At least one, rather than all: across a whole estate a single oddly-named
+		// Resource would otherwise fail this for reasons unrelated to the filter.
+		unfiltered.Should().Contain(resource => !string.IsNullOrEmpty(resource.Name));
+	}
+
+	[Fact]
 	public async Task GetResourcesByResourceGroupByFullPathWhereNameContainsParentheses()
 	{
 		// No recurse
