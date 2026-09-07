@@ -290,11 +290,17 @@ public partial class LogicMonitorClient
 	/// <param name="resourceGroupFullPaths">The FullPath(es) of the ResourceGroup(s), semicolon separated.</param>
 	/// <param name="recurse">If true, finds devices in child groups also.</param>
 	/// <param name="cancellationToken">The cancellation token</param>
+	/// <param name="resourceFilter">
+	///     An optional filter applied to each per-group Resource fetch. Its main use is Properties,
+	///     to request only the fields the caller reads: without it every property of every Resource
+	///     is fetched, for every group. Null preserves the previous behaviour.
+	/// </param>
 	/// <returns>A list of Resources</returns>
 	public async Task<List<Resource>> GetResourcesByResourceGroupFullPathAsync(
 		string resourceGroupFullPaths,
 		bool recurse,
-		CancellationToken cancellationToken)
+		CancellationToken cancellationToken,
+		Filter<Resource>? resourceFilter = null)
 	{
 		var resources = new List<Resource>();
 
@@ -389,7 +395,7 @@ public partial class LogicMonitorClient
 				{
 					var resourceGroupResources = await GetResourcesByResourceGroupIdAsync(
 						resourceGroup.Id,
-						null,
+						resourceFilter,
 						cancellationToken
 						).ConfigureAwait(false);
 
