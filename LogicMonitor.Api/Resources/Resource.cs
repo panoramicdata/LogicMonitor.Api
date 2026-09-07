@@ -236,6 +236,13 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public bool IsPreferredLogCollectorConfigured { get; set; }
 
 	/// <summary>
+	///    Whether a preferred Log Collector Group is configured
+	/// </summary>
+	[SantabaReadOnly]
+	[DataMember(Name = "isPreferredLogCollectorGroupConfigured")]
+	public bool IsPreferredLogCollectorGroupConfigured { get; set; }
+
+	/// <summary>
 	///    The last time that raw data was received for the device
 	/// </summary>
 	[SantabaReadOnly]
@@ -246,7 +253,7 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	///    The last time that raw data was received for the device
 	/// </summary>
 	[SantabaReadOnly]
-	[DataMember(Name = "lastRawDataTime")]
+	[DataMember(Name = "lastRawdataTime")]
 	public long? LastRawDataTimeSeconds { get; set; }
 
 	/// <summary>
