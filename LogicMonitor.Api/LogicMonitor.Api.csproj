@@ -24,22 +24,33 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.71:
-		- Fixed: GetResourceGroupByFullPathAsync returned null for any group whose path contains a
-		  segment with leading or trailing whitespace, even though the group exists - callers saw
-		  "no such path" for a group plainly present in the portal. LogicMonitor's filter endpoint
-		  silently trims whitespace in filter values, so the Eq on fullPath matched nothing. Verified
-		  against a live portal: the filter returns 0 results for such a path and 1 for an otherwise
-		  identical control, while the tree node free search returns the group with its whitespace
-		  intact. The fallback already used for parentheses was therefore capable of resolving these
-		  groups all along; it was simply never reached, because the trigger only tested for
-		  parentheses. That trigger now also covers whitespace, tested segment by segment rather than
-		  on the whole path, since an interior segment can carry a space without the full path looking
-		  untrimmed. Ordinary paths continue to use the cheaper filter.
-		- Note: GetDashboardGroupByFullPathAsync and GetWebsiteGroupByFullPathAsync have neither this
-		  workaround nor the parentheses one, and are likely affected in principle. Unchanged for now,
-		  as neither has been observed failing.
-			</PackageReleaseNotes>
+		v3.240.78:
+		- Added: GetResourcesByResourceGroupFullPathAsync now accepts an optional Filter&lt;Resource&gt;,
+		  so callers can request only the fields they read. The per-group method it delegates to already
+		  accepted a filter; the full-path wrapper hard-coded null, which made the capability unreachable
+		  from the path-based entry point. Measured on a live portal, narrowing a device count to id and
+		  resourceType: identical count and an identical number of API calls, with downlink bytes falling
+		  from 4,585,963 to 527,259 - 8.7x less data for the same answer. Note this cannot reduce the
+		  number of requests, which is one per group, so the saving is payload and memory rather than
+		  latency. Purely additive: the parameter is optional and trailing, so existing callers are
+		  unaffected and null preserves the previous behaviour exactly.
+		- Fixed: Resource did not model dedicatedLogCollectorGroupId or
+		  isPreferredLogCollectorGroupConfigured, both of which LogicMonitor returns on
+		  device/groups/{id}/devices. In DEBUG, where MissingMemberHandling is Error, deserialising any
+		  resource list from such a portal threw. Release builds ignore unknown members, so no consumer
+		  of the published package was affected.
+		- Fixed: Resource modelled lastRawdataTime as "lastRawDataTime", with a capital D the portal does
+		  not use, and the portal never sends the model's spelling. Release builds bound it anyway through
+		  Newtonsoft's case-insensitive fallback, so again no consumer was affected, but the DEBUG suite
+		  failed and IsPropertyReadOnly(name, type, tryJsonNameFirst: true) threw PropertyNotFoundException
+		  for the name the portal actually sends. Correcting the name also removes the library's reliance
+		  on that fallback, which disappears if MissingMemberHandling is ever tightened in Release.
+		- Added: ResourceModelDriftTests, which fetches a page of resources as a raw JObject, unions the
+		  field names across the page and diffs them against Resource's DataMember names. The three model
+		  gaps above were each discovered by a separate live test run, one field at a time, with no way to
+		  know how many remained; this reports every gap at once and distinguishes a field that is absent
+		  from one that is merely miscased, which need different fixes.
+	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
     <NeutralResourcesLanguage>en</NeutralResourcesLanguage>

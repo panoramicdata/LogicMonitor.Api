@@ -270,7 +270,7 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public string LogCollectorDescription { get; set; } = string.Empty;
 
 	/// <summary>
-	/// The id of the Collector Group associated with the device\u0027s log collection
+	/// The id of the Collector Group associated with the device's log collection
 	/// </summary>
 	[DataMember(Name = "logCollectorGroupId")]
 	public int LogCollectorGroupId { get; set; }
@@ -282,7 +282,7 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public int DedicatedLogCollectorGroupId { get; set; }
 
 	/// <summary>
-	/// The name of the Collector Group associated with the device\u0027s.
+	/// The name of the Collector Group associated with the device's log collection
 	/// </summary>
 	[SantabaReadOnly]
 	[DataMember(Name = "logCollectorGroupName")]
