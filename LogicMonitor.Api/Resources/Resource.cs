@@ -269,6 +269,12 @@ public class Resource : NamedItem, IHasCustomProperties, IPatchable
 	public int LogCollectorGroupId { get; set; }
 
 	/// <summary>
+	/// The id of the dedicated Collector Group associated with the device's log collection
+	/// </summary>
+	[DataMember(Name = "dedicatedLogCollectorGroupId")]
+	public int DedicatedLogCollectorGroupId { get; set; }
+
+	/// <summary>
 	/// The name of the Collector Group associated with the device\u0027s.
 	/// </summary>
 	[SantabaReadOnly]
