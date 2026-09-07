@@ -363,17 +363,13 @@ public partial class LogicMonitorClient
 					}
 					else
 					{
-						resourceGroups =
-							await GetAllAsync(
-								new Filter<ResourceGroup>
-								{
-									FilterItems =
-									[
-											new Eq<ResourceGroup>(nameof(ResourceGroup.FullPath), searchResourceGroupName)
-									]
-								},
-								cancellationToken: cancellationToken)
-							.ConfigureAwait(false);
+						// Issue #48 - the group has already been resolved, by a lookup that falls back to a
+						// tree node search precisely because Eq cannot carry parentheses or whitespace. Re-
+						// querying with that same Eq reintroduces the problem it worked around, and can also
+						// over-match on brackets with nothing trimming the extras on this branch: the RemoveAll
+						// below runs only when recursing. A non-recursive fetch would then return resources
+						// from groups the caller never asked for. Use the group in hand.
+						resourceGroups = [checkedResourceGroup];
 					}
 				}
 
