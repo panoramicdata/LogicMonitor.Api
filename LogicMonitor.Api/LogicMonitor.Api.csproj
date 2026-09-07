@@ -24,7 +24,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.78:
+		v3.240.79:
 		- Added: GetResourcesByResourceGroupFullPathAsync now accepts an optional Filter&lt;Resource&gt;,
 		  so callers can request only the fields they read. The per-group method it delegates to already
 		  accepted a filter; the full-path wrapper hard-coded null, which made the capability unreachable

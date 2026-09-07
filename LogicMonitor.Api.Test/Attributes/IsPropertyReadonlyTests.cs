@@ -21,7 +21,7 @@ public class IsPropertyReadonlyTests
 		=> LogicMonitorClient.IsPropertyReadOnly(propertyName, classType).Should().BeFalse();
 
 	[Theory]
-	[InlineData("lastRawDataTime", typeof(Resource))]
+	[InlineData("lastRawdataTime", typeof(Resource))]
 	[InlineData("lastDataTime", typeof(Resource))]
 	[InlineData("ackedOn", typeof(Collector))]
 	public void IsPropertyReadonlyTest_PreferJsonName_ShouldReturnTrue(string propertyName, Type classType)
