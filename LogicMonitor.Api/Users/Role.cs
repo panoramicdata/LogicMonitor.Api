@@ -72,6 +72,12 @@ public class Role : NamedItem, IHasEndpoint
 	[DataMember(Name = "isSamlRole")]
 	public bool IsSamlRole { get; set; }
 
+	/// <summary>
+	/// The tenant that owns the role, empty on a single-tenant portal
+	/// </summary>
+	[DataMember(Name = "tenantIdentifier")]
+	public string? TenantIdentifier { get; set; }
+
 	/// <inheritdoc />
 	public string Endpoint() => "setting/roles";
 }

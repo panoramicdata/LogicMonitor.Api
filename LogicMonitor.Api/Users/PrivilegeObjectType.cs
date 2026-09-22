@@ -161,5 +161,11 @@ public enum PrivilegeObjectType
 	/// OTLP Metrics
 	/// </summary>
 	[EnumMember(Value = "otlpMetrics")]
-	OtlpMetrics
+	OtlpMetrics,
+
+	/// <summary>
+	/// Agentic (AI agent access, e.g. the MCP gateway)
+	/// </summary>
+	[EnumMember(Value = "agentic")]
+	Agentic
 }
