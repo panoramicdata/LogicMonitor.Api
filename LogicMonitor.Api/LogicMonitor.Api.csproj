@@ -24,17 +24,14 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.88:
-		- Fixed: LogicMonitor has begun returning a role privilege objectType of "agentic", which
-		  PrivilegeObjectType did not define. The enum carries a plain StringEnumConverter, which
-		  throws on an unrecognised value rather than tolerating it, so a single unknown privilege on
-		  a single role failed the entire roles or users response. Every caller reading roles or
-		  users failed, whether or not it needed that privilege. PrivilegeObjectType now defines
-		  Agentic.
-		- Fixed: Role did not model the tenantIdentifier field LogicMonitor now returns on every
-		  role. Debug builds set MissingMemberHandling.Error, so the response failed to deserialize
-		  at the first role, before reaching any privilege; release builds ignore unmodelled members
-		  and were unaffected. Role now carries TenantIdentifier.
+		v3.240.89:
+		- Fixed: LogicMonitor also returns an API token type of "agentic", which ApiTokenType did
+		  not define, so reading users failed on the token rather than on the role privilege that
+		  3.240.88 addressed. The two are separate enums and both had to be declared; this one was
+		  reached only once the first was fixed. ApiTokenType now defines Agentic.
+		- Fixed: ViewPermission did not model the MetricsExplorer field LogicMonitor now returns on
+		  every user. As with Role.tenantIdentifier in 3.240.88, this failed only in Debug builds,
+		  which set MissingMemberHandling.Error; release builds ignore unmodelled members.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>

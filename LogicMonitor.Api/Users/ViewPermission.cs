@@ -96,6 +96,12 @@ public class ViewPermission
 	[DataMember(Name = "Modules")]
 	public bool Modules { get; set; }
 
+	/// <summary>
+	/// Metrics Explorer view permission
+	/// </summary>
+	[DataMember(Name = "MetricsExplorer")]
+	public bool MetricsExplorer { get; set; }
+
 	/// <inheritdoc />
 	public override string ToString() =>
 		$"{nameof(Alerts)}={Alerts};" +

@@ -16,4 +16,10 @@ public enum ApiTokenType
 	/// </summary>
 	[EnumMember(Value = "bearer")]
 	Bearer = 1,
+
+	/// <summary>
+	/// Agentic (AI agent access, e.g. the MCP gateway)
+	/// </summary>
+	[EnumMember(Value = "agentic")]
+	Agentic = 2,
 }
