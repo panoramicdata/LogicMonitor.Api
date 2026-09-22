@@ -35,4 +35,10 @@ public class NocWidget : Widget, IWidget
 	/// </summary>
 	[DataMember(Name = "displaySettings")]
 	public DisplaySettings DisplaySettings { get; set; } = new();
+
+	/// <summary>
+	///     Whether cleared alerts are displayed
+	/// </summary>
+	[DataMember(Name = "displayClearedAlert")]
+	public bool DisplayClearedAlert { get; set; }
 }

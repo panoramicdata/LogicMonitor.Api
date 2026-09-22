@@ -400,4 +400,10 @@ public class ResourceGroup : NamedItem, IHasCustomProperties, IPatchable
 	/// </summary>
 	/// <returns>FullPath</returns>
 	public override string ToString() => FullPath;
+
+	/// <summary>
+	/// The tenant that owns the resource group, null on a single-tenant portal
+	/// </summary>
+	[DataMember(Name = "tenantIdentifier")]
+	public string? TenantIdentifier { get; set; }
 }

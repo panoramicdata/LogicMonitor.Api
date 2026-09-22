@@ -54,4 +54,16 @@ public class InterfaceBandwidthReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "top10Only")]
 	public bool IsTop10Only { get; set; }
+
+	/// <summary>
+	/// The resource and instance property filters
+	/// </summary>
+	[DataMember(Name = "propertyFilterMetric")]
+	public PropertyFilterMetric? PropertyFilterMetric { get; set; }
+
+	/// <summary>
+	/// The columns
+	/// </summary>
+	[DataMember(Name = "columns")]
+	public List<ReportColumn> Columns { get; set; } = [];
 }

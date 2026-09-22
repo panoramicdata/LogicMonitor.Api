@@ -24,14 +24,26 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.89:
-		- Fixed: LogicMonitor also returns an API token type of "agentic", which ApiTokenType did
-		  not define, so reading users failed on the token rather than on the role privilege that
-		  3.240.88 addressed. The two are separate enums and both had to be declared; this one was
-		  reached only once the first was fixed. ApiTokenType now defines Agentic.
-		- Fixed: ViewPermission did not model the MetricsExplorer field LogicMonitor now returns on
-		  every user. As with Role.tenantIdentifier in 3.240.88, this failed only in Debug builds,
-		  which set MissingMemberHandling.Error; release builds ignore unmodelled members.
+		v3.240.90:
+		- Fixed: several responses carried fields this client did not model, which fails the WHOLE
+		  response in a Debug build because MissingMemberHandling.Error is set there. Release builds
+		  ignore unmodelled members and were unaffected, so this restores the ability to test rather
+		  than changing runtime behaviour. Found by sweeping live portal responses against the
+		  models, endpoint by endpoint, rather than one failure at a time.
+		- Reports: AlertsReport gains isEscalation, isIncludeDeletedResourceOrWebsite, logPartition
+		  and suppressionType. ServerCpuReport, ResourceInventoryReport, ResourceMetricTrendsReport,
+		  InterfaceBandwidthReport and SlaReport gain propertyFilterMetric, modelled by the new
+		  PropertyFilterMetric type. ResourceGroupInventoryReport and InterfaceBandwidthReport gain
+		  columns.
+		- Dashboards: AlertWidgetFilter and ParsedAlertFilters gain suppressionType and
+		  isIncludeDeletedResourceOrWebsite; a widget carries both under filters and parsedFilters,
+		  so both types needed them. NocWidget gains displayClearedAlert.
+		- ResourceGroup gains tenantIdentifier, the same field Role gained in 3.240.88.
+		- Collector gains archType, cpAgent, logCollectorGroupId and logCollectorGroupName.
+		- Swept and found complete, so unchanged: Alert, Resource, ScheduledDownTime, and all
+		  twenty widget types other than NocWidget. LogicModules and netscans were not swept.
+		  Websites were not either, and will not be: LogicMonitor has retired them for new portals,
+		  where the same things appear as services or resources instead.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>

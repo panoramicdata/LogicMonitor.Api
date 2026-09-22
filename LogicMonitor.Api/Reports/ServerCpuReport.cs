@@ -29,4 +29,10 @@ public class ServerCpuReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "columns")]
 	public List<ReportColumn> Columns { get; set; } = [];
+
+	/// <summary>
+	/// The resource and instance property filters
+	/// </summary>
+	[DataMember(Name = "propertyFilterMetric")]
+	public PropertyFilterMetric? PropertyFilterMetric { get; set; }
 }

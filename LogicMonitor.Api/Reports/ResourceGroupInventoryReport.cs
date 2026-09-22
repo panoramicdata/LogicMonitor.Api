@@ -34,4 +34,10 @@ public class ResourceGroupInventoryReport : ReportBase
 	/// The metrics
 	/// </summary>
 	public List<ResourceInventoryReportMetric> Metrics { get; set; } = [];
+
+	/// <summary>
+	/// The columns
+	/// </summary>
+	[DataMember(Name = "columns")]
+	public List<ReportColumn> Columns { get; set; } = [];
 }

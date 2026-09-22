@@ -34,4 +34,10 @@ public class ResourceInventoryReport : ReportBase
 	/// The metrics
 	/// </summary>
 	public List<ResourceInventoryReportMetric> Metrics { get; set; } = [];
+
+	/// <summary>
+	/// The resource and instance property filters
+	/// </summary>
+	[DataMember(Name = "propertyFilterMetric")]
+	public PropertyFilterMetric? PropertyFilterMetric { get; set; }
 }

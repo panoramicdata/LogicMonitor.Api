@@ -143,4 +143,28 @@ public class AlertsReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "monitoredObjectGroups")]
 	public object? MonitoredObjectGroups { get; set; }
+
+	/// <summary>
+	/// Whether to include escalated alerts. all|yes|no
+	/// </summary>
+	[DataMember(Name = "isEscalation")]
+	public string IsEscalation { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Whether to include alerts from deleted resources or websites. yes|no
+	/// </summary>
+	[DataMember(Name = "isIncludeDeletedResourceOrWebsite")]
+	public string IsIncludeDeletedResourceOrWebsite { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The log partition
+	/// </summary>
+	[DataMember(Name = "logPartition")]
+	public string LogPartition { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The alert suppression type
+	/// </summary>
+	[DataMember(Name = "suppressionType")]
+	public string SuppressionType { get; set; } = string.Empty;
 }

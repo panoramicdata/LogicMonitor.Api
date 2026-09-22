@@ -538,4 +538,28 @@ public class Collector : DescribedItem, IHasCustomProperties, IHasEndpoint
 	///     The subUrl for setting by id
 	/// </summary>
 	public string Endpoint() => "setting/collector/collectors";
+
+	/// <summary>
+	/// The processor architecture the collector runs on, for example x64
+	/// </summary>
+	[DataMember(Name = "archType")]
+	public string ArchType { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Whether this is a Control Plane agent
+	/// </summary>
+	[DataMember(Name = "cpAgent")]
+	public bool CpAgent { get; set; }
+
+	/// <summary>
+	/// The id of the log collector group, zero when none is set
+	/// </summary>
+	[DataMember(Name = "logCollectorGroupId")]
+	public int LogCollectorGroupId { get; set; }
+
+	/// <summary>
+	/// The name of the log collector group, empty when none is set
+	/// </summary>
+	[DataMember(Name = "logCollectorGroupName")]
+	public string LogCollectorGroupName { get; set; } = string.Empty;
 }

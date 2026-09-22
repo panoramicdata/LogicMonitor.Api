@@ -107,4 +107,16 @@ public class AlertWidgetFilter
 	/// </summary>
 	[DataMember(Name = "isHistoricalSdt")]
 	public string IsHistoricalSdt { get; set; } = string.Empty;
+
+	/// <summary>
+	/// Whether to include alerts from deleted resources or websites. yes|no
+	/// </summary>
+	[DataMember(Name = "isIncludeDeletedResourceOrWebsite")]
+	public string IsIncludeDeletedResourceOrWebsite { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The alert suppression type
+	/// </summary>
+	[DataMember(Name = "suppressionType")]
+	public string SuppressionType { get; set; } = string.Empty;
 }
