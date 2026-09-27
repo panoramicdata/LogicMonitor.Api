@@ -2,6 +2,9 @@ using Microsoft.Extensions.Options;
 
 namespace LogicMonitor.Api.Test;
 
+// Every test deriving from this base drives a live LogicMonitor portal with credentials from user
+// secrets. CI has none, so the coverage job excludes them with --filter "Category!=Integration".
+[Trait("Category", "Integration")]
 public abstract class TestWithOutput(ITestOutputHelper testOutputHelper, Fixture fixture) : IDisposable
 {
 	protected ITestOutputHelper TestOutputHelper { get; } = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
