@@ -12,6 +12,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 		return type switch
 		{
 			"dashboard" => new DashboardReport(),
+			"advanced metrics" => new AdvancedMetricsReport(),
 			"alert" => new AlertsReport(),
 			"alert forecasting" => new AlertForecastReport(),
 			"alert sla" => new AlertSlaReport(),
