@@ -59,4 +59,10 @@ public class ResourceMetricTrendsReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "propertyFilterMetric")]
 	public PropertyFilterMetric? PropertyFilterMetric { get; set; }
+
+	/// <summary>
+	/// How many items to show, for example all
+	/// </summary>
+	[DataMember(Name = "topN")]
+	public string TopN { get; set; } = string.Empty;
 }

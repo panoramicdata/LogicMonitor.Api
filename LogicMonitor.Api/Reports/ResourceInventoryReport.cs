@@ -33,6 +33,7 @@ public class ResourceInventoryReport : ReportBase
 	/// <summary>
 	/// The metrics
 	/// </summary>
+	[DataMember(Name = "metrics")]
 	public List<ResourceInventoryReportMetric> Metrics { get; set; } = [];
 
 	/// <summary>

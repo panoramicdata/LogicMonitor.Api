@@ -2,7 +2,7 @@ namespace LogicMonitor.Api.Reports;
 
 /// <summary>
 /// The property filters a report applies when selecting resources and instances.
-/// Both are empty when the report filters on neither.
+/// Each is null when the report does not filter on it.
 /// </summary>
 [DataContract]
 public class PropertyFilterMetric
@@ -11,11 +11,11 @@ public class PropertyFilterMetric
 	/// The resource property filter
 	/// </summary>
 	[DataMember(Name = "resourceFilter")]
-	public string ResourceFilter { get; set; } = string.Empty;
+	public PropertyFilter? ResourceFilter { get; set; }
 
 	/// <summary>
-	/// The instance property filter
+	/// The instance property filter. Only ever seen null, so its shape is assumed to match the resource filter.
 	/// </summary>
 	[DataMember(Name = "instanceFilter")]
-	public string InstanceFilter { get; set; } = string.Empty;
+	public PropertyFilter? InstanceFilter { get; set; }
 }

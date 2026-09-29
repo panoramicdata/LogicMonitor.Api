@@ -66,4 +66,10 @@ public class InterfaceBandwidthReport : DateRangeReport
 	/// </summary>
 	[DataMember(Name = "columns")]
 	public List<ReportColumn> Columns { get; set; } = [];
+
+	/// <summary>
+	/// How many items to show, for example all
+	/// </summary>
+	[DataMember(Name = "topN")]
+	public string TopN { get; set; } = string.Empty;
 }

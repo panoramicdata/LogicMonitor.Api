@@ -1,21 +1,26 @@
 namespace LogicMonitor.Api.Reports;
 
 /// <summary>
-/// A ResourceInventoryReportMetric
+/// A metric on a resource inventory report: a DataSource and the instances it covers
 /// </summary>
 [DataContract]
 public class ResourceInventoryReportMetric
-
 {
 	/// <summary>
-	/// The item type
+	/// The DataSource id
 	/// </summary>
-	[DataMember(Name = "itemType")]
-	public string ItemType { get; set; } = string.Empty;
+	[DataMember(Name = "dataSourceId")]
+	public int DataSourceId { get; set; }
 
 	/// <summary>
-	/// The item value
+	/// The DataSource's full name, for example Network Interfaces
 	/// </summary>
-	[DataMember(Name = "itemVal")]
-	public string ItemValue { get; set; } = string.Empty;
+	[DataMember(Name = "dataSourceFullName")]
+	public string DataSourceFullName { get; set; } = string.Empty;
+
+	/// <summary>
+	/// The instances, for example * for all of them
+	/// </summary>
+	[DataMember(Name = "instances")]
+	public string Instances { get; set; } = string.Empty;
 }
