@@ -24,18 +24,14 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.95:
-		- Fixed: a report with a resource or instance property filter set failed the whole list of
-		  reports with "Error reading string. Unexpected token: StartObject", because
-		  PropertyFilterMetric (added in 3.240.90) typed both filters as strings. LogicMonitor sends
-		  each as null or an object. The new PropertyFilter, PropertyFilterRule and
-		  PropertyFilterExpression model the object, from a live portal's response.
-		- Fixed: ResourceInventoryReport.Metrics was never populated, because it had no DataMember.
-		  ResourceInventoryReportMetric now models what LogicMonitor sends: dataSourceId,
-		  dataSourceFullName and instances. Breaking for anyone who referenced them: its ItemType
-		  and ItemValue properties are removed. They never held data.
-		- ResourceMetricTrendsReport and InterfaceBandwidthReport gain topN.
-		- Every report on two live portals, 376 in all, now reads with both the Release and the
+		v3.240.97:
+		- Fixed: on a portal with an Alerts Health Check report, reading the list of reports threw
+		  NotSupportedException ("ReportConverter.cs needs updating to include alertshealthcheck
+		  reports"), failing the whole list rather than just that report. The new
+		  AlertsHealthCheckReport models the type from a live portal's response: an alert report's
+		  filters under different field names, and columns, with dateRange from DateRangeReport.
+		- AlertForecastReport gains topN.
+		- Every report on the affected portal, 40 in all, now reads with both the Release and the
 		  strict Debug settings.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>

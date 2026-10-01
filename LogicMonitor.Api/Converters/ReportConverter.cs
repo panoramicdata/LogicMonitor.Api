@@ -18,6 +18,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 			"alert sla" => new AlertSlaReport(),
 			"alert threshold" => new AlertsThresholdsReport(),
 			"alert trends" => new AlertTrendsReport(),
+			"alertshealthcheck" => new AlertsHealthCheckReport(),
 			"audit log" => new AuditLogReport(),
 			"host cpu" => new ServerCpuReport(),
 			"host group inventory" => new ResourceGroupInventoryReport(),

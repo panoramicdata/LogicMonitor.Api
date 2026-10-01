@@ -3,13 +3,13 @@ using Newtonsoft.Json;
 namespace LogicMonitor.Api.Test.Converters;
 
 /// <summary>
-/// MS-26846 Host metric trends and Interfaces Bandwidth reports read topN, which live portals send as "all".
+/// MS-26846, MS-26936 Host metric trends, Interfaces Bandwidth and Alert Forecasting reports read topN, which live portals send as a string such as "all" or "50".
 /// </summary>
 public class ReportTopNTests
 {
-	private static T Read<T>(string type) where T : ReportBase
+	private static T Read<T>(string type, string topN = "all") where T : ReportBase
 		=> JsonConvert.DeserializeObject<ReportBase>(
-			$$"""{"id": 1, "name": "Thing", "type": "{{type}}", "topN": "all"}""",
+			$$"""{"id": 1, "name": "Thing", "type": "{{type}}", "topN": "{{topN}}"}""",
 			new JsonSerializerSettings { MissingMemberHandling = MissingMemberHandling.Error })
 			.Should().BeOfType<T>().Subject;
 
@@ -20,4 +20,8 @@ public class ReportTopNTests
 	[Fact]
 	public void InterfacesBandwidth_ReadsTopN()
 		=> Read<InterfaceBandwidthReport>("Interfaces Bandwidth").TopN.Should().Be("all");
+
+	[Fact]
+	public void AlertForecasting_ReadsTopN()
+		=> Read<AlertForecastReport>("Alert Forecasting", "50").TopN.Should().Be("50");
 }

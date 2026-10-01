@@ -43,6 +43,12 @@ public class AlertForecastReport : DateRangeReport
 	public bool TopTenOnly { get; set; }
 
 	/// <summary>
+	/// How many items to show, for example 50
+	/// </summary>
+	[DataMember(Name = "topN")]
+	public string TopN { get; set; } = string.Empty;
+
+	/// <summary>
 	/// The metrics
 	/// </summary>
 	[DataMember(Name = "metrics")]
