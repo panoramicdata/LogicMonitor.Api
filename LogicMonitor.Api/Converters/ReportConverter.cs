@@ -25,6 +25,7 @@ internal class ReportConverter : JsonCreationConverter<ReportBase>
 			"host inventory" => new ResourceInventoryReport(),
 			"host metric trends" => new ResourceMetricTrendsReport(),
 			"interfaces bandwidth" => new InterfaceBandwidthReport(),
+			"logs" => new LogsReport(),
 			"netflow device metric" => new NetflowResourceMetricReport(),
 			"role" => new RoleReport(),
 			"service level agreement" => new SlaReport(),

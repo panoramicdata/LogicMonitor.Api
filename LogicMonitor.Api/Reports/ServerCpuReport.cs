@@ -19,6 +19,12 @@ public class ServerCpuReport : DateRangeReport
 	public bool Top10Only { get; set; }
 
 	/// <summary>
+	/// How many items to show, for example 10
+	/// </summary>
+	[DataMember(Name = "topN")]
+	public string TopN { get; set; } = string.Empty;
+
+	/// <summary>
 	/// Whether to display graphs
 	/// </summary>
 	[DataMember(Name = "displayGraphs")]

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 namespace LogicMonitor.Api.Test.Converters;
 
 /// <summary>
-/// MS-26846, MS-26936 Host metric trends, Interfaces Bandwidth and Alert Forecasting reports read topN, which live portals send as a string such as "all" or "50".
+/// MS-26846, MS-26936, MS-27673 Host metric trends, Interfaces Bandwidth, Alert Forecasting and Host CPU reports read topN, which live portals send as a string such as "all" or "50".
 /// </summary>
 public class ReportTopNTests
 {
@@ -24,4 +24,8 @@ public class ReportTopNTests
 	[Fact]
 	public void AlertForecasting_ReadsTopN()
 		=> Read<AlertForecastReport>("Alert Forecasting", "50").TopN.Should().Be("50");
+
+	[Fact]
+	public void HostCpu_ReadsTopN()
+		=> Read<ServerCpuReport>("Host CPU", "10").TopN.Should().Be("10");
 }

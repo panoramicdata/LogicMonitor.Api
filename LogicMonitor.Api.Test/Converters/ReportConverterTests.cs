@@ -23,6 +23,7 @@ public class ReportConverterTests
 		{ "Host inventory", typeof(ResourceInventoryReport) },
 		{ "Host metric trends", typeof(ResourceMetricTrendsReport) },
 		{ "Interfaces Bandwidth", typeof(InterfaceBandwidthReport) },
+		{ "Logs", typeof(LogsReport) },
 		{ "Netflow device metric", typeof(NetflowResourceMetricReport) },
 		{ "Role", typeof(RoleReport) },
 		{ "Service Level Agreement", typeof(SlaReport) },
