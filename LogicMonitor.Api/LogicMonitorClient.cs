@@ -15,6 +15,8 @@ public partial class LogicMonitorClient : IDisposable
 
 	private readonly HttpClient _client;
 
+	private readonly LogicMonitorClientOptions _options;
+
 	private static readonly JsonConverter[] _jsonConverters =
 	[
 		new WidgetConverter(),
@@ -118,6 +120,8 @@ public partial class LogicMonitorClient : IDisposable
 	public LogicMonitorClient(
 		LogicMonitorClientOptions logicMonitorClientOptions)
 	{
+		_options = logicMonitorClientOptions;
+
 		// Set up the logger
 		_logger = logicMonitorClientOptions.Logger ?? new NullLogger<LogicMonitorClient>();
 
@@ -710,6 +714,8 @@ public partial class LogicMonitorClient : IDisposable
 
 	private async Task<HttpResponseMessage> GetHttpResponseMessage(HttpRequestMessage requestMessage, string subUrl, string? data, CancellationToken cancellationToken)
 	{
+		ReadOnlyGuard.ThrowIfWrite(_options, requestMessage.Method);
+
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		var subUrl2 = subUrl.Contains('?')
 			? subUrl.Substring(0, subUrl.IndexOf('?'))

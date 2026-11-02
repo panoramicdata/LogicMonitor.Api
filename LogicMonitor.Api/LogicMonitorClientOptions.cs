@@ -35,4 +35,9 @@ public class LogicMonitorClientOptions
 	/// An optional ILogger
 	/// </summary>
 	public ILogger? Logger { get; set; }
+
+	/// <summary>
+	/// Whether the client refuses every request that is not a read (GET, HEAD or OPTIONS).
+	/// </summary>
+	public bool IsReadOnly { get; set; }
 }
