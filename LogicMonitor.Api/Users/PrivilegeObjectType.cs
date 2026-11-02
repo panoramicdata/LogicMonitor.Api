@@ -167,5 +167,11 @@ public enum PrivilegeObjectType
 	/// Agentic (AI agent access, e.g. the MCP gateway)
 	/// </summary>
 	[EnumMember(Value = "agentic")]
-	Agentic
+	Agentic,
+
+	/// <summary>
+	/// Workspaces
+	/// </summary>
+	[EnumMember(Value = "workspaces")]
+	Workspaces
 }

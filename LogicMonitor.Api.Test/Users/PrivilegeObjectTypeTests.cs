@@ -23,6 +23,17 @@ public class PrivilegeObjectTypeTests
 		privilege.ObjectType.Should().Be(PrivilegeObjectType.Agentic);
 	}
 
+	[Fact]
+	public void Deserialize_Workspaces_ReturnsWorkspaces()
+	{
+		// MS-28093. Captured verbatim from the Panoramic Data portal's built-in administrator role.
+		var privilege = JsonConvert.DeserializeObject<RolePrivilege>(
+			"""{"objectType":"workspaces","objectId":"access","objectName":"Workspaces","operation":"read","subOperation":""}""");
+
+		privilege.Should().NotBeNull();
+		privilege.ObjectType.Should().Be(PrivilegeObjectType.Workspaces);
+	}
+
 	[Theory]
 	[MemberData(nameof(DeclaredWireValues))]
 	public void Deserialize_EveryDeclaredWireValue_ReturnsItsOwnMember(

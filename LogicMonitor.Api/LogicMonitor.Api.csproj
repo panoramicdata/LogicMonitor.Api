@@ -24,15 +24,9 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	<!-- Update the following before releasing to nuget -->
 	<PackageReleaseNotes>
-		v3.240.116:
-		- Fixed: on a portal with a Logs report, reading the list of reports threw
-		  NotSupportedException ("ReportConverter.cs needs updating to include logs reports"),
-		  failing the whole list rather than just that report. The new LogsReport models the type
-		  from a live portal's response: the log query, timezone, partitions, columns, logs data
-		  type, visualisation settings and ordering, with dateRange from DateRangeReport.
-		- ServerCpuReport gains topN.
-		- Every report on the affected portal, 100 in all, now reads with both the Release and the
-		  strict Debug settings.
+		v3.240.117:
+		- Fixed: on a portal where a role carries a "workspaces" privilege, reading users or roles threw
+		  JsonSerializationException. PrivilegeObjectType gains Workspaces.
 	</PackageReleaseNotes>
     <UserSecretsId>57aaa0e7-815d-4065-9339-f3f070bed01e</UserSecretsId>
     <PackageId>LogicMonitor.Api</PackageId>
