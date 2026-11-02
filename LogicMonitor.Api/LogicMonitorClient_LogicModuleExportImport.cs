@@ -403,4 +403,64 @@ public partial class LogicMonitorClient
 	}
 
 	#endregion File-based Export/Import
+
+	#region Portal file import
+
+	/// <summary>
+	///     Imports a LogicModule file through the portal's importjson/importxml endpoint, which can resolve a conflict with an existing module
+	/// </summary>
+	/// <param name="logicModuleType">The LogicModule type</param>
+	/// <param name="fileContent">The exported LogicModule JSON or XML</param>
+	/// <param name="isXml">True for XML (DataSource, ConfigSource, EventSource and JobMonitor only), false for JSON</param>
+	/// <param name="handleConflict">How the portal should handle a module that already exists, or null for the portal default</param>
+	/// <param name="fieldsToPreserve">Fields of an existing module to keep when overwriting it, or null</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>The portal's response, usually the imported module, or null if the body was empty</returns>
+	public async Task<JObject?> ImportLogicModuleFileAsync(
+		LogicModuleType logicModuleType,
+		string fileContent,
+		bool isXml,
+		string? handleConflict,
+		IReadOnlyCollection<string>? fieldsToPreserve,
+		CancellationToken cancellationToken)
+	{
+		ArgumentNullException.ThrowIfNull(fileContent);
+		var typeEndpoint = logicModuleType switch
+		{
+			LogicModuleType.DataSource => "datasources",
+			LogicModuleType.ConfigSource => "configsources",
+			LogicModuleType.EventSource => "eventsources",
+			LogicModuleType.JobMonitor => "batchjobs",
+			LogicModuleType.PropertySource when !isXml => "propertyrules",
+			LogicModuleType.TopologySource when !isXml => "topologysources",
+			LogicModuleType.DiagnosticSource when !isXml => "diagnosticsources",
+			LogicModuleType.LogSource when !isXml => "logsources",
+			LogicModuleType.AppliesToFunction when !isXml => "functions",
+			LogicModuleType.SnmpSysOIDMap when !isXml => "oids",
+			_ => throw new NotSupportedException($"LogicMonitor has no {(isXml ? "XML" : "JSON")} file import for {logicModuleType}."),
+		};
+
+		var query = new List<string>();
+		if (!isXml && handleConflict is not null)
+		{
+			query.Add($"handleConflict={Uri.EscapeDataString(handleConflict)}");
+		}
+
+		if (!isXml && fieldsToPreserve is not null)
+		{
+			query.AddRange(fieldsToPreserve.Select(f => $"fieldsToPreserve={Uri.EscapeDataString(f)}"));
+		}
+
+		var subUrl = $"setting/{typeEndpoint}/import{(isXml ? "xml" : "json")}{(query.Count == 0 ? string.Empty : "?" + string.Join("&", query))}";
+		var responseBody = await UploadFileAsync(
+			subUrl,
+			isXml ? "logicmodule.xml" : "logicmodule.json",
+			fileContent,
+			isXml ? "application/xml" : "application/json",
+			cancellationToken).ConfigureAwait(false);
+
+		return string.IsNullOrWhiteSpace(responseBody) ? null : JObject.Parse(responseBody);
+	}
+
+	#endregion Portal file import
 }

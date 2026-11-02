@@ -1236,4 +1236,36 @@ public partial class LogicMonitorClient
 		=> DeleteAsync(
 			$"device/groups/{resourceGroupId}/clusterAlertConf/{id}",
 			cancellationToken);
+
+	/// <summary>
+	/// Get Resource SDTs
+	/// </summary>
+	/// <param name="id">The Resource id</param>
+	/// <param name="filter">An optional filter</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<Page<ScheduledDownTime>> GetResourceSdtsAsync(
+		int id,
+		Filter<ScheduledDownTime>? filter,
+		CancellationToken cancellationToken)
+		=> FilteredGetAsync($"device/devices/{id}/sdts", filter, cancellationToken);
+
+	/// <summary>
+	/// Start tracking Resource changes: returns the matching Resources and a delta id for <see cref="GetResourceDeltaAsync"/>
+	/// </summary>
+	/// <param name="filter">An optional filter selecting which Resources to track</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<ResourceDeltaPage> StartResourceDeltaAsync(
+		Filter<Resource>? filter,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<ResourceDeltaPage>($"device/devices/delta{(filter is null ? string.Empty : $"?{filter}")}", cancellationToken);
+
+	/// <summary>
+	/// Get the Resources changed since a delta was started
+	/// </summary>
+	/// <param name="deltaId">The delta id returned by <see cref="StartResourceDeltaAsync"/></param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<ResourceDeltaPage> GetResourceDeltaAsync(
+		string deltaId,
+		CancellationToken cancellationToken)
+		=> GetBySubUrlAsync<ResourceDeltaPage>($"device/devices/delta/{Uri.EscapeDataString(deltaId)}", cancellationToken);
 }

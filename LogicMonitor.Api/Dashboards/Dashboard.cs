@@ -99,6 +99,18 @@ public class Dashboard
 	[DataMember(Name = "userPermission")]
 	public UserPermission UserPermission { get; set; }
 
+	/// <summary>
+	/// The tenant that owns the dashboard, null on a single-tenant portal
+	/// </summary>
+	[DataMember(Name = "tenantIdentifier")]
+	public string? TenantIdentifier { get; set; }
+
+	/// <summary>
+	/// The tenant the dashboard belongs to, including one inherited from its group
+	/// </summary>
+	[DataMember(Name = "effectiveTenantIdentifier")]
+	public string? EffectiveTenantIdentifier { get; set; }
+
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/dashboards";
 }
