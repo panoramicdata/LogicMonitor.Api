@@ -50,7 +50,7 @@ public class ReadOnlyOptionTests
 	[InlineData("DELETE")]
 	public void Guard_WhenReadOnly_RefusesWrites(string method)
 	{
-		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions { IsReadOnly = true }, new HttpMethod(method));
+		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions { IsReadOnly = true }, new HttpMethod(method), "setting/admins");
 
 		act.Should().Throw<InvalidOperationException>();
 	}
@@ -61,15 +61,40 @@ public class ReadOnlyOptionTests
 	[InlineData("OPTIONS")]
 	public void Guard_WhenReadOnly_AllowsReads(string method)
 	{
-		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions { IsReadOnly = true }, new HttpMethod(method));
+		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions { IsReadOnly = true }, new HttpMethod(method), "setting/admins");
 
 		act.Should().NotThrow();
+	}
+
+	[Theory]
+	[InlineData("functions")]
+	[InlineData("device/instances/datafetch?start=1&end=2")]
+	[InlineData("hierarchy/dataSourceInstances")]
+	[InlineData("log/search")]
+	[InlineData("log/search/abc123")]
+	public void Guard_WhenReadOnly_AllowsNamedReadOnlyPosts(string subUrl)
+	{
+		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions { IsReadOnly = true }, HttpMethod.Post, subUrl);
+
+		act.Should().NotThrow();
+	}
+
+	[Theory]
+	[InlineData("setting/functions")]
+	[InlineData("functionsX")]
+	[InlineData("log/ingest")]
+	[InlineData("setting/admins")]
+	public void Guard_WhenReadOnly_RefusesOtherPosts(string subUrl)
+	{
+		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions { IsReadOnly = true }, HttpMethod.Post, subUrl);
+
+		act.Should().Throw<InvalidOperationException>();
 	}
 
 	[Fact]
 	public void Guard_WhenNotReadOnly_AllowsWrites()
 	{
-		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions(), HttpMethod.Post);
+		var act = () => ReadOnlyGuard.ThrowIfWrite(new LogicMonitorClientOptions(), HttpMethod.Post, "setting/admins");
 
 		act.Should().NotThrow();
 	}

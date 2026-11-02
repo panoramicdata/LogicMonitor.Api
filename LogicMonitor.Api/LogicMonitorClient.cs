@@ -714,7 +714,7 @@ public partial class LogicMonitorClient : IDisposable
 
 	private async Task<HttpResponseMessage> GetHttpResponseMessage(HttpRequestMessage requestMessage, string subUrl, string? data, CancellationToken cancellationToken)
 	{
-		ReadOnlyGuard.ThrowIfWrite(_options, requestMessage.Method);
+		ReadOnlyGuard.ThrowIfWrite(_options, requestMessage.Method, subUrl);
 
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		var subUrl2 = subUrl.Contains('?')
