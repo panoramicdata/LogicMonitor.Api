@@ -425,7 +425,21 @@ public partial class LogicMonitorClient
 		CancellationToken cancellationToken)
 	{
 		ArgumentNullException.ThrowIfNull(fileContent);
-		var typeEndpoint = logicModuleType switch
+		var typeEndpoint = GetFileImportEndpoint(logicModuleType, isXml);
+		var query = isXml ? [] : GetFileImportQuery(handleConflict, fieldsToPreserve);
+		var subUrl = $"setting/{typeEndpoint}/import{(isXml ? "xml" : "json")}{(query.Count == 0 ? string.Empty : "?" + string.Join("&", query))}";
+		var responseBody = await UploadFileAsync(
+			subUrl,
+			isXml ? "logicmodule.xml" : "logicmodule.json",
+			fileContent,
+			isXml ? "application/xml" : "application/json",
+			cancellationToken).ConfigureAwait(false);
+
+		return string.IsNullOrWhiteSpace(responseBody) ? null : JObject.Parse(responseBody);
+	}
+
+	private static string GetFileImportEndpoint(LogicModuleType logicModuleType, bool isXml)
+		=> logicModuleType switch
 		{
 			LogicModuleType.DataSource => "datasources",
 			LogicModuleType.ConfigSource => "configsources",
@@ -440,26 +454,20 @@ public partial class LogicMonitorClient
 			_ => throw new NotSupportedException($"LogicMonitor has no {(isXml ? "XML" : "JSON")} file import for {logicModuleType}."),
 		};
 
+	private static List<string> GetFileImportQuery(string? handleConflict, IReadOnlyCollection<string>? fieldsToPreserve)
+	{
 		var query = new List<string>();
-		if (!isXml && handleConflict is not null)
+		if (handleConflict is not null)
 		{
 			query.Add($"handleConflict={Uri.EscapeDataString(handleConflict)}");
 		}
 
-		if (!isXml && fieldsToPreserve is not null)
+		if (fieldsToPreserve is not null)
 		{
 			query.AddRange(fieldsToPreserve.Select(f => $"fieldsToPreserve={Uri.EscapeDataString(f)}"));
 		}
 
-		var subUrl = $"setting/{typeEndpoint}/import{(isXml ? "xml" : "json")}{(query.Count == 0 ? string.Empty : "?" + string.Join("&", query))}";
-		var responseBody = await UploadFileAsync(
-			subUrl,
-			isXml ? "logicmodule.xml" : "logicmodule.json",
-			fileContent,
-			isXml ? "application/xml" : "application/json",
-			cancellationToken).ConfigureAwait(false);
-
-		return string.IsNullOrWhiteSpace(responseBody) ? null : JObject.Parse(responseBody);
+		return query;
 	}
 
 	#endregion Portal file import
