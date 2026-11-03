@@ -21,6 +21,7 @@ global using LogicMonitor.Api.Resources.Uptime;
 global using LogicMonitor.Api.ScheduledDownTimes;
 global using LogicMonitor.Api.Settings;
 global using LogicMonitor.Api.Time;
+global using LogicMonitor.Api.Usage;
 global using LogicMonitor.Api.Users;
 global using LogicMonitor.Api.Websites;
 global using Microsoft.Extensions.Logging;

@@ -229,4 +229,32 @@ public partial class LogicMonitorClient
 			new AlertNote(alertIds, note),
 			$"alert/alerts/note",
 			cancellationToken);
+
+	/// <summary>
+	/// Add a note to a single alert
+	/// </summary>
+	/// <param name="alertId">The non-unique alert id</param>
+	/// <param name="note">The note</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task AddAlertNoteAsync(
+		string alertId,
+		string note,
+		CancellationToken cancellationToken)
+		=> PostAsync<AlertAcknowledgement, EmptyResponse>(
+			new AlertAcknowledgement { AcknowledgementComment = note },
+			$"alert/alerts/{alertId}/note",
+			cancellationToken);
+
+	/// <summary>
+	/// Escalate an alert to the next stage of its escalation chain
+	/// </summary>
+	/// <param name="alertId">The non-unique alert id</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task EscalateAlertAsync(
+		string alertId,
+		CancellationToken cancellationToken)
+		=> PostAsync<EmptyRequest, EmptyResponse>(
+			new EmptyRequest(),
+			$"alert/alerts/{alertId}/escalate",
+			cancellationToken);
 }

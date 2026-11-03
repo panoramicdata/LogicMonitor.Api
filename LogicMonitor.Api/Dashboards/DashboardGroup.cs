@@ -60,6 +60,18 @@ public class DashboardGroup : NamedItem, IPatchable
 	[DataMember(Name = "widgetTokens")]
 	public List<SimpleProperty> CustomProperties { get; set; } = [];
 
+	/// <summary>
+	/// The tenant that owns the dashboard group, null on a single-tenant portal
+	/// </summary>
+	[DataMember(Name = "tenantIdentifier")]
+	public string? TenantIdentifier { get; set; }
+
+	/// <summary>
+	/// The tenant the dashboard group belongs to, including one inherited from a parent group
+	/// </summary>
+	[DataMember(Name = "effectiveTenantIdentifier")]
+	public string? EffectiveTenantIdentifier { get; set; }
+
 	/// <inheritdoc />
 	public string Endpoint() => "dashboard/groups";
 }

@@ -28,4 +28,16 @@ public partial class LogicMonitorClient
 		) => PostAsync<Audit, ConfigSource>(
 			body,
 			$"setting/configsources/{id}/audit", cancellationToken);
+
+	/// <summary>
+	/// Get the update history for a ConfigSource
+	/// </summary>
+	/// <param name="id">The ConfigSource id</param>
+	/// <param name="filter">An optional filter</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<Page<DataSourceUpdateReason>> GetConfigSourceUpdateReasonsAsync(
+		int id,
+		Filter<DataSourceUpdateReason>? filter,
+		CancellationToken cancellationToken)
+		=> GetPageAsync(filter, $"setting/configsources/{id}/updatereasons", cancellationToken);
 }

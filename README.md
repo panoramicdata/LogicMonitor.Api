@@ -111,6 +111,10 @@ var fetched = await logicMonitorClient.GetAsync<PingCheckResource>(pingCheck.Id,
 
 For more information on the LogicMonitor REST API, see the [official documentation](https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/).
 
+This library targets the LogicMonitor REST API v3. The official OpenAPI (Swagger) specification is published by LogicMonitor at:
+
+https://www.logicmonitor.com/swagger-ui-master/api-v3/dist/swagger.json
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

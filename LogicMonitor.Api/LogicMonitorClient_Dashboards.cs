@@ -222,4 +222,21 @@ public partial class LogicMonitorClient
 		int id,
 		CancellationToken cancellationToken)
 		=> DeleteAsync($"dashboard/widgets/{id}", cancellationToken);
+
+	/// <summary>
+	///	Clone a dashboard group asynchronously
+	/// </summary>
+	///	<param name="id">The id of the dashboard group to clone</param>
+	///	<param name="dashboardGroup">The name, parent and widget tokens of the new group</param>
+	///	<param name="recursive">Whether to clone sub-groups too</param>
+	///	<param name="cancellationToken">The cancellation token</param>
+	public Task<DashboardGroupAsyncCloneResponse> CloneDashboardGroupAsync(
+		int id,
+		DashboardGroupCreationDto dashboardGroup,
+		bool recursive,
+		CancellationToken cancellationToken)
+		=> PostAsync<DashboardGroupCreationDto, DashboardGroupAsyncCloneResponse>(
+			dashboardGroup,
+			$"dashboard/groups/{id}/asyncclone?recursive={(recursive ? "true" : "false")}",
+			cancellationToken);
 }

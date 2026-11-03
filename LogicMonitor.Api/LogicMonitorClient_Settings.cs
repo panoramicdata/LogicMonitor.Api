@@ -172,4 +172,27 @@ public partial class LogicMonitorClient
 	public Task<AccountSettings> GetMetricsAsync(
 		CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<AccountSettings>($"metrics/usage", cancellationToken);
+
+	/// <summary>
+	/// Add a DNS mapping for a range of IP addresses
+	/// </summary>
+	/// <param name="dnsMapping">The DNS mapping</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task<DnsMapping> AddDnsMappingAsync(
+		DnsMapping dnsMapping,
+		CancellationToken cancellationToken)
+		=> PostAsync<DnsMapping, DnsMapping>(dnsMapping, "setting/dnsmappings", cancellationToken);
+
+	/// <summary>
+	/// Set an item of the current user's customized data, such as the default dashboard
+	/// </summary>
+	/// <param name="userCustomizedData">The item id and its new value</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	public Task SetUserCustomizedDataAsync(
+		UserCustomizedData userCustomizedData,
+		CancellationToken cancellationToken)
+	{
+		ArgumentNullException.ThrowIfNull(userCustomizedData);
+		return PutAsync($"setting/userdata/{Uri.EscapeDataString(userCustomizedData.Id)}", userCustomizedData, cancellationToken);
+	}
 }
