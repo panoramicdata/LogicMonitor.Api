@@ -10,6 +10,8 @@ internal class SecureHttpClientHandler(LogicMonitorClientOptions logicMonitorCli
 		CancellationToken cancellationToken
 	)
 	{
+		ReadOnlyGuard.ThrowIfWrite(logicMonitorClientOptions, request.Method, request.RequestUri!.PathAndQuery);
+
 		var subUrl = request.RequestUri!.PathAndQuery.Replace("/santaba/rest/", "");
 		var epoch = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 		var subUrl2 = subUrl.Contains('?')
