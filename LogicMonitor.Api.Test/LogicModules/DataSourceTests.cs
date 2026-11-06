@@ -393,25 +393,24 @@ public class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixtur
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 
-		var deviceDataSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
+		// Config collection only exists for ConfigSources, and only on one that has an instance.
+		var configSources = await LogicMonitorClient.GetAllResourceDataSourcesAsync(device.Id, new Filter<ResourceDataSource>
 		{
-			Skip = 0,
-			Take = 1,
-			Properties =
-				[
-					nameof(ResourceDataSource.Id),
-				]
+			FilterItems = [new Eq<ResourceDataSource>(nameof(ResourceDataSource.DataSourceType), "CS")],
+			Properties = [nameof(ResourceDataSource.Id), nameof(ResourceDataSource.InstanceCount)]
 		}, CancellationToken);
+		var configSource = configSources.FirstOrDefault(candidate => candidate.InstanceCount > 0);
+		configSource.Should().NotBeNull($"resource {device.Id} needs an applied ConfigSource with at least one instance");
 
-		var datasourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSources[0].Id, new Filter<ResourceDataSourceInstance>
+		var instances = await LogicMonitorClient
+			.GetAllResourceDataSourceInstancesAsync(device.Id, configSource!.Id, new Filter<ResourceDataSourceInstance>
 			{
-				Skip = 0,
 				Properties = [nameof(ResourceDataSourceInstance.Id)]
 			}, CancellationToken);
+		instances.Should().NotBeEmpty();
 
 		await LogicMonitorClient
-			.CollectResourceConfigSourceConfig(device.Id, deviceDataSources[0].Id, datasourceInstances[0].Id, CancellationToken);
+			.CollectResourceConfigSourceConfig(device.Id, configSource.Id, instances[0].Id, CancellationToken);
 	}
 
 	[Fact]
