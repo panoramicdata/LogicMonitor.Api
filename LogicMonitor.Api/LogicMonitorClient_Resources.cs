@@ -720,46 +720,73 @@ public partial class LogicMonitorClient
 			cancellationToken
 		);
 
-	/// <summary>
-	/// For getting process results
-	/// </summary>
-	[DataContract]
-	private class ProcessServiceTaskResultError
-	{
-		[DataMember(Name = "errorCode")]
-		public int ErrorCode { get; set; }
+	private const int ProcessServiceTaskRunningErrorCode = 1202;
 
-		[DataMember(Name = "errorMessage")]
-		public string ErrorMessage { get; set; } = string.Empty;
-
-		[DataMember(Name = "errorDetail")]
-		public object ErrorDetail { get; set; } = new();
-	}
+	private static readonly TimeSpan DefaultProcessServiceTaskMaximumWait = TimeSpan.FromMinutes(5);
 
 	/// <summary>
-	///     Fetches a task result
+	///     Fetches a task result, waiting up to five minutes for the collector to finish
 	/// </summary>
 	/// <param name="resourceId">The Resource id</param>
 	/// <param name="taskId">The task id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	/// <returns>The task results</returns>
-	public async Task<Page<ResourceProcess>> GetProcessServiceTaskResultsAsync(
+	public Task<Page<ResourceProcess>> GetProcessServiceTaskResultsAsync(
 		int resourceId,
 		int taskId,
 		CancellationToken cancellationToken)
+		=> GetProcessServiceTaskResultsAsync(resourceId, taskId, DefaultProcessServiceTaskMaximumWait, cancellationToken);
+
+	/// <summary>
+	///     Fetches a task result, waiting up to maximumWait for the collector to finish
+	/// </summary>
+	/// <param name="resourceId">The Resource id</param>
+	/// <param name="taskId">The task id</param>
+	/// <param name="maximumWait">How long to wait for the task before throwing a TimeoutException</param>
+	/// <param name="cancellationToken">The cancellation token</param>
+	/// <returns>The task results</returns>
+	public async Task<Page<ResourceProcess>> GetProcessServiceTaskResultsAsync(
+		int resourceId,
+		int taskId,
+		TimeSpan maximumWait,
+		CancellationToken cancellationToken)
 	{
+		var stopwatch = Stopwatch.StartNew();
 		while (true)
 		{
-			var jObject = await GetBySubUrlAsync<JObject>($"device/devices/{resourceId}/fetchProcessServiceTask/{taskId}", cancellationToken).ConfigureAwait(false);
-			var error = jObject.ToObject<ProcessServiceTaskResultError>();
-			if (error is not null && error.ErrorMessage is null && jObject is not null)
+			// Uncached: each poll must reach the portal, and a finished result can only be read once
+			var response = await GetAsync<JObject>(false, $"device/devices/{resourceId}/fetchProcessServiceTask/{taskId}", cancellationToken).ConfigureAwait(false);
+			var page = ReadProcessServiceTaskResult(response);
+			if (page is not null)
 			{
-				return jObject.ToObject<Page<ResourceProcess>>()
-					?? throw new FormatException($"Could not convert response to a page of device process.");
+				return page;
+			}
+
+			if (stopwatch.Elapsed >= maximumWait)
+			{
+				throw new TimeoutException($"Process/service task {taskId} on Resource {resourceId} was still running after {maximumWait}.");
 			}
 
 			await Task.Delay(500, cancellationToken).ConfigureAwait(false);
 		}
+	}
+
+	/// <summary>
+	///     Interprets a fetchProcessServiceTask response: null while the task is running, the page once it has finished
+	/// </summary>
+	internal static Page<ResourceProcess>? ReadProcessServiceTaskResult(JObject response)
+	{
+		ArgumentNullException.ThrowIfNull(response);
+		var errorCode = response.Value<int?>("errorCode");
+		if (errorCode is null)
+		{
+			return response.ToObject<Page<ResourceProcess>>()
+				?? throw new FormatException("Could not convert response to a page of device process.");
+		}
+
+		return errorCode == ProcessServiceTaskRunningErrorCode
+			? null
+			: throw new LogicMonitorApiException($"Process/service task failed ({errorCode}): {response.Value<string>("errorMessage")}");
 	}
 
 	/// <summary>

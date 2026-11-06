@@ -55,6 +55,7 @@ jobs:
         -class LogicMonitor.Api.Test.LogicModules.AppliesToFunctionCidrTests
         -class LogicMonitor.Api.Test.PortalResponseTests
         -class LogicMonitor.Api.Test.Resources.EntityPropertyWriteTests
+        -class LogicMonitor.Api.Test.Resources.ProcessServiceTaskResultTests
         -class LogicMonitor.Api.Test.Topologies.TopologyDataDeserializationTests
         -class LogicMonitor.Api.Test.UptimeResources.UptimeResourceSerializationTests
         -noColor
