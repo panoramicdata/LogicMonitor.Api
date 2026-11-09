@@ -4,7 +4,8 @@ namespace LogicMonitor.Api.Test.EventLogs;
 /// Tests for the maximum description length guard in <see cref="LogItemExtensions"/>.
 /// Descriptions longer than the limit are deliberately skipped before regex processing
 /// (DataSource update messages can be enormous and would stall parsing), returning a
-/// blank AuditEvent with MatchedRegExId 0 and an explanatory Description.
+/// blank AuditEvent with MatchedRegExId 0 and an explanatory Description. Oversized
+/// "Found new instance(s)" messages are the exception; see <see cref="NewInstancesDescriptionTests"/>.
 /// </summary>
 public class OversizedDescriptionTests
 {
