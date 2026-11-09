@@ -894,13 +894,53 @@ public static class LogItemExtensions
 		var length = description.EndsWith('\n') ? description.Length - 1 : description.Length;
 		var text = description.AsSpan(0, length);
 
-		// "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceName=
-		if (!TryReadNewInstancesHeader(text, out var actionType, out var position))
+		// "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceName={instanceName}"; "Description=Found new instance(s) for: {resourceName} (CollectorID={collectorId}) [
+		if (!TryReadNewInstancesHeader(text, out var actionType, out var position)
+			|| !TryReadInstanceAndResource(description, text, ref position, out var header))
 		{
 			return false;
 		}
 
-		// {instanceName}"; "Description=Found new instance(s) for:
+		// ...]; New_InstanceIds=[deviceId={resourceId},dataSourceId={logicModuleId},dataSourceNewInstanceId(s)={ids}...];"
+		if (!TryReadInstanceIds(text, header.IdsMarkerIndex, out var ids))
+		{
+			return false;
+		}
+
+		// {newNames}] or, in the combined form, {newNames}]; Instance(s) disappeared from: ... [{deletedNames}]
+		if (!TryReadInstanceNames(description, text, position, header.IdsMarkerIndex, ids.DeletedInstanceIds is not null, out var newInstanceNames, out var deletedInstanceNames))
+		{
+			return false;
+		}
+
+		auditEvent.MatchedRegExId = ids.DeletedInstanceIds is null ? 8 : 9;
+		auditEvent.EntityType = AuditEventEntityType.ResourceDataSourceInstance;
+		auditEvent.ActionType = actionType;
+		auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+		auditEvent.InstanceName = header.InstanceName;
+		auditEvent.CollectorId = header.CollectorId;
+		auditEvent.LogicModuleId = ids.LogicModuleId;
+		auditEvent.ResourceIds = [ids.ResourceId];
+		auditEvent.ResourceNames = [header.ResourceName];
+		auditEvent.DataSourceNewInstanceNames = newInstanceNames;
+		auditEvent.DataSourceNewInstanceIds = ids.NewInstanceIds;
+		auditEvent.DataSourceDeletedInstanceNames = deletedInstanceNames;
+		auditEvent.DataSourceDeletedInstanceIds = ids.DeletedInstanceIds;
+		ApplyRegexIdMetadata(auditEvent);
+		return true;
+	}
+
+	private readonly record struct NewInstancesHeader(string InstanceName, string ResourceName, int CollectorId, int IdsMarkerIndex);
+
+	private readonly record struct NewInstancesIds(int ResourceId, int LogicModuleId, List<int> NewInstanceIds, List<int>? DeletedInstanceIds);
+
+	/// <summary>
+	/// Reads "{instanceName}"; "Description=Found new instance(s) for: {resourceName} (CollectorID={collectorId}) ["
+	/// and locates the trailing ids block. <paramref name="position"/> is left at the start of the new instance names.
+	/// </summary>
+	private static bool TryReadInstanceAndResource(string description, ReadOnlySpan<char> text, ref int position, out NewInstancesHeader header)
+	{
+		header = default;
 		var instanceNameEnd = IndexOf(text, NewInstancesDescriptionMarker, position + 1, text.Length);
 		if (instanceNameEnd < 0)
 		{
@@ -908,70 +948,68 @@ public static class LogItemExtensions
 		}
 
 		var instanceName = description[position..instanceNameEnd];
-		position = instanceNameEnd + NewInstancesDescriptionMarker.Length;
+		var resourceNameStart = instanceNameEnd + NewInstancesDescriptionMarker.Length;
 
 		// The ids block is fixed-format and cannot contain its own marker, so it starts at the last one
 		var idsMarkerIndex = text.LastIndexOf(InstanceIdsMarker, StringComparison.Ordinal);
-		if (idsMarkerIndex < position)
+		if (idsMarkerIndex < resourceNameStart)
 		{
 			return false;
 		}
 
-		// {resourceName} (CollectorID={collectorId}) [
-		var resourceNameStart = position;
-		if (!TryReadResourceAndCollector(text, ref position, idsMarkerIndex, out var resourceNameEnd, out var collectorId))
+		var namesStart = resourceNameStart;
+		if (!TryReadResourceAndCollector(text, ref namesStart, idsMarkerIndex, out var resourceNameEnd, out var collectorId))
 		{
 			return false;
 		}
 
-		var resourceName = description[resourceNameStart..resourceNameEnd];
-		var newNamesStart = position;
+		position = namesStart;
+		header = new(instanceName, description[resourceNameStart..resourceNameEnd], collectorId, idsMarkerIndex);
+		return true;
+	}
 
-		// ]; New_InstanceIds=[deviceId={resourceId},dataSourceId={logicModuleId},dataSourceNewInstanceId(s)={ids}
-		if (!TryReadInstanceIds(text, idsMarkerIndex, out var resourceId, out var logicModuleId, out var newInstanceIds, out var deletedInstanceIds))
+	/// <summary>
+	/// Reads the new instance names, and in the combined form the deleted instance names, which lie
+	/// between <paramref name="namesStart"/> and the ids block. Each list must be non-empty.
+	/// </summary>
+	private static bool TryReadInstanceNames(
+		string description,
+		ReadOnlySpan<char> text,
+		int namesStart,
+		int idsMarkerIndex,
+		bool isCombinedForm,
+		[NotNullWhen(true)] out List<string>? newInstanceNames,
+		out List<string>? deletedInstanceNames)
+	{
+		newInstanceNames = null;
+		deletedInstanceNames = null;
+		if (!isCombinedForm)
 		{
-			return false;
-		}
-
-		var newNamesEnd = idsMarkerIndex;
-		List<string>? deletedInstanceNames = null;
-		if (deletedInstanceIds is not null)
-		{
-			// Combined form: {newNames}]; Instance(s) disappeared from: {resourceName2} (CollectorID={collectorId2}) [{deletedNames}
-			newNamesEnd = IndexOf(text, DisappearedMarker, newNamesStart + 1, idsMarkerIndex);
-			if (newNamesEnd < 0)
+			if (namesStart >= idsMarkerIndex)
 			{
 				return false;
 			}
 
-			position = newNamesEnd + DisappearedMarker.Length;
-			if (!TryReadResourceAndCollector(text, ref position, idsMarkerIndex, out _, out _)
-				|| position >= idsMarkerIndex)
-			{
-				return false;
-			}
-
-			deletedInstanceNames = SplitOnCommas(description, position, idsMarkerIndex);
+			newInstanceNames = SplitOnCommas(description, namesStart, idsMarkerIndex);
+			return true;
 		}
-		else if (newNamesStart >= newNamesEnd)
+
+		// {newNames}]; Instance(s) disappeared from: {resourceName2} (CollectorID={collectorId2}) [{deletedNames}
+		var newNamesEnd = IndexOf(text, DisappearedMarker, namesStart + 1, idsMarkerIndex);
+		if (newNamesEnd < 0)
 		{
 			return false;
 		}
 
-		auditEvent.MatchedRegExId = deletedInstanceIds is null ? 8 : 9;
-		auditEvent.EntityType = AuditEventEntityType.ResourceDataSourceInstance;
-		auditEvent.ActionType = actionType;
-		auditEvent.OutcomeType = AuditEventOutcomeType.Success;
-		auditEvent.InstanceName = instanceName;
-		auditEvent.CollectorId = collectorId;
-		auditEvent.LogicModuleId = logicModuleId;
-		auditEvent.ResourceIds = [resourceId];
-		auditEvent.ResourceNames = [resourceName];
-		auditEvent.DataSourceNewInstanceNames = SplitOnCommas(description, newNamesStart, newNamesEnd);
-		auditEvent.DataSourceNewInstanceIds = newInstanceIds;
-		auditEvent.DataSourceDeletedInstanceNames = deletedInstanceNames;
-		auditEvent.DataSourceDeletedInstanceIds = deletedInstanceIds;
-		ApplyRegexIdMetadata(auditEvent);
+		var deletedNamesStart = newNamesEnd + DisappearedMarker.Length;
+		if (!TryReadResourceAndCollector(text, ref deletedNamesStart, idsMarkerIndex, out _, out _)
+			|| deletedNamesStart >= idsMarkerIndex)
+		{
+			return false;
+		}
+
+		newInstanceNames = SplitOnCommas(description, namesStart, newNamesEnd);
+		deletedInstanceNames = SplitOnCommas(description, deletedNamesStart, idsMarkerIndex);
 		return true;
 	}
 
@@ -1049,28 +1087,36 @@ public static class LogItemExtensions
 	/// Reads the trailing ids block, which runs from <paramref name="idsMarkerIndex"/> to the end of
 	/// <paramref name="text"/>. Deleted instance ids are only present (non-null) in the combined form.
 	/// </summary>
-	private static bool TryReadInstanceIds(
-		ReadOnlySpan<char> text,
-		int idsMarkerIndex,
-		out int resourceId,
-		out int logicModuleId,
-		[NotNullWhen(true)] out List<int>? newInstanceIds,
-		out List<int>? deletedInstanceIds)
+	private static bool TryReadInstanceIds(ReadOnlySpan<char> text, int idsMarkerIndex, out NewInstancesIds ids)
 	{
-		logicModuleId = 0;
-		newInstanceIds = null;
-		deletedInstanceIds = null;
+		ids = default;
 		var position = idsMarkerIndex + InstanceIdsMarker.Length;
 
-		if (!TryReadNumber(text, ref position, out resourceId)
+		if (!TryReadNumber(text, ref position, out var resourceId)
 			|| !TryReadLiteral(text, ref position, DataSourceIdMarker)
-			|| !TryReadNumber(text, ref position, out logicModuleId)
-			|| !TryReadLiteral(text, ref position, NewInstanceIdsMarker))
+			|| !TryReadNumber(text, ref position, out var logicModuleId)
+			|| !TryReadLiteral(text, ref position, NewInstanceIdsMarker)
+			|| !TryReadIdLists(text, position, out var newInstanceIds, out var deletedInstanceIds))
 		{
 			return false;
 		}
 
-		var idsStart = position;
+		ids = new(resourceId, logicModuleId, newInstanceIds, deletedInstanceIds);
+		return true;
+	}
+
+	/// <summary>
+	/// Reads "{newIds}];\"" or "{newIds},dataSourceDeletedInstanceId(s)={deletedIds}];\"", which must
+	/// run to the end of <paramref name="text"/>.
+	/// </summary>
+	private static bool TryReadIdLists(
+		ReadOnlySpan<char> text,
+		int idsStart,
+		[NotNullWhen(true)] out List<int>? newInstanceIds,
+		out List<int>? deletedInstanceIds)
+	{
+		newInstanceIds = null;
+		deletedInstanceIds = null;
 		var idsEnd = SkipIdListCharacters(text, idsStart);
 
 		if (text[idsEnd..].SequenceEqual(InstanceIdsEnd))
