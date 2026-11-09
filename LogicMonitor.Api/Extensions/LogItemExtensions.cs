@@ -11,7 +11,9 @@ public static class LogItemExtensions
 	/// The maximum LogItem description length, in characters, that ToAuditEvent will process
 	/// with regular expressions. Longer descriptions are deliberately skipped to protect
 	/// processing time (DataSource update messages can be enormous), returning an AuditEvent
-	/// with MatchedRegExId 0, EntityType None and an explanatory Description.
+	/// with MatchedRegExId 0, EntityType None and an explanatory Description. The exceptions are
+	/// resource group updates containing "getExtra: update value=", and Active Discovery
+	/// "Found new instance(s)" messages, which are parsed without running the full regex set.
 	/// Public so that consumers can report the limit when logging size-skipped messages.
 	/// A property rather than a const so the value is not compile-time inlined into consumers.
 	/// </summary>
@@ -609,7 +611,8 @@ public static class LogItemExtensions
 	/// <summary>
 	/// Chooses the regular expression that describes <paramref name="description"/>. Returns false
 	/// if the description is unrecognised, or is too long to run the regex set over - in the latter
-	/// case <paramref name="auditEvent"/> is populated with an explanatory Description.
+	/// case <paramref name="auditEvent"/> is populated with an explanatory Description. Oversized
+	/// "Found new instance(s)" messages never reach here: ToAuditEvent parses them beforehand.
 	/// </summary>
 	private static bool TryGetEntityTypeMatch(
 		string description,
