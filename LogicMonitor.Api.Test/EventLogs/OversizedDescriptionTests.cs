@@ -48,7 +48,7 @@ public class OversizedDescriptionTests
 
 	[Fact]
 	public void MaxRegexDescriptionLength_IsPubliclyVisibleWithExpectedValue()
-		// Consumers (e.g. the NTT EventProcessor) log this limit when reporting size-skipped
+		// Consumers log this limit when reporting size-skipped
 		// messages, so it must be public and must match the guard's actual behaviour.
 		=> LogItemExtensions.MaxRegexDescriptionLength.Should().Be(ExpectedMaxRegexDescriptionLength);
 }
