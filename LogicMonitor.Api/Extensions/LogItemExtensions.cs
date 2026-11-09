@@ -442,6 +442,15 @@ public static class LogItemExtensions
 			return auditEvent;
 		}
 
+		// Active Discovery "Found new instance(s)" messages list every new instance on a device and
+		// can run to over a megabyte. Too long for the regex set, they are parsed by plain scanning
+		// into exactly the fields regex 8 or 9 would have produced.
+		if (logItem.Description.Length > MaxRegexDescriptionLength
+			&& TryHandleNewInstancesDescription(logItem.Description, auditEvent))
+		{
+			return auditEvent;
+		}
+
 		// Interpret the description field
 		if (!TryGetEntityTypeMatch(logItem.Description, auditEvent, out var logItemRegex, out var match))
 		{
@@ -465,7 +474,7 @@ public static class LogItemExtensions
 		return auditEvent;
 	}
 
-	private static AuditEvent CreateAuditEvent(LogItem logItem)
+	internal static AuditEvent CreateAuditEvent(LogItem logItem)
 		=> new()
 		{
 			Id = logItem.Id,
@@ -860,6 +869,326 @@ public static class LogItemExtensions
 		var actionSegment = description.Substring(actionStartIndex);
 		match = SafeMatch(_groupActionRegex, actionSegment);
 		return match.Success;
+	}
+
+	/// <summary>
+	/// Parses an Active Discovery "Found new instance(s)" description, including the combined
+	/// "...; Instance(s) disappeared from: ..." form, without regular expressions. On success it
+	/// populates exactly the fields that regex 8 (or 9, for the combined form) would, sets
+	/// MatchedRegExId to that id and returns true. If the description does not have that shape it
+	/// returns false and leaves <paramref name="auditEvent"/> untouched.
+	/// </summary>
+	/// <remarks>
+	/// Each delimiter is located with a single forward or backward search, so the cost is linear
+	/// in the description length however many instances are listed. Delimiters are taken at the
+	/// same occurrence the regex's lazy groups would choose. The one difference is that a value
+	/// which itself contains a delimiter (a resource name containing " (CollectorID=", say) is not
+	/// retried further along: such a description is rejected, rather than parsed differently.
+	/// </remarks>
+	internal static bool TryHandleNewInstancesDescription(string description, AuditEvent auditEvent)
+	{
+		// The regex's trailing "$" also matches just before a final newline
+		var length = description.EndsWith('\n') ? description.Length - 1 : description.Length;
+		var text = description.AsSpan(0, length);
+
+		// "Action=Update"; "Type=Instance"; "Device=NA"; "InstanceName=
+		if (!TryReadNewInstancesHeader(text, out var actionType, out var position))
+		{
+			return false;
+		}
+
+		// {instanceName}"; "Description=Found new instance(s) for:
+		var instanceNameEnd = IndexOf(text, NewInstancesDescriptionMarker, position + 1, text.Length);
+		if (instanceNameEnd < 0)
+		{
+			return false;
+		}
+
+		var instanceName = description[position..instanceNameEnd];
+		position = instanceNameEnd + NewInstancesDescriptionMarker.Length;
+
+		// The ids block is fixed-format and cannot contain its own marker, so it starts at the last one
+		var idsMarkerIndex = text.LastIndexOf(InstanceIdsMarker, StringComparison.Ordinal);
+		if (idsMarkerIndex < position)
+		{
+			return false;
+		}
+
+		// {resourceName} (CollectorID={collectorId}) [
+		var resourceNameStart = position;
+		if (!TryReadResourceAndCollector(text, ref position, idsMarkerIndex, out var resourceNameEnd, out var collectorId))
+		{
+			return false;
+		}
+
+		var resourceName = description[resourceNameStart..resourceNameEnd];
+		var newNamesStart = position;
+
+		// ]; New_InstanceIds=[deviceId={resourceId},dataSourceId={logicModuleId},dataSourceNewInstanceId(s)={ids}
+		if (!TryReadInstanceIds(text, idsMarkerIndex, out var resourceId, out var logicModuleId, out var newInstanceIds, out var deletedInstanceIds))
+		{
+			return false;
+		}
+
+		var newNamesEnd = idsMarkerIndex;
+		List<string>? deletedInstanceNames = null;
+		if (deletedInstanceIds is not null)
+		{
+			// Combined form: {newNames}]; Instance(s) disappeared from: {resourceName2} (CollectorID={collectorId2}) [{deletedNames}
+			newNamesEnd = IndexOf(text, DisappearedMarker, newNamesStart + 1, idsMarkerIndex);
+			if (newNamesEnd < 0)
+			{
+				return false;
+			}
+
+			position = newNamesEnd + DisappearedMarker.Length;
+			if (!TryReadResourceAndCollector(text, ref position, idsMarkerIndex, out _, out _)
+				|| position >= idsMarkerIndex)
+			{
+				return false;
+			}
+
+			deletedInstanceNames = SplitOnCommas(description, position, idsMarkerIndex);
+		}
+		else if (newNamesStart >= newNamesEnd)
+		{
+			return false;
+		}
+
+		auditEvent.MatchedRegExId = deletedInstanceIds is null ? 8 : 9;
+		auditEvent.EntityType = AuditEventEntityType.ResourceDataSourceInstance;
+		auditEvent.ActionType = actionType;
+		auditEvent.OutcomeType = AuditEventOutcomeType.Success;
+		auditEvent.InstanceName = instanceName;
+		auditEvent.CollectorId = collectorId;
+		auditEvent.LogicModuleId = logicModuleId;
+		auditEvent.ResourceIds = [resourceId];
+		auditEvent.ResourceNames = [resourceName];
+		auditEvent.DataSourceNewInstanceNames = SplitOnCommas(description, newNamesStart, newNamesEnd);
+		auditEvent.DataSourceNewInstanceIds = newInstanceIds;
+		auditEvent.DataSourceDeletedInstanceNames = deletedInstanceNames;
+		auditEvent.DataSourceDeletedInstanceIds = deletedInstanceIds;
+		ApplyRegexIdMetadata(auditEvent);
+		return true;
+	}
+
+	private const string NewInstancesHeaderSuffix = "\"; \"Type=Instance\"; \"Device=NA\"; \"InstanceName=";
+	private const string NewInstancesDescriptionMarker = "\"; \"Description=Found new instance(s) for: ";
+	private const string CollectorIdMarker = " (CollectorID=";
+	private const string InstanceListStart = ") [";
+	private const string DisappearedMarker = "]; Instance(s) disappeared from: ";
+	private const string InstanceIdsMarker = "]; New_InstanceIds=[deviceId=";
+	private const string DataSourceIdMarker = ",dataSourceId=";
+	private const string NewInstanceIdsMarker = ",dataSourceNewInstanceId(s)=";
+	private const string DeletedInstanceIdsMarker = ",dataSourceDeletedInstanceId(s)=";
+	private const string InstanceIdsEnd = "];\"";
+
+	private static readonly (string Header, AuditEventActionType ActionType)[] _newInstancesHeaders =
+	[
+		("\"Action=Add" + NewInstancesHeaderSuffix, AuditEventActionType.Create),
+		("\"Action=Fetch" + NewInstancesHeaderSuffix, AuditEventActionType.Read),
+		("\"Action=Update" + NewInstancesHeaderSuffix, AuditEventActionType.Update),
+	];
+
+	private static bool TryReadNewInstancesHeader(ReadOnlySpan<char> text, out AuditEventActionType actionType, out int position)
+	{
+		foreach (var (header, headerActionType) in _newInstancesHeaders)
+		{
+			if (text.StartsWith(header, StringComparison.Ordinal))
+			{
+				actionType = headerActionType;
+				position = header.Length;
+				return true;
+			}
+		}
+
+		actionType = AuditEventActionType.None;
+		position = 0;
+		return false;
+	}
+
+	/// <summary>
+	/// Reads "{resourceName} (CollectorID={collectorId}) [" starting at <paramref name="position"/>,
+	/// which is left just after the opening bracket. The resource name must be non-empty.
+	/// </summary>
+	private static bool TryReadResourceAndCollector(
+		ReadOnlySpan<char> text,
+		ref int position,
+		int limit,
+		out int resourceNameEnd,
+		out int collectorId)
+	{
+		collectorId = 0;
+		resourceNameEnd = IndexOf(text, CollectorIdMarker, position + 1, limit);
+		if (resourceNameEnd < 0)
+		{
+			return false;
+		}
+
+		var collectorIdStart = resourceNameEnd + CollectorIdMarker.Length;
+		var collectorIdEnd = collectorIdStart;
+		while (collectorIdEnd < limit && (char.IsAsciiDigit(text[collectorIdEnd]) || text[collectorIdEnd] == '-'))
+		{
+			collectorIdEnd++;
+		}
+
+		if (!int.TryParse(text[collectorIdStart..collectorIdEnd], NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out collectorId)
+			|| !text[collectorIdEnd..limit].StartsWith(InstanceListStart, StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		position = collectorIdEnd + InstanceListStart.Length;
+		return true;
+	}
+
+	/// <summary>
+	/// Reads the trailing ids block, which runs from <paramref name="idsMarkerIndex"/> to the end of
+	/// <paramref name="text"/>. Deleted instance ids are only present (non-null) in the combined form.
+	/// </summary>
+	private static bool TryReadInstanceIds(
+		ReadOnlySpan<char> text,
+		int idsMarkerIndex,
+		out int resourceId,
+		out int logicModuleId,
+		[NotNullWhen(true)] out List<int>? newInstanceIds,
+		out List<int>? deletedInstanceIds)
+	{
+		logicModuleId = 0;
+		newInstanceIds = null;
+		deletedInstanceIds = null;
+		var position = idsMarkerIndex + InstanceIdsMarker.Length;
+
+		if (!TryReadNumber(text, ref position, out resourceId)
+			|| !TryReadLiteral(text, ref position, DataSourceIdMarker)
+			|| !TryReadNumber(text, ref position, out logicModuleId)
+			|| !TryReadLiteral(text, ref position, NewInstanceIdsMarker))
+		{
+			return false;
+		}
+
+		var idsStart = position;
+		var idsEnd = SkipIdListCharacters(text, idsStart);
+
+		if (text[idsEnd..].SequenceEqual(InstanceIdsEnd))
+		{
+			// Single form: ...,dataSourceNewInstanceId(s)={ids}];"
+			return TryParseIdList(text[idsStart..idsEnd], out newInstanceIds);
+		}
+
+		// Combined form: ...,dataSourceNewInstanceId(s)={ids},dataSourceDeletedInstanceId(s)={ids}];"
+		// The id-list scan will have consumed the comma that begins the deleted-ids marker.
+		if (idsEnd <= idsStart || !text[(idsEnd - 1)..].StartsWith(DeletedInstanceIdsMarker, StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		var deletedIdsStart = idsEnd - 1 + DeletedInstanceIdsMarker.Length;
+		var deletedIdsEnd = SkipIdListCharacters(text, deletedIdsStart);
+		return text[deletedIdsEnd..].SequenceEqual(InstanceIdsEnd)
+			&& TryParseIdList(text[idsStart..(idsEnd - 1)], out newInstanceIds)
+			&& TryParseIdList(text[deletedIdsStart..deletedIdsEnd], out deletedInstanceIds);
+	}
+
+	private static int SkipIdListCharacters(ReadOnlySpan<char> text, int position)
+	{
+		while (position < text.Length && (char.IsAsciiDigit(text[position]) || text[position] == ','))
+		{
+			position++;
+		}
+
+		return position;
+	}
+
+	/// <summary>
+	/// Parses a non-empty comma-separated list of ids. An empty entry fails, where the regex path's
+	/// int.Parse would throw.
+	/// </summary>
+	private static bool TryParseIdList(ReadOnlySpan<char> text, [NotNullWhen(true)] out List<int>? ids)
+	{
+		ids = null;
+		if (text.IsEmpty)
+		{
+			return false;
+		}
+
+		var result = new List<int>();
+		foreach (var range in text.Split(','))
+		{
+			if (!int.TryParse(text[range], NumberStyles.None, CultureInfo.InvariantCulture, out var id))
+			{
+				return false;
+			}
+
+			result.Add(id);
+		}
+
+		ids = result;
+		return true;
+	}
+
+	private static bool TryReadNumber(ReadOnlySpan<char> text, ref int position, out int value)
+	{
+		var end = position;
+		while (end < text.Length && char.IsAsciiDigit(text[end]))
+		{
+			end++;
+		}
+
+		if (!int.TryParse(text[position..end], NumberStyles.None, CultureInfo.InvariantCulture, out value))
+		{
+			return false;
+		}
+
+		position = end;
+		return true;
+	}
+
+	private static bool TryReadLiteral(ReadOnlySpan<char> text, ref int position, string literal)
+	{
+		if (!text[position..].StartsWith(literal, StringComparison.Ordinal))
+		{
+			return false;
+		}
+
+		position += literal.Length;
+		return true;
+	}
+
+	/// <summary>
+	/// Finds <paramref name="value"/> starting at or after <paramref name="start"/> and ending at or
+	/// before <paramref name="limit"/>, returning its index in <paramref name="text"/> or -1.
+	/// </summary>
+	private static int IndexOf(ReadOnlySpan<char> text, string value, int start, int limit)
+	{
+		if (start > limit)
+		{
+			return -1;
+		}
+
+		var index = text[start..limit].IndexOf(value, StringComparison.Ordinal);
+		return index < 0 ? -1 : start + index;
+	}
+
+	/// <summary>
+	/// Splits description[start..end] on commas, as the regex path's string.Split(',') does, without
+	/// first copying the (potentially very large) list out of the description.
+	/// </summary>
+	private static List<string> SplitOnCommas(string description, int start, int end)
+	{
+		var result = new List<string>();
+		while (true)
+		{
+			var comma = description.IndexOf(',', start, end - start);
+			if (comma < 0)
+			{
+				result.Add(description[start..end]);
+				return result;
+			}
+
+			result.Add(description[start..comma]);
+			start = comma + 1;
+		}
 	}
 
 	private static Regex CreateRegex(string pattern, RegexOptions options)
