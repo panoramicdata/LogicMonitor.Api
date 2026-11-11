@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <PackageProjectUrl>https://github.com/panoramicdata/LogicMonitor.Api/</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -22,8 +22,8 @@
     <AnalysisLevel>latest-recommended</AnalysisLevel>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	<!-- Update the following before releasing to nuget -->
-	<PackageReleaseNotes>
+    <!-- Update the following before releasing to nuget -->
+    <PackageReleaseNotes>
 		v3.240.117:
 		- Fixed: on a portal where a role carries a "workspaces" privilege, reading users or roles threw
 		  JsonSerializationException. PrivilegeObjectType gains Workspaces.
@@ -39,7 +39,6 @@
     <Content Include="LogicMonitor.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Nerdbank.GitVersioning">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

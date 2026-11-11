@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 11.0.x
 
     - name: Restore
       run: dotnet restore
@@ -90,7 +90,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 11.0.x
 
     - name: Login to NuGet
       id: login
@@ -128,7 +128,7 @@ jobs:
         # it can. setup-dotnet puts this directory on PATH for the later steps.
         DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
       with:
-        dotnet-version: 10.0.x
+        dotnet-version: 11.0.x
 
     - name: Build tests
       run: dotnet build LogicMonitor.Api.Test/LogicMonitor.Api.Test.csproj --configuration Debug
