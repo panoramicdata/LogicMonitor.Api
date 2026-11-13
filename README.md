@@ -2,6 +2,8 @@
 
 The LogicMonitor REST API nuget package, authored by Panoramic Data Limited.
 
+Supports .NET 11.0.
+
 [![Nuget](https://img.shields.io/nuget/v/LogicMonitor.Api)](https://www.nuget.org/packages/LogicMonitor.Api/)
 [![Nuget](https://img.shields.io/nuget/dt/LogicMonitor.Api)](https://www.nuget.org/packages/LogicMonitor.Api/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

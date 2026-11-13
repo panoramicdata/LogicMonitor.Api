@@ -9,7 +9,7 @@ This PowerShell module provides a wrapper around the LogicMonitor.Api .NET libra
 2. Build the solution
 3. Import the module:
 ```powershell
-Import-Module .\LogicMonitor.PowerShell\bin\Debug\net9.0\LogicMonitor
+Import-Module .\LogicMonitor.PowerShell\bin\Debug\net11.0\LogicMonitor
 ```
 
 ### From PowerShell Gallery (when published)
