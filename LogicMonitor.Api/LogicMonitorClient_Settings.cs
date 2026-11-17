@@ -127,8 +127,8 @@ public partial class LogicMonitorClient
 		AppliesToFunctionCreationDto body,
 		int id,
 		string reason,
-		bool ignoreReference = false,
-		CancellationToken cancellationToken = default)
+		[Optional] bool ignoreReference,
+		[Optional] CancellationToken cancellationToken)
 		=> PostAsync<AppliesToFunctionCreationDto, AppliesToFunction>(
 			body, $"setting/functions/{id}?reason={reason}&ignoreReference={ignoreReference}",
 			cancellationToken);

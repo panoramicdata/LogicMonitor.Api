@@ -80,7 +80,7 @@ public class FilterItem<T>
 	/// </summary>
 	private void ValidateValueAgainstOperation()
 	{
-		if (_valuelessOperations.Contains(Operation))
+		if (ValuelessFilterOperations.Contains(Operation))
 		{
 			if (Value is not null)
 			{
@@ -95,9 +95,6 @@ public class FilterItem<T>
 			throw new InvalidOperationException($"Value must not be null for the '{Operation}' operation.");
 		}
 	}
-
-	private static readonly HashSet<string> _valuelessOperations =
-		new(StringComparer.Ordinal) { ":::empty", ":::null", "!::empty", "!::null" };
 
 	/// <summary>
 	/// Renders the value the way the portal's filter syntax expects it: booleans lowercase and

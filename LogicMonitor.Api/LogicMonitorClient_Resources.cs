@@ -300,7 +300,7 @@ public partial class LogicMonitorClient
 		string resourceGroupFullPaths,
 		bool recurse,
 		CancellationToken cancellationToken,
-		Filter<Resource>? resourceFilter = null)
+		[Optional] Filter<Resource>? resourceFilter)
 	{
 		var resources = new List<Resource>();
 
@@ -561,7 +561,7 @@ public partial class LogicMonitorClient
 	public Task<List<TreeNodeFreeSearchResult>> TreeNodeFreeSearchAsync(
 		string searchText,
 		int maxResultCount,
-		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
+		[Optional] TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType)
 		=> TreeNodeFreeSearchAsync(searchText, maxResultCount, CancellationToken.None, treeNodeFreeSearchResultType);
 
 	/// <summary>
@@ -604,8 +604,8 @@ public partial class LogicMonitorClient
 	/// <param name="resourceGroupId">The ResourceGroup id</param>
 	/// <param name="cancellationToken">The cancellation token</param>
 	public async Task<ResourceGroup> GetFullResourceTreeAsync(
-		int resourceGroupId = -1,
-		CancellationToken cancellationToken = default)
+		[Optional, DefaultParameterValue(-1)] int resourceGroupId,
+		[Optional] CancellationToken cancellationToken)
 	{
 		var allResourceGroups = await GetAllAsync<ResourceGroup>(cancellationToken: cancellationToken).ConfigureAwait(false);
 		var requestedRootGroup = allResourceGroups.SingleOrDefault(g => g.Id == resourceGroupId) ?? new ResourceGroup { Name = "Root", Id = -1 };
@@ -1119,13 +1119,13 @@ public partial class LogicMonitorClient
 	/// <param name="cancellationToken"></param>
 	public Task<Page<Alert>> GetResourceGroupAlertsAsync(
 		int resourceGroupId,
-		string customColumns = "",
-		bool needMessage = false,
-		string fields = "",
-		int size = 50,
-		int offset = 0,
-		string filter = "",
-		CancellationToken cancellationToken = default)
+		[Optional, DefaultParameterValue("")] string customColumns,
+		[Optional] bool needMessage,
+		[Optional, DefaultParameterValue("")] string fields,
+		[Optional, DefaultParameterValue(50)] int size,
+		[Optional] int offset,
+		[Optional, DefaultParameterValue("")] string filter,
+		[Optional] CancellationToken cancellationToken)
 		=> GetBySubUrlAsync<Page<Alert>>($"device/groups/{resourceGroupId}/alerts?customColumns={customColumns}&needMessage={needMessage}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
 
 	/// <summary>

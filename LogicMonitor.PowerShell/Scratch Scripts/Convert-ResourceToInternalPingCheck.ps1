@@ -223,18 +223,18 @@ function ConvertTo-JsonCompact([object] $Value) {
     return ($Value | ConvertTo-Json -Depth 25 -Compress)
 }
 
-Write-Host ("=" * 78)
-Write-Host "Convert resource -> INTERNAL ping check   (portal: $Account)"
-Write-Host ("=" * 78)
-if ($DryRun) { Write-Host "[DRY RUN] No changes will be made." -ForegroundColor Yellow }
+Write-Output ("=" * 78)
+Write-Output "Convert resource -> INTERNAL ping check   (portal: $Account)"
+Write-Output ("=" * 78)
+if ($DryRun) { Write-Output "[DRY RUN] No changes will be made." }
 
 # --- 1. Locate the resource -----------------------------------------------------
 if ($ResourceId) {
-    Write-Host "Fetching resource id $ResourceId ..."
+    Write-Output "Fetching resource id $ResourceId ..."
     $resource = Invoke-LMApi -Method GET -ResourcePath "/device/devices/$ResourceId" -Query "?_=$([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds())"
 }
 else {
-    Write-Host "Locating resource by display name '$DisplayName' ..."
+    Write-Output "Locating resource by display name '$DisplayName' ..."
     $escaped = $DisplayName.Replace('"', '\"')
     $result  = Invoke-LMApi -Method GET -ResourcePath "/device/devices" -Query "?filter=displayName:`"$escaped`""
     $items   = @($result.items)
@@ -251,13 +251,13 @@ $preferredColl  = [int]   $resource.preferredCollectorId
 $deviceType     = [int]   $resource.deviceType
 $disableAlerting = [bool]($resource.PSObject.Properties['disableAlerting'] -and $resource.disableAlerting)
 
-Write-Host ""
-Write-Host "  Id                 : $resId"
-Write-Host "  Name (host)        : $resName"
-Write-Host "  DisplayName        : $resDisplayName"
-Write-Host "  Current deviceType : $deviceType $([string]::Format('({0})', $(if($deviceType -eq 19){'already an internal ping check!'}else{'regular device'})))"
-Write-Host "  PreferredCollector : $preferredColl"
-Write-Host "  DisableAlerting    : $disableAlerting"
+Write-Output ""
+Write-Output "  Id                 : $resId"
+Write-Output "  Name (host)        : $resName"
+Write-Output "  DisplayName        : $resDisplayName"
+Write-Output "  Current deviceType : $deviceType $([string]::Format('({0})', $(if($deviceType -eq 19){'already an internal ping check!'}else{'regular device'})))"
+Write-Output "  PreferredCollector : $preferredColl"
+Write-Output "  DisableAlerting    : $disableAlerting"
 
 if ($deviceType -eq 19) {
     Write-Warning "Resource $resId already has deviceType 19 (ping check). Nothing to convert."
@@ -306,11 +306,11 @@ foreach ($p in $sourceProps) {
     $carried.Add([ordered]@{ name = $pname; value = $pval }) | Out-Null
 }
 
-Write-Host ""
-Write-Host "  Static groups to reassign : [$([string]::Join(', ', $staticGroupIds))]"
-Write-Host "  Collector (testLocation)  : [$preferredColl]  (same as current preferred collector)"
-Write-Host "  User properties carried   : $($carried.Count)"
-if ($carried.Count -gt 0) { Write-Host "    $([string]::Join(', ', ($carried | ForEach-Object { $_.name })))" }
+Write-Output ""
+Write-Output "  Static groups to reassign : [$([string]::Join(', ', $staticGroupIds))]"
+Write-Output "  Collector (testLocation)  : [$preferredColl]  (same as current preferred collector)"
+Write-Output "  User properties carried   : $($carried.Count)"
+if ($carried.Count -gt 0) { Write-Output "    $([string]::Join(', ', ($carried | ForEach-Object { $_.name })))" }
 if ($maskedDropped.Count -gt 0) {
     Write-Warning "  $($maskedDropped.Count) masked (secret) propert$([string]$(if($maskedDropped.Count -eq 1){'y'}else{'ies'})) could not be read back and will be DROPPED (re-enter manually):"
     Write-Warning "    $([string]::Join(', ', $maskedDropped))"
@@ -321,8 +321,8 @@ if (-not (Test-Path -LiteralPath $BackupDirectory)) { New-Item -ItemType Directo
 $stamp      = Get-Date -Format 'yyyyMMdd-HHmmss'
 $backupFile = Join-Path $BackupDirectory ("pingcheck-conversion-backup-{0}-{1}.json" -f $resId, $stamp)
 $resource | ConvertTo-Json -Depth 25 | Out-File -LiteralPath $backupFile -Encoding utf8
-Write-Host ""
-Write-Host "  Backup snapshot written   : $backupFile"
+Write-Output ""
+Write-Output "  Backup snapshot written   : $backupFile"
 
 # --- Build the recreate body (v3 structured internal ping check) ----------------
 # Build the sub-collections explicitly (avoid generic-List pipeline binding quirks).
@@ -363,47 +363,47 @@ $createBody = [ordered]@{
 $createJson = ConvertTo-JsonCompact $createBody
 
 if ($DryRun) {
-    Write-Host ""
-    Write-Host "[DRY RUN] Would hard-delete resource $resId then POST /device/devices?type=uptimepingcheck with body:" -ForegroundColor Yellow
-    Write-Host ($createBody | ConvertTo-Json -Depth 25)
-    Write-Host ""
-    Write-Host "[DRY RUN] Complete. No changes made." -ForegroundColor Yellow
+    Write-Output ""
+    Write-Output "[DRY RUN] Would hard-delete resource $resId then POST /device/devices?type=uptimepingcheck with body:"
+    Write-Output ($createBody | ConvertTo-Json -Depth 25)
+    Write-Output ""
+    Write-Output "[DRY RUN] Complete. No changes made."
     return
 }
 
 # --- 5. Hard-delete then recreate -----------------------------------------------
 $target = "resource $resId ('$resDisplayName') -> internal ping check on collector $preferredColl"
 if (-not $PSCmdlet.ShouldProcess($target, "Hard-delete and recreate as internal ping check")) {
-    Write-Host "Aborted by user / -WhatIf." -ForegroundColor Yellow
+    Write-Output "Aborted by user / -WhatIf."
     return
 }
 
-Write-Host ""
-Write-Host "  Hard-deleting resource $resId ..." -ForegroundColor Cyan
+Write-Output ""
+Write-Output "  Hard-deleting resource $resId ..."
 Invoke-LMApi -Method DELETE -ResourcePath "/device/devices/$resId" -Query "?deleteHard=true" | Out-Null
 
-Write-Host "  Creating internal ping check ..." -ForegroundColor Cyan
+Write-Output "  Creating internal ping check ..."
 $created = Invoke-LMApi -Method POST -ResourcePath "/device/devices" -Query "?type=uptimepingcheck" -Body $createJson
 $newId = [int]$created.id
-Write-Host "  Created new resource id $newId (deviceType $([int]$created.deviceType))." -ForegroundColor Green
+Write-Output "  Created new resource id $newId (deviceType $([int]$created.deviceType))."
 
 # --- 6. Verify ------------------------------------------------------------------
-Write-Host ""
-Write-Host "  Verifying ..."
+Write-Output ""
+Write-Output "  Verifying ..."
 $verify = Invoke-LMApi -Method GET -ResourcePath "/device/devices/$newId" -Query "?_=$([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds())"
 $uptimeType = ''
 if ($verify.PSObject.Properties['systemProperties'] -and $verify.systemProperties) {
     $ut = @($verify.systemProperties | Where-Object { $_.name -eq 'system.uptime.type' })
     if ($ut.Count -gt 0) { $uptimeType = [string]$ut[0].value }
 }
-Write-Host "    deviceType         : $([int]$verify.deviceType)  (expected 19)"
-Write-Host "    system.uptime.type : '$uptimeType'  (expected 'internal'; may take a moment to populate)"
+Write-Output "    deviceType         : $([int]$verify.deviceType)  (expected 19)"
+Write-Output "    system.uptime.type : '$uptimeType'  (expected 'internal'; may take a moment to populate)"
 
 $ok = ([int]$verify.deviceType -eq 19)
-Write-Host ""
+Write-Output ""
 if ($ok) {
-    Write-Host "SUCCESS: resource converted to internal ping check (new id $newId)." -ForegroundColor Green
-    Write-Host "Backup of the original resource: $backupFile"
+    Write-Output "SUCCESS: resource converted to internal ping check (new id $newId)."
+    Write-Output "Backup of the original resource: $backupFile"
 } else {
     Write-Warning "Conversion completed but verification did not confirm deviceType 19. Check the portal (new id $newId)."
 }

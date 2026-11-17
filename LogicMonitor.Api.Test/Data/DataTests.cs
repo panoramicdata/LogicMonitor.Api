@@ -657,12 +657,7 @@ public class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		var graphData = await LogicMonitorClient
 			.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
 
-		// Calculate metrics
-		var durationInSeconds = (endDateTime - startDateTime).TotalSeconds;
 		var actualDataPoints = graphData.TimeStamps.Count;
-		var averageInterval = actualDataPoints > 1 
-			? durationInSeconds / (actualDataPoints - 1) 
-			: graphData.Step;
 
 		// Log detailed information for comparison with specific graph tests
 		Logger.LogInformation("=== {Description} (DataSourceGraphId=-1) ===", description);

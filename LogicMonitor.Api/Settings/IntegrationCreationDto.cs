@@ -29,4 +29,6 @@ public abstract class IntegrationCreationDto<T>(string type)
 	/// </summary>
 	[DataMember(Name = "extra")]
 	public string Extra { get; set; } = string.Empty;
+
+	internal static Type IntegrationItemType => typeof(T);
 }

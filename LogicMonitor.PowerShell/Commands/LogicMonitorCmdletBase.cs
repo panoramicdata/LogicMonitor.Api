@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using System.Runtime.InteropServices;
 using LogicMonitor.Api;
 
 namespace LogicMonitor.PowerShell.Commands;
@@ -50,7 +51,7 @@ public abstract class LogicMonitorCmdletBase : PSCmdlet
 	/// </summary>
 	/// <param name="ex">The exception to handle</param>
 	/// <param name="target">The target object that caused the error</param>
-	protected void HandleApiException(Exception ex, object? target = null)
+	protected void HandleApiException(Exception ex, [Optional] object? target)
 	{
 		var errorCategory = ex switch
 		{

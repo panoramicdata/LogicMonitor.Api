@@ -31,9 +31,9 @@ public partial class LogicMonitorClient
 		int collectorId,
 		FileInfo fileInfo,
 		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,
-		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
-		CollectorSize collectorSize = CollectorSize.Small,
-		int? collectorVersion = null)
+		[Optional, DefaultParameterValue(CollectorDownloadType.FullPackage)] CollectorDownloadType collectorDownloadType,
+		[Optional, DefaultParameterValue(CollectorSize.Small)] CollectorSize collectorSize,
+		[Optional] int? collectorVersion)
 		=> DownloadCollectorAsync(collectorId, fileInfo, collectorPlatformAndArchitecture,
 			CancellationToken.None, collectorDownloadType, collectorSize, collectorVersion);
 

@@ -162,7 +162,6 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		catch (InvalidOperationException ex) when (ex.Message.Contains("not found") || ex.Message.Contains("does not exist"))
 		{
 			// Skip test if the specific instance/graph combination doesn't exist
-			return;
 		}
 	}
 
@@ -200,7 +199,6 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		catch (InvalidOperationException ex) when (ex.Message.Contains("not found") || ex.Message.Contains("does not exist"))
 		{
 			// Skip test if the specific instance/graph combination doesn't exist
-			return;
 		}
 	}
 

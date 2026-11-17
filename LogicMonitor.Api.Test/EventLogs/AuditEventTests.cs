@@ -1290,9 +1290,7 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		"running-config",
 		1234,
 		"Cisco_IOS",
-		4,
-		"DeviceA",
-		5678)]
+		4)]
 	[InlineData(
 		"Download DataSource<running-config>. \"DataSourceInstanceId=1234\"; \"DataSourceName=Cisco_IOS\"; \"DataSourceVersion=4\"; \"DeviceName=DeviceA\"; \"DeviceId=5678\";",
 		74,
@@ -1300,9 +1298,7 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		"running-config",
 		1234,
 		"Cisco_IOS",
-		4,
-		"DeviceA",
-		5678)]
+		4)]
 	public void DownloadLogicModule_Success(
 		string logItemMessage,
 		int expectedMatchRegexId,
@@ -1310,9 +1306,7 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		string expectedInstanceName,
 		int expectedInstanceId,
 		string expectedLogicModuleName,
-		int expectedLogicModuleVersion,
-		string expectedResourceName,
-		int expectedResourceId)
+		int expectedLogicModuleVersion)
 		=> AssertToAuditEventSucceeds(
 	logItemMessage,
 	new()
@@ -1325,8 +1319,8 @@ getExtra: update value={""key"":1}, old value={""key"":0}
 		InstanceId = expectedInstanceId,
 		LogicModuleName = expectedLogicModuleName,
 		LogicModuleVersion = expectedLogicModuleVersion,
-		ResourceNames = [expectedResourceName],
-		ResourceIds = [expectedResourceId]
+		ResourceNames = ["DeviceA"],
+		ResourceIds = [5678]
 	}
 );
 
