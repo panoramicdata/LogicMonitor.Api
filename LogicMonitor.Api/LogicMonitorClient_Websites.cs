@@ -67,59 +67,42 @@ public partial class LogicMonitorClient
 		SetPropertyMode mode,
 		CancellationToken cancellationToken) where T : IdentifiedItem, IHasEndpoint, IHasCustomProperties, new()
 	{
-		// Input checking
-		switch (typeof(T).Name)
+		if (typeof(T) != typeof(Website) && typeof(T) != typeof(WebsiteGroup))
 		{
-			case nameof(WebsiteGroup):
-			case nameof(Website):
-				// OK
-				break;
-			default:
-				throw new InvalidOperationException($"Only to be used for {nameof(Website)} and {nameof(WebsiteGroup)}.");
+			throw new InvalidOperationException($"Only to be used for {nameof(Website)} and {nameof(WebsiteGroup)}.");
 		}
 
-		switch (mode)
-		{
-			case SetPropertyMode.Create:
-			case SetPropertyMode.Update:
-				if (value is null)
-				{
-					throw new InvalidOperationException("Value cannot be null if the mode is create or update.");
-				}
-
-				break;
-			case SetPropertyMode.Delete:
-				if (value is not null)
-				{
-					throw new ArgumentException("If mode is delete, value must be set to null", nameof(value));
-				}
-
-				break;
-			default:
-				// Every other mode (e.g. CreateOrUpdate) permits both a null and a non-null value,
-				// so there is nothing to check.
-				break;
-		}
+		ValidatePropertyValueForMode(mode, value);
 
 		// NB the generic SetCustomPropertyAsync helper cannot be used for websites and website
 		// groups - the portal does not support the sub-URL it builds, so the get/modify/put
 		// sequence below is done by hand instead.
-
 		var websiteOrGroup = await GetAsync<T>(id, cancellationToken: cancellationToken)
 			.ConfigureAwait(false);
-		var existingCustomProperty = websiteOrGroup.CustomProperties.SingleOrDefault(cp => cp.Name == name);
-		if (existingCustomProperty is not null)
+
+		ApplyCustomPropertyChange(websiteOrGroup.CustomProperties, name, value, mode);
+
+		await PutAsync(websiteOrGroup, cancellationToken).ConfigureAwait(false);
+	}
+
+	private static void ValidatePropertyValueForMode(SetPropertyMode mode, string? value)
+	{
+		// Every mode other than create, update and delete (e.g. CreateOrUpdate) permits both a null and a non-null value.
+		if (mode is SetPropertyMode.Create or SetPropertyMode.Update && value is null)
 		{
-			if (value is null)
-			{
-				websiteOrGroup.CustomProperties.Remove(existingCustomProperty);
-			}
-			else
-			{
-				existingCustomProperty.Value = value;
-			}
+			throw new InvalidOperationException("Value cannot be null if the mode is create or update.");
 		}
-		else
+
+		if (mode == SetPropertyMode.Delete && value is not null)
+		{
+			throw new ArgumentException("If mode is delete, value must be set to null", nameof(value));
+		}
+	}
+
+	private static void ApplyCustomPropertyChange(List<EntityProperty> customProperties, string name, string? value, SetPropertyMode mode)
+	{
+		var existingCustomProperty = customProperties.SingleOrDefault(cp => cp.Name == name);
+		if (existingCustomProperty is null)
 		{
 			if (mode == SetPropertyMode.Delete)
 			{
@@ -128,15 +111,24 @@ public partial class LogicMonitorClient
 
 			if (value is not null)
 			{
-				websiteOrGroup.CustomProperties.Add(new EntityProperty
+				customProperties.Add(new EntityProperty
 				{
 					Name = name,
 					Value = value
 				});
 			}
+
+			return;
 		}
 
-		await PutAsync(websiteOrGroup, cancellationToken).ConfigureAwait(false);
+		if (value is null)
+		{
+			customProperties.Remove(existingCustomProperty);
+		}
+		else
+		{
+			existingCustomProperty.Value = value;
+		}
 	}
 
 	/// <summary>

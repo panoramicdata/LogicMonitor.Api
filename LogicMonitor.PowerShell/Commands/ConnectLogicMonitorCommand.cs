@@ -74,29 +74,7 @@ public class ConnectLogicMonitorCommand : LogicMonitorCmdletBase
 
 			WriteVerboseMessage($"Connecting to LogicMonitor account: {Account}");
 
-			// Create logger if logging is enabled
-			ILogger? logger = null;
-			if (EnableLogging)
-			{
-				var loggerFactory = LoggerFactory.Create(builder =>
-					builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
-				logger = loggerFactory.CreateLogger<LogicMonitorClient>();
-			}
-
-			// Create client options
-			var options = new LogicMonitorClientOptions
-			{
-				Account = Account,
-				AccessId = AccessId,
-				AccessKey = AccessKey,
-				HttpClientTimeoutSeconds = TimeoutSeconds,
-				MaximumBackOffSeconds = MaxBackoffSeconds,
-				Logger = logger
-			};
-
-			// Create the client
-			var newClient = new LogicMonitorClient(options);
-			Client = newClient;
+			Client = new LogicMonitorClient(CreateClientOptions());
 
 			// Test the connection by getting account information
 			WriteVerboseMessage("Testing connection...");
@@ -129,5 +107,26 @@ public class ConnectLogicMonitorCommand : LogicMonitorCmdletBase
 			ConnectionInfo = previousConnectionInfo;
 			throw;
 		}
+	}
+
+	private LogicMonitorClientOptions CreateClientOptions()
+	{
+		ILogger? logger = null;
+		if (EnableLogging)
+		{
+			var loggerFactory = LoggerFactory.Create(builder =>
+				builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
+			logger = loggerFactory.CreateLogger<LogicMonitorClient>();
+		}
+
+		return new LogicMonitorClientOptions
+		{
+			Account = Account,
+			AccessId = AccessId,
+			AccessKey = AccessKey,
+			HttpClientTimeoutSeconds = TimeoutSeconds,
+			MaximumBackOffSeconds = MaxBackoffSeconds,
+			Logger = logger
+		};
 	}
 }

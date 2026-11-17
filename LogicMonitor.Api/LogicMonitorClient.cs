@@ -438,82 +438,12 @@ public partial class LogicMonitorClient : IDisposable
 
 		var jsonString = JsonConvert.SerializeObject(@item);
 		_logger.LogTrace("{Prefix} jsonString:\r\n{JsonString}", prefix, jsonString);
-		using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-		HttpResponseMessage httpResponseMessage;
-		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
-		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
-		var rateLimitAttempt = 0;
-		var rateLimitTotalMs = 0L;
-		while (true)
-		{
-			// Determine the cancellationToken
-			// We will always use one
-			using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
-			{
-				httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, jsonString, cancellationToken).ConfigureAwait(false);
-			}
 
-			_logger.LogDebug("{Prefix} complete", prefix);
-
-			// Check the outer HTTP status code
-			if (!httpResponseMessage.IsSuccessStatusCode)
-			{
-				if ((int)httpResponseMessage.StatusCode != 429)
-				{
-					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-					{
-						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
-						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
-						continue;
-					}
-
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
-						prefix,
-						httpResponseMessage.StatusCode,
-						responseBody);
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody);
-				}
-				// We have been told to back off
-
-				// Check that all rate limit headers are present
-				var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-				var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-				var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-				// Wait for the full window
-				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds > MaximumBackOffSeconds)
-				{
-					delayMs = 1000 * MaximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
-				}
-
-				// Wait some time and try again
-				rateLimitTotalMs = await WaitForRateLimitAsync(
-					prefix,
-					rateLimitInformation,
-					delayMs,
-					++rateLimitAttempt,
-					rateLimitTotalMs,
-					cancellationToken).ConfigureAwait(false);
-
-				// Try again
-				continue;
-			}
-
-			// Success - can be cached
-			break;
-		}
+		var httpResponseMessage = await SendWithRetryAsync(httpMethod, subUrl, jsonString, prefix, false, cancellationToken).ConfigureAwait(false);
 
 		var portalResponse = new PortalResponse<EmptyResponse>(httpResponseMessage);
-
-		// Check the outer HTTP status code
 		if (!portalResponse.IsSuccessStatusCode)
 		{
-			// If a success code was not received, throw an exception
 			throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
 		}
 	}

@@ -33,54 +33,17 @@ public partial class LogicMonitorClient
 
 		logFilter.Skip ??= 0;
 
-
-		int maxLogItemCount;
-		// Was a Take provided?
-		if (logFilter.Take is null)
-		{
-			// NO - set the maxLogItemCount to the count requested, set the request page size to LogItemsMaxTake
-			maxLogItemCount = int.MaxValue;
-			logFilter.Take = LogItemsMaxTake;
-		}
-		else
-		{
-			// YES - Are we being asked for more than the max defined request page size?
-			if (logFilter.Take > LogItemsMaxTake)
-			{
-				// YES - set the maxLogItemCount to our LogItemsMaxTake, restricting the request page size to LogItemsMaxTake
-				maxLogItemCount = (int)logFilter.Take;
-				logFilter.Take = LogItemsMaxTake;
-			}
-			else
-			{
-				// NO - The request page size can stay as desired and the max set to this
-				maxLogItemCount = (int)logFilter.Take;
-			}
-		}
+		var maxLogItemCount = NormaliseLogItemTake(logFilter);
 
 		var allLogItems = new List<LogItem>();
 		do
 		{
-			// Build the filter, always start with the date range requested
-			var filter = $"happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}";
-			if (!string.IsNullOrWhiteSpace(logFilter.UsernameFilter))
-			{
-				// Need to UrlEncode before adding to the filter
-				filter += HttpUtility.UrlEncode($",username:{logFilter.UsernameFilter}");
-			}
-
-			if (!string.IsNullOrWhiteSpace(logFilter.TextFilter))
-			{
-				filter += HttpUtility.UrlEncode($",_all~{logFilter.TextFilter}");
-
-			}
-
 			var logItems = (await GetBySubUrlAsync<Page<LogItem>>(
 				"setting/accesslogs" +
 				$"?sort={EnumHelper.ToEnumString(logFilter.LogFilterSortOrder)}" +
 				$"&offset={logFilter.Skip}" +
 				$"&size={logFilter.Take}" +
-				$"&filter={filter}",
+				$"&filter={BuildLogItemFilter(logFilter)}",
 				cancellationToken
 				).ConfigureAwait(false)).Items;
 			allLogItems.AddRange([.. logItems.Where(item => !allLogItems.Select(li => li.Id).Contains(item.Id))]);
@@ -94,7 +57,42 @@ public partial class LogicMonitorClient
 		}
 		while (logFilter.Take != 0);
 
-		// Return the lot
 		return allLogItems;
+	}
+
+	// Returns the number of items wanted, and caps the filter's Take at the page size.
+	private static int NormaliseLogItemTake(LogFilter logFilter)
+	{
+		if (logFilter.Take is null)
+		{
+			logFilter.Take = LogItemsMaxTake;
+			return int.MaxValue;
+		}
+
+		var maxLogItemCount = (int)logFilter.Take;
+		if (logFilter.Take > LogItemsMaxTake)
+		{
+			logFilter.Take = LogItemsMaxTake;
+		}
+
+		return maxLogItemCount;
+	}
+
+	private static string BuildLogItemFilter(LogFilter logFilter)
+	{
+		// Always start with the date range requested
+		var filter = $"happenedOn%3E%3A{logFilter.StartDateTimeUtc.SecondsSinceTheEpoch()}%2ChappenedOn%3C%3A{logFilter.EndDateTimeUtc.SecondsSinceTheEpoch()}";
+		if (!string.IsNullOrWhiteSpace(logFilter.UsernameFilter))
+		{
+			// Need to UrlEncode before adding to the filter
+			filter += HttpUtility.UrlEncode($",username:{logFilter.UsernameFilter}");
+		}
+
+		if (!string.IsNullOrWhiteSpace(logFilter.TextFilter))
+		{
+			filter += HttpUtility.UrlEncode($",_all~{logFilter.TextFilter}");
+		}
+
+		return filter;
 	}
 }

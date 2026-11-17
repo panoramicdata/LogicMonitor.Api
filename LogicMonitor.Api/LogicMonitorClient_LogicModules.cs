@@ -67,35 +67,9 @@ public partial class LogicMonitorClient
 		LogicModuleType logicModuleType,
 		CancellationToken cancellationToken)
 	{
-		var typeParameter = string.Empty;
-		switch (logicModuleType)
+		if (!_logicModuleUpdateTypeParameters.TryGetValue(logicModuleType, out var typeParameter))
 		{
-			case LogicModuleType.All:
-				// No parameter
-				break;
-			case LogicModuleType.DataSource:
-			case LogicModuleType.EventSource:
-			case LogicModuleType.ConfigSource:
-			case LogicModuleType.DiagnosticSource:
-				typeParameter = $"?type={logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}";
-				break;
-			case LogicModuleType.PropertySource:
-				typeParameter = "?type=propertyrules";
-				break;
-			case LogicModuleType.JobMonitor:
-				typeParameter = "?type=batchjob";
-				break;
-			case LogicModuleType.AppliesToFunction:
-				typeParameter = "?type=function";
-				break;
-			case LogicModuleType.SnmpSysOIDMap:
-				typeParameter = "?type=oid";
-				break;
-			case LogicModuleType.TopologySource:
-				typeParameter = $"?type={logicModuleType.ToString().ToLower(CultureInfo.InvariantCulture)}s";
-				break;
-			default:
-				throw new NotSupportedException($"LogicModule type {logicModuleType} not supported.");
+			throw new NotSupportedException($"LogicModule type {logicModuleType} not supported.");
 		}
 
 		return await PostAsync<LogicModuleUpdateCredential, LogicModuleUpdateCollection>(
@@ -107,6 +81,20 @@ public partial class LogicMonitorClient
 			cancellationToken)
 		.ConfigureAwait(false);
 	}
+
+	private static readonly Dictionary<LogicModuleType, string> _logicModuleUpdateTypeParameters = new()
+	{
+		[LogicModuleType.All] = string.Empty,
+		[LogicModuleType.DataSource] = "?type=datasource",
+		[LogicModuleType.EventSource] = "?type=eventsource",
+		[LogicModuleType.ConfigSource] = "?type=configsource",
+		[LogicModuleType.DiagnosticSource] = "?type=diagnosticsource",
+		[LogicModuleType.PropertySource] = "?type=propertyrules",
+		[LogicModuleType.JobMonitor] = "?type=batchjob",
+		[LogicModuleType.AppliesToFunction] = "?type=function",
+		[LogicModuleType.SnmpSysOIDMap] = "?type=oid",
+		[LogicModuleType.TopologySource] = "?type=topologysources"
+	};
 
 	/// <summary>
 	/// Mark a DataSource (from the repository) as audited. Find the version via GetLogicModuleUpdates
