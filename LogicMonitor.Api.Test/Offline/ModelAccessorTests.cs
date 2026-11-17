@@ -32,59 +32,38 @@ public class ModelAccessorTests
 	private static Type Resolve(string typeName)
 		=> _apiAssembly.GetType(typeName, throwOnError: true)!;
 
+	private static readonly Dictionary<Type, object> _simpleSamples = new()
+	{
+		[typeof(string)] = "sample",
+		[typeof(object)] = "sample",
+		[typeof(bool)] = true,
+		[typeof(int)] = 7,
+		[typeof(long)] = 7L,
+		[typeof(double)] = 1.5,
+		[typeof(float)] = 1.5f,
+		[typeof(decimal)] = 1.5m,
+		[typeof(DateTime)] = new DateTime(2020, 1, 2, 3, 4, 5, DateTimeKind.Utc),
+		[typeof(DateTimeOffset)] = new DateTimeOffset(2020, 1, 2, 3, 4, 5, TimeSpan.Zero),
+		[typeof(TimeSpan)] = TimeSpan.FromSeconds(90)
+	};
+
 	private static bool TryCreateSample(Type type, int depth, out object? sample)
 	{
 		type = Nullable.GetUnderlyingType(type) ?? type;
-		sample = null;
-		if (type == typeof(string) || type == typeof(object))
+		if (_simpleSamples.TryGetValue(type, out sample))
 		{
-			sample = "sample";
+			return true;
 		}
-		else if (type == typeof(bool))
-		{
-			sample = true;
-		}
-		else if (type == typeof(int))
-		{
-			sample = 7;
-		}
-		else if (type == typeof(long))
-		{
-			sample = 7L;
-		}
-		else if (type == typeof(double))
-		{
-			sample = 1.5;
-		}
-		else if (type == typeof(float))
-		{
-			sample = 1.5f;
-		}
-		else if (type == typeof(decimal))
-		{
-			sample = 1.5m;
-		}
-		else if (type == typeof(DateTime))
-		{
-			sample = new DateTime(2020, 1, 2, 3, 4, 5, DateTimeKind.Utc);
-		}
-		else if (type == typeof(DateTimeOffset))
-		{
-			sample = new DateTimeOffset(2020, 1, 2, 3, 4, 5, TimeSpan.Zero);
-		}
-		else if (type == typeof(TimeSpan))
-		{
-			sample = TimeSpan.FromSeconds(90);
-		}
-		else if (type.IsEnum)
+
+		if (type.IsEnum)
 		{
 			var values = Enum.GetValues(type);
-			sample = values.Length > 1 ? values.GetValue(1) : values.GetValue(0);
+			sample = values.GetValue(values.Length > 1 ? 1 : 0);
+			return true;
 		}
 
-		return sample is not null || TryCreateComposite(type, depth, out sample);
+		return TryCreateComposite(type, depth, out sample);
 	}
-
 	private static bool TryCreateComposite(Type type, int depth, out object? sample)
 	{
 		sample = null;
