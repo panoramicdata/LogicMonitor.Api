@@ -439,28 +439,6 @@ public partial class LogicMonitorClient
 		=> FilteredGetAsync($"device/groups/{id}/sdts", filter, cancellationToken);
 
 	/// <summary>
-	/// Get ResourceGroup alerts
-	/// </summary>
-	/// <param name="resourceGroupId"></param>
-	/// <param name="customColumns"></param>
-	/// <param name="needMessage"></param>
-	/// <param name="fields"></param>
-	/// <param name="size"></param>
-	/// <param name="offset"></param>
-	/// <param name="filter"></param>
-	/// <param name="cancellationToken"></param>
-	public Task<Page<Alert>> GetResourceGroupAlertsAsync(
-		int resourceGroupId,
-		[Optional, DefaultParameterValue("")] string customColumns,
-		[Optional] bool needMessage,
-		[Optional, DefaultParameterValue("")] string fields,
-		[Optional, DefaultParameterValue(50)] int size,
-		[Optional] int offset,
-		[Optional, DefaultParameterValue("")] string filter,
-		[Optional] CancellationToken cancellationToken)
-		=> GetBySubUrlAsync<Page<Alert>>($"device/groups/{resourceGroupId}/alerts?customColumns={customColumns}&needMessage={needMessage}&fields={fields}&size={size}&offset={offset}&filter={filter}", cancellationToken);
-
-	/// <summary>
 	/// Get unmonitored device list
 	/// </summary>
 	/// <param name="filter"></param>
