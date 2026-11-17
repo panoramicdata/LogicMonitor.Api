@@ -6,4 +6,5 @@ namespace LogicMonitor.Api;
 /// <typeparam name="T"></typeparam>
 public abstract class CloneRequest<T> where T : ICloneableItem
 {
+	internal static Type ClonedItemType => typeof(T);
 }

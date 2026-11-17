@@ -11,7 +11,7 @@ public partial class LogicMonitorClient
 	/// <param name="reportId">The report ID to run</param>
 	/// <param name="cancellationToken">An optional cancellation token</param>
 	/// <returns>The website</returns>
-	public Task<RunReportResponse> RunReportById(int reportId, CancellationToken cancellationToken = default)
+	public Task<RunReportResponse> RunReportById(int reportId, [Optional] CancellationToken cancellationToken)
 	  => PostAsync<RunReportRequest, RunReportResponse>(new RunReportRequest(), $"report/reports/{reportId}/executions", cancellationToken);
 
 	/// <summary>

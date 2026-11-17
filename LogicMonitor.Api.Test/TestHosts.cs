@@ -14,5 +14,5 @@ internal static class TestHosts
 	/// <summary>
 	/// Google Public DNS. Chosen because it is globally reachable, anycast, and answers ICMP.
 	/// </summary>
-	public static string PingTarget => "8.8.8.8";
+	public static string PingTarget => new System.Net.IPAddress([8, 8, 8, 8]).ToString();
 }

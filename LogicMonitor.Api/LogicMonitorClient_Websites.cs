@@ -55,8 +55,8 @@ public partial class LogicMonitorClient
 		int websiteId,
 		string name,
 		string? value,
-		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken = default)
+		[Optional, DefaultParameterValue(SetPropertyMode.Automatic)] SetPropertyMode mode,
+		[Optional] CancellationToken cancellationToken)
 	=>
 		SetWebsiteOrWebsiteGroupPropertyAsync<Website>(websiteId, name, value, mode, cancellationToken);
 
@@ -156,8 +156,8 @@ public partial class LogicMonitorClient
 		int websiteGroupId,
 		string name,
 		string? value,
-		SetPropertyMode mode = SetPropertyMode.Automatic,
-		CancellationToken cancellationToken = default)
+		[Optional, DefaultParameterValue(SetPropertyMode.Automatic)] SetPropertyMode mode,
+		[Optional] CancellationToken cancellationToken)
 	=>
 		SetWebsiteOrWebsiteGroupPropertyAsync<WebsiteGroup>(websiteGroupId, name, value, mode, cancellationToken);
 

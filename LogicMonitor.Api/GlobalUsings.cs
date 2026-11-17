@@ -44,6 +44,7 @@ global using System.Net;
 global using System.Net.Http;
 global using System.Net.Http.Headers;
 global using System.Reflection;
+global using System.Runtime.InteropServices;
 global using System.Runtime.Serialization;
 global using System.Security.Permissions;
 global using System.Text;

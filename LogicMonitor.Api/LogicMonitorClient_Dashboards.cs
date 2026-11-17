@@ -207,9 +207,9 @@ public partial class LogicMonitorClient
 	public Task<WidgetData> GetWidgetDataByIdAsync(
 		int id,
 		CancellationToken cancellationToken,
-		int? start = null,
-		int? end = null,
-		string format = ""
+		[Optional] int? start,
+		[Optional] int? end,
+		[Optional, DefaultParameterValue("")] string format
 		)
 		=> GetBySubUrlAsync<WidgetData>($"dashboard/widgets/{id}/data?start={start}&end={end}&format={format}", cancellationToken);
 
