@@ -69,6 +69,12 @@ public class AlertCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 		((string)alert!.Id).Should().Be(alertId);
 	}
 
+	private static bool IsUnacknowledgedActiveAlert(PSObject alertObj)
+	{
+		dynamic? alert = alertObj.BaseObject;
+		return alert != null && alert?.Acked == false && alert?.IsCleared == false;
+	}
+
 	[Fact]
 	public void ConfirmLMAlert_WithValidAlert_ShouldSucceed()
 	{
@@ -82,16 +88,7 @@ public class AlertCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fix
 		});
 
 		// Find an unacknowledged, active alert
-		PSObject? unackedAlert = null;
-		foreach (var alertObj in activeAlerts)
-		{
-			dynamic? alert = alertObj.BaseObject;
-			if (alert != null && alert?.Acked == false && alert?.IsCleared == false)
-			{
-				unackedAlert = alertObj;
-				break;
-			}
-		}
+		var unackedAlert = activeAlerts.FirstOrDefault(IsUnacknowledgedActiveAlert);
 
 		if (unackedAlert == null)
 		{

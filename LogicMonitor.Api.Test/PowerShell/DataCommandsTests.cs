@@ -21,16 +21,7 @@ public partial class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixt
 		resources.Should().HaveCountGreaterThan(0);
 	
 		// Find a resource that likely has data (skip if none found)
-		dynamic? resourceWithData = null;
-		foreach (var resourceObj in resources)
-		{
-			dynamic? resource = resourceObj.BaseObject;
-			if (resource != null)
-			{
-				resourceWithData = resource;
-				break;
-			}
-		}
+		dynamic? resourceWithData = resources.Select(resourceObj => resourceObj.BaseObject).FirstOrDefault(resource => resource != null);
 
 		if (resourceWithData == null)
 		{
