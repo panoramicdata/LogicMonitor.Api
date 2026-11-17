@@ -44,19 +44,25 @@ public partial class LogicMonitorClient
 			var result = await PostAsync<object, LogQueryResult>(new object(), $"log/search/{submit.QueryId}", cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.Logs is not null || result.Progress >= 1.0 || DateTimeOffset.UtcNow >= deadline)
+			if (IsLogSearchFinished(result, deadline))
 			{
-				// The search API ignores the requested size and returns up to its 1000-line cap, so
-				// honour LogQueryRequest.Size client-side.
-				if (result.Logs is { Count: > 0 } && request.Size > 0 && result.Logs.Count > request.Size)
-				{
-					result.Logs = result.Logs.GetRange(0, request.Size);
-				}
-
+				TrimToRequestedSize(result, request.Size);
 				return result;
 			}
 
 			await Task.Delay(LmLogsPollInterval, cancellationToken).ConfigureAwait(false);
+		}
+	}
+
+	private static bool IsLogSearchFinished(LogQueryResult result, DateTimeOffset deadline)
+		=> result.Logs is not null || result.Progress >= 1.0 || DateTimeOffset.UtcNow >= deadline;
+
+	// The search API ignores the requested size and returns up to its 1000-line cap, so honour it client-side.
+	private static void TrimToRequestedSize(LogQueryResult result, int size)
+	{
+		if (result.Logs is { Count: > 0 } && size > 0 && result.Logs.Count > size)
+		{
+			result.Logs = result.Logs.GetRange(0, size);
 		}
 	}
 }

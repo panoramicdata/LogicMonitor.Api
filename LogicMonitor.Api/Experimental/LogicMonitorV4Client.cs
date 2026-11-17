@@ -60,59 +60,67 @@ public class LogicMonitorV4Client : IDisposable
 			}
 
 			// 2. Fetch CSRF Token
-			_client.DefaultRequestHeaders.Clear();
-			_client.DefaultRequestHeaders.Add("X-Version", "3");
-			_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
-			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-			var csrfUrl = $"{_baseUrl}/functions/dummy";
-			var csrfResponse = await _client.GetAsync(csrfUrl, cancellationToken);
-
-			if (!csrfResponse.IsSuccessStatusCode)
+			var (csrfFetched, csrfToken) = await FetchCsrfTokenAsync(cancellationToken);
+			if (!csrfFetched)
 			{
-				await LogFailure("CSRF Token Retrieval", csrfResponse);
 				return;
 			}
 
-			// Extract the token from headers
-			var csrfToken = csrfResponse.Headers.GetValues("X-CSRF-Token").FirstOrDefault();
-
 			// 3. Authenticate / Sign-in
-			_client.DefaultRequestHeaders.Remove("X-CSRF-Token");
-			_client.DefaultRequestHeaders.Add("X-CSRF-Token", csrfToken);
-			_client.DefaultRequestHeaders.Add("External-User", "true");
-
-			var authUrl = $"{_baseUrl}/setting/admins/services/signin";
-			var loginPayload = new
-			{
-				keepMeSignedIn = "true",
-				username = _username,
-				password = _password
-			};
-
-			var jsonPayload = JsonConvert.SerializeObject(loginPayload);
-			var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-			var authResponse = await _client.PostAsync(authUrl, content, cancellationToken);
-
-			if (authResponse.IsSuccessStatusCode)
-			{
-				Console.WriteLine("Authentication successful.");
-
-				// 4. Example follow-up request
-				_client.DefaultRequestHeaders.Remove("X-Version");
-				_client.DefaultRequestHeaders.Add("X-Version", "4");
-				// Proceed to your restEndpoint here...
-			}
-			else
-			{
-				await LogFailure("Authentication", authResponse);
-			}
+			await SignInAsync(csrfToken, cancellationToken);
 		}
 		catch (Exception ex)
 		{
 			Console.WriteLine($"An error occurred: {ex.Message}");
 		}
+	}
+
+	private async Task<(bool Fetched, string? Token)> FetchCsrfTokenAsync(CancellationToken cancellationToken)
+	{
+		_client.DefaultRequestHeaders.Clear();
+		_client.DefaultRequestHeaders.Add("X-Version", "3");
+		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
+		_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+		var csrfResponse = await _client.GetAsync($"{_baseUrl}/functions/dummy", cancellationToken);
+
+		if (!csrfResponse.IsSuccessStatusCode)
+		{
+			await LogFailure("CSRF Token Retrieval", csrfResponse);
+			return (false, null);
+		}
+
+		return (true, csrfResponse.Headers.GetValues("X-CSRF-Token").FirstOrDefault());
+	}
+
+	private async Task SignInAsync(string? csrfToken, CancellationToken cancellationToken)
+	{
+		_client.DefaultRequestHeaders.Remove("X-CSRF-Token");
+		_client.DefaultRequestHeaders.Add("X-CSRF-Token", csrfToken);
+		_client.DefaultRequestHeaders.Add("External-User", "true");
+
+		var loginPayload = new
+		{
+			keepMeSignedIn = "true",
+			username = _username,
+			password = _password
+		};
+
+		var content = new StringContent(JsonConvert.SerializeObject(loginPayload), Encoding.UTF8, "application/json");
+
+		var authResponse = await _client.PostAsync($"{_baseUrl}/setting/admins/services/signin", content, cancellationToken);
+
+		if (!authResponse.IsSuccessStatusCode)
+		{
+			await LogFailure("Authentication", authResponse);
+			return;
+		}
+
+		Console.WriteLine("Authentication successful.");
+
+		// 4. Example follow-up request
+		_client.DefaultRequestHeaders.Remove("X-Version");
+		_client.DefaultRequestHeaders.Add("X-Version", "4");
 	}
 
 	private static async Task LogFailure(string step, HttpResponseMessage response)
