@@ -27,7 +27,7 @@ public class LogicMonitorClientPipelineTests
 	private static HttpResponseMessage Status(HttpStatusCode statusCode, string body)
 		=> StubHttpMessageHandler.JsonResponse(statusCode, body);
 
-	private static HttpResponseMessage Ok(string body = EmptyPage)
+	private static HttpResponseMessage Ok(string body)
 		=> StubHttpMessageHandler.JsonResponse(HttpStatusCode.OK, body);
 
 	[Fact]
