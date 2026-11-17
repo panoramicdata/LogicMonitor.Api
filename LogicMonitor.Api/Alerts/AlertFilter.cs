@@ -367,7 +367,7 @@ public class AlertFilter
 	private string? GetInScheduledDownTimeValue()
 		=> SdtFilter == SdtFilter.All ? null : (SdtFilter == SdtFilter.Sdt).ToString().ToLowerInvariant();
 
-	private static string? EscapeBackslashes(string? value) => value?.Replace(@"\", @"\\");
+	private static string? EscapeBackslashes(string? value) => value?.Replace("\\", "\\\\");
 
 	/// <summary>
 	/// IncludeCleared and IsCleared are mutually exclusive (enforced by Validate), and express

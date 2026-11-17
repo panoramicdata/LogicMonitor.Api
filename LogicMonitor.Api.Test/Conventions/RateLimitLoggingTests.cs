@@ -18,11 +18,11 @@ public class RateLimitLoggingTests
 {
 	private static string ClientSource([CallerFilePath] string thisFile = "")
 	{
-		// <repo>/LogicMonitor.Api.Test/Conventions/<this file>  ->  <repo>/LogicMonitor.Api/LogicMonitorClient.cs
+		// <repo>/LogicMonitor.Api.Test/Conventions/<this file>  ->  <repo>/LogicMonitor.Api/LogicMonitorClient*.cs
 		var repoRoot = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(thisFile)!)!)!;
-		var path = Path.Combine(repoRoot, "LogicMonitor.Api", "LogicMonitorClient.cs");
-		File.Exists(path).Should().BeTrue($"the client source should be at {path}");
-		return File.ReadAllText(path);
+		var files = Directory.GetFiles(Path.Combine(repoRoot, "LogicMonitor.Api"), "LogicMonitorClient*.cs");
+		files.Should().Contain(f => Path.GetFileName(f) == "LogicMonitorClient.cs", "the client source should be present");
+		return string.Join("\n", files.Select(File.ReadAllText));
 	}
 
 	[Fact]
