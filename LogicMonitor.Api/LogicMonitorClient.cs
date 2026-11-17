@@ -113,4 +113,44 @@ public partial class LogicMonitorClient : IDisposable
 	/// This can happen for example when an item in the first page is deleted during paging.
 	/// </summary>
 	public bool StrictPagingTotalChecking { get; set; }
+
+	/// <summary>
+	/// Create a LogicMonitor client
+	/// </summary>
+	/// <param name="logicMonitorClientOptions">The options</param>
+	public LogicMonitorClient(
+		LogicMonitorClientOptions logicMonitorClientOptions)
+		: this(logicMonitorClientOptions, new HttpClientHandler { CookieContainer = new CookieContainer() })
+	{
+	}
+
+	internal LogicMonitorClient(
+		LogicMonitorClientOptions logicMonitorClientOptions,
+		HttpMessageHandler handler)
+	{
+		_options = logicMonitorClientOptions;
+
+		// Set up the logger
+		_logger = logicMonitorClientOptions.Logger ?? new NullLogger<LogicMonitorClient>();
+
+		_cache = new Cache<string, object>(TimeSpan.FromMinutes(5), _logger);
+
+		AccountName = logicMonitorClientOptions.Account ?? throw new ArgumentException(nameof(LogicMonitorClientOptions));
+		_accessId = logicMonitorClientOptions.AccessId ?? throw new ArgumentException(nameof(LogicMonitorClientOptions));
+		_accessKey = logicMonitorClientOptions.AccessKey ?? throw new ArgumentException(nameof(LogicMonitorClientOptions));
+
+		_handler = handler;
+		_client = new HttpClient(_handler)
+		{
+			BaseAddress = new Uri($"https://{AccountName}.logicmonitor.com/santaba/")
+		};
+		_client.DefaultRequestHeaders.Accept.Clear();
+		_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+		_client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+		_client.DefaultRequestHeaders.Add("X-version", "3");
+		_client.DefaultRequestHeaders.Add("X-CSRF-Token", "Fetch");
+		_client.Timeout = TimeSpan.FromSeconds(logicMonitorClientOptions.HttpClientTimeoutSeconds);
+
+		MaximumBackOffSeconds = logicMonitorClientOptions.MaximumBackOffSeconds;
+	}
 }

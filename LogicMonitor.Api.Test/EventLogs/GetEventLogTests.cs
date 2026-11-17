@@ -17,45 +17,10 @@ public class GetEventLogTests(ITestOutputHelper iTestOutputHelper, Fixture fixtu
 			var logItems = await LogicMonitorClient
 				.GetLogItemsAsync(new LogFilter(i, 300, startDateTimeUtc, endDateTimeUtc, LogFilterSortOrder.HappenedOnAsc), CancellationToken);
 
-
 			foreach (var logItem in logItems)
 			{
-				try
-				{
-					var auditEvent = logItem.ToAuditEvent();
-					auditEvent.Should().NotBeNull();
-
-					if (auditEvent.EntityType == AuditEventEntityType.AlertNote)
-					{
-						auditEvent.AlertId.Should().NotBeNull();
-						auditEvent.AlertNote.Should().NotBeNullOrWhiteSpace();
-						auditEvent.PerformedByUsername.Should().NotBeNull();
-					}
-
-					if (auditEvent.MatchedRegExId == -1)
-					{
-						unhandledLogItems.Add(logItem);
-						continue;
-					}
-
-					auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
-					auditEvent.ActionType.Should().NotBe(AuditEventActionType.None);
-
-					if (auditEvent.ActionType is not AuditEventActionType.Login
-						and not AuditEventActionType.GeneralApi)
-					{
-						auditEvent.EntityType.Should().NotBe(AuditEventEntityType.None);
-					}
-				}
-				catch (Exception ex)
-				{
-
-					Logger.LogError(ex, "Could not parse log item {Id}\n'{Description}'", logItem.Id, logItem.Description);
-					throw;
-				}
-
+				AssertLogItemParses(logItem, unhandledLogItems);
 			}
-
 		}
 
 		if (unhandledLogItems.Count > 0)
@@ -68,5 +33,41 @@ public class GetEventLogTests(ITestOutputHelper iTestOutputHelper, Fixture fixtu
 		}
 
 		unhandledLogItems.Should().BeEmpty();
+	}
+
+	private void AssertLogItemParses(LogItem logItem, List<LogItem> unhandledLogItems)
+	{
+		try
+		{
+			var auditEvent = logItem.ToAuditEvent();
+			auditEvent.Should().NotBeNull();
+
+			if (auditEvent.EntityType == AuditEventEntityType.AlertNote)
+			{
+				auditEvent.AlertId.Should().NotBeNull();
+				auditEvent.AlertNote.Should().NotBeNullOrWhiteSpace();
+				auditEvent.PerformedByUsername.Should().NotBeNull();
+			}
+
+			if (auditEvent.MatchedRegExId == -1)
+			{
+				unhandledLogItems.Add(logItem);
+				return;
+			}
+
+			auditEvent.OutcomeType.Should().NotBe(AuditEventOutcomeType.None);
+			auditEvent.ActionType.Should().NotBe(AuditEventActionType.None);
+
+			if (auditEvent.ActionType is not AuditEventActionType.Login
+				and not AuditEventActionType.GeneralApi)
+			{
+				auditEvent.EntityType.Should().NotBe(AuditEventEntityType.None);
+			}
+		}
+		catch (Exception ex)
+		{
+			Logger.LogError(ex, "Could not parse log item {Id}\n'{Description}'", logItem.Id, logItem.Description);
+			throw;
+		}
 	}
 }
