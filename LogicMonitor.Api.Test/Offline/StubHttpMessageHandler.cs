@@ -36,8 +36,8 @@ public sealed class StubHttpMessageHandler(Func<RecordedRequest, HttpResponseMes
 	/// <summary>
 	/// A handler that always answers 200 with the given JSON body.
 	/// </summary>
-	public static StubHttpMessageHandler Json(string json)
-		=> new(_ => JsonResponse(HttpStatusCode.OK, json));
+	public static StubHttpMessageHandler Json(string content)
+		=> new(_ => JsonResponse(HttpStatusCode.OK, content));
 
 	/// <summary>
 	/// A handler that answers each request from the queue in order, repeating the last answer when it runs out.

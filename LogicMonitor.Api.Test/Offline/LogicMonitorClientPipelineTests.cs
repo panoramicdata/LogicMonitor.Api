@@ -24,7 +24,7 @@ public class LogicMonitorClientPipelineTests
 		return response;
 	}
 
-	private static HttpResponseMessage Status(HttpStatusCode statusCode, string body = "{}")
+	private static HttpResponseMessage Status(HttpStatusCode statusCode, string body)
 		=> StubHttpMessageHandler.JsonResponse(statusCode, body);
 
 	private static HttpResponseMessage Ok(string body = EmptyPage)
@@ -85,7 +85,7 @@ public class LogicMonitorClientPipelineTests
 	public async Task GetAsync_AfterATransientServerError_ReturnsTheNextSuccess()
 	{
 		var handler = StubHttpMessageHandler.Sequence(
-			() => Status(HttpStatusCode.BadGateway),
+			() => Status(HttpStatusCode.BadGateway, "{}"),
 			() => Ok("""{"status":200,"errmsg":"OK","data":{"id":9}}"""));
 		using var client = StubbedClient.Create(handler);
 
@@ -454,7 +454,7 @@ public class LogicMonitorClientPipelineTests
 	[Fact]
 	public async Task AnyRequest_StampsTheStatistics()
 	{
-		var handler = StubHttpMessageHandler.Sequence(() => Ok("{}"), () => Status(HttpStatusCode.NotFound));
+		var handler = StubHttpMessageHandler.Sequence(() => Ok("{}"), () => Status(HttpStatusCode.NotFound, "{}"));
 		using var client = StubbedClient.Create(handler);
 
 		await client.DeleteAsync("device/groups/1", TestContext.Current.CancellationToken);
