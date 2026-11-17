@@ -34,42 +34,8 @@ public partial class LogicMonitorClient
 	/// </summary>
 	/// <param name="alertFilter"></param>
 	/// <param name="chunkSize"></param>
-	public async Task<List<Alert>> GetRestAlertsWithV84BugAsync(AlertFilter alertFilter, TimeSpan chunkSize)
-	{
-		var originalStartEpochIsAfter = alertFilter.StartEpochIsAfter;
-		var originalStartEpochIsBefore = alertFilter.StartEpochIsBefore;
-		var utcNow = DateTime.UtcNow;
-		alertFilter.StartEpochIsAfter ??= utcNow.AddYears(-1).SecondsSinceTheEpoch();
-
-		alertFilter.StartEpochIsBefore ??= utcNow.SecondsSinceTheEpoch();
-
-		var allAlerts = new ConcurrentBag<Alert>();
-
-		var alertFilterList = ((long)alertFilter.StartEpochIsAfter).ToDateTimeUtc()
-			.GetChunkedTimeRangeList(((long)alertFilter.StartEpochIsBefore).ToDateTimeUtc(), chunkSize)
-			.Select(t =>
-			{
-				var newAlertFilter = alertFilter.Clone();
-				newAlertFilter.ResetSearch();
-				newAlertFilter.StartEpochIsAfter = t.Item1.SecondsSinceTheEpoch() - 1; // Take one off to include anything raised on that exact second
-				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
-				return newAlertFilter;
-			});
-		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
-		{
-			// Jitter, to spread the chunked requests out across the portal. Not security-sensitive.
-			await Task.Delay(Random.Shared.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetRestAlertsWithoutV84BugAsync(individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
-			{
-				allAlerts.Add(alert);
-			}
-		})).ConfigureAwait(false);
-
-		alertFilter.StartEpochIsAfter = originalStartEpochIsAfter;
-		alertFilter.StartEpochIsBefore = originalStartEpochIsBefore;
-
-		return [.. allAlerts.DistinctBy(a => a.Id).Take(alertFilter.Take ?? int.MaxValue)];
-	}
+	public Task<List<Alert>> GetRestAlertsWithV84BugAsync(AlertFilter alertFilter, TimeSpan chunkSize)
+		=> GetAlertsChunkedAsync(alertFilter, chunkSize, f => GetRestAlertsWithoutV84BugAsync(f, true, default));
 
 	internal async Task<(List<Alert> alerts, bool limitReached)> GetRestAlertsWithoutV84BugAsync(
 		AlertFilter? alertFilter,
@@ -83,72 +49,22 @@ public partial class LogicMonitorClient
 
 		// There is a bug in LogicMonitor (https://jira.logicmonitor.com/browse/DEVTS-4968)
 		// whereby the MonitorObjectId does not work in a filter.  If used, substitute the MonitorObjectName instead
-		// If the MonitorObjectId is set, set the
 		correctedAlertFilter.MonitorObjectId = null;
 		var alertFilterMonitorObjectId = alertFilter?.MonitorObjectId;
 		if (alertFilterMonitorObjectId.HasValue)
 		{
-			var alertTypesOrNull = alertFilter?.GetAlertTypes();
-			var alertTypesAreOnlyWebsite = alertTypesOrNull?.All(alertType => alertType == AlertType.Website) ?? false;
-			correctedAlertFilter.MonitorObjectName = alertTypesAreOnlyWebsite
-				? (await GetAsync<Website>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).Name
-				: (await GetAsync<Resource>(alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false)).DisplayName;
+			correctedAlertFilter.MonitorObjectName = await GetMonitorObjectNameAsync(alertFilter, alertFilterMonitorObjectId.Value, cancellationToken).ConfigureAwait(false);
 		}
 
-		// If take is specified, do only that chunk.
+		return await GetRestAlertPagesAsync(correctedAlertFilter, calledFromChunked, cancellationToken).ConfigureAwait(false);
+	}
 
-		correctedAlertFilter.Skip ??= 0;
-
-		int maxAlertCount;
-		if (correctedAlertFilter.Take is not null)
-		{
-			if (correctedAlertFilter.Take > AlertsMaxTake)
-			{
-				maxAlertCount = (int)correctedAlertFilter.Take;
-				correctedAlertFilter.Take = AlertsMaxTake;
-			}
-			else
-			{
-				maxAlertCount = (int)correctedAlertFilter.Take;
-			}
-		}
-		else
-		{
-			maxAlertCount = int.MaxValue;
-			correctedAlertFilter.Take = AlertsMaxTake;
-		}
-
-		var allAlerts = new List<Alert>();
-		do
-		{
-			var page = await FilteredGetAsync("alert/alerts", correctedAlertFilter.GetFilter(), cancellationToken).ConfigureAwait(false);
-			allAlerts.AddRange([.. page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id))]);
-
-			if (!calledFromChunked && allAlerts.Count >= 5000)
-			{
-				// LMREP-9012: when there are more than 5000 (anywhere near the 10,000 limit), return and use the chunked method instead
-				return (new List<Alert>(), true);
-			}
-
-			// The page TotalCount is negative if there are more to come, but this is not particularly useful to us.
-			// The only way to be sure (while bugs exist) is to keep fetching the next batch until no more results are returned.
-			if (page.Items?.Count == 0)
-			{
-				break;
-			}
-
-			// Adjust the alertFilter
-			if (correctedAlertFilter.SearchId is null && !string.IsNullOrWhiteSpace(page.SearchId))
-			{
-				// We can re-use the searchId
-				correctedAlertFilter.SearchId = page.SearchId;
-			}
-
-			correctedAlertFilter.Skip += AlertsMaxTake;
-			correctedAlertFilter.Take = Math.Min(AlertsMaxTake, maxAlertCount - allAlerts.Count);
-		}
-		while (correctedAlertFilter.Take != 0);
-		return (allAlerts, false);
+	private async Task<string> GetMonitorObjectNameAsync(AlertFilter? alertFilter, int monitorObjectId, CancellationToken cancellationToken)
+	{
+		var alertTypesAreOnlyWebsite = alertFilter?.GetAlertTypes()?.All(alertType => alertType == AlertType.Website) ?? false;
+		return alertTypesAreOnlyWebsite
+			? (await GetAsync<Website>(monitorObjectId, cancellationToken).ConfigureAwait(false)).Name
+			: (await GetAsync<Resource>(monitorObjectId, cancellationToken).ConfigureAwait(false)).DisplayName;
 	}
 
 	/// <summary>

@@ -308,99 +308,91 @@ public partial class LogicMonitorClient
 		{
 			// Make sure the ResourceGroup exists
 			if (await GetResourceGroupByFullPathAsync(searchResourceGroupName, cancellationToken).ConfigureAwait(false)
-				is ResourceGroup checkedResourceGroup)
+				is not ResourceGroup checkedResourceGroup)
 			{
-				List<ResourceGroup> resourceGroups;
+				continue;
+			}
 
-				// The root
-				if (checkedResourceGroup.Id == 1)
-				{
-					resourceGroups =
-						recurse
-							// All ResourceGroups
-							? await GetAllAsync<ResourceGroup>(cancellationToken: cancellationToken)
-								.ConfigureAwait(false)
-							// Only the root
-							: await GetAllAsync(
-								new Filter<ResourceGroup>
-								{
-									FilterItems =
-									[
-										new Eq<ResourceGroup>(nameof(ResourceGroup.Id), 1)
-									]
-								},
-								cancellationToken: cancellationToken)
-							.ConfigureAwait(false);
-				}
-				else
-				{
-					if (recurse)
-					{
-						if (!checkedResourceGroup.FullPath.Contains('(') &&
-							!checkedResourceGroup.FullPath.Contains(')') &&
-							!checkedResourceGroup.FullPath.Contains('|'))
-						{
-							resourceGroups =
-								await GetAllAsync(
-									new Filter<ResourceGroup>
-									{
-										FilterItems =
-										[
-											new Includes<ResourceGroup>(nameof(ResourceGroup.FullPath), checkedResourceGroup.FullPath)
-										]
-									},
-									cancellationToken: cancellationToken)
-								.ConfigureAwait(false);
-						}
-						else
-						{
-							// LM API Includes filter (~) cannot handle parentheses and pipes
-							resourceGroups = await GetAllSubResourceGroups(
-								checkedResourceGroup.Id,
-								cancellationToken)
-								.ConfigureAwait(false);
-						}
-					}
-					else
-					{
-						// Issue #48 - the group has already been resolved, by a lookup that falls back to a
-						// tree node search precisely because Eq cannot carry parentheses or whitespace. Re-
-						// querying with that same Eq reintroduces the problem it worked around, and can also
-						// over-match on brackets with nothing trimming the extras on this branch: the RemoveAll
-						// below runs only when recursing. A non-recursive fetch would then return resources
-						// from groups the caller never asked for. Use the group in hand.
-						resourceGroups = [checkedResourceGroup];
-					}
-				}
+			var resourceGroups = await GetResourceGroupsToSearchAsync(checkedResourceGroup, searchResourceGroupName, recurse, cancellationToken).ConfigureAwait(false);
 
-				// Ensure the one we actually found is included
-				if (!resourceGroups.Exists(dg => dg.Id == checkedResourceGroup.Id))
-				{
-					resourceGroups.Add(checkedResourceGroup);
-				}
+			foreach (var resourceGroup in resourceGroups)
+			{
+				var resourceGroupResources = await GetResourcesByResourceGroupIdAsync(
+					resourceGroup.Id,
+					resourceFilter,
+					cancellationToken
+					).ConfigureAwait(false);
 
-				if (recurse && checkedResourceGroup.Id != 1)
-				{
-					// Filter out the ones where the full path did not START with the searched-for group, as we could
-					// only use a Includes<ResourceGroup> filter and not a StartsWith (there isn't one!)
-					resourceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchResourceGroupName, StringComparison.Ordinal));
-				}
-
-				// Get the Resource
-				foreach (var resourceGroup in resourceGroups)
-				{
-					var resourceGroupResources = await GetResourcesByResourceGroupIdAsync(
-						resourceGroup.Id,
-						resourceFilter,
-						cancellationToken
-						).ConfigureAwait(false);
-
-					resources.AddRange(resourceGroupResources);
-				}
+				resources.AddRange(resourceGroupResources);
 			}
 		}
 
 		return [.. resources.DistinctBy(d => d.Id)];
+	}
+
+	private async Task<List<ResourceGroup>> GetResourceGroupsToSearchAsync(
+		ResourceGroup checkedResourceGroup,
+		string searchResourceGroupName,
+		bool recurse,
+		CancellationToken cancellationToken)
+	{
+		var resourceGroups = await GetCandidateResourceGroupsAsync(checkedResourceGroup, recurse, cancellationToken).ConfigureAwait(false);
+
+		// Ensure the one we actually found is included
+		if (!resourceGroups.Exists(dg => dg.Id == checkedResourceGroup.Id))
+		{
+			resourceGroups.Add(checkedResourceGroup);
+		}
+
+		if (recurse && checkedResourceGroup.Id != 1)
+		{
+			// Includes<ResourceGroup> has no StartsWith, so drop the groups whose full path did not start with the searched-for group
+			resourceGroups.RemoveAll(dg => !dg.FullPath.StartsWith(searchResourceGroupName, StringComparison.Ordinal));
+		}
+
+		return resourceGroups;
+	}
+
+	private Task<List<ResourceGroup>> GetCandidateResourceGroupsAsync(ResourceGroup checkedResourceGroup, bool recurse, CancellationToken cancellationToken)
+	{
+		if (checkedResourceGroup.Id == 1)
+		{
+			return recurse
+				? GetAllAsync<ResourceGroup>(cancellationToken: cancellationToken)
+				: GetAllAsync(
+					new Filter<ResourceGroup>
+					{
+						FilterItems =
+						[
+							new Eq<ResourceGroup>(nameof(ResourceGroup.Id), 1)
+						]
+					},
+					cancellationToken: cancellationToken);
+		}
+
+		if (!recurse)
+		{
+			// Issue #48: the group is already resolved, and re-querying it with Eq reintroduces the parentheses and whitespace problem the lookup worked around
+			return Task.FromResult(new List<ResourceGroup> { checkedResourceGroup });
+		}
+
+		// LM API Includes filter (~) cannot handle parentheses and pipes
+		if (checkedResourceGroup.FullPath.Contains('(')
+			|| checkedResourceGroup.FullPath.Contains(')')
+			|| checkedResourceGroup.FullPath.Contains('|'))
+		{
+			return GetAllSubResourceGroups(checkedResourceGroup.Id, cancellationToken);
+		}
+
+		return GetAllAsync(
+			new Filter<ResourceGroup>
+			{
+				FilterItems =
+				[
+					new Includes<ResourceGroup>(nameof(ResourceGroup.FullPath), checkedResourceGroup.FullPath)
+				]
+			},
+			cancellationToken: cancellationToken);
 	}
 
 	/// <summary>
@@ -614,6 +606,19 @@ public partial class LogicMonitorClient
 			throw new ArgumentOutOfRangeException($"No ResourceGroup found with id {resourceGroupId}");
 		}
 
+		await LinkResourceGroupsAsync(allResourceGroups, requestedRootGroup, resourceGroupId, cancellationToken).ConfigureAwait(false);
+
+		AttachResources(allResourceGroups, await GetAllAsync<Resource>(cancellationToken: cancellationToken).ConfigureAwait(false));
+
+		return requestedRootGroup;
+	}
+
+	private async Task LinkResourceGroupsAsync(
+		List<ResourceGroup> allResourceGroups,
+		ResourceGroup requestedRootGroup,
+		int resourceGroupId,
+		CancellationToken cancellationToken)
+	{
 		foreach (var resourceGroup in allResourceGroups)
 		{
 			var parentGroup = allResourceGroups.SingleOrDefault(g => g.Id == resourceGroup.ParentId) ?? (resourceGroupId == -1 ? requestedRootGroup : null);
@@ -622,14 +627,8 @@ public partial class LogicMonitorClient
 				continue;
 			}
 
-			if (parentGroup.SubGroups is null)
-			{
-				parentGroup.SubGroups = [resourceGroup];
-			}
-			else
-			{
-				parentGroup.SubGroups.Add(resourceGroup);
-			}
+			parentGroup.SubGroups ??= [];
+			parentGroup.SubGroups.Add(resourceGroup);
 
 			var detailedResourceGroup = await GetAsync<ResourceGroup>(
 				resourceGroup.Id,
@@ -638,28 +637,27 @@ public partial class LogicMonitorClient
 
 			resourceGroup.AlertStatus = detailedResourceGroup.AlertStatus;
 		}
+	}
 
-		foreach (var resource in await GetAllAsync<Resource>(cancellationToken: cancellationToken).ConfigureAwait(false))
+	private static void AttachResources(List<ResourceGroup> allResourceGroups, List<Resource> resources)
+	{
+		foreach (var resource in resources)
 		{
-			foreach (var resourceGroup in resource
+			var resourceGroups = resource
 				.ResourceGroupIdsString
 				.Split(',')
 				.Select(int.Parse)
-				.Select(dgId => allResourceGroups.SingleOrDefault(g => g.Id == dgId)))
-			{
-				// Avoids a race condition
-				if (resourceGroup is null)
-				{
-					continue;
-				}
+				.Select(dgId => allResourceGroups.SingleOrDefault(g => g.Id == dgId))
+				.OfType<ResourceGroup>();
 
+			// A null group is skipped, which avoids a race condition
+			foreach (var resourceGroup in resourceGroups)
+			{
 				resourceGroup.Resources ??= [];
 				resourceGroup.Resources.Add(resource);
 				resourceGroup.ResourceCount = resourceGroup.Resources.Count;
 			}
 		}
-
-		return requestedRootGroup;
 	}
 
 	/// <summary>
@@ -863,38 +861,48 @@ public partial class LogicMonitorClient
 		// Need to get the existing Alert config, modify it and then PUT it back
 		var url = $"device/groups/{resourceGroupId}/datasources/{dataSourceId}/alertsettings";
 
-		var dataPointConfigurationCollection = await GetBySubUrlAsync<DataPointConfigurationCollection>($"device/groups/{resourceGroupId}/datasources/{dataSourceId}/alertsettings", cancellationToken).ConfigureAwait(false);
+		var dataPointConfigurationCollection = await GetBySubUrlAsync<DataPointConfigurationCollection>(url, cancellationToken).ConfigureAwait(false);
 
 		var changeMade = false;
 
-		foreach (var dataPointConfiguration in dataPointConfigurationCollection.Items)
+		foreach (var dataPointConfiguration in dataPointConfigurationCollection.Items.Where(c => c.DataPointId == dataPointId))
 		{
-			if (dataPointConfiguration.DataPointId == dataPointId)
-			{
-				if (alertExpression is not null && dataPointConfiguration.AlertExpression != alertExpression)
-				{
-					dataPointConfiguration.AlertExpression = alertExpression;
-					changeMade = true;
-				}
-
-				if (alertExpressionNote is not null && dataPointConfiguration.AlertExpressionNote != alertExpressionNote)
-				{
-					dataPointConfiguration.AlertExpressionNote = alertExpressionNote;
-					changeMade = true;
-				}
-
-				if (disableAlerting.HasValue && dataPointConfiguration.DisableAlerting != disableAlerting)
-				{
-					dataPointConfiguration.DisableAlerting = disableAlerting.Value;
-					changeMade = true;
-				}
-			}
+			changeMade |= ApplyThresholdChanges(dataPointConfiguration, alertExpression, alertExpressionNote, disableAlerting);
 		}
 
 		if (changeMade)
 		{
 			await PutAsync(url, dataPointConfigurationCollection, cancellationToken).ConfigureAwait(false);
 		}
+	}
+
+	private static bool ApplyThresholdChanges(
+		DataPointConfiguration dataPointConfiguration,
+		string alertExpression,
+		string alertExpressionNote,
+		bool? disableAlerting)
+	{
+		var changeMade = false;
+
+		if (alertExpression is not null && dataPointConfiguration.AlertExpression != alertExpression)
+		{
+			dataPointConfiguration.AlertExpression = alertExpression;
+			changeMade = true;
+		}
+
+		if (alertExpressionNote is not null && dataPointConfiguration.AlertExpressionNote != alertExpressionNote)
+		{
+			dataPointConfiguration.AlertExpressionNote = alertExpressionNote;
+			changeMade = true;
+		}
+
+		if (disableAlerting.HasValue && dataPointConfiguration.DisableAlerting != disableAlerting)
+		{
+			dataPointConfiguration.DisableAlerting = disableAlerting.Value;
+			changeMade = true;
+		}
+
+		return changeMade;
 	}
 
 	/// <summary>
@@ -973,7 +981,7 @@ public partial class LogicMonitorClient
 	/// <param name="filter"></param>
 	/// <param name="chunkSize">The chunk size (TimeSpan)</param>
 	/// <param name="cancellationToken"></param>
-	internal async Task<List<Alert>> GetResourceAlertsByIdChunkedAsync(
+	internal Task<List<Alert>> GetResourceAlertsByIdChunkedAsync(
 		int resourceId,
 		AlertFilter filter,
 		TimeSpan chunkSize,
@@ -982,40 +990,7 @@ public partial class LogicMonitorClient
 		// Ensure that the filter CANNOT override the device ID set!
 		filter.RemoveMonitorObjectReferences();
 
-		var originalStartEpochIsAfter = filter.StartEpochIsAfter;
-		var originalStartEpochIsBefore = filter.StartEpochIsBefore;
-		var utcNow = DateTime.UtcNow;
-		filter.StartEpochIsAfter ??= utcNow.AddYears(-1).SecondsSinceTheEpoch();
-
-		filter.StartEpochIsBefore ??= utcNow.SecondsSinceTheEpoch();
-
-		var allAlerts = new ConcurrentBag<Alert>();
-
-		var alertFilterList = ((long)filter.StartEpochIsAfter).ToDateTimeUtc()
-			.GetChunkedTimeRangeList(((long)filter.StartEpochIsBefore).ToDateTimeUtc(), chunkSize)
-			.Select(t =>
-			{
-				var newAlertFilter = filter.Clone();
-				newAlertFilter.ResetSearch();
-				newAlertFilter.StartEpochIsAfter = t.Item1.SecondsSinceTheEpoch() - 1; // Take one off to include anything raised on that exact second
-				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
-				return newAlertFilter;
-			});
-
-		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
-		{
-			// Jitter, to spread the chunked requests out across the portal. Not security-sensitive.
-			await Task.Delay(Random.Shared.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetResourceAlertsByIdNormalAsync(resourceId, individualAlertFilter, true, cancellationToken).ConfigureAwait(false)).alerts)
-			{
-				allAlerts.Add(alert);
-			}
-		})).ConfigureAwait(false);
-
-		filter.StartEpochIsAfter = originalStartEpochIsAfter;
-		filter.StartEpochIsBefore = originalStartEpochIsBefore;
-
-		return [.. allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue)];
+		return GetAlertsChunkedAsync(filter, chunkSize, f => GetResourceAlertsByIdNormalAsync(resourceId, f, true, cancellationToken));
 	}
 
 	/// <summary>
@@ -1026,67 +1001,12 @@ public partial class LogicMonitorClient
 	/// <param name="calledFromChunked"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	/// <returns>A List of Alerts and whether the limit was reached</returns>
-	internal async Task<(List<Alert> alerts, bool limitReached)> GetResourceAlertsByIdNormalAsync(
+	internal Task<(List<Alert> alerts, bool limitReached)> GetResourceAlertsByIdNormalAsync(
 		int resourceId,
 		AlertFilter filter,
 		bool calledFromChunked,
 		CancellationToken cancellationToken)
-	{
-		// Ensure that the filter CANNOT override the device ID set!
-		filter.RemoveMonitorObjectReferences();
-
-		// Ensure skip is set (or 0)
-		filter.Skip ??= 0;
-
-		var maxAlertCount = int.MaxValue;
-		if (filter.Take is not null)
-		{
-			if (filter.Take > AlertsMaxTake)
-			{
-				maxAlertCount = (int)filter.Take;
-				filter.Take = AlertsMaxTake;
-			}
-			else
-			{
-				maxAlertCount = (int)filter.Take;
-			}
-		}
-		else
-		{
-			filter.Take = AlertsMaxTake;
-		}
-
-		var allAlerts = new List<Alert>();
-		do
-		{
-			var page = await GetBySubUrlAsync<Page<Alert>>($"device/devices/{resourceId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
-
-			allAlerts.AddRange([.. page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id))]);
-
-			if (!calledFromChunked && allAlerts.Count >= 5000)
-			{
-				// When there are more than 5000 (anywhere near the 10,000 limit), return and use the chunked method instead
-				return (new List<Alert>(), true);
-			}
-
-			if (page.Items?.Count == 0)
-			{
-				break;
-			}
-
-			if (filter.SearchId is null && !string.IsNullOrWhiteSpace(page.SearchId))
-			{
-				// We can re-use the searchId
-				filter.SearchId = page.SearchId;
-			}
-
-			filter.Skip += AlertsMaxTake;
-			filter.Take = Math.Min(AlertsMaxTake, maxAlertCount - allAlerts.Count);
-		}
-		while (filter.Take != 0);
-
-		return (allAlerts, false);
-	}
+		=> GetEntityAlertPagesAsync($"device/devices/{resourceId}/alerts", filter, calledFromChunked, cancellationToken);
 
 	/// <summary>
 	/// Get AWS external id

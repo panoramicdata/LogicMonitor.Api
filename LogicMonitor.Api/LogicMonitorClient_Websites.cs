@@ -232,7 +232,7 @@ public partial class LogicMonitorClient
 	/// <param name="websiteId">The Website ID</param>
 	/// <param name="filter"></param>
 	/// <param name="chunkSize">The chunk size (TimeSpan)</param>
-	internal async Task<List<Alert>> GetWebsiteAlertsByIdChunkedAsync(
+	internal Task<List<Alert>> GetWebsiteAlertsByIdChunkedAsync(
 		int websiteId,
 		AlertFilter filter,
 		TimeSpan chunkSize)
@@ -240,39 +240,7 @@ public partial class LogicMonitorClient
 		// Ensure that the filter CANNOT override the website ID set!
 		filter.RemoveMonitorObjectReferences();
 
-		var originalStartEpochIsAfter = filter.StartEpochIsAfter;
-		var originalStartEpochIsBefore = filter.StartEpochIsBefore;
-		var utcNow = DateTime.UtcNow;
-		filter.StartEpochIsAfter ??= utcNow.AddYears(-1).SecondsSinceTheEpoch();
-
-		filter.StartEpochIsBefore ??= utcNow.SecondsSinceTheEpoch();
-
-		var allAlerts = new ConcurrentBag<Alert>();
-
-		var alertFilterList = ((long)filter.StartEpochIsAfter).ToDateTimeUtc()
-			.GetChunkedTimeRangeList(((long)filter.StartEpochIsBefore).ToDateTimeUtc(), chunkSize)
-			.Select(t =>
-			{
-				var newAlertFilter = filter.Clone();
-				newAlertFilter.ResetSearch();
-				newAlertFilter.StartEpochIsAfter = t.Item1.SecondsSinceTheEpoch() - 1; // Take one off to include anything raised on that exact second
-				newAlertFilter.StartEpochIsBefore = t.Item2.SecondsSinceTheEpoch();
-				return newAlertFilter;
-			});
-		await Task.WhenAll(alertFilterList.Select(async individualAlertFilter =>
-		{
-			// Jitter, to spread the chunked requests out across the portal. Not security-sensitive.
-			await Task.Delay(Random.Shared.Next(0, 2000), default).ConfigureAwait(false);
-			foreach (var alert in (await GetWebsiteAlertsByIdNormalAsync(websiteId, individualAlertFilter, true, default).ConfigureAwait(false)).alerts)
-			{
-				allAlerts.Add(alert);
-			}
-		})).ConfigureAwait(false);
-
-		filter.StartEpochIsAfter = originalStartEpochIsAfter;
-		filter.StartEpochIsBefore = originalStartEpochIsBefore;
-
-		return [.. allAlerts.DistinctBy(a => a.Id).Take(filter.Take ?? int.MaxValue)];
+		return GetAlertsChunkedAsync(filter, chunkSize, f => GetWebsiteAlertsByIdNormalAsync(websiteId, f, true, default));
 	}
 
 	/// <summary>
@@ -283,67 +251,12 @@ public partial class LogicMonitorClient
 	/// <param name="calledFromChunked"></param>
 	/// <param name="cancellationToken">The CancellationToken</param>
 	/// <returns>A List of Alerts and whether the limit was reached</returns>
-	internal async Task<(List<Alert> alerts, bool limitReached)> GetWebsiteAlertsByIdNormalAsync(
+	internal Task<(List<Alert> alerts, bool limitReached)> GetWebsiteAlertsByIdNormalAsync(
 		int websiteId,
 		AlertFilter filter,
 		bool calledFromChunked,
 		CancellationToken cancellationToken)
-	{
-		// Ensure that the filter CANNOT override the website ID set!
-		filter.RemoveMonitorObjectReferences();
-
-		// Ensure skip is set (or 0)
-		filter.Skip ??= 0;
-
-		var maxAlertCount = int.MaxValue;
-		if (filter.Take is not null)
-		{
-			if (filter.Take > AlertsMaxTake)
-			{
-				maxAlertCount = (int)filter.Take;
-				filter.Take = AlertsMaxTake;
-			}
-			else
-			{
-				maxAlertCount = (int)filter.Take;
-			}
-		}
-		else
-		{
-			filter.Take = AlertsMaxTake;
-		}
-
-		var allAlerts = new List<Alert>();
-		do
-		{
-			var page = await GetBySubUrlAsync<Page<Alert>>($"website/websites/{websiteId}/alerts?{filter.GetFilter()}", cancellationToken).ConfigureAwait(false);
-
-			allAlerts.AddRange([.. page.Items.Where(alert => !allAlerts.Select(aa => aa.Id).Contains(alert.Id))]);
-
-			if (!calledFromChunked && allAlerts.Count >= 5000)
-			{
-				// When there are more than 5000 (anywhere near the 10,000 limit), return and use the chunked method instead
-				return (new List<Alert>(), true);
-			}
-
-			if (page.Items?.Count == 0)
-			{
-				break;
-			}
-
-			if (filter.SearchId is null && !string.IsNullOrWhiteSpace(page.SearchId))
-			{
-				// We can re-use the searchId
-				filter.SearchId = page.SearchId;
-			}
-
-			filter.Skip += AlertsMaxTake;
-			filter.Take = Math.Min(AlertsMaxTake, maxAlertCount - allAlerts.Count);
-		}
-		while (filter.Take != 0);
-
-		return (allAlerts, false);
-	}
+		=> GetEntityAlertPagesAsync($"website/websites/{websiteId}/alerts", filter, calledFromChunked, cancellationToken);
 
 	/// <summary>
 	/// Get a list of SDTs for a Website

@@ -11,7 +11,7 @@ public partial class LogicMonitorClient : IDisposable
 
 	private static readonly HttpMethod _patchHttpMethod = new("PATCH");
 
-	private readonly HttpClientHandler _handler;
+	private readonly HttpMessageHandler _handler;
 
 	private readonly HttpClient _client;
 
@@ -119,6 +119,13 @@ public partial class LogicMonitorClient : IDisposable
 	/// <param name="logicMonitorClientOptions">The options</param>
 	public LogicMonitorClient(
 		LogicMonitorClientOptions logicMonitorClientOptions)
+		: this(logicMonitorClientOptions, new HttpClientHandler { CookieContainer = new CookieContainer() })
+	{
+	}
+
+	internal LogicMonitorClient(
+		LogicMonitorClientOptions logicMonitorClientOptions,
+		HttpMessageHandler handler)
 	{
 		_options = logicMonitorClientOptions;
 
@@ -131,7 +138,7 @@ public partial class LogicMonitorClient : IDisposable
 		_accessId = logicMonitorClientOptions.AccessId ?? throw new ArgumentException(nameof(LogicMonitorClientOptions));
 		_accessKey = logicMonitorClientOptions.AccessKey ?? throw new ArgumentException(nameof(LogicMonitorClientOptions));
 
-		_handler = new HttpClientHandler { CookieContainer = new CookieContainer() };
+		_handler = handler;
 		_client = new HttpClient(_handler)
 		{
 			BaseAddress = new Uri($"https://{AccountName}.logicmonitor.com/santaba/")
@@ -232,27 +239,17 @@ public partial class LogicMonitorClient : IDisposable
 			// Get a page
 			var page = await GetPageAsync(filter, subUrl, cancellationToken).ConfigureAwait(false);
 			var pageItems = page.Items ?? [];
-			var pageTotalCount = page?.TotalCount ?? 0;
 			list.AddRange(pageItems);
 
-			// Some endpoints return a negative total count
-			var expectedTotal = Math.Min(pageTotalCount < 0 ? int.MaxValue : pageTotalCount, requestedTake);
-
-			// Did we zero this time
-			// OR do we already have all items?
-			// OR Special case - OpsNotesTags don't like being paged.
-			if (pageItems.Count == 0
-				|| list.Count >= expectedTotal
-				|| typeof(T) == typeof(OpsNoteTag))
+			var expectedTotal = GetExpectedPagedTotal(page?.TotalCount ?? 0, requestedTake);
+			if (IsLastPage<T>(pageItems.Count, list.Count, expectedTotal))
 			{
-				// Yes.
-
 				// Do strict checking if required
 				if (StrictPagingTotalChecking && expectedTotal != list.Count)
 				{
 					throw new PagingException($"Mismatch between expected total: {expectedTotal} and received count: {list.Count}");
 				}
-				// Return list.
+
 				return list;
 			}
 
@@ -260,6 +257,16 @@ public partial class LogicMonitorClient : IDisposable
 			filter.Skip += filter.Take;
 		}
 	}
+
+	// Some endpoints return a negative total count
+	private static int GetExpectedPagedTotal(int pageTotalCount, int requestedTake)
+		=> Math.Min(pageTotalCount < 0 ? int.MaxValue : pageTotalCount, requestedTake);
+
+	// A page that is empty, one that completes the total, and OpsNoteTags (which do not page) all end the loop.
+	private static bool IsLastPage<T>(int pageItemCount, int totalItemCount, int expectedTotal)
+		=> pageItemCount == 0
+			|| totalItemCount >= expectedTotal
+			|| typeof(T) == typeof(OpsNoteTag);
 
 	/// <summary>
 	///     Gets an item singleton
@@ -742,6 +749,18 @@ public partial class LogicMonitorClient : IDisposable
 		return response;
 	}
 
+	private static readonly Dictionary<string, Action<Statistics>> _methodCounters = new(StringComparer.Ordinal)
+	{
+		["DELETE"] = s => s.ApiCallDeleteCount++,
+		["GET"] = s => s.ApiCallGetCount++,
+		["POST"] = s => s.ApiCallPostCount++,
+		["TRACE"] = s => s.ApiCallTraceCount++,
+		["HEAD"] = s => s.ApiCallHeadCount++,
+		["PUT"] = s => s.ApiCallPutCount++,
+		["OPTIONS"] = s => s.ApiCallOptionsCount++,
+		["PATCH"] = s => s.ApiCallPatchCount++
+	};
+
 	private void UpdateSummary(HttpRequestMessage requestMessage, HttpResponseMessage response)
 	{
 		if (response.IsSuccessStatusCode)
@@ -753,35 +772,13 @@ public partial class LogicMonitorClient : IDisposable
 			Statistics.ApiCallFailureCount++;
 		}
 
-		switch (requestMessage.Method.ToString())
+		if (_methodCounters.TryGetValue(requestMessage.Method.ToString(), out var count))
 		{
-			case "DELETE":
-				Statistics.ApiCallDeleteCount++;
-				break;
-			case "GET":
-				Statistics.ApiCallGetCount++;
-				break;
-			case "POST":
-				Statistics.ApiCallPostCount++;
-				break;
-			case "TRACE":
-				Statistics.ApiCallTraceCount++;
-				break;
-			case "HEAD":
-				Statistics.ApiCallHeadCount++;
-				break;
-			case "PUT":
-				Statistics.ApiCallPutCount++;
-				break;
-			case "OPTIONS":
-				Statistics.ApiCallOptionsCount++;
-				break;
-			case "PATCH":
-				Statistics.ApiCallPatchCount++;
-				break;
-			default:
-				Statistics.ApiCallOtherCount++;
-				break;
+			count(Statistics);
+		}
+		else
+		{
+			Statistics.ApiCallOtherCount++;
 		}
 
 		Statistics.DataTransferUplinkBytes += requestMessage.Content?.Headers.ContentLength ?? 0;
@@ -826,120 +823,13 @@ public partial class LogicMonitorClient : IDisposable
 		var prefix = GetPrefix(httpMethod);
 		_logger.LogDebug("{Prefix} {SubUrl}", prefix, subUrl);
 
-		var stopwatch = Stopwatch.StartNew();
-		HttpResponseMessage httpResponseMessage;
-		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
-		var failureCount = 0;
-		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
-		var rateLimitAttempt = 0;
-		var rateLimitTotalMs = 0L;
-		while (true)
-		{
-			// Determine the cancellationToken
-			// We will always use one
-			try
-			{
-				using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)))
-				{
-					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
-				}
+		var httpResponseMessage = await SendWithRetryAsync(httpMethod, subUrl, null, prefix, true, cancellationToken).ConfigureAwait(false);
 
-				_logger.LogDebug("{Prefix} complete (from remote: {ElapsedMilliseconds:N0}ms)",
-					prefix,
-					stopwatch.ElapsedMilliseconds);
-			}
-			catch (Exception e)
-			{
-				_logger.LogDebug(e, "{Prefix} failed on attempt {FailureCount}: {StackTrace}",
-					prefix,
-					++failureCount,
-					e.ToString());
-				if (failureCount < AttemptCount)
-				{
-					// Try again
-					_logger.LogDebug("{Prefix} Retrying..", prefix);
-					continue;
-				}
-
-				_logger.LogDebug("{Prefix} Giving up.", prefix);
-				throw;
-			}
-
-			// Check the outer HTTP status code
-			if (!httpResponseMessage.IsSuccessStatusCode)
-			{
-				if ((int)httpResponseMessage.StatusCode != 429)
-				{
-					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-					{
-						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
-						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
-						continue;
-					}
-
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-					_logger.LogDebug("{Prefix} failed with {StatusCode}: {ResponseBody}",
-						prefix,
-						httpResponseMessage.StatusCode,
-						responseBody);
-					throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed: {responseBody}");
-				}
-				// We have been told to back off
-
-				// Check that all rate limit headers are present
-				var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-				var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-				var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-				// Wait for the full window
-				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds > MaximumBackOffSeconds)
-				{
-					delayMs = 1000 * MaximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
-				}
-
-				// Wait some time and try again
-				rateLimitTotalMs = await WaitForRateLimitAsync(
-					prefix,
-					rateLimitInformation,
-					delayMs,
-					++rateLimitAttempt,
-					rateLimitTotalMs,
-					cancellationToken).ConfigureAwait(false);
-
-				// Try again
-				continue;
-			}
-
-			// Success - can be cached if permitted
-			break;
-		}
-
-		_logger.LogDebug("{Prefix} complete", prefix);
-
-		// Check the outer HTTP status code
-		if (!httpResponseMessage.IsSuccessStatusCode)
-		{
-			// If a success code was not received, throw an exception
-			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
-				prefix,
-				httpResponseMessage.StatusCode,
-				responseBody);
-			throw new LogicMonitorApiException(HttpMethod.Get, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-		}
-
-		// Get the content
 		var jsonString = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 		if (jsonString.Contains("group is not empty"))
 		{
-			// If a success code was not received, throw an exception
 			_logger.LogDebug("{Prefix} failed - group is not empty for suburl", prefix);
-			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-			throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.PreconditionFailed, responseBody, $"{prefix} failed - group is not empty for suburl");
+			throw new LogicMonitorApiException(httpMethod, subUrl, HttpStatusCode.PreconditionFailed, jsonString, $"{prefix} failed - group is not empty for suburl");
 		}
 	}
 
@@ -976,116 +866,28 @@ public partial class LogicMonitorClient : IDisposable
 			}
 		}
 
-		HttpResponseMessage httpResponseMessage;
-		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
-		var failureCount = 0;
-		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
-		var rateLimitAttempt = 0;
-		var rateLimitTotalMs = 0L;
-		while (true)
+		var httpResponseMessage = await SendGetWithRetryAsync(subUrl, prefix, stopwatch, cancellationToken).ConfigureAwait(false);
+
+		// File and raw responses are returned as they are, and never cached
+		var rawResponse = await ReadRawResponseAsync<T>(httpResponseMessage, cancellationToken).ConfigureAwait(false);
+		if (rawResponse is not null)
 		{
-			// Determine the cancellationToken
-			// We will always use one
-			try
-			{
-				using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)))
-				{
-					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, null, cancellationToken).ConfigureAwait(false);
-				}
-
-				_logger.LogDebug("{Prefix} complete (from remote: {ElapsedMilliseconds:N0}ms)",
-					prefix,
-					stopwatch.ElapsedMilliseconds);
-			}
-			catch (Exception e)
-			{
-				_logger.LogDebug(e, "{Prefix} failed on attempt {FailureCount}: {StackTrace}",
-					prefix,
-					++failureCount,
-					e.ToString());
-				if (failureCount < AttemptCount)
-				{
-					_logger.LogDebug("{Prefix} Retrying..", prefix);
-					// Try again (after a short delay)
-					await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
-					continue;
-				}
-
-				_logger.LogDebug("{Prefix} Giving up.", prefix);
-				throw;
-			}
-
-			// Check the outer HTTP status code
-			if (httpResponseMessage.IsSuccessStatusCode)
-			{
-				// Success - can be cached if permitted
-				break;
-			}
-
-			// NOT A SUCCESS :-(
-
-			var statusCode = (int)httpResponseMessage.StatusCode;
-			var tooManyRequests = statusCode == 429;
-
-			if (!tooManyRequests)
-			{
-				if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-				{
-					_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
-					await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
-					continue;
-				}
-
-				var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-
-				if (statusCode is >= 400 and < 500)
-				{
-					// HTTP 400 - 499: do not retry EXCEPT when we have a 429 (too many requests)
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-				}
-
-				_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
-				_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}", prefix, ++failureCount, responseBody);
-
-				if (failureCount < AttemptCount)
-				{
-					_logger.LogDebug("{Prefix} Retrying..", prefix);
-					// Try again (after a short delay)
-					await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
-					continue;
-				}
-
-				throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-			}
-			// We have been told to back off
-
-			// Check that all rate limit headers are present
-			var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-			var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-			var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-			var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-			// Wait for the full window
-			var delayMs = 1000 * xRateLimitWindowSeconds;
-			if (xRateLimitWindowSeconds > MaximumBackOffSeconds)
-			{
-				delayMs = 1000 * MaximumBackOffSeconds;
-				_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
-			}
-
-			// Wait some time and try again
-			rateLimitTotalMs = await WaitForRateLimitAsync(
-				prefix,
-				rateLimitInformation,
-				delayMs,
-				++rateLimitAttempt,
-				rateLimitTotalMs,
-				cancellationToken).ConfigureAwait(false);
-
-			// Try again
+			return rawResponse;
 		}
 
-		// If this is a file response, return that
+		var deserializedObject = await ReadPortalResponseAsync<T>(httpResponseMessage, subUrl, prefix, cancellationToken).ConfigureAwait(false);
+
+		// Cache the result
+		if (useCache && deserializedObject is not null)
+		{
+			_cache.AddOrUpdate(subUrl, deserializedObject);
+		}
+
+		return deserializedObject ?? new();
+	}
+
+	private async Task<T?> ReadRawResponseAsync<T>(HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken) where T : class
+	{
 		if (typeof(T).Name == nameof(XmlResponse))
 		{
 			var content = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
@@ -1093,14 +895,16 @@ public partial class LogicMonitorClient : IDisposable
 			return new XmlResponse { Content = content } as T
 				?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
-		else if (typeof(T) == typeof(List<byte>))
+
+		if (typeof(T) == typeof(List<byte>))
 		{
 			var content = await httpResponseMessage.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
 			_logger.LogTrace("Byte Array");
 			return content.ToList() as T
 				?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
-		else if (typeof(T) == typeof(DownloadFileInfo))
+
+		if (typeof(T) == typeof(DownloadFileInfo))
 		{
 			var tempFileInfo = new FileInfo(Path.GetTempFileName());
 			using Stream output = File.OpenWrite(tempFileInfo.FullName);
@@ -1114,13 +918,15 @@ public partial class LogicMonitorClient : IDisposable
 			?? throw new FormatException($"Could not convert content to {typeof(T).Name}");
 		}
 
-		// Create a PortalResponse
+		return null;
+	}
+
+	private async Task<T?> ReadPortalResponseAsync<T>(HttpResponseMessage httpResponseMessage, string subUrl, string prefix, CancellationToken cancellationToken) where T : class, new()
+	{
 		var portalResponse = new PortalResponse<T>(httpResponseMessage);
 
-		// Check the outer HTTP status code
 		if (!portalResponse.IsSuccessStatusCode)
 		{
-			// If a success code was not received, throw an exception
 			var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 			_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
 			_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
@@ -1128,15 +934,13 @@ public partial class LogicMonitorClient : IDisposable
 				httpResponseMessage.StatusCode,
 				responseBody);
 			_logger.LogTrace("RESPONSE:\r\n\r\n{ResponseBody}", responseBody);
-			throw new LogicMonitorApiException(httpMethod, subUrl, portalResponse.HttpStatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+			throw new LogicMonitorApiException(HttpMethod.Get, subUrl, portalResponse.HttpStatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
 		}
 
-		// Return the object
-		T? deserializedObject;
 		_logger.LogTrace("RESPONSE:\r\n\r\n{Data}:", portalResponse.Data?.ToString());
 		try
 		{
-			deserializedObject = portalResponse.GetObject(_jsonConverters);
+			return portalResponse.GetObject(_jsonConverters);
 		}
 		catch (DeserializationException e)
 		{
@@ -1146,15 +950,6 @@ public partial class LogicMonitorClient : IDisposable
 				e.Message);
 			throw;
 		}
-
-		// Cache the result
-		if (useCache && deserializedObject is not null)
-		{
-			_cache.AddOrUpdate(subUrl, deserializedObject);
-		}
-
-		// Return the result
-		return deserializedObject is not null ? deserializedObject : new();
 	}
 
 	/// <summary>
@@ -1176,92 +971,16 @@ public partial class LogicMonitorClient : IDisposable
 		// LMREP-1042: "d:\"EBSDB [prod24778]\" does not work, however "d:\"EBSDB *prod24778*\" matches. Unrelated to URl encoding, etc...
 		var data = JsonConvert.SerializeObject(postedObject, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
 		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
-		HttpResponseMessage httpResponseMessage;
-		// Handle rate limiting (see https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/)
-		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
-		var rateLimitAttempt = 0;
-		var rateLimitTotalMs = 0L;
-		while (true)
-		{
-			using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
-			{
-				using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
-				{
-					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken)
-						.ConfigureAwait(false);
-				}
 
-				_logger.LogDebug("{Prefix} complete", prefix);
-			}
+		var httpResponseMessage = await SendWithRetryAsync(httpMethod, subUrl, data, prefix, false, cancellationToken).ConfigureAwait(false);
 
-			// Check the outer HTTP status code
-			if (!httpResponseMessage.IsSuccessStatusCode)
-			{
-
-				if ((int)httpResponseMessage.StatusCode != 429)
-				{
-					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-					{
-						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
-						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
-						continue;
-					}
-					// If a success code was not received, throw an exception
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
-						prefix,
-						httpResponseMessage.StatusCode,
-						responseBody);
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-				}
-
-				// We have been told to back off
-				// Check that all rate limit headers are present
-				var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-				var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-				var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-				// Wait for the full window
-				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds > MaximumBackOffSeconds)
-				{
-					delayMs = 1000 * MaximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
-				}
-
-				// Wait some time and try again
-				rateLimitTotalMs = await WaitForRateLimitAsync(
-					prefix,
-					rateLimitInformation,
-					delayMs,
-					++rateLimitAttempt,
-					rateLimitTotalMs,
-					cancellationToken).ConfigureAwait(false);
-
-				// Try again
-				continue;
-			}
-
-			// Success - can be cached
-			break;
-		}
-		// Success - can cache
-
-		// Create a PortalResponse
 		var portalResponse = new PortalResponse<TOut>(httpResponseMessage);
-
-		// Check the outer HTTP status code
 		if (!portalResponse.IsSuccessStatusCode)
 		{
-			// If a success code was not received, throw an exception
 			throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
 		}
 
-		// Deserialize the JSON
 		var deserializedObject = portalResponse.GetObject();
-
-		// Return
 		return deserializedObject != null ? deserializedObject : new();
 	}
 
@@ -1287,89 +1006,182 @@ public partial class LogicMonitorClient : IDisposable
 
 		var data = jObject.ToString();
 		_logger.LogTrace("{Prefix} body:\r\n{Data}", prefix, data);
-		HttpResponseMessage httpResponseMessage;
-		// Issue #38: carried across retries so the log can say how long we have been waiting in total.
-		var rateLimitAttempt = 0;
-		var rateLimitTotalMs = 0L;
-		while (true)
-		{
-			using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
-			{
-				using (var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content })
-				{
-					httpResponseMessage = await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken)
-						.ConfigureAwait(false);
-				}
 
-				_logger.LogDebug("{Prefix} complete", prefix);
-			}
+		var httpResponseMessage = await SendWithRetryAsync(httpMethod, subUrl, data, prefix, false, cancellationToken).ConfigureAwait(false);
 
-			// Check the outer HTTP status code
-			if (!httpResponseMessage.IsSuccessStatusCode)
-			{
-				if ((int)httpResponseMessage.StatusCode != 429)
-				{
-					if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
-					{
-						// TODO: could also check the reason phrase, and / or the RESPONSE (which contains "Service Temporarily Unavailable")
-						_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
-						await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
-						continue;
-					}
-					// If a success code was not received, throw an exception
-					var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-					_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}",
-						prefix,
-						httpResponseMessage.StatusCode,
-						responseBody);
-					throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
-				}
-
-				// We have been told to back off
-				// Check that all rate limit headers are present
-				var xRateLimitWindowLimitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
-				var xRateLimitWindowRemainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
-				var xRateLimitWindowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
-
-				var rateLimitInformation = $"Window: {xRateLimitWindowSeconds}s, Count: {xRateLimitWindowLimitCount}, Remaining {xRateLimitWindowRemainingCount}";
-				// Wait for the full window
-				var delayMs = 1000 * xRateLimitWindowSeconds;
-				if (xRateLimitWindowSeconds > MaximumBackOffSeconds)
-				{
-					delayMs = 1000 * MaximumBackOffSeconds;
-					_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, xRateLimitWindowSeconds, MaximumBackOffSeconds);
-				}
-
-				// Wait some time and try again
-				rateLimitTotalMs = await WaitForRateLimitAsync(
-					prefix,
-					rateLimitInformation,
-					delayMs,
-					++rateLimitAttempt,
-					rateLimitTotalMs,
-					cancellationToken).ConfigureAwait(false);
-
-				// Try again
-				continue;
-			}
-
-			// Success - can be cached
-			break;
-		}
-		// Success - can cache
-
-		// Create a PortalResponse
 		var portalResponse = new PortalResponse<JObject>(httpResponseMessage);
-
-		// Check the outer HTTP status code
 		if (!portalResponse.IsSuccessStatusCode)
 		{
-			// If a success code was not received, throw an exception
 			throw new LogicMonitorApiException(portalResponse.ErrorMessage) { HttpStatusCode = portalResponse.HttpStatusCode };
 		}
 
-		// Return
 		return portalResponse.GetObject();
+	}
+
+	private sealed class RetryState
+	{
+		public int FailureCount { get; set; }
+
+		public int RateLimitAttempt { get; set; }
+
+		public long RateLimitTotalMs { get; set; }
+	}
+
+	private async Task<HttpResponseMessage> SendOnceAsync(HttpMethod httpMethod, string subUrl, string? data, CancellationToken cancellationToken)
+	{
+		using var content = data is null ? null : new StringContent(data, Encoding.UTF8, "application/json");
+		using var requestMessage = new HttpRequestMessage(httpMethod, RequestUri(subUrl)) { Content = content };
+		return await GetHttpResponseMessage(requestMessage, subUrl, data, cancellationToken).ConfigureAwait(false);
+	}
+
+	private async Task<HttpResponseMessage> SendWithRetryAsync(
+		HttpMethod httpMethod,
+		string subUrl,
+		string? data,
+		string prefix,
+		bool retryTransportFailures,
+		CancellationToken cancellationToken)
+	{
+		var state = new RetryState();
+		while (true)
+		{
+			HttpResponseMessage httpResponseMessage;
+			try
+			{
+				httpResponseMessage = await SendOnceAsync(httpMethod, subUrl, data, cancellationToken).ConfigureAwait(false);
+			}
+			catch (Exception e) when (retryTransportFailures && LogTransportFailure(e, prefix, state))
+			{
+				continue;
+			}
+
+			_logger.LogDebug("{Prefix} complete", prefix);
+			if (httpResponseMessage.IsSuccessStatusCode)
+			{
+				return httpResponseMessage;
+			}
+
+			await WaitBeforeRetryOrThrowAsync(httpMethod, subUrl, httpResponseMessage, prefix, state, false, cancellationToken).ConfigureAwait(false);
+		}
+	}
+
+	private async Task<HttpResponseMessage> SendGetWithRetryAsync(string subUrl, string prefix, Stopwatch stopwatch, CancellationToken cancellationToken)
+	{
+		var state = new RetryState();
+		while (true)
+		{
+			HttpResponseMessage httpResponseMessage;
+			try
+			{
+				httpResponseMessage = await SendOnceAsync(HttpMethod.Get, subUrl, null, cancellationToken).ConfigureAwait(false);
+				_logger.LogDebug("{Prefix} complete (from remote: {ElapsedMilliseconds:N0}ms)",
+					prefix,
+					stopwatch.ElapsedMilliseconds);
+			}
+			catch (Exception e) when (LogTransportFailure(e, prefix, state))
+			{
+				await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
+				continue;
+			}
+
+			if (httpResponseMessage.IsSuccessStatusCode)
+			{
+				return httpResponseMessage;
+			}
+
+			await WaitBeforeRetryOrThrowAsync(HttpMethod.Get, subUrl, httpResponseMessage, prefix, state, true, cancellationToken).ConfigureAwait(false);
+		}
+	}
+
+	// Returns true when the caller should retry; false lets the original exception propagate.
+	private bool LogTransportFailure(Exception e, string prefix, RetryState state)
+	{
+		_logger.LogDebug(e, "{Prefix} failed on attempt {FailureCount}: {StackTrace}",
+			prefix,
+			++state.FailureCount,
+			e.ToString());
+		if (state.FailureCount < AttemptCount)
+		{
+			_logger.LogDebug("{Prefix} Retrying..", prefix);
+			return true;
+		}
+
+		_logger.LogDebug("{Prefix} Giving up.", prefix);
+		return false;
+	}
+
+	// Returns when the request should be retried; throws when it should not.
+	private async Task WaitBeforeRetryOrThrowAsync(
+		HttpMethod httpMethod,
+		string subUrl,
+		HttpResponseMessage httpResponseMessage,
+		string prefix,
+		RetryState state,
+		bool retryServerErrors,
+		CancellationToken cancellationToken)
+	{
+		var statusCode = (int)httpResponseMessage.StatusCode;
+		if (statusCode == 429)
+		{
+			await BackOffAsync(httpMethod, subUrl, httpResponseMessage, prefix, state, cancellationToken).ConfigureAwait(false);
+			return;
+		}
+
+		if (WaitDuringLogicMonitorUpgrades && httpResponseMessage.StatusCode == HttpStatusCode.ServiceUnavailable)
+		{
+			_logger.LogDebug("{Prefix} Service Unavailable. Waiting 10000ms", prefix);
+			await Task.Delay(10000, cancellationToken).ConfigureAwait(false);
+			return;
+		}
+
+		var responseBody = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+
+		// HTTP 400 - 499 are never retried
+		if (retryServerErrors && statusCode is not (>= 400 and < 500))
+		{
+			_logger.LogHttpHeaders(false, prefix, httpResponseMessage.Headers);
+			_logger.LogDebug("{Prefix} failed on attempt {FailureCount}: {ResponseBody}", prefix, ++state.FailureCount, responseBody);
+
+			if (state.FailureCount < AttemptCount)
+			{
+				_logger.LogDebug("{Prefix} Retrying..", prefix);
+				await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
+				return;
+			}
+		}
+
+		_logger.LogDebug("{Prefix} failed ({StatusCode}): {ResponseBody}", prefix, httpResponseMessage.StatusCode, responseBody);
+		throw new LogicMonitorApiException(httpMethod, subUrl, httpResponseMessage.StatusCode, responseBody, $"{prefix} failed ({httpResponseMessage.StatusCode}): {responseBody}");
+	}
+
+	// We have been told to back off: wait for the rate limit window, up to the configured maximum.
+	private async Task BackOffAsync(
+		HttpMethod httpMethod,
+		string subUrl,
+		HttpResponseMessage httpResponseMessage,
+		string prefix,
+		RetryState state,
+		CancellationToken cancellationToken)
+	{
+		var limitCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Limit").ConfigureAwait(false);
+		var remainingCount = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Remaining").ConfigureAwait(false);
+		var windowSeconds = await GetIntegerHeaderAsync(httpMethod, subUrl, httpResponseMessage.StatusCode, httpResponseMessage, "X-Rate-Limit-Window").ConfigureAwait(false);
+
+		var rateLimitInformation = $"Window: {windowSeconds}s, Count: {limitCount}, Remaining {remainingCount}";
+		var delayMs = 1000 * windowSeconds;
+		if (windowSeconds > MaximumBackOffSeconds)
+		{
+			delayMs = 1000 * MaximumBackOffSeconds;
+			_logger.LogDebug("{Prefix} Rate limit window of {Seconds} seconds is greater than our max of {Max} seconds, so using the max value instead.", prefix, windowSeconds, MaximumBackOffSeconds);
+		}
+
+		state.RateLimitTotalMs = await WaitForRateLimitAsync(
+			prefix,
+			rateLimitInformation,
+			delayMs,
+			++state.RateLimitAttempt,
+			state.RateLimitTotalMs,
+			cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>
@@ -1548,73 +1360,75 @@ public partial class LogicMonitorClient : IDisposable
 		CancellationToken cancellationToken)
 	{
 		var propertiesSubUrl = $"{subUrl}/{id}/properties";
-		switch (mode)
+		var task = mode switch
 		{
-			case SetPropertyMode.Automatic:
-				// Determine whether there is an existing property
-				try
-				{
-					_ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
+			SetPropertyMode.Automatic => SetCustomPropertyAutomaticAsync(propertiesSubUrl, name, value, cancellationToken),
+			SetPropertyMode.Create => CreateCustomPropertyAsync(propertiesSubUrl, name, value, cancellationToken),
+			SetPropertyMode.Update => UpdateCustomPropertyAsync(propertiesSubUrl, name, value, cancellationToken),
+			SetPropertyMode.Delete => DeleteCustomPropertyAsync(propertiesSubUrl, name, value, cancellationToken),
+			_ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+		};
+		await task.ConfigureAwait(false);
+	}
 
-					// No exception thrown? It exists
-					// Are we deleting?
-					if (value is null)
-					{
-						// Yes.
-						await DeleteAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
-					}
-					else
-					{
-						// No
-						// PUT the replacement value
-						await PutAsync($"{propertiesSubUrl}/{name}", new { value }, cancellationToken).ConfigureAwait(false);
-					}
-				}
-				catch (Exception)
-				{
-					// It doesn't exist
-					// so POST a new one (unless it's null, in which case nothing to do)
-					if (value is not null)
-					{
-						_ = await PostAsync<EntityProperty, EntityProperty>(
-							new EntityProperty { Name = name, Value = value },
-							$"{propertiesSubUrl}",
-							cancellationToken).ConfigureAwait(false);
-					}
-				}
+	private async Task SetCustomPropertyAutomaticAsync(string propertiesSubUrl, string name, string? value, CancellationToken cancellationToken)
+	{
+		// Determine whether there is an existing property
+		try
+		{
+			_ = await GetBySubUrlAsync<EntityProperty>($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 
-				break;
-
-			case SetPropertyMode.Create:
-				if (value is null)
-				{
-					throw new InvalidOperationException("Value must not be set to null when creating the property.");
-				}
-
-				await PostAsync<EntityProperty, EntityProperty>(new EntityProperty { Name = name, Value = value }, $"{propertiesSubUrl}", cancellationToken).ConfigureAwait(false);
-				break;
-
-			case SetPropertyMode.Update:
-				if (value is null)
-				{
-					throw new InvalidOperationException("Value must not be set to null when updating the property.");
-				}
-				// PUT the replacement value
-				await PutAsync($"{propertiesSubUrl}/{name}", new { value }, cancellationToken).ConfigureAwait(false);
-				break;
-
-			case SetPropertyMode.Delete:
-				if (value is not null)
-				{
-					throw new InvalidOperationException("Value must be set to null when deleting the value.");
-				}
-				// Delete the value
+			// No exception thrown? It exists, so delete it when the new value is null, otherwise PUT the replacement
+			if (value is null)
+			{
 				await DeleteAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
-				break;
-
-			default:
-				throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+			}
+			else
+			{
+				await PutAsync($"{propertiesSubUrl}/{name}", new { value }, cancellationToken).ConfigureAwait(false);
+			}
 		}
+		catch (Exception)
+		{
+			// It doesn't exist, so POST a new one (unless it's null, in which case nothing to do)
+			if (value is not null)
+			{
+				_ = await PostAsync<EntityProperty, EntityProperty>(
+					new EntityProperty { Name = name, Value = value },
+					propertiesSubUrl,
+					cancellationToken).ConfigureAwait(false);
+			}
+		}
+	}
+
+	private async Task CreateCustomPropertyAsync(string propertiesSubUrl, string name, string? value, CancellationToken cancellationToken)
+	{
+		if (value is null)
+		{
+			throw new InvalidOperationException("Value must not be set to null when creating the property.");
+		}
+
+		await PostAsync<EntityProperty, EntityProperty>(new EntityProperty { Name = name, Value = value }, propertiesSubUrl, cancellationToken).ConfigureAwait(false);
+	}
+
+	private async Task UpdateCustomPropertyAsync(string propertiesSubUrl, string name, string? value, CancellationToken cancellationToken)
+	{
+		if (value is null)
+		{
+			throw new InvalidOperationException("Value must not be set to null when updating the property.");
+		}
+
+		await PutAsync($"{propertiesSubUrl}/{name}", new { value }, cancellationToken).ConfigureAwait(false);
+	}
+
+	private async Task DeleteCustomPropertyAsync(string propertiesSubUrl, string name, string? value, CancellationToken cancellationToken)
+	{
+		if (value is not null)
+		{
+			throw new InvalidOperationException("Value must be set to null when deleting the value.");
+		}
+
+		await DeleteAsync($"{propertiesSubUrl}/{name}", cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <summary>
