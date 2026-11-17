@@ -7,6 +7,17 @@ namespace LogicMonitor.Api;
 /// </summary>
 public partial class LogicMonitorClient : IDisposable
 {
+
+	/// <summary>
+	/// Dispose
+	/// </summary>
+	public void Dispose()
+	{
+		// Sign out
+		_client.Dispose();
+		_handler.Dispose();
+		GC.SuppressFinalize(this);
+	}
 	private static readonly HttpMethod _patchHttpMethod = new("PATCH");
 
 	private readonly HttpMessageHandler _handler;
@@ -102,14 +113,4 @@ public partial class LogicMonitorClient : IDisposable
 	/// This can happen for example when an item in the first page is deleted during paging.
 	/// </summary>
 	public bool StrictPagingTotalChecking { get; set; }
-
-	/// <summary>
-	/// Create a LogicMonitor client
-	/// </summary>
-	/// <param name="logicMonitorClientOptions">The options</param>
-	public LogicMonitorClient(
-		LogicMonitorClientOptions logicMonitorClientOptions)
-		: this(logicMonitorClientOptions, new HttpClientHandler { CookieContainer = new CookieContainer() })
-	{
-	}
 }

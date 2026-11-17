@@ -9,6 +9,34 @@ namespace LogicMonitor.Api.Test.Offline;
 /// </summary>
 public partial class ModelAccessorTests
 {
+
+	[Theory]
+	[MemberData(nameof(ModelTypeNames))]
+	public void WrittenProperties_ReadBackWhatWasWritten(string typeName)
+	{
+		var type = Resolve(typeName);
+		var instance = Activator.CreateInstance(type)!;
+
+		foreach (var property in WritableProperties(type))
+		{
+			if (!TryCreateSample(property.PropertyType, 0, out var sample))
+			{
+				continue;
+			}
+
+			property.SetValue(instance, sample);
+			var readBack = property.GetValue(instance);
+
+			if (sample is string or ValueType)
+			{
+				readBack.Should().Be(sample, $"{typeName}.{property.Name}");
+			}
+			else
+			{
+				readBack.Should().NotBeNull($"{typeName}.{property.Name}");
+			}
+		}
+	}
 	private static readonly Assembly _apiAssembly = typeof(LogicMonitorClient).Assembly;
 
 	private static bool IsModelType(Type type)
@@ -63,28 +91,5 @@ public partial class ModelAccessorTests
 		}
 
 		return TryCreateComposite(type, depth, out sample);
-	}
-	private static bool TryCreateComposite(Type type, int depth, out object? sample)
-	{
-		sample = null;
-		if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
-		{
-			var list = Activator.CreateInstance(type)!;
-			if (TryCreateSample(type.GetGenericArguments()[0], depth + 1, out var element) && element is not null)
-			{
-				type.GetMethod(nameof(List<object>.Add))!.Invoke(list, [element]);
-			}
-
-			sample = list;
-			return true;
-		}
-
-		if (depth < 2 && type is { IsClass: true, IsAbstract: false, IsGenericType: false } && type.GetConstructor(Type.EmptyTypes) is not null)
-		{
-			sample = Activator.CreateInstance(type);
-			return true;
-		}
-
-		return false;
 	}
 }

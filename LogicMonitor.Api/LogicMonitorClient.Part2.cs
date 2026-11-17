@@ -8,6 +8,16 @@ namespace LogicMonitor.Api;
 public partial class LogicMonitorClient
 {
 
+	/// <summary>
+	/// Create a LogicMonitor client
+	/// </summary>
+	/// <param name="logicMonitorClientOptions">The options</param>
+	public LogicMonitorClient(
+		LogicMonitorClientOptions logicMonitorClientOptions)
+		: this(logicMonitorClientOptions, new HttpClientHandler { CookieContainer = new CookieContainer() })
+	{
+	}
+
 	internal LogicMonitorClient(
 		LogicMonitorClientOptions logicMonitorClientOptions,
 		HttpMessageHandler handler)
@@ -46,17 +56,6 @@ public partial class LogicMonitorClient
 		var signatureBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(compoundString));
 		var signatureHex = Convert.ToHexStringLower(signatureBytes);
 		return Convert.ToBase64String(Encoding.UTF8.GetBytes(signatureHex));
-	}
-
-	/// <summary>
-	/// Dispose
-	/// </summary>
-	public void Dispose()
-	{
-		// Sign out
-		_client.Dispose();
-		_handler.Dispose();
-		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
