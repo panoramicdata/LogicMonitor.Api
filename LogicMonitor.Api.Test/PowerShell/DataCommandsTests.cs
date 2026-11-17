@@ -238,7 +238,6 @@ public class DataCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		catch (InvalidOperationException ex) when (ex.Message.Contains("not found") || ex.Message.Contains("does not exist"))
 		{
 			// Skip test if the specific instances don't exist
-			return;
 		}
 	}
 }

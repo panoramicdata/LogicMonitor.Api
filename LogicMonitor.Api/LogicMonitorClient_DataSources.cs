@@ -421,22 +421,7 @@ public partial class LogicMonitorClient
 			]
 		};
 
-		var instanceFilter = new Filter<ResourceDataSourceInstance>
-		{
-			Properties = [
-				nameof(ResourceDataSourceInstance.Id),
-				nameof(ResourceDataSourceInstance.DataSourceId),
-				nameof(ResourceDataSourceInstance.ResourceId)
-			]
-		};
-
-		var appliesToResourceIds = new Dictionary<int, List<int>>();
-		foreach (var logicModuleId in logicModuleIds)
-		{
-			// TODO - support more than just this LogicModuleType
-			var appliesToFunction = (await GetAsync<DataSource>(logicModuleId, cancellationToken).ConfigureAwait(false)).AppliesTo;
-			appliesToResourceIds[logicModuleId] = (await GetAppliesToAsync(appliesToFunction, cancellationToken).ConfigureAwait(false)).ConvertAll(atr => atr.Id);
-		}
+		var appliesToResourceIds = await GetAppliesToResourceIdsAsync(logicModuleIds, cancellationToken).ConfigureAwait(false);
 
 		// Get a list of resourceGroupIds
 		var resourceGroupIds = new List<int> { rootResourceGroupId };
@@ -452,8 +437,7 @@ public partial class LogicMonitorClient
 			{
 				Properties = [nameof(Resource.Id)]
 			}, cancellationToken).ConfigureAwait(false))
-				.ConvertAll(d => d.Id)
-;
+				.ConvertAll(d => d.Id);
 
 			// Iterate over all devices where the appliesTo matches
 			foreach (var logicModuleId in logicModuleIds)
@@ -461,31 +445,68 @@ public partial class LogicMonitorClient
 				var resourceIds = appliesToResourceIds[logicModuleId];
 				foreach (var deviceId in resourceGroupResourceIds.Where(id => resourceIds.Contains(id)))
 				{
-					var resourceDataSource = await GetResourceDataSourceByResourceIdAndDataSourceIdAsync(deviceId, logicModuleId, cancellationToken).ConfigureAwait(false);
-
-					if (instanceProperty is null)
-					{
-						resourceDataSourceInstances.AddRange(await GetAllResourceDataSourceInstancesAsync(deviceId, resourceDataSource!.Id, instanceFilter, cancellationToken).ConfigureAwait(false));
-					}
-					else
-					{
-						var thisResourceDataSourceInstances = await GetAllResourceDataSourceInstancesAsync(deviceId, resourceDataSource!.Id, instanceFilter, cancellationToken).ConfigureAwait(false);
-						foreach (var resourceDataSourceInstance in thisResourceDataSourceInstances)
-						{
-							var instanceCustomProperties = await GetAllResourceDataSourceInstancePropertiesAsync(deviceId, resourceDataSource.Id, resourceDataSourceInstance.Id, filter, cancellationToken).ConfigureAwait(false);
-							if (instancePropertyValueRegex is not null && !instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
-							{
-								continue;
-							}
-
-							resourceDataSourceInstances.Add(resourceDataSourceInstance);
-						}
-					}
+					resourceDataSourceInstances.AddRange(await GetMatchingInstancesAsync(
+						deviceId,
+						logicModuleId,
+						instanceProperty,
+						instancePropertyValueRegex,
+						filter,
+						cancellationToken).ConfigureAwait(false));
 				}
 			}
 		}
 
 		return resourceDataSourceInstances;
+	}
+
+	private async Task<Dictionary<int, List<int>>> GetAppliesToResourceIdsAsync(List<int> logicModuleIds, CancellationToken cancellationToken)
+	{
+		var appliesToResourceIds = new Dictionary<int, List<int>>();
+		foreach (var logicModuleId in logicModuleIds)
+		{
+			// TODO - support more than just this LogicModuleType
+			var appliesToFunction = (await GetAsync<DataSource>(logicModuleId, cancellationToken).ConfigureAwait(false)).AppliesTo;
+			appliesToResourceIds[logicModuleId] = (await GetAppliesToAsync(appliesToFunction, cancellationToken).ConfigureAwait(false)).ConvertAll(atr => atr.Id);
+		}
+
+		return appliesToResourceIds;
+	}
+
+	private async Task<List<ResourceDataSourceInstance>> GetMatchingInstancesAsync(
+		int resourceId,
+		int logicModuleId,
+		string? instanceProperty,
+		Regex? instancePropertyValueRegex,
+		Filter<InstanceProperty> filter,
+		CancellationToken cancellationToken)
+	{
+		var instanceFilter = new Filter<ResourceDataSourceInstance>
+		{
+			Properties = [
+				nameof(ResourceDataSourceInstance.Id),
+				nameof(ResourceDataSourceInstance.DataSourceId),
+				nameof(ResourceDataSourceInstance.ResourceId)
+			]
+		};
+
+		var resourceDataSource = await GetResourceDataSourceByResourceIdAndDataSourceIdAsync(resourceId, logicModuleId, cancellationToken).ConfigureAwait(false);
+		var instances = await GetAllResourceDataSourceInstancesAsync(resourceId, resourceDataSource!.Id, instanceFilter, cancellationToken).ConfigureAwait(false);
+		if (instanceProperty is null)
+		{
+			return instances;
+		}
+
+		var matchingInstances = new List<ResourceDataSourceInstance>();
+		foreach (var instance in instances)
+		{
+			var instanceCustomProperties = await GetAllResourceDataSourceInstancePropertiesAsync(resourceId, resourceDataSource.Id, instance.Id, filter, cancellationToken).ConfigureAwait(false);
+			if (instancePropertyValueRegex is null || instanceCustomProperties.Any(cp => cp.Name == instanceProperty && instancePropertyValueRegex.IsMatch(cp.Value)))
+			{
+				matchingInstances.Add(instance);
+			}
+		}
+
+		return matchingInstances;
 	}
 
 	/// <summary>

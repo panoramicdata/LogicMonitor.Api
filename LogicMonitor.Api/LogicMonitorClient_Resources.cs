@@ -567,7 +567,7 @@ public partial class LogicMonitorClient
 		string searchText,
 		int maxResultCount,
 		CancellationToken cancellationToken,
-		TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType = null)
+		[Optional] TreeNodeFreeSearchResultType? treeNodeFreeSearchResultType)
 	{
 		ArgumentNullException.ThrowIfNull(searchText);
 

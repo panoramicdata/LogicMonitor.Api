@@ -52,9 +52,9 @@ public partial class LogicMonitorClient
 		FileInfo fileInfo,
 		CollectorPlatformAndArchitecture collectorPlatformAndArchitecture,
 		CancellationToken cancellationToken,
-		CollectorDownloadType collectorDownloadType = CollectorDownloadType.FullPackage,
-		CollectorSize collectorSize = CollectorSize.Small,
-		int? collectorVersion = null)
+		[Optional, DefaultParameterValue(CollectorDownloadType.FullPackage)] CollectorDownloadType collectorDownloadType,
+		[Optional, DefaultParameterValue(CollectorSize.Small)] CollectorSize collectorSize,
+		[Optional] int? collectorVersion)
 	{
 		// Get the download token
 		var downloadToken = await GetBySubUrlAsync<DownloadToken>($"setting/collector/collectors/{collectorId}/downloadToken", cancellationToken).ConfigureAwait(false);
