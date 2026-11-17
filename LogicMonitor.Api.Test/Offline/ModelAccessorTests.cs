@@ -69,10 +69,10 @@ public class ModelAccessorTests
 		sample = null;
 		if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
 		{
-			var list = (IList)Activator.CreateInstance(type)!;
+			var list = Activator.CreateInstance(type)!;
 			if (TryCreateSample(type.GetGenericArguments()[0], depth + 1, out var element) && element is not null)
 			{
-				list.Add(element);
+				type.GetMethod(nameof(List<object>.Add))!.Invoke(list, [element]);
 			}
 
 			sample = list;
