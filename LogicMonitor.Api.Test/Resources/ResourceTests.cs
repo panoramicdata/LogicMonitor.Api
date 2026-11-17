@@ -2,16 +2,8 @@ using System.Globalization;
 
 namespace LogicMonitor.Api.Test.Resources;
 
-public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
+public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
-	[Fact]
-	public async Task GetResourcesByResourceGroupRecursive()
-	{
-		var devices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
-
-		devices.Should().NotBeNull();
-	}
 
 	[Fact]
 	[Trait("Category", "Long")]
@@ -169,270 +161,6 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 	}
 
 	[Fact]
-	public async Task GetAllScheduledDownTimes()
-	{
-		var scheduledDownTimes = await LogicMonitorClient
-			.GetAllAsync<ScheduledDownTime>(CancellationToken);
-
-		scheduledDownTimes.Should().NotBeNull();
-	}
-
-	[Fact]
-	public async Task GetResourcePage()
-	{
-		const int MaxCount = 50;
-		var devicesPage = await LogicMonitorClient
-			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = MaxCount }, CancellationToken);
-
-		devicesPage.Should().NotBeNull();
-		(devicesPage.Items.Count <= MaxCount).Should().BeTrue();
-	}
-
-	[Fact]
-	public async Task GetAllResourceInstances()
-	{
-		var deviceInstances = await LogicMonitorClient
-			.GetResourceInstanceListAsync(WindowsDeviceId, new Filter<ResourceDataSourceInstance>
-			{
-				Properties =
-				[
-						nameof(ResourceDataSourceInstance.Id),
-						nameof(ResourceDataSourceInstance.Name),
-						nameof(ResourceDataSourceInstance.DataSourceName),
-				]
-			}, CancellationToken);
-		(deviceInstances.Items.Count > 10).Should().BeTrue();
-	}
-
-	[Fact]
-	public async Task GetResourceByDeviceId()
-	{
-		var device = await LogicMonitorClient
-			.GetAsync<Resource>(77, CancellationToken);
-		device.Should().NotBeNull();
-	}
-
-	/// <summary>
-	/// This should fail as the device does not exist
-	/// </summary>
-	/// <returns></returns>
-	[Fact]
-	public Task GetResourceByNonExistentDeviceIdShouldFail() =>
-		LogicMonitorClient
-			.Invoking(async x => await LogicMonitorClient
-				.GetAsync<Resource>(12345678, CancellationToken))
-			.Should()
-			.ThrowAsync<LogicMonitorApiException>();
-
-	[Fact]
-	public async Task GetResourceByDisplayNameAsync()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var device2 = await LogicMonitorClient.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken);
-		device2.Should().NotBeNull();
-	}
-
-	[Fact]
-	public async Task GetResourceByHostName()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var devices = await LogicMonitorClient
-			.GetResourcesByHostNameAsync(device.Name, 100, CancellationToken);
-
-		// Possibly all 127.0.0.1
-		devices.Should().NotBeEmpty();
-	}
-
-	[Fact]
-	public async Task DateTimeSetCorrectly()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var refresh = await LogicMonitorClient
-			.GetAsync<Resource>(device.Id, CancellationToken);
-		refresh.CreatedOnSeconds.Should().BePositive();
-		refresh.CreatedOnUtc.Should().NotBeNull();
-		refresh.CreatedOnUtc.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
-	}
-
-	[Fact]
-	public async Task SerialisationIgnoredProperties()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		device.Should().NotBeNull();
-		var jObject = JObject.FromObject(device);
-		int.Parse(jObject["id"]!.ToString(), CultureInfo.InvariantCulture).Should().Be(device.Id);
-		jObject.Properties().Should().AllSatisfy(p => p.Name.Should().NotBe(nameof(Resource.AutoPropertiesAssignedOnUtc)));
-	}
-
-	[Fact]
-	public async Task GetResourcePropertiesContainsExpected()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var deviceProperties = await LogicMonitorClient
-			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		deviceProperties.Should().Contain(dp => dp.Name == "location");
-		deviceProperties.Should().Contain(dp => dp.Type == PropertyType.Auto);
-	}
-
-	[Fact]
-	public async Task GetResourcesAndInstancesAssociatedWithDataSourceById()
-	{
-		// Get the dataSource
-		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("WinVolumeUsage-", CancellationToken);
-		dataSource.Should().NotBeNull();
-
-		// Get the information
-		var info = await LogicMonitorClient
-			.GetResourcesAndInstancesAssociatedWithDataSourceByIdPageAsync(
-				dataSource!.Id,
-				new Filter<ResourceWithDataSourceInstanceInformation> { Skip = 0, Take = 300 },
-				CancellationToken);
-
-		// Check
-		info.Should().NotBeNull();
-	}
-
-	[Fact]
-	public void GetResourcesByDeviceGroupFullPath_InvalidDeviceGroup_ThrowsException()
-	{
-		LogicMonitorClient
-			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", true, CancellationToken))
-			.Should()
-			.ThrowAsync<LogicMonitorApiException>();
-		LogicMonitorClient
-			.Invoking(async x => await x.GetResourcesByResourceGroupFullPathAsync("XXXXXX/YYYYYY", false, CancellationToken))
-			.Should()
-			.ThrowAsync<LogicMonitorApiException>();
-	}
-
-	[Fact]
-	public async Task GetResourcesByDeviceGroupFullPathV78()
-	{
-		// Recurse
-		var allDatacenterDevices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
-		// Don't recurse
-		var topFolderDevices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, false, CancellationToken);
-
-		// Make sure there are more when recursing
-		allDatacenterDevices.Should().HaveCountGreaterThan(topFolderDevices.Count);
-		allDatacenterDevices.Should().AllSatisfy(d => d.DisplayName.Should().NotBeNull());
-	}
-
-	[Fact]
-	public async Task GetResourcesRecurse()
-	{
-		var allStaffDevices = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
-		allStaffDevices.Should().NotBeNullOrEmpty();
-	}
-
-	[Fact]
-	public async Task GetFewerResources()
-	{
-		const int numberToFetch = 10;
-		var devices = await LogicMonitorClient
-			.GetPageAsync(new Filter<Resource> { Skip = 0, Take = numberToFetch }, CancellationToken);
-		devices.Items.Should().HaveCount(numberToFetch);
-		devices.TotalCount.Should().NotBe(numberToFetch);
-		devices.TotalCount.Should().NotBe(0);
-	}
-
-	[Fact]
-	public async Task GetFullResourceTree()
-	{
-		var deviceGroup = await LogicMonitorClient
-			.GetFullResourceTreeAsync(cancellationToken: CancellationToken);
-		deviceGroup.Should().NotBeNull();
-	}
-
-	[Fact]
-	public async Task GetFullResourceTreeForDatacenter()
-	{
-		var deviceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(DeviceGroupFullPath, CancellationToken) ?? throw new InvalidOperationException();
-		deviceGroup = await LogicMonitorClient
-			.GetFullResourceTreeAsync(deviceGroup.Id, CancellationToken);
-		deviceGroup.Should().NotBeNull();
-	}
-
-	[Fact]
-	public async Task TreeNodeFreeSearch()
-	{
-		// Get the result without specifying a type
-		var treeNodeFreeSearch = await LogicMonitorClient
-			.TreeNodeFreeSearchAsync("Datacenter", 100, cancellationToken: CancellationToken);
-		var totalItemCount = treeNodeFreeSearch.Count;
-
-		// Subtract the count of a search for each individual type
-		var treeNodeFreeSearchResultTypes =
-		Enum.GetValues<TreeNodeFreeSearchResultType>()
-			.Cast<TreeNodeFreeSearchResultType>()
-			.Except([TreeNodeFreeSearchResultType.Unknown]);
-		var list = new List<TreeNodeFreeSearchResult>();
-		foreach (var treeNodeFreeSearchResultType in treeNodeFreeSearchResultTypes)
-		{
-			var treeNodeFreeSearchResult = await LogicMonitorClient
-				.TreeNodeFreeSearchAsync("Datacenter", 100, treeNodeFreeSearchResultType);
-			list.AddRange(treeNodeFreeSearchResult);
-		}
-		// Make sure that some are returned
-		list.Should().HaveCount(totalItemCount);
-	}
-
-	[Fact]
-	public async Task UpdateResourceProperty()
-	{
-		var portalClient = LogicMonitorClient;
-		var device = await GetWindowsResourceAsync(CancellationToken);
-
-		// Remove any called "test"
-		const string testPropertyName = "test";
-		const string testPropertyValue = "testValue";
-		var errantProperty = device.CustomProperties.SingleOrDefault(p => p.Name == testPropertyName);
-		if (errantProperty is not null)
-		{
-			device.CustomProperties.Remove(errantProperty);
-		}
-
-		device.CustomProperties.Add(new EntityProperty
-		{
-			Name = testPropertyName,
-			Value = testPropertyValue
-		});
-
-		// Update the device
-		await portalClient
-			.PutAsync(device, CancellationToken);
-
-		// Re-fetch the device
-		device = await GetWindowsResourceAsync(CancellationToken);
-
-		// Make sure that there is now one called "test"
-		var testProperty = device
-			.CustomProperties
-			.SingleOrDefault(p => p.Name == testPropertyName);
-		testProperty.Should().NotBeNull();
-		testProperty ??= new();
-		testProperty.Value.Should().Be(testPropertyValue);
-
-		// Clean up afterwards - remove the property
-		// Re-fetch the properties
-		device.CustomProperties = [.. device.CustomProperties.Where(p => p.Name != testPropertyName)];
-
-		// Update the device
-		await portalClient.PutAsync(device, CancellationToken);
-
-		// Re-fetch the properties
-		device = await GetWindowsResourceAsync(CancellationToken);
-
-		// Make sure that there are none called "test"
-		device.CustomProperties.Should().AllSatisfy(p => p.Name.Should().NotBe(testPropertyName));
-	}
-
-	[Fact]
 	public async Task SetResourceCustomProperty()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
@@ -534,201 +262,108 @@ public class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture)
 		actual = deviceProperties.Count(dp => dp.Name == propertyName);
 		actual.Should().Be(0);
 	}
-
 	[Fact]
-	public async Task GetResourceCustomProperties()
+	public async Task GetResourcesByResourceGroupRecursive()
 	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var deviceProperties = await LogicMonitorClient.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		deviceProperties.Should().NotBeNullOrEmpty();
+		var devices = await LogicMonitorClient
+			.GetResourcesByResourceGroupFullPathAsync(DeviceGroupFullPath, true, CancellationToken);
+
+		devices.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetResourceUsingSubUrl()
+	public async Task GetAllScheduledDownTimes()
 	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var deviceRefetch = await LogicMonitorClient
-			.GetAllAsync<JObject>($"device/devices?filter=id:{device.Id}&fields=inheritedProperties", CancellationToken);
-		deviceRefetch.Should().NotBeNull();
+		var scheduledDownTimes = await LogicMonitorClient
+			.GetAllAsync<ScheduledDownTime>(CancellationToken);
+
+		scheduledDownTimes.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetDifferentResourceTypes()
+	public async Task GetResourcePage()
 	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		device.ResourceType.Should().Be(ResourceType.Regular);
+		const int MaxCount = 50;
+		var devicesPage = await LogicMonitorClient
+			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = MaxCount }, CancellationToken);
 
-		device = await GetServiceDeviceAsync(CancellationToken);
-		device.ResourceType.Should().Be(ResourceType.Service);
-
-		// TODO - AWS and Azure
+		devicesPage.Should().NotBeNull();
+		(devicesPage.Items.Count <= MaxCount).Should().BeTrue();
 	}
 
 	[Fact]
-	public async Task GetDeadResources()
+	public async Task GetAllResourceInstances()
 	{
-		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Resource>
-		{
-			FilterItems =
-			[
-				new Eq<Resource>(nameof(Resource.ResourceStatus), "dead")
-			]
-		}, CancellationToken);
-		deviceList.Should().NotBeNull();
-		deviceList.Should().NotBeNullOrEmpty();
-	}
-
-	[Fact]
-	public async Task GetAlertDisableResources_Filtered()
-	{
-		var deviceList = await LogicMonitorClient.GetAllAsync(new Filter<Resource>
-		{
-			FilterItems =
-			[
-				new Ne<Resource>(nameof(Resource.AlertDisableStatus), "none-none-none")
-			]
-		}, CancellationToken);
-		deviceList.Should().NotBeNull();
-		deviceList.Should().NotBeNullOrEmpty();
-	}
-
-	[Fact]
-	public async Task GetAlertDisableResources_RawFilter()
-	{
-		var deviceList = await LogicMonitorClient.GetAllAsync(
-			new Filter<Resource> { QueryString = "filter=alertDisableStatus!:\"none-none-none\"" },
-			CancellationToken);
-		deviceList.Should().NotBeNull();
-		deviceList.Should().NotBeNullOrEmpty();
-	}
-
-	[Fact]
-	public async Task GetResourcesFromRoot()
-	{
-		// Fetch groups ordered by ID ascending, find one with direct resources
-		var deviceGroups = await LogicMonitorClient
-			.GetAllAsync(new Filter<ResourceGroup>
+		var deviceInstances = await LogicMonitorClient
+			.GetResourceInstanceListAsync(WindowsDeviceId, new Filter<ResourceDataSourceInstance>
 			{
-				Order = new Order<ResourceGroup> { Property = nameof(ResourceGroup.Id), Direction = OrderDirection.Asc }
+				Properties =
+				[
+						nameof(ResourceDataSourceInstance.Id),
+						nameof(ResourceDataSourceInstance.Name),
+						nameof(ResourceDataSourceInstance.DataSourceName),
+				]
 			}, CancellationToken);
-		var deviceGroup = deviceGroups.Find(dg => dg.DirectResourceCount > 0);
-		deviceGroup.Should().NotBeNull();
-		deviceGroup ??= new();
-		var deviceList = await LogicMonitorClient
-			.GetResourcesByResourceGroupFullPathAsync(deviceGroup.FullPath, false, CancellationToken);
-		deviceList.Should().NotBeNull();
-		deviceList.Should().NotBeNullOrEmpty();
+		(deviceInstances.Items.Count > 10).Should().BeTrue();
 	}
 
 	[Fact]
-	public async Task GetResourceAlertsPageAsync()
+	public async Task GetResourceByDeviceId()
+	{
+		var device = await LogicMonitorClient
+			.GetAsync<Resource>(77, CancellationToken);
+		device.Should().NotBeNull();
+	}
+
+	/// <summary>
+	/// This should fail as the device does not exist
+	/// </summary>
+	/// <returns></returns>
+	[Fact]
+	public Task GetResourceByNonExistentDeviceIdShouldFail() =>
+		LogicMonitorClient
+			.Invoking(async x => await LogicMonitorClient
+				.GetAsync<Resource>(12345678, CancellationToken))
+			.Should()
+			.ThrowAsync<LogicMonitorApiException>();
+
+	[Fact]
+	public async Task GetResourceByDisplayNameAsync()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
-		var alertsPage = await LogicMonitorClient
-			.GetResourceAlertsPageAsync(device.Id, 0, 100, CancellationToken);
-		alertsPage.Should().NotBeNull();
-		alertsPage.Items.Should().HaveCount(alertsPage.TotalCount);
+		var device2 = await LogicMonitorClient.GetResourceByDisplayNameAsync(device.DisplayName, CancellationToken);
+		device2.Should().NotBeNull();
 	}
 
 	[Fact]
-	public async Task GetResourceAlertsWithFilterAsync()
+	public async Task GetResourceByHostName()
 	{
-		var alertFilter = new AlertFilter
-		{
-			IncludeCleared = true,
-			Levels =
-				 [
-					 AlertLevel.Warning,
-					 AlertLevel.Error,
-					 AlertLevel.Critical
-				 ],
-			StartUtcIsAfter = DateTime.UtcNow.AddDays(-25)
-		};
+		var device = await GetWindowsResourceAsync(CancellationToken);
+		var devices = await LogicMonitorClient
+			.GetResourcesByHostNameAsync(device.Name, 100, CancellationToken);
 
-		// Get the Device
+		// Possibly all 127.0.0.1
+		devices.Should().NotBeEmpty();
+	}
+
+	[Fact]
+	public async Task DateTimeSetCorrectly()
+	{
+		var device = await GetWindowsResourceAsync(CancellationToken);
+		var refresh = await LogicMonitorClient
+			.GetAsync<Resource>(device.Id, CancellationToken);
+		refresh.CreatedOnSeconds.Should().BePositive();
+		refresh.CreatedOnUtc.Should().NotBeNull();
+		refresh.CreatedOnUtc.Should().BeAfter(DateTime.Parse("2011-02-11", CultureInfo.InvariantCulture));
+	}
+
+	[Fact]
+	public async Task SerialisationIgnoredProperties()
+	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
 		device.Should().NotBeNull();
-
-		// Get the Alerts
-		var allAlerts = await LogicMonitorClient
-			.GetResourceAlertsByIdAsync(device.Id, alertFilter, CancellationToken);
-		allAlerts.Should().NotBeNull();
-	}
-
-	[Fact]
-	public async Task PatchResourceAsync()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-		var oldDescription = device.Description;
-		var newDescription = Guid.NewGuid().ToString();
-		await LogicMonitorClient
-			.PatchAsync(device, new Dictionary<string, object> { { "description", newDescription } }, CancellationToken);
-		var updatedDevice = await GetWindowsResourceAsync(CancellationToken);
-		updatedDevice.Description.Should().Be(newDescription);
-		await LogicMonitorClient
-			.PatchAsync(device, new Dictionary<string, object> { { "description", oldDescription } }, CancellationToken);
-	}
-
-	[Fact]
-	public Task ScheduleActiveDiscovery()
-		=> LogicMonitorClient
-			.ScheduleActiveDiscovery(WindowsDeviceId, CancellationToken);
-
-	[Fact]
-	[Trait("Category", "Long")]
-	public async Task GetResourceAlertSettings()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-
-		var config = await LogicMonitorClient
-			.GetResourceDataPointConfigurationsAsync(device.Id, CancellationToken);
-
-		config.Should().NotBeEmpty();
-	}
-
-	[Fact]
-	[Trait("Category", "Long")]
-	public async Task GetResourceDataSourceInstanceDataPointConfigurationAsync()
-	{
-		var device = await GetWindowsResourceAsync(CancellationToken);
-
-		var dataSource = await LogicMonitorClient
-			.GetDataSourceByUniqueNameAsync("SNMP_Network_Interfaces", CancellationToken);
-		dataSource.Should().NotBeNull();
-
-		var deviceDataSource = await LogicMonitorClient
-			.GetResourceDataSourceByResourceIdAndDataSourceIdAsync(device.Id, dataSource.Id, CancellationToken) ?? throw new InvalidOperationException();
-
-		var deviceDataSourceInstances = await LogicMonitorClient
-			.GetAllResourceDataSourceInstancesAsync(device.Id, deviceDataSource.Id, CancellationToken);
-
-		var deviceDataSourceInstance = deviceDataSourceInstances.FirstOrDefault();
-		deviceDataSourceInstance.Should().NotBeNull();
-
-		var config = await LogicMonitorClient
-			.GetResourceDataSourceInstanceDataPointConfigurationsAsync(
-				device.Id,
-				deviceDataSource.Id,
-				deviceDataSourceInstance.Id,
-				CancellationToken);
-
-		config.Should().NotBeNull();
-	}
-
-	[Fact]
-	[Trait("Category", "Long")]
-	public async Task GetTopTalkerGraphAsync()
-	{
-		var devicesPage = await LogicMonitorClient
-			.GetResourcesPageAsync(new Filter<Resource> { Skip = 0, Take = 50 }, CancellationToken);
-
-		var netflowEnabledId = devicesPage
-			.Items
-			.FirstOrDefault(device => device.EnableNetflow)?.Id ?? NetflowDeviceId;
-		netflowEnabledId.Should().BePositive();
-
-		var graph = await LogicMonitorClient
-			.GetTopTalkersGraphAsync(netflowEnabledId, CancellationToken);
-		graph.Should().NotBeNull();
+		var jObject = JObject.FromObject(device);
+		int.Parse(jObject["id"]!.ToString(), CultureInfo.InvariantCulture).Should().Be(device.Id);
+		jObject.Properties().Should().AllSatisfy(p => p.Name.Should().NotBe(nameof(Resource.AutoPropertiesAssignedOnUtc)));
 	}
 }
