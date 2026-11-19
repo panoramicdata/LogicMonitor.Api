@@ -46,7 +46,15 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		widgets.Should().HaveCount(20); // There are 20 different types of widget
 		widgets ??= [];
 		// Test each type
+		AssertAlertJobBigNumberAndGaugeWidgets(widgets);
+		AssertCustomGraphWidget(widgets);
+		AssertHtmlMapAndNocWidgets(widgets);
+		AssertPieChartAndWebsiteIndividualStatusWidgets(widgets);
+		AssertSlaAndTextWidgets(widgets);
+	}
 
+	private static void AssertAlertJobBigNumberAndGaugeWidgets(List<Widget> widgets)
+	{
 		// AlertsList
 		var alertsListWidget = widgets.OfType<AlertWidget>().SingleOrDefault();
 		alertsListWidget.Should().NotBeNull();
@@ -83,7 +91,10 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		gaugeWidget.DataPoint.AggregateFunction.Should().NotBeNull();
 		gaugeWidget.DataPoint.DataSeries.Should().NotBeNull();
 		gaugeWidget.DataPoint.Rpn.Should().NotBeNull();
+	}
 
+	private static void AssertCustomGraphWidget(List<Widget> widgets)
+	{
 		// Custom Graph
 		var customGraphWidget = widgets.OfType<CustomGraphWidget>().SingleOrDefault();
 		customGraphWidget.Should().NotBeNull();
@@ -117,7 +128,10 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		customGraphWidget.GraphInfo.DataPoints[0].Display.Color.Should().NotBeNull();
 		customGraphWidget.GraphInfo.VirtualDataPoints.Should().NotBeNull();
 		customGraphWidget.GraphInfo.GlobalConsolidateFunction.Should().NotBeNull();
+	}
 
+	private static void AssertHtmlMapAndNocWidgets(List<Widget> widgets)
+	{
 		// Html
 		var htmlWidget = widgets.OfType<HtmlWidget>().SingleOrDefault();
 		htmlWidget.Should().NotBeNull();
@@ -159,7 +173,10 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		websiteNocWidget.Items[0].WebsiteGroupName.Should().NotBeNull();
 		websiteNocWidget.Items[0].WebsiteName.Should().NotBeNull();
 		websiteNocWidget.Items[0].GroupBy.Should().NotBeNull();
+	}
 
+	private static void AssertPieChartAndWebsiteIndividualStatusWidgets(List<Widget> widgets)
+	{
 		// Pie Chart
 		var pieChartWidget = widgets.OfType<PieChartWidget>().SingleOrDefault();
 		pieChartWidget.Should().NotBeNull();
@@ -198,7 +215,10 @@ public class DashboardTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		websiteIndividualStatusWidget.Locations.Should().NotBeNull();
 		websiteIndividualStatusWidget.Locations.Should().NotBeNullOrEmpty();
 		websiteIndividualStatusWidget.IsInternal.Should().BeFalse();
+	}
 
+	private static void AssertSlaAndTextWidgets(List<Widget> widgets)
+	{
 		// Website overall status widget
 		var websiteOverallStatusWidget = widgets.OfType<WebsiteOverallStatusWidget>().SingleOrDefault();
 		websiteOverallStatusWidget.Should().NotBeNull();

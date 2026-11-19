@@ -151,31 +151,36 @@ public class ResourceCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 		catch
 		{
 			// Cleanup in case of failure
-			try
-			{
-				var cleanupResults = InvokePowerShell("Get-LMResourceGroup", new Dictionary<string, object>
-				{
-					{ "Name", testGroupName }
-				});
-
-				if (cleanupResults.Count > 0)
-				{
-					var groupToCleanup = (Api.Resources.ResourceGroup)cleanupResults.First().BaseObject;
-					var groupId = groupToCleanup.Id;
-
-					InvokePowerShell("Remove-LMResourceGroup", new Dictionary<string, object>
-					{
-						{ "Id", groupId },
-						{ "Confirm", false }
-					});
-				}
-			}
-			catch
-			{
-				// Ignore cleanup errors
-			}
+			RemoveGroupByNameIgnoringErrors(testGroupName);
 
 			throw;
+		}
+	}
+
+	private void RemoveGroupByNameIgnoringErrors(string testGroupName)
+	{
+		try
+		{
+			var cleanupResults = InvokePowerShell("Get-LMResourceGroup", new Dictionary<string, object>
+			{
+				{ "Name", testGroupName }
+			});
+
+			if (cleanupResults.Count > 0)
+			{
+				var groupToCleanup = (Api.Resources.ResourceGroup)cleanupResults.First().BaseObject;
+				var groupId = groupToCleanup.Id;
+
+				InvokePowerShell("Remove-LMResourceGroup", new Dictionary<string, object>
+				{
+					{ "Id", groupId },
+					{ "Confirm", false }
+				});
+			}
+		}
+		catch
+		{
+			// Ignore cleanup errors
 		}
 	}
 }

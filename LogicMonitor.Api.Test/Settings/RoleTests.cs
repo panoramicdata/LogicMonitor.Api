@@ -61,56 +61,7 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			Name = Value,
 			RequireEULA = false,
 			TwoFactorAuthenticationRequired = true,
-			Privileges =
-				[
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.DashboardGroup,
-						ObjectId = dashboardGroup.Id.ToString(CultureInfo.InvariantCulture),
-						Operation = RolePrivilegeOperation.Read
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.ResourceGroup,
-						ObjectId = resourceGroup.Id.ToString(CultureInfo.InvariantCulture),
-						Operation = RolePrivilegeOperation.Read
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.WebsiteGroup,
-						ObjectId = websiteGroup.Id.ToString(CultureInfo.InvariantCulture),
-						Operation = RolePrivilegeOperation.Read
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.ReportGroup,
-						ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
-						Operation = RolePrivilegeOperation.Read
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.Help,
-						ObjectId = "*",
-						Operation = RolePrivilegeOperation.Read
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.ResourceDashboard,
-						Operation = RolePrivilegeOperation.Read
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.ConfigNeedResourceManagePermission,
-						ObjectId = "",
-						Operation = RolePrivilegeOperation.Write
-					},
-					new RolePrivilege
-					{
-						ObjectType = PrivilegeObjectType.ReportGroup,
-						ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
-						Operation = RolePrivilegeOperation.Read
-					},
-				]
+			Privileges = [.. BuildGroupPrivileges(dashboardGroup, resourceGroup, websiteGroup, reportGroup), .. BuildOtherPrivileges(reportGroup)]
 		}, CancellationToken);
 
 		// Refetch
@@ -121,5 +72,66 @@ public class RoleTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 		// Delete
 		await LogicMonitorClient
 			.DeleteAsync(role, CancellationToken);
+	}
+
+	private static List<RolePrivilege> BuildGroupPrivileges(DashboardGroup dashboardGroup, ResourceGroup resourceGroup, WebsiteGroup websiteGroup, ReportGroup reportGroup)
+	{
+		return
+		[
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.DashboardGroup,
+				ObjectId = dashboardGroup.Id.ToString(CultureInfo.InvariantCulture),
+				Operation = RolePrivilegeOperation.Read
+			},
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.ResourceGroup,
+				ObjectId = resourceGroup.Id.ToString(CultureInfo.InvariantCulture),
+				Operation = RolePrivilegeOperation.Read
+			},
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.WebsiteGroup,
+				ObjectId = websiteGroup.Id.ToString(CultureInfo.InvariantCulture),
+				Operation = RolePrivilegeOperation.Read
+			},
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.ReportGroup,
+				ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
+				Operation = RolePrivilegeOperation.Read
+			},
+		];
+	}
+
+	private static List<RolePrivilege> BuildOtherPrivileges(ReportGroup reportGroup)
+	{
+		return
+		[
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.Help,
+				ObjectId = "*",
+				Operation = RolePrivilegeOperation.Read
+			},
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.ResourceDashboard,
+				Operation = RolePrivilegeOperation.Read
+			},
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.ConfigNeedResourceManagePermission,
+				ObjectId = "",
+				Operation = RolePrivilegeOperation.Write
+			},
+			new RolePrivilege
+			{
+				ObjectType = PrivilegeObjectType.ReportGroup,
+				ObjectId = reportGroup.Id.ToString(CultureInfo.InvariantCulture),
+				Operation = RolePrivilegeOperation.Read
+			},
+		];
 	}
 }

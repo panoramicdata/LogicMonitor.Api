@@ -36,7 +36,19 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 				.DeleteAsync(existingUser, CancellationToken);
 		}
 
-		var userCreationDto = new UserCreationDto
+		var userCreationDto = BuildUserCreationDto();
+
+		var user = await LogicMonitorClient
+			.CreateAsync(userCreationDto, CancellationToken);
+
+		// Delete again
+		await LogicMonitorClient
+			.DeleteAsync(user, CancellationToken);
+	}
+
+	private static UserCreationDto BuildUserCreationDto()
+	{
+		return new UserCreationDto
 		{
 			ViewPermission = new ViewPermission
 			{
@@ -69,13 +81,6 @@ public class UserTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : T
 			Phone = "+447761503941",
 			ApiOnly = false
 		};
-
-		var user = await LogicMonitorClient
-			.CreateAsync(userCreationDto, CancellationToken);
-
-		// Delete again
-		await LogicMonitorClient
-			.DeleteAsync(user, CancellationToken);
 	}
 
 	[Fact]

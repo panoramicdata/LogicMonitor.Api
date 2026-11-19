@@ -66,31 +66,7 @@ public class ResourceRenameTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 		try
 		{
 			resource = await LogicMonitorClient.CreateAsync(
-				new PingCheckResourceCreationDto
-				{
-					Name = originalName,
-					DisplayName = originalName,
-					Description = "Integration test rename ping check",
-					ResourceGroupIds = "1",
-					PreferredCollectorId = collectorId,
-					DisableAlerting = true,
-					IsInternal = true,
-					HostName = TargetHost,
-					PollingIntervalMinutes = 5,
-					PacketCount = 5,
-					TimeoutMs = 500,
-					PercentPacketsNotReceivedInTime = 80,
-					SyntheticsCollectorIds = [collectorId],
-					TestLocation = new UptimeTestLocation { All = true, CollectorIds = [collectorId], SmgIds = [] },
-					Alerting = new UptimeAlertSettings
-					{
-						OverallAlertLevel = Level.Critical,
-						IndividualAlertLevel = Level.Warning,
-						IndividualCheckpointAlertsEnabled = true,
-						FailedCheckCountBeforeAlerting = 1,
-						AlertCondition = SiteMonitorAlertCondition.AllLocations
-					}
-				},
+				BuildPingCheckToRename(originalName, collectorId),
 				CancellationToken);
 		}
 		catch (LogicMonitorApiException ex) when (IsUptimeUnavailable(ex))
@@ -124,6 +100,35 @@ public class ResourceRenameTests(ITestOutputHelper iTestOutputHelper, Fixture fi
 				await LogicMonitorClient.DeleteAsync(resource, cancellationToken: CancellationToken);
 			}
 		}
+	}
+
+	private static PingCheckResourceCreationDto BuildPingCheckToRename(string originalName, int collectorId)
+	{
+		return new PingCheckResourceCreationDto
+		{
+			Name = originalName,
+			DisplayName = originalName,
+			Description = "Integration test rename ping check",
+			ResourceGroupIds = "1",
+			PreferredCollectorId = collectorId,
+			DisableAlerting = true,
+			IsInternal = true,
+			HostName = TargetHost,
+			PollingIntervalMinutes = 5,
+			PacketCount = 5,
+			TimeoutMs = 500,
+			PercentPacketsNotReceivedInTime = 80,
+			SyntheticsCollectorIds = [collectorId],
+			TestLocation = new UptimeTestLocation { All = true, CollectorIds = [collectorId], SmgIds = [] },
+			Alerting = new UptimeAlertSettings
+			{
+				OverallAlertLevel = Level.Critical,
+				IndividualAlertLevel = Level.Warning,
+				IndividualCheckpointAlertsEnabled = true,
+				FailedCheckCountBeforeAlerting = 1,
+				AlertCondition = SiteMonitorAlertCondition.AllLocations
+			}
+		};
 	}
 
 	[Fact]

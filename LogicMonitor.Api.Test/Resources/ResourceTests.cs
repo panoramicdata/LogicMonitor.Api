@@ -4,27 +4,16 @@ namespace LogicMonitor.Api.Test.Resources;
 
 public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
+	private const string CreatedResourceDisplayName = "dns.google.com";
+	private const string CustomPropertyName = "blah";
+	private const string CustomPropertyValue1 = "test1";
+	private const string CustomPropertyValue2 = "test2";
 
 	[Fact]
 	[Trait("Category", "Long")]
 	public async Task CreateAndRemoveResourceAndResourceGroup()
 	{
 		var logicMonitorClient = LogicMonitorClient;
-
-		// Device properties
-		const string resourceName = "127.199.199.199";
-		const string deviceDisplayName = "dns.google.com";
-		const string deviceLink = "https://www.google.co.uk/";
-		const string devicePropertyName = "Woo";
-		const string devicePropertyValue = "Yay";
-		const string deviceDescription = "Description";
-		const bool deviceDisableAlerting = true;
-		const bool deviceEnableNetflow = false;
-		var deviceProperty = new EntityProperty
-		{
-			Name = devicePropertyName,
-			Value = devicePropertyValue
-		};
 
 		// ResourceGroup properties
 		const string deviceGroupName = "UnitTest CreateAndRemoveDeviceAndDeviceGroup";
@@ -33,7 +22,7 @@ public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture 
 
 		// Delete device if it already exists
 		var deviceForDeletion = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(deviceDisplayName, CancellationToken);
+			.GetResourceByDisplayNameAsync(CreatedResourceDisplayName, CancellationToken);
 		if (deviceForDeletion is not null)
 		{
 			await logicMonitorClient
@@ -68,91 +57,9 @@ public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture 
 
 		foreach (var finalHardDelete in new[] { false, true })
 		{
-			// Create device
-			var deviceCreationDto = new ResourceCreationDto
-			{
-				Name = resourceName,
-				DisplayName = deviceDisplayName,
-				Link = deviceLink,
-				ResourceGroupIds = $"{deviceGroup.Id}",
-				CustomProperties =
-					[
-						deviceProperty
-					],
-				Description = deviceDescription,
-				DisableAlerting = deviceDisableAlerting,
-				EnableNetflow = deviceEnableNetflow,
-				PreferredCollectorId = collectorId.Value
-			};
-			var deviceFromCreation = await logicMonitorClient
-				.CreateAsync(
-					deviceCreationDto,
-					CancellationToken);
-
-			foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Resource>(deviceFromCreation.Id, CancellationToken) })
-			{
-				device.Name.Should().Be(resourceName);
-				device.DisplayName.Should().Be(deviceDisplayName);
-				device.Description.Should().Be(deviceDescription);
-				device.Link.Should().Be(deviceLink);
-				device.CustomProperties.Should().NotBeNull();
-				device.CustomProperties.Count(p => p.Name == devicePropertyName && p.Value == devicePropertyValue).Should().Be(1);
-				device.CustomProperties[0].Name.Should().Be(devicePropertyName);
-				device.CustomProperties[0].Value.Should().Be(devicePropertyValue);
-				device.IsAlertingDisabled.Should().Be(deviceDisableAlerting);
-				device.EnableNetflow.Should().Be(deviceEnableNetflow);
-			}
-
-			// Soft delete device
-			await logicMonitorClient
-				.DeleteAsync(deviceFromCreation, false, cancellationToken: CancellationToken);
-
-			// Get recycle bin items
-			var recycleBinItems = await logicMonitorClient
-				.GetAllAsync<RecycleBinItem>(CancellationToken);
-
-			// Assert that the device is in the recycle bin
-			recycleBinItems.Select(i => i.ResourceId).Should().Contain(deviceFromCreation.Id);
-
-			// Get the recycle bin item
-			var recycleBinItem = recycleBinItems.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
-			recycleBinItem.Should().NotBeNull();
-			recycleBinItem ??= new();
-			deviceFromCreation.DisplayName.Should().Be(recycleBinItem.ResourceName);
-			recycleBinItem.ResourceType.Should().Be("device");
-
-			// Hard delete it?
-			if (finalHardDelete)
-			{
-				// Restore from recycle bin
-				await logicMonitorClient
-					.RecycleBinRestoreAsync([recycleBinItem.Id], CancellationToken);
-
-				// Make sure that it's no longer in the recycle bin
-				recycleBinItems = await logicMonitorClient
-					.GetAllAsync<RecycleBinItem>(CancellationToken);
-				recycleBinItem = recycleBinItems
-					.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
-				recycleBinItem.Should().BeNull();
-
-				// Get the resource again by Id
-				var restoredResource = await logicMonitorClient
-					.GetAsync<Resource>(deviceFromCreation.Id, CancellationToken);
-
-				// Check that it's the same
-				restoredResource.Should().NotBeNull();
-				restoredResource.DisplayName.Should().Be(deviceFromCreation.DisplayName);
-
-				// Do a regular hard delete
-				await logicMonitorClient
-					.DeleteAsync(deviceFromCreation, cancellationToken: CancellationToken);
-			}
-			else
-			{
-				// Remove from the recycle bin
-				await logicMonitorClient
-					.RecycleBinDeleteAsync([recycleBinItem.Id], CancellationToken);
-			}
+			var deviceFromCreation = await CreateResourceAndAssertAsync(logicMonitorClient, deviceGroup, collectorId.Value);
+			var recycleBinItem = await SoftDeleteResourceAndAssertInRecycleBinAsync(logicMonitorClient, deviceFromCreation);
+			await FinishResourceDeletionAsync(logicMonitorClient, deviceFromCreation, recycleBinItem, finalHardDelete);
 		}
 
 		// Delete ResourceGroup
@@ -160,43 +67,163 @@ public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture 
 			.DeleteAsync(deviceGroup, cancellationToken: CancellationToken);
 	}
 
+	private static async Task<Resource> CreateResourceAndAssertAsync(LogicMonitorClient logicMonitorClient, ResourceGroup deviceGroup, int collectorId)
+	{
+		// Device properties
+		const string resourceName = "127.199.199.199";
+		const string deviceDisplayName = CreatedResourceDisplayName;
+		const string deviceLink = "https://www.google.co.uk/";
+		const string devicePropertyName = "Woo";
+		const string devicePropertyValue = "Yay";
+		const string deviceDescription = "Description";
+		const bool deviceDisableAlerting = true;
+		const bool deviceEnableNetflow = false;
+		var deviceProperty = new EntityProperty
+		{
+			Name = devicePropertyName,
+			Value = devicePropertyValue
+		};
+
+		// Create device
+		var deviceCreationDto = new ResourceCreationDto
+		{
+			Name = resourceName,
+			DisplayName = deviceDisplayName,
+			Link = deviceLink,
+			ResourceGroupIds = $"{deviceGroup.Id}",
+			CustomProperties =
+				[
+					deviceProperty
+				],
+			Description = deviceDescription,
+			DisableAlerting = deviceDisableAlerting,
+			EnableNetflow = deviceEnableNetflow,
+			PreferredCollectorId = collectorId
+		};
+		var deviceFromCreation = await logicMonitorClient
+			.CreateAsync(
+				deviceCreationDto,
+				CancellationToken);
+
+		foreach (var device in new[] { deviceFromCreation, await logicMonitorClient.GetAsync<Resource>(deviceFromCreation.Id, CancellationToken) })
+		{
+			device.Name.Should().Be(resourceName);
+			device.DisplayName.Should().Be(deviceDisplayName);
+			device.Description.Should().Be(deviceDescription);
+			device.Link.Should().Be(deviceLink);
+			device.CustomProperties.Should().NotBeNull();
+			device.CustomProperties.Count(p => p.Name == devicePropertyName && p.Value == devicePropertyValue).Should().Be(1);
+			device.CustomProperties[0].Name.Should().Be(devicePropertyName);
+			device.CustomProperties[0].Value.Should().Be(devicePropertyValue);
+			device.IsAlertingDisabled.Should().Be(deviceDisableAlerting);
+			device.EnableNetflow.Should().Be(deviceEnableNetflow);
+		}
+
+		return deviceFromCreation;
+	}
+
+	private static async Task<RecycleBinItem> SoftDeleteResourceAndAssertInRecycleBinAsync(LogicMonitorClient logicMonitorClient, Resource deviceFromCreation)
+	{
+		// Soft delete device
+		await logicMonitorClient
+			.DeleteAsync(deviceFromCreation, false, cancellationToken: CancellationToken);
+
+		// Get recycle bin items
+		var recycleBinItems = await logicMonitorClient
+			.GetAllAsync<RecycleBinItem>(CancellationToken);
+
+		// Assert that the device is in the recycle bin
+		recycleBinItems.Select(i => i.ResourceId).Should().Contain(deviceFromCreation.Id);
+
+		// Get the recycle bin item
+		var recycleBinItem = recycleBinItems.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
+		recycleBinItem.Should().NotBeNull();
+		recycleBinItem ??= new();
+		deviceFromCreation.DisplayName.Should().Be(recycleBinItem.ResourceName);
+		recycleBinItem.ResourceType.Should().Be("device");
+
+		return recycleBinItem;
+	}
+
+	private static async Task FinishResourceDeletionAsync(LogicMonitorClient logicMonitorClient, Resource deviceFromCreation, RecycleBinItem recycleBinItem, bool finalHardDelete)
+	{
+		// Hard delete it?
+		if (finalHardDelete)
+		{
+			// Restore from recycle bin
+			await logicMonitorClient
+				.RecycleBinRestoreAsync([recycleBinItem.Id], CancellationToken);
+
+			// Make sure that it's no longer in the recycle bin
+			var recycleBinItems = await logicMonitorClient
+				.GetAllAsync<RecycleBinItem>(CancellationToken);
+			var remainingItem = recycleBinItems
+				.SingleOrDefault(i => i.ResourceId == deviceFromCreation.Id);
+			remainingItem.Should().BeNull();
+
+			// Get the resource again by Id
+			var restoredResource = await logicMonitorClient
+				.GetAsync<Resource>(deviceFromCreation.Id, CancellationToken);
+
+			// Check that it's the same
+			restoredResource.Should().NotBeNull();
+			restoredResource.DisplayName.Should().Be(deviceFromCreation.DisplayName);
+
+			// Do a regular hard delete
+			await logicMonitorClient
+				.DeleteAsync(deviceFromCreation, cancellationToken: CancellationToken);
+		}
+		else
+		{
+			// Remove from the recycle bin
+			await logicMonitorClient
+				.RecycleBinDeleteAsync([recycleBinItem.Id], CancellationToken);
+		}
+	}
+
 	[Fact]
 	public async Task SetResourceCustomProperty()
 	{
 		var device = await GetWindowsResourceAsync(CancellationToken);
-		const string propertyName = "blah";
-		const string value1 = "test1";
-		const string value2 = "test2";
+		await SetAndVerifyCustomPropertyValuesAsync(device);
+		await AssertInvalidCustomPropertyWritesThrowAsync(device);
+		await CreateUpdateAndDeleteCustomPropertyWithoutCheckingAsync(device);
+	}
 
+	private async Task SetAndVerifyCustomPropertyValuesAsync(Resource device)
+	{
 		// Set it to an expected value
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, value1, CancellationToken);
+			.SetResourceCustomPropertyAsync(device.Id, CustomPropertyName, CustomPropertyValue1, CancellationToken);
 		var deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		var actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
+		var actual = deviceProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue1);
 		actual.Should().Be(1);
 
 		// Set it to a different value
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, value2, CancellationToken);
+			.SetResourceCustomPropertyAsync(device.Id, CustomPropertyName, CustomPropertyValue2, CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
+		actual = deviceProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue2);
 		actual.Should().Be(1);
 
 		// Set it to null (delete it)
 		await LogicMonitorClient
-			.SetResourceCustomPropertyAsync(device.Id, propertyName, null, cancellationToken: CancellationToken);
+			.SetResourceCustomPropertyAsync(device.Id, CustomPropertyName, null, cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		actual = deviceProperties.Count(dp => dp.Name == propertyName);
+		actual = deviceProperties.Count(dp => dp.Name == CustomPropertyName);
 		actual.Should().Be(0);
+	}
 
+	private async Task AssertInvalidCustomPropertyWritesThrowAsync(Resource device)
+	{
 		// This should fail as there is nothing to delete
 		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient
 				.SetResourceCustomPropertyAsync(
 					device.Id,
-					propertyName,
+					CustomPropertyName,
 					null,
 					SetPropertyMode.Delete,
 					CancellationToken)
@@ -206,7 +233,7 @@ public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture 
 		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient
 			.SetResourceCustomPropertyAsync(
 				device.Id,
-				propertyName,
+				CustomPropertyName,
 				null,
 				SetPropertyMode.Update,
 				CancellationToken)
@@ -216,52 +243,56 @@ public partial class ResourceTests(ITestOutputHelper iTestOutputHelper, Fixture 
 		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient
 			.SetResourceCustomPropertyAsync(
 				device.Id,
-				propertyName,
+				CustomPropertyName,
 				null,
 				SetPropertyMode.Create,
 				CancellationToken)
 				);
 		createNullException.Should().BeOfType<InvalidOperationException>();
+	}
 
+	private async Task CreateUpdateAndDeleteCustomPropertyWithoutCheckingAsync(Resource device)
+	{
 		// Create one without checking
 		await LogicMonitorClient
 			.SetResourceCustomPropertyAsync(
 				device.Id,
-				propertyName,
-				value1,
+				CustomPropertyName,
+				CustomPropertyValue1,
 				SetPropertyMode.Create,
 				cancellationToken: CancellationToken);
-		deviceProperties = await LogicMonitorClient
+		var deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
+		var actual = deviceProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue1);
 		actual.Should().Be(1);
 
 		// Update one without checking
 		await LogicMonitorClient
 			.SetResourceCustomPropertyAsync(
 				device.Id,
-				propertyName,
-				value2,
+				CustomPropertyName,
+				CustomPropertyValue2,
 				SetPropertyMode.Update,
 				cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		actual = deviceProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
+		actual = deviceProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue2);
 		actual.Should().Be(1);
 
 		// Delete one without checking
 		await LogicMonitorClient
 			.SetResourceCustomPropertyAsync(
 				device.Id,
-				propertyName,
+				CustomPropertyName,
 				null,
 				SetPropertyMode.Delete,
 				cancellationToken: CancellationToken);
 		deviceProperties = await LogicMonitorClient
 			.GetResourcePropertiesAsync(device.Id, CancellationToken);
-		actual = deviceProperties.Count(dp => dp.Name == propertyName);
+		actual = deviceProperties.Count(dp => dp.Name == CustomPropertyName);
 		actual.Should().Be(0);
 	}
+
 	[Fact]
 	public async Task GetResourcesByResourceGroupRecursive()
 	{

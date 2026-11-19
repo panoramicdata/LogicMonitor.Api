@@ -38,16 +38,7 @@ public class ResourceGroupClusterAlertConfigTests(ITestOutputHelper iTestOutputH
 			?? throw new InvalidOperationException("DataSource 'Ping' not found.");
 
 		// --- CREATE ---
-		var config = new ResourceGroupClusterAlertConfig
-		{
-			DataSourceId = dataSource.Id,
-			CountBy = "host",
-			MinAlertLevel = 2,
-			AlertExpression = ">= 1",
-			ThresholdType = "absolute",
-			SuppressIndividualAlerts = false,
-			DisableAlerting = false
-		};
+		var config = BuildClusterAlertConfig(dataSource.Id);
 
 		var created = await LogicMonitorClient
 			.CreateResourceGroupClusterAlertConfigAsync(group.Id, config, CancellationToken);
@@ -60,21 +51,7 @@ public class ResourceGroupClusterAlertConfigTests(ITestOutputHelper iTestOutputH
 
 		try
 		{
-			// --- GET ALL ---
-			var all = await LogicMonitorClient
-				.GetAllResourceGroupClusterAlertConfigsAsync(group.Id, CancellationToken);
-
-			all.Should().NotBeEmpty();
-			all.Should().AllSatisfy(c => c.ResourceGroupId.Should().Be(group.Id));
-			all.Should().Contain(c => c.Id == created.Id);
-
-			// --- GET PAGE ---
-			var page = await LogicMonitorClient
-				.GetResourceGroupClusterAlertConfigsPageAsync(group.Id, null, CancellationToken);
-
-			page.Should().NotBeNull();
-			page.Items.Should().NotBeEmpty();
-			page.Items.Should().AllSatisfy(c => c.ResourceGroupId.Should().Be(group.Id));
+			await AssertListAndPageAsync(group, created);
 
 			// --- GET BY ID ---
 			var fetched = await LogicMonitorClient
@@ -118,5 +95,38 @@ public class ResourceGroupClusterAlertConfigTests(ITestOutputHelper iTestOutputH
 				.GetAllResourceGroupClusterAlertConfigsAsync(group.Id, CancellationToken);
 			remaining.Should().NotContain(c => c.Id == created.Id);
 		}
+	}
+
+	private static ResourceGroupClusterAlertConfig BuildClusterAlertConfig(int dataSourceId)
+	{
+		return new ResourceGroupClusterAlertConfig
+		{
+			DataSourceId = dataSourceId,
+			CountBy = "host",
+			MinAlertLevel = 2,
+			AlertExpression = ">= 1",
+			ThresholdType = "absolute",
+			SuppressIndividualAlerts = false,
+			DisableAlerting = false
+		};
+	}
+
+	private async Task AssertListAndPageAsync(ResourceGroup group, ResourceGroupClusterAlertConfig created)
+	{
+		// --- GET ALL ---
+		var all = await LogicMonitorClient
+			.GetAllResourceGroupClusterAlertConfigsAsync(group.Id, CancellationToken);
+
+		all.Should().NotBeEmpty();
+		all.Should().AllSatisfy(c => c.ResourceGroupId.Should().Be(group.Id));
+		all.Should().Contain(c => c.Id == created.Id);
+
+		// --- GET PAGE ---
+		var page = await LogicMonitorClient
+			.GetResourceGroupClusterAlertConfigsPageAsync(group.Id, null, CancellationToken);
+
+		page.Should().NotBeNull();
+		page.Items.Should().NotBeEmpty();
+		page.Items.Should().AllSatisfy(c => c.ResourceGroupId.Should().Be(group.Id));
 	}
 }
