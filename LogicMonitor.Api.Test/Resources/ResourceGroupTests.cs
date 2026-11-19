@@ -4,6 +4,9 @@ namespace LogicMonitor.Api.Test.Resources;
 
 public partial class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
+	private const string CustomPropertyName = "blah";
+	private const string CustomPropertyValue1 = "test1";
+	private const string CustomPropertyValue2 = "test2";
 
 	[Fact]
 	public async Task SetResourceGroupCustomProperty()
@@ -24,76 +27,9 @@ public partial class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fix
 
 		try
 		{
-			const string propertyName = "blah";
-			const string value1 = "test1";
-			const string value2 = "test2";
-
-			// Set it to an expected value
-			await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(
-				resourceGroup.Id,
-				propertyName,
-				value1,
-				SetPropertyMode.Automatic,
-				CancellationToken);
-			var resourceGroupProperties = await LogicMonitorClient
-				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
-			var actual = resourceGroupProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
-			actual.Should().Be(1);
-
-			// Set it to a different value
-			await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(
-				resourceGroup.Id,
-				propertyName,
-				value2,
-				SetPropertyMode.Automatic,
-				CancellationToken);
-			resourceGroupProperties = await LogicMonitorClient
-				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
-			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
-			actual.Should().Be(1);
-
-			// Delete it
-			await LogicMonitorClient
-				.DeleteResourceGroupPropertyAsync(resourceGroup.Id, propertyName, CancellationToken);
-
-			resourceGroupProperties = await LogicMonitorClient
-				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
-			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName);
-			actual.Should().Be(0);
-
-			// This should fail as there is nothing to delete
-			var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Delete, CancellationToken));
-			deletionException.Should().BeOfType<LogicMonitorApiException>();
-
-			var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Update, CancellationToken));
-			updateException.Should().BeOfType<InvalidOperationException>();
-
-			var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Create, CancellationToken));
-			createNullException.Should().BeOfType<InvalidOperationException>();
-
-			// Create one without checking
-			await LogicMonitorClient
-				.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, value1, SetPropertyMode.Create, CancellationToken);
-			resourceGroupProperties = await LogicMonitorClient
-				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
-			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName && dp.Value == value1);
-			actual.Should().Be(1);
-
-			// Update one without checking
-			await LogicMonitorClient
-				.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, value2, SetPropertyMode.Update, CancellationToken);
-			resourceGroupProperties = await LogicMonitorClient
-				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
-			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName && dp.Value == value2);
-			actual.Should().Be(1);
-
-			// Delete one without checking
-			await LogicMonitorClient
-				.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, propertyName, null, SetPropertyMode.Delete, CancellationToken);
-			resourceGroupProperties = await LogicMonitorClient
-				.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
-			actual = resourceGroupProperties.Count(dp => dp.Name == propertyName);
-			actual.Should().Be(0);
+			await SetAndVerifyResourceGroupCustomPropertyValuesAsync(resourceGroup);
+			await AssertInvalidResourceGroupCustomPropertyWritesThrowAsync(resourceGroup);
+			await CreateUpdateAndDeleteResourceGroupCustomPropertyWithoutCheckingAsync(resourceGroup);
 		}
 		finally
 		{
@@ -101,6 +37,83 @@ public partial class ResourceGroupTests(ITestOutputHelper iTestOutputHelper, Fix
 				.DeleteAsync(resourceGroup, true, CancellationToken);
 		}
 	}
+
+	private async Task SetAndVerifyResourceGroupCustomPropertyValuesAsync(ResourceGroup resourceGroup)
+	{
+		// Set it to an expected value
+		await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(
+			resourceGroup.Id,
+			CustomPropertyName,
+			CustomPropertyValue1,
+			SetPropertyMode.Automatic,
+			CancellationToken);
+		var resourceGroupProperties = await LogicMonitorClient
+			.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
+		var actual = resourceGroupProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue1);
+		actual.Should().Be(1);
+
+		// Set it to a different value
+		await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(
+			resourceGroup.Id,
+			CustomPropertyName,
+			CustomPropertyValue2,
+			SetPropertyMode.Automatic,
+			CancellationToken);
+		resourceGroupProperties = await LogicMonitorClient
+			.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
+		actual = resourceGroupProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue2);
+		actual.Should().Be(1);
+
+		// Delete it
+		await LogicMonitorClient
+			.DeleteResourceGroupPropertyAsync(resourceGroup.Id, CustomPropertyName, CancellationToken);
+
+		resourceGroupProperties = await LogicMonitorClient
+			.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
+		actual = resourceGroupProperties.Count(dp => dp.Name == CustomPropertyName);
+		actual.Should().Be(0);
+	}
+
+	private async Task AssertInvalidResourceGroupCustomPropertyWritesThrowAsync(ResourceGroup resourceGroup)
+	{
+		// This should fail as there is nothing to delete
+		var deletionException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, CustomPropertyName, null, SetPropertyMode.Delete, CancellationToken));
+		deletionException.Should().BeOfType<LogicMonitorApiException>();
+
+		var updateException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, CustomPropertyName, null, SetPropertyMode.Update, CancellationToken));
+		updateException.Should().BeOfType<InvalidOperationException>();
+
+		var createNullException = await Record.ExceptionAsync(async () => await LogicMonitorClient.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, CustomPropertyName, null, SetPropertyMode.Create, CancellationToken));
+		createNullException.Should().BeOfType<InvalidOperationException>();
+	}
+
+	private async Task CreateUpdateAndDeleteResourceGroupCustomPropertyWithoutCheckingAsync(ResourceGroup resourceGroup)
+	{
+		// Create one without checking
+		await LogicMonitorClient
+			.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, CustomPropertyName, CustomPropertyValue1, SetPropertyMode.Create, CancellationToken);
+		var resourceGroupProperties = await LogicMonitorClient
+			.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
+		var actual = resourceGroupProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue1);
+		actual.Should().Be(1);
+
+		// Update one without checking
+		await LogicMonitorClient
+			.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, CustomPropertyName, CustomPropertyValue2, SetPropertyMode.Update, CancellationToken);
+		resourceGroupProperties = await LogicMonitorClient
+			.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
+		actual = resourceGroupProperties.Count(dp => dp.Name == CustomPropertyName && dp.Value == CustomPropertyValue2);
+		actual.Should().Be(1);
+
+		// Delete one without checking
+		await LogicMonitorClient
+			.SetResourceGroupCustomPropertyAsync(resourceGroup.Id, CustomPropertyName, null, SetPropertyMode.Delete, CancellationToken);
+		resourceGroupProperties = await LogicMonitorClient
+			.GetResourceGroupPropertiesAsync(resourceGroup.Id, CancellationToken);
+		actual = resourceGroupProperties.Count(dp => dp.Name == CustomPropertyName);
+		actual.Should().Be(0);
+	}
+
 	[Fact]
 	public async Task GetResourceGroupByFullPath()
 	{

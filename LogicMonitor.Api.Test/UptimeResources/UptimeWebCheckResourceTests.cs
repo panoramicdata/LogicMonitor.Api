@@ -96,14 +96,7 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 
 	private async Task AssertWebCrudAsync(WebCheckResourceCreationDto creationDto, string resourceDisplayName)
 	{
-		// Clean up any leftover test resource from a prior run
-		var existingResource = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(resourceDisplayName, CancellationToken);
-		if (existingResource is not null)
-		{
-			await LogicMonitorClient
-				.DeleteAsync(existingResource, cancellationToken: CancellationToken);
-		}
+		await UptimePingCheckResourceTests.DeleteLeftoverResourceAsync(LogicMonitorClient, resourceDisplayName);
 
 		// LM Uptime web checks require the feature and the Web_Check LogicModules; skip (not fail) where absent.
 		WebCheckResource resource;
@@ -141,22 +134,7 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 			}
 
 			// Update (skip if Uptime feature not enabled)
-			try
-			{
-				var updatedDescription = creationDto.Description + " - updated";
-				fetched.Description = updatedDescription;
-				await LogicMonitorClient
-					.PutAsync(fetched, CancellationToken);
-
-				var updated = await LogicMonitorClient
-					.GetAsync<WebCheckResource>(resource.Id, CancellationToken);
-				updated.Description.Should().Be(updatedDescription);
-				updated.ResourceType.Should().Be(ResourceType.Web);
-			}
-			catch (LogicMonitorApiException ex) when (ex.Message.Contains("Uptime feature is not enabled"))
-			{
-				Logger.LogInformation("Skipping update test - Uptime feature is not enabled in this portal");
-			}
+			await UpdateDescriptionUnlessUptimeDisabledAsync(fetched, resource.Id, creationDto);
 		}
 		finally
 		{
@@ -166,6 +144,26 @@ public class UptimeWebCheckResourceTests(ITestOutputHelper iTestOutputHelper, Fi
 				await LogicMonitorClient
 					.DeleteAsync(resource, cancellationToken: CancellationToken);
 			}
+		}
+	}
+
+	private async Task UpdateDescriptionUnlessUptimeDisabledAsync(WebCheckResource fetched, int resourceId, WebCheckResourceCreationDto creationDto)
+	{
+		try
+		{
+			var updatedDescription = creationDto.Description + " - updated";
+			fetched.Description = updatedDescription;
+			await LogicMonitorClient
+				.PutAsync(fetched, CancellationToken);
+
+			var updated = await LogicMonitorClient
+				.GetAsync<WebCheckResource>(resourceId, CancellationToken);
+			updated.Description.Should().Be(updatedDescription);
+			updated.ResourceType.Should().Be(ResourceType.Web);
+		}
+		catch (LogicMonitorApiException ex) when (ex.Message.Contains("Uptime feature is not enabled"))
+		{
+			Logger.LogInformation("Skipping update test - Uptime feature is not enabled in this portal");
 		}
 	}
 

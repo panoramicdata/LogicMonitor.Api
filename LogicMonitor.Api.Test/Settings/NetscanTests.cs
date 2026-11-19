@@ -4,6 +4,14 @@ namespace LogicMonitor.Api.Test.Settings;
 
 public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) : TestWithOutput(iTestOutputHelper, fixture), IClassFixture<Fixture>
 {
+	private const string ExpectedNetscanName = "LogicMonitor.Api UnitTest CreateNetscan";
+	private const string ExpectedNetscanDescription = "Description 1";
+	private const NetscanMethod ExpectedNetscanMethod = NetscanMethod.Icmp;
+	private const NetscanScheduleType ExpectedScheduleType = NetscanScheduleType.Daily;
+	private const string ExpectedScheduleCron = "01 00 * * *";
+	private const bool ExpectedScheduleNotify = false;
+	private const NetscanExcludeDuplicatesStrategy ExpectedDuplicatesStrategyType = NetscanExcludeDuplicatesStrategy.MatchingAnyMonitoredResources;
+
 	[Fact]
 	public async Task CanGetNetscanById()
 	{
@@ -29,75 +37,11 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		netscanGroup ??= new();
 		// We have the Unit test netscan  group
 
-		const string name = "LogicMonitor.Api UnitTest CreateNetscan";
-		const string description = "Description 1";
-		const int credentialsResourceGroupId = 0;
-		const string netscanScheduleCron = "01 00 * * *";
-		const NetscanMethod netscanMethod = NetscanMethod.Icmp;
-		const NetscanScheduleType netscanScheduleType = NetscanScheduleType.Daily;
-		var netscanScheduleWeekday = new List<string> { "1", "1" };
-		const string netscanScheduleNthWeek = "5";
-		const bool netscanScheduleNotify = false;
-		var credentialsCustom = new List<object>();
-		var netscanScheduleScheduleRecipients = new List<object>();
-		const string subnetScanRange = "10.9.9.0/24";
-		const string excludedIpAddresses = "10.9.9.1, 10.9.9.2";
-		const string ddrChangeName = "##REVERSEDNS##";
-		const NetscanExcludeDuplicatesStrategy duplicatesStrategyType = NetscanExcludeDuplicatesStrategy.MatchingAnyMonitoredResources;
-		const int assignmentResourceGroupId = 1;
-		const bool assignmentDisableAlerting = false;
-		const NetscanInclusionType assignmentInclusionType = NetscanInclusionType.Include;
-		var netscanCreationDto = new NetscanCreationDto
-		{
-			Name = name,
-			Description = description,
-			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
-			Credentials = new NetscanCredentials
-			{
-				ResourceGroupId = credentialsResourceGroupId,
-				Custom = credentialsCustom
-			},
-			Method = netscanMethod,
-			Schedule = new NetscanSchedule
-			{
-				Type = netscanScheduleType,
-				Cron = netscanScheduleCron,
-				WeekDays = netscanScheduleWeekday,
-				NthWeek = netscanScheduleNthWeek,
-				Notify = netscanScheduleNotify,
-				Recipients = netscanScheduleScheduleRecipients
-			},
-			//GroupName = netscanGroupName,
-			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
-			SubnetScanRange = subnetScanRange,
-			ExcludedIpAddresses = excludedIpAddresses,
-			DiscoveredResourceRule = new DiscoveredResourceRule
-			{
-				Assignment =
-					[
-						new NetscanAssignment
-						{
-							ResourceGroupId = assignmentResourceGroupId,
-							DisableAlerting = assignmentDisableAlerting,
-							InclusionType = assignmentInclusionType,
-						}
-					],
-				ChangeName = ddrChangeName
-			},
-			DuplicatesStrategy = new NetscanDuplicatesStrategy
-			{
-				Type = duplicatesStrategyType,
-			},
-			Ports = new NetscanPorts
-			{
-				IsGlobalDefault = false,
-				Value = "21,22,23,25,53,69,80,81,110,123,135,143,389,443,445,631,993,1433,1521,3306,3389,5432,5672,6081,7199,8000,8080,8081,9100,10000,11211,27017"
-			}
-		};
+		var netscanCreationDto = BuildNetscanCreationDto(netscanGroup);
 
 		// Remove any existing  by this name
 		var existingNetscan = (await portalClient.GetAllAsync<Netscan>(CancellationToken))
-			.SingleOrDefault(nsp => nsp.Name == name);
+			.SingleOrDefault(nsp => nsp.Name == ExpectedNetscanName);
 		if (existingNetscan is not null)
 		{
 			await portalClient.DeleteAsync(existingNetscan, CancellationToken);
@@ -108,23 +52,98 @@ public class NetscanTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 		createdNetscan.Should().NotBeNull();
 		// Ensure that the  is returned as expected
 
-		createdNetscan.Name.Should().Be(name);
-		createdNetscan.Description.Should().Be(description);
+		createdNetscan.Name.Should().Be(ExpectedNetscanName);
+		createdNetscan.Description.Should().Be(ExpectedNetscanDescription);
 		createdNetscan.CollectorId.Should().Be(CollectorId);
-		createdNetscan.Method.Should().Be(netscanMethod);
+		createdNetscan.Method.Should().Be(ExpectedNetscanMethod);
 		createdNetscan.Schedule.Should().NotBeNull();
-		createdNetscan.Schedule.Type.Should().Be(netscanScheduleType);
-		createdNetscan.Schedule.Cron.Should().Be(netscanScheduleCron);
-		createdNetscan.Schedule.Notify.Should().Be(netscanScheduleNotify);
+		createdNetscan.Schedule.Type.Should().Be(ExpectedScheduleType);
+		createdNetscan.Schedule.Cron.Should().Be(ExpectedScheduleCron);
+		createdNetscan.Schedule.Notify.Should().Be(ExpectedScheduleNotify);
 		createdNetscan.GroupName.Should().Be(netscanGroup.Name);
 		createdNetscan.GroupId.Should().Be(netscanGroup.Id);
 		createdNetscan.CreatorName.Should().NotBeNull();
 		createdNetscan.DuplicatesStrategy.Should().NotBeNull();
-		createdNetscan.DuplicatesStrategy.Type.Should().Be(duplicatesStrategyType);
+		createdNetscan.DuplicatesStrategy.Type.Should().Be(ExpectedDuplicatesStrategyType);
 
 		// Clean up
 		await portalClient
 			.DeleteAsync(createdNetscan, CancellationToken);
+	}
+
+	private NetscanCreationDto BuildNetscanCreationDto(NetscanGroup netscanGroup)
+	{
+		const int credentialsResourceGroupId = 0;
+		var credentialsCustom = new List<object>();
+		const string subnetScanRange = "10.9.9.0/24";
+		const string excludedIpAddresses = "10.9.9.1, 10.9.9.2";
+
+		return new NetscanCreationDto
+		{
+			Name = ExpectedNetscanName,
+			Description = ExpectedNetscanDescription,
+			CollectorId = CollectorId.ToString(CultureInfo.InvariantCulture),
+			Credentials = new NetscanCredentials
+			{
+				ResourceGroupId = credentialsResourceGroupId,
+				Custom = credentialsCustom
+			},
+			Method = ExpectedNetscanMethod,
+			Schedule = BuildNetscanSchedule(),
+			//GroupName = netscanGroupName,
+			GroupId = netscanGroup.Id.ToString(CultureInfo.InvariantCulture),
+			SubnetScanRange = subnetScanRange,
+			ExcludedIpAddresses = excludedIpAddresses,
+			DiscoveredResourceRule = BuildDiscoveredResourceRule(),
+			DuplicatesStrategy = new NetscanDuplicatesStrategy
+			{
+				Type = ExpectedDuplicatesStrategyType,
+			},
+			Ports = new NetscanPorts
+			{
+				IsGlobalDefault = false,
+				Value = "21,22,23,25,53,69,80,81,110,123,135,143,389,443,445,631,993,1433,1521,3306,3389,5432,5672,6081,7199,8000,8080,8081,9100,10000,11211,27017"
+			}
+		};
+	}
+
+	private static NetscanSchedule BuildNetscanSchedule()
+	{
+		var netscanScheduleWeekday = new List<string> { "1", "1" };
+		const string netscanScheduleNthWeek = "5";
+		var netscanScheduleScheduleRecipients = new List<object>();
+
+		return new NetscanSchedule
+		{
+			Type = ExpectedScheduleType,
+			Cron = ExpectedScheduleCron,
+			WeekDays = netscanScheduleWeekday,
+			NthWeek = netscanScheduleNthWeek,
+			Notify = ExpectedScheduleNotify,
+			Recipients = netscanScheduleScheduleRecipients
+		};
+	}
+
+	private static DiscoveredResourceRule BuildDiscoveredResourceRule()
+	{
+		const string ddrChangeName = "##REVERSEDNS##";
+		const int assignmentResourceGroupId = 1;
+		const bool assignmentDisableAlerting = false;
+		const NetscanInclusionType assignmentInclusionType = NetscanInclusionType.Include;
+
+		return new DiscoveredResourceRule
+		{
+			Assignment =
+				[
+					new NetscanAssignment
+					{
+						ResourceGroupId = assignmentResourceGroupId,
+						DisableAlerting = assignmentDisableAlerting,
+						InclusionType = assignmentInclusionType,
+					}
+				],
+			ChangeName = ddrChangeName
+		};
 	}
 
 	[Fact]

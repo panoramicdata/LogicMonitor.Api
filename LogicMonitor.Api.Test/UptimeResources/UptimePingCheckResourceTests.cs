@@ -92,14 +92,7 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 
 	private async Task AssertPingCrudAsync(PingCheckResourceCreationDto creationDto, string resourceDisplayName)
 	{
-		// Clean up any leftover test resource from a prior run
-		var existingResource = await LogicMonitorClient
-			.GetResourceByDisplayNameAsync(resourceDisplayName, CancellationToken);
-		if (existingResource is not null)
-		{
-			await LogicMonitorClient
-				.DeleteAsync(existingResource, cancellationToken: CancellationToken);
-		}
+		await DeleteLeftoverResourceAsync(LogicMonitorClient, resourceDisplayName);
 
 		// LM Uptime must be enabled on the portal, otherwise the v3 creation endpoint rejects the request.
 		// Skip (rather than fail) on portals where the feature or the Ping_Check LogicModules are absent.
@@ -125,13 +118,7 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			var fetched = await LogicMonitorClient
 				.GetAsync<PingCheckResource>(resource.Id, CancellationToken);
 			fetched.Should().NotBeNull();
-			fetched.ResourceType.Should().Be(ResourceType.Ping);
-			fetched.Description.Should().Be(creationDto.Description);
-			fetched.HostName.Should().Be(creationDto.HostName);
-			fetched.PacketCount.Should().Be(creationDto.PacketCount);
-			fetched.TimeoutMs.Should().Be(creationDto.TimeoutMs);
-			fetched.PercentPacketsNotReceivedInTime.Should().Be(creationDto.PercentPacketsNotReceivedInTime);
-			fetched.PollingIntervalMinutes.Should().Be(creationDto.PollingIntervalMinutes);
+			AssertFetchedPingCheckRoundTrips(fetched, creationDto);
 
 			// Internal ping checks must be provisioned as an Uptime resource at creation: the server sets the
 			// read-only system.uptime.type/system.device.provider properties and applies the Ping_Check DataSources,
@@ -143,22 +130,7 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 			}
 
 			// Update (skip if Uptime feature not enabled)
-			try
-			{
-				var updatedDescription = creationDto.Description + " - updated";
-				fetched.Description = updatedDescription;
-				await LogicMonitorClient
-					.PutAsync(fetched, CancellationToken);
-
-				var updated = await LogicMonitorClient
-					.GetAsync<PingCheckResource>(resource.Id, CancellationToken);
-				updated.Description.Should().Be(updatedDescription);
-				updated.ResourceType.Should().Be(ResourceType.Ping);
-			}
-			catch (LogicMonitorApiException ex) when (ex.Message.Contains("Uptime feature is not enabled"))
-			{
-				Logger.LogInformation("Skipping update test - Uptime feature is not enabled in this portal");
-			}
+			await UpdateDescriptionUnlessUptimeDisabledAsync(fetched, resource.Id, creationDto);
 		}
 		finally
 		{
@@ -168,6 +140,49 @@ public class UptimePingCheckResourceTests(ITestOutputHelper iTestOutputHelper, F
 				await LogicMonitorClient
 					.DeleteAsync(resource, cancellationToken: CancellationToken);
 			}
+		}
+	}
+
+	private static void AssertFetchedPingCheckRoundTrips(PingCheckResource fetched, PingCheckResourceCreationDto creationDto)
+	{
+		fetched.ResourceType.Should().Be(ResourceType.Ping);
+		fetched.Description.Should().Be(creationDto.Description);
+		fetched.HostName.Should().Be(creationDto.HostName);
+		fetched.PacketCount.Should().Be(creationDto.PacketCount);
+		fetched.TimeoutMs.Should().Be(creationDto.TimeoutMs);
+		fetched.PercentPacketsNotReceivedInTime.Should().Be(creationDto.PercentPacketsNotReceivedInTime);
+		fetched.PollingIntervalMinutes.Should().Be(creationDto.PollingIntervalMinutes);
+	}
+
+	private async Task UpdateDescriptionUnlessUptimeDisabledAsync(PingCheckResource fetched, int resourceId, PingCheckResourceCreationDto creationDto)
+	{
+		try
+		{
+			var updatedDescription = creationDto.Description + " - updated";
+			fetched.Description = updatedDescription;
+			await LogicMonitorClient
+				.PutAsync(fetched, CancellationToken);
+
+			var updated = await LogicMonitorClient
+				.GetAsync<PingCheckResource>(resourceId, CancellationToken);
+			updated.Description.Should().Be(updatedDescription);
+			updated.ResourceType.Should().Be(ResourceType.Ping);
+		}
+		catch (LogicMonitorApiException ex) when (ex.Message.Contains("Uptime feature is not enabled"))
+		{
+			Logger.LogInformation("Skipping update test - Uptime feature is not enabled in this portal");
+		}
+	}
+
+	internal static async Task DeleteLeftoverResourceAsync(LogicMonitorClient logicMonitorClient, string resourceDisplayName)
+	{
+		// Clean up any leftover test resource from a prior run
+		var existingResource = await logicMonitorClient
+			.GetResourceByDisplayNameAsync(resourceDisplayName, CancellationToken);
+		if (existingResource is not null)
+		{
+			await logicMonitorClient
+				.DeleteAsync(existingResource, cancellationToken: CancellationToken);
 		}
 	}
 

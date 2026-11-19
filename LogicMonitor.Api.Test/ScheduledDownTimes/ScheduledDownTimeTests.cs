@@ -132,44 +132,8 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			createdSdt.Comment.Should().Be(initialComment);
 			createdSdt.ResourceId.Should().Be(deviceId);
 
-			// Check the re-fetched SDT looks right
-			var refetchSdt = await LogicMonitorClient
-				.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
-			refetchSdt.Comment.Should().Be(initialComment);
-			refetchSdt.ResourceId.Should().Be(deviceId);
-
-			// Update
-			const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteADeviceSdt new comment";
-			createdSdt.Comment = newComment;
-			await LogicMonitorClient
-				.PutStringIdentifiedItemAsync(createdSdt, CancellationToken);
-
-			// Check the re-fetched SDT looks right
-			refetchSdt = await LogicMonitorClient
-				.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
-			refetchSdt.Comment.Should().Be(newComment);
-			refetchSdt.ResourceId.Should().Be(deviceId);
-
-			// Get all scheduled downtimes (we have created one, so at least that one should be there)
-			var scheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
-			{
-				FilterItems =
-				[
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "ResourceSDT"),
-					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
-				]
-			}, CancellationToken);
-			scheduledDownTimes.Should().NotBeNullOrEmpty();
-
-			// Get them all individually
-			foreach (var sdt in scheduledDownTimes)
-			{
-				var refetchedSdt = await LogicMonitorClient
-					.GetAsync<ScheduledDownTime>(sdt.Id, CancellationToken);
-				refetchedSdt.Id.Should().Be(sdt.Id);
-				refetchedSdt.ResourceId.Should().Be(sdt.ResourceId);
-				refetchedSdt.Comment.Should().Be(sdt.Comment);
-			}
+			await RefetchUpdateAndRecheckDeviceSdtAsync(createdSdt, initialComment, deviceId);
+			await ListAndRefetchDeviceSdtsIndividuallyAsync();
 		}
 		finally
 		{
@@ -180,6 +144,51 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 				await LogicMonitorClient
 					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
+		}
+	}
+
+	private async Task RefetchUpdateAndRecheckDeviceSdtAsync(ScheduledDownTime createdSdt, string initialComment, int deviceId)
+	{
+		// Check the re-fetched SDT looks right
+		var refetchSdt = await LogicMonitorClient
+			.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
+		refetchSdt.Comment.Should().Be(initialComment);
+		refetchSdt.ResourceId.Should().Be(deviceId);
+
+		// Update
+		const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteADeviceSdt new comment";
+		createdSdt.Comment = newComment;
+		await LogicMonitorClient
+			.PutStringIdentifiedItemAsync(createdSdt, CancellationToken);
+
+		// Check the re-fetched SDT looks right
+		refetchSdt = await LogicMonitorClient
+			.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
+		refetchSdt.Comment.Should().Be(newComment);
+		refetchSdt.ResourceId.Should().Be(deviceId);
+	}
+
+	private async Task ListAndRefetchDeviceSdtsIndividuallyAsync()
+	{
+		// Get all scheduled downtimes (we have created one, so at least that one should be there)
+		var scheduledDownTimes = await LogicMonitorClient.GetAllAsync(new Filter<ScheduledDownTime>
+		{
+			FilterItems =
+			[
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "ResourceSDT"),
+				new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
+			]
+		}, CancellationToken);
+		scheduledDownTimes.Should().NotBeNullOrEmpty();
+
+		// Get them all individually
+		foreach (var sdt in scheduledDownTimes)
+		{
+			var refetchedSdt = await LogicMonitorClient
+				.GetAsync<ScheduledDownTime>(sdt.Id, CancellationToken);
+			refetchedSdt.Id.Should().Be(sdt.Id);
+			refetchedSdt.ResourceId.Should().Be(sdt.ResourceId);
+			refetchedSdt.Comment.Should().Be(sdt.Comment);
 		}
 	}
 
@@ -211,44 +220,8 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 			createdSdt.Comment.Should().Be(initialComment);
 			createdSdt.CollectorId.Should().Be(collectorId);
 
-			// Check the re-fetched SDT looks right
-			var refetchSdt = await portalClient
-				.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
-			refetchSdt.Comment.Should().Be(initialComment);
-			refetchSdt.CollectorId.Should().Be(collectorId);
-
-			// Update
-			const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteACollectorSdt new comment";
-			createdSdt.Comment = newComment;
-			await portalClient.PutStringIdentifiedItemAsync(createdSdt, CancellationToken);
-
-			// Check the re-fetched SDT looks right
-			refetchSdt = await portalClient
-				.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
-			refetchSdt.Comment.Should().Be(newComment);
-			refetchSdt.CollectorId.Should().Be(collectorId);
-
-			// Get all scheduled downtimes (we have created one, so at least that one should be there)
-			var scheduledDownTimes = await portalClient.GetAllAsync(new Filter<ScheduledDownTime>
-			{
-				FilterItems =
-				[
-					new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "CollectorSDT"),
-					new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
-				]
-			}, CancellationToken);
-			scheduledDownTimes.Should().NotBeNull();
-			scheduledDownTimes.Should().NotBeNullOrEmpty();
-
-			// Get them all individually
-			foreach (var sdt in scheduledDownTimes)
-			{
-				var refetchedSdt = await portalClient
-					.GetAsync<ScheduledDownTime>(sdt.Id, CancellationToken);
-				refetchedSdt.Id.Should().Be(sdt.Id);
-				refetchedSdt.ResourceId.Should().Be(sdt.ResourceId);
-				refetchedSdt.Comment.Should().Be(sdt.Comment);
-			}
+			await RefetchUpdateAndRecheckCollectorSdtAsync(portalClient, createdSdt, initialComment, collectorId);
+			await ListAndRefetchCollectorSdtsIndividuallyAsync(portalClient);
 		}
 		finally
 		{
@@ -259,6 +232,51 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 				await portalClient
 					.DeleteAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
 			}
+		}
+	}
+
+	private static async Task RefetchUpdateAndRecheckCollectorSdtAsync(LogicMonitorClient portalClient, ScheduledDownTime createdSdt, string initialComment, int collectorId)
+	{
+		// Check the re-fetched SDT looks right
+		var refetchSdt = await portalClient
+			.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
+		refetchSdt.Comment.Should().Be(initialComment);
+		refetchSdt.CollectorId.Should().Be(collectorId);
+
+		// Update
+		const string newComment = "LogicMonitor.Api unit tests - AddAndDeleteACollectorSdt new comment";
+		createdSdt.Comment = newComment;
+		await portalClient.PutStringIdentifiedItemAsync(createdSdt, CancellationToken);
+
+		// Check the re-fetched SDT looks right
+		refetchSdt = await portalClient
+			.GetAsync<ScheduledDownTime>(createdSdt.Id, CancellationToken);
+		refetchSdt.Comment.Should().Be(newComment);
+		refetchSdt.CollectorId.Should().Be(collectorId);
+	}
+
+	private static async Task ListAndRefetchCollectorSdtsIndividuallyAsync(LogicMonitorClient portalClient)
+	{
+		// Get all scheduled downtimes (we have created one, so at least that one should be there)
+		var scheduledDownTimes = await portalClient.GetAllAsync(new Filter<ScheduledDownTime>
+		{
+			FilterItems =
+			[
+				new Eq<ScheduledDownTime>(nameof(ScheduledDownTime.Type), "CollectorSDT"),
+				new Gt<ScheduledDownTime>(nameof(ScheduledDownTime.StartDateTimeMs), DateTime.UtcNow.AddDays(-30).SecondsSinceTheEpoch())
+			]
+		}, CancellationToken);
+		scheduledDownTimes.Should().NotBeNull();
+		scheduledDownTimes.Should().NotBeNullOrEmpty();
+
+		// Get them all individually
+		foreach (var sdt in scheduledDownTimes)
+		{
+			var refetchedSdt = await portalClient
+				.GetAsync<ScheduledDownTime>(sdt.Id, CancellationToken);
+			refetchedSdt.Id.Should().Be(sdt.Id);
+			refetchedSdt.ResourceId.Should().Be(sdt.ResourceId);
+			refetchedSdt.Comment.Should().Be(sdt.Comment);
 		}
 	}
 
@@ -299,36 +317,10 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 	{
 		const string resourceGroupName = "CreatePingDataSourceSdtOnEmptyDeviceGroupUnitTest";
 
-		// Ensure DeviceGroup is NOT present
-		var resourceGroup = await LogicMonitorClient
-			.GetResourceGroupByFullPathAsync(resourceGroupName, CancellationToken);
-
-		if (resourceGroup is not null)
-		{
-			await LogicMonitorClient
-				.DeleteAsync(resourceGroup, CancellationToken);
-		}
-
-		// Create DeviceGroup
-		resourceGroup = await LogicMonitorClient
-			.CreateAsync(new ResourceGroupCreationDto
-			{
-				ParentId = "1",
-				Name = resourceGroupName
-			}, CancellationToken);
+		var resourceGroup = await RecreateResourceGroupAsync(resourceGroupName);
 
 		// Get ping DataSource
-		var dataSource = (await LogicMonitorClient
-			.GetAllAsync(new Filter<DataSource>
-			{
-				FilterItems =
-				[
-						new Eq<DataSource>(nameof(DataSource.Name), "Ping")
-				]
-			}, CancellationToken)
-			)
-			.SingleOrDefault();
-		dataSource.Should().NotBeNull();
+		var dataSource = await GetPingDataSourceAsync();
 
 		// Create Scheduled Downtime
 		var sdtCreationDto = new ResourceGroupScheduledDownTimeCreationDto(resourceGroup.Id)
@@ -362,6 +354,46 @@ public class ScheduledDownTimeTests(ITestOutputHelper iTestOutputHelper, Fixture
 		// Remove the ResourceGroup
 		await LogicMonitorClient
 			.DeleteAsync(resourceGroup, CancellationToken);
+	}
+
+	private async Task<ResourceGroup> RecreateResourceGroupAsync(string resourceGroupName)
+	{
+		// Ensure DeviceGroup is NOT present
+		var resourceGroup = await LogicMonitorClient
+			.GetResourceGroupByFullPathAsync(resourceGroupName, CancellationToken);
+
+		if (resourceGroup is not null)
+		{
+			await LogicMonitorClient
+				.DeleteAsync(resourceGroup, CancellationToken);
+		}
+
+		// Create DeviceGroup
+		resourceGroup = await LogicMonitorClient
+			.CreateAsync(new ResourceGroupCreationDto
+			{
+				ParentId = "1",
+				Name = resourceGroupName
+			}, CancellationToken);
+
+		return resourceGroup;
+	}
+
+	private async Task<DataSource> GetPingDataSourceAsync()
+	{
+		var dataSource = (await LogicMonitorClient
+			.GetAllAsync(new Filter<DataSource>
+			{
+				FilterItems =
+				[
+						new Eq<DataSource>(nameof(DataSource.Name), "Ping")
+				]
+			}, CancellationToken)
+			)
+			.SingleOrDefault();
+		dataSource.Should().NotBeNull();
+
+		return dataSource;
 	}
 
 	[Fact]

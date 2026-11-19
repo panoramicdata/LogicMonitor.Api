@@ -47,6 +47,13 @@ public class CsrfProbeTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 		var token = bootstrapResponse.Headers.TryGetValues("x-csrf-token", out var v) ? v.FirstOrDefault() : null;
 		TestOutputHelper.WriteLine($"Bootstrap: {(int)bootstrapResponse.StatusCode}, token present: {token is not null}, cookies: {cookies.GetCookies(dummyUri).Count}");
 
+		await ProbeAnonymousSessionAsync(client, account, token);
+
+		await ProbeLmv1TokenAsync(account, config);
+	}
+
+	private async Task ProbeAnonymousSessionAsync(HttpClient client, string account, string? token)
+	{
 		// (a) Try to read data with ONLY the anonymous session + token (no Authorization)
 		foreach (var (label, subUrl, xVersion) in new[]
 		{
@@ -67,7 +74,10 @@ public class CsrfProbeTests(ITestOutputHelper iTestOutputHelper, Fixture fixture
 			var body = await res.Content.ReadAsStringAsync(CancellationToken);
 			TestOutputHelper.WriteLine($"[{label}] {(int)res.StatusCode} {res.StatusCode} :: {body[..Math.Min(200, body.Length)]}");
 		}
+	}
 
+	private async Task ProbeLmv1TokenAsync(string account, TestPortalConfig config)
+	{
 		// (b) LMv1 API token against X-Version 4
 		foreach (var (label, subUrl, xVersion) in new[]
 		{

@@ -45,6 +45,11 @@ public partial class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 			deviceDataSourceInstanceRefetch.Should().NotBeNull();
 		}
 
+		await AssertInstanceGroupsAsync(portalClient, device, deviceDataSource);
+	}
+
+	private async Task AssertInstanceGroupsAsync(LogicMonitorClient portalClient, Resource device, ResourceDataSource deviceDataSource)
+	{
 		var deviceDataSourceInstanceGroups = await portalClient
 			.GetResourceDataSourceInstanceGroupsAsync(
 				device.Id,
@@ -86,6 +91,7 @@ public partial class DataSourceTests(ITestOutputHelper iTestOutputHelper, Fixtur
 			}
 		}
 	}
+
 	[Fact]
 	public async Task GetDataSourceByName()
 	{

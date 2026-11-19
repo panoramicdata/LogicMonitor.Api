@@ -52,53 +52,7 @@ public partial class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		{
 			try
 			{
-				// Calculate date range based on TimePeriod
-				var endDateTime = DateTime.UtcNow;
-				var startDateTime = timePeriod switch
-				{
-					TimePeriod.OneHour => endDateTime.AddHours(-1),
-					TimePeriod.TwoHours => endDateTime.AddHours(-2),
-					TimePeriod.FiveHours => endDateTime.AddHours(-5),
-					TimePeriod.OneDay => endDateTime.AddDays(-1),
-					TimePeriod.TwoDays => endDateTime.AddDays(-2),
-					TimePeriod.SevenDays => endDateTime.AddDays(-7),
-					TimePeriod.OneMonth => endDateTime.AddMonths(-1),
-					TimePeriod.ThreeMonths => endDateTime.AddMonths(-3),
-					_ => endDateTime.AddHours(-1)
-				};
-
-				var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
-				{
-					ResourceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
-					DataSourceGraphId = dataSourceGraph.Id,
-					TimePeriod = timePeriod,
-					StartDateTime = startDateTime,
-					EndDateTime = endDateTime
-				};
-
-				var graphData = await LogicMonitorClient
-					.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
-
-				// Calculate actual duration and expected points based on actual step
-				var durationInSeconds = (endDateTime - startDateTime).TotalSeconds;
-				var actualDataPoints = graphData.TimeStamps.Count;
-				var averageInterval = actualDataPoints > 1 
-					? durationInSeconds / (actualDataPoints - 1) 
-					: graphData.Step;
-
-				// Log results
-				Logger.LogInformation("TimePeriod: {TimePeriod}", timePeriod);
-				Logger.LogInformation("  Duration: {Duration:F0} seconds ({DurationHuman})", 
-					durationInSeconds, 
-					FormatDuration(durationInSeconds));
-				Logger.LogInformation("  Actual Step: {Step} seconds ({StepHuman})", 
-					graphData.Step, 
-					FormatDuration(graphData.Step));
-				Logger.LogInformation("  Data Points: {Count}", actualDataPoints);
-				Logger.LogInformation("  Average Interval: {Avg:F0} seconds ({AvgHuman})", 
-					averageInterval,
-					FormatDuration(averageInterval));
-				Logger.LogInformation("");
+				await LogStepsForTimePeriodAsync(timePeriod, deviceDataSourceInstances, dataSourceGraph);
 			}
 			catch (Exception ex)
 			{
@@ -111,6 +65,58 @@ public partial class DataTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		Logger.LogInformation("Use the 'Actual Step' values above to update the expected values in:");
 		Logger.LogInformation("  GetGraphData_VariousTimePeriods_ShouldHaveExpectedResolution");
 	}
+
+	private async Task LogStepsForTimePeriodAsync(TimePeriod timePeriod, List<ResourceDataSourceInstance> deviceDataSourceInstances, DataSourceGraph dataSourceGraph)
+	{
+		// Calculate date range based on TimePeriod
+		var endDateTime = DateTime.UtcNow;
+		var startDateTime = timePeriod switch
+		{
+			TimePeriod.OneHour => endDateTime.AddHours(-1),
+			TimePeriod.TwoHours => endDateTime.AddHours(-2),
+			TimePeriod.FiveHours => endDateTime.AddHours(-5),
+			TimePeriod.OneDay => endDateTime.AddDays(-1),
+			TimePeriod.TwoDays => endDateTime.AddDays(-2),
+			TimePeriod.SevenDays => endDateTime.AddDays(-7),
+			TimePeriod.OneMonth => endDateTime.AddMonths(-1),
+			TimePeriod.ThreeMonths => endDateTime.AddMonths(-3),
+			_ => endDateTime.AddHours(-1)
+		};
+
+		var deviceGraphDataRequest = new ResourceDataSourceInstanceGraphDataRequest
+		{
+			ResourceDataSourceInstanceId = deviceDataSourceInstances.Single().Id,
+			DataSourceGraphId = dataSourceGraph.Id,
+			TimePeriod = timePeriod,
+			StartDateTime = startDateTime,
+			EndDateTime = endDateTime
+		};
+
+		var graphData = await LogicMonitorClient
+			.GetGraphDataAsync(deviceGraphDataRequest, CancellationToken);
+
+		// Calculate actual duration and expected points based on actual step
+		var durationInSeconds = (endDateTime - startDateTime).TotalSeconds;
+		var actualDataPoints = graphData.TimeStamps.Count;
+		var averageInterval = actualDataPoints > 1 
+			? durationInSeconds / (actualDataPoints - 1) 
+			: graphData.Step;
+
+		// Log results
+		Logger.LogInformation("TimePeriod: {TimePeriod}", timePeriod);
+		Logger.LogInformation("  Duration: {Duration:F0} seconds ({DurationHuman})", 
+			durationInSeconds, 
+			FormatDuration(durationInSeconds));
+		Logger.LogInformation("  Actual Step: {Step} seconds ({StepHuman})", 
+			graphData.Step, 
+			FormatDuration(graphData.Step));
+		Logger.LogInformation("  Data Points: {Count}", actualDataPoints);
+		Logger.LogInformation("  Average Interval: {Avg:F0} seconds ({AvgHuman})", 
+			averageInterval,
+			FormatDuration(averageInterval));
+		Logger.LogInformation("");
+	}
+
 	[Fact]
 	[Trait("Category", "Long")]
 	public async Task GetForecastGraphData()

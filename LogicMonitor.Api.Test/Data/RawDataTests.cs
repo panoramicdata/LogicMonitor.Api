@@ -27,22 +27,7 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 
 		website.Should().NotBeNull();
 
-		foreach (var checkpoint in website.Checkpoints ?? [])
-		{
-			var rawData =
-				await LogicMonitorClient
-				.GetWebsiteCheckpointRawDataSet(
-					new WebsiteCheckPointRawDataRequest
-					{
-						WebsiteCheckPointId = checkpoint.Id,
-						WebsiteId = website.Id,
-					},
-					CancellationToken);
-
-			rawData.Should().NotBeNull();
-			rawData.DataPoints.Should().NotBeEmpty();
-			rawData.UtcTimeStamps.Should().NotBeEmpty();
-		}
+		await AssertCheckpointRawDataAsync(website);
 
 		foreach (var checkpoint in website.Checkpoints ?? [])
 		{
@@ -81,24 +66,49 @@ public class RawDataTests(ITestOutputHelper iTestOutputHelper, Fixture fixture) 
 			rawData2.UtcTimeStamps.Should().NotBeEmpty();
 
 			// Check there is only 1 timestamp / value for the aggregation type First
-			var rawData3 =
+			await AssertFirstAggregationRawDataAsync(website, checkpoint);
+		}
+	}
+
+	private async Task AssertCheckpointRawDataAsync(Website website)
+	{
+		foreach (var checkpoint in website.Checkpoints ?? [])
+		{
+			var rawData =
 				await LogicMonitorClient
 				.GetWebsiteCheckpointRawDataSet(
 					new WebsiteCheckPointRawDataRequest
 					{
-						Aggregation = WebsiteCheckpointRawDataAggregationType.First,
-						TimePeriod = WebsiteCheckpointRawDataTimePeriod.TwoHours,
 						WebsiteCheckPointId = checkpoint.Id,
 						WebsiteId = website.Id,
 					},
 					CancellationToken);
 
-			rawData3.Should().NotBeNull();
-			rawData3.DataPoints.Should().NotBeEmpty();
-			rawData3.UtcTimeStamps.Should().ContainSingle();
-			rawData3.Values.Should().ContainSingle();
-			rawData3.ValuesAsObjects.Should().ContainSingle();
+			rawData.Should().NotBeNull();
+			rawData.DataPoints.Should().NotBeEmpty();
+			rawData.UtcTimeStamps.Should().NotBeEmpty();
 		}
+	}
+
+	private async Task AssertFirstAggregationRawDataAsync(Website website, WebsiteCheckpoint checkpoint)
+	{
+		var rawData3 =
+			await LogicMonitorClient
+			.GetWebsiteCheckpointRawDataSet(
+				new WebsiteCheckPointRawDataRequest
+				{
+					Aggregation = WebsiteCheckpointRawDataAggregationType.First,
+					TimePeriod = WebsiteCheckpointRawDataTimePeriod.TwoHours,
+					WebsiteCheckPointId = checkpoint.Id,
+					WebsiteId = website.Id,
+				},
+				CancellationToken);
+
+		rawData3.Should().NotBeNull();
+		rawData3.DataPoints.Should().NotBeEmpty();
+		rawData3.UtcTimeStamps.Should().ContainSingle();
+		rawData3.Values.Should().ContainSingle();
+		rawData3.ValuesAsObjects.Should().ContainSingle();
 	}
 
 	[Fact]

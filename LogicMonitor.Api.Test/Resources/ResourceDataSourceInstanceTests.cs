@@ -215,21 +215,7 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 
 		var customPropertyName = "test";
 
-		// Is it already set?
-		var customProperty = instance.CustomProperties.FirstOrDefault(cp => cp.Name == customPropertyName);
-		if (customProperty != null)
-		{
-			// Set it to "value1"
-			customProperty.Value = "value1";
-		}
-		else
-		{
-			instance.CustomProperties.Add(new EntityProperty
-			{
-				Name = customPropertyName,
-				Value = "value1"
-			});
-		}
+		EnsureCustomPropertyIsValue1(instance, customPropertyName);
 
 		// Update the instance
 		await LogicMonitorClient
@@ -245,28 +231,51 @@ public class ResourceDataSourceInstanceTests(ITestOutputHelper iTestOutputHelper
 			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, CancellationToken);
 
 		// Check that the custom property was set
-		customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
+		var customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
 		customProperty.Should().NotBeNull();
 		customProperty.Value.Should().Be("value1");
+		await UpdateToValue2AndVerifyAsync(resource, resourceDataSources[0].Id, instance, refetchedInstance, customProperty);
+	}
 
+	private static void EnsureCustomPropertyIsValue1(ResourceDataSourceInstance instance, string customPropertyName)
+	{
+		// Is it already set?
+		var customProperty = instance.CustomProperties.FirstOrDefault(cp => cp.Name == customPropertyName);
+		if (customProperty != null)
+		{
+			// Set it to "value1"
+			customProperty.Value = "value1";
+		}
+		else
+		{
+			instance.CustomProperties.Add(new EntityProperty
+			{
+				Name = customPropertyName,
+				Value = "value1"
+			});
+		}
+	}
+
+	private async Task UpdateToValue2AndVerifyAsync(Resource resource, int dataSourceId, ResourceDataSourceInstance instance, ResourceDataSourceInstance firstRefetchedInstance, EntityProperty propertyToUpdate)
+	{
 		// Set it to something else
-		customProperty.Value = "value2";
+		propertyToUpdate.Value = "value2";
 
 		// Update the instance
 		await LogicMonitorClient
 			.UpdateResourceDataSourceInstanceAsync(
 				resource.Id,
-				resourceDataSources[0].Id,
+				dataSourceId,
 				instance.Id,
-				refetchedInstance,
+				firstRefetchedInstance,
 				CancellationToken);
 
 		// Re-fetch the instance
-		refetchedInstance = await LogicMonitorClient
-			.GetResourceDataSourceInstanceAsync(resource.Id, resourceDataSources[0].Id, instance.Id, CancellationToken);
+		var refetchedInstance = await LogicMonitorClient
+			.GetResourceDataSourceInstanceAsync(resource.Id, dataSourceId, instance.Id, CancellationToken);
 
 		// Check that the custom property was set
-		customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
+		var customProperty = refetchedInstance.CustomProperties.FirstOrDefault(cp => cp.Name == "test");
 		customProperty.Should().NotBeNull();
 		customProperty.Value.Should().Be("value2");
 	}

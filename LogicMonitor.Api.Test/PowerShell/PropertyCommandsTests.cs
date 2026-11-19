@@ -49,15 +49,7 @@ public class PropertyCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 		// Arrange
 		ConnectToLogicMonitor();
 
-		// Get a valid resource ID first
-		var resources = InvokePowerShell("Get-LMResource", new Dictionary<string, object>
-		{
-			{ "Take", 1 }
-		});
-
-		resources.Should().ContainSingle();
-		dynamic? resource = resources.First().BaseObject;
-		var resourceId = (int)resource!.Id;
+		var resourceId = GetFirstResourceId();
 
 		var testPropertyName = $"PowerShell.Test.{DateTime.Now:yyyyMMddHHmmss}";
 		var testPropertyValue = "PowerShell Test Value";
@@ -106,21 +98,39 @@ public class PropertyCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture 
 		catch
 		{
 			// Cleanup in case of failure
-			try
-			{
-				InvokePowerShell("Remove-LMResourceProperty", new Dictionary<string, object>
-				{
-					{ "ResourceId", resourceId },
-					{ "PropertyName", testPropertyName },
-					{ "Confirm", false }
-				});
-			}
-			catch
-			{
-				// Ignore cleanup errors
-			}
+			RemoveTestPropertyIgnoringErrors(resourceId, testPropertyName);
 
 			throw;
+		}
+	}
+
+	private int GetFirstResourceId()
+	{
+		// Get a valid resource ID first
+		var resources = InvokePowerShell("Get-LMResource", new Dictionary<string, object>
+		{
+			{ "Take", 1 }
+		});
+
+		resources.Should().ContainSingle();
+		dynamic? resource = resources.First().BaseObject;
+		return (int)resource!.Id;
+	}
+
+	private void RemoveTestPropertyIgnoringErrors(int resourceId, string testPropertyName)
+	{
+		try
+		{
+			InvokePowerShell("Remove-LMResourceProperty", new Dictionary<string, object>
+			{
+				{ "ResourceId", resourceId },
+				{ "PropertyName", testPropertyName },
+				{ "Confirm", false }
+			});
+		}
+		catch
+		{
+			// Ignore cleanup errors
 		}
 	}
 

@@ -136,31 +136,36 @@ public class UserCommandsTests(ITestOutputHelper iTestOutputHelper, Fixture fixt
 		catch
 		{
 			// Cleanup in case of failure
-			try
-			{
-				var cleanupResults = InvokePowerShell("Get-LMUser", new Dictionary<string, object>
-				{
-					{ "Username", testUsername }
-				});
-
-				if (cleanupResults.Count > 0)
-				{
-					var userToCleanup = (Api.Users.User)cleanupResults.First().BaseObject;
-					var userId = userToCleanup.Id;
-
-					InvokePowerShell("Remove-LMUser", new Dictionary<string, object>
-					{
-						{ "Id", userId },
-						{ "Confirm", false }
-					});
-				}
-			}
-			catch
-			{
-				// Ignore cleanup errors
-			}
+			RemoveUserByNameIgnoringErrors(testUsername);
 
 			throw;
+		}
+	}
+
+	private void RemoveUserByNameIgnoringErrors(string testUsername)
+	{
+		try
+		{
+			var cleanupResults = InvokePowerShell("Get-LMUser", new Dictionary<string, object>
+			{
+				{ "Username", testUsername }
+			});
+
+			if (cleanupResults.Count > 0)
+			{
+				var userToCleanup = (Api.Users.User)cleanupResults.First().BaseObject;
+				var userId = userToCleanup.Id;
+
+				InvokePowerShell("Remove-LMUser", new Dictionary<string, object>
+				{
+					{ "Id", userId },
+					{ "Confirm", false }
+				});
+			}
+		}
+		catch
+		{
+			// Ignore cleanup errors
 		}
 	}
 }
