@@ -13,9 +13,9 @@ Supports .NET 11.0.
 
 If you want some LogicMonitor software developed, come find us at: https://www.panoramicdata.com/ !
 
-To get started, watch the videos here:
+For an overview of the package, see:
 
-http://www.panoramicdata.com/products/logicmonitor-api-nuget-package/
+https://www.panoramicdata.com/open-source/nuget-packages/logicmonitor-api/
 
 A simple example:
 
