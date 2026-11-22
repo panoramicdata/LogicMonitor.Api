@@ -49,6 +49,8 @@ public partial class LogicMonitorClient
 	public Task<List<T>> GetAllAsync<T>(string subUrl, CancellationToken cancellationToken) where T : new()
 		=> GetAllInternalAsync(default(Filter<T>?), subUrl, cancellationToken);
 
+	private const int GetAllPageSize = 1000;
+
 	/// <summary>
 	/// Get all
 	/// </summary>
@@ -71,7 +73,7 @@ public partial class LogicMonitorClient
 		// Ensure filter is set up
 		filter ??= new Filter<T>();
 
-		filter.Take = Math.Min(300, requestedTake);
+		filter.Take = Math.Min(GetAllPageSize, requestedTake);
 		filter.Skip = 0;
 		var list = new List<T>();
 		while (true)
@@ -89,7 +91,8 @@ public partial class LogicMonitorClient
 			}
 
 			// Increment the skip value
-			filter.Skip += filter.Take;
+			// Advance by what arrived, so an endpoint that caps below the requested size loses nothing
+			filter.Skip += pageItems.Count;
 		}
 	}
 
