@@ -111,6 +111,10 @@ var pingCheck = await logicMonitorClient.CreateAsync(
 var fetched = await logicMonitorClient.GetAsync<PingCheckResource>(pingCheck.Id, cancellationToken);
 ```
 
+## Breaking changes
+
+- `GetAllAsync` now requests pages of 1000 items instead of 300, and advances by the number of items actually returned, so an endpoint that caps its page size lower still returns every item. Callers that relied on the 300 item page size (for example, by inspecting request URLs) will see the difference. Endpoints with their own fixed limits (alerts and others) are unchanged.
+
 ## API Documentation
 
 For more information on the LogicMonitor REST API, see the [official documentation](https://www.logicmonitor.com/support/rest-api-developers-guide/overview/using-logicmonitors-rest-api/).

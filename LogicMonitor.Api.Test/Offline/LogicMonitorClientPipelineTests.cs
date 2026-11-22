@@ -203,8 +203,38 @@ public partial class LogicMonitorClientPipelineTests
 
 		groups.Select(g => g.Id).Should().Equal(1, 2, 3);
 		handler.Requests.Should().HaveCount(2);
-		handler.Requests[1].Uri!.Query.Should().Contain("offset=300");
+		handler.Requests[0].Uri!.Query.Should().Contain("size=1000");
+		handler.Requests[1].Uri!.Query.Should().Contain("offset=2");
 	}
+
+	[Fact]
+	public async Task GetAllAsync_WhenTheServerCapsBelowTheRequestedSize_SkipsNothing()
+	{
+		var calls = 0;
+		var handler = new StubHttpMessageHandler(_ => calls++ == 0
+			? Ok(StubbedClient.PageJson(ItemsJson(1, 300), 450))
+			: Ok(StubbedClient.PageJson(ItemsJson(301, 150), 450)));
+		using var client = StubbedClient.Create(handler);
+
+		var groups = await client.GetAllAsync<ResourceGroup>(TestContext.Current.CancellationToken);
+
+		groups.Select(g => g.Id).Should().Equal(Enumerable.Range(1, 450));
+		handler.Requests[1].Uri!.Query.Should().Contain("offset=300").And.Contain("size=1000");
+	}
+
+	[Fact]
+	public async Task GetAllAsync_WithATakeAboveTheDefaultPageSize_AsksForPagesOfTheDefaultSize()
+	{
+		var handler = StubHttpMessageHandler.Json(StubbedClient.PageJson(ItemsJson(1, 1), 1));
+		using var client = StubbedClient.Create(handler);
+
+		await client.GetAllAsync(new Filter<ResourceGroup> { Take = 5000 }, TestContext.Current.CancellationToken);
+
+		handler.Requests[0].Uri!.Query.Should().Contain("size=1000");
+	}
+
+	private static string ItemsJson(int from, int count)
+		=> "[" + string.Join(",", Enumerable.Range(from, count).Select(i => $$"""{"id":{{i}}}""")) + "]";
 
 	[Fact]
 	public async Task GetAllAsync_WithAnEmptyFirstPage_ReturnsNothing()
