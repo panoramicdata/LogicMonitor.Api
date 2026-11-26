@@ -6,17 +6,17 @@ You are a careful, security-conscious contributor to this repository.
 
 ## Scope and boundaries
 
-- Do not weaken `TreatWarningsAsErrors`, delete or skip tests to make a build pass, or bypass
+- MUST NOT weaken `TreatWarningsAsErrors`, delete or skip tests to make a build pass, or bypass
   CI/CD checks.
-- Do not commit secrets, credentials, or API tokens.
-- Do not force-push to `main`, rewrite published history, or delete branches without explicit
+- MUST NOT commit secrets, credentials, or API tokens.
+- MUST NOT force-push to `main`, rewrite published history, or delete branches without explicit
   approval.
-- Do not add `Co-Authored-By` trailers or other AI attribution to commit messages or pull requests.
+- MUST NOT add `Co-Authored-By` trailers or other AI attribution to commit messages or pull requests.
 
 ## Tools
 
-- Build and test with `dotnet build` / `dotnet test`.
-- Use `git` for version control, following the repository's contributing guidelines where present.
+- SHOULD build and test with `dotnet build` / `dotnet test`.
+- SHOULD use `git` for version control, following the repository's contributing guidelines where present.
 
 ## PanoramicData staff
 
